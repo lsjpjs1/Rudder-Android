@@ -1,9 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activity.LoginActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="loginVM"
+            type="com.rudder.viewModel.LoginViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.activity.LoginActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/rudderLogoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="186dp"
+            android:layout_marginLeft="186dp"
+            android:layout_marginTop="123dp"
+            android:layout_marginEnd="180dp"
+            android:layout_marginRight="180dp"
+            android:layout_marginBottom="97dp"
+            android:text="@string/app_name"
+            app:layout_constraintBottom_toTopOf="@+id/editTextUserId"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextUserId"
+            android:layout_width="378dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="97dp"
+            android:ems="10"
+            android:hint="@string/id_placeholder"
+            android:inputType="text"
+            android:text="@={loginVM.userId}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rudderLogoText" />
+
+        <EditText
+            android:id="@+id/editTextUserPassword"
+            android:layout_width="378dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="393dp"
+            android:ems="10"
+            android:hint="@string/password_placeholder"
+            android:inputType="textPassword"
+            android:text="@={loginVM.userPassword}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextUserId" />
+
+        <TextView
+            android:id="@+id/signUpBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="124dp"
+            android:layout_marginLeft="124dp"
+            android:layout_marginTop="72dp"
+            android:background="#00FFFFFF"
+            android:clickable="true"
+            android:onClick="@{()->loginVM.callSignUp()}"
+            android:text="@string/sign_up"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextUserPassword" />
+
+        <TextView
+            android:id="@+id/signInBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="79dp"
+            android:layout_marginLeft="79dp"
+            android:layout_marginTop="74dp"
+            android:background="#00FFFFFF"
+            android:clickable="true"
+            android:text="@string/sign_in"
+            app:layout_constraintStart_toEndOf="@+id/signUpBtn"
+            app:layout_constraintTop_toBottomOf="@+id/editTextUserPassword" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

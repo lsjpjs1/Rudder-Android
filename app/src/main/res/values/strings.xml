@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Rudder</string>
+    <string name="id_placeholder">ID</string>
+    <string name="password_placeholder">PASSWORD</string>
+    <string name="sign_up">sign up</string>
+    <string name="sign_in">sign in</string>
 </resources>
