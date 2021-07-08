@@ -3,7 +3,9 @@ package com.rudder.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
+import com.rudder.BuildConfig
 import com.rudder.R
 import com.rudder.databinding.ActivityLoginBinding
 import com.rudder.util.Navigator
@@ -18,9 +20,6 @@ class LoginActivity : AppCompatActivity(),Navigator {
         binding.loginVM = viewModel
         binding.lifecycleOwner = this
 
-        signUpBtn.setOnClickListener{
-
-        }
     }
 
     override fun callSignUpActivity() {
