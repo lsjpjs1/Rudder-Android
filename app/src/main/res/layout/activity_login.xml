@@ -83,6 +83,7 @@
             android:layout_marginTop="74dp"
             android:background="#00FFFFFF"
             android:clickable="true"
+            android:onClick="@{()->loginVM.callLogin()}"
             android:text="@string/sign_in"
             app:layout_constraintStart_toEndOf="@+id/signUpBtn"
             app:layout_constraintTop_toBottomOf="@+id/editTextUserPassword" />

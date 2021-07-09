@@ -1,21 +1,21 @@
 package com.rudder.data.remote
 
-import com.rudder.BuildConfig
+
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClass {
+object RetrofitClient {
 
-    private var retrofit: Retrofit? = null
+    private lateinit var retrofit: Retrofit
 
 
-    fun getClient(): Retrofit{
-        if(retrofit==null){
+    fun getClient(baseUrl: String): Retrofit{
+        if(!this::retrofit.isInitialized){
             retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-        return retrofit!!
+        return retrofit
     }
 }
