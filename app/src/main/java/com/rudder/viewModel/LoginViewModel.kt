@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 class LoginViewModel() : ViewModel() {
     val userId = MutableLiveData<String>()
     val userPassword = MutableLiveData<String>()
-    val test = MutableLiveData<String>()
     private val _showLoginErrorToast = MutableLiveData<Event<Boolean>>()
     private val _startMainActivity = MutableLiveData<Event<Boolean>>()
     private val _startSignUpActivity = MutableLiveData<Event<Boolean>>()
@@ -27,7 +26,6 @@ class LoginViewModel() : ViewModel() {
     init {
         userId.value = ""
         userPassword.value = ""
-        test.value = ""
     }
 
     fun callSignUp(){

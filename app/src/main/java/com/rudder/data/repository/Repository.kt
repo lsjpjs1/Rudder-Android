@@ -8,6 +8,7 @@ import com.rudder.data.local.App
 import com.rudder.data.remote.LoginApi
 
 class Repository {
+
     suspend fun login(loginInfo: LoginInfo) : Boolean{
         val key = BuildConfig.TOKEN_KEY
         var result = true
@@ -21,7 +22,6 @@ class Repository {
             }
         }
         return result
-
-
     }
+
 }

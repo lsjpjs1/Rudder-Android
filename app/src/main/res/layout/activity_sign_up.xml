@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-
+        <variable
+            name="signUpVM"
+            type="com.rudder.viewModel.SignUpViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -99,7 +101,7 @@
                 android:background="@null"
                 android:ems="10"
                 android:inputType="text"
-                android:text=""
+                android:text="@={signUpVM._userPasswordCheck}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -134,7 +136,7 @@
                 android:background="@null"
                 android:ems="10"
                 android:inputType="text"
-                android:text=""
+                android:text="@={signUpVM._userPassword}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
