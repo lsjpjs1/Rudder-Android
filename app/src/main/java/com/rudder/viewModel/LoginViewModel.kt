@@ -1,12 +1,8 @@
 package com.rudder.viewModel
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.rudder.data.LoginInfo
-import com.rudder.data.remote.LoginApi
 import com.rudder.data.repository.Repository
 import com.rudder.util.Navigator
 import kotlinx.coroutines.GlobalScope
@@ -29,13 +25,13 @@ class LoginViewModel(private val navigator: Navigator) : ViewModel() {
 
     fun callLogin(){
         GlobalScope.launch {
-            val a = repository.login(LoginInfo(userId.value!!,userPassword.value!!)).await()
-            viewModelScope.launch {
-                test.value = a.toString()
+            val result = repository.login(LoginInfo(userId.value!!,userPassword.value!!))
+            if(result){
+                navigator.callMainActivity()
+            }else{
+
             }
-
         }
-
     }
 
 

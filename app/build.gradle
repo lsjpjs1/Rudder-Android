@@ -24,6 +24,7 @@ android {
 
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "BASE_URL",localProperties['baseUrl']
+        buildConfigField "String", "TOKEN_KEY",localProperties['tokenKey']
     }
 
 
