@@ -1,28 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".ui.activity.MainActivity">
-
-    <View
+<layout>
+    <data>
+        <variable
+            name="mainVM"
+            type="com.rudder.viewModel.MainViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.005"
-        android:background="@drawable/shadow"
-        app:layout_constraintBottom_toTopOf="@+id/main_bottom_bar" />
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        tools:context=".ui.activity.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/main_bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.1"
-        tools:layout_editor_absoluteX="0dp">
+        <FrameLayout
+            android:id="@+id/main_display"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/without_main_bottom_height"
+            tools:layout_editor_absoluteX="0dp">
 
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/shadow"
+            app:layout_constraintBottom_toTopOf="@+id/main_bottom_bar"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height" />
+
+        <FrameLayout
+            android:id="@+id/main_bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/main_bottom_bar_height"
+            tools:layout_editor_absoluteX="0dp">
+
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
