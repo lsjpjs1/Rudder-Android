@@ -14,7 +14,7 @@
         tools:context=".ui.activity.MainActivity">
 
         <FrameLayout
-            android:id="@+id/main_display"
+            android:id="@+id/mainDisplay"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#FFFFFF"
@@ -30,12 +30,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/shadow"
-            app:layout_constraintBottom_toTopOf="@+id/main_bottom_bar"
+            app:layout_constraintBottom_toTopOf="@+id/mainBottomBar"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height" />
 
         <FrameLayout
-            android:id="@+id/main_bottom_bar"
+            android:id="@+id/mainBottomBar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
