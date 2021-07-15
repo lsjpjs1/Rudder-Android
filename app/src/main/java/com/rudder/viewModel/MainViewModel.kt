@@ -5,6 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rudder.R
+import com.rudder.data.repository.Repository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 
 object MainViewModel : ViewModel() {
@@ -22,6 +26,13 @@ object MainViewModel : ViewModel() {
 
     fun clickMyPage(){
         _selectedTab.value = R.id.myPageButton
+        GlobalScope.async {
+            Repository().getPosts()
+        }
+    }
+
+    fun getPosts(){
+
     }
 
 }

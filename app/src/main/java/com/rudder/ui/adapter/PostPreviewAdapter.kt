@@ -19,18 +19,16 @@ class PostPreviewAdapter(val postList: ArrayList<Post>): RecyclerView.Adapter<Po
         parent: ViewGroup,
         viewType: Int
     ): PostPreviewAdapter.CustomViewHolder{
-        val holder = CustomViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.post_preview,
-                parent,
-                false
-            )
+        val bind = DataBindingUtil.inflate<PostPreviewBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.post_preview,
+            parent,
+            false
         )
-//        val params = holder.itemView.layoutParams as Cons
-//        params.height = 300
-//        holder.itemView.layoutParams = params
-        return holder
+        val params = bind.root.layoutParams
+        params.height = 700 // 아이템뷰 높이 고정값으로 되어있는 것 상대값으로 수정해야함
+        bind.root.layoutParams = params
+        return CustomViewHolder(bind)
     }
 
 

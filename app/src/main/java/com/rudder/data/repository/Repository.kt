@@ -6,6 +6,9 @@ import com.rudder.BuildConfig
 import com.rudder.data.LoginInfo
 import com.rudder.data.local.App
 import com.rudder.data.remote.LoginApi
+import com.rudder.data.remote.PostApi
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 
 class Repository {
 
@@ -22,6 +25,14 @@ class Repository {
             }
         }
         return result
+    }
+
+    suspend fun getPosts(){
+
+
+
+        val tmp = PostApi.instance.getPosts().await()
+        Log.d("posts",tmp.toString())
     }
 
 }

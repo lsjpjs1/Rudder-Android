@@ -33,7 +33,7 @@ class CommunityDisplayFragment: Fragment() {
         val communityDisplay = DataBindingUtil.inflate<FragmentCommunityDisplayBinding>(inflater,R.layout.fragment_community_display,container,false)
         communityDisplay.postPreviewRV.also{
             it.layoutManager=LinearLayoutManager(lazyContext)
-            it.setHasFixedSize(true)
+            it.setHasFixedSize(false)
             it.adapter = PostPreviewAdapter(arrayListOf(Post(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3),Post(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3),Post(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3),Post(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3)))
         }
 
