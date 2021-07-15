@@ -19,7 +19,8 @@ object MainViewModel : ViewModel() {
     private val _posts = MutableLiveData<ArrayList<Post>>()
 
     val selectedTab: LiveData<Int> = _selectedTab
-    val posts : LiveData<ArrayList<Post>> = _posts
+    val posts : LiveData<ArrayList<Post>>
+        get() = _posts
 
     init{
         _selectedTab.value = R.id.communityButton

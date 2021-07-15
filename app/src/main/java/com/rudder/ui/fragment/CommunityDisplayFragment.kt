@@ -41,8 +41,7 @@ class CommunityDisplayFragment: Fragment() {
             it.adapter = PostPreviewAdapter(viewModel.posts.value!!)
         }
         viewModel.posts.observe(viewLifecycleOwner, Observer {
-            Log.d("posts",it.toString())
-            communityDisplay.postPreviewRV.adapter = PostPreviewAdapter(it) // notifydatasetchange로 새로고침 안되게 고쳐야 됨
+            postPreviewRV.adapter!!.notifyDataSetChanged()
         })
 
 
