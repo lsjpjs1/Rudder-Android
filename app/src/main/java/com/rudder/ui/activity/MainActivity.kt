@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private var viewModel: MainViewModel = MainViewModel
     private var mainBottomBarFragment = MainBottomBarFragment()
     private var communityFragment = CommunityFragment()
-    private var communityDisplayFragment = CommunityDisplayFragment()
     private val purpleRudder by lazy { ContextCompat.getColor(this,R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this,R.color.grey) }
 //    private val linearLayoutManager by lazy { LinearLayoutManager(this) }

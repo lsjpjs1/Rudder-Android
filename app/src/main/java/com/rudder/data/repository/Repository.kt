@@ -1,14 +1,12 @@
 package com.rudder.data.repository
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import com.rudder.BuildConfig
 import com.rudder.data.LoginInfo
+import com.rudder.data.Post
 import com.rudder.data.local.App
 import com.rudder.data.remote.LoginApi
 import com.rudder.data.remote.PostApi
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
+
 
 class Repository {
 
@@ -27,12 +25,10 @@ class Repository {
         return result
     }
 
-    suspend fun getPosts(){
+    suspend fun getPosts(): ArrayList<Post>{
 
 
-
-        val tmp = PostApi.instance.getPosts().await()
-        Log.d("posts",tmp.toString())
+        return PostApi.instance.getPosts().await()
     }
 
 }

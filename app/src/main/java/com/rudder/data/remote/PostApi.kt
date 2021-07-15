@@ -3,6 +3,7 @@ package com.rudder.data.remote
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.rudder.BuildConfig
+import com.rudder.data.GetPostInfo
 import com.rudder.data.LoginInfo
 import com.rudder.data.Post
 import kotlinx.coroutines.Deferred
@@ -21,7 +22,7 @@ class PostApi {
     fun getPosts() : Deferred<ArrayList<Post>> {
 
         return GlobalScope.async(Dispatchers.IO){
-            postService.renderPost("bulletin",0,-1)
+            postService.renderPost(GetPostInfo("bulletin",0,-1))
         }
 
     }
