@@ -1,30 +1,21 @@
 package com.rudder.ui.fragment
 
-import android.content.Context
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
-import com.rudder.data.Post
 import com.rudder.databinding.FragmentCommunityDisplayBinding
-import com.rudder.databinding.FragmentMainBottomBarBinding
 import com.rudder.ui.adapter.PostPreviewAdapter
+import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.fragment_community_display.*
-import kotlinx.android.synthetic.main.fragment_community_display.view.*
-import kotlinx.android.synthetic.main.fragment_main_bottom_bar.view.*
-import java.sql.Timestamp
 
-class CommunityDisplayFragment: Fragment() {
+class CommunityDisplayFragment: Fragment(),CustomOnclickListener {
     private val viewModel = MainViewModel
     private val lazyContext by lazy {
         requireContext()
@@ -35,16 +26,25 @@ class CommunityDisplayFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val communityDisplay = DataBindingUtil.inflate<FragmentCommunityDisplayBinding>(inflater,R.layout.fragment_community_display,container,false)
+        val adapter = PostPreviewAdapter(viewModel.posts.value!!,this)
         communityDisplay.postPreviewRV.also{
             it.layoutManager=LinearLayoutManager(lazyContext)
             it.setHasFixedSize(false)
-            it.adapter = PostPreviewAdapter(viewModel.posts.value!!)
+            it.adapter = adapter
         }
+
         viewModel.posts.observe(viewLifecycleOwner, Observer {
-            postPreviewRV.adapter!!.notifyDataSetChanged()
+            adapter.updatePosts(it)
         })
+
 
 
         return communityDisplay.root
     }
+
+    override fun onPostPreviewClick(view: View, position: Int) {
+        Toast.makeText(lazyContext,position.toString(),Toast.LENGTH_SHORT).show()
+    }
+
+
 }

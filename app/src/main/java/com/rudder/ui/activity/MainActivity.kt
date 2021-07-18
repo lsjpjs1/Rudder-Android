@@ -24,8 +24,9 @@ import java.sql.Timestamp
 
 class MainActivity : AppCompatActivity() {
     private var viewModel: MainViewModel = MainViewModel
-    private var mainBottomBarFragment = MainBottomBarFragment()
-    private var communityFragment = CommunityFragment()
+    private lateinit var mainBottomBarFragment : MainBottomBarFragment
+    private lateinit var communityFragment : CommunityFragment
+    private lateinit var myPageFragment : MyPageFragment
     private val purpleRudder by lazy { ContextCompat.getColor(this,R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this,R.color.grey) }
 //    private val linearLayoutManager by lazy { LinearLayoutManager(this) }
@@ -42,6 +43,8 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
+        mainBottomBarFragment = MainBottomBarFragment()
+        communityFragment = CommunityFragment()
         supportFragmentManager.beginTransaction()
             .add(R.id.mainBottomBar,mainBottomBarFragment)
             .add(R.id.mainDisplay,communityFragment)
@@ -54,10 +57,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.communityButton -> {
                     showCommunity()
                     changeColorCommunity()
+                    Log.d("whereispost",viewModel.posts.value.toString())
                 }
                 R.id.myPageButton -> {
                     showMyPage()
                     changeColorMyPage()
+                    Log.d("whereispost",viewModel.posts.value.toString())
                 }
             }
         })
@@ -65,11 +70,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showCommunity(){
-        supportFragmentManager.beginTransaction().replace(R.id.mainDisplay,CommunityFragment()).commit()
+        //supportFragmentManager.beginTransaction().replace(R.id.mainDisplay,communityFragment).commit()
+        val transaction = supportFragmentManager.beginTransaction()
+        if(this::myPageFragment.isInitialized){
+            transaction.hide(myPageFragment)
+            transaction.show(communityFragment)
+        }else{
+            myPageFragment = MyPageFragment()
+            transaction.add(R.id.mainDisplay,myPageFragment)
+            transaction.hide(myPageFragment)
+            transaction.show(communityFragment)
+        }
+        transaction.commit()
     }
 
     fun showMyPage(){
-        supportFragmentManager.beginTransaction().replace(R.id.mainDisplay,MyPageFragment()).commit()
+        //supportFragmentManager.beginTransaction().replace(R.id.mainDisplay,myPageFragment).commit()
+        val transaction = supportFragmentManager.beginTransaction()
+        if(this::myPageFragment.isInitialized){
+            transaction.hide(communityFragment)
+            transaction.show(myPageFragment)
+        }else{
+            myPageFragment = MyPageFragment()
+            transaction.add(R.id.mainDisplay,myPageFragment)
+            transaction.hide(communityFragment)
+            transaction.show(myPageFragment)
+        }
+        transaction.commit()
+
     }
 
     fun changeColorCommunity(){

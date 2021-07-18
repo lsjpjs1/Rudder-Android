@@ -1,6 +1,7 @@
 package com.rudder.viewModel
 
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.rudder.R
 import com.rudder.data.Post
 import com.rudder.data.repository.Repository
+import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -26,6 +28,7 @@ object MainViewModel : ViewModel() {
         _selectedTab.value = R.id.communityButton
         _posts.value=arrayListOf(Post(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3))
         getPosts()
+
     }
 
     fun clickCommunity(){

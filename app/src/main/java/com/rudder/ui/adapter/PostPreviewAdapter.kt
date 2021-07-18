@@ -1,17 +1,18 @@
 package com.rudder.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.JsonArray
 import com.rudder.R
 import com.rudder.data.Post
 import com.rudder.databinding.PostPreviewBinding
+import com.rudder.util.CustomOnclickListener
+import com.rudder.util.PostsDiffCallback
 
-class PostPreviewAdapter(val postList: ArrayList<Post>): RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
+class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOnclickListener): RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
 
     inner class CustomViewHolder(val postPreviewBinding: PostPreviewBinding) : RecyclerView.ViewHolder(postPreviewBinding.root)
 
@@ -36,8 +37,24 @@ class PostPreviewAdapter(val postList: ArrayList<Post>): RecyclerView.Adapter<Po
         return postList.size
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.postPreviewBinding.post=postList[position]
+        holder.postPreviewBinding.postPreview.setOnClickListener{
+            listener.onPostPreviewClick(holder.postPreviewBinding.postPreview,position)
+        }
     }
+
+    fun updatePosts(newPosts: ArrayList<Post>){
+        if(newPosts.size>0) {
+            val diffCallback: PostsDiffCallback = PostsDiffCallback(postList, newPosts)
+            val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
+
+            postList.clear()
+            postList.addAll(newPosts)
+            diffResult.dispatchUpdatesTo(this)
+        }
+    }
+
 
 }
