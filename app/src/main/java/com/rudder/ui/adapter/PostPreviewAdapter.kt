@@ -1,6 +1,10 @@
 package com.rudder.ui.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.res.Resources
+import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,7 +16,7 @@ import com.rudder.databinding.PostPreviewBinding
 import com.rudder.util.CustomOnclickListener
 import com.rudder.util.PostsDiffCallback
 
-class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOnclickListener): RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
+class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOnclickListener,val context : Context): RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
 
     inner class CustomViewHolder(val postPreviewBinding: PostPreviewBinding) : RecyclerView.ViewHolder(postPreviewBinding.root)
 
@@ -26,8 +30,12 @@ class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOncli
             parent,
             false
         )
+        Log.d("parentHeight",parent.height.toString())
         val params = bind.root.layoutParams
-        params.height = 700 // 아이템뷰 높이 고정값으로 되어있는 것 상대값으로 수정해야함
+        val typedValue = TypedValue()
+        context.resources.getValue(R.dimen.post_preview_height, typedValue,true)
+        val heightRatio = typedValue.float
+        params.height = (parent.height * heightRatio).toInt() // 아이템뷰 높이 고정값으로 되어있는 것 상대값으로 수정해야함
         bind.root.layoutParams = params
         return CustomViewHolder(bind)
     }

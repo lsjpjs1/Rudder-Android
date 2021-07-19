@@ -97,9 +97,10 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/commentDisplayRV"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="3dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"
                     tools:layout_editor_absoluteX="0dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>

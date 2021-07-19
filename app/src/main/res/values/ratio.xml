@@ -8,6 +8,7 @@
     <item name="community_selector_height" format="float" type="dimen">0.056</item>
     <item name="community_display_height" format="float" type="dimen">0.864</item>
 
+<!--    게시글 미리보기 영역 높이 비율-->
     <item name="post_preview_height" format="float" type="dimen">0.25</item>
 
     <item name="post_preview_head_height" format="float" type="dimen">0.33</item>
