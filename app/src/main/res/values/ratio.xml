@@ -30,4 +30,9 @@
     <item name="post_count_height" type="dimen" format="float">0.08</item>
     <item name="comment_info_height" type="dimen" format="float">0.08</item>
 
+    <item name="comment_header_height" type="dimen" format="float">0.15</item>
+    <item name="comment_tail_height" type="dimen" format="float">0.15</item>
+
+    <item name="comment_header_name_width" type="dimen" format="float">0.25</item>
+
 </resources>
