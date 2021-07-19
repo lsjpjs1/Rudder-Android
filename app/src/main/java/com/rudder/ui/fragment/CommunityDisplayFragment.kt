@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
@@ -17,7 +18,7 @@ import com.rudder.ui.adapter.PostPreviewAdapter
 import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
 
-class CommunityDisplayFragment: Fragment(),CustomOnclickListener {
+class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclickListener {
     private val viewModel = MainViewModel
     private val lazyContext by lazy {
         requireContext()
@@ -45,15 +46,9 @@ class CommunityDisplayFragment: Fragment(),CustomOnclickListener {
     }
 
     override fun onPostPreviewClick(view: View, position: Int) {
-        showPost()
+        (activity as MainActivity).showPost()
     }
 
-    fun showPost(){
-        val transaction = parentFragmentManager.beginTransaction()
-        transaction.hide(CommunityFragment())
-        transaction.add(R.id.mainDisplay,ShowPostFragment())
-        transaction.show(ShowPostFragment())
-        transaction.commit()
-    }
+
 
 }

@@ -6,16 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.data.Post
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.adapter.PostPreviewAdapter
-import com.rudder.ui.fragment.CommunityDisplayFragment
-import com.rudder.ui.fragment.CommunityFragment
-import com.rudder.ui.fragment.MainBottomBarFragment
-import com.rudder.ui.fragment.MyPageFragment
+import com.rudder.ui.fragment.*
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_community_display.view.*
@@ -27,20 +25,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainBottomBarFragment : MainBottomBarFragment
     private lateinit var communityFragment : CommunityFragment
     private lateinit var myPageFragment : MyPageFragment
+    private val showPostFragment = ShowPostFragment()
     private val purpleRudder by lazy { ContextCompat.getColor(this,R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this,R.color.grey) }
-//    private val linearLayoutManager by lazy { LinearLayoutManager(this) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.mainVM = viewModel
         binding.lifecycleOwner = this
-
-//        communityDisplayFragment.postPreviewRV.also{
-//            it.layoutManager= linearLayoutManager
-//            it.setHasFixedSize(true)
-//            it.adapter = PostPreviewAdapter(arrayListOf(Post(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3)))
-//        }
 
 
         mainBottomBarFragment = MainBottomBarFragment()
@@ -69,8 +62,21 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        if(supportFragmentManager.findFragmentById(R.id.mainDisplay)!=myPageFragment){
+            super.onBackPressed()
+        }
+    }
+
+    fun showPost(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.hide(communityFragment)
+        transaction.addToBackStack(null)
+        transaction.add(R.id.mainDisplay,showPostFragment)
+        transaction.show(showPostFragment)
+        transaction.commit()
+    }
     fun showCommunity(){
-        //supportFragmentManager.beginTransaction().replace(R.id.mainDisplay,communityFragment).commit()
         val transaction = supportFragmentManager.beginTransaction()
         if(this::myPageFragment.isInitialized){
             transaction.hide(myPageFragment)

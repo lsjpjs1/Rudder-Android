@@ -18,7 +18,7 @@ class CommunityFragment: Fragment() {
     ): View? {
 
         val community = inflater.inflate(R.layout.fragment_community, container, false)
-        childFragmentManager.beginTransaction().add(R.id.communityDisplay,CommunityDisplayFragment()).commit()
+        childFragmentManager.beginTransaction().add(R.id.communityDisplay,CommunityDisplayFragment(parentFragmentManager)).commit()
         return community
     }
 }
