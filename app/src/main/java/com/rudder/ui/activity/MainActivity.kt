@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
@@ -15,6 +17,7 @@ import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.adapter.PostPreviewAdapter
 import com.rudder.ui.fragment.*
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_community_display.view.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
@@ -38,36 +41,56 @@ class MainActivity : AppCompatActivity() {
 
         mainBottomBarFragment = MainBottomBarFragment()
         communityFragment = CommunityFragment()
+        myPageFragment = MyPageFragment()
         supportFragmentManager.beginTransaction()
             .add(R.id.mainBottomBar,mainBottomBarFragment)
-            .add(R.id.mainDisplay,communityFragment)
+            .add(R.id.mainDisplay,myPageFragment,"myPage")
+            .hide(myPageFragment)
+            .add(R.id.mainDisplay,communityFragment,"community")
             .commit()
 
-
         viewModel.selectedTab.observe(this, Observer {
-            Log.d("abc",it.toString()+"    "+R.id.communityButton.toString()+"    "+R.id.myPageButton)
             when(it){
                 R.id.communityButton -> {
                     showCommunity()
                     changeColorCommunity()
-                    Log.d("whereispost",viewModel.posts.value.toString())
                 }
                 R.id.myPageButton -> {
                     showMyPage()
                     changeColorMyPage()
-                    Log.d("whereispost",viewModel.posts.value.toString())
                 }
             }
+        })
+        viewModel.posts.observe(this, Observer {
+            Log.d("changedPost",it.toString())
         })
 
     }
 
     override fun onBackPressed() {
-        if(supportFragmentManager.findFragmentById(R.id.mainDisplay)!=myPageFragment){
+        val isBackButtonAvailable = (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) &&(!supportFragmentManager.findFragmentByTag("community")!!.isVisible)
+        if(isBackButtonAvailable){ // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
             super.onBackPressed()
         }
+        Log.d("changedPost", findFragmentsInId(R.id.mainDisplay).toString())
     }
 
+    fun changeSelectedPostPosition(position: Int){
+        viewModel.setSelectedPostPosition(position)
+    }
+
+    fun hideOtherPosts(fragment: Fragment, id: Int){
+
+    }
+    fun findFragmentsInId(id: Int) : ArrayList<Fragment>{
+        var resFragments: ArrayList<Fragment> = arrayListOf()
+        for(fragment in supportFragmentManager.fragments){
+            if(fragment.id == id){
+                resFragments.add(fragment)
+            }
+        }
+        return resFragments
+    }
     fun showPost(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.hide(communityFragment)
@@ -76,32 +99,48 @@ class MainActivity : AppCompatActivity() {
         transaction.show(showPostFragment)
         transaction.commit()
     }
+
+//    fun showCommunity(){
+//        val transaction = supportFragmentManager.beginTransaction()
+//        val currentFragment = supportFragmentManager.findFragmentById(R.id.mainDisplay)!!
+//        if(this::myPageFragment.isInitialized){
+//            transaction.hide(currentFragment)
+//            transaction.show(communityFragment)
+//        }else{
+//            myPageFragment = MyPageFragment()
+//            transaction.add(R.id.mainDisplay,myPageFragment)
+//            transaction.hide(currentFragment)
+//            transaction.show(communityFragment)
+//        }
+//        transaction.commit()
+//    }
     fun showCommunity(){
         val transaction = supportFragmentManager.beginTransaction()
-        if(this::myPageFragment.isInitialized){
-            transaction.hide(myPageFragment)
-            transaction.show(communityFragment)
-        }else{
-            myPageFragment = MyPageFragment()
-            transaction.add(R.id.mainDisplay,myPageFragment)
-            transaction.hide(myPageFragment)
-            transaction.show(communityFragment)
-        }
+        transaction.hide(myPageFragment)
+        transaction.show(communityFragment)
         transaction.commit()
     }
 
+//    fun showMyPage(){
+//        val transaction = supportFragmentManager.beginTransaction()
+//        val currentFragment = supportFragmentManager.findFragmentById(R.id.mainDisplay)!!
+//        if(this::myPageFragment.isInitialized){
+//            transaction.hide(currentFragment)
+//            transaction.show(myPageFragment)
+//        }else{
+//            myPageFragment = MyPageFragment()
+//            transaction.add(R.id.mainDisplay,myPageFragment)
+//            transaction.hide(currentFragment)
+//            transaction.show(myPageFragment)
+//        }
+//        transaction.commit()
+//
+//    }
+
     fun showMyPage(){
-        //supportFragmentManager.beginTransaction().replace(R.id.mainDisplay,myPageFragment).commit()
         val transaction = supportFragmentManager.beginTransaction()
-        if(this::myPageFragment.isInitialized){
-            transaction.hide(communityFragment)
-            transaction.show(myPageFragment)
-        }else{
-            myPageFragment = MyPageFragment()
-            transaction.add(R.id.mainDisplay,myPageFragment)
-            transaction.hide(communityFragment)
-            transaction.show(myPageFragment)
-        }
+        transaction.hide(communityFragment)
+        transaction.show(myPageFragment)
         transaction.commit()
 
     }
