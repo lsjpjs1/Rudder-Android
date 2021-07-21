@@ -96,9 +96,9 @@
             android:id="@+id/postPreviewTail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="@dimen/post_preview_tail_height">
+            app:layout_constraintHeight_percent="@dimen/post_preview_tail_height"
+            app:layout_constraintTop_toBottomOf="@+id/postPreviewBody">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/postPreviewTailLikeCount"
@@ -112,11 +112,11 @@
                     android:id="@+id/postPreviewTailLikeCountTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    android:text="@{Integer.toString(post.likeCount)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="@{Integer.toString(post.likeCount)}" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -139,6 +139,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/postPreviewBoundary"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/light_grey"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/post_preview_boundary_height"
+            app:layout_constraintTop_toBottomOf="@+id/postPreviewTail">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

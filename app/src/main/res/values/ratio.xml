@@ -16,7 +16,8 @@
 
     <item name="post_preview_head_height" format="float" type="dimen">0.33</item>
     <item name="post_preview_body_height" format="float" type="dimen">0.33</item>
-    <item name="post_preview_tail_height" format="float" type="dimen">0.34</item>
+    <item name="post_preview_tail_height" format="float" type="dimen">0.30</item>
+    <item name="post_preview_boundary_height" format="float" type="dimen">0.04</item>
 
     <item name="post_preview_head_name_width" format="float" type="dimen">0.33</item>
     <item name="post_preview_head_post_time_width" format="float" type="dimen">0.12</item>
