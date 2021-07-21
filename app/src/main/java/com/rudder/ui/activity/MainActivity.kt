@@ -16,6 +16,7 @@ import com.rudder.data.Post
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.adapter.PostPreviewAdapter
 import com.rudder.ui.fragment.*
+import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
@@ -52,11 +53,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.selectedTab.observe(this, Observer {
             when(it){
                 R.id.communityButton -> {
-                    showCommunity()
+                    FragmentShowHide(supportFragmentManager).showFragment(communityFragment,R.id.mainDisplay)
                     changeColorCommunity()
                 }
                 R.id.myPageButton -> {
-                    showMyPage()
+                    FragmentShowHide(supportFragmentManager).showFragment(myPageFragment,R.id.mainDisplay)
                     changeColorMyPage()
                 }
             }
@@ -72,32 +73,34 @@ class MainActivity : AppCompatActivity() {
         if(isBackButtonAvailable){ // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
             super.onBackPressed()
         }
-        Log.d("changedPost", findFragmentsInId(R.id.mainDisplay).toString())
+        Log.d("changedPost", supportFragmentManager.findFragmentByTag("1234").toString())
     }
 
     fun changeSelectedPostPosition(position: Int){
         viewModel.setSelectedPostPosition(position)
     }
 
-    fun hideOtherPosts(fragment: Fragment, id: Int){
+//    fun hideOtherFragments(fragment: Fragment, id: Int){
+//        val transaction = supportFragmentManager.beginTransaction()
+//        val otherFragments = findFragmentsInId(id)
+//        for(frag in otherFragments){
+//            if(frag.isVisible) transaction.hide(frag)
+//        }
+//        transaction.show(fragment)
+//
+//    }
+//    fun findFragmentsInId(id: Int) : ArrayList<Fragment>{
+//        var resFragments: ArrayList<Fragment> = arrayListOf()
+//        for(fragment in supportFragmentManager.fragments){
+//            if(fragment.id == id){
+//                resFragments.add(fragment)
+//            }
+//        }
+//        return resFragments
+//    }
 
-    }
-    fun findFragmentsInId(id: Int) : ArrayList<Fragment>{
-        var resFragments: ArrayList<Fragment> = arrayListOf()
-        for(fragment in supportFragmentManager.fragments){
-            if(fragment.id == id){
-                resFragments.add(fragment)
-            }
-        }
-        return resFragments
-    }
     fun showPost(){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.hide(communityFragment)
-        transaction.addToBackStack(null)
-        transaction.add(R.id.mainDisplay,showPostFragment)
-        transaction.show(showPostFragment)
-        transaction.commit()
+        FragmentShowHide(supportFragmentManager).showFragmentForShowPost(showPostFragment,R.id.mainDisplay,"showPost")
     }
 
 //    fun showCommunity(){
