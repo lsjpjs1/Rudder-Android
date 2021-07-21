@@ -37,7 +37,7 @@ object MainViewModel : ViewModel() {
 
     fun scrollTouchBottom(){
         pagingIndex += 1
-        endPostId = _posts.value!![-1].postId
+        endPostId = _posts.value!![_posts.value!!.size-1].postId
         getPosts()
     }
 
@@ -53,7 +53,7 @@ object MainViewModel : ViewModel() {
         GlobalScope.launch {
             val resPosts = Repository().getPosts(pagingIndex, endPostId)
             viewModelScope.launch {
-                if(_posts.value==null){
+                if(_posts.value!!.size == 0){
                     _posts.value = resPosts
                 }else{
                     val oldPosts = _posts.value
