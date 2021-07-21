@@ -25,10 +25,10 @@ class Repository {
         return result
     }
 
-    suspend fun getPosts(): ArrayList<Post>{
+    suspend fun getPosts(pagingIndex:Int, endPostId:Int): ArrayList<Post>{
 
 
-        return PostApi.instance.getPosts().await()
+        return PostApi.instance.getPosts(pagingIndex, endPostId).await()
     }
 
 }

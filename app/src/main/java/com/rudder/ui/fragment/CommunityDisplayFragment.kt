@@ -2,6 +2,7 @@ package com.rudder.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityDisplayBinding
 import com.rudder.ui.activity.MainActivity
@@ -34,6 +36,14 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
             it.layoutManager=LinearLayoutManager(lazyContext)
             it.setHasFixedSize(false)
             it.adapter = adapter
+            it.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if(!it.canScrollVertically(1)){
+                        viewModel.scrollTouchBottom()
+                    }
+                }
+            })
         }
 
         viewModel.posts.observe(viewLifecycleOwner, Observer {

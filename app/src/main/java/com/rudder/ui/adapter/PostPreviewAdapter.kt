@@ -65,4 +65,5 @@ class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOncli
     }
 
 
+
 }

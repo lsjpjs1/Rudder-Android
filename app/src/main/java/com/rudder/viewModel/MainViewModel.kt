@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.rudder.R
 import com.rudder.data.Post
 import com.rudder.data.repository.Repository
+import com.rudder.util.Event
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -14,6 +15,9 @@ import java.sql.Timestamp
 
 
 object MainViewModel : ViewModel() {
+    private var pagingIndex = 0
+    private var endPostId = -1
+
     private val _selectedTab = MutableLiveData<Int>()
     private val _posts = MutableLiveData<ArrayList<Post>>()
     private val _selectedPostPosition = MutableLiveData<Int>()
@@ -28,10 +32,14 @@ object MainViewModel : ViewModel() {
         _selectedTab.value = R.id.communityButton
         _posts.value=arrayListOf(Post(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3))
         getPosts()
-
     }
 
 
+    fun scrollTouchBottom(){
+        pagingIndex += 1
+        endPostId = _posts.value!![-1].postId
+        getPosts()
+    }
 
     fun clickCommunity(){
         _selectedTab.value = R.id.communityButton
@@ -43,9 +51,16 @@ object MainViewModel : ViewModel() {
 
     fun getPosts(){
         GlobalScope.launch {
-            val resPosts = Repository().getPosts()
+            val resPosts = Repository().getPosts(pagingIndex, endPostId)
             viewModelScope.launch {
-                _posts.value = resPosts
+                if(_posts.value==null){
+                    _posts.value = resPosts
+                }else{
+                    val oldPosts = _posts.value
+                    oldPosts!!.addAll(resPosts)
+                    Log.d("oldPost",oldPosts.toString())
+                    _posts.value= oldPosts!!
+                }
             }
         }
     }
