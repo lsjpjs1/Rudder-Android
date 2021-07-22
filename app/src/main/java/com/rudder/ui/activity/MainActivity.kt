@@ -4,6 +4,7 @@ import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -84,6 +85,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.isScrollBottomTouch.observe(this, Observer {
+            if(it.getContentIfNotHandled()!!){
+                showProgressBar()
+            }else{
+                hideProgressBar()
+            }
+        })
+
     }
 
     override fun onBackPressed() {
@@ -92,6 +101,18 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
         Log.d("changedPost", supportFragmentManager.findFragmentByTag("1234").toString())
+    }
+
+    fun showProgressBar(){
+        progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar(){
+        progressBar.visibility = View.GONE
+    }
+
+    fun expandProgressBarAnimation(){
+
     }
 
     fun changeSelectedPostPosition(position: Int){

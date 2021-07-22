@@ -10,6 +10,7 @@ import com.rudder.util.Event
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.sql.Timestamp
 
@@ -17,13 +18,16 @@ import java.sql.Timestamp
 object MainViewModel : ViewModel() {
     private var pagingIndex = 0
     private var endPostId = -1
+    private val MIN_PROGRESSBAR_TIME = 500.toLong() //millisecond
 
     private val _selectedTab = MutableLiveData<Int>()
     private val _posts = MutableLiveData<ArrayList<Post>>()
     private val _selectedPostPosition = MutableLiveData<Int>()
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
     private val _isBackClick = MutableLiveData<Event<Boolean>>()
+    private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
 
+    val isScrollBottomTouch: LiveData<Event<Boolean>> = _isScrollBottomTouch
     val isBackClick: LiveData<Event<Boolean>> = _isBackClick
     val isAddPostClick: LiveData<Event<Boolean>> = _isAddPostClick
     val selectedTab: LiveData<Int> = _selectedTab
@@ -40,6 +44,7 @@ object MainViewModel : ViewModel() {
 
 
     fun scrollTouchBottom(){
+        _isScrollBottomTouch.value = Event(true)
         pagingIndex += 1
         endPostId = _posts.value!![_posts.value!!.size-1].postId
         getPosts()
@@ -72,6 +77,8 @@ object MainViewModel : ViewModel() {
                     oldPosts!!.addAll(resPosts)
                     Log.d("oldPost",oldPosts.toString())
                     _posts.value= oldPosts!!
+                    delay(MIN_PROGRESSBAR_TIME) //
+                    _isScrollBottomTouch.value = Event(false)
                 }
             }
         }
