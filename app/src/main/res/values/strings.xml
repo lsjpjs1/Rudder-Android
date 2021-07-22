@@ -8,4 +8,5 @@
     <string name="verify_capital">VERIFY</string>
     <string name="login_error">Fail to sign in</string>
     <string name="community_title">Community</string>
+    <string name="comment_title">Comment</string>
 </resources>
