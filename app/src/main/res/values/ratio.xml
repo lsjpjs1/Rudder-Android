@@ -8,7 +8,7 @@
     <item name="community_selector_height" format="float" type="dimen">0.056</item>
     <item name="community_display_height" format="float" type="dimen">0.864</item>
 
-    <item name="community_display_progress_bar_height" format="float" type="dimen">0.15</item>
+    <item name="community_display_progress_bar_height" format="float" type="dimen">0.1</item>
 
     <item name="add_post_header_height" format="float" type="dimen">0.08</item>
     <item name="add_post_display_height" format="float" type="dimen">0.92</item>
