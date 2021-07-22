@@ -12,15 +12,15 @@ class FragmentShowHide(val supportedFragmentManager: FragmentManager) {
         transaction.show(fragment).commit()
     }
 
-    private fun addFragment(fragment: Fragment, id: Int, tag: String){
+
+    fun addFragment(fragment: Fragment, id: Int, tag: String){
         if(supportedFragmentManager.findFragmentByTag(tag)==null){
             transaction.add(id,fragment,tag)
         }
     }
-    fun showFragmentForShowPost(fragment: Fragment, id: Int, tag: String){
+
+    fun addToBackStack(){
         transaction.addToBackStack(null)
-        addFragment(fragment,id,tag)
-        showFragment(fragment,id)
     }
 
 
