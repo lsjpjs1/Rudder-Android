@@ -35,16 +35,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView1"
+            <CheckBox android:id="@+id/IDcheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="9dp"
                 android:layout_marginLeft="9dp"
                 android:layout_marginTop="18dp"
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_check_circle_24" />
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,16 +70,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <CheckBox android:id="@+id/Recommendcheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="9dp"
                 android:layout_marginLeft="9dp"
                 android:layout_marginTop="18dp"
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_check_circle_24" />
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -114,16 +114,7 @@
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName3"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="9dp"
-                android:layout_marginLeft="9dp"
-                android:layout_marginTop="18dp"
-                app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName3"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_check_circle_24" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -160,16 +151,7 @@
 
 
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="9dp"
-                android:layout_marginLeft="9dp"
-                android:layout_marginTop="18dp"
-                app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName4"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_check_circle_24" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -230,17 +212,21 @@
                 android:text="@"
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName9"
                 app:layout_constraintTop_toTopOf="parent" />
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
             android:layout_width="173dp"
             android:layout_height="62dp"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="39dp"
+            android:background="@drawable/bottom_stroke"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout5"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-            android:background="@drawable/bottom_stroke">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
 
             <EditText
                 android:id="@+id/editTextTextPersonName10"
@@ -252,6 +238,15 @@
                 android:inputType="text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/emailCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="142dp"
+                tools:layout_editor_absoluteY="8dp" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -49,51 +49,102 @@ class SignUpActivity : AppCompatActivity() {
         var myPWFirst = findViewById<EditText>(R.id.editTextTextPersonName4)
         var myPWSecond = findViewById<EditText>(R.id.editTextTextPersonName3)
 
+        var emailDomain = findViewById<EditText>(R.id.editTextTextPersonName10)
+        val emailInput: String
+
+        val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
+
+
+        val checkBoxId = findViewById<CheckBox>(R.id.IDcheckbox)
+        val checkBoxReco = findViewById<CheckBox>(R.id.Recommendcheckbox)
         val checkBox1 = findViewById<CheckBox>(R.id.PWcheckbox1)
         val checkBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
+        val checkBoxEmail = findViewById<CheckBox>(R.id.emailCheckbox)
 
-        checkBox1.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun
-        }
+        checkBox1.setEnabled(false)
+        checkBox2.setEnabled(false)
 
-        )
+        checkBoxId.setEnabled(false)
+        checkBoxReco.setEnabled(false)
 
         myPWSecond.addTextChangedListener(object : TextWatcher {
             //입력이 끝났을 때
             //4. 비밀번호 일치하는지 확인
             override fun afterTextChanged(p0: Editable?) {
-                if(myPWFirst.getText().toString().equals(myPWSecond.getText().toString())){
+                if (myPWFirst.getText().toString().equals(myPWSecond.getText().toString())) {
 
-                    Toast.makeText(getApplicationContext(), "PW SAME",Toast.LENGTH_SHORT).show()
+                    checkBox1.setEnabled(true)
                     checkBox1.setChecked(true)
+                    checkBox1.setEnabled(false)
 
-                    //pw_confirm.setText("비밀번호가 일치합니다.")
-                    //pw_confirm.setTextColor(colorMain)
-                    // 가입하기 버튼 활성화
-                    //sign_up_btn2.isEnabled=true
-                }
-                else{
-                    //pw_confirm.setText("비밀번호가 일치하지 않습니다.")
-                    //pw_confirm.setTextColor(red)
-                    // 가입하기 버튼 비활성화
-                    //sign_up_btn2.isEnabled=false
+                    checkBox2.setEnabled(true)
+                    checkBox2.setChecked(true)
+                    checkBox2.setEnabled(false)
+                } else {
+                    checkBox1.setEnabled(true)
+                    checkBox1.setChecked(false)
+                    checkBox1.setEnabled(false)
+
+                    checkBox2.setEnabled(true)
+                    checkBox2.setChecked(false)
+                    checkBox2.setEnabled(false)
                 }
             }
+
             //입력하기 전
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
             //텍스트 변화가 있을 시
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(myPWFirst.getText().toString().equals(myPWSecond.getText().toString())){
-                    //pw_confirm.setText("비밀번호가 일치합니다.")
-                    //pw_confirm.setTextColor(colorMain)
-                    // 가입하기 버튼 활성화
-                    //sign_up_btn2.isEnabled=true
+                if (myPWFirst.getText().toString().equals(myPWSecond.getText().toString())) {
+                    checkBox1.setEnabled(true)
+                    checkBox1.setChecked(true)
+                    checkBox1.setEnabled(false)
+
+                    checkBox2.setEnabled(true)
+                    checkBox2.setChecked(true)
+                    checkBox2.setEnabled(false)
+                } else {
+                    checkBox1.setEnabled(true)
+                    checkBox1.setChecked(false)
+                    checkBox1.setEnabled(false)
+
+                    checkBox2.setEnabled(true)
+                    checkBox2.setChecked(false)
+                    checkBox2.setEnabled(false)
                 }
-                else{
-                    //pw_confirm.setText("비밀번호가 일치하지 않습니다.")
-                    //pw_confirm.setTextColor(red)
-                    // 가입하기 버튼 비활성화
-                    //sign_up_btn2.isEnabled=false
+            }
+        })
+
+
+
+        emailDomain.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (emailDomain.getText().toString().trim().matches(emailRg)) {
+                    checkBoxEmail.setEnabled(true)
+                    checkBoxEmail.setChecked(true)
+                    checkBoxEmail.setEnabled(false)
+                } else {
+                    checkBoxEmail.setEnabled(true)
+                    checkBoxEmail.setChecked(false)
+                    checkBoxEmail.setEnabled(false)
+                }
+            }
+
+            //입력하기 전
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            //텍스트 변화가 있을 시
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (emailDomain.getText().toString().trim().matches(emailRg)) {
+                    checkBoxEmail.setEnabled(true)
+                    checkBoxEmail.setChecked(true)
+                    checkBoxEmail.setEnabled(false)
+                } else {
+                    checkBoxEmail.setEnabled(true)
+                    checkBoxEmail.setChecked(false)
+                    checkBoxEmail.setEnabled(false)
                 }
             }
         })
