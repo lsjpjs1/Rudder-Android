@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="main_bottom_bar_height" format="float" type="dimen">0.07</item>
+    <item name="main_bottom_bar_shadow_height" format="float" type="dimen">0.0035</item>
+    <item name="without_main_bottom_height" format="float" type="dimen">0.9265</item>
+
+    <item name="community_header_height" format="float" type="dimen">0.08</item>
+    <item name="community_selector_height" format="float" type="dimen">0.056</item>
+    <item name="community_display_height" format="float" type="dimen">0.864</item>
+
+    <item name="add_post_header_height" format="float" type="dimen">0.08</item>
+    <item name="add_post_display_height" format="float" type="dimen">0.92</item>
+
+    <item name="community_header_title_width" type="dimen" format="float">0.45</item>
+    <item name="community_header_add_width" type="dimen" format="float">0.13</item>
+    <item name="community_header_find_width" type="dimen" format="float">0.13</item>
+<!--    게시글 미리보기 영역 높이 비율-->
+    <item name="post_preview_height" format="float" type="dimen">0.25</item>
+
+    <item name="post_preview_head_height" format="float" type="dimen">0.33</item>
+    <item name="post_preview_body_height" format="float" type="dimen">0.33</item>
+    <item name="post_preview_tail_height" format="float" type="dimen">0.30</item>
+    <item name="post_preview_boundary_height" format="float" type="dimen">0.04</item>
+
+    <item name="post_preview_head_name_width" format="float" type="dimen">0.33</item>
+    <item name="post_preview_head_post_time_width" format="float" type="dimen">0.12</item>
+
+    <item name="post_preview_body_post_title_width" format="float" type="dimen">0.9</item>
+
+    <item name="post_preview_tail_like_count_width" format="float" type="dimen">0.2</item>
+    <item name="post_preview_tail_comment_count_width" format="float" type="dimen">0.15</item>
+
+    <item name="show_post_header_height" type="dimen" format="float">0.08</item>
+    <item name="show_post_body_height" type="dimen" format="float">0.92</item>
+
+    <item name="post_info_height" type="dimen" format="float">0.08</item>
+    <item name="post_count_height" type="dimen" format="float">0.08</item>
+    <item name="comment_info_height" type="dimen" format="float">0.08</item>
+
+    <item name="comment_header_height" type="dimen" format="float">0.15</item>
+    <item name="comment_tail_height" type="dimen" format="float">0.15</item>
+
+    <item name="comment_header_name_width" type="dimen" format="float">0.25</item>
+
+    <item name="show_post_header_name_width" type="dimen" format="float">0.35</item>
+
+
+
+</resources>
