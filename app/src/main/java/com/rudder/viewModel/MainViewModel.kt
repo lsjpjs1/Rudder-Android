@@ -21,7 +21,9 @@ object MainViewModel : ViewModel() {
     private val _selectedTab = MutableLiveData<Int>()
     private val _posts = MutableLiveData<ArrayList<Post>>()
     private val _selectedPostPosition = MutableLiveData<Int>()
+    private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
 
+    val isAddPostClick: LiveData<Event<Boolean>> = _isAddPostClick
     val selectedTab: LiveData<Int> = _selectedTab
     val selectedPostPosition: LiveData<Int> = _selectedPostPosition
     val posts : LiveData<ArrayList<Post>>
@@ -47,6 +49,10 @@ object MainViewModel : ViewModel() {
 
     fun clickMyPage(){
         _selectedTab.value = R.id.myPageButton
+    }
+
+    fun clickAddPost(){
+        _isAddPostClick.value = Event(true)
     }
 
     fun getPosts(){

@@ -8,6 +8,9 @@
     <item name="community_selector_height" format="float" type="dimen">0.056</item>
     <item name="community_display_height" format="float" type="dimen">0.864</item>
 
+    <item name="add_post_header_height" format="float" type="dimen">0.08</item>
+    <item name="add_post_display_height" format="float" type="dimen">0.92</item>
+
     <item name="community_header_title_width" type="dimen" format="float">0.45</item>
     <item name="community_header_add_width" type="dimen" format="float">0.13</item>
     <item name="community_header_find_width" type="dimen" format="float">0.13</item>

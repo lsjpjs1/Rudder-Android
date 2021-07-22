@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainBottomBarFragment : MainBottomBarFragment
     private lateinit var communityFragment : CommunityFragment
     private lateinit var myPageFragment : MyPageFragment
+    private lateinit var addPostFragment: AddPostFragment
     private val showPostFragment = ShowPostFragment()
     private val purpleRudder by lazy { ContextCompat.getColor(this,R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this,R.color.grey) }
@@ -43,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         mainBottomBarFragment = MainBottomBarFragment()
         communityFragment = CommunityFragment()
         myPageFragment = MyPageFragment()
+        addPostFragment = AddPostFragment()
+
         supportFragmentManager.beginTransaction()
             .add(R.id.mainBottomBar,mainBottomBarFragment)
             .add(R.id.mainDisplay,myPageFragment,"myPage")
@@ -66,6 +69,13 @@ class MainActivity : AppCompatActivity() {
             Log.d("changedPost",it.toString())
         })
 
+        viewModel.isAddPostClick.observe(this, Observer {
+            val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+            fragmentShowHide.addToBackStack()
+            fragmentShowHide.addFragment(addPostFragment,R.id.mainDisplay,"addPost")
+            fragmentShowHide.showFragment(addPostFragment,R.id.mainDisplay)
+        })
+
     }
 
     override fun onBackPressed() {
@@ -80,72 +90,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.setSelectedPostPosition(position)
     }
 
-//    fun hideOtherFragments(fragment: Fragment, id: Int){
-//        val transaction = supportFragmentManager.beginTransaction()
-//        val otherFragments = findFragmentsInId(id)
-//        for(frag in otherFragments){
-//            if(frag.isVisible) transaction.hide(frag)
-//        }
-//        transaction.show(fragment)
-//
-//    }
-//    fun findFragmentsInId(id: Int) : ArrayList<Fragment>{
-//        var resFragments: ArrayList<Fragment> = arrayListOf()
-//        for(fragment in supportFragmentManager.fragments){
-//            if(fragment.id == id){
-//                resFragments.add(fragment)
-//            }
-//        }
-//        return resFragments
-//    }
-
     fun showPost(){
-        FragmentShowHide(supportFragmentManager).showFragmentForShowPost(showPostFragment,R.id.mainDisplay,"showPost")
-    }
-
-//    fun showCommunity(){
-//        val transaction = supportFragmentManager.beginTransaction()
-//        val currentFragment = supportFragmentManager.findFragmentById(R.id.mainDisplay)!!
-//        if(this::myPageFragment.isInitialized){
-//            transaction.hide(currentFragment)
-//            transaction.show(communityFragment)
-//        }else{
-//            myPageFragment = MyPageFragment()
-//            transaction.add(R.id.mainDisplay,myPageFragment)
-//            transaction.hide(currentFragment)
-//            transaction.show(communityFragment)
-//        }
-//        transaction.commit()
-//    }
-    fun showCommunity(){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.hide(myPageFragment)
-        transaction.show(communityFragment)
-        transaction.commit()
-    }
-
-//    fun showMyPage(){
-//        val transaction = supportFragmentManager.beginTransaction()
-//        val currentFragment = supportFragmentManager.findFragmentById(R.id.mainDisplay)!!
-//        if(this::myPageFragment.isInitialized){
-//            transaction.hide(currentFragment)
-//            transaction.show(myPageFragment)
-//        }else{
-//            myPageFragment = MyPageFragment()
-//            transaction.add(R.id.mainDisplay,myPageFragment)
-//            transaction.hide(currentFragment)
-//            transaction.show(myPageFragment)
-//        }
-//        transaction.commit()
-//
-//    }
-
-    fun showMyPage(){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.hide(communityFragment)
-        transaction.show(myPageFragment)
-        transaction.commit()
-
+        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+        fragmentShowHide.addToBackStack()
+        fragmentShowHide.addFragment(showPostFragment,R.id.mainDisplay,"showPost")
+        fragmentShowHide.showFragment(showPostFragment,R.id.mainDisplay)
     }
 
     fun changeColorCommunity(){

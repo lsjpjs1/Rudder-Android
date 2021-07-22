@@ -20,9 +20,6 @@ class CommunityHeaderFragment : Fragment() {
     ): View? {
 
         val header = DataBindingUtil.inflate<FragmentCommunityHeaderBinding>(inflater,R.layout.fragment_community_header,container,false)
-        header.imageView.setOnClickListener{
-            Log.d("click","click")
-        }
         header.mainVM = viewModel
         return header.root
     }
