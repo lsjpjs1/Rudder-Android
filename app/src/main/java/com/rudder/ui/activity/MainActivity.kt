@@ -70,10 +70,18 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.isAddPostClick.observe(this, Observer {
-            val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-            fragmentShowHide.addToBackStack()
-            fragmentShowHide.addFragment(addPostFragment,R.id.mainDisplay,"addPost")
-            fragmentShowHide.showFragment(addPostFragment,R.id.mainDisplay)
+            if(it.getContentIfNotHandled()!!){
+                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                fragmentShowHide.addToBackStack()
+                fragmentShowHide.addFragment(addPostFragment,R.id.mainDisplay,"addPost")
+                fragmentShowHide.showFragment(addPostFragment,R.id.mainDisplay)
+            }
+        })
+
+        viewModel.isBackClick.observe(this, Observer {
+            if(it.getContentIfNotHandled()!!){
+                onBackPressed()
+            }
         })
 
     }

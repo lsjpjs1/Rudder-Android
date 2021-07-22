@@ -12,10 +12,9 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout6"
+            android:id="@+id/showPostHeader"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/grey"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/show_post_header_height"
             app:layout_constraintTop_toTopOf="parent">
@@ -28,7 +27,7 @@
             android:background="@color/light_grey"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/show_post_body_height"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+            app:layout_constraintTop_toBottomOf="@+id/showPostHeader">
 
             <ScrollView
                 android:layout_width="match_parent"

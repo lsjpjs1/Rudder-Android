@@ -22,7 +22,9 @@ object MainViewModel : ViewModel() {
     private val _posts = MutableLiveData<ArrayList<Post>>()
     private val _selectedPostPosition = MutableLiveData<Int>()
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
+    private val _isBackClick = MutableLiveData<Event<Boolean>>()
 
+    val isBackClick: LiveData<Event<Boolean>> = _isBackClick
     val isAddPostClick: LiveData<Event<Boolean>> = _isAddPostClick
     val selectedTab: LiveData<Int> = _selectedTab
     val selectedPostPosition: LiveData<Int> = _selectedPostPosition
@@ -53,6 +55,10 @@ object MainViewModel : ViewModel() {
 
     fun clickAddPost(){
         _isAddPostClick.value = Event(true)
+    }
+
+    fun clickBack(){
+        _isBackClick.value = Event(true)
     }
 
     fun getPosts(){

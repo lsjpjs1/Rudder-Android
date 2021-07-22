@@ -23,6 +23,9 @@ class ShowPostFragment: Fragment() {
         viewModel.selectedPostPosition.observe(viewLifecycleOwner, Observer {
             fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
         })
+        childFragmentManager.beginTransaction()
+                .add(R.id.showPostHeader,ShowPostHeaderFragment())
+                .commit()
         return fragmentBinding.root
     }
 }
