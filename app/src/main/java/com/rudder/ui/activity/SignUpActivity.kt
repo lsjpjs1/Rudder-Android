@@ -80,7 +80,6 @@ class SignUpActivity : AppCompatActivity() {
         val checkBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
         val checkBoxEmail = findViewById<CheckBox>(R.id.emailCheckbox)
 
-
         val verifyButton = findViewById<Button>(R.id.verifyBtn)
         val submitButton = findViewById<Button>(R.id.submitBtn)
 
