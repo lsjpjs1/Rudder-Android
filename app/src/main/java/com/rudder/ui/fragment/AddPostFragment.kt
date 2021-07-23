@@ -14,7 +14,9 @@ class AddPostFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val addPost = inflater.inflate(R.layout.fragment_add_post, container, false)
-
+        childFragmentManager.beginTransaction()
+            .add(R.id.addPostHeader,AddPostHeaderFragment())
+            .commit()
         return addPost
     }
 }
