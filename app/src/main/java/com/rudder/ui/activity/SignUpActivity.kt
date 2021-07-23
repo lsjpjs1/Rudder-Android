@@ -73,8 +73,6 @@ class SignUpActivity : AppCompatActivity() {
         var emailDomain = findViewById<EditText>(R.id.editTextTextPersonName10)
         val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
 
-
-
         val checkBoxId = findViewById<CheckBox>(R.id.IDcheckbox)
         val checkBoxReco = findViewById<CheckBox>(R.id.Recommendcheckbox)
         val checkBox1 = findViewById<CheckBox>(R.id.PWcheckbox1)
