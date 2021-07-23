@@ -1,8 +1,10 @@
 package com.rudder.ui.activity
 
 import android.graphics.PorterDuff
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -24,6 +26,8 @@ import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_community_display.view.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import java.sql.Timestamp
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     private var viewModel: MainViewModel = MainViewModel
@@ -40,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.mainVM = viewModel
         binding.lifecycleOwner = this
+
 
 
         mainBottomBarFragment = MainBottomBarFragment()

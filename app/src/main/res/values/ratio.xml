@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="width_default" format="float" type="dimen">0.9</item>
+
     <item name="main_bottom_bar_height" format="float" type="dimen">0.07</item>
     <item name="main_bottom_bar_shadow_height" format="float" type="dimen">0.0035</item>
     <item name="without_main_bottom_height" format="float" type="dimen">0.9265</item>
@@ -21,11 +23,10 @@
 
     <item name="post_preview_head_height" format="float" type="dimen">0.33</item>
     <item name="post_preview_body_height" format="float" type="dimen">0.33</item>
-    <item name="post_preview_tail_height" format="float" type="dimen">0.30</item>
-    <item name="post_preview_boundary_height" format="float" type="dimen">0.04</item>
+    <item name="post_preview_tail_height" format="float" type="dimen">0.34</item>
 
     <item name="post_preview_head_name_width" format="float" type="dimen">0.33</item>
-    <item name="post_preview_head_post_time_width" format="float" type="dimen">0.12</item>
+    <item name="post_preview_head_post_time_width" format="float" type="dimen">0.24</item>
 
     <item name="post_preview_body_post_title_width" format="float" type="dimen">0.9</item>
 

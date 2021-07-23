@@ -3,6 +3,7 @@ package com.rudder.ui.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
+import android.text.format.DateUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -14,7 +15,11 @@ import com.rudder.R
 import com.rudder.data.Post
 import com.rudder.databinding.PostPreviewBinding
 import com.rudder.util.CustomOnclickListener
+import com.rudder.util.LocaleUtil
 import com.rudder.util.PostsDiffCallback
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOnclickListener,val context : Context): RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
 
@@ -47,7 +52,9 @@ class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOncli
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.postPreviewBinding.post=postList[position]
+        val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(postList[position].postTime.time))
+        holder.postPreviewBinding.post = postList[position]
+        holder.postPreviewBinding.timeago = timeago
         holder.postPreviewBinding.postPreview.setOnClickListener{
             listener.onPostPreviewClick(holder.postPreviewBinding.postPreview,position)
         }

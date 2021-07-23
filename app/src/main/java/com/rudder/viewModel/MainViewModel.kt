@@ -44,7 +44,7 @@ object MainViewModel : ViewModel() {
 
 
     fun scrollTouchBottom(){
-        _isScrollBottomTouch.value = Event(true)
+
         pagingIndex += 1
         endPostId = _posts.value!![_posts.value!!.size-1].postId
         getPosts()
@@ -67,6 +67,7 @@ object MainViewModel : ViewModel() {
     }
 
     fun getPosts(){
+        _isScrollBottomTouch.value = Event(true)
         GlobalScope.launch {
             val resPosts = Repository().getPosts(pagingIndex, endPostId)
             viewModelScope.launch {
@@ -77,9 +78,9 @@ object MainViewModel : ViewModel() {
                     oldPosts!!.addAll(resPosts)
                     Log.d("oldPost",oldPosts.toString())
                     _posts.value= oldPosts!!
-                    delay(MIN_PROGRESSBAR_TIME) //
-                    _isScrollBottomTouch.value = Event(false)
                 }
+                delay(MIN_PROGRESSBAR_TIME) //
+                _isScrollBottomTouch.value = Event(false)
             }
         }
     }
