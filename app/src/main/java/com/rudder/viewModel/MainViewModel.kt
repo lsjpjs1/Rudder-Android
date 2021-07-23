@@ -18,7 +18,7 @@ import java.sql.Timestamp
 object MainViewModel : ViewModel() {
     private var pagingIndex = 0
     private var endPostId = -1
-    private val MIN_PROGRESSBAR_TIME = 500.toLong() //millisecond
+    private val MIN_PROGRESSBAR_TIME = 200.toLong() //millisecond
 
     private val _selectedTab = MutableLiveData<Int>()
     private val _posts = MutableLiveData<ArrayList<Post>>()
