@@ -7,248 +7,393 @@
             name="signUpVM"
             type="com.rudder.viewModel.SignUpViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout5"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout5"
         tools:context=".ui.activity.SignUpActivity">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="327dp"
-            android:layout_height="61dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="57dp"
             android:layout_marginLeft="57dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/bottom_stroke"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.08"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signUpTextView">
+            app:layout_constraintTop_toBottomOf="@+id/signUpTextView"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.8">
 
             <EditText
                 android:id="@+id/editTextTextPersonName1"
                 style="@android:style/Widget.AutoCompleteTextView"
-                android:layout_width="287dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:background="@null"
                 android:ems="10"
+                android:hint="@string/id_placeholder"
                 android:inputType="text"
-                android:text=""
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.85" />
 
-            <CheckBox android:id="@+id/IDcheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <CheckBox
+                android:id="@+id/IDcheckbox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="9dp"
                 android:layout_marginLeft="9dp"
                 android:layout_marginTop="18dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName1"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.1" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"
-            android:layout_width="327dp"
-            android:layout_height="61dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="57dp"
             android:layout_marginLeft="57dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bottom_stroke"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.08"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.8">
 
             <EditText
                 android:id="@+id/editTextTextPersonName2"
                 style="@android:style/Widget.AutoCompleteTextView"
-                android:layout_width="287dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:background="@null"
                 android:ems="10"
+                android:hint="@string/recommend_code"
                 android:inputType="text"
-                android:text=""
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.85" />
 
-            <CheckBox android:id="@+id/Recommendcheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <CheckBox
+                android:id="@+id/Recommendcheckbox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="9dp"
                 android:layout_marginLeft="9dp"
                 android:layout_marginTop="18dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName2"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.1" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
-            android:layout_width="327dp"
-            android:layout_height="61dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="57dp"
             android:layout_marginLeft="57dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bottom_stroke"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.08"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.8">
 
             <EditText
                 android:id="@+id/editTextTextPersonName3"
                 style="@android:style/Widget.AutoCompleteTextView"
-                android:layout_width="287dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:background="@null"
                 android:ems="10"
+                android:hint="@string/password_confirm_placeholder"
                 android:inputType="text"
                 android:text="@={signUpVM._userPasswordCheck}"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.85" />
 
-            <CheckBox android:id="@+id/PWcheckbox2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <CheckBox
+                android:id="@+id/PWcheckbox2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="9dp"
                 android:layout_marginLeft="9dp"
                 android:layout_marginTop="18dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName3"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.1" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
-            android:layout_width="327dp"
-            android:layout_height="61dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="57dp"
             android:layout_marginLeft="57dp"
             android:layout_marginTop="7dp"
             android:background="@drawable/bottom_stroke"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.08"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.8">
 
             <EditText
                 android:id="@+id/editTextTextPersonName4"
                 style="@android:style/Widget.AutoCompleteTextView"
-                android:layout_width="287dp"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:background="@null"
                 android:ems="10"
+                android:hint="@string/password_placeholder"
                 android:inputType="text"
                 android:text="@={signUpVM._userPassword}"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.85" />
 
-            <CheckBox android:id="@+id/PWcheckbox1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <CheckBox
+                android:id="@+id/PWcheckbox1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="9dp"
                 android:layout_marginLeft="9dp"
                 android:layout_marginTop="18dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName4"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.1" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/signUpTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="57dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="30dp"
             android:layout_marginLeft="57dp"
-            android:layout_marginTop="62dp"
-            android:text="@string/sign_up_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="221dp"
-            android:layout_height="61dp"
-            android:layout_marginStart="95dp"
-            android:layout_marginLeft="95dp"
-            android:layout_marginTop="25dp"
-            android:background="#9329D1"
+            android:layout_marginTop="50dp"
             android:gravity="center"
-            android:text="@string/verify_capital"
-            android:textColor="#FFFFFF"
+            android:text="@string/sign_up_title"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.07"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.3" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout5"
-            android:layout_width="186dp"
-            android:layout_height="62dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="39dp"
             android:background="@drawable/bottom_stroke"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.09"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.45">
 
             <EditText
                 android:id="@+id/editTextTextPersonName9"
-                android:layout_width="136dp"
-                android:layout_height="61dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="1dp"
                 android:background="@null"
                 android:ems="10"
+                android:hint="@string/email_id"
                 android:inputType="text"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.8" />
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="40dp"
-                android:layout_height="32dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="6dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName9"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.15" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout6"
-            android:layout_width="173dp"
-            android:layout_height="62dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="39dp"
             android:background="@drawable/bottom_stroke"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.09"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout5"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.45">
 
             <EditText
                 android:id="@+id/editTextTextPersonName10"
-                android:layout_width="172dp"
-                android:layout_height="58dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="2dp"
                 android:background="@null"
                 android:ems="10"
+                android:hint="@string/email_domain"
                 android:inputType="text"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.8" />
 
             <CheckBox
                 android:id="@+id/emailCheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="142dp"
-                tools:layout_editor_absoluteY="8dp" />
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName10"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.15" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+        <Button
+            android:id="@+id/verifyBtn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="80dp"
+            android:backgroundTint="#9329D1"
+            android:text="@string/verify_capital"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout5"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.9" />
+
+        <Button
+            android:id="@+id/submitBtn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginRight="19dp"
+            android:backgroundTint="#9329D1"
+            android:text="@string/sumbit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout5" />
+
+        <EditText
+            android:id="@+id/verifyCode"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="100dp"
+            android:hint="@string/verify_code"
+            android:inputType="text"
+            android:layout_marginTop="150dp"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout5" />
+
+        <Button
+            android:id="@+id/signUpBtn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="100dp"
+            android:backgroundTint="#9329D1"
+            android:text="@string/sign_up"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/verifyBtn"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.9" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

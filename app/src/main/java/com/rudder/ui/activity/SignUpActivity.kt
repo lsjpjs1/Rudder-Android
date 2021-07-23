@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -13,19 +12,37 @@ import com.rudder.R
 import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.viewModel.SignUpViewModel
 import android.view.View
-import android.widget.EditText
 import android.text.TextWatcher
-import android.widget.CheckBox
-import android.widget.CompoundButton
+import android.widget.*
+import com.google.gson.GsonBuilder
+import com.rudder.BuildConfig
+import com.rudder.data.remote.EmailSingupAPI
+import com.rudder.data.remote.Emailaddress
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 
 class SignUpActivity : AppCompatActivity() {
     private val viewModel: SignUpViewModel = SignUpViewModel()
 
+    val gson = GsonBuilder()
+        .setLenient()
+        .create()
 
-    val isExistBlank = false
-    val isPWSame = false
+    val retrofit = Retrofit.Builder()
+        .baseUrl(BuildConfig.BASE_URL)
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .build()
+
+    val emailApi = retrofit.create(EmailSingupAPI::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,16 +59,18 @@ class SignUpActivity : AppCompatActivity() {
 //                Toast.makeText(this,"same",Toast.LENGTH_SHORT).show()
 //            }
 //        })
+
+
+
+
         setContentView(R.layout.activity_sign_up)
 
         var id = findViewById<EditText>(R.id.editTextTextPersonName1)
         //editTextTextPersonName1
         var myPWFirst = findViewById<EditText>(R.id.editTextTextPersonName4)
         var myPWSecond = findViewById<EditText>(R.id.editTextTextPersonName3)
-
         var emailDomain = findViewById<EditText>(R.id.editTextTextPersonName10)
         val emailInput: String
-
         val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
 
 
@@ -61,11 +80,33 @@ class SignUpActivity : AppCompatActivity() {
         val checkBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
         val checkBoxEmail = findViewById<CheckBox>(R.id.emailCheckbox)
 
+        val verifyButton = findViewById<Button>(R.id.verifyBtn)
+        val submitButton = findViewById<Button>(R.id.submitBtn)
+
         checkBox1.setEnabled(false)
         checkBox2.setEnabled(false)
 
         checkBoxId.setEnabled(false)
         checkBoxReco.setEnabled(false)
+
+        verifyButton.setOnClickListener {
+            val callPostTransferEmail = emailApi.emailPost(Emailaddress("asdasd@naver.com"))
+
+            callPostTransferEmail.enqueue(object : Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+                    Log.d(TAG, "성공 : ${response.raw()}")
+                    Log.d(TAG, "성공 : ${response.message()}")
+
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.d(TAG, "실패 : ${t.message}")
+                }
+            })
+        }
 
         myPWSecond.addTextChangedListener(object : TextWatcher {
             //입력이 끝났을 때
@@ -131,7 +172,6 @@ class SignUpActivity : AppCompatActivity() {
                     checkBoxEmail.setEnabled(false)
                 }
             }
-
             //입력하기 전
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
