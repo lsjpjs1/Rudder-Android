@@ -69,8 +69,8 @@ class SignUpActivity : AppCompatActivity() {
         //editTextTextPersonName1
         var myPWFirst = findViewById<EditText>(R.id.editTextTextPersonName4)
         var myPWSecond = findViewById<EditText>(R.id.editTextTextPersonName3)
+        var emailID = findViewById<EditText>(R.id.editTextTextPersonName9)
         var emailDomain = findViewById<EditText>(R.id.editTextTextPersonName10)
-        val emailInput: String
         val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
 
 
@@ -79,6 +79,7 @@ class SignUpActivity : AppCompatActivity() {
         val checkBox1 = findViewById<CheckBox>(R.id.PWcheckbox1)
         val checkBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
         val checkBoxEmail = findViewById<CheckBox>(R.id.emailCheckbox)
+
 
         val verifyButton = findViewById<Button>(R.id.verifyBtn)
         val submitButton = findViewById<Button>(R.id.submitBtn)
@@ -90,7 +91,10 @@ class SignUpActivity : AppCompatActivity() {
         checkBoxReco.setEnabled(false)
 
         verifyButton.setOnClickListener {
-            val callPostTransferEmail = emailApi.emailPost(Emailaddress("asdasd@naver.com"))
+
+            val emailInput = emailID.getText().toString().plus('@').plus(emailDomain.getText().toString())
+            Log.d(TAG, "이메일 : ${emailInput}")
+            val callPostTransferEmail = emailApi.emailPost(Emailaddress(emailInput))
 
             callPostTransferEmail.enqueue(object : Callback<String> {
                 override fun onResponse(
