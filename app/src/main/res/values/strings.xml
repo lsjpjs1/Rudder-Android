@@ -12,6 +12,7 @@
     <string name="sign_up_title">Sign up</string>
     <string name="verify_code">Verification Code</string>
     <string name="verify_capital">SEND VERIFY CODE</string>
+    <string name="id_check">CHECK</string>
     <string name="login_error">Fail to sign in</string>
     <string name="community_title">Community</string>
 </resources>

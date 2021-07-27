@@ -44,21 +44,25 @@ class SignUpActivity : AppCompatActivity() {
 
     val emailApi = retrofit.create(EmailSingupAPI::class.java)
 
+    fun signUpCheck(b0 : Boolean, b1 : Boolean, b2 : Boolean, b3 : Boolean) : Boolean{
+        return b0 && b1 && b2 && b3
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
-//        binding.signUpVM = viewModel
-//        binding.lifecycleOwner = this
-//        viewModel.userPassword.observe(this, Observer {
-//            if(it==viewModel.userPasswordCheck.value && it.isNotBlank()){
-//                Toast.makeText(this,"same",Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//        viewModel.userPasswordCheck.observe(this, Observer {
-//            if(it==viewModel.userPassword.value && it.isNotBlank()){
-//                Toast.makeText(this,"same",Toast.LENGTH_SHORT).show()
-//            }
-//        })
+        val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
+        binding.signUpVM = viewModel
+        binding.lifecycleOwner = this
+        viewModel.userPassword.observe(this, Observer {
+            if(it==viewModel.userPasswordCheck.value && it.isNotBlank()){
+                Toast.makeText(this,"same",Toast.LENGTH_SHORT).show()
+            }
+        })
+        viewModel.userPasswordCheck.observe(this, Observer {
+            if(it==viewModel.userPassword.value && it.isNotBlank()){
+                Toast.makeText(this,"same",Toast.LENGTH_SHORT).show()
+            }
+        })
 
         setContentView(R.layout.activity_sign_up)
 
@@ -82,7 +86,6 @@ class SignUpActivity : AppCompatActivity() {
         var verifyButton = findViewById<Button>(R.id.verifyBtn)
         var submitButton = findViewById<Button>(R.id.submitBtn)
         var signUpButton = findViewById<Button>(R.id.signUpBtn)
-        signUpButton.setEnabled(false)
 
 
         pwCheckBox1.setEnabled(false)
@@ -91,6 +94,11 @@ class SignUpActivity : AppCompatActivity() {
         checkBoxEmail.setEnabled(false)
         checkBoxReco.setChecked(true)
         checkBoxReco.setEnabled(false)
+        veriCheckBox.setEnabled(false)
+
+        verifyButton.setEnabled(false)
+        submitButton.setEnabled(false)
+        signUpButton.setEnabled(false)
 
 
         signUpButton.setOnClickListener{
@@ -132,6 +140,7 @@ class SignUpActivity : AppCompatActivity() {
                     pwCheckBox1.setEnabled(true)
                     pwCheckBox1.setChecked(true)
                     pwCheckBox1.setEnabled(false)
+
                 } else {
                     pwCheckBox1.setEnabled(true)
                     pwCheckBox1.setChecked(false)
@@ -162,6 +171,7 @@ class SignUpActivity : AppCompatActivity() {
                     pwCheckBox2.setEnabled(true)
                     pwCheckBox2.setChecked(true)
                     pwCheckBox2.setEnabled(false)
+                    //if (signUpCheck(pwCheckBox1.isChecked(), pwCheckBox2.isChecked(), veriCheckBox.isChecked()) ) signUpButton.setEnabled(true)
                 } else {
                     pwCheckBox2.setEnabled(true)
                     pwCheckBox2.setChecked(false)
@@ -176,6 +186,8 @@ class SignUpActivity : AppCompatActivity() {
                     pwCheckBox2.setEnabled(true)
                     pwCheckBox2.setChecked(true)
                     pwCheckBox2.setEnabled(false)
+                    //if (signUpCheck(pwCheckBox1.isChecked(), pwCheckBox2.isChecked(), veriCheckBox.isChecked()) ) signUpButton.setEnabled(true)
+
                 } else {
                     pwCheckBox2.setEnabled(true)
                     pwCheckBox2.setChecked(false)
@@ -213,14 +225,6 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
         })
-
-        // Submit 버튼 활성화
-
-//        val checkBoxId = findViewById<CheckBox>(R.id.IDcheckbox)
-//        val checkBoxReco = findViewById<CheckBox>(R.id.Recommendcheckbox)
-//        val pwCheckBox1 = findViewById<CheckBox>(R.id.PWcheckbox1)
-//        val pwCheckBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
-//        val checkBoxEmail = findViewById<CheckBox>(R.id.emailCheckbox)
 
     }
 

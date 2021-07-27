@@ -14,12 +14,19 @@ class SignUpViewModel  : ViewModel() {
     val _userId = MutableLiveData<String>()
     val _userPassword = MutableLiveData<String>()
     val _userPasswordCheck = MutableLiveData<String>()
+    val _userRecommendCode = MutableLiveData<String>()
+    val _userEmailID = MutableLiveData<String>()
+    val _userEmailDomain = MutableLiveData<String>()
+    val _userVerificationCode = MutableLiveData<String>()
+
 
     val userId: LiveData<String> = _userId
     val userPassword: LiveData<String> = _userPassword
     val userPasswordCheck: LiveData<String> = _userPasswordCheck
-
-
+    val userRecommendCode: LiveData<String> = _userRecommendCode
+    val userEmailID = LiveData<String> = _userEmailID
+    val userEmailDomain = LiveData<String> = _userEmailDomain
+    val userVerificationCode = LiveData<String> = _userVerificationCode
 
 
     private val repository = Repository()
@@ -27,8 +34,23 @@ class SignUpViewModel  : ViewModel() {
         _userId.value = ""
         _userPassword.value = ""
         _userPasswordCheck.value = ""
+        _userRecommendCode.value = ""
+        _userEmailID.value = ""
+        _userEmailDomain.value = ""
+        _userVerificationCode.value = ""
+
     }
 
+    fun callIdCheck(){
 
+    }
+
+    fun callEmail(){
+
+    }
+
+    fun callVeificationCodeCheck(){
+
+    }
 
 }
