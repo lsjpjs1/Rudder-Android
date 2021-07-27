@@ -72,19 +72,21 @@ class SignUpActivity : AppCompatActivity() {
         var emailID = findViewById<EditText>(R.id.editTextTextPersonName9)
         var emailDomain = findViewById<EditText>(R.id.editTextTextPersonName10)
         val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
+        val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
+
 
         val checkBoxId = findViewById<CheckBox>(R.id.IDcheckbox)
         val checkBoxReco = findViewById<CheckBox>(R.id.Recommendcheckbox)
-        val checkBox1 = findViewById<CheckBox>(R.id.PWcheckbox1)
-        val checkBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
+        val pwCheckBox1 = findViewById<CheckBox>(R.id.PWcheckbox1)
+        val pwCheckBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
         val checkBoxEmail = findViewById<CheckBox>(R.id.emailCheckbox)
 
 
         val verifyButton = findViewById<Button>(R.id.verifyBtn)
         val submitButton = findViewById<Button>(R.id.submitBtn)
 
-        checkBox1.setEnabled(false)
-        checkBox2.setEnabled(false)
+        pwCheckBox1.setEnabled(false)
+        pwCheckBox2.setEnabled(false)
 
         checkBoxId.setEnabled(false)
         checkBoxReco.setEnabled(false)
@@ -111,59 +113,68 @@ class SignUpActivity : AppCompatActivity() {
             })
         }
 
-        myPWSecond.addTextChangedListener(object : TextWatcher {
+        myPWFirst.addTextChangedListener(object : TextWatcher {
             //입력이 끝났을 때
             //4. 비밀번호 일치하는지 확인
             override fun afterTextChanged(p0: Editable?) {
-                if (myPWFirst.getText().toString().equals(myPWSecond.getText().toString())) {
-
-                    checkBox1.setEnabled(true)
-                    checkBox1.setChecked(true)
-                    checkBox1.setEnabled(false)
-
-                    checkBox2.setEnabled(true)
-                    checkBox2.setChecked(true)
-                    checkBox2.setEnabled(false)
+                if (myPWFirst.getText().toString().trim().matches(passwordRg)) {
+                    pwCheckBox1.setEnabled(true)
+                    pwCheckBox1.setChecked(true)
+                    pwCheckBox1.setEnabled(false)
                 } else {
-                    checkBox1.setEnabled(true)
-                    checkBox1.setChecked(false)
-                    checkBox1.setEnabled(false)
-
-                    checkBox2.setEnabled(true)
-                    checkBox2.setChecked(false)
-                    checkBox2.setEnabled(false)
+                    pwCheckBox1.setEnabled(true)
+                    pwCheckBox1.setChecked(false)
+                    pwCheckBox1.setEnabled(false)
                 }
             }
-
             //입력하기 전
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            //텍스트 변화가 있을 시
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (myPWFirst.getText().toString().trim().matches(passwordRg)) {
+                    pwCheckBox1.setEnabled(true)
+                    pwCheckBox1.setChecked(true)
+                    pwCheckBox1.setEnabled(false)
+                } else {
+                    pwCheckBox1.setEnabled(true)
+                    pwCheckBox1.setChecked(false)
+                    pwCheckBox1.setEnabled(false)
+                }
+            }
+        })
 
+        myPWSecond.addTextChangedListener(object : TextWatcher {
+            //입력이 끝났을 때
+            override fun afterTextChanged(p0: Editable?) {
+                if (myPWFirst.getText().toString().equals(myPWSecond.getText().toString())) {
+
+                    pwCheckBox2.setEnabled(true)
+                    pwCheckBox2.setChecked(true)
+                    pwCheckBox2.setEnabled(false)
+                } else {
+                    pwCheckBox2.setEnabled(true)
+                    pwCheckBox2.setChecked(false)
+                    pwCheckBox2.setEnabled(false)
+                }
+            }
+            //입력하기 전
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             //텍스트 변화가 있을 시
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (myPWFirst.getText().toString().equals(myPWSecond.getText().toString())) {
-                    checkBox1.setEnabled(true)
-                    checkBox1.setChecked(true)
-                    checkBox1.setEnabled(false)
-
-                    checkBox2.setEnabled(true)
-                    checkBox2.setChecked(true)
-                    checkBox2.setEnabled(false)
+                    pwCheckBox2.setEnabled(true)
+                    pwCheckBox2.setChecked(true)
+                    pwCheckBox2.setEnabled(false)
                 } else {
-                    checkBox1.setEnabled(true)
-                    checkBox1.setChecked(false)
-                    checkBox1.setEnabled(false)
-
-                    checkBox2.setEnabled(true)
-                    checkBox2.setChecked(false)
-                    checkBox2.setEnabled(false)
+                    pwCheckBox2.setEnabled(true)
+                    pwCheckBox2.setChecked(false)
+                    pwCheckBox2.setEnabled(false)
                 }
             }
         })
 
 
-
         emailDomain.addTextChangedListener(object : TextWatcher {
-
             override fun afterTextChanged(p0: Editable?) {
                 if (emailDomain.getText().toString().trim().matches(emailRg)) {
                     checkBoxEmail.setEnabled(true)
