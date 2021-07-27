@@ -60,9 +60,6 @@ class SignUpActivity : AppCompatActivity() {
 //            }
 //        })
 
-
-
-
         setContentView(R.layout.activity_sign_up)
 
         var id = findViewById<EditText>(R.id.editTextTextPersonName1)
@@ -71,25 +68,41 @@ class SignUpActivity : AppCompatActivity() {
         var myPWSecond = findViewById<EditText>(R.id.editTextTextPersonName3)
         var emailID = findViewById<EditText>(R.id.editTextTextPersonName9)
         var emailDomain = findViewById<EditText>(R.id.editTextTextPersonName10)
+
         val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
         val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
 
+        var checkBoxId = findViewById<CheckBox>(R.id.IDcheckbox)
+        var checkBoxReco = findViewById<CheckBox>(R.id.Recommendcheckbox)
+        var pwCheckBox1 = findViewById<CheckBox>(R.id.PWcheckbox1)
+        var pwCheckBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
+        var checkBoxEmail = findViewById<CheckBox>(R.id.emailCheckbox)
+        var veriCheckBox = findViewById<CheckBox>(R.id.veifyCodeCheckbox)
 
-        val checkBoxId = findViewById<CheckBox>(R.id.IDcheckbox)
-        val checkBoxReco = findViewById<CheckBox>(R.id.Recommendcheckbox)
-        val pwCheckBox1 = findViewById<CheckBox>(R.id.PWcheckbox1)
-        val pwCheckBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
-        val checkBoxEmail = findViewById<CheckBox>(R.id.emailCheckbox)
+        var verifyButton = findViewById<Button>(R.id.verifyBtn)
+        var submitButton = findViewById<Button>(R.id.submitBtn)
+        var signUpButton = findViewById<Button>(R.id.signUpBtn)
+        signUpButton.setEnabled(false)
 
-
-        val verifyButton = findViewById<Button>(R.id.verifyBtn)
-        val submitButton = findViewById<Button>(R.id.submitBtn)
 
         pwCheckBox1.setEnabled(false)
         pwCheckBox2.setEnabled(false)
-
         checkBoxId.setEnabled(false)
+        checkBoxEmail.setEnabled(false)
+        checkBoxReco.setChecked(true)
         checkBoxReco.setEnabled(false)
+
+
+        signUpButton.setOnClickListener{
+                signUpButton.setEnabled(true)
+        }
+        ///Log.d(TAG, "pass : ${pwCheckBox1.isChecked()}")
+
+        if (pwCheckBox1.isChecked())
+        {
+            Log.d(TAG, "pass : ${pwCheckBox1.isChecked()}")
+            signUpButton.setEnabled(true)
+        }
 
         verifyButton.setOnClickListener {
 
@@ -104,9 +117,7 @@ class SignUpActivity : AppCompatActivity() {
                 ) {
                     Log.d(TAG, "성공 : ${response.raw()}")
                     Log.d(TAG, "성공 : ${response.message()}")
-
                 }
-
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     Log.d(TAG, "실패 : ${t.message}")
                 }
@@ -143,11 +154,11 @@ class SignUpActivity : AppCompatActivity() {
             }
         })
 
+
         myPWSecond.addTextChangedListener(object : TextWatcher {
             //입력이 끝났을 때
             override fun afterTextChanged(p0: Editable?) {
                 if (myPWFirst.getText().toString().equals(myPWSecond.getText().toString())) {
-
                     pwCheckBox2.setEnabled(true)
                     pwCheckBox2.setChecked(true)
                     pwCheckBox2.setEnabled(false)
@@ -203,5 +214,14 @@ class SignUpActivity : AppCompatActivity() {
             }
         })
 
+        // Submit 버튼 활성화
+
+//        val checkBoxId = findViewById<CheckBox>(R.id.IDcheckbox)
+//        val checkBoxReco = findViewById<CheckBox>(R.id.Recommendcheckbox)
+//        val pwCheckBox1 = findViewById<CheckBox>(R.id.PWcheckbox1)
+//        val pwCheckBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
+//        val checkBoxEmail = findViewById<CheckBox>(R.id.emailCheckbox)
+
     }
+
 }

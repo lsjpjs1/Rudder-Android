@@ -3,7 +3,7 @@
     <string name="id_placeholder">ID</string>
     <string name="password_placeholder">PASSWORD</string>
     <string name="password_confirm_placeholder">PASSWORD CONFIRM</string>
-    <string name="recommend_code">RECOMMEND CODE</string>
+    <string name="recommend_code">RECOMMEND CODE (option)</string>
     <string name="email_id">EMAIL ID</string>
     <string name="email_domain">EMAIL DOMAIN</string>
     <string name="sign_up">sign up</string>
@@ -11,7 +11,7 @@
     <string name="sumbit">SUBMIT</string>
     <string name="sign_up_title">Sign up</string>
     <string name="verify_code">Verification Code</string>
-    <string name="verify_capital">VERIFY</string>
+    <string name="verify_capital">SEND VERIFY CODE</string>
     <string name="login_error">Fail to sign in</string>
     <string name="community_title">Community</string>
 </resources>

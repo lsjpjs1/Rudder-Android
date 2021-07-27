@@ -308,7 +308,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.8" />
+                app:layout_constraintWidth_percent="0.72" />
 
             <CheckBox
                 android:id="@+id/emailCheckbox"
@@ -347,24 +347,23 @@
             android:id="@+id/submitBtn"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="19dp"
             android:layout_marginTop="150dp"
-            android:layout_marginRight="19dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginRight="22dp"
             android:backgroundTint="#9329D1"
             android:text="@string/sumbit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.07"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout5"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.3"
-            app:layout_constraintTop_toTopOf="@id/constraintLayout5" />
+            app:layout_constraintWidth_percent="0.3" />
 
         <EditText
             android:id="@+id/verifyCode"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="40dp"
             android:layout_marginLeft="100dp"
             android:hint="@string/verify_code"
             android:inputType="text"
@@ -377,12 +376,28 @@
             app:layout_constraintWidth_percent="0.4"
             app:layout_constraintTop_toTopOf="@id/constraintLayout5" />
 
+        <CheckBox
+            android:id="@+id/veifyCodeCheckbox"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="210dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="160dp"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.04"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout5"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.07" />
+
         <Button
             android:id="@+id/signUpBtn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="100dp"
             android:backgroundTint="#9329D1"
+            android:clickable="false"
             android:text="@string/sign_up"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_default="percent"
