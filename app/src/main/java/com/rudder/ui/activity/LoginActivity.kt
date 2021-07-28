@@ -3,6 +3,7 @@ package com.rudder.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -36,7 +37,6 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-
 
 
 
