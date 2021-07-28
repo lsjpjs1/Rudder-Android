@@ -11,64 +11,73 @@
         android:layout_height="match_parent">
 
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/addPostDisplayTextTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintHeight_default="percent"
-                    app:layout_constraintHeight_percent="@dimen/add_post_display_text_title_height"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:id="@+id/addPostDisplayText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent="@dimen/width_default">
 
-                    <TextView
-                        android:id="@+id/textView11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_title"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout6"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@color/light_grey"
-                    app:layout_constraintHeight_default="percent"
-                    app:layout_constraintHeight_percent="@dimen/add_post_display_line_height"
-                    app:layout_constraintTop_toBottomOf="@+id/addPostDisplayTextTitle">
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintHeight_default="percent"
-                    app:layout_constraintHeight_percent="@dimen/add_post_display_edit_text_height"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
-
-                    <EditText
-                        android:id="@+id/editTextTextPersonName"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/addPostDisplayTextTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Name" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="@dimen/add_post_display_text_title_height"
+                        app:layout_constraintTop_toTopOf="parent">
 
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_title"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout6"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:background="@color/light_grey"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="@dimen/add_post_display_line_height"
+                        app:layout_constraintTop_toBottomOf="@+id/addPostDisplayTextTitle">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/writePost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+
+                        <EditText
+                            android:id="@+id/editTextTextPersonName"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="textMultiLine"
+                            android:text="Name" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
