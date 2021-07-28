@@ -14,13 +14,13 @@ class Repository {
         val key = BuildConfig.TOKEN_KEY
         var result = true
         if(App.prefs.getValue(key)==null || App.prefs.getValue(key)==""){
-            val resLogin =  LoginApi.instance.login(loginInfo).await()
-            if(resLogin.has("info")){
-                val value = resLogin.get("info").asString
-                App.prefs.setValue(key, value)
-            }else{
-                result = false
-            }
+                val resLogin =  LoginApi.instance.login(loginInfo).await()
+                if(resLogin.has("info")){
+                    val value = resLogin.get("info").asString
+                    App.prefs.setValue(key, value)
+                }else{
+                    result = false
+                }
         }
         return result
     }

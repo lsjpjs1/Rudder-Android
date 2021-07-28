@@ -14,6 +14,7 @@ import com.rudder.viewModel.SignUpViewModel
 import android.view.View
 import android.text.TextWatcher
 import android.widget.*
+import androidx.core.widget.addTextChangedListener
 import com.google.gson.GsonBuilder
 import com.rudder.BuildConfig
 import com.rudder.data.remote.EmailSingupAPI
@@ -44,37 +45,70 @@ class SignUpActivity : AppCompatActivity() {
 
     val emailApi = retrofit.create(EmailSingupAPI::class.java)
 
-    fun signUpCheck(b0 : Boolean, b1 : Boolean, b2 : Boolean, b3 : Boolean) : Boolean{
-        return b0 && b1 && b2 && b3
+    val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
+    val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
+
+
+    fun changeCheckBoxTrueState(checkBox: CheckBox){
+        checkBox.isEnabled = true
+        checkBox.isChecked = true
+        checkBox.isEnabled = false
     }
+
+    fun changeCheckBoxFalseState(checkBox: CheckBox){
+        checkBox.isEnabled = true
+        checkBox.isChecked = false
+        checkBox.isEnabled = false
+    }
+
+    fun buttonEnable(b0 : Boolean, b1 : Boolean, b2 : Boolean, b3 : Boolean){
+        verifyBtn.isEnabled = b0 && b1 && b2 && b3
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
         binding.signUpVM = viewModel
         binding.lifecycleOwner = this
+
         viewModel.userPassword.observe(this, Observer {
-            if(it==viewModel.userPasswordCheck.value && it.isNotBlank()){
-                Toast.makeText(this,"same",Toast.LENGTH_SHORT).show()
+            if (it.trim().matches(passwordRg)) changeCheckBoxTrueState(PWcheckbox1)
+            else {
+                changeCheckBoxFalseState(PWcheckbox1)
+                Toast.makeText(this,"비밀번호는 숫자,문자,특수문자 중 2가지 포함(8~15자)",Toast.LENGTH_SHORT).show()
             }
-        })
-        viewModel.userPasswordCheck.observe(this, Observer {
-            if(it==viewModel.userPassword.value && it.isNotBlank()){
-                Toast.makeText(this,"same",Toast.LENGTH_SHORT).show()
-            }
+            buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
         })
 
-        setContentView(R.layout.activity_sign_up)
+        viewModel.userPasswordCheck.observe(this, Observer {
+            if(it.trim() == viewModel.userPassword.value!!.trim() && it.isNotBlank() ){ changeCheckBoxTrueState(PWcheckbox2)
+            }
+            else {
+                changeCheckBoxFalseState(PWcheckbox2)
+                Toast.makeText(this,"Please Check, Password and Password Confirm",Toast.LENGTH_SHORT).show()
+            }
+            buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+        })
+
+        viewModel.userEmailDomain.observe(this, Observer {
+            if(it.trim().matches(emailRg) ){ changeCheckBoxTrueState(emailCheckbox)
+            }
+            else {
+                changeCheckBoxFalseState(emailCheckbox)
+                Toast.makeText(this,"Please Check, Right Email Domain",Toast.LENGTH_SHORT).show()
+            }
+            buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+        })
+
 
         var id = findViewById<EditText>(R.id.editTextTextPersonName1)
-        //editTextTextPersonName1
         var myPWFirst = findViewById<EditText>(R.id.editTextTextPersonName4)
         var myPWSecond = findViewById<EditText>(R.id.editTextTextPersonName3)
         var emailID = findViewById<EditText>(R.id.editTextTextPersonName9)
         var emailDomain = findViewById<EditText>(R.id.editTextTextPersonName10)
 
-        val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
-        val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
 
         var checkBoxId = findViewById<CheckBox>(R.id.IDcheckbox)
         var checkBoxReco = findViewById<CheckBox>(R.id.Recommendcheckbox)
@@ -86,6 +120,7 @@ class SignUpActivity : AppCompatActivity() {
         var verifyButton = findViewById<Button>(R.id.verifyBtn)
         var submitButton = findViewById<Button>(R.id.submitBtn)
         var signUpButton = findViewById<Button>(R.id.signUpBtn)
+
 
 
         pwCheckBox1.setEnabled(false)
@@ -100,17 +135,6 @@ class SignUpActivity : AppCompatActivity() {
         submitButton.setEnabled(false)
         signUpButton.setEnabled(false)
 
-
-        signUpButton.setOnClickListener{
-                signUpButton.setEnabled(true)
-        }
-        ///Log.d(TAG, "pass : ${pwCheckBox1.isChecked()}")
-
-        if (pwCheckBox1.isChecked())
-        {
-            Log.d(TAG, "pass : ${pwCheckBox1.isChecked()}")
-            signUpButton.setEnabled(true)
-        }
 
         verifyButton.setOnClickListener {
 
@@ -132,36 +156,35 @@ class SignUpActivity : AppCompatActivity() {
             })
         }
 
-        myPWFirst.addTextChangedListener(object : TextWatcher {
-            //입력이 끝났을 때
-            //4. 비밀번호 일치하는지 확인
-            override fun afterTextChanged(p0: Editable?) {
-                if (myPWFirst.getText().toString().trim().matches(passwordRg)) {
-                    pwCheckBox1.setEnabled(true)
-                    pwCheckBox1.setChecked(true)
-                    pwCheckBox1.setEnabled(false)
-
-                } else {
-                    pwCheckBox1.setEnabled(true)
-                    pwCheckBox1.setChecked(false)
-                    pwCheckBox1.setEnabled(false)
-                }
-            }
-            //입력하기 전
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            //텍스트 변화가 있을 시
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (myPWFirst.getText().toString().trim().matches(passwordRg)) {
-                    pwCheckBox1.setEnabled(true)
-                    pwCheckBox1.setChecked(true)
-                    pwCheckBox1.setEnabled(false)
-                } else {
-                    pwCheckBox1.setEnabled(true)
-                    pwCheckBox1.setChecked(false)
-                    pwCheckBox1.setEnabled(false)
-                }
-            }
-        })
+//        myPWFirst.addTextChangedListener(object : TextWatcher {
+//            //입력이 끝났을 때
+//            //4. 비밀번호 일치하는지 확인
+//            override fun afterTextChanged(p0: Editable?) {
+//                if (myPWFirst.getText().toString().trim().matches(passwordRg)) {
+//                    pwCheckBox1.setEnabled(true)
+//                    pwCheckBox1.setChecked(true)
+//                    pwCheckBox1.setEnabled(false)
+//                } else {
+//                    pwCheckBox1.setEnabled(true)
+//                    pwCheckBox1.setChecked(false)
+//                    pwCheckBox1.setEnabled(false)
+//                }
+//            }
+//            //입력하기 전
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+//            //텍스트 변화가 있을 시
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                if (myPWFirst.getText().toString().trim().matches(passwordRg)) {
+//                    pwCheckBox1.setEnabled(true)
+//                    pwCheckBox1.setChecked(true)
+//                    pwCheckBox1.setEnabled(false)
+//                } else {
+//                    pwCheckBox1.setEnabled(true)
+//                    pwCheckBox1.setChecked(false)
+//                    pwCheckBox1.setEnabled(false)
+//                }
+//            }
+//        })
 
 
         myPWSecond.addTextChangedListener(object : TextWatcher {
@@ -227,5 +250,7 @@ class SignUpActivity : AppCompatActivity() {
         })
 
     }
+
+
 
 }

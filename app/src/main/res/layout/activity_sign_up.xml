@@ -56,6 +56,7 @@
                 android:layout_marginLeft="100dp"
                 android:text="@string/id_check"
                 android:backgroundTint="#9329D1"
+                android:onClick="@{()->signUpVM.callIdCheck()}"
                 android:gravity="center"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="1"
@@ -203,7 +204,9 @@
                 android:ems="10"
                 android:hint="@string/password_placeholder"
                 android:inputType="text"
+
                 android:text="@={signUpVM._userPassword}"
+
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
