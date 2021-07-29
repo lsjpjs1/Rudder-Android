@@ -1,6 +1,7 @@
 package com.rudder.data.remote
 
 
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +12,9 @@ object RetrofitClient {
 
     private lateinit var retrofit: Retrofit
 
-
+    val gson = GsonBuilder()
+        .setLenient()
+        .create()
 
     fun getClient(baseUrl: String): Retrofit{
 
@@ -23,7 +26,7 @@ object RetrofitClient {
                 .baseUrl(baseUrl)
                 .client(client)
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
         }
         return retrofit

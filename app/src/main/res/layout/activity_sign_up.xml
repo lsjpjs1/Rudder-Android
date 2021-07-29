@@ -358,6 +358,7 @@
             android:layout_marginTop="80dp"
             android:backgroundTint="#9329D1"
             android:text="@string/verify_capital"
+            android:onClick="@{()->signUpVM.callSendVeriCode()}"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.07"
             app:layout_constraintLeft_toLeftOf="parent"

@@ -33,17 +33,17 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 class SignUpActivity : AppCompatActivity() {
     private val viewModel: SignUpViewModel = SignUpViewModel()
 
-    val gson = GsonBuilder()
-        .setLenient()
-        .create()
-
-    val retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL)
-        .addConverterFactory(ScalarsConverterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .build()
-
-    val emailApi = retrofit.create(EmailSingupAPI::class.java)
+//    val gson = GsonBuilder()
+//        .setLenient()
+//        .create()
+//
+//    val retrofit = Retrofit.Builder()
+//        .baseUrl(BuildConfig.BASE_URL)
+//        .addConverterFactory(ScalarsConverterFactory.create())
+//        .addConverterFactory(GsonConverterFactory.create(gson))
+//        .build()
+//
+//    val emailApi = retrofit.create(EmailSingupAPI::class.java)
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
     val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
@@ -65,192 +65,70 @@ class SignUpActivity : AppCompatActivity() {
         verifyBtn.isEnabled = b0 && b1 && b2 && b3
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        IDcheckbox.isEnabled = false
+        PWcheckbox1.isEnabled = false
+        PWcheckbox2.isEnabled = false
+        emailCheckbox.isEnabled = false
+        Recommendcheckbox.isChecked = false
+        Recommendcheckbox.isEnabled = false
+        veifyCodeCheckbox.isEnabled = false
+
+        //verifyBtn.isEnabled = false
+        submitBtn.isEnabled = false
+        signUpBtn.isEnabled = false
 
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
         binding.signUpVM = viewModel
         binding.lifecycleOwner = this
 
         viewModel.userPassword.observe(this, Observer {
-            if (it.trim().matches(passwordRg)) changeCheckBoxTrueState(PWcheckbox1)
+            if (it.trim().matches(passwordRg) && it.isNotBlank()) changeCheckBoxTrueState(
+                PWcheckbox1
+            )
             else {
                 changeCheckBoxFalseState(PWcheckbox1)
-                Toast.makeText(this,"비밀번호는 숫자,문자,특수문자 중 2가지 포함(8~15자)",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "비밀번호는 숫자,문자,특수문자 중 2가지 포함(8~15자)", Toast.LENGTH_SHORT).show()
             }
-            buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+            //buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
         })
 
         viewModel.userPasswordCheck.observe(this, Observer {
-            if(it.trim() == viewModel.userPassword.value!!.trim() && it.isNotBlank() ){ changeCheckBoxTrueState(PWcheckbox2)
-            }
-            else {
+            if (it.trim() == viewModel.userPassword.value!!.trim() && it.isNotBlank()) {
+                changeCheckBoxTrueState(PWcheckbox2)
+            } else {
                 changeCheckBoxFalseState(PWcheckbox2)
-                Toast.makeText(this,"Please Check, Password and Password Confirm",Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Please Check, Password and Password Confirm",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+            //buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
         })
 
         viewModel.userEmailDomain.observe(this, Observer {
-            if(it.trim().matches(emailRg) ){ changeCheckBoxTrueState(emailCheckbox)
-            }
-            else {
+            if (it.trim().matches(emailRg)) {
+                changeCheckBoxTrueState(emailCheckbox)
+            } else {
                 changeCheckBoxFalseState(emailCheckbox)
-                Toast.makeText(this,"Please Check, Right Email Domain",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please Check, Right Email Domain", Toast.LENGTH_SHORT).show()
             }
-            buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+            //buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
         })
 
-
-        var id = findViewById<EditText>(R.id.editTextTextPersonName1)
-        var myPWFirst = findViewById<EditText>(R.id.editTextTextPersonName4)
-        var myPWSecond = findViewById<EditText>(R.id.editTextTextPersonName3)
-        var emailID = findViewById<EditText>(R.id.editTextTextPersonName9)
-        var emailDomain = findViewById<EditText>(R.id.editTextTextPersonName10)
-
-
-        var checkBoxId = findViewById<CheckBox>(R.id.IDcheckbox)
-        var checkBoxReco = findViewById<CheckBox>(R.id.Recommendcheckbox)
-        var pwCheckBox1 = findViewById<CheckBox>(R.id.PWcheckbox1)
-        var pwCheckBox2 = findViewById<CheckBox>(R.id.PWcheckbox2)
-        var checkBoxEmail = findViewById<CheckBox>(R.id.emailCheckbox)
-        var veriCheckBox = findViewById<CheckBox>(R.id.veifyCodeCheckbox)
-
-        var verifyButton = findViewById<Button>(R.id.verifyBtn)
-        var submitButton = findViewById<Button>(R.id.submitBtn)
-        var signUpButton = findViewById<Button>(R.id.signUpBtn)
-
-
-
-        pwCheckBox1.setEnabled(false)
-        pwCheckBox2.setEnabled(false)
-        checkBoxId.setEnabled(false)
-        checkBoxEmail.setEnabled(false)
-        checkBoxReco.setChecked(true)
-        checkBoxReco.setEnabled(false)
-        veriCheckBox.setEnabled(false)
-
-        verifyButton.setEnabled(false)
-        submitButton.setEnabled(false)
-        signUpButton.setEnabled(false)
-
-
-        verifyButton.setOnClickListener {
-
-            val emailInput = emailID.getText().toString().plus('@').plus(emailDomain.getText().toString())
-            Log.d(TAG, "이메일 : ${emailInput}")
-            val callPostTransferEmail = emailApi.emailPost(Emailaddress(emailInput))
-
-            callPostTransferEmail.enqueue(object : Callback<String> {
-                override fun onResponse(
-                    call: Call<String>,
-                    response: Response<String>
-                ) {
-                    Log.d(TAG, "성공 : ${response.raw()}")
-                    Log.d(TAG, "성공 : ${response.message()}")
-                }
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    Log.d(TAG, "실패 : ${t.message}")
-                }
-            })
-        }
-
-//        myPWFirst.addTextChangedListener(object : TextWatcher {
-//            //입력이 끝났을 때
-//            //4. 비밀번호 일치하는지 확인
-//            override fun afterTextChanged(p0: Editable?) {
-//                if (myPWFirst.getText().toString().trim().matches(passwordRg)) {
-//                    pwCheckBox1.setEnabled(true)
-//                    pwCheckBox1.setChecked(true)
-//                    pwCheckBox1.setEnabled(false)
-//                } else {
-//                    pwCheckBox1.setEnabled(true)
-//                    pwCheckBox1.setChecked(false)
-//                    pwCheckBox1.setEnabled(false)
-//                }
-//            }
-//            //입력하기 전
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-//            //텍스트 변화가 있을 시
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                if (myPWFirst.getText().toString().trim().matches(passwordRg)) {
-//                    pwCheckBox1.setEnabled(true)
-//                    pwCheckBox1.setChecked(true)
-//                    pwCheckBox1.setEnabled(false)
-//                } else {
-//                    pwCheckBox1.setEnabled(true)
-//                    pwCheckBox1.setChecked(false)
-//                    pwCheckBox1.setEnabled(false)
-//                }
-//            }
-//        })
-
-
-        myPWSecond.addTextChangedListener(object : TextWatcher {
-            //입력이 끝났을 때
-            override fun afterTextChanged(p0: Editable?) {
-                if (myPWFirst.getText().toString().equals(myPWSecond.getText().toString())) {
-                    pwCheckBox2.setEnabled(true)
-                    pwCheckBox2.setChecked(true)
-                    pwCheckBox2.setEnabled(false)
-                    //if (signUpCheck(pwCheckBox1.isChecked(), pwCheckBox2.isChecked(), veriCheckBox.isChecked()) ) signUpButton.setEnabled(true)
-                } else {
-                    pwCheckBox2.setEnabled(true)
-                    pwCheckBox2.setChecked(false)
-                    pwCheckBox2.setEnabled(false)
-                }
+        viewModel.emailCheck.observe(this, Observer {
+            if (it) submitBtn.isEnabled = true
+            else {
+                submitBtn.isEnabled = false
+                Toast.makeText(this, "Email must be Naver Email", Toast.LENGTH_SHORT).show()
             }
-            //입력하기 전
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            //텍스트 변화가 있을 시
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (myPWFirst.getText().toString().equals(myPWSecond.getText().toString())) {
-                    pwCheckBox2.setEnabled(true)
-                    pwCheckBox2.setChecked(true)
-                    pwCheckBox2.setEnabled(false)
-                    //if (signUpCheck(pwCheckBox1.isChecked(), pwCheckBox2.isChecked(), veriCheckBox.isChecked()) ) signUpButton.setEnabled(true)
 
-                } else {
-                    pwCheckBox2.setEnabled(true)
-                    pwCheckBox2.setChecked(false)
-                    pwCheckBox2.setEnabled(false)
-                }
-            }
         })
 
-
-        emailDomain.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                if (emailDomain.getText().toString().trim().matches(emailRg)) {
-                    checkBoxEmail.setEnabled(true)
-                    checkBoxEmail.setChecked(true)
-                    checkBoxEmail.setEnabled(false)
-                } else {
-                    checkBoxEmail.setEnabled(true)
-                    checkBoxEmail.setChecked(false)
-                    checkBoxEmail.setEnabled(false)
-                }
-            }
-            //입력하기 전
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            //텍스트 변화가 있을 시
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (emailDomain.getText().toString().trim().matches(emailRg)) {
-                    checkBoxEmail.setEnabled(true)
-                    checkBoxEmail.setChecked(true)
-                    checkBoxEmail.setEnabled(false)
-                } else {
-                    checkBoxEmail.setEnabled(true)
-                    checkBoxEmail.setChecked(false)
-                    checkBoxEmail.setEnabled(false)
-                }
-            }
-        })
 
     }
-
-
 
 }
