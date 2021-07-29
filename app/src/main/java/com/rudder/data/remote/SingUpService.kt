@@ -1,6 +1,7 @@
 package com.rudder.data.remote
 
 import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -18,7 +19,7 @@ interface SingUpEmailService {
 }
 
 interface IdDuplicatedService {
-    @POST("/schoolverify/verifyEmail")
+    @POST("/signupin/checkduplication")
     suspend fun idDuplicatedSignup(
         @Body userId : IdDuplicatedInfo
     ) : JsonObject

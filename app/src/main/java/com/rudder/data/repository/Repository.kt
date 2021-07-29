@@ -3,8 +3,10 @@ package com.rudder.data.repository
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.EmailInfo
+import com.rudder.data.IdDuplicatedInfo
 import com.rudder.data.LoginInfo
 import com.rudder.data.Post
 import com.rudder.data.local.App
@@ -40,6 +42,18 @@ class Repository {
         emailCheckFlag = verifyAPIResult == "true"
 
         return emailCheckFlag
+    }
+
+    suspend fun signUpIdDuplicated(idDuplicatedInfo: IdDuplicatedInfo) : Boolean{
+        var idCheckFlag : Boolean
+        val idDuplicatedAPIResultJson = SignUpApi.instance.idDuplicatedSignUp(idDuplicatedInfo).await()
+        Log.d(TAG, "idDuplicatedAPIResultJson : ${idDuplicatedAPIResultJson}")
+
+        val jsonResult = idDuplicatedAPIResultJson.getAsJsonObject("result")
+        val isDuplicatedResult = jsonResult.get("isDuplicated").asBoolean
+
+        idCheckFlag = isDuplicatedResult
+        return idCheckFlag
     }
 
 

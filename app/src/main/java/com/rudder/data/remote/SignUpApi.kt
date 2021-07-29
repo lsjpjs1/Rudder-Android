@@ -2,6 +2,7 @@ package com.rudder.data.remote
 
 
 import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
 import com.rudder.BuildConfig
 import com.rudder.data.EmailInfo
 import com.rudder.data.IdDuplicatedInfo
@@ -17,22 +18,16 @@ class SignUpApi {
     private val singUpEmailService : SingUpEmailService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(SingUpEmailService::class.java)
 
     fun emailSignUp(emailInfo: EmailInfo) : Deferred<String>{
-
         return GlobalScope.async(Dispatchers.IO){
             singUpEmailService.emailSignUp(emailInfo)
-        }
+        } }
 
-    }
 
     private val idDuplicatedService : IdDuplicatedService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(IdDuplicatedService::class.java)
 
     fun idDuplicatedSignUp(idDuplicatedInfo: IdDuplicatedInfo) : Deferred<JsonObject>{
-
         return GlobalScope.async(Dispatchers.IO){
             idDuplicatedService.idDuplicatedSignup(idDuplicatedInfo)
-        }
-
-    }
-
+        } }
 
 }

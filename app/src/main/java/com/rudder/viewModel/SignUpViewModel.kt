@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rudder.R
 import com.rudder.data.EmailInfo
+import com.rudder.data.IdDuplicatedInfo
 import com.rudder.data.LoginInfo
-import com.rudder.data.remote.Emailaddress
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
@@ -31,6 +31,7 @@ class SignUpViewModel  : ViewModel() {
     val _userVerificationCode = MutableLiveData<String>()
 
     val _emailCheck = MutableLiveData<Boolean>()
+    val _idCheck = MutableLiveData<Boolean>()
 
 
     val userId: LiveData<String> = _userId
@@ -42,6 +43,7 @@ class SignUpViewModel  : ViewModel() {
     val userVerificationCode: LiveData<String> = _userVerificationCode
 
     val emailCheck: LiveData<Boolean> = _emailCheck
+    val idCheck: LiveData<Boolean> = _idCheck
 
     val passwordRg =
         "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
@@ -61,10 +63,14 @@ class SignUpViewModel  : ViewModel() {
     fun callIdCheck() {
         GlobalScope.launch {
             val idInput = _userId.value!!
-
-            val result = repository.signUpSendVerifyCode(I(emailInput))
+            val result = repository.signUpIdDuplicated(IdDuplicatedInfo(idInput))
+            Log.d(ContentValues.TAG, "결과 : ${result}")
+            _idCheck.postValue(result)
 
         }
+    }
+
+
 
     fun callSendVeriCode() {
         GlobalScope.launch {
