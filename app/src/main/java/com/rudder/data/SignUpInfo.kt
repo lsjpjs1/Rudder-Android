@@ -20,3 +20,11 @@ data class CheckVerifyCodeInfo(
     val verifyCode : String
 )
 
+
+data class AccountInfo(
+    @SerializedName(value = "user_id")
+    val userId: String,
+    @SerializedName(value = "user_password")
+    val userPassword: String
+
+)

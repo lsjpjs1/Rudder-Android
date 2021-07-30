@@ -4,6 +4,7 @@ package com.rudder.data.remote
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import com.rudder.BuildConfig
+import com.rudder.data.AccountInfo
 import com.rudder.data.CheckVerifyCodeInfo
 import com.rudder.data.EmailInfo
 import com.rudder.data.IdDuplicatedInfo
@@ -38,5 +39,13 @@ class SignUpApi {
         return GlobalScope.async(Dispatchers.IO){
             checkVerifyCodeService.verifyCodeSignUp(checkVeriCodeInfo)
         } }
+
+    private val createAccountService : CreateAccountService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(CreateAccountService::class.java)
+
+    fun createAccountSignUp(accountInfo: AccountInfo) : Deferred<String>{
+        return GlobalScope.async(Dispatchers.IO){
+            createAccountService.createAccountSignUp(accountInfo)
+        } }
+
 
 }

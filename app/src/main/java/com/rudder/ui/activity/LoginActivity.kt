@@ -38,8 +38,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-
-
     fun callMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

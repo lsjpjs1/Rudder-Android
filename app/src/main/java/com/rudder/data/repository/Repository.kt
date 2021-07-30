@@ -46,7 +46,7 @@ class Repository {
         val idDuplicatedAPIResultJson = SignUpApi.instance.idDuplicatedSignUp(idDuplicatedInfo).await()
         Log.d(TAG, "idDuplicatedAPIResultJson : ${idDuplicatedAPIResultJson}")
 
-        val jsonResult = idDuplicatedAPIResultJson.getAsJsonObject("result")
+        val jsonResult = idDuplicatedAPIResultJson.getAsJsonObject("results")
         val isDuplicatedResult = jsonResult.get("isDuplicated").asBoolean
 
         idCheckFlag = isDuplicatedResult
@@ -60,6 +60,15 @@ class Repository {
         verifyCheckFlag = checkVerifyAPIResult == "Success"
 
         return verifyCheckFlag
+    }
+
+    suspend fun signUpCreateAccount(accountInfo: AccountInfo) : Boolean {
+        var createAccountCheckFlag : Boolean
+        val createAccountAPIResult = SignUpApi.instance.createAccountSignUp(accountInfo).await()
+        Log.d(TAG, "createAccountAPIResult : ${createAccountAPIResult}")
+        createAccountCheckFlag = createAccountAPIResult == "true"
+
+        return createAccountCheckFlag
     }
 
 

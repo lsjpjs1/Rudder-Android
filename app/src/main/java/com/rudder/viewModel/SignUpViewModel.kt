@@ -10,10 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rudder.R
-import com.rudder.data.CheckVerifyCodeInfo
-import com.rudder.data.EmailInfo
-import com.rudder.data.IdDuplicatedInfo
-import com.rudder.data.LoginInfo
+import com.rudder.data.*
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
@@ -35,7 +32,7 @@ class SignUpViewModel  : ViewModel() {
     val _idCheck = MutableLiveData<Boolean>()
     val _verifyCodeCheck = MutableLiveData<Boolean>()
 
-    private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
+    private val _startLoginActivity = MutableLiveData<Boolean>()
 
 
     val userId: LiveData<String> = _userId
@@ -50,7 +47,7 @@ class SignUpViewModel  : ViewModel() {
     val idCheck : LiveData<Boolean> = _idCheck
     val verifyCodeCheck : LiveData<Boolean> = _verifyCodeCheck
 
-    val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
+    val startLoginActivity: LiveData<Boolean> = _startLoginActivity
 
     private val repository = Repository()
 
@@ -91,6 +88,16 @@ class SignUpViewModel  : ViewModel() {
             Log.d(ContentValues.TAG, "callCheckVeriCode 결과 : ${result}")
             _verifyCodeCheck.postValue(result)
 
+        }
+    }
+
+    fun callCreateAccount() {
+        GlobalScope.launch {
+            val idInput = _userId.value!!
+            val passwordInput = _userPassword.value!!
+            val result = repository.signUpCreateAccount(AccountInfo(idInput, passwordInput))
+            Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
+            _startLoginActivity.postValue(result)
         }
     }
 

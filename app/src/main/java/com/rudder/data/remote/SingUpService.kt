@@ -2,6 +2,7 @@ package com.rudder.data.remote
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
+import com.rudder.data.AccountInfo
 import com.rudder.data.CheckVerifyCodeInfo
 import retrofit2.Call
 import retrofit2.http.Body
@@ -15,7 +16,6 @@ interface SingUpEmailService {
     suspend fun emailSignUp(
             @Body email : EmailInfo
     ) : String
-
 }
 
 interface IdDuplicatedService {
@@ -23,16 +23,20 @@ interface IdDuplicatedService {
     suspend fun idDuplicatedSignup(
         @Body userId : IdDuplicatedInfo
     ) : JsonObject
-
 }
-
 
 interface CheckVerifyCodeService {
     @POST("/schoolverify/checkCode")
     suspend fun verifyCodeSignUp(
         @Body verifyInfo : CheckVerifyCodeInfo
     ) : String
+}
 
+interface CreateAccountService {
+    @POST("/signupin/signup")
+    suspend fun createAccountSignUp(
+        @Body accountInfo : AccountInfo
+    ) : String
 }
 
 
