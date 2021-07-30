@@ -4,6 +4,7 @@ package com.rudder.data.remote
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import com.rudder.BuildConfig
+import com.rudder.data.CheckVerifyCodeInfo
 import com.rudder.data.EmailInfo
 import com.rudder.data.IdDuplicatedInfo
 import kotlinx.coroutines.*
@@ -28,6 +29,14 @@ class SignUpApi {
     fun idDuplicatedSignUp(idDuplicatedInfo: IdDuplicatedInfo) : Deferred<JsonObject>{
         return GlobalScope.async(Dispatchers.IO){
             idDuplicatedService.idDuplicatedSignup(idDuplicatedInfo)
+        } }
+
+
+    private val checkVerifyCodeService : CheckVerifyCodeService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(CheckVerifyCodeService::class.java)
+
+    fun checkVerifySignUp(checkVeriCodeInfo: CheckVerifyCodeInfo) : Deferred<String>{
+        return GlobalScope.async(Dispatchers.IO){
+            checkVerifyCodeService.verifyCodeSignUp(checkVeriCodeInfo)
         } }
 
 }

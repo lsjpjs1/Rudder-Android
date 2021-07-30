@@ -13,10 +13,10 @@ data class IdDuplicatedInfo(
 )
 
 
-data class checkVeriCodeInfo(
+data class CheckVerifyCodeInfo(
     @SerializedName(value = "email")
     val email: String,
     @SerializedName(value = "verifyCode")
-    val veifyCode : String
+    val verifyCode : String
 )
 

@@ -5,10 +5,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.gson.JsonObject
 import com.rudder.BuildConfig
-import com.rudder.data.EmailInfo
-import com.rudder.data.IdDuplicatedInfo
-import com.rudder.data.LoginInfo
-import com.rudder.data.Post
+import com.rudder.data.*
 import com.rudder.data.local.App
 import com.rudder.data.remote.LoginApi
 import com.rudder.data.remote.PostApi
@@ -54,6 +51,15 @@ class Repository {
 
         idCheckFlag = isDuplicatedResult
         return idCheckFlag
+    }
+
+    suspend fun signUpCheckVerifyCode(checkVeriCodeInfo: CheckVerifyCodeInfo) : Boolean {
+        var verifyCheckFlag : Boolean
+        val checkVerifyAPIResult = SignUpApi.instance.checkVerifySignUp(checkVeriCodeInfo).await()
+        Log.d(TAG, "checkVerifyAPIResult : ${checkVerifyAPIResult}")
+        verifyCheckFlag = checkVerifyAPIResult == "Success"
+
+        return verifyCheckFlag
     }
 
 

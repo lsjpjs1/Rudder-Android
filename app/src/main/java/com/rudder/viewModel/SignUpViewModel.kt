@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rudder.R
+import com.rudder.data.CheckVerifyCodeInfo
 import com.rudder.data.EmailInfo
 import com.rudder.data.IdDuplicatedInfo
 import com.rudder.data.LoginInfo
@@ -32,6 +33,9 @@ class SignUpViewModel  : ViewModel() {
 
     val _emailCheck = MutableLiveData<Boolean>()
     val _idCheck = MutableLiveData<Boolean>()
+    val _verifyCodeCheck = MutableLiveData<Boolean>()
+
+    private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
 
 
     val userId: LiveData<String> = _userId
@@ -42,11 +46,11 @@ class SignUpViewModel  : ViewModel() {
     val userEmailDomain: LiveData<String> = _userEmailDomain
     val userVerificationCode: LiveData<String> = _userVerificationCode
 
-    val emailCheck: LiveData<Boolean> = _emailCheck
-    val idCheck: LiveData<Boolean> = _idCheck
+    val emailCheck : LiveData<Boolean> = _emailCheck
+    val idCheck : LiveData<Boolean> = _idCheck
+    val verifyCodeCheck : LiveData<Boolean> = _verifyCodeCheck
 
-    val passwordRg =
-        "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
+    val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
 
     private val repository = Repository()
 
@@ -64,32 +68,28 @@ class SignUpViewModel  : ViewModel() {
         GlobalScope.launch {
             val idInput = _userId.value!!
             val result = repository.signUpIdDuplicated(IdDuplicatedInfo(idInput))
-            Log.d(ContentValues.TAG, "결과 : ${result}")
+            Log.d(ContentValues.TAG, "callIdCheck 결과 : ${result}")
             _idCheck.postValue(result)
 
         }
     }
 
-
-
     fun callSendVeriCode() {
         GlobalScope.launch {
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpSendVerifyCode(EmailInfo(emailInput))
-            Log.d(ContentValues.TAG, "결과 : ${result}")
+            Log.d(ContentValues.TAG, "callSendVeriCode 결과 : ${result}")
             _emailCheck.postValue(result)
         }
     }
 
-
     fun callCheckVeriCode() {
         GlobalScope.launch {
-            val verifyInput = _userVerificationCode.value!!
-            //val result = repository.signUpSendVerifyCode(EmailInfo(emailInput))
-            //Log.d(ContentValues.TAG, "결과 : ${result}")
-            //_emailCheck.postValue(result)
-
-            Log.d(ContentValues.TAG, "_emailCheck : ${_emailCheck.value}")
+            val verifyCodeInput = _userVerificationCode.value!!
+            val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
+            val result = repository.signUpCheckVerifyCode(CheckVerifyCodeInfo(emailInput, verifyCodeInput))
+            Log.d(ContentValues.TAG, "callCheckVeriCode 결과 : ${result}")
+            _verifyCodeCheck.postValue(result)
 
         }
     }

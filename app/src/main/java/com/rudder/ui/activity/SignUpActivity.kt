@@ -1,6 +1,7 @@
 package com.rudder.ui.activity
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -37,6 +38,12 @@ class SignUpActivity : AppCompatActivity() {
 
     fun buttonEnable(b0 : Boolean, b1 : Boolean, b2 : Boolean, b3 : Boolean){
         verifyBtn.isEnabled = b0 && b1 && b2 && b3
+    }
+
+
+    fun callLoginActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +88,15 @@ class SignUpActivity : AppCompatActivity() {
             buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
         })
 
+        viewModel.idCheck.observe(this, Observer {
+            if (!it) changeCheckBoxTrueState(IDcheckbox)
+            else {
+                changeCheckBoxFalseState(IDcheckbox)
+                Toast.makeText(this, "ID is duplicated", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
         viewModel.emailCheck.observe(this, Observer {
             if (it) submitBtn.isEnabled = true
             else {
@@ -90,13 +106,22 @@ class SignUpActivity : AppCompatActivity() {
 
         })
 
-        viewModel.idCheck.observe(this, Observer {
-            if (!it) changeCheckBoxTrueState(IDcheckbox)
-            else {
-                changeCheckBoxFalseState(IDcheckbox)
-                Toast.makeText(this, "ID is duplicated", Toast.LENGTH_SHORT).show()
+        viewModel.verifyCodeCheck.observe(this, Observer {
+            if (it) {
+                changeCheckBoxTrueState(veifyCodeCheckbox)
+                signUpBtn.isEnabled = true
             }
+            else {
+                changeCheckBoxFalseState(veifyCodeCheckbox)
+                signUpBtn.isEnabled = false
+                Toast.makeText(this, "Wrong Verification Code", Toast.LENGTH_SHORT).show()
+            }
+        })
 
+        viewModel.startLoginActivity.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{
+                callLoginActivity()
+            }
         })
 
         IDcheckbox.isEnabled = false
