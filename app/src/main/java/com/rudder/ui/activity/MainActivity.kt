@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -107,6 +109,8 @@ class MainActivity : AppCompatActivity() {
         }
         Log.d("changedPost", supportFragmentManager.findFragmentByTag("1234").toString())
     }
+
+
 
     fun showProgressBar(){
         progressBar.visibility = View.VISIBLE

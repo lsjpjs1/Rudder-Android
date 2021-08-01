@@ -33,13 +33,69 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout11" />
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/postPreviewTail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="@dimen/comment_tail_height">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/postPreviewTailLikeCount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="@dimen/post_preview_tail_like_count_width">
 
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_outline_thumb_up_24" />
+
+            <TextView
+                android:id="@+id/postPreviewTailLikeCountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{` `+Integer.toString(post.likeCount)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/postPreviewTailCommentCount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toEndOf="@+id/postPreviewTailLikeCount"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="@dimen/post_preview_tail_comment_count_width">
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_outline_chat_bubble_outline_24" />
+
+            <TextView
+                android:id="@+id/postPreviewTailCommentCountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{` `+Integer.toString(post.commentCount)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView7"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
