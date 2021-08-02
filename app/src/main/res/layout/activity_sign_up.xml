@@ -36,11 +36,11 @@
                 style="@android:style/Widget.AutoCompleteTextView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="#9329D1"
                 android:ems="10"
                 android:hint="@string/id_placeholder"
                 android:inputType="text"
                 android:text="@={signUpVM._userId}"
-                android:backgroundTint="#9329D1"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,11 +54,11 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="180dp"
                 android:layout_marginLeft="100dp"
-                android:text="@string/id_check"
                 android:backgroundTint="#9329D1"
+                android:gravity="center"
 
                 android:onClick="@{()->signUpVM.callIdCheck()}"
-                android:gravity="center"
+                android:text="@string/id_check"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -154,10 +154,10 @@
                 style="@android:style/Widget.AutoCompleteTextView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="#9329D1"
                 android:ems="10"
                 android:hint="@string/password_confirm_placeholder"
                 android:inputType="textPassword"
-                android:backgroundTint="#9329D1"
                 android:text="@={signUpVM._userPasswordCheck}"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="1"
@@ -204,9 +204,9 @@
                 style="@android:style/Widget.AutoCompleteTextView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:backgroundTint="#9329D1"
                 android:ems="10"
                 android:hint="@string/password_placeholder"
-                android:backgroundTint="#9329D1"
                 android:inputType="textPassword"
                 android:text="@={signUpVM._userPassword}"
                 app:layout_constraintHeight_default="percent"
@@ -273,10 +273,10 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="1dp"
+                android:backgroundTint="#9329D1"
                 android:ems="10"
                 android:hint="@string/email_id"
                 android:inputType="text"
-                android:backgroundTint="#9329D1"
                 android:text="@={signUpVM._userEmailID}"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="1"
@@ -324,10 +324,10 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="2dp"
+                android:backgroundTint="#9329D1"
                 android:ems="10"
                 android:hint="@string/email_domain"
                 android:inputType="text"
-                android:backgroundTint="#9329D1"
                 android:text="@={signUpVM._userEmailDomain}"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="1"
@@ -354,15 +354,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <Button
             android:id="@+id/verifyBtn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="80dp"
             android:backgroundTint="#9329D1"
-            android:text="@string/verify_capital"
             android:onClick="@{()->signUpVM.callSendVeriCode()}"
+            android:text="@string/verify_capital"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.07"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -394,18 +393,18 @@
             android:layout_height="0dp"
             android:layout_marginStart="40dp"
             android:layout_marginLeft="100dp"
-            android:hint="@string/verify_code"
-            android:inputType="text"
             android:layout_marginTop="150dp"
             android:backgroundTint="#9329D1"
+            android:hint="@string/verify_code"
+            android:inputType="text"
             android:text="@={signUpVM._userVerificationCode}"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.07"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout5"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.4"
-            app:layout_constraintTop_toTopOf="@id/constraintLayout5" />
+            app:layout_constraintWidth_percent="0.4" />
 
         <CheckBox
             android:id="@+id/veifyCodeCheckbox"
@@ -430,8 +429,8 @@
             android:layout_marginTop="100dp"
             android:backgroundTint="#9329D1"
             android:clickable="false"
-            android:text="@string/sign_up"
             android:onClick="@{()->signUpVM.callCreateAccount()}"
+            android:text="@string/sign_up"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.07"
@@ -441,7 +440,7 @@
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.9" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

@@ -5,15 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".data.local.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Rudder"
-        android:usesCleartextTraffic="true"
-        android:name=".data.local.App">
-        <activity android:name=".ui.activity.MainActivity"></activity>
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.activity.ProfileSettingActivity"></activity>
+        <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.SignUpActivity" />
         <activity android:name=".ui.activity.LoginActivity">
             <intent-filter>

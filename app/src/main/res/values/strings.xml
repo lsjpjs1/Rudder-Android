@@ -3,7 +3,7 @@
     <string name="id_placeholder">ID</string>
     <string name="password_placeholder">PASSWORD</string>
     <string name="password_confirm_placeholder">PASSWORD CONFIRM</string>
-    <string name="recommend_code">RECOMMEND CODE (option)</string>
+    <string name="recommend_code">RECOMMEND CODE (optional)</string>
     <string name="email_id">EMAIL ID</string>
     <string name="email_domain">EMAIL DOMAIN</string>
     <string name="sign_up">sign up</string>
@@ -15,4 +15,8 @@
     <string name="id_check">CHECK</string>
     <string name="login_error">Fail to sign in</string>
     <string name="community_title">Community</string>
+    <string name="profile_setting">Profile Setting</string>
+    <string name="nickname">NICKNAME</string>
+    <string name="introduce">Introduce Yourself! (optional)</string>
+
 </resources>

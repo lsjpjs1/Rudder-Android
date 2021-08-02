@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="profileSettingVM"
+            type="com.rudder.viewModel.ProfileSettingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutPS2"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutPS2"
+        tools:context=".ui.activity.ProfileSettingActivity">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutPS1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/profile_setting"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutPS2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toBottomOf="@id/constraintLayoutPS1"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            >
+
+            <EditText
+                android:id="@+id/editTextNickName"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:backgroundTint="#9329D1"
+                android:hint="@string/nickname"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.7" />
+
+            <CheckBox
+                android:id="@+id/nickNameCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="340dp"
+                android:layout_marginTop="20dp"
+                android:buttonTint="#5AEF0A"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.1" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutPS3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1"
+            app:layout_constraintTop_toBottomOf="@id/constraintLayoutPS2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            >
+
+
+            <EditText
+                android:id="@+id/editTextIntroduce"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:hint="@string/introduce"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:inputType="textImeMultiLine"
+                android:gravity="top|left"
+                android:background="@drawable/edge"
+
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.7" />
+
+            <CheckBox
+                android:id="@+id/introduceCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="340dp"
+                android:layout_marginTop="20dp"
+                android:buttonTint="#5AEF0A"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.1" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutPS4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1"
+            app:layout_constraintTop_toBottomOf="@id/constraintLayoutPS3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            >
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
+
+
+</layout>
