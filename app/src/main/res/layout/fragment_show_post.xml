@@ -146,7 +146,7 @@
                         android:layout_height="0dp"
                         android:background="@color/light_grey"
                         app:layout_constraintHeight_default="percent"
-                        app:layout_constraintHeight_percent="0.02"
+                        app:layout_constraintHeight_percent="@dimen/divide_default"
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="width_default" format="float" type="dimen">0.9</item>
+    <item name="divide_default" format="float" type="dimen">0.02</item>
 
     <item name="main_bottom_bar_height" format="float" type="dimen">0.07</item>
     <item name="main_bottom_bar_shadow_height" format="float" type="dimen">0.0035</item>
@@ -49,6 +50,9 @@
 
     <item name="post_info_height" type="dimen" format="float">0.08</item>
     <item name="post_count_height" type="dimen" format="float">0.08</item>
+
+    <item name="comment_height" type="dimen" format="float">0.4</item>
+
     <item name="comment_info_height" type="dimen" format="float">0.08</item>
 
     <item name="comment_info_title_width" type="dimen" format="float">0.3</item>
