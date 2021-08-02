@@ -63,9 +63,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "androidx.activity:activity-ktx:1.1.0"
 
-    //noinspection GradleCompatible
-    implementation 'com.android.support:design:30.0.0'
-
     implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
 
     def lifecycle_version = "2.3.1"

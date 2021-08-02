@@ -18,5 +18,7 @@
     <string name="profile_setting">Profile Setting</string>
     <string name="nickname">NICKNAME</string>
     <string name="introduce">Introduce Yourself! (optional)</string>
+    <string name="school_selection">School Selection</string>
+    <string name="school_select">School Select</string>
 
 </resources>

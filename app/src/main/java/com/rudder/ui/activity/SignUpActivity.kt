@@ -40,7 +40,7 @@ class SignUpActivity : AppCompatActivity() {
 
 
     fun callLoginActivity() {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, SchoolSelectionActivity::class.java)
         startActivity(intent)
     }
 

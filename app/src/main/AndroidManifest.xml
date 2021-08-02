@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rudder"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.ProfileSettingActivity"></activity>
+        <activity android:name=".ui.activity.SchoolSelectionActivity"></activity>
+        <activity android:name=".ui.activity.ProfileSettingActivity" />
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.SignUpActivity" />
         <activity android:name=".ui.activity.LoginActivity">

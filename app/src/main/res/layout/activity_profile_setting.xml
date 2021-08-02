@@ -29,7 +29,6 @@
             app:layout_constraintWidth_percent="1">
 
             <TextView
-                android:id="@+id/textView8"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginLeft="30dp"
@@ -164,13 +163,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <EditText
-        android:id="@+id/editTextTextMultiLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine" />
 
 
 </layout>
