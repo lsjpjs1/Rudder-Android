@@ -10,7 +10,6 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayoutSS1"
         >
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutSS1"
             android:layout_width="0dp"
