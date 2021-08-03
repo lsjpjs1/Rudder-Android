@@ -19,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SignUpViewModel  : ViewModel() {
+object SignUpViewModel  : ViewModel() {
     val _userId = MutableLiveData<String>()
     val _userPassword = MutableLiveData<String>()
     val _userPasswordCheck = MutableLiveData<String>()
@@ -34,7 +34,7 @@ class SignUpViewModel  : ViewModel() {
 
     private val _startLoginActivity = MutableLiveData<Boolean>()
 
-    val _schoolSelectNext = MutableLiveData<Boolean>()
+    val _schoolSelectNext = MutableLiveData<Event<Boolean>>()
     val _schoolSelectBack = MutableLiveData<Boolean>()
     val _createAccountNext = MutableLiveData<Boolean>()
     val _createAccountBack = MutableLiveData<Boolean>()
@@ -55,7 +55,7 @@ class SignUpViewModel  : ViewModel() {
 
     val startLoginActivity: LiveData<Boolean> = _startLoginActivity
 
-    val schoolSelectNext: LiveData<Boolean> = _schoolSelectNext
+    val schoolSelectNext: LiveData<Event<Boolean>> = _schoolSelectNext
     val schoolSelectBack: LiveData<Boolean> = _schoolSelectBack
     val createAccountNext: LiveData<Boolean> = _createAccountNext
     val createAccountBack: LiveData<Boolean> = _createAccountBack
@@ -73,6 +73,16 @@ class SignUpViewModel  : ViewModel() {
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
     }
+
+    fun clickNextSchoolSelect(){
+        _schoolSelectNext.value = Event(true)
+    }
+
+
+    fun clickBackSchoolSelect(){
+        _schoolSelectBack.postValue(false)
+    }
+
 
     fun callIdCheck() {
         GlobalScope.launch {

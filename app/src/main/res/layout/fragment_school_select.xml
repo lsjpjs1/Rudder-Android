@@ -2,6 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="signUpVM"
+            type="com.rudder.viewModel.SignUpViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -114,8 +119,28 @@
                 android:layout_marginTop="200dp"
                 android:layout_marginRight="100dp"
                 android:backgroundTint="#9329D1"
+                android:onClick="@{()->signUpVM.clickNextSchoolSelect()}"
                 android:gravity="center"
                 android:text="@string/next"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.8" />
+
+
+            <Button
+                android:id="@+id/schoolSelectBackBtn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="150dp"
+                android:layout_marginRight="100dp"
+                android:backgroundTint="#9329D1"
+                android:gravity="center"
+                android:text="@string/back"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.15"
                 app:layout_constraintStart_toStartOf="parent"

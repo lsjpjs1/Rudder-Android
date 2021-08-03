@@ -8,12 +8,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.rudder.R
-import kotlinx.android.synthetic.main.activity_profile_schoolselect.*
+import kotlinx.android.synthetic.main.fragment_school_select.*
 
 class SchoolSelectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile_schoolselect)
+        setContentView(R.layout.fragment_school_select)
 
         val items = resources.getStringArray(R.array.schools_array)
 

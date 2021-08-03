@@ -20,6 +20,7 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.SignUpActivity" />
         <activity android:name=".ui.activity.LoginActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
