@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -45,7 +46,7 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
         bind.root.constraintLayout11.minHeight=headerHeight
         bind.root.postPreviewTail.minHeight=headerHeight
 
-        Log.d("cal",showPostBodyHeight.toString())
+        Log.d("cal",(context as Activity).findViewById<ScrollView>(R.id.scrollView1).height.toString())
 
 
         return CustomViewHolder(bind)

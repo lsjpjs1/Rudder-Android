@@ -13,6 +13,7 @@ import com.rudder.databinding.FragmentShowPostBinding
 import com.rudder.ui.adapter.PostCommentsAdapter
 import com.rudder.ui.adapter.PostPreviewAdapter
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_show_post.view.*
 
 class ShowPostFragment: Fragment() {
     private val viewModel = MainViewModel
@@ -25,7 +26,7 @@ class ShowPostFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val fragmentBinding= DataBindingUtil.inflate<FragmentShowPostBinding>(inflater,R.layout.fragment_show_post,container,false)
-
+        fragmentBinding.root.scrollView1.layoutParams.height = 1892
         val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext)
         fragmentBinding.commentDisplayRV.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
