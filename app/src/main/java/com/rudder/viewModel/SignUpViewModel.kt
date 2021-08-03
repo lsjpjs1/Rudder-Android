@@ -26,6 +26,8 @@ object SignUpViewModel  : ViewModel() {
     val _userEmailDomain = MutableLiveData<String>()
     val _userVerificationCode = MutableLiveData<String>()
 
+    val _test = MutableLiveData<Int>()
+
     val _emailCheck = MutableLiveData<Boolean>()
     val _idCheck = MutableLiveData<Boolean>()
     val _verifyCodeCheck = MutableLiveData<Boolean>()

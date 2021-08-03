@@ -53,31 +53,50 @@
             android:layout_height="0dp"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/constraintLayoutSS1"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            >
+            app:layout_constraintWidth_percent="1">
 
             <TextView
+                android:id="@+id/textView3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginLeft="80dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="80dp"
+                android:background="@drawable/edge"
+                android:backgroundTint="#9329D1"
                 android:gravity="center"
-                android:textSize="18dp"
                 android:text="@string/school_select"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#9329D1"
-                android:background="@drawable/edge"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.4" />
+
+<!--            <androidx.appcompat.widget.AppCompatSpinner-->
+<!--                android:id="@+id/schoolSelectSpinner"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_marginLeft="80dp"-->
+<!--                android:layout_marginTop="100dp"-->
+<!--                android:layout_marginRight="80dp"-->
+<!--                android:background="@drawable/edge"-->
+<!--                android:selectedItemPosition="@={signUpVM._test}"-->
+<!--                android:spinnerMode="dialog"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHeight_default="percent"-->
+<!--                app:layout_constraintHeight_percent="0.1"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintWidth_default="percent"-->
+<!--                app:layout_constraintWidth_percent="0.8">-->
+<!--            </androidx.appcompat.widget.AppCompatSpinner>-->
 
             <Spinner
                 android:id="@+id/schoolSelectSpinner"
@@ -86,15 +105,18 @@
                 android:layout_marginLeft="80dp"
                 android:layout_marginTop="100dp"
                 android:layout_marginRight="80dp"
+                android:background="@drawable/edge"
+                android:selectedItemPosition="@={signUpVM._test}"
+
+                android:spinnerMode="dialog"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.8"
-                android:spinnerMode="dialog"
-                android:background="@drawable/edge">
+                app:layout_constraintWidth_percent="0.8">
+
             </Spinner>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

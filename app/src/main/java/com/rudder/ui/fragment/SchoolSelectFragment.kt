@@ -38,7 +38,6 @@ class SchoolSelectFragment : Fragment() {
     ): View? {
         schoolSelect = DataBindingUtil.inflate<FragmentSchoolSelectBinding>(inflater,R.layout.fragment_school_select,container,false)
         schoolSelect.signUpVM = viewModel
-
 //        viewModel.schoolSelectNext.observe(viewLifecycleOwner, Observer {
 ////            val signUpActivityInstance = context as SignUpActivity
 ////            signUpActivityInstance.asd()
@@ -48,23 +47,25 @@ class SchoolSelectFragment : Fragment() {
 
 
         val items = resources.getStringArray(R.array.schools_array)
-
-        schoolSelect.root.schoolSelectSpinner.adapter = ArrayAdapter.createFromResource(lazyContext, R.array.schools_array , R.layout.support_simple_spinner_dropdown_item)
+        viewModel._test.observe(viewLifecycleOwner, Observer {
+            Log.d("test",it.toString())
+        })
+        schoolSelect.schoolSelectSpinner.adapter = ArrayAdapter.createFromResource(lazyContext, R.array.schools_array , R.layout.support_simple_spinner_dropdown_item)
             .also { adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                schoolSelectSpinner.adapter = adapter
+                schoolSelect.schoolSelectSpinner.adapter = adapter
             }
-
-        schoolSelect.root.schoolSelectSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                ///
-
-                //Log.d(ContentValues.TAG, "spinner 결과 : ${p2}")
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-        }
+//
+//        schoolSelect.schoolSelectSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//                ///
+//
+//                //Log.d(ContentValues.TAG, "spinner 결과 : ${p2}")
+//            }
+//
+//            override fun onNothingSelected(p0: AdapterView<*>?) {
+//
+//            }
+//        }
 
         return schoolSelect.root
 
