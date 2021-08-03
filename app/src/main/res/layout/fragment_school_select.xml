@@ -139,6 +139,7 @@
                 android:layout_marginTop="150dp"
                 android:layout_marginRight="100dp"
                 android:backgroundTint="#9329D1"
+                android:onClick="@{()->signUpVM.clickBackSchoolSelect()}"
                 android:gravity="center"
                 android:text="@string/back"
                 app:layout_constraintHeight_default="percent"

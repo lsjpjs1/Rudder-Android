@@ -70,6 +70,24 @@ object SignUpViewModel  : ViewModel() {
         _userEmailID.value = ""
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
+        _schoolSelectNext.value = Event(false)
+        _schoolSelectBack.value = Event(false)
+        _createAccountNext.value = Event(false)
+        _createAccountBack.value = Event(false)
+        _profileSettingNext.value = Event(false)
+        _profileSettingBack.value = Event(false)
+    }
+
+
+    fun clear(){
+        _userId.value = ""
+        _userPassword.value = ""
+        _userPasswordCheck.value = ""
+        _userRecommendCode.value = ""
+        _userEmailID.value = ""
+        _userEmailDomain.value = ""
+        _userVerificationCode.value = ""
+
     }
 
     fun clickNextSchoolSelect(){
@@ -78,7 +96,7 @@ object SignUpViewModel  : ViewModel() {
 
 
     fun clickBackSchoolSelect(){
-        //_schoolSelectBack.postValue(false)
+        _schoolSelectBack.value = Event(true)
     }
 
     fun clickNextCreateAccount(){

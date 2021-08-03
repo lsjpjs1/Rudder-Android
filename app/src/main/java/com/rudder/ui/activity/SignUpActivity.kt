@@ -1,10 +1,13 @@
 package com.rudder.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.rudder.R
@@ -12,7 +15,7 @@ import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.SignUpViewModel
-import kotlinx.android.synthetic.main.fragment_create_account.*
+
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -43,22 +46,32 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        createAccountFragment = CreateAccountFragment()
+        profileSettingFragment = ProfileSettingFragment()
+        schoolSelectFragment = SchoolSelectFragment()
 
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
         binding.signUpVM = viewModel
         binding.lifecycleOwner = this
 
-
-
-        createAccountFragment = CreateAccountFragment()
-        profileSettingFragment = ProfileSettingFragment()
-        schoolSelectFragment = SchoolSelectFragment()
-
-
         viewModel.schoolSelectNext.observe(this, Observer {
-            val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-            fragmentShowHide.addToBackStack()
-            fragmentShowHide.showFragment(createAccountFragment,R.id.signUp_container)
+
+            it.getContentIfNotHandled()?.let{
+                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                fragmentShowHide.addToBackStack()
+                fragmentShowHide.showFragment(createAccountFragment,R.id.signUp_container)
+            }})
+
+//            if(it.getContentIfNotHandled()!!){
+//                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+//                fragmentShowHide.addToBackStack()
+//                fragmentShowHide.showFragment(createAccountFragment,R.id.signUp_container)
+//            } })
+
+        viewModel.schoolSelectBack.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{
+                onBackPressed()
+            }
         })
 
 
@@ -66,35 +79,47 @@ class SignUpActivity : AppCompatActivity() {
             val fragmentShowHide = FragmentShowHide(supportFragmentManager)
             fragmentShowHide.addToBackStack()
             fragmentShowHide.showFragment(profileSettingFragment,R.id.signUp_container)
-        }
-        )
-
+        })
         viewModel.createAccountBack.observe(this, Observer {
-            val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-            fragmentShowHide.addToBackStack()
-            fragmentShowHide.showFragment(schoolSelectFragment,R.id.signUp_container)
-        }
-        )
+            it.getContentIfNotHandled()?.let{
+                onBackPressed()
+            }})
+
+
 
         viewModel.profileSettingBack.observe(this, Observer {
-            val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-            fragmentShowHide.addToBackStack()
-            fragmentShowHide.showFragment(createAccountFragment,R.id.signUp_container)
-        }
+            it.getContentIfNotHandled()?.let{
+                onBackPressed()
+            }}
         )
 
     }
 
     override fun onResume() {
 
-        val transaction = supportFragmentManager.beginTransaction()
+        supportFragmentManager.beginTransaction()
             .add(R.id.signUp_container, createAccountFragment)
             .hide(createAccountFragment)
             .add(R.id.signUp_container, profileSettingFragment)
             .hide(profileSettingFragment)
             .add(R.id.signUp_container, schoolSelectFragment)
+            .commit()
 
-        transaction.commit()
         super.onResume()
+    }
+
+
+    override fun onBackPressed() {
+        if (schoolSelectFragment.isVisible) {
+            viewModel.clear()
+//            finish()
+//            Log.d("a","a")
+//            val intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+
+            //onDestroy()
+        }
+
+        super.onBackPressed()
     }
 }
