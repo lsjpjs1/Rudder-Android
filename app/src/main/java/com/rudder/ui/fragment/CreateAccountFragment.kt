@@ -10,17 +10,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityHeaderBinding
+import com.rudder.databinding.FragmentCreateAccountBinding
+import com.rudder.databinding.FragmentMainBottomBarBinding
+import com.rudder.viewModel.SignUpViewModel
 
 
 class CreateAccountFragment : Fragment() {
 
+    private val viewModel = SignUpViewModel
+    private lateinit var createAccount : FragmentCreateAccountBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_create_account ,container, false)
+        createAccount = DataBindingUtil.inflate<FragmentCreateAccountBinding>(inflater,R.layout.fragment_create_account,container,false)
+        createAccount.signUpVM = viewModel
 
-        return view
+        return createAccount.root
     }
 }

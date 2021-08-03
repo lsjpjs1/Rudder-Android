@@ -15,9 +15,7 @@ import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 object SignUpViewModel  : ViewModel() {
     val _userId = MutableLiveData<String>()

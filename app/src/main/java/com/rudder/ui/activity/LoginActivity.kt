@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun callSignUpActivity() {
-        val intent = Intent(this, SignUpActivity2::class.java)
+        val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
 
