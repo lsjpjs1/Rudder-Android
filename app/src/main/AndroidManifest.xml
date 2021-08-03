@@ -15,7 +15,6 @@
         android:usesCleartextTraffic="true" >
 
         <activity android:name=".ui.activity.SchoolSelectionActivity" />
-        <activity android:name=".ui.activity.ProfileSettingActivity" />
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.SignUpActivity" />
         <activity android:name=".ui.activity.LoginActivity" >

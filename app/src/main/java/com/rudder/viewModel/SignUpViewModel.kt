@@ -33,11 +33,11 @@ object SignUpViewModel  : ViewModel() {
     private val _startLoginActivity = MutableLiveData<Boolean>()
 
     val _schoolSelectNext = MutableLiveData<Event<Boolean>>()
-    val _schoolSelectBack = MutableLiveData<Boolean>()
-    val _createAccountNext = MutableLiveData<Boolean>()
-    val _createAccountBack = MutableLiveData<Boolean>()
-    val _profileSettingNext = MutableLiveData<Boolean>()
-    val _profileSettingBack = MutableLiveData<Boolean>()
+    val _schoolSelectBack = MutableLiveData<Event<Boolean>>()
+    val _createAccountNext = MutableLiveData<Event<Boolean>>()
+    val _createAccountBack = MutableLiveData<Event<Boolean>>()
+    val _profileSettingNext = MutableLiveData<Event<Boolean>>()
+    val _profileSettingBack = MutableLiveData<Event<Boolean>>()
 
     val userId: LiveData<String> = _userId
     val userPassword: LiveData<String> = _userPassword
@@ -54,11 +54,11 @@ object SignUpViewModel  : ViewModel() {
     val startLoginActivity: LiveData<Boolean> = _startLoginActivity
 
     val schoolSelectNext: LiveData<Event<Boolean>> = _schoolSelectNext
-    val schoolSelectBack: LiveData<Boolean> = _schoolSelectBack
-    val createAccountNext: LiveData<Boolean> = _createAccountNext
-    val createAccountBack: LiveData<Boolean> = _createAccountBack
-    val profileSettingNext : LiveData<Boolean> = _profileSettingNext
-    val profileSettingBack : LiveData<Boolean> = _profileSettingBack
+    val schoolSelectBack: LiveData<Event<Boolean>> = _schoolSelectBack
+    val createAccountNext: LiveData<Event<Boolean>> = _createAccountNext
+    val createAccountBack: LiveData<Event<Boolean>> = _createAccountBack
+    val profileSettingNext : LiveData<Event<Boolean>> = _profileSettingNext
+    val profileSettingBack : LiveData<Event<Boolean>> = _profileSettingBack
 
     private val repository = Repository()
 
@@ -78,7 +78,19 @@ object SignUpViewModel  : ViewModel() {
 
 
     fun clickBackSchoolSelect(){
-        _schoolSelectBack.postValue(false)
+        //_schoolSelectBack.postValue(false)
+    }
+
+    fun clickNextCreateAccount(){
+        _createAccountNext.value = Event(true)
+    }
+
+    fun clickBackCreateAccount(){
+        _createAccountBack.value = Event(true)
+    }
+
+    fun clickBackProfileSetting(){
+        _profileSettingBack.value = Event(true)
     }
 
 

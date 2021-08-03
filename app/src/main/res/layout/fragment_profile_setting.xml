@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="profileSettingVM"
-            type="com.rudder.viewModel.ProfileSettingViewModel" />
+            name="signUpVM"
+            type="com.rudder.viewModel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutPS2"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutPS2"
-        tools:context=".ui.activity.ProfileSettingActivity">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutPS2">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -184,6 +183,7 @@
                 android:backgroundTint="#9329D1"
                 android:gravity="center"
                 android:text="@string/back"
+                android:onClick="@{()->signUpVM.clickBackProfileSetting()}"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.15"
                 app:layout_constraintStart_toStartOf="parent"
