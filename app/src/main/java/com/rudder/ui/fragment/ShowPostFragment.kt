@@ -25,9 +25,14 @@ class ShowPostFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val fragmentBinding= DataBindingUtil.inflate<FragmentShowPostBinding>(inflater,R.layout.fragment_show_post,container,false)
+
         val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext)
         fragmentBinding.commentDisplayRV.also {
-            it.layoutManager = LinearLayoutManager(lazyContext)
+            it.layoutManager = object : LinearLayoutManager(lazyContext){
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
             it.setHasFixedSize(false)
             it.adapter = adapter
         }

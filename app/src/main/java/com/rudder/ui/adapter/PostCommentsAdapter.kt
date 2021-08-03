@@ -1,19 +1,22 @@
 package com.rudder.ui.adapter
 
+import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
 import com.rudder.data.Comment
-import com.rudder.data.Post
 import com.rudder.databinding.PostCommentsBinding
 import com.rudder.util.CommentsDiffCallback
 import com.rudder.util.LocaleUtil
-import com.rudder.util.PostsDiffCallback
+import kotlinx.android.synthetic.main.post_comments.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,19 +30,35 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
                 parent,
                 false
         )
+        val showPostBodyHeight by lazy {
+            (context as Activity).findViewById<ConstraintLayout>(R.id.showPostBody).height
+        }
         val params = bind.root.layoutParams
         val typedValue = TypedValue()
+        val typedValue2 = TypedValue()
         context.resources.getValue(R.dimen.comment_height, typedValue,true)
-        val heightRatio = typedValue.float
-        params.height = (parent.height * heightRatio).toInt() // 아이템뷰 높이 고정값으로 되어있는 것 상대값으로 수정해야함
-        bind.root.layoutParams = params
+        context.resources.getValue(R.dimen.comment_header_height, typedValue2,true)
+        bind.root.textView5.measure(View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.AT_MOST),View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+        val entireHeightRatio = typedValue.float
+        val headerHeightRatio = typedValue2.float
+        val headerHeight = (showPostBodyHeight * headerHeightRatio).toInt()
+        bind.root.constraintLayout11.minHeight=headerHeight
+        bind.root.postPreviewTail.minHeight=headerHeight
+
+        Log.d("cal",showPostBodyHeight.toString())
+
+
         return CustomViewHolder(bind)
     }
+
+
 
     override fun onBindViewHolder(holder: PostCommentsAdapter.CustomViewHolder, position: Int) {
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(commentList[position].postTime.time))
         holder.postCommentsBinding.comment = commentList[position]
         holder.postCommentsBinding.timeago = timeago
+//        holder.postCommentsBinding.root.textView5.measure(View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.AT_MOST),View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+//        Log.d("cal",holder.postCommentsBinding.textView5.measuredHeight.toString())
     }
 
     override fun getItemCount(): Int {
