@@ -34,6 +34,12 @@ class SignUpViewModel  : ViewModel() {
 
     private val _startLoginActivity = MutableLiveData<Boolean>()
 
+    val _schoolSelectNext = MutableLiveData<Boolean>()
+    val _schoolSelectBack = MutableLiveData<Boolean>()
+    val _createAccountNext = MutableLiveData<Boolean>()
+    val _createAccountBack = MutableLiveData<Boolean>()
+    val _profileSettingNext = MutableLiveData<Boolean>()
+    val _profileSettingBack = MutableLiveData<Boolean>()
 
     val userId: LiveData<String> = _userId
     val userPassword: LiveData<String> = _userPassword
@@ -48,6 +54,13 @@ class SignUpViewModel  : ViewModel() {
     val verifyCodeCheck : LiveData<Boolean> = _verifyCodeCheck
 
     val startLoginActivity: LiveData<Boolean> = _startLoginActivity
+
+    val schoolSelectNext: LiveData<Boolean> = _schoolSelectNext
+    val schoolSelectBack: LiveData<Boolean> = _schoolSelectBack
+    val createAccountNext: LiveData<Boolean> = _createAccountNext
+    val createAccountBack: LiveData<Boolean> = _createAccountBack
+    val profileSettingNext : LiveData<Boolean> = _profileSettingNext
+    val profileSettingBack : LiveData<Boolean> = _profileSettingBack
 
     private val repository = Repository()
 

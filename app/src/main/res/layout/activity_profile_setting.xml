@@ -43,7 +43,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintWidth_percent="0.5"
+                android:layout_marginStart="30dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -68,7 +69,6 @@
                 android:hint="@string/nickname"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="20dp"
-
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +156,53 @@
             app:layout_constraintLeft_toLeftOf="parent"
             >
 
+            <Button
+                android:id="@+id/signUpFinishBtn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="230dp"
+                android:layout_marginRight="100dp"
+                android:backgroundTint="#9329D1"
+                android:gravity="center"
+                android:text="@string/sign_up"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.8" />
 
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:hint="profile image setting (not complete)"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:inputType="textImeMultiLine"
+                android:gravity="top|left"
+                android:background="@drawable/edge"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.7" />
+
+            <CheckBox
+                android:id="@+id/imageSettingCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="340dp"
+                android:layout_marginTop="20dp"
+                android:buttonTint="#5AEF0A"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
