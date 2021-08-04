@@ -71,7 +71,10 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.schoolSelectBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
-                if(it) onBackPressed() } })
+                if(it) {onBackPressed()
+                    Log.d("test56","$it")
+                }
+            } })
 
         viewModel.createAccountNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
@@ -83,14 +86,17 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.createAccountBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
-                if (it) onBackPressed() }})
+                if (it) onBackPressed()
+            }})
 
 
         viewModel.profileSettingBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) onBackPressed() }})
 
+
     }
+
 
     override fun onResume() {
         supportFragmentManager.beginTransaction()
@@ -108,12 +114,6 @@ class SignUpActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (schoolSelectFragment.isVisible) {
             viewModel.clearValue()
-//            finish()
-//            Log.d("a","a")
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-
-            //onDestroy()
         }
 
         super.onBackPressed()

@@ -58,26 +58,41 @@
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="1">
 
-            <TextView
-                android:id="@+id/textView3"
+            <Button
+                android:id="@+id/schoolSelectionBtn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginLeft="80dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="180dp"
                 android:layout_marginRight="80dp"
-                android:background="@drawable/edge"
                 android:backgroundTint="#9329D1"
+                android:onClick="@{()->signUpVM.clickSchoolSelection()}"
                 android:gravity="center"
                 android:text="@string/school_select"
                 android:textColor="#FFFFFF"
-                android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.4" />
+
+
+            <CheckBox
+                android:id="@+id/schoolSelectCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="300dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="190dp"
+                android:buttonTint="#5AEF0A"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.4" />
+                app:layout_constraintWidth_percent="0.1" />
 
 <!--            <androidx.appcompat.widget.AppCompatSpinner-->
 <!--                android:id="@+id/schoolSelectSpinner"-->
@@ -106,7 +121,7 @@
                 android:layout_marginTop="100dp"
                 android:layout_marginRight="80dp"
                 android:background="@drawable/edge"
-                android:selectedItemPosition="@={signUpVM._test}"
+                android:selectedItemPosition="@={signUpVM._userSchool}"
 
                 android:spinnerMode="dialog"
                 app:layout_constraintEnd_toEndOf="parent"
