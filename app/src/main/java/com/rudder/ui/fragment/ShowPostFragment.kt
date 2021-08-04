@@ -43,9 +43,11 @@ class ShowPostFragment: Fragment() {
             it.setHasFixedSize(false)
             it.adapter = adapter
         }
+        fragmentBinding.commentCount=viewModel.comments.value!!.size
         fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
         viewModel.comments.observe(viewLifecycleOwner, Observer {
             adapter.updateComments(it)
+            fragmentBinding.commentCount=viewModel.comments.value!!.size
         })
         viewModel.selectedPostPosition.observe(viewLifecycleOwner, Observer {
             fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]

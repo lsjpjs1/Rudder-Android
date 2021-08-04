@@ -11,8 +11,7 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/communitySelector"
             app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="@dimen/add_post_header_height"
-            android:background="@color/grey">
+            app:layout_constraintHeight_percent="@dimen/add_post_header_height">
 
         </FrameLayout>
 

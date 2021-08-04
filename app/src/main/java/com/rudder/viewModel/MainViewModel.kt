@@ -20,6 +20,7 @@ import java.sql.Timestamp
 
 
 object MainViewModel : ViewModel() {
+
     private var pagingIndex = 0
     private var endPostId = -1
     private val MIN_PROGRESSBAR_TIME = 200.toLong() //millisecond
@@ -109,6 +110,8 @@ object MainViewModel : ViewModel() {
     fun setSelectedPostPosition(position: Int){
         _selectedPostPosition.value=position
     }
+
+
 
 
 }
