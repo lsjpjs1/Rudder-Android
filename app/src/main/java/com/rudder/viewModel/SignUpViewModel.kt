@@ -7,13 +7,25 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rudder.data.*
+import com.rudder.data.remote.PostApi
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-object SignUpViewModel  : ViewModel() {
+class SignUpViewModel  : ViewModel() {
+    fun getInstance():SignUpViewModel{
+        return if(this::signUpViewModel.isInitialized){
+            signUpViewModel
+        }else{
+            signUpViewModel = SignUpViewModel()
+            signUpViewModel
+        }
+    }
+    private lateinit var signUpViewModel:SignUpViewModel
+
+
     val _userId = MutableLiveData<String>()
     val _userPassword = MutableLiveData<String>()
     val _userPasswordCheck = MutableLiveData<String>()
@@ -22,12 +34,6 @@ object SignUpViewModel  : ViewModel() {
     val _userEmailDomain = MutableLiveData<String>()
     val _userVerificationCode = MutableLiveData<String>()
     val _userSchool = MutableLiveData<Int>()
-
-    val _emailCheck = MutableLiveData<Boolean>()
-    val _idCheck = MutableLiveData<Boolean>()
-    val _verifyCodeCheck = MutableLiveData<Boolean>()
-
-    private val _startLoginActivity = MutableLiveData<Boolean>()
 
     val _schoolSelectNext = MutableLiveData<Event<Boolean>>()
     val _schoolSelectBack = MutableLiveData<Event<Boolean>>()
@@ -40,6 +46,9 @@ object SignUpViewModel  : ViewModel() {
     val _passwordCheckFlag = MutableLiveData<Event<Boolean>>()
     val _emailDomainFlag = MutableLiveData<Event<Boolean>>()
     val _schoolSelectFlag = MutableLiveData<Event<Boolean>>()
+    val _idCheckFlag = MutableLiveData<Event<Boolean>>()
+    val _emailCheckFlag = MutableLiveData<Event<Boolean>>()
+    val _verifyCodeCheckFlag = MutableLiveData<Event<Boolean>>()
 
 
     val userId: LiveData<String> = _userId
@@ -52,12 +61,6 @@ object SignUpViewModel  : ViewModel() {
     val userSchool: LiveData<Int> = _userSchool
 
 
-    val emailCheck: LiveData<Boolean> = _emailCheck
-    val idCheck: LiveData<Boolean> = _idCheck
-    val verifyCodeCheck: LiveData<Boolean> = _verifyCodeCheck
-
-    val startLoginActivity: LiveData<Boolean> = _startLoginActivity
-
     val schoolSelectNext: LiveData<Event<Boolean>> = _schoolSelectNext
     val schoolSelectBack: LiveData<Event<Boolean>> = _schoolSelectBack
     val createAccountNext: LiveData<Event<Boolean>> = _createAccountNext
@@ -69,6 +72,9 @@ object SignUpViewModel  : ViewModel() {
     val passwordCheckFlag : LiveData<Event<Boolean>> = _passwordCheckFlag
     val emailDomainFlag : LiveData<Event<Boolean>> = _emailDomainFlag
     val schoolSelectFlag : LiveData<Event<Boolean>> = _schoolSelectFlag
+    val idCheckFlag : LiveData<Event<Boolean>> = _idCheckFlag
+    val emailCheckFlag : LiveData<Event<Boolean>> = _emailCheckFlag
+    val verifyCodeCheckFlag: LiveData<Event<Boolean>> = _verifyCodeCheckFlag
 
         private val repository = Repository()
 
@@ -90,8 +96,7 @@ object SignUpViewModel  : ViewModel() {
     }
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
-    val passwordRg =
-        "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
+    val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
 
 
     fun clearValue() {
@@ -132,8 +137,10 @@ object SignUpViewModel  : ViewModel() {
     }
 
 
-
-
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("mytag","onCleared")
+    }
 
     fun clickNextSchoolSelect(){
         _schoolSelectNext.value = Event(true)
@@ -152,7 +159,7 @@ object SignUpViewModel  : ViewModel() {
     }
 
     fun clickNextProfileSetting(){
-
+        _profileSettingNext.value = Event(true)
     }
 
     fun clickBackProfileSetting(){
@@ -160,8 +167,7 @@ object SignUpViewModel  : ViewModel() {
     }
 
 
-    fun clickSchoolSelection()
-    {
+    fun clickSchoolSelection() {
         if (_userSchool.value != 0) _schoolSelectFlag.value = Event(true)
         else _schoolSelectFlag.value = Event(false)
     }
@@ -173,7 +179,7 @@ object SignUpViewModel  : ViewModel() {
             val idInput = _userId.value!!
             val result = repository.signUpIdDuplicated(IdDuplicatedInfo(idInput))
             Log.d(ContentValues.TAG, "callIdCheck 결과 : ${result}")
-            _idCheck.postValue(result)
+            _idCheckFlag.postValue(Event(result))
         }
     }
 
@@ -182,7 +188,7 @@ object SignUpViewModel  : ViewModel() {
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpSendVerifyCode(EmailInfo(emailInput))
             Log.d(ContentValues.TAG, "callSendVeriCode 결과 : ${result}")
-            _emailCheck.postValue(result)
+            _emailCheckFlag.postValue(Event(result))
             _userVerificationCode.postValue("")
         }
     }
@@ -193,7 +199,7 @@ object SignUpViewModel  : ViewModel() {
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpCheckVerifyCode(CheckVerifyCodeInfo(emailInput, verifyCodeInput))
             Log.d(ContentValues.TAG, "callCheckVeriCode 결과 : ${result}")
-            _verifyCodeCheck.postValue(result)
+            _verifyCodeCheckFlag.postValue(Event(result))
         }
     }
 
@@ -203,7 +209,7 @@ object SignUpViewModel  : ViewModel() {
             val passwordInput = _userPassword.value!!
             val result = repository.signUpCreateAccount(AccountInfo(idInput, passwordInput))
             Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
-            _startLoginActivity.postValue(result)
+            //_startLoginActivity.postValue(result)
         }
     }
 

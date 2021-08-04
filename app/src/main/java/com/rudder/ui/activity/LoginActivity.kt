@@ -3,6 +3,7 @@ package com.rudder.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -37,6 +38,10 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("onDestoryLogin","onDestory")
+    }
 
     fun callMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
@@ -44,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun callSignUpActivity() {
+        //finish()
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
