@@ -1,5 +1,6 @@
 package com.rudder.data.repository
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.rudder.BuildConfig
@@ -18,6 +19,7 @@ class Repository {
     suspend fun login(loginInfo: LoginInfo) : Boolean{
         val key = BuildConfig.TOKEN_KEY
         var result = true
+        Log.d("token",App.prefs.getValue(key).toString())
         if(App.prefs.getValue(key)==null || App.prefs.getValue(key)==""){
             val resLogin =  LoginApi.instance.login(loginInfo).await()
             if(resLogin.has("info")){
