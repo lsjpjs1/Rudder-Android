@@ -149,12 +149,11 @@
                             app:layout_constraintWidth_percent="@dimen/width_default">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="116dp"
-                                android:layout_height="56dp"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintWidth_default="percent"
-                                app:layout_constraintWidth_percent="@dimen/comment_info_title_width"
-                                tools:layout_editor_absoluteY="-2dp">
+                                app:layout_constraintWidth_percent="@dimen/comment_info_title_width">
 
                                 <TextView
                                     android:id="@+id/textView8"

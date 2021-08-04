@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.rudder.databinding.FragmentShowPostBinding
 import com.rudder.ui.adapter.PostCommentsAdapter
 import com.rudder.ui.adapter.PostPreviewAdapter
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_show_post.*
 import kotlinx.android.synthetic.main.fragment_show_post.view.*
 
 class ShowPostFragment: Fragment() {
@@ -52,8 +54,47 @@ class ShowPostFragment: Fragment() {
                 .add(R.id.showPostHeader,ShowPostHeaderFragment())
                 .commit()
 
+        fragmentBinding.showPostBody.viewTreeObserver.addOnGlobalLayoutListener(
+                object : ViewTreeObserver.OnGlobalLayoutListener{
+                    override fun onGlobalLayout() {
+                        fixOtherViewHeight()
+                        fragmentBinding.showPostBody.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }
 
+                }
+        )
 
         return fragmentBinding.root
+    }
+
+
+    //스크롤 뷰 높이에 따라 바뀌는 view의 높이를 고정시켜주는 함수
+   fun fixOtherViewHeight(){
+        val showPostBodyHeight = showPostBody.height
+        val typedValue = TypedValue()
+        val typedValue2 = TypedValue()
+        lazyContext.resources.getValue(R.dimen.post_info_height, typedValue,true)
+        lazyContext.resources.getValue(R.dimen.divide_default, typedValue2,true)
+        val postInfoHeightRatio = typedValue.float
+        val divideHeightRatio = typedValue2.float
+
+        //리사이클러뷰를 제외한 나머지 뷰의 높이 고정
+        var lp = constraintLayout16.layoutParams
+        lp.height=(showPostBodyHeight*divideHeightRatio).toInt()
+        constraintLayout16.layoutParams=lp
+
+        lp=constraintLayout8.layoutParams
+        lp.height=(showPostBodyHeight*postInfoHeightRatio).toInt()
+        constraintLayout8.layoutParams=lp
+
+        lp=constraintLayout9.layoutParams
+        lp.height=(showPostBodyHeight*postInfoHeightRatio).toInt()
+        constraintLayout9.layoutParams=lp
+
+        lp=constraintLayout10.layoutParams
+        lp.height=(showPostBodyHeight*postInfoHeightRatio).toInt()
+        constraintLayout10.layoutParams=lp
+
+
     }
 }
