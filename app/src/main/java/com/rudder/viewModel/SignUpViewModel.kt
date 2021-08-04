@@ -72,6 +72,7 @@ object SignUpViewModel  : ViewModel() {
         _userEmailID.value = ""
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
+
         _schoolSelectNext.value = Event(false)
         _schoolSelectBack.value = Event(false)
         _createAccountNext.value = Event(false)
@@ -81,7 +82,7 @@ object SignUpViewModel  : ViewModel() {
     }
 
 
-    fun clear(){
+    fun clearValue(){
         _userId.value = ""
         _userPassword.value = ""
         _userPasswordCheck.value = ""
@@ -91,6 +92,8 @@ object SignUpViewModel  : ViewModel() {
         _userVerificationCode.value = ""
 
     }
+
+
 
     fun clickNextSchoolSelect(){
         _schoolSelectNext.value = Event(true)
@@ -109,9 +112,14 @@ object SignUpViewModel  : ViewModel() {
         _createAccountBack.value = Event(true)
     }
 
+    fun clickNextProfileSetting(){
+
+    }
+
     fun clickBackProfileSetting(){
         _profileSettingBack.value = Event(true)
     }
+
 
 
     fun callIdCheck() {
@@ -130,6 +138,7 @@ object SignUpViewModel  : ViewModel() {
             val result = repository.signUpSendVerifyCode(EmailInfo(emailInput))
             Log.d(ContentValues.TAG, "callSendVeriCode 결과 : ${result}")
             _emailCheck.postValue(result)
+            _userVerificationCode.postValue("")
         }
     }
 

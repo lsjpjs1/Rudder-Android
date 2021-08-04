@@ -118,7 +118,7 @@ class CreateAccountFragment : Fragment() {
                 Toast.makeText(activity, "Email must be Naver Email", Toast.LENGTH_SHORT).show()
             }
             changeCheckBoxFalseState(veifyCodeCheckbox)
-            verifyCode.setText("")
+            verifyCode.text.clear()
             buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, true, verifyBtn)
             buttonEnable(IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked, createAccountNextBtn)
         })

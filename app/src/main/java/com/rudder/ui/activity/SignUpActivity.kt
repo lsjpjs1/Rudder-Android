@@ -44,6 +44,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createAccountFragment = CreateAccountFragment()
@@ -55,11 +56,11 @@ class SignUpActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         viewModel.schoolSelectNext.observe(this, Observer {
-
-            it.getContentIfNotHandled()?.let{
-                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                fragmentShowHide.addToBackStack()
-                fragmentShowHide.showFragment(createAccountFragment,R.id.signUp_container)
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) {
+                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                    fragmentShowHide.addToBackStack()
+                    fragmentShowHide.showFragment(createAccountFragment, R.id.signUp_container) }
             }})
 
 //            if(it.getContentIfNotHandled()!!){
@@ -69,34 +70,29 @@ class SignUpActivity : AppCompatActivity() {
 //            } })
 
         viewModel.schoolSelectBack.observe(this, Observer {
-            it.getContentIfNotHandled()?.let{
-                onBackPressed()
-            }
-        })
-
+            it.getContentIfNotHandled()?.let{ it ->
+                if(it) onBackPressed() } })
 
         viewModel.createAccountNext.observe(this, Observer {
-            val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-            fragmentShowHide.addToBackStack()
-            fragmentShowHide.showFragment(profileSettingFragment,R.id.signUp_container)
-        })
-        viewModel.createAccountBack.observe(this, Observer {
-            it.getContentIfNotHandled()?.let{
-                onBackPressed()
-            }})
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) {
+                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                    fragmentShowHide.addToBackStack()
+                    fragmentShowHide.showFragment(createAccountFragment, R.id.signUp_container)
+                } }})
 
+        viewModel.createAccountBack.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) onBackPressed() }})
 
 
         viewModel.profileSettingBack.observe(this, Observer {
-            it.getContentIfNotHandled()?.let{
-                onBackPressed()
-            }}
-        )
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) onBackPressed() }})
 
     }
 
     override fun onResume() {
-
         supportFragmentManager.beginTransaction()
             .add(R.id.signUp_container, createAccountFragment)
             .hide(createAccountFragment)
@@ -111,7 +107,7 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (schoolSelectFragment.isVisible) {
-            viewModel.clear()
+            viewModel.clearValue()
 //            finish()
 //            Log.d("a","a")
 //            val intent = Intent(this, LoginActivity::class.java)

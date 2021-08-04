@@ -45,8 +45,6 @@ class SchoolSelectFragment : Fragment() {
 //            //val fragmentShowHide = FragmentShowHide(supportFragmentManager)
 //        })
 
-
-        val items = resources.getStringArray(R.array.schools_array)
         viewModel._test.observe(viewLifecycleOwner, Observer {
             Log.d("test",it.toString())
         })
@@ -68,8 +66,5 @@ class SchoolSelectFragment : Fragment() {
 //        }
 
         return schoolSelect.root
-
     }
-
-
 }
