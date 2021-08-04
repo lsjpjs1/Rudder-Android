@@ -1,9 +1,13 @@
 package com.rudder.ui.fragment
 
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -26,7 +30,7 @@ class ShowPostFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val fragmentBinding= DataBindingUtil.inflate<FragmentShowPostBinding>(inflater,R.layout.fragment_show_post,container,false)
-        fragmentBinding.root.scrollView1.layoutParams.height = 1892
+
         val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext)
         fragmentBinding.commentDisplayRV.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
@@ -47,6 +51,9 @@ class ShowPostFragment: Fragment() {
         childFragmentManager.beginTransaction()
                 .add(R.id.showPostHeader,ShowPostHeaderFragment())
                 .commit()
+
+
+
         return fragmentBinding.root
     }
 }

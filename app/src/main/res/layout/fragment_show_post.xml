@@ -22,6 +22,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/showPostBody"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
@@ -40,7 +41,7 @@
                     android:layout_height="match_parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/showPostBody"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
@@ -148,11 +149,12 @@
                             app:layout_constraintWidth_percent="@dimen/width_default">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="116dp"
+                                android:layout_height="56dp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintWidth_default="percent"
-                                app:layout_constraintWidth_percent="@dimen/comment_info_title_width">
+                                app:layout_constraintWidth_percent="@dimen/comment_info_title_width"
+                                tools:layout_editor_absoluteY="-2dp">
 
                                 <TextView
                                     android:id="@+id/textView8"
