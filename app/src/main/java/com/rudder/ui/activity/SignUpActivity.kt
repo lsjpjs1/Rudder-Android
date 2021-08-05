@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -17,12 +18,17 @@ import com.rudder.R
 import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
+import com.rudder.viewModel.LoginViewModel
 import com.rudder.viewModel.SignUpViewModel
-
+import androidx.fragment.app.activityViewModels
 
 
 class SignUpActivity : AppCompatActivity() {
     private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
+
+    //private var viewModel: SignUpViewModel = SignUpViewModel()
+
+    //private val viewModel: SignUpViewModel by activityViewModels()
 
     private lateinit var createAccountFragment : CreateAccountFragment
     private lateinit var profileSettingFragment : ProfileSettingFragment
@@ -65,9 +71,8 @@ class SignUpActivity : AppCompatActivity() {
         binding.signUpVM = viewModel
         binding.lifecycleOwner = this
 
-        Log.d("binding.lifecycleOwner","${binding.lifecycleOwner}")
-
         viewModel.schoolSelectNext.observe(this, Observer {
+            Log.d("next","next")
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
@@ -126,17 +131,16 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        finish()
         Log.d("mytag","onDestory")
     }
 
-    override fun onBackPressed() {
-        if (schoolSelectFragment.isVisible) {
-            viewModel.clearValue()
-        }
-
-        super.onBackPressed()
-    }
+//    override fun onBackPressed() {
+//        if (schoolSelectFragment.isVisible) {
+//            viewModel.clearValue()
+//        }
+//
+//        super.onBackPressed()
+//    }
 
     fun callLoginActivity() {
         finish()

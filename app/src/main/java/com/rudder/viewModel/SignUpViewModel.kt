@@ -3,6 +3,8 @@ package com.rudder.viewModel
 import android.content.ContentValues
 import android.text.Editable
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,8 +16,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class SignUpViewModel  : ViewModel() {
-    fun getInstance():SignUpViewModel{
+class SignUpViewModel : ViewModel() {
+    fun getInstance() : SignUpViewModel{
         return if(this::signUpViewModel.isInitialized){
             signUpViewModel
         }else{
@@ -99,17 +101,6 @@ class SignUpViewModel  : ViewModel() {
     val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
 
 
-    fun clearValue() {
-        _userId.value = ""
-        _userPassword.value = ""
-        _userPasswordCheck.value = ""
-        _userRecommendCode.value = ""
-        _userEmailID.value = ""
-        _userEmailDomain.value = ""
-        _userVerificationCode.value = ""
-
-    }
-
     fun onTextChangePW() {
         if (_userPassword.value!!.trim().matches(passwordRg) && _userPassword.value!!.isNotEmpty())
             _passwordFlag.value = Event(true)
@@ -139,7 +130,7 @@ class SignUpViewModel  : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        Log.d("mytag","onCleared")
+        Log.d("onCleared","onCleared")
     }
 
     fun clickNextSchoolSelect(){
@@ -172,6 +163,22 @@ class SignUpViewModel  : ViewModel() {
         else _schoolSelectFlag.value = Event(false)
     }
 
+
+    fun onSelectItem(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        //pos                                 get selected item position
+        //view.getText()                      get lable of selected item
+        //parent.getAdapter().getItem(pos)    get item by pos
+        //parent.getAdapter().getCount()      get item count
+        //parent.getCount()                   get item count
+        //parent.getSelectedItem()            get selected item
+        //and other...
+        Log.d("parent.getAdapter","$pos")
+        if (pos != 0){
+            _schoolSelectFlag.value = Event(true)
+        }else{
+            _schoolSelectFlag.value = Event(false)
+        }
+    }
 
 
     fun callIdCheck() {

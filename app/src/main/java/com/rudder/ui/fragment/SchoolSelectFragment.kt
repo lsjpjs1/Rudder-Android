@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
@@ -28,7 +29,10 @@ import kotlinx.android.synthetic.main.fragment_school_select.view.*
 
 class SchoolSelectFragment : Fragment() {
 
-    private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
+    //private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
+
+    private val viewModel: SignUpViewModel by activityViewModels()
+
     private lateinit var schoolSelect : FragmentSchoolSelectBinding
 
     private val lazyContext by lazy {
