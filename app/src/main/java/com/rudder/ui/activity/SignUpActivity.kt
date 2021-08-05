@@ -8,7 +8,6 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -18,22 +17,19 @@ import com.rudder.R
 import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
-import com.rudder.viewModel.LoginViewModel
 import com.rudder.viewModel.SignUpViewModel
-import androidx.fragment.app.activityViewModels
+
 
 
 class SignUpActivity : AppCompatActivity() {
     private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
 
     //private var viewModel: SignUpViewModel = SignUpViewModel()
-
     //private val viewModel: SignUpViewModel by activityViewModels()
 
     private lateinit var createAccountFragment : CreateAccountFragment
     private lateinit var profileSettingFragment : ProfileSettingFragment
     private lateinit var schoolSelectFragment: SchoolSelectFragment
-
 
     // id가 명시되어있지 않은 다른 부분을 터치했을 때 키보드가 보여져있는 상태면 키보드를 내림.
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -51,7 +47,6 @@ class SignUpActivity : AppCompatActivity() {
         }
         return super.dispatchTouchEvent(ev)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +66,9 @@ class SignUpActivity : AppCompatActivity() {
         binding.signUpVM = viewModel
         binding.lifecycleOwner = this
 
+
+        val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
+
         viewModel.schoolSelectNext.observe(this, Observer {
             Log.d("next","next")
             it.getContentIfNotHandled()?.let{ it ->
@@ -82,11 +80,8 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.schoolSelectBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
-                if(it) {
-                    onBackPressed()
-                    Log.d("test56","$it")
-                }
-            } })
+                if (it) onBackPressed()
+            }})
 
         viewModel.createAccountNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
@@ -104,27 +99,20 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.profileSettingBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
-                if (it) onBackPressed() }})
+                if (it) onBackPressed()
+            }})
 
         viewModel.profileSettingNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
-                if (it) callLoginActivity() }}) // signUP Complete !
-
-
-
+                if (it) {
+                    callLoginActivity()
+                    toastSignUpComplete.show()
+                }
+            }}) // signUP Complete !
     }
 
 
-
     override fun onResume() {
-//        supportFragmentManager.beginTransaction()
-//            .add(R.id.signUp_container, profileSettingFragment)
-//            .hide(profileSettingFragment)
-//            .add(R.id.signUp_container, createAccountFragment)
-//            .hide(createAccountFragment)
-//            .add(R.id.signUp_container, schoolSelectFragment)
-//            .commit()
-
         Log.d("mytag","onResume")
         super.onResume()
     }

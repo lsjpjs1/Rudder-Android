@@ -1,9 +1,7 @@
 package com.rudder.ui.fragment
 
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,17 +10,11 @@ import androidx.fragment.app.Fragment
 import com.rudder.R
 import com.rudder.databinding.FragmentCreateAccountBinding
 import com.rudder.viewModel.SignUpViewModel
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.util.ChangeUIState
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.android.synthetic.main.fragment_create_account.view.*
 
@@ -30,31 +22,31 @@ import kotlinx.android.synthetic.main.fragment_create_account.view.*
 class CreateAccountFragment : Fragment() {
 
     //private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
-
     private val viewModel: SignUpViewModel by activityViewModels()
 
-    private lateinit var createAccount : FragmentCreateAccountBinding
-
-
-//    fun callLoginActivity() {
-//        val intent = Intent(this, SchoolSelectionActivity::class.java)
-//        startActivity(intent)
-//    }
-
+    private lateinit var createAccountBinding : FragmentCreateAccountBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        createAccount = DataBindingUtil.inflate<FragmentCreateAccountBinding>(inflater,R.layout.fragment_create_account,container,false)
-        createAccount.signUpVM = viewModel
+    ): View {
+        createAccountBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_create_account,container,false)
+        createAccountBinding.signUpVM = viewModel
 
         val toastPassword = Toast.makeText(activity, "비밀번호는 숫자,문자,특수문자 중 2가지 포함(8~15자)", Toast.LENGTH_SHORT)
         val toastPasswordCheck = Toast.makeText(activity, "Please Check, Password and Password Confirm",Toast.LENGTH_SHORT)
-        val toastEmailDomain = Toast.makeText(activity, "Please Check, Right Email Domain", Toast.LENGTH_SHORT)
+        val toastEmailDomain = Toast.makeText(activity, "Please Check, Right Email Address", Toast.LENGTH_SHORT)
         val toastEmailCheck = Toast.makeText(activity, "Email must be Naver Email", Toast.LENGTH_SHORT)
         val verifyCodeCheck = Toast.makeText(activity, "Wrong Verification Code", Toast.LENGTH_SHORT)
+
+
+        viewModel.idChangeFlag.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let{
+                ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
+                ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+                ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
+            }})
 
         viewModel.passwordFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->
@@ -99,10 +91,9 @@ class CreateAccountFragment : Fragment() {
                 ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
         }})
 
-
         viewModel.idCheckFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
-                if (!it) ChangeUIState.changeCheckBoxTrueState(IDcheckbox)
+                if (it) ChangeUIState.changeCheckBoxTrueState(IDcheckbox)
                 else {
                     ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
                     Toast.makeText(activity, "ID is duplicated", Toast.LENGTH_SHORT).show()
@@ -145,25 +136,18 @@ class CreateAccountFragment : Fragment() {
             ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
         })
 
-//        viewModel.startLoginActivity.observe(viewLifecycleOwner, Observer {
-//            if (it) callLoginActivity()
-//            Toast.makeText(this, "Create account Successfully, Complete!", Toast.LENGTH_SHORT).show()
-//        })
+        createAccountBinding.root.IDcheckbox.isEnabled = false
+        createAccountBinding.root.PWcheckbox1.isEnabled = false
+        createAccountBinding.root.PWcheckbox2.isEnabled = false
+        createAccountBinding.root.emailCheckbox.isEnabled = false
+        createAccountBinding.root.Recommendcheckbox.isChecked = true
+        createAccountBinding.root.Recommendcheckbox.isEnabled = false
+        createAccountBinding.root.veifyCodeCheckbox.isEnabled = false
 
+        createAccountBinding.root.verifyBtn.isEnabled = false
+        createAccountBinding.root.submitBtn.isEnabled = false
+        createAccountBinding.root.createAccountNextBtn.isEnabled = false
 
-        createAccount.root.IDcheckbox.isEnabled = false
-        createAccount.root.PWcheckbox1.isEnabled = false
-        createAccount.root.PWcheckbox2.isEnabled = false
-        createAccount.root.emailCheckbox.isEnabled = false
-        createAccount.root.Recommendcheckbox.isChecked = true
-        createAccount.root.Recommendcheckbox.isEnabled = false
-        createAccount.root.veifyCodeCheckbox.isEnabled = false
-
-        createAccount.root.verifyBtn.isEnabled = false
-        createAccount.root.submitBtn.isEnabled = false
-        createAccount.root.createAccountNextBtn.isEnabled = false
-
-
-        return createAccount.root
+        return createAccountBinding.root
     }
 }

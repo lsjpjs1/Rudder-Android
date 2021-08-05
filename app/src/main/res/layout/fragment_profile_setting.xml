@@ -68,6 +68,9 @@
                 android:hint="@string/nickname"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="20dp"
+                android:maxLength="20"
+                android:text="@={signUpVM._userNickName}"
+                android:afterTextChanged="@{() -> signUpVM.onTextChangeNickName()}"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -110,14 +113,13 @@
                 android:id="@+id/editTextIntroduce"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-
                 android:hint="@string/introduce"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="20dp"
-                android:inputType="textImeMultiLine"
+                android:maxLength="180"
                 android:gravity="top|left"
                 android:background="@drawable/edge"
-
+                android:text="@={signUpVM._userIntroduce}"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -149,28 +151,30 @@
             android:layout_height="0dp"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.4"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="1"
-            app:layout_constraintTop_toBottomOf="@id/constraintLayoutPS3"
             app:layout_constraintLeft_toLeftOf="parent"
-            >
+            app:layout_constraintTop_toBottomOf="@id/constraintLayoutPS3"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1">
+
 
             <Button
                 android:id="@+id/signUpFinishBtn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="230dp"
-                android:layout_marginRight="100dp"
+
                 android:backgroundTint="#9329D1"
                 android:gravity="center"
+                android:onClick="@{()->signUpVM.callCreateAccount()}"
                 android:text="@string/sign_up"
-                android:onClick="@{()->signUpVM.clickNextProfileSetting()}"
+
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.15"
+
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileSettingBackBtn"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.8" />
 
@@ -178,32 +182,35 @@
                 android:id="@+id/profileSettingBackBtn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="180dp"
-                android:layout_marginRight="100dp"
+
                 android:backgroundTint="#9329D1"
                 android:gravity="center"
-                android:text="@string/back"
                 android:onClick="@{()->signUpVM.clickBackProfileSetting()}"
+                android:text="@string/back"
+
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.15"
+
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageSetting"
+                app:layout_constraintBottom_toTopOf="@+id/signUpFinishBtn"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.8" />
 
             <EditText
+                android:id="@+id/imageSetting"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:hint="profile image setting (not complete)"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="20dp"
-                android:inputType="textImeMultiLine"
-                android:gravity="top|left"
+                android:layout_marginRight="40dp"
                 android:background="@drawable/edge"
-                android:text="@string/back"
+                android:gravity="top|left"
+                android:hint="profile image setting (not complete)"
+
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_default="percent"
+
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

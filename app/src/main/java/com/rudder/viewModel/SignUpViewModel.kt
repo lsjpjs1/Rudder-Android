@@ -25,8 +25,7 @@ class SignUpViewModel : ViewModel() {
             signUpViewModel
         }
     }
-    private lateinit var signUpViewModel:SignUpViewModel
-
+    private lateinit var signUpViewModel : SignUpViewModel
 
     val _userId = MutableLiveData<String>()
     val _userPassword = MutableLiveData<String>()
@@ -36,6 +35,8 @@ class SignUpViewModel : ViewModel() {
     val _userEmailDomain = MutableLiveData<String>()
     val _userVerificationCode = MutableLiveData<String>()
     val _userSchool = MutableLiveData<Int>()
+    val _userNickName = MutableLiveData<String>()
+    val _userIntroduce = MutableLiveData<String>()
 
     val _schoolSelectNext = MutableLiveData<Event<Boolean>>()
     val _schoolSelectBack = MutableLiveData<Event<Boolean>>()
@@ -44,6 +45,7 @@ class SignUpViewModel : ViewModel() {
     val _profileSettingNext = MutableLiveData<Event<Boolean>>()
     val _profileSettingBack = MutableLiveData<Event<Boolean>>()
 
+    val _idChangeFlag = MutableLiveData<Event<Boolean>>()
     val _passwordFlag = MutableLiveData<Event<Boolean>>()
     val _passwordCheckFlag = MutableLiveData<Event<Boolean>>()
     val _emailDomainFlag = MutableLiveData<Event<Boolean>>()
@@ -51,6 +53,7 @@ class SignUpViewModel : ViewModel() {
     val _idCheckFlag = MutableLiveData<Event<Boolean>>()
     val _emailCheckFlag = MutableLiveData<Event<Boolean>>()
     val _verifyCodeCheckFlag = MutableLiveData<Event<Boolean>>()
+    val _nickNameFlag = MutableLiveData<Event<Boolean>>()
 
 
     val userId: LiveData<String> = _userId
@@ -61,6 +64,8 @@ class SignUpViewModel : ViewModel() {
     val userEmailDomain: LiveData<String> = _userEmailDomain
     val userVerificationCode: LiveData<String> = _userVerificationCode
     val userSchool: LiveData<Int> = _userSchool
+    val userNickName: LiveData<String> = _userNickName
+    val userIntroduce: LiveData<String> = _userIntroduce
 
 
     val schoolSelectNext: LiveData<Event<Boolean>> = _schoolSelectNext
@@ -70,6 +75,7 @@ class SignUpViewModel : ViewModel() {
     val profileSettingNext: LiveData<Event<Boolean>> = _profileSettingNext
     val profileSettingBack: LiveData<Event<Boolean>> = _profileSettingBack
 
+    val idChangeFlag : LiveData<Event<Boolean>> = _idChangeFlag
     val passwordFlag : LiveData<Event<Boolean>> = _passwordFlag
     val passwordCheckFlag : LiveData<Event<Boolean>> = _passwordCheckFlag
     val emailDomainFlag : LiveData<Event<Boolean>> = _emailDomainFlag
@@ -77,8 +83,9 @@ class SignUpViewModel : ViewModel() {
     val idCheckFlag : LiveData<Event<Boolean>> = _idCheckFlag
     val emailCheckFlag : LiveData<Event<Boolean>> = _emailCheckFlag
     val verifyCodeCheckFlag: LiveData<Event<Boolean>> = _verifyCodeCheckFlag
+    val nickNameFlag: LiveData<Event<Boolean>> = _nickNameFlag
 
-        private val repository = Repository()
+    private val repository = Repository()
 
     init {
         _userId.value = ""
@@ -89,16 +96,21 @@ class SignUpViewModel : ViewModel() {
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
 
-        _schoolSelectNext.value = Event(false)
-        _schoolSelectBack.value = Event(false)
-        _createAccountNext.value = Event(false)
-        _createAccountBack.value = Event(false)
-        _profileSettingNext.value = Event(false)
-        _profileSettingBack.value = Event(false)
+//        _schoolSelectNext.value = Event(false)
+//        _schoolSelectBack.value = Event(false)
+//        _createAccountNext.value = Event(false)
+//        _createAccountBack.value = Event(false)
+//        _profileSettingNext.value = Event(false)
+//        _profileSettingBack.value = Event(false)
     }
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
     val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
+    val nickNameRg = "^[a-zA-Z0-9-_]{5,10}\$".toRegex()
+
+    fun onTextChangeId() {
+        _idChangeFlag.value = Event(true)
+    }
 
 
     fun onTextChangePW() {
@@ -121,10 +133,17 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun onTextChangeEmailDomain() {
-        if (_userEmailDomain.value!!.trim().matches(emailRg))
+        if (_userEmailDomain.value!!.trim().matches(emailRg) && _userEmailID.value!!.isNotEmpty())
             _emailDomainFlag.value = Event(true)
         else
             _emailDomainFlag.value = Event(false)
+    }
+
+    fun onTextChangeNickName() {
+        if (_userNickName.value!!.trim().matches(nickNameRg) && _userNickName.value!!.isNotEmpty())
+            _nickNameFlag.value = Event(true)
+        else
+            _nickNameFlag.value = Event(false)
     }
 
 
@@ -149,18 +168,8 @@ class SignUpViewModel : ViewModel() {
         _createAccountBack.value = Event(true)
     }
 
-    fun clickNextProfileSetting(){
-        _profileSettingNext.value = Event(true)
-    }
-
     fun clickBackProfileSetting(){
         _profileSettingBack.value = Event(true)
-    }
-
-
-    fun clickSchoolSelection() {
-        if (_userSchool.value != 0) _schoolSelectFlag.value = Event(true)
-        else _schoolSelectFlag.value = Event(false)
     }
 
 
@@ -186,7 +195,8 @@ class SignUpViewModel : ViewModel() {
             val idInput = _userId.value!!
             val result = repository.signUpIdDuplicated(IdDuplicatedInfo(idInput))
             Log.d(ContentValues.TAG, "callIdCheck 결과 : ${result}")
-            _idCheckFlag.postValue(Event(result))
+            Log.d(ContentValues.TAG, "_userId.value!!.isNotEmpty() : ${_userId.value!!.isNotEmpty()}")
+            _idCheckFlag.postValue(Event(!result && _userId.value!!.isNotEmpty()))
         }
     }
 
@@ -216,7 +226,7 @@ class SignUpViewModel : ViewModel() {
             val passwordInput = _userPassword.value!!
             val result = repository.signUpCreateAccount(AccountInfo(idInput, passwordInput))
             Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
-            //_startLoginActivity.postValue(result)
+            _profileSettingNext.postValue(Event(result))
         }
     }
 

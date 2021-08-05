@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -15,14 +14,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
-import com.rudder.databinding.FragmentCommunityHeaderBinding
-import com.rudder.databinding.FragmentCreateAccountBinding
 import com.rudder.databinding.FragmentSchoolSelectBinding
-import com.rudder.ui.activity.SignUpActivity
 import com.rudder.util.ChangeUIState
-import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.SignUpViewModel
-import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.android.synthetic.main.fragment_school_select.*
 import kotlinx.android.synthetic.main.fragment_school_select.view.*
 
@@ -33,7 +27,7 @@ class SchoolSelectFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by activityViewModels()
 
-    private lateinit var schoolSelect : FragmentSchoolSelectBinding
+    private lateinit var schoolSelectBinding : FragmentSchoolSelectBinding
 
     private val lazyContext by lazy {
         requireContext()
@@ -43,10 +37,10 @@ class SchoolSelectFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        schoolSelect = DataBindingUtil.inflate<FragmentSchoolSelectBinding>(inflater,R.layout.fragment_school_select,container,false)
-        schoolSelect.signUpVM = viewModel
-        schoolSelect.lifecycleOwner = this
+    ): View {
+        schoolSelectBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_school_select,container,false)
+        schoolSelectBinding.signUpVM = viewModel
+        schoolSelectBinding.lifecycleOwner = this
 
         val toastSchoolSelect = Toast.makeText(activity, "Please Select, Your School", Toast.LENGTH_SHORT)
 
@@ -55,22 +49,22 @@ class SchoolSelectFragment : Fragment() {
                 if(it) {
                     ChangeUIState.changeCheckBoxTrueState(schoolSelectCheckbox)
                     toastSchoolSelect.cancel()
-                    ChangeUIState.buttonEnable(schoolSelectNextBtn,schoolSelectCheckbox.isChecked) }
+                     }
                 else{
                     ChangeUIState.changeCheckBoxFalseState(schoolSelectCheckbox)
                     toastSchoolSelect.show()
-                    ChangeUIState.buttonEnable(schoolSelectNextBtn,schoolSelectCheckbox.isChecked)}
+                    }
+                ChangeUIState.buttonEnable(schoolSelectNextBtn,schoolSelectCheckbox.isChecked)
         }})
 
-        schoolSelect.schoolSelectSpinner.adapter = ArrayAdapter.createFromResource(lazyContext, R.array.schools_array , R.layout.support_simple_spinner_dropdown_item)
+        schoolSelectBinding.schoolSelectSpinner.adapter = ArrayAdapter.createFromResource(lazyContext, R.array.schools_array , R.layout.support_simple_spinner_dropdown_item)
             .also { adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                schoolSelect.schoolSelectSpinner.adapter = adapter
+                schoolSelectBinding.schoolSelectSpinner.adapter = adapter
             }
 
+        schoolSelectBinding.root.schoolSelectCheckbox.isEnabled = false
+        schoolSelectBinding.root.schoolSelectNextBtn.isEnabled = false
 
-        schoolSelect.root.schoolSelectCheckbox.isEnabled = false
-        schoolSelect.root.schoolSelectNextBtn.isEnabled = false
-
-        return schoolSelect.root
+        return schoolSelectBinding.root
     }
 }
