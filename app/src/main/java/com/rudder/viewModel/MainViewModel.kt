@@ -107,6 +107,10 @@ object MainViewModel : ViewModel() {
 
     }
 
+    fun addPost(){
+
+    }
+
     fun setSelectedPostPosition(position: Int){
         _selectedPostPosition.value=position
     }

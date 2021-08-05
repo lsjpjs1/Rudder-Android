@@ -27,5 +27,11 @@ class PostApi {
 
     }
 
+    fun addPostApi(addPostInfo: AddPostInfo):Deferred<JsonObject>{
+        return GlobalScope.async(Dispatchers.IO){
+            postService.addPost(addPostInfo)
+        }
+    }
+
 
 }
