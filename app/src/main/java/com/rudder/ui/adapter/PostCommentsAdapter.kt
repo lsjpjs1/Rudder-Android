@@ -52,7 +52,6 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
         lp.height=headerHeight
         bind.root.postPreviewTail.layoutParams=lp
 
-        Log.d("cal",(context as Activity).findViewById<ScrollView>(R.id.scrollView1).height.toString())
 
 
         return CustomViewHolder(bind)
