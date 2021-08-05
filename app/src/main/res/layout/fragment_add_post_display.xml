@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
 
+        <variable
+            name="mainVM"
+            type="com.rudder.viewModel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,7 +75,7 @@
                             android:layout_height="match_parent"
                             android:ems="10"
                             android:inputType="textMultiLine"
-                            android:text="Name" />
+                            android:text="@={mainVM._postBody}" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

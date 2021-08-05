@@ -9,10 +9,7 @@ import com.rudder.data.GetCommentInfo
 import com.rudder.data.LoginInfo
 import com.rudder.data.Post
 import com.rudder.data.local.App
-import com.rudder.data.remote.AddPostInfo
-import com.rudder.data.remote.CommentApi
-import com.rudder.data.remote.LoginApi
-import com.rudder.data.remote.PostApi
+import com.rudder.data.remote.*
 
 
 class Repository {
@@ -47,8 +44,9 @@ class Repository {
 
     suspend fun addPost(addPostInfo: AddPostInfo): Boolean{
         val resJson = PostApi.instance.addPostApi(addPostInfo).await()
-        val type = object : TypeToken<ArrayList<Comment>>(){}
-        return Gson().fromJson(resJson.get("results"),type.type)
+        val type = object : TypeToken<AddPostResponse>(){}
+        val addPostResponse:AddPostResponse = Gson().fromJson(resJson.get("results"),type.type)
+        return addPostResponse.isSuccess
     }
 
 }

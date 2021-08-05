@@ -44,3 +44,7 @@ data class ImageInfo(
         @SerializedName("file_size")
         val fileSize: Int
 )
+
+data class AddPostResponse(
+        val isSuccess:Boolean
+)

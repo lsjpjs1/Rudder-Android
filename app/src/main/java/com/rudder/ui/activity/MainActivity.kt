@@ -33,7 +33,7 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    private var viewModel: MainViewModel = MainViewModel
+    private val viewModel: MainViewModel by lazy {ViewModelProvider(this).get(MainViewModel::class.java)  }
     private lateinit var mainBottomBarFragment : MainBottomBarFragment
     private lateinit var communityFragment : CommunityFragment
     private lateinit var myPageFragment : MyPageFragment

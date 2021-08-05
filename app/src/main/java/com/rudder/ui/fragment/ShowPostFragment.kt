@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_show_post.*
 import kotlinx.android.synthetic.main.fragment_show_post.view.*
 
 class ShowPostFragment: Fragment() {
-    private val viewModel = MainViewModel
+    private val viewModel :MainViewModel by activityViewModels()
     private val lazyContext by lazy {
         requireContext()
     }

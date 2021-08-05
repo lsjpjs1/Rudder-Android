@@ -9,6 +9,7 @@ import com.rudder.data.Comment
 import com.rudder.data.GetCommentInfo
 import com.rudder.data.Post
 import com.rudder.data.local.App
+import com.rudder.data.remote.AddPostInfo
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.android.synthetic.main.fragment_community_display.*
@@ -19,12 +20,13 @@ import kotlinx.coroutines.launch
 import java.sql.Timestamp
 
 
-object MainViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
     private var pagingIndex = 0
     private var endPostId = -1
     private val MIN_PROGRESSBAR_TIME = 200.toLong() //millisecond
 
+    val _postBody = MutableLiveData<String>()
     private val _selectedTab = MutableLiveData<Int>()
     private val _posts = MutableLiveData<ArrayList<Post>>()
     private val _comments = MutableLiveData<ArrayList<Comment>>()
@@ -32,7 +34,9 @@ object MainViewModel : ViewModel() {
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
     private val _isBackClick = MutableLiveData<Event<Boolean>>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
+    private val _isAddPostSuccess = MutableLiveData<Event<Boolean>>()
 
+    val isAddPostSuccess: LiveData<Event<Boolean>> = _isAddPostSuccess
     val isScrollBottomTouch: LiveData<Event<Boolean>> = _isScrollBottomTouch
     val isBackClick: LiveData<Event<Boolean>> = _isBackClick
     val isAddPostClick: LiveData<Event<Boolean>> = _isAddPostClick
@@ -47,6 +51,7 @@ object MainViewModel : ViewModel() {
         _selectedTab.value = R.id.communityButton
         _posts.value=arrayListOf(Post(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3))
         _comments.value= arrayListOf(Comment("",0,"",Timestamp.valueOf("2021-07-13 11:11:11"),0,false))
+        _postBody.value=""
         getPosts()
     }
 
@@ -108,8 +113,16 @@ object MainViewModel : ViewModel() {
     }
 
     fun addPost(){
-
+        GlobalScope.launch {
+            val key = BuildConfig.TOKEN_KEY
+            val addPostInfo = AddPostInfo("bulletin","",_postBody.value!!, App.prefs.getValue(key)!!, arrayListOf())
+            val res = Repository().addPost(addPostInfo)
+            viewModelScope.launch {
+                _isAddPostSuccess.value=Event(res)
+            }
+        }
     }
+
 
     fun setSelectedPostPosition(position: Int){
         _selectedPostPosition.value=position
