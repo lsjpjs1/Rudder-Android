@@ -50,7 +50,7 @@ class MainViewModel : ViewModel() {
         Log.d("call","call")
         _selectedTab.value = R.id.communityButton
         _posts.value=arrayListOf(Post(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3))
-        _comments.value= arrayListOf(Comment("",0,"",Timestamp.valueOf("2021-07-13 11:11:11"),0,false))
+        _comments.value= arrayListOf(Comment("",0,"",Timestamp.valueOf("2021-07-13 11:11:11"),0,"parent",0,0,false))
         _postBody.value=""
         getPosts()
     }

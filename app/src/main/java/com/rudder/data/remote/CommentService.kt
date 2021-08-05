@@ -7,7 +7,7 @@ import retrofit2.http.POST
 
 interface CommentService {
 
-    @POST("/board/showComment")
+    @POST("/comment/showComment")
     suspend fun renderComment(
             @Body getCommentInfo: GetCommentInfo
     ) : JsonObject

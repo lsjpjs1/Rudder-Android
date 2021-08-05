@@ -9,6 +9,9 @@
         <variable
             name="timeago"
             type="String" />
+        <variable
+            name="MAX_POST_BODY_LENGTH"
+            type="Integer" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/postPreview"
@@ -102,7 +105,7 @@
                             android:id="@+id/postPreviewBodyPostTitleTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{post.postBody}"
+                            android:text="@{post.postBody.length()>50?post.postBody.substring(0,MAX_POST_BODY_LENGTH)+`  ...`:post.postBody}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

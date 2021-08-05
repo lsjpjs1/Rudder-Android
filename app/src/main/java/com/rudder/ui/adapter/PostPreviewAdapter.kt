@@ -22,7 +22,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOnclickListener,val context : Context): RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
-
+    private val MAX_POST_BODY_LENGTH = 50
     inner class CustomViewHolder(val postPreviewBinding: PostPreviewBinding) : RecyclerView.ViewHolder(postPreviewBinding.root)
 
     override fun onCreateViewHolder(
@@ -55,10 +55,16 @@ class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOncli
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(postList[position].postTime.time))
         holder.postPreviewBinding.post = postList[position]
         holder.postPreviewBinding.timeago = timeago
+        holder.postPreviewBinding.also {
+            it.post = postList[position]
+            it.timeago = timeago
+            it.maxpostbodylength=MAX_POST_BODY_LENGTH
+        }
         holder.postPreviewBinding.postPreview.setOnClickListener{
             listener.onPostPreviewClick(holder.postPreviewBinding.postPreview,position)
         }
     }
+
 
     fun updatePosts(newPosts: ArrayList<Post>){
         if(newPosts.size>0) {

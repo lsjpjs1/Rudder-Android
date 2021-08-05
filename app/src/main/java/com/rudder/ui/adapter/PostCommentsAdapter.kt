@@ -43,8 +43,14 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
         val entireHeightRatio = typedValue.float
         val headerHeightRatio = typedValue2.float
         val headerHeight = (showPostBodyHeight * headerHeightRatio).toInt()
-        bind.root.constraintLayout11.minHeight=headerHeight
-        bind.root.postPreviewTail.minHeight=headerHeight
+
+        var lp =bind.root.constraintLayout11.layoutParams
+        lp.height=headerHeight
+        bind.root.constraintLayout11.layoutParams=lp
+
+        lp = bind.root.postPreviewTail.layoutParams
+        lp.height=headerHeight
+        bind.root.postPreviewTail.layoutParams=lp
 
         Log.d("cal",(context as Activity).findViewById<ScrollView>(R.id.scrollView1).height.toString())
 
@@ -55,11 +61,10 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
 
 
     override fun onBindViewHolder(holder: PostCommentsAdapter.CustomViewHolder, position: Int) {
+        Log.d("position",position.toString())
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(commentList[position].postTime.time))
         holder.postCommentsBinding.comment = commentList[position]
         holder.postCommentsBinding.timeago = timeago
-//        holder.postCommentsBinding.root.textView5.measure(View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.AT_MOST),View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
-//        Log.d("cal",holder.postCommentsBinding.textView5.measuredHeight.toString())
     }
 
     override fun getItemCount(): Int {

@@ -9,7 +9,7 @@ data class Post(
     @SerializedName(value = "user_id")
     val userId: String,
     @SerializedName(value = "post_body")
-    val postBody: String,
+    var postBody: String,
     @SerializedName(value = "post_title")
     val postTitle: String,
     @SerializedName(value = "post_time")
