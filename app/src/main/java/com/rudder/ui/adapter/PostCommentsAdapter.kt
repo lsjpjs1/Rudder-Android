@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
@@ -60,7 +61,25 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
 
 
     override fun onBindViewHolder(holder: PostCommentsAdapter.CustomViewHolder, position: Int) {
-        Log.d("position",position.toString())
+        if(commentList[position].status=="child"){
+            holder.postCommentsBinding.nestedCommentImage.visibility=View.VISIBLE
+            holder.postCommentsBinding.constraintLayout11.viewTreeObserver.addOnGlobalLayoutListener(
+                    object : ViewTreeObserver.OnGlobalLayoutListener{
+                        override fun onGlobalLayout() {
+                            Log.d("position$position",holder.postCommentsBinding.constraintLayout11.height.toString())
+                            holder.postCommentsBinding.nestedCommentImage.minHeight = holder.postCommentsBinding.constraintLayout11.height
+                            val lp = holder.postCommentsBinding.constraintLayout14.layoutParams as ConstraintLayout.LayoutParams
+                            lp.startToStart = ConstraintLayout.LayoutParams.UNSET
+                            holder.postCommentsBinding.constraintLayout14.layoutParams=lp
+
+                            holder.postCommentsBinding.constraintLayout11.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                        }
+
+                    }
+            )
+        }
+
+
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(commentList[position].postTime.time))
         holder.postCommentsBinding.comment = commentList[position]
         holder.postCommentsBinding.timeago = timeago

@@ -62,6 +62,8 @@
 
     <item name="comment_header_name_width" type="dimen" format="float">0.25</item>
 
+    <item name="nested_comment_image_width" type="dimen" format="float">0.05</item>
+
     <item name="show_post_header_name_width" type="dimen" format="float">0.35</item>
 
 
