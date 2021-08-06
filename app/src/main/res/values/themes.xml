@@ -15,4 +15,9 @@
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="splashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
 </resources>
