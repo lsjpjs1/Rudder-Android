@@ -12,4 +12,5 @@
     <string name="add_post_title">Add Post</string>
     <string name="post_button">Post</string>
     <string name="text_title">Text</string>
+    <string name="text_hint">Text</string>
 </resources>

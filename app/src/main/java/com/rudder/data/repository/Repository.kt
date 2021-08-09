@@ -4,10 +4,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.rudder.BuildConfig
-import com.rudder.data.Comment
-import com.rudder.data.GetCommentInfo
-import com.rudder.data.LoginInfo
-import com.rudder.data.Post
+import com.rudder.data.*
 import com.rudder.data.local.App
 import com.rudder.data.remote.*
 
@@ -37,9 +34,8 @@ class Repository {
     }
 
     suspend fun getComments(getCommentInfo: GetCommentInfo): ArrayList<Comment> {
-        val resJson = CommentApi.instance.getComments(getCommentInfo).await()
-        val type = object : TypeToken<ArrayList<Comment>>(){}
-        return Gson().fromJson(resJson.get("results"),type.type)
+        val resJson :Response<ArrayList<Comment>> = CommentApi.instance.getComments(getCommentInfo).await()
+        return resJson.results
     }
 
     suspend fun addPost(addPostInfo: AddPostInfo): Boolean{
