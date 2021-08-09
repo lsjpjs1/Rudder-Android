@@ -190,12 +190,22 @@ class SignUpViewModel : ViewModel() {
     }
 
 
+    fun asd() {
+        GlobalScope.launch {
+
+            val result = repository.signUpSchoolList()
+
+            Log.d(ContentValues.TAG, "callIdCheck 결과 : ${result}")
+
+        }
+    }
+
+
     fun callIdCheck() {
         GlobalScope.launch {
             val idInput = _userId.value!!
             val result = repository.signUpIdDuplicated(IdDuplicatedInfo(idInput))
             Log.d(ContentValues.TAG, "callIdCheck 결과 : ${result}")
-            Log.d(ContentValues.TAG, "_userId.value!!.isNotEmpty() : ${_userId.value!!.isNotEmpty()}")
             _idCheckFlag.postValue(Event(!result && _userId.value!!.isNotEmpty()))
         }
     }

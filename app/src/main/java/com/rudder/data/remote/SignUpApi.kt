@@ -1,14 +1,13 @@
 package com.rudder.data.remote
 
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import com.rudder.BuildConfig
-import com.rudder.data.AccountInfo
-import com.rudder.data.CheckVerifyCodeInfo
-import com.rudder.data.EmailInfo
-import com.rudder.data.IdDuplicatedInfo
+import com.rudder.data.*
 import kotlinx.coroutines.*
+import org.json.JSONArray
 import retrofit2.Call
 
 class SignUpApi {
@@ -45,6 +44,14 @@ class SignUpApi {
     fun createAccountSignUp(accountInfo: AccountInfo) : Deferred<String>{
         return GlobalScope.async(Dispatchers.IO){
             createAccountService.createAccountSignUp(accountInfo)
+        } }
+
+
+    private val schoolListService : SchoolListService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(SchoolListService::class.java)
+
+    fun schoolListSignUp() : Deferred<JSONArray>{
+        return GlobalScope.async(Dispatchers.IO){
+            schoolListService.schoolListSignUp()
         } }
 
 

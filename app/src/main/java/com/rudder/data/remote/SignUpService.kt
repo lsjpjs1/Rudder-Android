@@ -1,14 +1,13 @@
 package com.rudder.data.remote
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
-import com.rudder.data.AccountInfo
-import com.rudder.data.CheckVerifyCodeInfo
+import com.rudder.data.*
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
-import com.rudder.data.EmailInfo
-import com.rudder.data.IdDuplicatedInfo
 import org.json.JSONObject
 
 interface SingUpEmailService {
@@ -37,6 +36,13 @@ interface CreateAccountService {
     suspend fun createAccountSignUp(
         @Body accountInfo : AccountInfo
     ) : String
+}
+
+
+interface SchoolListService {
+    @POST("/signupin/schoolList")
+    suspend fun schoolListSignUp(
+    ) : JSONArray
 }
 
 

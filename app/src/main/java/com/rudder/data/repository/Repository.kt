@@ -45,9 +45,9 @@ class Repository {
             Log.d("login", "value : ${token}")
 
 
-
             if (token == ""){
                 result = false
+                App.prefs.setValue(key, "")
             }else{
                 result = true
                 App.prefs.setValue(key, token)
@@ -97,6 +97,22 @@ class Repository {
 
         return createAccountCheckFlag
     }
+
+    suspend fun signUpSchoolList() : Boolean{
+        var schoolListFlag : Boolean
+
+        val schoolListFlagAPIResultJson = SignUpApi.instance.schoolListSignUp().await()
+        Log.d(TAG, "schoolListFlagAPIResultJson : ${schoolListFlagAPIResultJson}")
+
+        //val jsonResult = schoolListFlagAPIResultJson.getJSONArray(0)
+//        Log.d(TAG, "jsonResult : ${jsonResult}")
+        //val schoolListResult = jsonResult.get("isDuplicated").asBoolean
+
+        //schoolListFlag = schoolListResult
+        //return schoolListFlag
+        return true
+    }
+
 
 
     suspend fun getPosts(pagingIndex:Int, endPostId:Int): ArrayList<Post>{

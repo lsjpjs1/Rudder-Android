@@ -16,14 +16,16 @@ import kotlinx.coroutines.launch
 
 
 class LoginViewModel() : ViewModel() {
-    val userId = MutableLiveData<String>()
-    val userPassword = MutableLiveData<String>()
+    val _userId = MutableLiveData<String>()
+    val _userPassword = MutableLiveData<String>()
     private val _showLoginErrorToast = MutableLiveData<Event<Boolean>>()
     private val _startMainActivity = MutableLiveData<Event<Boolean>>()
     private val _startSignUpActivity = MutableLiveData<Event<Boolean>>()
 
     val _autoLogin = MutableLiveData<Event<Boolean>>()
 
+    val userId: LiveData<String> = _userId
+    val userPassword: LiveData<String> = _userPassword
     val showLoginErrorToast: LiveData<Event<Boolean>> = _showLoginErrorToast
     val startMainActivity: LiveData<Event<Boolean>> = _startMainActivity
     val startSignUpActivity: LiveData<Event<Boolean>> = _startSignUpActivity
@@ -32,8 +34,8 @@ class LoginViewModel() : ViewModel() {
     private val repository = Repository()
 
     init {
-        userId.value = ""
-        userPassword.value = ""
+        _userId.value = App.prefs.getValue("loginId")
+        _userPassword.value = App.prefs.getValue("loginPassword")
         _showLoginErrorToast.value = Event(false)
     }
 
@@ -59,17 +61,43 @@ class LoginViewModel() : ViewModel() {
 
     fun callLogin(){
         GlobalScope.launch {
-            val result = repository.login(LoginInfo(userId.value!!,userPassword.value!!))
-            Log.d("result", "${result }" )
+            val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!))
+
+            Log.d("result", "${result}" )
             viewModelScope.launch{
                 if(result){
                     _startMainActivity.value = Event(true)
+                    App.prefs.setValue("loginId",_userId.value!!)
+                    App.prefs.setValue("loginPassword",_userPassword.value!!)
                 }else{
                     _showLoginErrorToast.value = Event(true)
+                    App.prefs.setValue("loginId", "")
+                    App.prefs.setValue("loginPassword", "")
                 }
             }
         }
     }
 
 
+    fun callAutoLogin() {
+        GlobalScope.launch {
+
+//            App.prefs.setValue("loginId",_userId.value!!)
+//            App.prefs.setValue("loginPassword",_userPassword.value!!)
+
+//            val userIdPref = App.prefs.getValue("loginId")
+//            val userPasswordPref = App.prefs.getValue("loginPassword")
+
+            val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!))
+            Log.d("result", "${result}")
+            viewModelScope.launch {
+                if (result) {
+                    _startMainActivity.value = Event(true)
+                } else {
+                    _showLoginErrorToast.value = Event(true)
+                }
+            }
+
+        }
+    }
 }

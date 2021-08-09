@@ -66,6 +66,8 @@ class SignUpActivity : AppCompatActivity() {
         binding.signUpVM = viewModel
         binding.lifecycleOwner = this
 
+        viewModel.asd()
+
 
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
 

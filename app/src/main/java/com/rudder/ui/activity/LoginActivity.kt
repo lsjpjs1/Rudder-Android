@@ -30,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
         autoLoginCheck()
 
 
-
         viewModel.showLoginErrorToast.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
@@ -70,11 +69,13 @@ class LoginActivity : AppCompatActivity() {
 
     fun autoLoginCheck(){
         val autoLoginPref = App.prefs.getValue("autoLogin")
+        Log.d("autoLoginPref","$autoLoginPref")
         autoLoginCheckbox.isChecked = autoLoginPref == "true"
 
-        if (autoLoginPref == "true")
-            Log.d("asdasd","asdasd")
-            viewModel.callLogin()
+        if (autoLoginPref == "true") {
+            Log.d("autoLoginPref2","$autoLoginPref")
+            viewModel.callAutoLogin()
+            }
     }
 
 
