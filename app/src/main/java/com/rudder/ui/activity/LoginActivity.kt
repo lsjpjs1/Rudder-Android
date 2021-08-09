@@ -11,7 +11,9 @@ import com.rudder.BuildConfig
 import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.databinding.ActivityLoginBinding
+import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.LoginViewModel
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
     private var viewModel: LoginViewModel = LoginViewModel()
@@ -21,13 +23,20 @@ class LoginActivity : AppCompatActivity() {
 
         setTheme(R.style.Theme_Rudder)
 
-
         val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
         binding.loginVM = viewModel
         binding.lifecycleOwner = this
+
+        autoLoginCheck()
+
+
+
         viewModel.showLoginErrorToast.observe(this, Observer {
-            it.getContentIfNotHandled()?.let{
-                Toast.makeText(this, R.string.login_error,Toast.LENGTH_SHORT).show()
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    Log.d("onDestoryLogin","${it}")
+                    Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show()
+                }
             }
         })
         viewModel.startMainActivity.observe(this, Observer {
@@ -40,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
                 callSignUpActivity()
             }
         })
+
     }
 
     override fun onDestroy() {
@@ -56,6 +66,15 @@ class LoginActivity : AppCompatActivity() {
         //finish()
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
+    }
+
+    fun autoLoginCheck(){
+        val autoLoginPref = App.prefs.getValue("autoLogin")
+        autoLoginCheckbox.isChecked = autoLoginPref == "true"
+
+        if (autoLoginPref == "true")
+            Log.d("asdasd","asdasd")
+            viewModel.callLogin()
     }
 
 

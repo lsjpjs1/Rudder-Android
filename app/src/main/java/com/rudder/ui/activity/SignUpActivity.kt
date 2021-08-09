@@ -70,7 +70,6 @@ class SignUpActivity : AppCompatActivity() {
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
 
         viewModel.schoolSelectNext.observe(this, Observer {
-            Log.d("next","next")
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)

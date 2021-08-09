@@ -20,20 +20,44 @@ class Repository {
     suspend fun login(loginInfo: LoginInfo) : Boolean{
         val key = BuildConfig.TOKEN_KEY
         var result = true
+
+        Log.d("login", "App.prefs.getValue(key) : ${App.prefs.getValue(key)}")
+
         if(App.prefs.getValue(key)==null || App.prefs.getValue(key)==""){ // 토큰이 비어있는 상태, 로그인의 서버요청이 필요한 상태
                 val resLogin =  LoginApi.instance.login(loginInfo).await()
+                Log.d("login", "resLogin : ${resLogin}")
                 if(resLogin.has("info")){
                     val value = resLogin.get("info").asString
+                    Log.d("login", "value : ${value}")
                     App.prefs.setValue(key, value)
                 }else{
                     result = false
                 }
-        }else{
+        } else {
             // 자동 로그인 하는 상태, 로그인의 서버요청이 필요하지 않는 상태
+            val resLogin = LoginApi.instance.login(loginInfo).await()
+            Log.d("login", "resLogin : ${resLogin}")
+
+            val value = resLogin.getAsJsonObject("results")
+            Log.d("login", "value : ${value}")
+
+            val token = value.get("token").asString
+            Log.d("login", "value : ${token}")
+
+
+
+            if (token == ""){
+                result = false
+            }else{
+                result = true
+                App.prefs.setValue(key, token)
+            }
 
         }
         return result
     }
+
+
 
     suspend fun signUpSendVerifyCode(emailInfo : EmailInfo) : Boolean{
         var emailCheckFlag : Boolean

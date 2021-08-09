@@ -23,5 +23,6 @@
     <string name="next">NEXT</string>
     <string name="back">BACK</string>
     <string name="create_account">Create Account</string>
-
+    <string name="remeber_me">Remember me?</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>

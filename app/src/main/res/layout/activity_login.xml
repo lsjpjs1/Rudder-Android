@@ -57,6 +57,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             >
 
+            <CheckBox
+                android:id="@+id/autoLoginCheckbox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:buttonTint="#5AEF0A"
+                android:onCheckedChanged="@{(compoundButton, checked) -> loginVM.onCheckedChange(compoundButton, checked)}"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.08"
+                app:layout_constraintStart_toEndOf="@+id/autoLogin"
+                app:layout_constraintTop_toBottomOf="@+id/editTextUserPassword"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
             <EditText
                 android:id="@+id/editTextUserId"
                 android:layout_width="0dp"
@@ -72,7 +87,6 @@
                 android:text="@={loginVM.userId}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="0.2"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayoutLogin2"
                 app:layout_constraintBottom_toTopOf="@+id/editTextUserPassword"
 
@@ -101,15 +115,32 @@
                 android:id="@+id/autoLogin"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="auto_login"
+                android:text="@string/remeber_me"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintWidth_percent="0.35"
                 android:gravity="center"
-
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="18dp"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintEnd_toStartOf="@+id/ForgetText"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextUserPassword"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/ForgetText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/forgot_password"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.35"
+                android:gravity="center"
+                android:textSize="16dp"
+                app:layout_constraintStart_toEndOf="@+id/autoLoginCheckbox"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextUserPassword"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -127,34 +158,46 @@
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="1">
 
+            <Button
+                android:id="@+id/signUpBtn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.4"
+                android:clickable="true"
+                android:backgroundTint="#9329D1"
+                android:gravity="center"
+                android:onClick="@{()->loginVM.callSignUp()}"
+                android:text="@string/sign_up"
+                app:layout_constraintEnd_toStartOf="@id/signInBtn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <Button
+                android:id="@+id/signInBtn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.4"
+                android:clickable="true"
+                android:backgroundTint="#9329D1"
+                android:gravity="center"
+                android:onClick="@{()->loginVM.callLogin()}"
+                android:text="@string/sign_in"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/signUpBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-<!--        <Button-->
-<!--            android:id="@+id/signUpBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="124dp"-->
-<!--            android:layout_marginLeft="124dp"-->
-<!--            android:layout_marginTop="72dp"-->
-<!--            android:clickable="true"-->
-<!--            android:onClick="@{()->loginVM.callSignUp()}"-->
-<!--            android:text="@string/sign_up"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/editTextUserPassword" />-->
 
-<!--        <Button-->
-<!--            android:id="@+id/signInBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="79dp"-->
-<!--            android:layout_marginLeft="79dp"-->
-<!--            android:layout_marginTop="74dp"-->
-<!--            android:clickable="true"-->
-<!--            android:onClick="@{()->loginVM.callLogin()}"-->
-<!--            android:text="@string/sign_in"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/signUpBtn"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/editTextUserPassword" />-->
 
 
 

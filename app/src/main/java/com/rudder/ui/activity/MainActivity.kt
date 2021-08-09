@@ -86,13 +86,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onBackPressed() {
-        val isBackButtonAvailable = (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) &&(!supportFragmentManager.findFragmentByTag("community")!!.isVisible)
-        if(isBackButtonAvailable){ // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
-            super.onBackPressed()
-        }
-        Log.d("changedPost", supportFragmentManager.findFragmentByTag("1234").toString())
-    }
+//    override fun onBackPressed() {
+////        val isBackButtonAvailable = (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) &&(!supportFragmentManager.findFragmentByTag("community")!!.isVisible)
+////        if(isBackButtonAvailable){ // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
+////            super.onBackPressed()
+////        }
+////        Log.d("changedPost", supportFragmentManager.findFragmentByTag("1234").toString())
+//
+//    }
 
     fun changeSelectedPostPosition(position: Int){
         viewModel.setSelectedPostPosition(position)
