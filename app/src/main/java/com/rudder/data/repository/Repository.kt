@@ -18,10 +18,10 @@ class Repository {
         val key = BuildConfig.TOKEN_KEY
         var result = true
         Log.d("token",App.prefs.getValue(key).toString())
-        if(App.prefs.getValue(key)==null || App.prefs.getValue(key)==""){
-            val resLogin =  LoginApi.instance.login(loginInfo).await()
-            if(resLogin.has("info")){
-                val value = resLogin.get("info").asString
+       if(App.prefs.getValue(key)==null || App.prefs.getValue(key)==""){
+            val response =  LoginApi.instance.login(loginInfo).await()
+            if(response.results.success){
+                val value = response.results.token
                 App.prefs.setValue(key, value)
             }else{
                 result = false
@@ -43,10 +43,8 @@ class Repository {
     }
 
     suspend fun addPost(addPostInfo: AddPostInfo): Boolean{
-        val resJson = PostApi.instance.addPostApi(addPostInfo).await()
-        val type = object : TypeToken<AddPostResponse>(){}
-        val addPostResponse:AddPostResponse = Gson().fromJson(resJson.get("results"),type.type)
-        return addPostResponse.isSuccess
+        val response = PostApi.instance.addPostApi(addPostInfo).await()
+        return response.results.isSuccess
     }
 
 }

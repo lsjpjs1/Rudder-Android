@@ -7,9 +7,9 @@ import android.util.Log
 import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.LoginInfo
+import com.rudder.data.Response
 import kotlinx.coroutines.*
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.await
 
 class LoginApi {
@@ -20,7 +20,7 @@ class LoginApi {
 
     private val loginService : LoginService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(LoginService::class.java)
 
-    fun login(loginInfo: LoginInfo) : Deferred<JsonObject>{
+    fun login(loginInfo: LoginInfo) : Deferred<Response<LoginResponse>>{
 
         return GlobalScope.async(Dispatchers.IO){
             loginService.login(loginInfo)

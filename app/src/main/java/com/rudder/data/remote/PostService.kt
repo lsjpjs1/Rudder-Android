@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 import com.rudder.data.GetPostInfo
 import com.rudder.data.LoginInfo
 import com.rudder.data.Post
+import com.rudder.data.Response
 import retrofit2.http.Body
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -20,7 +21,7 @@ interface PostService {
     @POST("/board/addPost")
     suspend fun addPost(
             @Body addPostInfo: AddPostInfo
-    ) : JsonObject
+    ) : Response<AddPostResponse>
 }
 
 data class AddPostInfo(

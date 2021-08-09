@@ -6,6 +6,7 @@ import com.rudder.BuildConfig
 import com.rudder.data.GetPostInfo
 import com.rudder.data.LoginInfo
 import com.rudder.data.Post
+import com.rudder.data.Response
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,7 +28,7 @@ class PostApi {
 
     }
 
-    fun addPostApi(addPostInfo: AddPostInfo):Deferred<JsonObject>{
+    fun addPostApi(addPostInfo: AddPostInfo):Deferred<Response<AddPostResponse>>{
         return GlobalScope.async(Dispatchers.IO){
             postService.addPost(addPostInfo)
         }
