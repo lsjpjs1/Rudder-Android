@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="mainVM"
-            type="com.rudder.viewModel.MainViewModel" />
+            name="addCommentVM"
+            type="com.rudder.viewModel.AddCommentViewModel" />
     </data>
 
 
@@ -26,8 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:hint="@string/comment_title"
                 android:inputType="textMultiLine"
-                android:text="Comment"
+                android:text="@={addCommentVM._commentBody}"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -97,6 +97,12 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val isBackButtonAvailable = (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) &&(!supportFragmentManager.findFragmentByTag("community")!!.isVisible)
         if(isBackButtonAvailable){ // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
+            if(addCommentFragment.isVisible){
+                Log.d("tag","visible")
+                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                fragmentShowHide.removeFragment(addCommentFragment)
+                fragmentShowHide.showFragment(mainBottomBarFragment,R.id.mainBottomBar)
+            }
             super.onBackPressed()
         }
         Log.d("changedPost", supportFragmentManager.findFragmentByTag("1234").toString())
@@ -128,9 +134,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showAddComment(){
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainBottomBar,addCommentFragment)
-            .commit()
+        addCommentFragment = AddCommentFragment()
+        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+        fragmentShowHide.addFragment(addCommentFragment,R.id.mainBottomBar,"mainBottomBar")
+        fragmentShowHide.showFragment(addCommentFragment,R.id.mainBottomBar)
     }
 
     fun changeColorCommunity(){

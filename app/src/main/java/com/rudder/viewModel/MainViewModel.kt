@@ -23,6 +23,7 @@ class MainViewModel : ViewModel() {
     private val MIN_PROGRESSBAR_TIME = 200.toLong() //millisecond
 
     val _postBody = MutableLiveData<String>()
+    val _commentBody = MutableLiveData<String>()
     private val _selectedTab = MutableLiveData<Int>()
     private val _posts = MutableLiveData<ArrayList<PreviewPost>>()
     private val _comments = MutableLiveData<ArrayList<Comment>>()

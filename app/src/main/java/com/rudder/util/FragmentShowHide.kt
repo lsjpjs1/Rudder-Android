@@ -19,6 +19,10 @@ class FragmentShowHide(val supportedFragmentManager: FragmentManager) {
         }
     }
 
+    fun removeFragment(fragment: Fragment){
+        transaction.remove(fragment)
+    }
+
     fun addToBackStack(){
         transaction.addToBackStack(null)
     }
