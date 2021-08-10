@@ -1,21 +1,17 @@
 package com.rudder.viewModel
 
 import android.util.Log
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.rudder.BuildConfig
 import com.rudder.R
 import com.rudder.data.Comment
 import com.rudder.data.GetCommentInfo
-import com.rudder.data.Post
+import com.rudder.data.PreviewPost
 import com.rudder.data.local.App
 import com.rudder.data.remote.AddPostInfo
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
-import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.sql.Timestamp
 
@@ -28,28 +24,30 @@ class MainViewModel : ViewModel() {
 
     val _postBody = MutableLiveData<String>()
     private val _selectedTab = MutableLiveData<Int>()
-    private val _posts = MutableLiveData<ArrayList<Post>>()
+    private val _posts = MutableLiveData<ArrayList<PreviewPost>>()
     private val _comments = MutableLiveData<ArrayList<Comment>>()
     private val _selectedPostPosition = MutableLiveData<Int>()
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
     private val _isBackClick = MutableLiveData<Event<Boolean>>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
     private val _isAddPostSuccess = MutableLiveData<Event<Boolean>>()
+    private val _isLikeClick = MutableLiveData<Event<Boolean>>()
 
+    val isLikeClick: LiveData<Event<Boolean>> = _isLikeClick
     val isAddPostSuccess: LiveData<Event<Boolean>> = _isAddPostSuccess
     val isScrollBottomTouch: LiveData<Event<Boolean>> = _isScrollBottomTouch
     val isBackClick: LiveData<Event<Boolean>> = _isBackClick
     val isAddPostClick: LiveData<Event<Boolean>> = _isAddPostClick
     val selectedTab: LiveData<Int> = _selectedTab
     val selectedPostPosition: LiveData<Int> = _selectedPostPosition
-    val posts : LiveData<ArrayList<Post>>
+    val posts : LiveData<ArrayList<PreviewPost>>
         get() = _posts
     val comments : LiveData<ArrayList<Comment>> = _comments
 
     init{
         Log.d("call","call")
         _selectedTab.value = R.id.communityButton
-        _posts.value=arrayListOf(Post(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3))
+        _posts.value=arrayListOf(PreviewPost(1,"abc","body","title", Timestamp.valueOf("2021-07-13 11:11:11"),1,2,3))
         _comments.value= arrayListOf(Comment("",0,"",Timestamp.valueOf("2021-07-13 11:11:11"),0,"parent",0,0,false))
         _postBody.value=""
         getPosts()
@@ -79,6 +77,11 @@ class MainViewModel : ViewModel() {
         _isBackClick.value = Event(true)
     }
 
+    fun clickLike(){
+        _isLikeClick.value = Event(true)
+    }
+
+
     fun getPosts(){
         _isScrollBottomTouch.value = Event(true)
         GlobalScope.launch {
@@ -92,7 +95,6 @@ class MainViewModel : ViewModel() {
                     Log.d("oldPost",oldPosts.toString())
                     _posts.value= oldPosts!!
                 }
-                delay(MIN_PROGRESSBAR_TIME) //
                 _isScrollBottomTouch.value = Event(false)
             }
         }

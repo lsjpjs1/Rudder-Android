@@ -5,10 +5,13 @@
     <data>
         <variable
             name="post"
-            type="com.rudder.data.Post" />
+            type="com.rudder.data.PreviewPost" />
         <variable
             name="commentCount"
             type="Integer" />
+        <variable
+            name="mainVM"
+            type="com.rudder.viewModel.MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -133,12 +136,13 @@
                                 app:layout_constraintWidth_percent="@dimen/post_preview_tail_like_count_width">
 
                                 <ImageView
-                                    android:id="@+id/imageView6"
+                                    android:id="@+id/showPostLikeImageView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
+                                    android:onClick="@{()->mainVM.clickLike()}"
                                     app:srcCompat="@drawable/ic_outline_thumb_up_24" />
 
                                 <TextView
@@ -147,7 +151,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@{` `+Integer.toString(post.likeCount)}"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toEndOf="@+id/imageView6"
+                                    app:layout_constraintStart_toEndOf="@+id/showPostLikeImageView"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>

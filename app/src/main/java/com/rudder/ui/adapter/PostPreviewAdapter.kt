@@ -2,8 +2,6 @@ package com.rudder.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Resources
-import android.text.format.DateUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -12,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
-import com.rudder.data.Post
+import com.rudder.data.PreviewPost
 import com.rudder.databinding.PostPreviewBinding
 import com.rudder.util.CustomOnclickListener
 import com.rudder.util.LocaleUtil
@@ -21,7 +19,7 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOnclickListener,val context : Context): RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
+class PostPreviewAdapter(val previewPostList: ArrayList<PreviewPost>, val listener: CustomOnclickListener, val context : Context): RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
     private val MAX_POST_BODY_LENGTH = 50
     inner class CustomViewHolder(val postPreviewBinding: PostPreviewBinding) : RecyclerView.ViewHolder(postPreviewBinding.root)
 
@@ -47,16 +45,16 @@ class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOncli
 
 
     override fun getItemCount(): Int {
-        return postList.size
+        return previewPostList.size
     }
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(postList[position].postTime.time))
-        holder.postPreviewBinding.post = postList[position]
+        val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(previewPostList[position].postTime.time))
+        holder.postPreviewBinding.post = previewPostList[position]
         holder.postPreviewBinding.timeago = timeago
         holder.postPreviewBinding.also {
-            it.post = postList[position]
+            it.post = previewPostList[position]
             it.timeago = timeago
             it.maxpostbodylength=MAX_POST_BODY_LENGTH
         }
@@ -66,13 +64,13 @@ class PostPreviewAdapter(val postList: ArrayList<Post>,val listener: CustomOncli
     }
 
 
-    fun updatePosts(newPosts: ArrayList<Post>){
-        if(newPosts.size>0) {
-            val diffCallback: PostsDiffCallback = PostsDiffCallback(postList, newPosts)
+    fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>){
+        if(newPreviewPosts.size>0) {
+            val diffCallback: PostsDiffCallback = PostsDiffCallback(previewPostList, newPreviewPosts)
             val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
 
-            postList.clear()
-            postList.addAll(newPosts)
+            previewPostList.clear()
+            previewPostList.addAll(newPreviewPosts)
             diffResult.dispatchUpdatesTo(this)
         }
     }

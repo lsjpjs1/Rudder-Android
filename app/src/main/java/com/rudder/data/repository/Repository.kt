@@ -1,8 +1,6 @@
 package com.rudder.data.repository
 
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.rudder.BuildConfig
 import com.rudder.data.*
 import com.rudder.data.local.App
@@ -27,7 +25,7 @@ class Repository {
         return result
     }
 
-    suspend fun getPosts(pagingIndex:Int, endPostId:Int): ArrayList<Post>{
+    suspend fun getPosts(pagingIndex:Int, endPostId:Int): ArrayList<PreviewPost>{
 
 
         return PostApi.instance.getPosts(pagingIndex, endPostId).await()

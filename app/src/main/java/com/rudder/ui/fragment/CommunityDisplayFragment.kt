@@ -59,6 +59,7 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
     override fun onPostPreviewClick(view: View, position: Int) {
         (activity as MainActivity).changeSelectedPostPosition(position)
         (activity as MainActivity).showPost()
+        (activity as MainActivity).showAddComment()
         viewModel.getComments()
     }
 

@@ -3,7 +3,7 @@ package com.rudder.data
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 
-data class Post(
+data class PreviewPost(
     @SerializedName(value = "post_id")
     val postId: Int,
     @SerializedName(value = "user_id")

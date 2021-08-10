@@ -1,11 +1,8 @@
 package com.rudder.data.remote
 
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.GetPostInfo
-import com.rudder.data.LoginInfo
-import com.rudder.data.Post
+import com.rudder.data.PreviewPost
 import com.rudder.data.Response
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +17,7 @@ class PostApi {
 
     private val postService : PostService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(PostService::class.java)
 
-    fun getPosts(pagingIndex:Int, endPostId:Int) : Deferred<ArrayList<Post>> {
+    fun getPosts(pagingIndex:Int, endPostId:Int) : Deferred<ArrayList<PreviewPost>> {
 
         return GlobalScope.async(Dispatchers.IO){
             postService.renderPost(GetPostInfo("bulletin",pagingIndex,endPostId))

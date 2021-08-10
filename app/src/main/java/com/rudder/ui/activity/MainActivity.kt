@@ -1,26 +1,16 @@
 package com.rudder.ui.activity
 
 import android.graphics.PorterDuff
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
-import com.rudder.data.Post
 import com.rudder.databinding.ActivityMainBinding
-import com.rudder.ui.adapter.PostPreviewAdapter
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
@@ -28,13 +18,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_community_display.view.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
-import java.sql.Timestamp
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by lazy {ViewModelProvider(this).get(MainViewModel::class.java)  }
     private lateinit var mainBottomBarFragment : MainBottomBarFragment
+    private lateinit var addCommentFragment: AddCommentFragment
     private lateinit var communityFragment : CommunityFragment
     private lateinit var myPageFragment : MyPageFragment
     private lateinit var addPostFragment: AddPostFragment
@@ -54,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         communityFragment = CommunityFragment()
         myPageFragment = MyPageFragment()
         addPostFragment = AddPostFragment()
+        addCommentFragment = AddCommentFragment()
 
         supportFragmentManager.beginTransaction()
             .add(R.id.mainBottomBar,mainBottomBarFragment)
@@ -134,6 +125,12 @@ class MainActivity : AppCompatActivity() {
         fragmentShowHide.addToBackStack()
         fragmentShowHide.addFragment(showPostFragment,R.id.mainDisplay,"showPost")
         fragmentShowHide.showFragment(showPostFragment,R.id.mainDisplay)
+    }
+
+    fun showAddComment(){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.mainBottomBar,addCommentFragment)
+            .commit()
     }
 
     fun changeColorCommunity(){

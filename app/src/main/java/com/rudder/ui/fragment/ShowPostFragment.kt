@@ -46,6 +46,7 @@ class ShowPostFragment: Fragment() {
         }
         fragmentBinding.commentCount=viewModel.comments.value!!.size
         fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        fragmentBinding.mainVM = viewModel
         viewModel.comments.observe(viewLifecycleOwner, Observer {
             adapter.updateComments(it)
             fragmentBinding.commentCount=viewModel.comments.value!!.size
@@ -66,6 +67,10 @@ class ShowPostFragment: Fragment() {
 
                 }
         )
+
+        viewModel.isLikeClick.observe(viewLifecycleOwner , Observer {
+            showPostLikeImageView.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+        })
 
         return fragmentBinding.root
     }

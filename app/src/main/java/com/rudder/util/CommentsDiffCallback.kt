@@ -2,7 +2,6 @@ package com.rudder.util
 
 import androidx.recyclerview.widget.DiffUtil
 import com.rudder.data.Comment
-import com.rudder.data.Post
 
 class CommentsDiffCallback(private val oldList:ArrayList<Comment>, private val newList: ArrayList<Comment>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
