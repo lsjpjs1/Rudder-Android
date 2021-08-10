@@ -15,6 +15,7 @@ import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class SignUpViewModel : ViewModel() {
@@ -56,7 +57,7 @@ class SignUpViewModel : ViewModel() {
     val _verifyCodeCheckFlag = MutableLiveData<Event<Boolean>>()
     val _nickNameFlag = MutableLiveData<Event<Boolean>>()
 
-    val _schoolArray = MutableLiveData<Array<String>>()
+    val _schoolList = MutableLiveData<MutableList<String>>()
 
     val userId: LiveData<String> = _userId
     val userPassword: LiveData<String> = _userPassword
@@ -87,7 +88,7 @@ class SignUpViewModel : ViewModel() {
     val verifyCodeCheckFlag: LiveData<Event<Boolean>> = _verifyCodeCheckFlag
     val nickNameFlag: LiveData<Event<Boolean>> = _nickNameFlag
 
-    val schoolArray : LiveData<Array<String>> = _schoolArray
+    val schoolList : LiveData<MutableList<String>> = _schoolList
 
     private val repository = Repository()
 
@@ -99,7 +100,7 @@ class SignUpViewModel : ViewModel() {
         _userEmailID.value = ""
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
-        _schoolArray.value = arrayOf()
+        _schoolList.value = mutableListOf()
 
 //        _schoolSelectNext.value = Event(false)
 //        _schoolSelectBack.value = Event(false)
@@ -195,20 +196,18 @@ class SignUpViewModel : ViewModel() {
     }
 
 
-    fun asd() {
+    fun callSchoolList() {
         GlobalScope.launch {
             val resultSchoolList = repository.signUpSchoolList()
             Log.d(ContentValues.TAG, "callIdCheck 결과 : ${resultSchoolList}")
 
             for (i in 0 until resultSchoolList.size() ) {
                 val iObject = resultSchoolList[i].asJsonObject
-                val schoolName = iObject.get("school_name")
+                val schoolName = iObject.get("school_name").asString
                 Log.d(ContentValues.TAG, "callIdCheck 결과 : ${schoolName}")
-                _schoolArray.value!!.plus("123")
-
+                _schoolList.value!!.add(schoolName)
             }
         }
-        //Log.d(ContentValues.TAG, "callIdCheck 결과 : ${_schoolArray.value!!}")
     }
 
 

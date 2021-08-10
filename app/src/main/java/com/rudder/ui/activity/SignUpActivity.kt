@@ -18,7 +18,7 @@ import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.SignUpViewModel
-
+import java.util.*
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -66,10 +66,9 @@ class SignUpActivity : AppCompatActivity() {
         binding.signUpVM = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.asd()
-
-
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
+
+        viewModel.callSchoolList()
 
         viewModel.schoolSelectNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->

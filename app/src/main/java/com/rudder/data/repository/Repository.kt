@@ -1,20 +1,14 @@
 package com.rudder.data.repository
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.*
 import com.rudder.data.local.App
 import com.rudder.data.remote.LoginApi
 import com.rudder.data.remote.PostApi
 import com.rudder.data.remote.SignUpApi
-import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class Repository {
 
@@ -99,11 +93,10 @@ class Repository {
         return createAccountCheckFlag
     }
 
-    suspend fun signUpSchoolList() : JsonArray {
+    suspend fun signUpSchoolList(): JsonArray {
         val schoolListFlagAPIResultJson = SignUpApi.instance.schoolListSignUp().await()
         Log.d(TAG, "schoolListFlagAPIResultJson : ${schoolListFlagAPIResultJson}")
-        val jsonResult = schoolListFlagAPIResultJson.results
-        return jsonResult
+        return schoolListFlagAPIResultJson.results
     }
 
 

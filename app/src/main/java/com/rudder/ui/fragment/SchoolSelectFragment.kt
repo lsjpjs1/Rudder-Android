@@ -57,10 +57,14 @@ class SchoolSelectFragment : Fragment() {
                 ChangeUIState.buttonEnable(schoolSelectNextBtn,schoolSelectCheckbox.isChecked)
         }})
 
-        schoolSelectBinding.schoolSelectSpinner.adapter = ArrayAdapter.createFromResource(lazyContext, R.array.schools_array , R.layout.support_simple_spinner_dropdown_item)
-            .also { adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                schoolSelectBinding.schoolSelectSpinner.adapter = adapter
-            }
+        var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,viewModel.schoolList.value!!)
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        schoolSelectBinding.schoolSelectSpinner.adapter = adapter
+
+//        schoolSelectBinding.schoolSelectSpinner.adapter = ArrayAdapter.createFromResource(lazyContext, R.array.schools_array , R.layout.support_simple_spinner_dropdown_item)
+//            .also { adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//                schoolSelectBinding.schoolSelectSpinner.adapter = adapter
+//            }
 
         schoolSelectBinding.root.schoolSelectCheckbox.isEnabled = false
         schoolSelectBinding.root.schoolSelectNextBtn.isEnabled = false
