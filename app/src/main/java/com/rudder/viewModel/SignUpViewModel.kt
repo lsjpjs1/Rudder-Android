@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.JsonObject
 import com.rudder.data.*
 import com.rudder.data.remote.PostApi
 import com.rudder.data.repository.Repository
@@ -55,6 +56,7 @@ class SignUpViewModel : ViewModel() {
     val _verifyCodeCheckFlag = MutableLiveData<Event<Boolean>>()
     val _nickNameFlag = MutableLiveData<Event<Boolean>>()
 
+    val _schoolArray = MutableLiveData<Array<String>>()
 
     val userId: LiveData<String> = _userId
     val userPassword: LiveData<String> = _userPassword
@@ -85,6 +87,8 @@ class SignUpViewModel : ViewModel() {
     val verifyCodeCheckFlag: LiveData<Event<Boolean>> = _verifyCodeCheckFlag
     val nickNameFlag: LiveData<Event<Boolean>> = _nickNameFlag
 
+    val schoolArray : LiveData<Array<String>> = _schoolArray
+
     private val repository = Repository()
 
     init {
@@ -95,6 +99,7 @@ class SignUpViewModel : ViewModel() {
         _userEmailID.value = ""
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
+        _schoolArray.value = arrayOf()
 
 //        _schoolSelectNext.value = Event(false)
 //        _schoolSelectBack.value = Event(false)
@@ -192,12 +197,18 @@ class SignUpViewModel : ViewModel() {
 
     fun asd() {
         GlobalScope.launch {
+            val resultSchoolList = repository.signUpSchoolList()
+            Log.d(ContentValues.TAG, "callIdCheck 결과 : ${resultSchoolList}")
 
-            val result = repository.signUpSchoolList()
+            for (i in 0 until resultSchoolList.size() ) {
+                val iObject = resultSchoolList[i].asJsonObject
+                val schoolName = iObject.get("school_name")
+                Log.d(ContentValues.TAG, "callIdCheck 결과 : ${schoolName}")
+                _schoolArray.value!!.plus("123")
 
-            Log.d(ContentValues.TAG, "callIdCheck 결과 : ${result}")
-
+            }
         }
+        //Log.d(ContentValues.TAG, "callIdCheck 결과 : ${_schoolArray.value!!}")
     }
 
 

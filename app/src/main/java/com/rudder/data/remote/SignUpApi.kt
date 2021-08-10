@@ -49,7 +49,7 @@ class SignUpApi {
 
     private val schoolListService : SchoolListService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(SchoolListService::class.java)
 
-    fun schoolListSignUp() : Deferred<JSONArray>{
+    fun schoolListSignUp() : Deferred<Response<JsonArray>> {
         return GlobalScope.async(Dispatchers.IO){
             schoolListService.schoolListSignUp()
         } }

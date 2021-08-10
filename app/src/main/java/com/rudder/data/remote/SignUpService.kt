@@ -42,7 +42,7 @@ interface CreateAccountService {
 interface SchoolListService {
     @POST("/signupin/schoolList")
     suspend fun schoolListSignUp(
-    ) : JSONArray
+    ) : Response<JsonArray>
 }
 
 

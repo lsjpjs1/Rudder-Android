@@ -3,6 +3,7 @@ package com.rudder.data.repository
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.*
@@ -98,19 +99,11 @@ class Repository {
         return createAccountCheckFlag
     }
 
-    suspend fun signUpSchoolList() : Boolean{
-        var schoolListFlag : Boolean
-
+    suspend fun signUpSchoolList() : JsonArray {
         val schoolListFlagAPIResultJson = SignUpApi.instance.schoolListSignUp().await()
         Log.d(TAG, "schoolListFlagAPIResultJson : ${schoolListFlagAPIResultJson}")
-
-        //val jsonResult = schoolListFlagAPIResultJson.getJSONArray(0)
-//        Log.d(TAG, "jsonResult : ${jsonResult}")
-        //val schoolListResult = jsonResult.get("isDuplicated").asBoolean
-
-        //schoolListFlag = schoolListResult
-        //return schoolListFlag
-        return true
+        val jsonResult = schoolListFlagAPIResultJson.results
+        return jsonResult
     }
 
 
