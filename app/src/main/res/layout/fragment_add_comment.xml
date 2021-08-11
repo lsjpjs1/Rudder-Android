@@ -15,14 +15,15 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/addCommentBody"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.75">
+            app:layout_constraintWidth_percent="@dimen/add_comment_body_width">
 
             <EditText
-                android:id="@+id/editTextTextPersonName5"
+                android:id="@+id/addCommentBodyEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
@@ -30,13 +31,26 @@
                 android:inputType="textMultiLine"
                 android:text="@={addCommentVM._commentBody}"
                 app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout17"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:id="@+id/addCommentTail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toEndOf="@+id/addCommentBody"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="@dimen/add_comment_tail_width">
 
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comment_send_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

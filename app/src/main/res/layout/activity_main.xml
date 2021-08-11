@@ -24,18 +24,18 @@
             tools:layout_editor_absoluteX="0dp">
 
 
-        <Button
-            android:id="@+id/loginOut"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:clickable="true"
-            android:backgroundTint="#9329D1"
-            android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="login_out_semi"
-            android:onClick="@{()->mainVM.callLoginOut()}"
-            android:focusable="true" />
+<!--        <Button-->
+<!--            android:id="@+id/loginOut"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:clickable="true"-->
+<!--            android:backgroundTint="#9329D1"-->
+<!--            android:gravity="center"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:text="login_out_semi"-->
+<!--            android:onClick="@{()->mainVM.callLoginOut()}"-->
+<!--            android:focusable="true" />-->
 
         </FrameLayout>
 

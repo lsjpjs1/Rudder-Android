@@ -30,5 +30,6 @@
     <string name="post_button">Post</string>
     <string name="text_title">Text</string>
     <string name="text_hint">Text</string>
+    <string name="comment_send_text">Reply</string>
 
 </resources>
