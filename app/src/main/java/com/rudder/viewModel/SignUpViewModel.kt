@@ -1,5 +1,6 @@
 package com.rudder.viewModel
 
+
 import android.content.ContentValues
 import android.text.Editable
 import android.util.Log
@@ -91,6 +92,7 @@ class SignUpViewModel : ViewModel() {
     val schoolList : LiveData<MutableList<String>> = _schoolList
 
     private val repository = Repository()
+
 
     init {
         _userId.value = ""
@@ -249,3 +251,4 @@ class SignUpViewModel : ViewModel() {
     }
 
 }
+

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +22,9 @@ import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
 
 class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclickListener {
-    private val viewModel = MainViewModel
+
+    private val viewModel :MainViewModel by activityViewModels()
+
     private val lazyContext by lazy {
         requireContext()
     }
@@ -50,14 +53,14 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
             adapter.updatePosts(it)
         })
 
-
-
         return communityDisplay.root
     }
 
     override fun onPostPreviewClick(view: View, position: Int) {
         (activity as MainActivity).changeSelectedPostPosition(position)
         (activity as MainActivity).showPost()
+        (activity as MainActivity).showAddComment()
+        viewModel.getComments()
     }
 
 

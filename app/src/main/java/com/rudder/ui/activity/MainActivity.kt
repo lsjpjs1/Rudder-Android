@@ -1,20 +1,16 @@
 package com.rudder.ui.activity
 
 import android.graphics.PorterDuff
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
-import com.rudder.data.Post
 import com.rudder.databinding.ActivityMainBinding
-import com.rudder.ui.adapter.PostPreviewAdapter
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
@@ -22,11 +18,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_community_display.view.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
-import java.sql.Timestamp
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
-    private var viewModel: MainViewModel = MainViewModel
+    private val viewModel: MainViewModel by lazy {ViewModelProvider(this).get(MainViewModel::class.java)  }
     private lateinit var mainBottomBarFragment : MainBottomBarFragment
+    private lateinit var addCommentFragment: AddCommentFragment
     private lateinit var communityFragment : CommunityFragment
     private lateinit var myPageFragment : MyPageFragment
     private lateinit var addPostFragment: AddPostFragment
@@ -45,6 +43,9 @@ class MainActivity : AppCompatActivity() {
         communityFragment = CommunityFragment()
         myPageFragment = MyPageFragment()
         addPostFragment = AddPostFragment()
+
+        addCommentFragment = AddCommentFragment()
+
 
         supportFragmentManager.beginTransaction()
             .add(R.id.mainBottomBar,mainBottomBarFragment)
@@ -84,17 +85,46 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+
+        viewModel.isScrollBottomTouch.observe(this, Observer {
+            if(it.getContentIfNotHandled()!!){
+                showProgressBar()
+            }else{
+                hideProgressBar()
+            }
+        })
+
     }
 
     override fun onBackPressed() {
         val isBackButtonAvailable = (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) &&(!supportFragmentManager.findFragmentByTag("community")!!.isVisible)
         if(isBackButtonAvailable){ // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
+
+            if(addCommentFragment.isVisible){
+                Log.d("tag","visible")
+                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                fragmentShowHide.removeFragment(addCommentFragment)
+                fragmentShowHide.showFragment(mainBottomBarFragment,R.id.mainBottomBar)
+            }
             super.onBackPressed()
-        }
-        else{
+        } else {
 
         }
+
         Log.d("changedPost", supportFragmentManager.findFragmentByTag("1234").toString())
+    }
+
+
+
+    fun showProgressBar(){
+        progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar(){
+        progressBar.visibility = View.GONE
+    }
+
+    fun expandProgressBarAnimation(){
 
     }
 
@@ -109,6 +139,16 @@ class MainActivity : AppCompatActivity() {
         fragmentShowHide.showFragment(showPostFragment,R.id.mainDisplay)
     }
 
+
+
+    fun showAddComment(){
+        addCommentFragment = AddCommentFragment()
+        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+        fragmentShowHide.addFragment(addCommentFragment,R.id.mainBottomBar,"mainBottomBar")
+        fragmentShowHide.showFragment(addCommentFragment,R.id.mainBottomBar)
+    }
+
+
     fun changeColorCommunity(){
         mainBottomBarFragment.communityIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
         mainBottomBarFragment.myPageIcon.setColorFilter(grey, PorterDuff.Mode.SRC_IN)
@@ -117,6 +157,7 @@ class MainActivity : AppCompatActivity() {
         mainBottomBarFragment.myPageIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
         mainBottomBarFragment.communityIcon.setColorFilter(grey, PorterDuff.Mode.SRC_IN)
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

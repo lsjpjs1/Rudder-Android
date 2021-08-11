@@ -11,6 +11,8 @@ import com.rudder.data.remote.LoginApi
 import com.rudder.data.remote.PostApi
 import com.rudder.data.remote.SignUpApi
 import com.rudder.data.remote.TokenApi
+import com.rudder.data.remote.*
+
 
 class Repository {
 
@@ -35,10 +37,10 @@ class Repository {
         } else { //      자동 로그인 하는 상태, 로그인의 서버요청이 필요하지 않는 상태, 토큰이 차있는 상태, 토큰 유효 검사 해야됨.
             Log.d("login", "value : ${prefs.getValue(key)!!}")
             result = checkToken(TokenInfo(prefs.getValue(key)!!))
+
         }
         return result
     }
-
 
 
     suspend fun signUpSendVerifyCode(emailInfo : EmailInfo) : Boolean{
@@ -95,8 +97,19 @@ class Repository {
         return schoolListFlagAPIResultJson.results
     }
 
-    suspend fun getPosts(pagingIndex:Int, endPostId:Int): ArrayList<Post>{
+
+    suspend fun getPosts(pagingIndex:Int, endPostId:Int): ArrayList<PreviewPost>{
         return PostApi.instance.getPosts(pagingIndex, endPostId).await()
+    }
+
+    suspend fun getComments(getCommentInfo: GetCommentInfo): ArrayList<Comment> {
+        val resJson :Response<ArrayList<Comment>> = CommentApi.instance.getComments(getCommentInfo).await()
+        return resJson.results
+    }
+
+    suspend fun addPost(addPostInfo: AddPostInfo): Boolean{
+        val response = PostApi.instance.addPostApi(addPostInfo).await()
+        return response.results.isSuccess
     }
 
 }

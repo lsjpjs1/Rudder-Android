@@ -1,8 +1,10 @@
 package com.rudder.viewModel
 
 
+
 import android.util.Log
 import android.widget.CompoundButton
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +17,7 @@ import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 
 
 class LoginViewModel() : ViewModel() {

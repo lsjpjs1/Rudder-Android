@@ -25,4 +25,10 @@
     <string name="create_account">Create Account</string>
     <string name="remeber_me">Remember me?</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="comment_title">Comment</string>
+    <string name="add_post_title">Add Post</string>
+    <string name="post_button">Post</string>
+    <string name="text_title">Text</string>
+    <string name="text_hint">Text</string>
+
 </resources>

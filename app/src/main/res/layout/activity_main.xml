@@ -22,7 +22,7 @@
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/without_main_bottom_height"
             tools:layout_editor_absoluteX="0dp">
-        </FrameLayout>
+
 
         <Button
             android:id="@+id/loginOut"
@@ -36,6 +36,9 @@
             android:text="login_out_semi"
             android:onClick="@{()->mainVM.callLoginOut()}"
             android:focusable="true" />
+
+        </FrameLayout>
+
 
         <View
             android:id="@+id/view"

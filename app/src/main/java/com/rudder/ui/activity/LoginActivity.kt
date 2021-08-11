@@ -1,6 +1,7 @@
 package com.rudder.ui.activity
 
 import android.content.Intent
+
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,11 +26,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
+
 class LoginActivity : AppCompatActivity() {
     private var viewModel: LoginViewModel = LoginViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         setTheme(R.style.Theme_Rudder)
 
@@ -45,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("onDestoryLogin","${it}")
                     Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show()
                 }
+
             }
         })
         viewModel.startMainActivity.observe(this, Observer {
@@ -76,6 +80,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
     fun callMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
@@ -87,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+
     fun autoLoginCheck(){
         val autoLoginPref = prefs.getValue("autoLogin")
         Log.d("autoLoginPref","$autoLoginPref")
@@ -97,7 +103,4 @@ class LoginActivity : AppCompatActivity() {
             viewModel.callLogin()
             }
     }
-
-
-
 }

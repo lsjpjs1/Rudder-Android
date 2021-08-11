@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 
+
 class MySharedPreferences(context: Context) {
     private val PREFS_FILENAME = "prefs"
     val prefs: SharedPreferences = context.getSharedPreferences(PREFS_FILENAME, 0)
+
 
     fun setValue(key:String, value:String?){
         //prefs.edit().putString(key,value).commit()
@@ -21,8 +23,9 @@ class MySharedPreferences(context: Context) {
     }
 
 
-
     fun setValueCommit(key:String, value:String?) {
     prefs.edit().putString(key, value).commit()
     }
+
+
 }

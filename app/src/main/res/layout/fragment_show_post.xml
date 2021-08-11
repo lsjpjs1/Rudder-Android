@@ -5,7 +5,13 @@
     <data>
         <variable
             name="post"
-            type="com.rudder.data.Post" />
+            type="com.rudder.data.PreviewPost" />
+        <variable
+            name="commentCount"
+            type="Integer" />
+        <variable
+            name="mainVM"
+            type="com.rudder.viewModel.MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,14 +28,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/showPostBody"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/light_grey"
+            android:background="@color/white"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/show_post_body_height"
             app:layout_constraintTop_toBottomOf="@+id/showPostHeader">
 
-            <ScrollView
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollView1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true">
@@ -39,94 +48,208 @@
                     android:layout_height="match_parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout8"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:background="@color/white"
-                        app:layout_constraintHeight_default="percent"
-                        app:layout_constraintHeight_percent="@dimen/post_info_height"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:layout_editor_absoluteX="0dp">
+                        android:layout_height="match_parent">
+
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout8"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
+                            android:background="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight_default="percent"
+                            app:layout_constraintHeight_percent="@dimen/post_info_height"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintWidth_default="percent"
-                            app:layout_constraintWidth_percent="@dimen/show_post_header_name_width">
+                            app:layout_constraintWidth_percent="@dimen/width_default">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="@dimen/show_post_header_name_width">
+
+                                <TextView
+                                    android:id="@+id/textView6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{post.userId}"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout7"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8"
+                            app:layout_constraintWidth_default="percent"
+                            app:layout_constraintWidth_percent="@dimen/width_default">
 
                             <TextView
-                                android:id="@+id/textView6"
+                                android:id="@+id/textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                android:text="@{post.userId}" />
+                                android:text="@{post.postTitle}"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{post.postBody}"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout7"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout9"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight_default="percent"
+                            app:layout_constraintHeight_percent="@dimen/post_count_height"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"
+                            app:layout_constraintWidth_default="percent"
+                            app:layout_constraintWidth_percent="@dimen/width_default"
+                            tools:layout_editor_absoluteX="0dp">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/postPreviewTailLikeCount"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="@dimen/post_preview_tail_like_count_width">
 
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="wrap_content"
+                                <ImageView
+                                    android:id="@+id/showPostLikeImageView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:onClick="@{()->mainVM.clickLike()}"
+                                    app:srcCompat="@drawable/ic_outline_thumb_up_24" />
+
+                                <TextView
+                                    android:id="@+id/postPreviewTailLikeCountTV"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{` `+Integer.toString(post.likeCount)}"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/showPostLikeImageView"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/postPreviewTailCommentCount"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_constraintStart_toEndOf="@+id/postPreviewTailLikeCount"
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="@dimen/post_preview_tail_comment_count_width">
+
+                                <ImageView
+                                    android:id="@+id/imageView7"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_outline_chat_bubble_outline_24" />
+
+                                <TextView
+                                    android:id="@+id/postPreviewTailCommentCountTV"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{` `+Integer.toString(commentCount)}"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/imageView7"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout16"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:background="@color/light_grey"
+                            app:layout_constraintHeight_default="percent"
+                            app:layout_constraintHeight_percent="@dimen/divide_default"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout10"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight_default="percent"
+                            app:layout_constraintHeight_percent="@dimen/comment_info_height"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout16"
+                            app:layout_constraintWidth_default="percent"
+                            app:layout_constraintWidth_percent="@dimen/width_default">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="@dimen/comment_info_title_width">
+
+                                <TextView
+                                    android:id="@+id/textView8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{@string/comment_title+`(`+Integer.toString(commentCount)+`)`}"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{post.postTitle}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
 
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{post.postBody}"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout9"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:background="@color/white"
-                        app:layout_constraintHeight_default="percent"
-                        app:layout_constraintHeight_percent="@dimen/post_count_height"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"
-                        tools:layout_editor_absoluteX="0dp">
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/commentDisplayRV"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout10"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/white"
-                        app:layout_constraintHeight_default="percent"
-                        app:layout_constraintHeight_percent="@dimen/comment_info_height"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout9"
-                        tools:layout_editor_absoluteX="0dp">
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/commentDisplayRV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"
-                        tools:layout_editor_absoluteX="0dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,7 @@ interface LoginService {
     @POST("/signupin/loginJWT")
     suspend fun login(
             @Body loginInfo: LoginInfo
-    ) : Response<JsonObject>
 
+    ) : Response<JsonObject>
 }
+

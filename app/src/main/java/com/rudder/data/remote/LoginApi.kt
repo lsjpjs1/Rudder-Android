@@ -20,6 +20,7 @@ class LoginApi {
 
     private val loginService : LoginService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(LoginService::class.java)
 
+
     fun login(loginInfo: LoginInfo) : Deferred<Response<JsonObject>>{
 
         return GlobalScope.async(Dispatchers.IO){
