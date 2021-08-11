@@ -3,8 +3,10 @@ package com.rudder.viewModel
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
+import com.rudder.BuildConfig
 import com.rudder.R
 import com.rudder.data.Post
+import com.rudder.data.local.App
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.android.synthetic.main.fragment_community_display.*
@@ -81,5 +83,16 @@ object MainViewModel : ViewModel() {
         _selectedPostPosition.value=position
     }
 
+
+
+
+
+    fun callLoginOut() { // SEMI!!!
+        Log.d("token", "token")
+        val key = BuildConfig.TOKEN_KEY
+        App.prefs.removeValue(key)
+        var a = App.prefs.getValue(key)
+        Log.d("token123", "$a")
+    }
 
 }

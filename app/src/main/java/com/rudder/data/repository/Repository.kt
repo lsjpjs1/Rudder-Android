@@ -6,48 +6,35 @@ import com.google.gson.JsonArray
 import com.rudder.BuildConfig
 import com.rudder.data.*
 import com.rudder.data.local.App
+import com.rudder.data.local.App.Companion.prefs
 import com.rudder.data.remote.LoginApi
 import com.rudder.data.remote.PostApi
 import com.rudder.data.remote.SignUpApi
+import com.rudder.data.remote.TokenApi
 
 class Repository {
 
     suspend fun login(loginInfo: LoginInfo) : Boolean{
         val key = BuildConfig.TOKEN_KEY
-        var result = true
+        val result : Boolean
 
-        Log.d("login", "App.prefs.getValue(key) : ${App.prefs.getValue(key)}")
+        Log.d("login", "App.prefs.getValue(key) : ${prefs.getValue(key)}")
 
-        if(App.prefs.getValue(key)==null || App.prefs.getValue(key)==""){ // 토큰이 비어있는 상태, 로그인의 서버요청이 필요한 상태
-                val resLogin =  LoginApi.instance.login(loginInfo).await()
-                Log.d("login", "resLogin : ${resLogin}")
-                if(resLogin.has("info")){
-                    val value = resLogin.get("info").asString
-                    Log.d("login", "value : ${value}")
-                    App.prefs.setValue(key, value)
-                }else{
-                    result = false
-                }
-        } else {
-            // 자동 로그인 하는 상태, 로그인의 서버요청이 필요하지 않는 상태
-            val resLogin = LoginApi.instance.login(loginInfo).await()
-            Log.d("login", "resLogin : ${resLogin}")
-
-            val value = resLogin.getAsJsonObject("results")
-            Log.d("login", "value : ${value}")
-
-            val token = value.get("token").asString
-            Log.d("login", "value : ${token}")
-
-
-            if (token == ""){
-                result = false
-                App.prefs.setValue(key, "")
-            }else{
+        if(prefs.getValue(key) == null || prefs.getValue(key) == "" ){ // 토큰이 비어있는 상태, 로그인의 서버요청이 필요한 상태
+            val resLogin =  LoginApi.instance.login(loginInfo).await()
+            val value = resLogin.results
+            val flag = value.get("success").asBoolean
+            Log.d("login", "value : $value")
+            if (flag){
+                val loginToken = value.get("token").asString
+                prefs.setValue(key, loginToken)
                 result = true
-                App.prefs.setValue(key, token)
+            } else{
+                result = false
             }
-
+        } else { //      자동 로그인 하는 상태, 로그인의 서버요청이 필요하지 않는 상태, 토큰이 차있는 상태, 토큰 유효 검사 해야됨.
+            Log.d("login", "value : ${prefs.getValue(key)!!}")
+            result = checkToken(TokenInfo(prefs.getValue(key)!!))
         }
         return result
     }
@@ -55,18 +42,18 @@ class Repository {
 
 
     suspend fun signUpSendVerifyCode(emailInfo : EmailInfo) : Boolean{
-        var emailCheckFlag : Boolean
+        val emailCheckFlag : Boolean
         val verifyAPIResult = SignUpApi.instance.emailSignUp(emailInfo).await()
-        Log.d(TAG, "callPostTransferEmail : ${verifyAPIResult}")
+        Log.d(TAG, "callPostTransferEmail : $verifyAPIResult")
         emailCheckFlag = verifyAPIResult == "true"
 
         return emailCheckFlag
     }
 
     suspend fun signUpIdDuplicated(idDuplicatedInfo: IdDuplicatedInfo) : Boolean{
-        var idCheckFlag : Boolean
+        val idCheckFlag : Boolean
         val idDuplicatedAPIResultJson = SignUpApi.instance.idDuplicatedSignUp(idDuplicatedInfo).await()
-        Log.d(TAG, "idDuplicatedAPIResultJson : ${idDuplicatedAPIResultJson}")
+        Log.d(TAG, "idDuplicatedAPIResultJson : $idDuplicatedAPIResultJson")
 
         val jsonResult = idDuplicatedAPIResultJson.getAsJsonObject("results")
         val isDuplicatedResult = jsonResult.get("isDuplicated").asBoolean
@@ -76,30 +63,37 @@ class Repository {
     }
 
     suspend fun signUpCheckVerifyCode(checkVeriCodeInfo: CheckVerifyCodeInfo) : Boolean {
-        var verifyCheckFlag : Boolean
+        val verifyCheckFlag : Boolean
         val checkVerifyAPIResult = SignUpApi.instance.checkVerifySignUp(checkVeriCodeInfo).await()
-        Log.d(TAG, "checkVerifyAPIResult : ${checkVerifyAPIResult}")
+        Log.d(TAG, "checkVerifyAPIResult : $checkVerifyAPIResult")
         verifyCheckFlag = checkVerifyAPIResult == "Success"
 
         return verifyCheckFlag
     }
 
     suspend fun signUpCreateAccount(accountInfo: AccountInfo) : Boolean {
-        var createAccountCheckFlag : Boolean
+        val createAccountCheckFlag : Boolean
         val createAccountAPIResult = SignUpApi.instance.createAccountSignUp(accountInfo).await()
-        Log.d(TAG, "createAccountAPIResult : ${createAccountAPIResult}")
+        Log.d(TAG, "createAccountAPIResult : $createAccountAPIResult")
         createAccountCheckFlag = createAccountAPIResult == "true"
 
         return createAccountCheckFlag
     }
 
-    suspend fun signUpSchoolList(): JsonArray {
-        val schoolListFlagAPIResultJson = SignUpApi.instance.schoolListSignUp().await()
-        Log.d(TAG, "schoolListFlagAPIResultJson : ${schoolListFlagAPIResultJson}")
-        return schoolListFlagAPIResultJson.results
+    private suspend fun checkToken(tokenInfo: TokenInfo): Boolean {
+        val tokenAPIResultJson = TokenApi.instance.tokenValidation(tokenInfo).await()
+        Log.d(TAG, "tokenAPIResultJson : ${tokenAPIResultJson}")
+        val jsonResult = tokenAPIResultJson.results
+        Log.d(TAG, "tokenAPIResultJson : ${jsonResult}")
+        return jsonResult.get("isTokenValid").asBoolean
     }
 
 
+    suspend fun signUpSchoolList(): JsonArray {
+        val schoolListFlagAPIResultJson = SignUpApi.instance.schoolListSignUp().await()
+        Log.d(TAG, "schoolListFlagAPIResultJson : $schoolListFlagAPIResultJson")
+        return schoolListFlagAPIResultJson.results
+    }
 
     suspend fun getPosts(pagingIndex:Int, endPostId:Int): ArrayList<Post>{
         return PostApi.instance.getPosts(pagingIndex, endPostId).await()

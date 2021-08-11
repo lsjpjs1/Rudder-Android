@@ -100,7 +100,7 @@ class SignUpViewModel : ViewModel() {
         _userEmailID.value = ""
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
-        _schoolList.value = mutableListOf()
+        _schoolList.value = mutableListOf("Select Your School!")
 
 //        _schoolSelectNext.value = Event(false)
 //        _schoolSelectBack.value = Event(false)
@@ -195,7 +195,6 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-
     fun callSchoolList() {
         GlobalScope.launch {
             val resultSchoolList = repository.signUpSchoolList()
@@ -209,7 +208,6 @@ class SignUpViewModel : ViewModel() {
             }
         }
     }
-
 
     fun callIdCheck() {
         GlobalScope.launch {

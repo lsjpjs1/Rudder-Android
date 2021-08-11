@@ -8,22 +8,23 @@ import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.LoginInfo
 import com.rudder.data.Response
+import com.rudder.data.TokenInfo
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.await
 
-class LoginApi {
+class TokenApi {
 
     companion object{
-        val instance = LoginApi()
+        val instance = TokenApi()
     }
 
-    private val loginService : LoginService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(LoginService::class.java)
+    private val tokenService : TokenService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(TokenService::class.java)
 
-    fun login(loginInfo: LoginInfo) : Deferred<Response<JsonObject>>{
+    fun tokenValidation(tokenInfo : TokenInfo) : Deferred<Response<JsonObject>>{
 
         return GlobalScope.async(Dispatchers.IO){
-            loginService.login(loginInfo)
+            tokenService.tokenValid(tokenInfo)
         }
 
     }

@@ -24,6 +24,7 @@
             app:layout_constraintHeight_percent="@dimen/community_selector_height"
             android:background="@color/purple_rudder">
 
+
         </FrameLayout>
 
         <FrameLayout
