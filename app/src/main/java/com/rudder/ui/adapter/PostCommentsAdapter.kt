@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -65,6 +66,7 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
         if(commentList[position].status=="child"){
             holder.postCommentsBinding.nestedCommentImage.visibility=View.VISIBLE
             holder.postCommentsBinding.postPreviewTailCommentCount.visibility=View.GONE
+            holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.light_grey,null)
             holder.postCommentsBinding.constraintLayout11.viewTreeObserver.addOnGlobalLayoutListener(
                     object : ViewTreeObserver.OnGlobalLayoutListener{
                         override fun onGlobalLayout() {
