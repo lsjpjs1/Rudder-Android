@@ -36,7 +36,7 @@ class LoginViewModel() : ViewModel() {
     val startSignUpActivity: LiveData<Event<Boolean>> = _startSignUpActivity
     val autoLogin : LiveData<Event<Boolean>> = _autoLogin
 
-    private val repository = Repository() //test commit
+    private val repository = Repository() //test commit2
 
     init {
         _userId.value = ""
