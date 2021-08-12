@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:text="login_out_semi"
-            android:onClick="@{()->mainVM.callLoginOut()}"
+            android:onClick="@{()->mainVM.callLogin()}"
             android:focusable="true" />
 
         </FrameLayout>

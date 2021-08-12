@@ -40,6 +40,7 @@ class SignUpViewModel : ViewModel() {
     val _userSchool = MutableLiveData<Int>()
     val _userNickName = MutableLiveData<String>()
     val _userIntroduce = MutableLiveData<String>()
+    val _userSchoolName = MutableLiveData<String>()
 
     val _schoolSelectNext = MutableLiveData<Event<Boolean>>()
     val _schoolSelectBack = MutableLiveData<Event<Boolean>>()
@@ -70,6 +71,7 @@ class SignUpViewModel : ViewModel() {
     val userSchool: LiveData<Int> = _userSchool
     val userNickName: LiveData<String> = _userNickName
     val userIntroduce: LiveData<String> = _userIntroduce
+    val userSchoolName: LiveData<String> = _userSchoolName
 
 
     val schoolSelectNext: LiveData<Event<Boolean>> = _schoolSelectNext
@@ -103,6 +105,7 @@ class SignUpViewModel : ViewModel() {
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
         _schoolList.value = mutableListOf("Select Your School!")
+        _userSchoolName.value = ""
 
 //        _schoolSelectNext.value = Event(false)
 //        _schoolSelectBack.value = Event(false)
@@ -141,9 +144,14 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun onTextChangeEmailDomain() {
-        if (_userEmailDomain.value!!.trim().matches(emailRg) && _userEmailID.value!!.isNotEmpty())
-            _emailDomainFlag.value = Event(true)
-        else
+        val emailDomainChunk = _userEmailDomain.value!!.split('.')[0]
+        Log.d("emailDomainChunk","emailDomainChunk : ${emailDomainChunk}")
+        if (_userEmailDomain.value!!.trim().matches(emailRg) && _userEmailID.value!!.isNotEmpty()) {
+            if (emailDomainChunk == _userSchoolName.value!!)
+                _emailDomainFlag.value = Event(true)
+            else
+                _emailDomainFlag.value = Event(false)
+        } else
             _emailDomainFlag.value = Event(false)
     }
 
@@ -185,13 +193,13 @@ class SignUpViewModel : ViewModel() {
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
         //parent.getAdapter().getItem(pos)    get item by pos
-        //parent.getAdapter().getCount()      get item count
         //parent.getCount()                   get item count
         //parent.getSelectedItem()            get selected item
-        //and other...
-        Log.d("parent.getAdapter","$pos")
+        Log.d("parent.getAdapter","$pos, $id, ${parent.selectedItem}")
         if (pos != 0){
             _schoolSelectFlag.value = Event(true)
+            _userSchoolName.value = parent.selectedItem.toString().split(" ")[0].toLowerCase()
+            Log.d(ContentValues.TAG, "_userSchoolName.value : ${_userSchoolName.value }")
         }else{
             _schoolSelectFlag.value = Event(false)
         }
@@ -200,7 +208,7 @@ class SignUpViewModel : ViewModel() {
     fun callSchoolList() {
         GlobalScope.launch {
             val resultSchoolList = repository.signUpSchoolList()
-            Log.d(ContentValues.TAG, "callIdCheck 결과 : ${resultSchoolList}")
+            Log.d(ContentValues.TAG, "resultSchoolList 결과 : ${resultSchoolList}")
 
             for (i in 0 until resultSchoolList.size() ) {
                 val iObject = resultSchoolList[i].asJsonObject
@@ -240,7 +248,7 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun callCreateAccount() {
+    fun callCreateAccount() { // Sign Up, Complete!
         GlobalScope.launch {
             val idInput = _userId.value!!
             val passwordInput = _userPassword.value!!

@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.rudder.BuildConfig
 import com.rudder.R
@@ -20,47 +21,58 @@ import com.rudder.databinding.ActivityLoginBinding
 import com.rudder.util.Event
 import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.LoginViewModel
+import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 class LoginActivity : AppCompatActivity() {
-    private var viewModel: LoginViewModel = LoginViewModel()
+    //private var viewModel: LoginViewModel = LoginViewModel()
+    private val viewModel: LoginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java)  }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
 
-        setTheme(R.style.Theme_Rudder)
 
-        val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
-        binding.loginVM = viewModel
-        binding.lifecycleOwner = this
 
-        autoLoginCheck()
-
-        viewModel.showLoginErrorToast.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    Log.d("onDestoryLogin","${it}")
-                    Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show()
-                }
-
+        CoroutineScope(Dispatchers.Main).launch {
+            launch {
+                super.onCreate(savedInstanceState)
+                autoLoginCheck()
             }
-        })
-        viewModel.startMainActivity.observe(this, Observer {
-            it.getContentIfNotHandled()?.let{
-                callMainActivity()
+
+            launch {
+                setTheme(R.style.Theme_Rudder)
+
+                val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this@LoginActivity, R.layout.activity_login)
+                binding.loginVM = viewModel
+                binding.lifecycleOwner = this@LoginActivity
+
+                autoLoginCheck()
+
+                viewModel.showLoginErrorToast.observe(this@LoginActivity, Observer {
+                    it.getContentIfNotHandled()?.let { it ->
+                        if (it) {
+                            Log.d("onDestoryLogin","${it}")
+                            Toast.makeText(this@LoginActivity, R.string.login_error, Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+                })
+                viewModel.startMainActivity.observe(this@LoginActivity, Observer {
+                    it.getContentIfNotHandled()?.let{
+                        callMainActivity()
+                    }
+                })
+                viewModel.startSignUpActivity.observe(this@LoginActivity, Observer {
+                    it.getContentIfNotHandled()?.let{
+                        callSignUpActivity()
+                    }
+                })
             }
-        })
-        viewModel.startSignUpActivity.observe(this, Observer {
-            it.getContentIfNotHandled()?.let{
-                callSignUpActivity()
-            }
-        })
+        }
+
+
 
     }
 
@@ -87,20 +99,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun callSignUpActivity() {
-        //finish()
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
 
 
-    fun autoLoginCheck(){
-        val autoLoginPref = prefs.getValue("autoLogin")
-        Log.d("autoLoginPref","$autoLoginPref")
-        autoLoginCheckbox.isChecked = autoLoginPref == "true"
+    suspend fun autoLoginCheck(){
+        GlobalScope.launch {
+            val autoLoginPref = prefs.getValue("autoLogin")
+            Log.d("autoLoginPref","$autoLoginPref")
+            //autoLoginCheckbox.isChecked = autoLoginPref == "true"
 
-        if (autoLoginPref == "true") {
-            Log.d("autoLoginPref2","$autoLoginPref")
-            viewModel.callLogin()
+            if (autoLoginPref == "true") {
+                Log.d("autoLoginPref2","$autoLoginPref")
+                viewModel.callLogin()
             }
+        }
+
     }
 }

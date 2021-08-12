@@ -34,6 +34,10 @@ class MainViewModel : ViewModel() {
     private val _isAddPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isLikeClick = MutableLiveData<Event<Boolean>>()
 
+    private val _islogoutButton = MutableLiveData<Event<Boolean>>()
+    private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
+
+
     val isLikeClick: LiveData<Event<Boolean>> = _isLikeClick
     val isAddPostSuccess: LiveData<Event<Boolean>> = _isAddPostSuccess
     val isScrollBottomTouch: LiveData<Event<Boolean>> = _isScrollBottomTouch
@@ -41,6 +45,11 @@ class MainViewModel : ViewModel() {
     val isAddPostClick: LiveData<Event<Boolean>> = _isAddPostClick
     val selectedTab: LiveData<Int> = _selectedTab
     val selectedPostPosition: LiveData<Int> = _selectedPostPosition
+
+
+    val islogoutButton : LiveData<Event<Boolean>> = _islogoutButton
+    val startLoginActivity : LiveData<Event<Boolean>> = _startLoginActivity
+
 
     val posts : LiveData<ArrayList<PreviewPost>>
         get() = _posts
@@ -55,6 +64,13 @@ class MainViewModel : ViewModel() {
         getPosts()
     }
 
+
+    fun callLogin(){
+        _startLoginActivity.value = Event(true)
+
+        val key = BuildConfig.TOKEN_KEY
+        App.prefs.removeValue(key)
+    }
 
     fun scrollTouchBottom(){
         pagingIndex += 1

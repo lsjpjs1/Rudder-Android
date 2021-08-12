@@ -1,5 +1,6 @@
 package com.rudder.ui.activity
 
+import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
@@ -94,12 +95,18 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+
+        viewModel.startLoginActivity.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{
+                callLoginActivity()
+            }
+        })
+
     }
 
     override fun onBackPressed() {
         val isBackButtonAvailable = (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) &&(!supportFragmentManager.findFragmentByTag("community")!!.isVisible)
         if(isBackButtonAvailable){ // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
-
             if(addCommentFragment.isVisible){
                 Log.d("tag","visible")
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
@@ -108,7 +115,7 @@ class MainActivity : AppCompatActivity() {
             }
             super.onBackPressed()
         } else {
-
+            moveTaskToBack(true)
         }
 
         Log.d("changedPost", supportFragmentManager.findFragmentByTag("1234").toString())
@@ -159,9 +166,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    fun callLoginActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("mytag","onDestory")
+        Log.d("mytag","onDestorymain")
     }
 
 
