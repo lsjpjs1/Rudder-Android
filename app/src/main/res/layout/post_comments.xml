@@ -9,6 +9,9 @@
         <variable
             name="timeago"
             type="String" />
+        <variable
+            name="mainVM"
+            type="com.rudder.viewModel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -159,8 +162,9 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/postPreviewTailCommentCount"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:onClick="@{()->mainVM.clickNestedCommentReply(comment.groupNum,comment.commentBody)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/postPreviewTailLikeCount"
                     app:layout_constraintTop_toTopOf="parent"
@@ -174,13 +178,13 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_outline_chat_bubble_outline_24" />
+                        app:srcCompat="@drawable/ic_baseline_subdirectory_arrow_right_24" />
 
                     <TextView
                         android:id="@+id/postPreviewTailCommentCountTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="commentcount"
+                        android:text="Reply"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView7"
                         app:layout_constraintTop_toTopOf="parent" />

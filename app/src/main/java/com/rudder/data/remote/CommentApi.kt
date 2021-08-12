@@ -20,7 +20,12 @@ class CommentApi {
         return GlobalScope.async(Dispatchers.IO){
             commentService.renderComment(getCommentInfo)
         }
+    }
 
+    fun addComment(addCommentInfo: AddCommentInfo) : Deferred<Response<JsonObject>>{
+        return GlobalScope.async(Dispatchers.IO){
+            commentService.addComment(addCommentInfo)
+        }
     }
 
 }

@@ -107,6 +107,11 @@ class Repository {
         return resJson.results
     }
 
+    suspend fun addComment(addCommentInfo: AddCommentInfo) : Boolean{
+        val resJson = CommentApi.instance.addComment(addCommentInfo).await()
+        return resJson.results.get("isSuccess").asBoolean
+    }
+
     suspend fun addPost(addPostInfo: AddPostInfo): Boolean{
         val response = PostApi.instance.addPostApi(addPostInfo).await()
         return response.results.isSuccess

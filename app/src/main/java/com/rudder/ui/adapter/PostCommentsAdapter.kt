@@ -18,12 +18,13 @@ import com.rudder.data.Comment
 import com.rudder.databinding.PostCommentsBinding
 import com.rudder.util.CommentsDiffCallback
 import com.rudder.util.LocaleUtil
+import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.post_comments.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Context): RecyclerView.Adapter<PostCommentsAdapter.CustomViewHolder>() {
+class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Context, val viewModel: MainViewModel): RecyclerView.Adapter<PostCommentsAdapter.CustomViewHolder>() {
     inner class CustomViewHolder(val postCommentsBinding: PostCommentsBinding) : RecyclerView.ViewHolder(postCommentsBinding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostCommentsAdapter.CustomViewHolder {
         val bind = DataBindingUtil.inflate<PostCommentsBinding>(
@@ -63,6 +64,7 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
     override fun onBindViewHolder(holder: PostCommentsAdapter.CustomViewHolder, position: Int) {
         if(commentList[position].status=="child"){
             holder.postCommentsBinding.nestedCommentImage.visibility=View.VISIBLE
+            holder.postCommentsBinding.postPreviewTailCommentCount.visibility=View.GONE
             holder.postCommentsBinding.constraintLayout11.viewTreeObserver.addOnGlobalLayoutListener(
                     object : ViewTreeObserver.OnGlobalLayoutListener{
                         override fun onGlobalLayout() {
@@ -81,6 +83,7 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
 
 
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(commentList[position].postTime.time))
+        holder.postCommentsBinding.mainVM = viewModel
         holder.postCommentsBinding.comment = commentList[position]
         holder.postCommentsBinding.timeago = timeago
     }
