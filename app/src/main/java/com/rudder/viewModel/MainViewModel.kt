@@ -93,6 +93,10 @@ class MainViewModel : ViewModel() {
         _selectedCommentGroupNum.value = -1
     }
 
+    fun clearAddPostBody(){
+        _postBody.value = ""
+    }
+
     fun commentBodyClear() {
         _commentBody.value = ""
     }

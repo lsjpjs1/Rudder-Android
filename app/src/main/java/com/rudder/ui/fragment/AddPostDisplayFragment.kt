@@ -26,6 +26,7 @@ class AddPostDisplayFragment : Fragment() {
         val display = DataBindingUtil.inflate<FragmentAddPostDisplayBinding>(inflater,
                 R.layout.fragment_add_post_display,container,false)
         display.mainVM=viewModel
+        viewModel.clearAddPostBody()
         return display.root
     }
 }
