@@ -14,6 +14,7 @@ import com.rudder.R
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
+import com.rudder.util.StartActivity
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
@@ -98,7 +99,8 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.startLoginActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
-                callLoginActivity()
+                StartActivity.callActivity(this, LoginActivity())
+                //callLoginActivity()
             }
         })
 
@@ -163,12 +165,6 @@ class MainActivity : AppCompatActivity() {
     fun changeColorMyPage(){
         mainBottomBarFragment.myPageIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
         mainBottomBarFragment.communityIcon.setColorFilter(grey, PorterDuff.Mode.SRC_IN)
-    }
-
-
-    fun callLoginActivity() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
     }
 
     override fun onDestroy() {

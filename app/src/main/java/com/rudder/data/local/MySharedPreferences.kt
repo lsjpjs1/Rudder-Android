@@ -10,7 +10,7 @@ class MySharedPreferences(context: Context) {
     val prefs: SharedPreferences = context.getSharedPreferences(PREFS_FILENAME, 0)
 
 
-    fun setValue(key:String, value:String?){
+    fun setValue(key:String, value:String?){ // apply
         //prefs.edit().putString(key,value).commit()
         prefs.edit().putString(key,value).apply()
     }
