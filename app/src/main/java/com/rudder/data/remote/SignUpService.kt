@@ -14,21 +14,21 @@ interface SingUpEmailService {
     @POST("/schoolverify/verifyEmail")
     suspend fun emailSignUp(
             @Body email : EmailInfo
-    ) : String
+    ) : Response<JsonObject>
 }
 
 interface IdDuplicatedService {
     @POST("/signupin/checkduplication")
     suspend fun idDuplicatedSignup(
         @Body userId : IdDuplicatedInfo
-    ) : JsonObject
+    ) : Response<JsonObject>
 }
 
 interface CheckVerifyCodeService {
     @POST("/schoolverify/checkCode")
     suspend fun verifyCodeSignUp(
         @Body verifyInfo : CheckVerifyCodeInfo
-    ) : String
+    ) : Response<JsonObject>
 }
 
 interface CreateAccountService {

@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.util.ChangeUIState
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.android.synthetic.main.fragment_create_account.view.*
@@ -33,6 +34,7 @@ class CreateAccountFragment : Fragment() {
     ): View {
         createAccountBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_create_account,container,false)
         createAccountBinding.signUpVM = viewModel
+        createAccountBinding.lifecycleOwner = this
 
         val toastPassword = Toast.makeText(activity, "비밀번호는 숫자,문자,특수문자 중 2가지 포함(8~15자)", Toast.LENGTH_SHORT)
         val toastPasswordCheck = Toast.makeText(activity, "Please Check, Password and Password Confirm",Toast.LENGTH_SHORT)

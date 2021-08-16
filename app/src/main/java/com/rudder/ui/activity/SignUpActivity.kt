@@ -16,9 +16,12 @@ import androidx.lifecycle.lifecycleScope
 import com.rudder.R
 import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.ui.fragment.*
+import com.rudder.util.ChangeUIState
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.StartActivity
 import com.rudder.viewModel.SignUpViewModel
+import kotlinx.android.synthetic.main.fragment_create_account.*
+import kotlinx.android.synthetic.main.fragment_create_account.view.*
 import java.util.*
 
 
@@ -76,7 +79,14 @@ class SignUpActivity : AppCompatActivity() {
                 if (it) {
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                     fragmentShowHide.addToBackStack()
-                    fragmentShowHide.showFragment(createAccountFragment, R.id.signUp_container) }
+                    fragmentShowHide.showFragment(createAccountFragment, R.id.signUp_container)
+
+                    verifyBtn.isEnabled = false
+                    submitBtn.isEnabled = false
+                    createAccountNextBtn.isEnabled = false
+                    ChangeUIState.changeCheckBoxFalseState(veifyCodeCheckbox)
+                    viewModel.clearValue()
+                }
             }})
 
         viewModel.schoolSelectBack.observe(this, Observer {

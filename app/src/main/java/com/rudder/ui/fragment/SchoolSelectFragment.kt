@@ -49,11 +49,11 @@ class SchoolSelectFragment : Fragment() {
                 if(it) {
                     ChangeUIState.changeCheckBoxTrueState(schoolSelectCheckbox)
                     toastSchoolSelect.cancel()
-                     }
-                else{
+                }
+                else {
                     ChangeUIState.changeCheckBoxFalseState(schoolSelectCheckbox)
                     toastSchoolSelect.show()
-                    }
+                }
                 ChangeUIState.buttonEnable(schoolSelectNextBtn,schoolSelectCheckbox.isChecked)
         }})
 

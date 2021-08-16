@@ -123,6 +123,11 @@ class SignUpViewModel : ViewModel() {
         _idChangeFlag.value = Event(true)
     }
 
+    fun clearValue() {
+        _userEmailDomain.value = ""
+        _userVerificationCode.value = ""
+    }
+
 
     fun onTextChangePW() {
         if (_userPassword.value!!.trim().matches(passwordRg) && _userPassword.value!!.isNotEmpty())

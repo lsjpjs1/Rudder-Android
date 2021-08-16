@@ -44,36 +44,24 @@ class Repository {
 
 
     suspend fun signUpSendVerifyCode(emailInfo : EmailInfo) : Boolean{
-        val emailCheckFlag : Boolean
         val verifyAPIResult = SignUpApi.instance.emailSignUp(emailInfo).await()
-        Log.d(TAG, "callPostTransferEmail : $verifyAPIResult")
-        emailCheckFlag = verifyAPIResult == "true"
-
-        return emailCheckFlag
+        Log.d(TAG, "callPostTransferEmail : ${verifyAPIResult.results}")
+        return verifyAPIResult.results.get("isVerify").asBoolean
     }
 
     suspend fun signUpIdDuplicated(idDuplicatedInfo: IdDuplicatedInfo) : Boolean{
-        val idCheckFlag : Boolean
         val idDuplicatedAPIResultJson = SignUpApi.instance.idDuplicatedSignUp(idDuplicatedInfo).await()
-        Log.d(TAG, "idDuplicatedAPIResultJson : $idDuplicatedAPIResultJson")
-
-        val jsonResult = idDuplicatedAPIResultJson.getAsJsonObject("results")
-        val isDuplicatedResult = jsonResult.get("isDuplicated").asBoolean
-
-        idCheckFlag = isDuplicatedResult
-        return idCheckFlag
+        Log.d(TAG, "idDuplicatedAPIResultJson : ${idDuplicatedAPIResultJson.results}")
+        return idDuplicatedAPIResultJson.results.get("isDuplicated").asBoolean
     }
 
     suspend fun signUpCheckVerifyCode(checkVeriCodeInfo: CheckVerifyCodeInfo) : Boolean {
-        val verifyCheckFlag : Boolean
         val checkVerifyAPIResult = SignUpApi.instance.checkVerifySignUp(checkVeriCodeInfo).await()
-        Log.d(TAG, "checkVerifyAPIResult : $checkVerifyAPIResult")
-        verifyCheckFlag = checkVerifyAPIResult == "Success"
-
-        return verifyCheckFlag
+        Log.d(TAG, "checkVerifyAPIResult : ${checkVerifyAPIResult.results}")
+        return checkVerifyAPIResult.results.get("isSuccess").asBoolean
     }
 
-    suspend fun signUpCreateAccount(accountInfo: AccountInfo) : Boolean {
+    suspend fun signUpCreateAccount(accountInfo: AccountInfo) : Boolean { // Sign up, Complete!
         val createAccountCheckFlag : Boolean
         val createAccountAPIResult = SignUpApi.instance.createAccountSignUp(accountInfo).await()
         Log.d(TAG, "createAccountAPIResult : $createAccountAPIResult")
@@ -84,10 +72,8 @@ class Repository {
 
     private suspend fun checkToken(tokenInfo: TokenInfo): Boolean {
         val tokenAPIResultJson = TokenApi.instance.tokenValidation(tokenInfo).await()
-        Log.d(TAG, "tokenAPIResultJson : ${tokenAPIResultJson}")
-        val jsonResult = tokenAPIResultJson.results
-        Log.d(TAG, "tokenAPIResultJson : ${jsonResult}")
-        return jsonResult.get("isTokenValid").asBoolean
+        Log.d(TAG, "tokenAPIResultJson : ${tokenAPIResultJson.results}")
+        return tokenAPIResultJson.results.get("isTokenValid").asBoolean
     }
 
 

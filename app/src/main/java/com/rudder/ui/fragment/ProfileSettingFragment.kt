@@ -34,6 +34,7 @@ class ProfileSettingFragment : Fragment() {
     ): View {
         profileSettingBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_profile_setting,container,false)
         profileSettingBinding.signUpVM = viewModel
+        profileSettingBinding.lifecycleOwner = this
 
         val toastNickName = Toast.makeText(activity, "Write Right Nickname !", Toast.LENGTH_SHORT)
 
