@@ -50,45 +50,20 @@ class LoginActivity : AppCompatActivity() {
         viewModel.startMainActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 StartActivity.callActivity(this, MainActivity() )
-                //callMainActivity()
             }
         })
         viewModel.startSignUpActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
-                //callSignUpActivity()
                 StartActivity.callActivity(this, SignUpActivity())
             }
         })
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.d("mytag","onDestoryLogin")
-
-        val autoLoginPref = prefs.getValue("autoLogin")
-        autoLoginCheckbox.isChecked = autoLoginPref == "true"
-        val key = BuildConfig.TOKEN_KEY
-        Log.d("autoLoginPref2", "$autoLoginPref")
-
-        if (autoLoginPref == "false") { // 자동로그인을 안하고, 앱을 종료하면, 토큰 사라짐(로그아웃)
-            Log.d("autoLoginPref3","${prefs.getValue(key)}")
-            prefs.removeValue(key)
-            Log.d("autoLoginPref4","${prefs.getValue(key)}")
-            Log.d("autoLoginPref5","asdasd")
-        }
     }
 
-
-    fun callMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun callSignUpActivity() {
-        val intent = Intent(this, SignUpActivity::class.java)
-        startActivity(intent)
-    }
 
 
     fun autoLoginCheckbox(){

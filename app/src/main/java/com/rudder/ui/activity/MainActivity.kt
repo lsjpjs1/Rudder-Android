@@ -100,7 +100,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.startLoginActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 StartActivity.callActivity(this, LoginActivity())
-                //callLoginActivity()
             }
         })
 

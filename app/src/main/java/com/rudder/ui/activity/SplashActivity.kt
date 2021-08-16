@@ -1,25 +1,26 @@
 package com.rudder.ui.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
 import com.rudder.data.local.App
-import com.rudder.databinding.ActivityLoginBinding
 import com.rudder.databinding.ActivitySplashBinding
+import com.rudder.util.ForecdTerminationService
+import com.rudder.util.StartActivity
 import com.rudder.viewModel.LoginViewModel
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 class SplashActivity : AppCompatActivity() {
 
@@ -28,6 +29,8 @@ class SplashActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        startService(Intent(this, ForecdTerminationService::class.java))
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
@@ -44,13 +47,15 @@ class SplashActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show()
-                    callLoginActivity()
+                    StartActivity.callActivity(this, LoginActivity())
+                    finish()
                 }
             }
         })
         viewModel.startMainActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
-                callMainActivity()
+                StartActivity.callActivity(this, MainActivity())
+                finish()
             }
         })
 
@@ -65,23 +70,14 @@ class SplashActivity : AppCompatActivity() {
                 viewModel.callLogin()
             }
             else {
-                delay(1000L)
-                callLoginActivity()
+                val mHandler = Handler(Looper.getMainLooper())
+                mHandler.postDelayed({
+                    StartActivity.callActivity(this@SplashActivity, LoginActivity())
+                    finish()
+                }, 1000)
             }
         }
 
-    }
-
-    fun callMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    fun callLoginActivity() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
 

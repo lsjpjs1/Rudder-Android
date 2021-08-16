@@ -17,6 +17,7 @@ import com.rudder.R
 import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
+import com.rudder.util.StartActivity
 import com.rudder.viewModel.SignUpViewModel
 import java.util.*
 
@@ -105,7 +106,8 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.profileSettingNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
-                    callLoginActivity()
+                    StartActivity.callActivity(this, LoginActivity())
+                    finish()
                     toastSignUpComplete.show()
                 }
             }}) // signUP Complete !
@@ -130,10 +132,4 @@ class SignUpActivity : AppCompatActivity() {
 //        super.onBackPressed()
 //    }
 
-    fun callLoginActivity() {
-        finish()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-
-    }
 }

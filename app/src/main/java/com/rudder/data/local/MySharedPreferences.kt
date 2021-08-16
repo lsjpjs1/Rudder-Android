@@ -11,20 +11,19 @@ class MySharedPreferences(context: Context) {
 
 
     fun setValue(key:String, value:String?){ // apply
-        //prefs.edit().putString(key,value).commit()
         prefs.edit().putString(key,value).apply()
     }
     fun getValue(key:String):String?{
         return prefs.getString(key,"")
     }
 
-    fun removeValue(key:String){
+    fun removeValue(key:String){ // commit
         prefs.edit().remove(key).commit()
     }
 
 
     fun setValueCommit(key:String, value:String?) {
-    prefs.edit().putString(key, value).commit()
+        prefs.edit().putString(key, value).commit()
     }
 
 
