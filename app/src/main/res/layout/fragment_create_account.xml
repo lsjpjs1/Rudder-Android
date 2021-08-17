@@ -403,6 +403,7 @@
             android:backgroundTint="#9329D1"
             android:hint="@string/verify_code"
             android:inputType="text"
+            android:afterTextChanged="@{() -> signUpVM.onTextChangeVerifiCode()}"
             android:text="@={signUpVM._userVerificationCode}"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.07"

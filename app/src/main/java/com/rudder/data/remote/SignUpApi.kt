@@ -39,13 +39,6 @@ class SignUpApi {
             checkVerifyCodeService.verifyCodeSignUp(checkVeriCodeInfo)
         } }
 
-    private val createAccountService : CreateAccountService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(CreateAccountService::class.java)
-
-    fun createAccountSignUp(accountInfo: AccountInfo) : Deferred<String>{
-        return GlobalScope.async(Dispatchers.IO){
-            createAccountService.createAccountSignUp(accountInfo)
-        } }
-
 
     private val schoolListService : SchoolListService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(SchoolListService::class.java)
 
@@ -53,6 +46,14 @@ class SignUpApi {
         return GlobalScope.async(Dispatchers.IO){
             schoolListService.schoolListSignUp()
         } }
+
+    private val createAccountService : CreateAccountService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(CreateAccountService::class.java)
+
+    fun createAccountSignUp(signUpInsertInfo: SignUpInsertInfo) : Deferred<Response<JsonObject>>{
+        return GlobalScope.async(Dispatchers.IO){
+            createAccountService.createAccountSignUp(signUpInsertInfo)
+        } }
+
 
 
 }

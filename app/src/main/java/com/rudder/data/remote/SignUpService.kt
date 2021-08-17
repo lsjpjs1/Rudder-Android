@@ -31,18 +31,18 @@ interface CheckVerifyCodeService {
     ) : Response<JsonObject>
 }
 
-interface CreateAccountService {
-    @POST("/signupin/signup")
-    suspend fun createAccountSignUp(
-        @Body accountInfo : AccountInfo
-    ) : String
-}
-
 
 interface SchoolListService {
     @POST("/signupin/schoolList")
     suspend fun schoolListSignUp(
     ) : Response<JsonArray>
+}
+
+interface CreateAccountService {
+    @POST("/signupin/signupinsert")
+    suspend fun createAccountSignUp(
+        @Body signUpInsertInfo : SignUpInsertInfo
+    ) : Response<JsonObject>
 }
 
 

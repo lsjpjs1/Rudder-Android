@@ -61,15 +61,6 @@ class Repository {
         return checkVerifyAPIResult.results.get("isSuccess").asBoolean
     }
 
-    suspend fun signUpCreateAccount(accountInfo: AccountInfo) : Boolean { // Sign up, Complete!
-        val createAccountCheckFlag : Boolean
-        val createAccountAPIResult = SignUpApi.instance.createAccountSignUp(accountInfo).await()
-        Log.d(TAG, "createAccountAPIResult : $createAccountAPIResult")
-        createAccountCheckFlag = createAccountAPIResult == "true"
-
-        return createAccountCheckFlag
-    }
-
     private suspend fun checkToken(tokenInfo: TokenInfo): Boolean {
         val tokenAPIResultJson = TokenApi.instance.tokenValidation(tokenInfo).await()
         Log.d(TAG, "tokenAPIResultJson : ${tokenAPIResultJson.results}")
@@ -96,6 +87,12 @@ class Repository {
     suspend fun addPost(addPostInfo: AddPostInfo): Boolean{
         val response = PostApi.instance.addPostApi(addPostInfo).await()
         return response.results.isSuccess
+    }
+
+    suspend fun signUpCreateAccount(signUpInsertInfo: SignUpInsertInfo) : Boolean { // Sign up, Complete!
+        val createAccountAPIResult = SignUpApi.instance.createAccountSignUp(signUpInsertInfo).await()
+        Log.d(TAG, "createAccountAPIResult : ${createAccountAPIResult.results}")
+        return createAccountAPIResult.results.get("signUpComplete").asBoolean
     }
 
 }

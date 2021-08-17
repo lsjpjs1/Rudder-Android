@@ -40,13 +40,19 @@ class CreateAccountFragment : Fragment() {
         val toastPasswordCheck = Toast.makeText(activity, "Please Check, Password and Password Confirm",Toast.LENGTH_SHORT)
         val toastEmailDomain = Toast.makeText(activity, "Please Check, Right Email Address", Toast.LENGTH_SHORT)
         val toastEmailCheck = Toast.makeText(activity, "Email must be Naver Email", Toast.LENGTH_SHORT)
-        val verifyCodeCheck = Toast.makeText(activity, "Wrong Verification Code", Toast.LENGTH_SHORT)
+        val toastverifyCodeCheck = Toast.makeText(activity, "Wrong Verification Code", Toast.LENGTH_SHORT)
 
 
         viewModel.idChangeFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{
                 ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
                 ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+                ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
+            }})
+
+        viewModel.verifiCodeChangeFlag.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let{
+                ChangeUIState.changeCheckBoxFalseState(veifyCodeCheckbox)
                 ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
             }})
 
@@ -127,12 +133,12 @@ class CreateAccountFragment : Fragment() {
                 if (it) {
                     ChangeUIState.changeCheckBoxTrueState(veifyCodeCheckbox)
                     createAccountNextBtn.isEnabled = true
-                    verifyCodeCheck.cancel()
+                    toastverifyCodeCheck.cancel()
                 }
                 else {
                     ChangeUIState.changeCheckBoxFalseState(veifyCodeCheckbox)
                     createAccountNextBtn.isEnabled = false
-                    verifyCodeCheck.show()
+                    toastverifyCodeCheck.show()
                 }
             }
             ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)

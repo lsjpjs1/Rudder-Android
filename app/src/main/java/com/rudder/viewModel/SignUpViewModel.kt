@@ -58,6 +58,7 @@ class SignUpViewModel : ViewModel() {
     val _emailCheckFlag = MutableLiveData<Event<Boolean>>()
     val _verifyCodeCheckFlag = MutableLiveData<Event<Boolean>>()
     val _nickNameFlag = MutableLiveData<Event<Boolean>>()
+    val _verifiCodeChangeFlag = MutableLiveData<Event<Boolean>>()
 
     val _schoolList = MutableLiveData<MutableList<String>>()
 
@@ -90,6 +91,7 @@ class SignUpViewModel : ViewModel() {
     val emailCheckFlag : LiveData<Event<Boolean>> = _emailCheckFlag
     val verifyCodeCheckFlag: LiveData<Event<Boolean>> = _verifyCodeCheckFlag
     val nickNameFlag: LiveData<Event<Boolean>> = _nickNameFlag
+    val verifiCodeChangeFlag : LiveData<Event<Boolean>> = _verifiCodeChangeFlag
 
     val schoolList : LiveData<MutableList<String>> = _schoolList
 
@@ -121,6 +123,10 @@ class SignUpViewModel : ViewModel() {
 
     fun onTextChangeId() {
         _idChangeFlag.value = Event(true)
+    }
+
+    fun onTextChangeVerifiCode() {
+        _verifiCodeChangeFlag.value = Event(true)
     }
 
     fun clearValue() {
@@ -255,9 +261,11 @@ class SignUpViewModel : ViewModel() {
 
     fun callCreateAccount() { // Sign Up, Complete!
         GlobalScope.launch {
-            val idInput = _userId.value!!
-            val passwordInput = _userPassword.value!!
-            val result = repository.signUpCreateAccount(AccountInfo(idInput, passwordInput))
+            val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
+            val inputInfo = SignUpInsertInfo(_userId.value!!, _userPassword.value!!,emailInput,_userRecommendCode.value!!,
+                _userSchoolName.value!!,"",_userIntroduce.value!!,_userNickName.value!! )
+
+            val result = repository.signUpCreateAccount(inputInfo)
             Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
             _profileSettingNext.postValue(Event(result))
         }

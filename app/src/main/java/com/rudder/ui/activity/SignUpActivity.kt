@@ -28,9 +28,6 @@ import java.util.*
 class SignUpActivity : AppCompatActivity() {
     private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
 
-    //private var viewModel: SignUpViewModel = SignUpViewModel()
-    //private val viewModel: SignUpViewModel by activityViewModels()
-
     private lateinit var createAccountFragment : CreateAccountFragment
     private lateinit var profileSettingFragment : ProfileSettingFragment
     private lateinit var schoolSelectFragment: SchoolSelectFragment
