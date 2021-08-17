@@ -104,7 +104,7 @@
                 android:layout_marginTop="100dp"
                 android:layout_marginRight="80dp"
                 android:background="@drawable/edge"
-                android:selectedItemPosition="@={signUpVM._userSchool}"
+                android:selectedItemPosition="@={signUpVM._userSchoolInt}"
                 android:onItemSelected="@{(parent,view,pos,id)->signUpVM.onSelectItem(parent,view,pos,id)}"
 
                 android:spinnerMode="dialog"

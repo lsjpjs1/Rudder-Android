@@ -44,7 +44,7 @@ data class SignUpInsertInfo(
     val userRecommendCode: String,
 
     @SerializedName(value = "school_id")
-    val userSchoolName: String,
+    val userSchoolInt: Int,
 
     @SerializedName(value = "character_index")
     val userCharacter: String,

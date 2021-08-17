@@ -37,7 +37,7 @@ class SignUpViewModel : ViewModel() {
     val _userEmailID = MutableLiveData<String>()
     val _userEmailDomain = MutableLiveData<String>()
     val _userVerificationCode = MutableLiveData<String>()
-    val _userSchool = MutableLiveData<Int>()
+    val _userSchoolInt = MutableLiveData<Int>()
     val _userNickName = MutableLiveData<String>()
     val _userIntroduce = MutableLiveData<String>()
     val _userSchoolName = MutableLiveData<String>()
@@ -69,7 +69,7 @@ class SignUpViewModel : ViewModel() {
     val userEmailID: LiveData<String> = _userEmailID
     val userEmailDomain: LiveData<String> = _userEmailDomain
     val userVerificationCode: LiveData<String> = _userVerificationCode
-    val userSchool: LiveData<Int> = _userSchool
+    val userSchoolInt: LiveData<Int> = _userSchoolInt
     val userNickName: LiveData<String> = _userNickName
     val userIntroduce: LiveData<String> = _userIntroduce
     val userSchoolName: LiveData<String> = _userSchoolName
@@ -108,6 +108,7 @@ class SignUpViewModel : ViewModel() {
         _userVerificationCode.value = ""
         _schoolList.value = mutableListOf("Select Your School!")
         _userSchoolName.value = ""
+        _userSchoolInt.value = 0
 
 //        _schoolSelectNext.value = Event(false)
 //        _schoolSelectBack.value = Event(false)
@@ -209,6 +210,7 @@ class SignUpViewModel : ViewModel() {
         Log.d("parent.getAdapter","$pos, $id, ${parent.selectedItem}")
         if (pos != 0){
             _schoolSelectFlag.value = Event(true)
+            _userSchoolInt.value = pos + 1
             _userSchoolName.value = parent.selectedItem.toString().split(" ")[0].toLowerCase()
             Log.d(ContentValues.TAG, "_userSchoolName.value : ${_userSchoolName.value }")
         }else{
@@ -263,7 +265,7 @@ class SignUpViewModel : ViewModel() {
         GlobalScope.launch {
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val inputInfo = SignUpInsertInfo(_userId.value!!, _userPassword.value!!,emailInput,_userRecommendCode.value!!,
-                _userSchoolName.value!!,"",_userIntroduce.value!!,_userNickName.value!! )
+                _userSchoolInt.value!!,"",_userIntroduce.value!!,_userNickName.value!! )
 
             val result = repository.signUpCreateAccount(inputInfo)
             Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
