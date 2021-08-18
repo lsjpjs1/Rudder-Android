@@ -6,10 +6,7 @@ import android.nfc.Tag
 import android.util.Log
 import com.google.gson.JsonObject
 import com.rudder.BuildConfig
-import com.rudder.data.EmailInfo
-import com.rudder.data.IdDuplicatedInfo
-import com.rudder.data.LoginInfo
-import com.rudder.data.Response
+import com.rudder.data.*
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.await
@@ -37,4 +34,12 @@ class ForgotApi {
         }
     }
 
+
+    private val sendPasswordSevice : SendPasswordSevice = RetrofitClient.getClient(BuildConfig.BASE_URL).create(SendPasswordSevice::class.java)
+
+    fun sendPassword(verifyInfo : CheckVerifyCodeInfo) : Deferred<Response<JsonObject>>{
+        return GlobalScope.async(Dispatchers.IO){
+            sendPasswordSevice.forgotSendPassword(verifyInfo)
+        }
+    }
 }

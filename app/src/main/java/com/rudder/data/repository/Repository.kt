@@ -94,4 +94,23 @@ class Repository {
         return createAccountAPIResult.results.get("signUpComplete").asBoolean
     }
 
+    suspend fun findAccountID(emailInfo: EmailInfo) : Boolean {
+        val forgotIDAPIResult = ForgotApi.instance.findForgotID(emailInfo).await()
+        Log.d(TAG, "forgotIDAPIResult : ${forgotIDAPIResult.results}")
+        return forgotIDAPIResult.results.get("sendIdToEmail").asBoolean
+    }
+
+    suspend fun findAccountPassword(emailInfo: EmailInfo) : Boolean {
+        val forgotPasswordAPIResult = ForgotApi.instance.findForgotPassword(emailInfo).await()
+        Log.d(TAG, "forgotPasswordAPIResult : ${forgotPasswordAPIResult.results}")
+        return forgotPasswordAPIResult.results.get("sendPwVerificationCode").asBoolean
+    }
+
+
+    suspend fun sendAccountPassword(verifyInfo : CheckVerifyCodeInfo) : Boolean {
+        val sendAccountPasswordAPIResult = ForgotApi.instance.sendPassword(verifyInfo).await()
+        Log.d(TAG, "sendAccountPasswordAPIResult : ${sendAccountPasswordAPIResult.results}")
+        return sendAccountPasswordAPIResult.results.get("isSuccessForgot").asBoolean
+    }
+
 }

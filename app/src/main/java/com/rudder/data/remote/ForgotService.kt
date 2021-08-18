@@ -1,6 +1,7 @@
 package com.rudder.data.remote
 
 import com.google.gson.JsonObject
+import com.rudder.data.CheckVerifyCodeInfo
 import com.rudder.data.EmailInfo
 import com.rudder.data.LoginInfo
 import com.rudder.data.Response
@@ -25,5 +26,13 @@ interface ForgotPasswordService {
     suspend fun forgotPassword(
         @Body emailInfo: EmailInfo
 
+    ) : Response<JsonObject>
+}
+
+
+interface SendPasswordSevice {
+    @POST("/signupin/checkCode")
+    suspend fun forgotSendPassword(
+        @Body verifyInfo : CheckVerifyCodeInfo
     ) : Response<JsonObject>
 }
