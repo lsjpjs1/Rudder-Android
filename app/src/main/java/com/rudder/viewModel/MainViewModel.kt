@@ -73,7 +73,8 @@ class MainViewModel : ViewModel() {
                 Timestamp.valueOf("2021-07-13 11:11:11"),
                 1,
                 2,
-                3
+                3,
+                ""
             )
         )
         _comments.value = arrayListOf(
@@ -91,7 +92,7 @@ class MainViewModel : ViewModel() {
         )
         _postBody.value = ""
         _categories.value = arrayListOf(
-            Category(0,"category0")
+            Category(0,"All")
         )
         clearNestedCommentInfo()
         getPosts()
@@ -149,7 +150,6 @@ class MainViewModel : ViewModel() {
         _isScrollBottomTouch.value = Event(true)
         GlobalScope.launch {
             val resPosts = Repository().getPosts(pagingIndex, endPostId,categories.value!![selectedCategoryPosition.value!!].categoryId)
-            Log.d("posts in repo", resPosts.toString())
             viewModelScope.launch {
                 if (_posts.value!!.size == 0) {
                     _posts.value = resPosts
@@ -255,7 +255,9 @@ class MainViewModel : ViewModel() {
 
     fun getCategories() {
         GlobalScope.launch {
-            val categoryList = Repository().getCategories()
+            var categoryList = Repository().getCategories()
+            categoryList.add(0, Category(0,"All"))
+
             viewModelScope.launch {
                 _categories.value = categoryList
             }

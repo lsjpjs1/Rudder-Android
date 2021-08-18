@@ -44,15 +44,15 @@ class CategorySelectorAdaptor(val categoryList: ArrayList<Category>,val selected
 
     override fun onBindViewHolder(holder: CategorySelectorAdaptor.CustomViewHolder, position: Int) {
         holder.categorySelectorBinding.category = categoryList[position]
-//        var visibility = View.GONE
-//        var textColor = R.color.grey
+        if (position==1){
+            var lp = holder.categorySelectorBinding.root.layoutParams
+            lp.width = 0
+            lp.height = 0
+            holder.categorySelectorBinding.root.layoutParams = lp
+        }
         if(selectedCategoryNum==position){
             listener.onClick(holder.categorySelectorBinding.root,position)
-//            visibility= View.VISIBLE
-//            textColor = R.color.black
         }
-//        holder.categorySelectorBinding.categoryTextView.setTextColor(ContextCompat.getColor(context,textColor))
-//        holder.categorySelectorBinding.categoryUnderBarView.visibility= visibility
         holder.categorySelectorBinding.categoryTextView.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener{
                 override fun onGlobalLayout() {

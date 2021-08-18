@@ -19,5 +19,7 @@ data class PreviewPost(
     @SerializedName(value = "like_count")
     val likeCount: Int,
     @SerializedName(value = "post_view")
-    val postView: Int
+    val postView: Int,
+    @SerializedName(value = "category_name")
+    val categoryName: String
 )
