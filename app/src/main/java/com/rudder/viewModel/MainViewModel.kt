@@ -1,6 +1,7 @@
 package com.rudder.viewModel
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.*
 import com.rudder.BuildConfig
 import com.rudder.R
@@ -10,6 +11,7 @@ import com.rudder.data.PreviewPost
 import com.rudder.data.local.App
 import com.rudder.data.remote.AddCommentInfo
 import com.rudder.data.remote.AddPostInfo
+import com.rudder.data.remote.Category
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
@@ -29,8 +31,11 @@ class MainViewModel : ViewModel() {
     private val _selectedTab = MutableLiveData<Int>()
     private val _posts = MutableLiveData<ArrayList<PreviewPost>>()
     private val _comments = MutableLiveData<ArrayList<Comment>>()
+    private val _categories = MutableLiveData<ArrayList<Category>>()
     private val _selectedPostPosition = MutableLiveData<Int>()
+    private val _selectedCategoryPosition = MutableLiveData<Int>()
     private val _selectedCommentGroupNum = MutableLiveData<Int>()
+    private val _selectedCategoryView = MutableLiveData<View>()
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
     private val _isBackClick = MutableLiveData<Event<Boolean>>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
@@ -44,15 +49,19 @@ class MainViewModel : ViewModel() {
     val isAddPostClick: LiveData<Event<Boolean>> = _isAddPostClick
     val selectedTab: LiveData<Int> = _selectedTab
     val selectedPostPosition: LiveData<Int> = _selectedPostPosition
+    val selectedCategoryPosition: LiveData<Int> = _selectedCategoryPosition
     val selectedCommentGroupNum: LiveData<Int> = _selectedCommentGroupNum
+    val selectedCategoryView: LiveData<View> = _selectedCategoryView
 
     val posts: LiveData<ArrayList<PreviewPost>>
         get() = _posts
     val comments: LiveData<ArrayList<Comment>> = _comments
+    val categories: LiveData<ArrayList<Category>> = _categories
 
     init {
         Log.d("call", "call")
         _selectedTab.value = R.id.communityButton
+        _selectedCategoryPosition.value = 0
         _posts.value = arrayListOf(
             PreviewPost(
                 1,
@@ -79,8 +88,12 @@ class MainViewModel : ViewModel() {
             )
         )
         _postBody.value = ""
+        _categories.value = arrayListOf(
+            Category(1,"category0")
+        )
         clearNestedCommentInfo()
         getPosts()
+        getCategories()
     }
 
     fun clickNestedCommentReply(groupNum: Int, commentBody: String) {
@@ -213,6 +226,14 @@ class MainViewModel : ViewModel() {
         _selectedPostPosition.value = position
     }
 
+    fun setSelectedCategoryPosition(position: Int) {
+        _selectedCategoryPosition.value = position
+    }
+
+    fun setSelectedCategoryView(view : View) {
+        _selectedCategoryView.value = view
+    }
+
 
     fun callLoginOut() { // SEMI!!!
         Log.d("token", "token")
@@ -220,6 +241,15 @@ class MainViewModel : ViewModel() {
         App.prefs.removeValue(key)
         var a = App.prefs.getValue(key)
         Log.d("token123", "$a")
+    }
+
+    fun getCategories() {
+        GlobalScope.launch {
+            val categoryList = Repository().getCategories()
+            viewModelScope.launch {
+                _categories.value = categoryList
+            }
+        }
     }
 
 }

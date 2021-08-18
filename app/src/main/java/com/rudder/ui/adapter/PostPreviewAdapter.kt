@@ -59,7 +59,7 @@ class PostPreviewAdapter(val previewPostList: ArrayList<PreviewPost>, val listen
             it.maxpostbodylength=MAX_POST_BODY_LENGTH
         }
         holder.postPreviewBinding.postPreview.setOnClickListener{
-            listener.onPostPreviewClick(holder.postPreviewBinding.postPreview,position)
+            listener.onClick(holder.postPreviewBinding.postPreview,position)
         }
     }
 

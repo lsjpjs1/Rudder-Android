@@ -117,4 +117,8 @@ class Repository {
         return response.results.isSuccess
     }
 
+    suspend fun getCategories(): ArrayList<Category>{
+        return BoardInfoApi.instance.getCategoryList().await().results
+    }
+
 }
