@@ -137,7 +137,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        Log.d("changedPost", supportFragmentManager.findFragmentByTag("1234").toString())
     }
 
     fun swapMainBottomBar(){

@@ -62,7 +62,8 @@ class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
         }
         viewModel.setSelectedCategoryPosition(position)
         viewModel.setSelectedCategoryView(view)
-
+        viewModel.clearPosts()
+        viewModel.getPosts()
     }
 
 }

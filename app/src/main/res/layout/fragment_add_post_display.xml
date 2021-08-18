@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
 
         <variable
@@ -24,11 +25,58 @@
                 android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/chooseCategoryConstraintLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_default="percent"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent="@dimen/width_default">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chooseCategoryTextConstraintLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.3"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Choose a category"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.7"
+                        app:layout_constraintTop_toBottomOf="@id/chooseCategoryTextConstraintLayout"
+                        >
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"></Spinner>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/addPostDisplayText"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_default="percent"
+                    app:layout_constraintHeight_percent="0.9"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/chooseCategoryConstraintLayout"
                     app:layout_constraintWidth_default="percent"
                     app:layout_constraintWidth_percent="@dimen/width_default">
 
@@ -74,10 +122,10 @@
                             android:id="@+id/editTextTextPersonName"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:ems="10"
-                            android:inputType="textMultiLine"
                             android:background="@null"
+                            android:ems="10"
                             android:hint="@string/text_hint"
+                            android:inputType="textMultiLine"
                             android:text="@={mainVM._postBody}" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

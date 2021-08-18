@@ -7,11 +7,13 @@ import com.rudder.BuildConfig
 import com.rudder.R
 import com.rudder.data.Comment
 import com.rudder.data.GetCommentInfo
+import com.rudder.data.Post
 import com.rudder.data.PreviewPost
 import com.rudder.data.local.App
 import com.rudder.data.remote.AddCommentInfo
 import com.rudder.data.remote.AddPostInfo
 import com.rudder.data.remote.Category
+import com.rudder.data.remote.PostApi
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
@@ -89,7 +91,7 @@ class MainViewModel : ViewModel() {
         )
         _postBody.value = ""
         _categories.value = arrayListOf(
-            Category(1,"category0")
+            Category(0,"category0")
         )
         clearNestedCommentInfo()
         getPosts()
@@ -115,9 +117,11 @@ class MainViewModel : ViewModel() {
     }
 
     fun scrollTouchBottom() {
-        pagingIndex += 1
-        endPostId = _posts.value!![_posts.value!!.size - 1].postId
-        getPosts()
+        if(_posts.value!!.size>0) {
+            pagingIndex += 1
+            endPostId = _posts.value!![_posts.value!!.size - 1].postId
+            getPosts()
+        }
     }
 
     fun clickCommunity() {
@@ -144,7 +148,8 @@ class MainViewModel : ViewModel() {
     fun getPosts() {
         _isScrollBottomTouch.value = Event(true)
         GlobalScope.launch {
-            val resPosts = Repository().getPosts(pagingIndex, endPostId)
+            val resPosts = Repository().getPosts(pagingIndex, endPostId,categories.value!![selectedCategoryPosition.value!!].categoryId)
+            Log.d("posts in repo", resPosts.toString())
             viewModelScope.launch {
                 if (_posts.value!!.size == 0) {
                     _posts.value = resPosts
@@ -160,6 +165,11 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun clearPosts(){
+        _posts.value = ArrayList<PreviewPost>()
+        pagingIndex = 0
+        endPostId = -1
+    }
 
     fun getComments() {
         val key = BuildConfig.TOKEN_KEY
