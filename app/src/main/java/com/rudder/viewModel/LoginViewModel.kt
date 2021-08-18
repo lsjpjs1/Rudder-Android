@@ -26,6 +26,7 @@ class LoginViewModel() : ViewModel() {
     private val _showLoginErrorToast = MutableLiveData<Event<Boolean>>()
     private val _startMainActivity = MutableLiveData<Event<Boolean>>()
     private val _startSignUpActivity = MutableLiveData<Event<Boolean>>()
+    private val _startForgotActivity = MutableLiveData<Event<Boolean>>()
 
     val _autoLogin = MutableLiveData<Event<Boolean>>()
 
@@ -34,6 +35,8 @@ class LoginViewModel() : ViewModel() {
     val showLoginErrorToast: LiveData<Event<Boolean>> = _showLoginErrorToast
     val startMainActivity: LiveData<Event<Boolean>> = _startMainActivity
     val startSignUpActivity: LiveData<Event<Boolean>> = _startSignUpActivity
+    val startForgotActivity : LiveData<Event<Boolean>> = _startForgotActivity
+
     val autoLogin : LiveData<Event<Boolean>> = _autoLogin
 
     private val repository = Repository()
@@ -74,4 +77,8 @@ class LoginViewModel() : ViewModel() {
         }
     }
 
+
+    fun callForgot(){
+        _startForgotActivity.value = Event(true)
+    }
 }

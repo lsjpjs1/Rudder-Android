@@ -13,23 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rudder"
         android:usesCleartextTraffic="true">
-        <service android:name=".util.ForecdTerminationService"
+        <activity android:name=".ui.activity.ForgotActivity"></activity>
+
+        <service
+            android:name=".util.ForecdTerminationService"
             android:stopWithTask="false" />
-        <activity
-            android:name=".ui.activity.SplashActivity">
+
+        <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.activity.SignUpActivity" />
-        <activity
-            android:name=".ui.activity.LoginActivity"
-            >
-
-        </activity>
+        <activity android:name=".ui.activity.LoginActivity"></activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />

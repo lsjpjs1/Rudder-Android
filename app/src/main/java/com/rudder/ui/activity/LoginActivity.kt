@@ -57,6 +57,12 @@ class LoginActivity : AppCompatActivity() {
                 StartActivity.callActivity(this, SignUpActivity())
             }
         })
+
+        viewModel.startForgotActivity.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{
+                StartActivity.callActivity(this, ForgotActivity())
+            }
+        })
     }
 
     override fun onDestroy() {

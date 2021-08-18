@@ -142,6 +142,7 @@
                 app:layout_constraintWidth_percent="0.35"
                 android:gravity="center"
                 android:textSize="16dp"
+                android:onClick="@{()->loginVM.callForgot()}"
                 app:layout_constraintStart_toEndOf="@+id/autoLoginCheckbox"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextUserPassword"
