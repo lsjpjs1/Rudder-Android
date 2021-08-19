@@ -29,7 +29,9 @@ class AddPostFragment : Fragment() {
             .add(R.id.addPostHeader,AddPostHeaderFragment())
             .add(R.id.addPostDisplay,AddPostDisplayFragment())
             .commit()
+
         fragmentBinding.mainVM=viewModel
+
         viewModel.isAddPostSuccess.observe(viewLifecycleOwner, Observer {
             Log.d("isaddpostsuccess",it.getContentIfNotHandled().toString())
         })

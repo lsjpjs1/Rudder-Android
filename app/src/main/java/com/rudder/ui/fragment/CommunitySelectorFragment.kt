@@ -12,20 +12,17 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentCommuintySelectorBinding
-import com.rudder.databinding.FragmentShowPostBinding
-import com.rudder.ui.adapter.CategorySelectorAdaptor
-import com.rudder.ui.adapter.PostCommentsAdapter
+import com.rudder.ui.adapter.CategorySelectorAdapter
 import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.category_selector.view.*
-import kotlinx.android.synthetic.main.fragment_commuinty_selector.view.*
 
 class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
     private val viewModel: MainViewModel by activityViewModels()
     private val lazyContext by lazy {
         requireContext()
     }
-    private lateinit var adapter : CategorySelectorAdaptor
+    private lateinit var adapter : CategorySelectorAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +30,7 @@ class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
         savedInstanceState: Bundle?
     ): View? {
         val fragmentBinding= DataBindingUtil.inflate<FragmentCommuintySelectorBinding>(inflater,R.layout.fragment_commuinty_selector,container,false)
-        adapter = CategorySelectorAdaptor(viewModel.categories.value!!,viewModel.selectedCategoryPosition.value!!,lazyContext,this)
+        adapter = CategorySelectorAdapter(viewModel.categories.value!!,viewModel.selectedCategoryPosition.value!!,lazyContext,this)
         fragmentBinding.categoryRecyclerView.also {
             it.layoutManager = LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)
             it.setHasFixedSize(false)

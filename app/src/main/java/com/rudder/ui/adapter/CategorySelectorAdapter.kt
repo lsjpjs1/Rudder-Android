@@ -1,33 +1,25 @@
 package com.rudder.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
-import com.rudder.data.Comment
 import com.rudder.data.remote.Category
 import com.rudder.databinding.CategorySelectorBinding
-import com.rudder.databinding.PostCommentsBinding
 import com.rudder.util.CategoriesDiffCallback
-import com.rudder.util.CommentsDiffCallback
 import com.rudder.util.CustomOnclickListener
 
-class CategorySelectorAdaptor(val categoryList: ArrayList<Category>,val selectedCategoryNum: Int, val context : Context,val listener: CustomOnclickListener): RecyclerView.Adapter<CategorySelectorAdaptor.CustomViewHolder>(){
+class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selectedCategoryNum: Int, val context : Context, val listener: CustomOnclickListener): RecyclerView.Adapter<CategorySelectorAdapter.CustomViewHolder>(){
     inner class CustomViewHolder(val categorySelectorBinding: CategorySelectorBinding) : RecyclerView.ViewHolder(categorySelectorBinding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CategorySelectorAdaptor.CustomViewHolder {
+    ): CategorySelectorAdapter.CustomViewHolder {
         val bind = DataBindingUtil.inflate<CategorySelectorBinding>(
             LayoutInflater.from(parent.context),
             R.layout.category_selector,
@@ -42,7 +34,7 @@ class CategorySelectorAdaptor(val categoryList: ArrayList<Category>,val selected
         return categoryList.size
     }
 
-    override fun onBindViewHolder(holder: CategorySelectorAdaptor.CustomViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategorySelectorAdapter.CustomViewHolder, position: Int) {
         holder.categorySelectorBinding.category = categoryList[position]
         if (position==1){
             var lp = holder.categorySelectorBinding.root.layoutParams
