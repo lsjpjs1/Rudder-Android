@@ -18,6 +18,10 @@ class MyPageFragment: Fragment() {
     ): View? {
         val MyPage = inflater.inflate(R.layout.fragment_my_page, container, false)
 
+        childFragmentManager.beginTransaction()
+            .add(R.id.myPageHeader, MyPageHeaderFragment())
+            .commit()
+
         return MyPage
     }
 }

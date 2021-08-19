@@ -31,6 +31,7 @@
             android:clickable="true"
             android:backgroundTint="#9329D1"
             android:gravity="center"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:text="login_out_semi"

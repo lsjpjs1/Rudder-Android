@@ -20,7 +20,10 @@ class CommunityFragment: Fragment() {
 
 
         val community = inflater.inflate(R.layout.fragment_community, container, false)
-        childFragmentManager.beginTransaction().add(R.id.communityDisplay,CommunityDisplayFragment(parentFragmentManager)).add(R.id.communityHeader,CommunityHeaderFragment()).commit()
+        childFragmentManager.beginTransaction()
+            .add(R.id.communityDisplay,CommunityDisplayFragment(parentFragmentManager))
+            .add(R.id.communityHeader,CommunityHeaderFragment())
+            .commit()
         return community
     }
 }

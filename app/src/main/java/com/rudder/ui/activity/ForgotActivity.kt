@@ -31,6 +31,9 @@ class ForgotActivity : AppCompatActivity() {
 
         val toastEmailTrue = Toast.makeText(this, "Complete to Send Your ID to Email Address", Toast.LENGTH_SHORT)
         val toastEmailFalse = Toast.makeText(this, "Not Valid Email Address", Toast.LENGTH_SHORT)
+        val toastVerifyCodeTrue = Toast.makeText(this, "Complete to Send Your Password to Email Address", Toast.LENGTH_SHORT)
+        val toastVerifyCodeFalse = Toast.makeText(this, "Not Valid Verification Code", Toast.LENGTH_SHORT)
+
         var findpasswordFlag = false
 
         viewModel.findIDClick.observe(this, Observer {
@@ -55,23 +58,23 @@ class ForgotActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     toastEmailTrue.show()
-                    if (findpasswordFlag) forgotSubmit.isEnabled = true
+                    if (findpasswordFlag) forgotSendPasswordBtn.isEnabled = true
                 }
                 else {
                     toastEmailFalse.show()
-                    if (findpasswordFlag) forgotSubmit.isEnabled = false
+                    if (findpasswordFlag) forgotSendPasswordBtn.isEnabled = false
                 }
             }
         })
 
         viewModel.verifyCodeCheckFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
-                forgotSendPasswordBtn.isEnabled = it
+                if (it) toastVerifyCodeTrue.show()
+                else toastVerifyCodeFalse.show()
             }
         })
 
 
-        forgotSubmit.isEnabled = false
         forgotSendPasswordBtn.isEnabled = false
     }
 

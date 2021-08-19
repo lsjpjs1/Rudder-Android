@@ -46,6 +46,10 @@ class ForgotViewModel() : ViewModel() {
         _findPasswordClick.value = Event(false)
     }
 
+    val emailRg = android.util.Patterns.EMAIL_ADDRESS.toRegex()
+
+
+
 
     fun clickID(){
         _findIDClick.value = Event(true)
@@ -55,12 +59,11 @@ class ForgotViewModel() : ViewModel() {
         _findPasswordClick.value = Event(true)
     }
 
-
     fun callCheckEmail() { // FIND ID Email Check
         GlobalScope.launch {
             val result = repository.findAccountID(EmailInfo(_forgotEmail.value!!))
             Log.d(ContentValues.TAG, "callCheckEmail 결과 : ${result}")
-            _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.isNotEmpty()))
+            _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
         }
     }
 
@@ -68,10 +71,9 @@ class ForgotViewModel() : ViewModel() {
         GlobalScope.launch {
             val result = repository.findAccountPassword(EmailInfo(_forgotEmail.value!!))
             Log.d(ContentValues.TAG, "callSendVeriCode 결과 : ${result}")
-            _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.isNotEmpty()))
+            _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
         }
     }
-
 
     fun callSendPassword() {
         GlobalScope.launch {

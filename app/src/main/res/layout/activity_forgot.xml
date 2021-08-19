@@ -51,6 +51,7 @@
             android:id="@+id/constraintLayoutForgot2"
             android:layout_width="0dp"
             android:layout_height="0dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.3"
@@ -178,27 +179,11 @@
                 app:layout_constraintVertical_bias="0.2"
                 android:text="@={forgotVM._forgotverifyCode}"
 
-                app:layout_constraintEnd_toStartOf="@+id/forgotSubmit"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/verifyBtn"
                 app:layout_constraintBottom_toBottomOf="@+id/forgotSendPasswordBtn"
                 />
-
-            <Button
-                android:id="@+id/forgotSubmit"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:onClick="@{()->forgotVM.callSendPassword()}"
-                app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.15"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.3"
-                android:backgroundTint="#9329D1"
-                android:text="@string/sumbit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/verifyCodeForgot"
-                app:layout_constraintTop_toBottomOf="@+id/verifyBtn"
-                app:layout_constraintBottom_toBottomOf="@+id/forgotSendPasswordBtn" />
 
 
             <Button
@@ -212,9 +197,10 @@
                 android:backgroundTint="#9329D1"
                 android:text="Send Account Password"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{()->forgotVM.callSendPassword()}"
                 app:layout_constraintVertical_bias="0.4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/forgotSubmit"
+                app:layout_constraintTop_toBottomOf="@+id/verifyCodeForgot"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutForgot3" />
 
             <Button
