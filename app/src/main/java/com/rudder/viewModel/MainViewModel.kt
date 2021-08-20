@@ -34,10 +34,12 @@ class MainViewModel : ViewModel() {
     private val _posts = MutableLiveData<ArrayList<PreviewPost>>()
     private val _comments = MutableLiveData<ArrayList<Comment>>()
     private val _categories = MutableLiveData<ArrayList<Category>>()
+    private val _categoryNames = MutableLiveData<ArrayList<String>>()
     private val _selectedPostPosition = MutableLiveData<Int>()
     private val _selectedCategoryPosition = MutableLiveData<Int>()
     private val _selectedCommentGroupNum = MutableLiveData<Int>()
     private val _selectedCategoryView = MutableLiveData<View>()
+    private val _selectedCategoryNameInAddPost = MutableLiveData<String>()
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
     private val _isBackClick = MutableLiveData<Event<Boolean>>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
@@ -50,10 +52,12 @@ class MainViewModel : ViewModel() {
     val isBackClick: LiveData<Event<Boolean>> = _isBackClick
     val isAddPostClick: LiveData<Event<Boolean>> = _isAddPostClick
     val selectedTab: LiveData<Int> = _selectedTab
+    val categoryNames : LiveData<ArrayList<String>> = _categoryNames
     val selectedPostPosition: LiveData<Int> = _selectedPostPosition
     val selectedCategoryPosition: LiveData<Int> = _selectedCategoryPosition
     val selectedCommentGroupNum: LiveData<Int> = _selectedCommentGroupNum
     val selectedCategoryView: LiveData<View> = _selectedCategoryView
+    val selectedCategoryNameInAddPost : LiveData<String> = _selectedCategoryNameInAddPost
 
     val posts: LiveData<ArrayList<PreviewPost>>
         get() = _posts
@@ -109,8 +113,9 @@ class MainViewModel : ViewModel() {
         _selectedCommentGroupNum.value = -1
     }
 
-    fun clearAddPostBody(){
+    fun clearAddPost(){
         _postBody.value = ""
+        _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
     }
 
     fun commentBodyClear() {
@@ -223,7 +228,8 @@ class MainViewModel : ViewModel() {
                 "",
                 _postBody.value!!,
                 App.prefs.getValue(key)!!,
-                arrayListOf()
+                arrayListOf(),
+                _selectedCategoryNameInAddPost.value!!
             )
             val res = Repository().addPost(addPostInfo)
             viewModelScope.launch {
@@ -244,6 +250,10 @@ class MainViewModel : ViewModel() {
         _selectedCategoryView.value = view
     }
 
+    fun setSelectedCategoryNameInAddPost(position : Int){
+        _selectedCategoryNameInAddPost.value = _categoryNames.value!![position]
+    }
+
 
     fun callLoginOut() { // SEMI!!!
         Log.d("token", "token")
@@ -256,12 +266,21 @@ class MainViewModel : ViewModel() {
     fun getCategories() {
         GlobalScope.launch {
             var categoryList = Repository().getCategories()
-            categoryList.add(0, Category(0,"All"))
-
             viewModelScope.launch {
+                _categoryNames.value = splitCategoryNames((categoryList))
+                _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
+                categoryList.add(0, Category(0,"All"))
                 _categories.value = categoryList
             }
         }
+    }
+
+    fun splitCategoryNames(categoryList : ArrayList<Category>):ArrayList<String>{
+        var categoryNames = ArrayList<String>()
+        for(category in categoryList){
+            categoryNames.add(category.categoryName)
+        }
+        return categoryNames
     }
 
 }

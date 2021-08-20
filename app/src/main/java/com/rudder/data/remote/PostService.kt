@@ -35,7 +35,9 @@ data class AddPostInfo(
         @SerializedName("token")
         val token:String,
         @SerializedName("imageInfoList")
-        val imageInfoList:ArrayList<ImageInfo>
+        val imageInfoList:ArrayList<ImageInfo>,
+        @SerializedName("category_name")
+        val categoryName:String
 )
 
 data class ImageInfo(
