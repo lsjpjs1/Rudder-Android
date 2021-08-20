@@ -2,21 +2,21 @@ package com.rudder.viewModel
 
 
 import android.content.ContentValues
-import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.CompoundButton
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.JsonObject
-import com.rudder.data.*
-import com.rudder.data.remote.PostApi
+import com.rudder.data.CheckVerifyCodeInfo
+import com.rudder.data.EmailInfo
+import com.rudder.data.IdDuplicatedInfo
+import com.rudder.data.SignUpInsertInfo
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.*
 
 
 class SignUpViewModel : ViewModel() {
@@ -42,6 +42,8 @@ class SignUpViewModel : ViewModel() {
     val _userIntroduce = MutableLiveData<String>()
     val _userSchoolName = MutableLiveData<String>()
 
+    val _termsOfServiceNext = MutableLiveData<Event<Boolean>>()
+    val _termsOfServiceBack = MutableLiveData<Event<Boolean>>()
     val _schoolSelectNext = MutableLiveData<Event<Boolean>>()
     val _schoolSelectBack = MutableLiveData<Event<Boolean>>()
     val _createAccountNext = MutableLiveData<Event<Boolean>>()
@@ -59,6 +61,7 @@ class SignUpViewModel : ViewModel() {
     val _verifyCodeCheckFlag = MutableLiveData<Event<Boolean>>()
     val _nickNameFlag = MutableLiveData<Event<Boolean>>()
     val _verifiCodeChangeFlag = MutableLiveData<Event<Boolean>>()
+    val _termsOfServiceFlag = MutableLiveData<Event<Boolean>>()
 
     val _schoolList = MutableLiveData<MutableList<String>>()
 
@@ -74,7 +77,8 @@ class SignUpViewModel : ViewModel() {
     val userIntroduce: LiveData<String> = _userIntroduce
     val userSchoolName: LiveData<String> = _userSchoolName
 
-
+    val termsOfServiceNext: LiveData<Event<Boolean>> = _termsOfServiceNext
+    val termsOfServiceBack: LiveData<Event<Boolean>> = _termsOfServiceBack
     val schoolSelectNext: LiveData<Event<Boolean>> = _schoolSelectNext
     val schoolSelectBack: LiveData<Event<Boolean>> = _schoolSelectBack
     val createAccountNext: LiveData<Event<Boolean>> = _createAccountNext
@@ -92,11 +96,11 @@ class SignUpViewModel : ViewModel() {
     val verifyCodeCheckFlag: LiveData<Event<Boolean>> = _verifyCodeCheckFlag
     val nickNameFlag: LiveData<Event<Boolean>> = _nickNameFlag
     val verifiCodeChangeFlag : LiveData<Event<Boolean>> = _verifiCodeChangeFlag
+    val termsOfServiceFlag : LiveData<Event<Boolean>> = _termsOfServiceFlag
 
     val schoolList : LiveData<MutableList<String>> = _schoolList
 
     private val repository = Repository()
-
 
     init {
         _userId.value = ""
@@ -110,17 +114,16 @@ class SignUpViewModel : ViewModel() {
         _userSchoolName.value = ""
         _userSchoolInt.value = 0
 
-//        _schoolSelectNext.value = Event(false)
-//        _schoolSelectBack.value = Event(false)
-//        _createAccountNext.value = Event(false)
-//        _createAccountBack.value = Event(false)
-//        _profileSettingNext.value = Event(false)
-//        _profileSettingBack.value = Event(false)
     }
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
     val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
     val nickNameRg = "^[a-zA-Z0-9-_]{5,10}\$".toRegex()
+
+
+    fun onCheckedChange(button: CompoundButton?, check: Boolean) {
+        _termsOfServiceFlag.value = Event (check)
+    }
 
     fun onTextChangeId() {
         _idChangeFlag.value = Event(true)
@@ -179,6 +182,16 @@ class SignUpViewModel : ViewModel() {
         super.onCleared()
         Log.d("onCleared","onCleared")
     }
+
+
+    fun clickNextTermsOfService(){
+        _termsOfServiceNext.value = Event(true)
+    }
+
+    fun clickBackTermsOfService(){
+        _termsOfServiceBack.value = Event(true)
+    }
+
 
     fun clickNextSchoolSelect(){
         _schoolSelectNext.value = Event(true)

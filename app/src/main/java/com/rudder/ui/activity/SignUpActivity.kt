@@ -22,12 +22,14 @@ import com.rudder.util.StartActivity
 import com.rudder.viewModel.SignUpViewModel
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.android.synthetic.main.fragment_create_account.view.*
+import kotlinx.android.synthetic.main.fragment_terms_of_service.*
 import java.util.*
 
 
 class SignUpActivity : AppCompatActivity() {
     private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
 
+    private lateinit var termsOfServiceFragment : TermsOfServiceFragment
     private lateinit var createAccountFragment : CreateAccountFragment
     private lateinit var profileSettingFragment : ProfileSettingFragment
     private lateinit var schoolSelectFragment: SchoolSelectFragment
@@ -51,9 +53,13 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        termsOfServiceFragment = TermsOfServiceFragment()
         createAccountFragment = CreateAccountFragment()
         profileSettingFragment = ProfileSettingFragment()
         schoolSelectFragment = SchoolSelectFragment()
+
 
         supportFragmentManager.beginTransaction()
             .add(R.id.signUp_container, createAccountFragment)
@@ -61,6 +67,8 @@ class SignUpActivity : AppCompatActivity() {
             .add(R.id.signUp_container, profileSettingFragment)
             .hide(profileSettingFragment)
             .add(R.id.signUp_container, schoolSelectFragment)
+            .hide(schoolSelectFragment)
+            .add(R.id.signUp_container, termsOfServiceFragment)
             .commit()
 
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
@@ -70,6 +78,24 @@ class SignUpActivity : AppCompatActivity() {
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
 
         viewModel.callSchoolList()
+
+
+
+        viewModel.termsOfServiceNext.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) {
+                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                    fragmentShowHide.addToBackStack()
+                    fragmentShowHide.showFragment(schoolSelectFragment, R.id.signUp_container)
+                } }})
+
+        viewModel.termsOfServiceBack.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) onBackPressed()
+            }})
+
+
+
 
         viewModel.schoolSelectNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
@@ -130,13 +156,5 @@ class SignUpActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d("mytag","onDestory")
     }
-
-//    override fun onBackPressed() {
-//        if (schoolSelectFragment.isVisible) {
-//            viewModel.clearValue()
-//        }
-//
-//        super.onBackPressed()
-//    }
 
 }

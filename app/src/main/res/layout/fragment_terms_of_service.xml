@@ -11,7 +11,181 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/constraintLayout0"
         >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/constraintLayout1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Terms Of Service"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.6" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/constraintLayout2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
+            >
+
+            <WebView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/termsOfServiceWebView"
+                >
+
+            </WebView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/constraintLayout3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="Accept"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:id="@+id/textview1"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/termsOfServiceCheckBox"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.4" />
+
+            <CheckBox
+                android:id="@+id/termsOfServiceCheckBox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:buttonTint="#5AEF0A"
+                android:onCheckedChanged="@{(compoundButton, checked) -> signUpVM.onCheckedChange(compoundButton, checked)}"
+
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textview1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/constraintLayout4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1"
+            >
+
+            <Button
+                android:id="@+id/termsOfServiceBackBtn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:backgroundTint="#9329D1"
+                android:gravity="center"
+                android:text="@string/back"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{()->signUpVM.clickBackTermsOfService()}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout4"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.8" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/constraintLayout5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1"
+            >
+
+            <Button
+                android:id="@+id/termsOfServiceNextBtn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:backgroundTint="#9329D1"
+                android:gravity="center"
+                android:text="@string/next"
+                app:layout_constraintHeight_default="percent"
+                android:onClick="@{()->signUpVM.clickNextTermsOfService()}"
+                app:layout_constraintHeight_percent="0.6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.8" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
