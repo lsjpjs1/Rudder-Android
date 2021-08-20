@@ -128,5 +128,9 @@ class Repository {
         return PostApi.instance.addLikePost(addLikePostInfo).await().results.get("isSuccess").asBoolean
     }
 
+    suspend fun addPostViewCount(addPostViewCountInfo: AddPostViewCountInfo): Boolean{
+        return PostApi.instance.addPostViewCount(addPostViewCountInfo).await().results.get("isSuccess").asBoolean
+    }
+
 
 }

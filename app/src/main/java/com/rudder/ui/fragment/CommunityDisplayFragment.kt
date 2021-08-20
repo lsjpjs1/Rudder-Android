@@ -66,6 +66,9 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
         (activity as MainActivity).changeSelectedPostPosition(position)
         (activity as MainActivity).showPost()
         (activity as MainActivity).showAddComment()
+        if(!viewModel.isAlreadyReadPost()){
+            viewModel.addPostViewCount()
+        }
         viewModel.getComments()
     }
 

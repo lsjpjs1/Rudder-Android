@@ -45,4 +45,10 @@ class PostApi {
         }
     }
 
+    fun addPostViewCount(addPostViewCountInfo: AddPostViewCountInfo):Deferred<Response<JsonObject>>{
+        return GlobalScope.async(Dispatchers.IO){
+            postService.addPostViewCount(addPostViewCountInfo)
+        }
+    }
+
 }

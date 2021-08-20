@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
+import com.rudder.data.local.App
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
@@ -187,7 +188,6 @@ class MainActivity : AppCompatActivity() {
         fragmentShowHide.addFragment(showPostFragment,R.id.mainDisplay,"showPost")
         fragmentShowHide.showFragment(showPostFragment,R.id.mainDisplay)
     }
-
 
 
     fun showAddComment(){

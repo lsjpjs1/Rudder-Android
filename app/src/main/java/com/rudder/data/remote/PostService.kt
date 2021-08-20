@@ -32,9 +32,19 @@ interface PostService {
         @Body addLikePostInfo: AddLikePostInfo
     ): Response<JsonObject>
 
+    @POST("/board/addPostViewCount")
+    suspend fun addPostViewCount(
+        @Body addPostViewCountInfo: AddPostViewCountInfo
+    ): Response<JsonObject>
+
 
 
 }
+
+data class AddPostViewCountInfo(
+    @SerializedName("post_id")
+    val postId: Int
+)
 
 data class AddLikePostInfo(
     @SerializedName("post_id")
