@@ -2,6 +2,7 @@ package com.rudder.data.remote
 
 
 
+import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.GetPostInfo
 import com.rudder.data.PreviewPost
@@ -29,6 +30,18 @@ class PostApi {
     fun addPostApi(addPostInfo: AddPostInfo):Deferred<Response<AddPostResponse>>{
         return GlobalScope.async(Dispatchers.IO){
             postService.addPost(addPostInfo)
+        }
+    }
+
+    fun isLikePost(isLikePostInfo:IsLikePostInfo):Deferred<Response<JsonObject>>{
+        return GlobalScope.async(Dispatchers.IO){
+            postService.isLikePost(isLikePostInfo)
+        }
+    }
+
+    fun addLikePost(addLikePostInfo: AddLikePostInfo):Deferred<Response<JsonObject>>{
+        return GlobalScope.async(Dispatchers.IO){
+            postService.addLikePost(addLikePostInfo)
         }
     }
 

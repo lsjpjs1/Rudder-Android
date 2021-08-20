@@ -49,6 +49,12 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
             })
         }
 
+        viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
+            adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
+        })
+        viewModel.isLikePost.observe(viewLifecycleOwner, Observer {
+            adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
+        })
         viewModel.posts.observe(viewLifecycleOwner, Observer {
             adapter.updatePosts(it)
         })

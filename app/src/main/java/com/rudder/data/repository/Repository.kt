@@ -5,7 +5,6 @@ import android.util.Log
 import com.google.gson.JsonArray
 import com.rudder.BuildConfig
 import com.rudder.data.*
-import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.data.remote.LoginApi
 import com.rudder.data.remote.PostApi
@@ -120,5 +119,14 @@ class Repository {
     suspend fun getCategories(): ArrayList<Category>{
         return BoardInfoApi.instance.getCategoryList().await().results
     }
+
+    suspend fun isLikePost(isLikePostInfo: IsLikePostInfo): Boolean{
+        return PostApi.instance.isLikePost(isLikePostInfo).await().results.get("isSuccess").asBoolean
+    }
+
+    suspend fun addLikePost(addLikePostInfo: AddLikePostInfo): Boolean{
+        return PostApi.instance.addLikePost(addLikePostInfo).await().results.get("isSuccess").asBoolean
+    }
+
 
 }

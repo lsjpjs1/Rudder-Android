@@ -1,13 +1,13 @@
 package com.rudder.data.remote
 
 
+import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import com.rudder.data.GetPostInfo
 import com.rudder.data.PreviewPost
 import com.rudder.data.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
-import java.sql.Timestamp
 
 
 interface PostService {
@@ -19,10 +19,38 @@ interface PostService {
 
     @POST("/board/addPost")
     suspend fun addPost(
-            @Body addPostInfo: AddPostInfo
+        @Body addPostInfo: AddPostInfo
     ) : Response<AddPostResponse>
 
+    @POST("/board/isLiked")
+    suspend fun isLikePost(
+        @Body isLikePostInfo: IsLikePostInfo
+    ): Response<JsonObject>
+
+    @POST("/board/addlike")
+    suspend fun addLikePost(
+        @Body addLikePostInfo: AddLikePostInfo
+    ): Response<JsonObject>
+
+
+
 }
+
+data class AddLikePostInfo(
+    @SerializedName("post_id")
+    val postId:Int,
+    @SerializedName("token")
+    val token:String,
+    @SerializedName("plusValue")
+    val plusValue:Int
+)
+
+data class IsLikePostInfo(
+    @SerializedName("post_id")
+    val postId:Int,
+    @SerializedName("token")
+    val token:String
+)
 
 
 data class AddPostInfo(

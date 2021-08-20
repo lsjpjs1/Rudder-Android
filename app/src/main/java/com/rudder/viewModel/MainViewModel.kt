@@ -7,13 +7,9 @@ import com.rudder.BuildConfig
 import com.rudder.R
 import com.rudder.data.Comment
 import com.rudder.data.GetCommentInfo
-import com.rudder.data.Post
 import com.rudder.data.PreviewPost
 import com.rudder.data.local.App
-import com.rudder.data.remote.AddCommentInfo
-import com.rudder.data.remote.AddPostInfo
-import com.rudder.data.remote.Category
-import com.rudder.data.remote.PostApi
+import com.rudder.data.remote.*
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
@@ -43,9 +39,11 @@ class MainViewModel : ViewModel() {
     private val _isBackClick = MutableLiveData<Event<Boolean>>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
     private val _isAddPostSuccess = MutableLiveData<Event<Boolean>>()
-    private val _isLikeClick = MutableLiveData<Event<Boolean>>()
+    private val _isLikePost = MutableLiveData<Boolean>()
+    private val _commentCountChange = MutableLiveData<Event<Boolean>>()
 
-    val isLikeClick: LiveData<Event<Boolean>> = _isLikeClick
+    val commentCountChange: LiveData<Event<Boolean>> = _commentCountChange
+    val isLikePost: LiveData<Boolean> = _isLikePost
     val isAddPostSuccess: LiveData<Event<Boolean>> = _isAddPostSuccess
     val isScrollBottomTouch: LiveData<Event<Boolean>> = _isScrollBottomTouch
     val isBackClick: LiveData<Event<Boolean>> = _isBackClick
@@ -146,8 +144,26 @@ class MainViewModel : ViewModel() {
         _isBackClick.value = Event(true)
     }
 
-    fun clickLike() {
-        _isLikeClick.value = Event(true)
+    fun clickPostLike() {
+
+        val plusValue =
+            if (_isLikePost.value!!) -1
+            else 1
+        _posts.value!![_selectedPostPosition.value!!].likeCount =_posts.value!![_selectedPostPosition.value!!].likeCount+plusValue
+        _isLikePost.value = !(_isLikePost.value)!!//like button 체크 혹은 해제
+        addLike(plusValue)
+    }
+
+    fun addLike(plusValue:Int){
+        GlobalScope.launch {
+            val addLikePostInfo = AddLikePostInfo(
+                _posts.value!![_selectedPostPosition.value!!].postId,
+                App.prefs.getValue(tokenKey)!!,
+                plusValue
+            )
+            val res = Repository().addLikePost(addLikePostInfo)
+
+        }
     }
 
 
@@ -193,6 +209,8 @@ class MainViewModel : ViewModel() {
 
     fun addComment() {
         lateinit var addCommentInfo : AddCommentInfo
+        _posts.value!![_selectedPostPosition.value!!].commentCount =_posts.value!![_selectedPostPosition.value!!].commentCount+1
+        _commentCountChange.value=Event(true)
         GlobalScope.launch {
             if (_selectedCommentGroupNum.value == -1) { // _selectedCommentGroupNum.value==-1 -> parent인 댓글
                 addCommentInfo = AddCommentInfo(
@@ -281,6 +299,19 @@ class MainViewModel : ViewModel() {
             categoryNames.add(category.categoryName)
         }
         return categoryNames
+    }
+
+    fun isLikePost(){
+        GlobalScope.launch {
+            val isLikePostInfo = IsLikePostInfo(
+                _posts.value!![_selectedPostPosition.value!!].postId,
+                App.prefs.getValue(tokenKey)!!
+            )
+            val res = Repository().isLikePost(isLikePostInfo)
+            viewModelScope.launch {
+                _isLikePost.value = res
+            }
+        }
     }
 
 }

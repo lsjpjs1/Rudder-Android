@@ -15,9 +15,9 @@ data class PreviewPost(
     @SerializedName(value = "post_time")
     val postTime: Timestamp,
     @SerializedName(value = "comment_count")
-    val commentCount: Int,
+    var commentCount: Int,
     @SerializedName(value = "like_count")
-    val likeCount: Int,
+    var likeCount: Int,
     @SerializedName(value = "post_view")
     val postView: Int,
     @SerializedName(value = "category_name")

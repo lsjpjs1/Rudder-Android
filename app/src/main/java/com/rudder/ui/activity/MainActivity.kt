@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_community_display.view.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
+import kotlinx.android.synthetic.main.fragment_show_post.*
 import java.util.*
 
 
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var communityFragment : CommunityFragment
     private lateinit var myPageFragment : MyPageFragment
     private lateinit var addPostFragment: AddPostFragment
-    private val showPostFragment = ShowPostFragment()
+    private lateinit var showPostFragment : ShowPostFragment
     private val purpleRudder by lazy { ContextCompat.getColor(this,R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this,R.color.grey) }
 
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         communityFragment = CommunityFragment()
         myPageFragment = MyPageFragment()
         addPostFragment = AddPostFragment()
-
+        showPostFragment = ShowPostFragment()
         addCommentFragment = AddCommentFragment()
 
 
@@ -68,9 +69,6 @@ class MainActivity : AppCompatActivity() {
                     changeColorMyPage()
                 }
             }
-        })
-        viewModel.posts.observe(this, Observer {
-            Log.d("changedPost",it.toString())
         })
 
         viewModel.isAddPostClick.observe(this, Observer {
@@ -110,6 +108,15 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isAddPostSuccess.observe(this, Observer {
             super.onBackPressed()
+        })
+
+        viewModel.isLikePost.observe(this, Observer {
+
+            if(it!!){
+                showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+            }else{
+                showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_outline_thumb_up_24)
+            }
         })
 
     }
@@ -174,6 +181,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showPost(){
+        viewModel.isLikePost()
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
         fragmentShowHide.addToBackStack()
         fragmentShowHide.addFragment(showPostFragment,R.id.mainDisplay,"showPost")
