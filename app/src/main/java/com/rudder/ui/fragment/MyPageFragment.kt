@@ -19,7 +19,7 @@ class MyPageFragment: Fragment() {
     ): View? {
         val MyPage = inflater.inflate(R.layout.fragment_my_page, container, false)
 
-        scrollViewMyPage.isNestedScrollingEnabled = true
+        //scrollViewMyPage.isNestedScrollingEnabled = true
 
         childFragmentManager.beginTransaction()
             .add(R.id.myPageHeader, MyPageHeaderFragment())
