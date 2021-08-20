@@ -25,7 +25,6 @@ class MainViewModel : ViewModel() {
     private val tokenKey = BuildConfig.TOKEN_KEY
     private var pagingIndex = 0
     private var endPostId = -1
-    private val MIN_PROGRESSBAR_TIME = 200.toLong() //millisecond
 
     val _postBody = MutableLiveData<String>()
     val _commentBody = MutableLiveData<String>()
@@ -78,7 +77,8 @@ class MainViewModel : ViewModel() {
                 1,
                 2,
                 3,
-                ""
+                "",
+                0
             )
         )
         _comments.value = arrayListOf(

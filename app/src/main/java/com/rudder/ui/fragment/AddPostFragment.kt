@@ -32,9 +32,7 @@ class AddPostFragment : Fragment() {
 
         fragmentBinding.mainVM=viewModel
 
-        viewModel.isAddPostSuccess.observe(viewLifecycleOwner, Observer {
-            Log.d("isaddpostsuccess",it.getContentIfNotHandled().toString())
-        })
+
         return fragmentBinding.root
     }
 }

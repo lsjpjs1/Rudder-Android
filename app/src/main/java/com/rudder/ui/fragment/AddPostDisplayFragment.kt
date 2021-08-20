@@ -51,7 +51,6 @@ class AddPostDisplayFragment : Fragment() {
             }
         }
 
-        viewModel.clearAddPost()
         return display.root
     }
 }

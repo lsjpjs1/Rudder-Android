@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isAddPostClick.observe(this, Observer {
             if(it.getContentIfNotHandled()!!){
+                viewModel.clearAddPost()
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
                 fragmentShowHide.addFragment(addPostFragment,R.id.mainDisplay,"addPost")
@@ -105,6 +106,10 @@ class MainActivity : AppCompatActivity() {
             }else{
                 hideParentCommentInfo()
             }
+        })
+
+        viewModel.isAddPostSuccess.observe(this, Observer {
+            super.onBackPressed()
         })
 
     }

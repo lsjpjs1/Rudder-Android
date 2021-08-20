@@ -56,7 +56,6 @@ class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selecte
                         lp2.width = holder.categorySelectorBinding.categoryTextView.width+70
                         holder.categorySelectorBinding.root.layoutParams = lp2
                     }
-
                 }
 
             }

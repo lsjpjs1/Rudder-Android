@@ -21,5 +21,7 @@ data class PreviewPost(
     @SerializedName(value = "post_view")
     val postView: Int,
     @SerializedName(value = "category_name")
-    val categoryName: String
+    val categoryName: String,
+    @SerializedName(value = "category_id")
+    val categoryId: Int
 )
