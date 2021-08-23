@@ -31,8 +31,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_arrow_back_24"
                 tools:srcCompat="@drawable/ic_baseline_arrow_back_24"
-                app:tint="#000000"/>
-<!--                android:onClick="@{()->mainVM.clickAddPost()}"-->
+                app:tint="#000000"
+                android:onClick="@{()->mainVM.clickBack()}"/>
 
 
 

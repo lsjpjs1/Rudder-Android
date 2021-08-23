@@ -65,7 +65,8 @@ class MainViewModel : ViewModel() {
     }
 
 
-    fun callLogin(){
+    fun callLoginOut(){
+        Log.d("callLoginOut","callLoginOut")
         _startLoginActivity.value = Event(true)
 
         val key = BuildConfig.TOKEN_KEY
@@ -148,12 +149,12 @@ class MainViewModel : ViewModel() {
     }
 
 
-    fun callLoginOut() { // SEMI!!!
-        Log.d("token", "token")
-        val key = BuildConfig.TOKEN_KEY
-        App.prefs.removeValue(key)
-        var a = App.prefs.getValue(key)
-        Log.d("token123", "$a")
-    }
+//    fun callLoginOut() { // SEMI!!!
+//        Log.d("token", "token")
+//        val key = BuildConfig.TOKEN_KEY
+//        App.prefs.removeValue(key)
+//        var a = App.prefs.getValue(key)
+//        Log.d("token123", "$a")
+//    }
 
 }

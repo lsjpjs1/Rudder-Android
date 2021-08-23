@@ -32,6 +32,7 @@
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.92">
 
+
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/scrollViewMyPage"
                 android:layout_width="match_parent"
@@ -75,7 +76,8 @@
                                 android:id="@+id/textView1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="11111" />
+                                android:textStyle="bold"
+                                android:text="Account" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,7 +88,6 @@
                             app:layout_constraintHeight_percent="0.25"
                             android:id="@+id/constraintLayoutMyPage3"
                             app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage2"
-
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent">
 
@@ -94,7 +95,10 @@
                                 android:id="@+id/textView2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="asdasd" />
+                                android:onClick="@{()->mainVM.callLoginOut()}"
+                                android:text="@string/logout"
+                                />
+
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 

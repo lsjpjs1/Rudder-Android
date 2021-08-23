@@ -31,5 +31,6 @@
     <string name="text_title">Text</string>
     <string name="text_hint">Text</string>
     <string name="email_address">EMAIL ADDRESS</string>
+    <string name="logout">Logout</string>
 
 </resources>
