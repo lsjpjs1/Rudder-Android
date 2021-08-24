@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -81,10 +82,11 @@ class SignUpActivity : AppCompatActivity() {
 
         ProgressBarUtil.progressBarFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
-                if (it)
-                    ProgressBarUtil.progressBarVisible(progressBarSignUP,signUp_container,R.color.transparent)
+                if (it){
+                    ProgressBarUtil.progressBarVisible(progressBarSignUP,signUp_container,R.color.transparent, this)
+                    }
                 else
-                    ProgressBarUtil.progressBarGone(progressBarSignUP,signUp_container,R.color.white)
+                    ProgressBarUtil.progressBarGone(progressBarSignUP,signUp_container,R.color.white, this)
             }
         })
 
@@ -96,7 +98,6 @@ class SignUpActivity : AppCompatActivity() {
                     fragmentShowHide.addToBackStack()
                     fragmentShowHide.showFragment(schoolSelectFragment, R.id.signUp_container)
                 } }
-            //progressBarSignUP.visibility = View.VISIBLE
         })
 
         viewModel.termsOfServiceBack.observe(this, Observer {

@@ -105,7 +105,6 @@ class SignUpViewModel : ViewModel() {
 
     val schoolList : LiveData<MutableList<String>> = _schoolList
 
-
     private val repository = Repository()
 
     init {
@@ -253,7 +252,6 @@ class SignUpViewModel : ViewModel() {
 
     fun callIdCheck() {
         GlobalScope.launch {
-
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
             val idInput = _userId.value!!

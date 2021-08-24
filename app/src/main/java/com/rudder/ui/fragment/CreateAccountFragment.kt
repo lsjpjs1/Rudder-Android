@@ -46,6 +46,7 @@ class CreateAccountFragment : Fragment() {
         viewModel.idChangeFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{
                 ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
+                idDuplicatedCheck.isEnabled = true
                 ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
                 ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
             }})
@@ -101,8 +102,10 @@ class CreateAccountFragment : Fragment() {
 
         viewModel.idCheckFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
-                if (it) ChangeUIState.changeCheckBoxTrueState(IDcheckbox)
-                else {
+                if (it) {
+                    ChangeUIState.changeCheckBoxTrueState(IDcheckbox)
+                    idDuplicatedCheck.isEnabled = false
+                } else {
                     ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
                     Toast.makeText(activity, "ID is duplicated", Toast.LENGTH_SHORT).show()
                 }
