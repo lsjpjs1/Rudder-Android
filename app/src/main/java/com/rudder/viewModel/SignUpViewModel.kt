@@ -1,11 +1,14 @@
 package com.rudder.viewModel
 
 
+import android.R
+import android.app.ProgressDialog
 import android.content.ContentValues
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
+import android.widget.ProgressBar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +17,9 @@ import com.rudder.data.EmailInfo
 import com.rudder.data.IdDuplicatedInfo
 import com.rudder.data.SignUpInsertInfo
 import com.rudder.data.repository.Repository
+import com.rudder.ui.activity.SignUpActivity
 import com.rudder.util.Event
+import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -99,6 +104,7 @@ class SignUpViewModel : ViewModel() {
     val termsOfServiceFlag : LiveData<Event<Boolean>> = _termsOfServiceFlag
 
     val schoolList : LiveData<MutableList<String>> = _schoolList
+
 
     private val repository = Repository()
 
@@ -247,10 +253,15 @@ class SignUpViewModel : ViewModel() {
 
     fun callIdCheck() {
         GlobalScope.launch {
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
             val idInput = _userId.value!!
             val result = repository.signUpIdDuplicated(IdDuplicatedInfo(idInput))
             Log.d(ContentValues.TAG, "callIdCheck 결과 : ${result}")
             _idCheckFlag.postValue(Event(!result && _userId.value!!.isNotEmpty()))
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 
@@ -285,6 +296,7 @@ class SignUpViewModel : ViewModel() {
             _profileSettingNext.postValue(Event(result))
         }
     }
+
 
 }
 

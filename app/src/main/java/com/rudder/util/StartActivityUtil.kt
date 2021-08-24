@@ -6,7 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 
-class StartActivity() {
+class StartActivityUtil() {
 
     companion object {
         fun callActivity(fromActivity: AppCompatActivity, toActivity: AppCompatActivity) {

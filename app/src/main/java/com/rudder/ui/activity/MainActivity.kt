@@ -1,6 +1,5 @@
 package com.rudder.ui.activity
 
-import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
@@ -14,13 +13,10 @@ import com.rudder.R
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
-import com.rudder.util.StartActivity
+import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
-import kotlinx.android.synthetic.main.fragment_community_display.view.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -99,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.startLoginActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
-                StartActivity.callActivity(this, LoginActivity())
+                StartActivityUtil.callActivity(this, LoginActivity())
             }
         })
 

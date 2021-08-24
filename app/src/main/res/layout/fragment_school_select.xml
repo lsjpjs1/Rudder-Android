@@ -58,6 +58,7 @@
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="1">
 
+
             <TextView
                 android:id="@+id/schoolSelectionBtn"
                 android:layout_width="0dp"

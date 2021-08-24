@@ -16,8 +16,9 @@ import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.databinding.ActivitySplashBinding
 import com.rudder.util.ForecdTerminationService
-import com.rudder.util.StartActivity
+import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.LoginViewModel
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -47,14 +48,14 @@ class SplashActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show()
-                    StartActivity.callActivity(this, LoginActivity())
+                    StartActivityUtil.callActivity(this, LoginActivity())
                     finish()
                 }
             }
         })
         viewModel.startMainActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
-                StartActivity.callActivity(this, MainActivity())
+                StartActivityUtil.callActivity(this, MainActivity())
                 finish()
             }
         })
@@ -72,7 +73,7 @@ class SplashActivity : AppCompatActivity() {
             else {
                 val mHandler = Handler(Looper.getMainLooper())
                 mHandler.postDelayed({
-                    StartActivity.callActivity(this@SplashActivity, LoginActivity())
+                    StartActivityUtil.callActivity(this@SplashActivity, LoginActivity())
                     finish()
                 }, 1000)
             }

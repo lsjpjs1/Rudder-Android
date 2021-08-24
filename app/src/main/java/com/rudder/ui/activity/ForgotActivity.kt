@@ -2,7 +2,6 @@ package com.rudder.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -10,13 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
 import com.rudder.databinding.ActivityForgotBinding
-import com.rudder.databinding.ActivityLoginBinding
-import com.rudder.util.ChangeUIState
-import com.rudder.util.StartActivity
 import com.rudder.viewModel.ForgotViewModel
-import com.rudder.viewModel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_forgot.*
-import kotlinx.android.synthetic.main.fragment_create_account.*
 
 class ForgotActivity : AppCompatActivity() {
     private val viewModel: ForgotViewModel by lazy { ViewModelProvider(this).get(ForgotViewModel::class.java)  }

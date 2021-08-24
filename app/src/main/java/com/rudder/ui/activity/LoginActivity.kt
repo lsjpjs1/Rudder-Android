@@ -1,31 +1,18 @@
 package com.rudder.ui.activity
 
-import android.content.Intent
-
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import com.rudder.BuildConfig
 import com.rudder.R
-import com.rudder.data.LoginInfo
-import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.databinding.ActivityLoginBinding
-import com.rudder.util.Event
-import com.rudder.util.FragmentShowHide
-import com.rudder.util.StartActivity
+import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.LoginViewModel
-import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -49,18 +36,18 @@ class LoginActivity : AppCompatActivity() {
         })
         viewModel.startMainActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
-                StartActivity.callActivity(this, MainActivity() )
+                StartActivityUtil.callActivity(this, MainActivity() )
             }
         })
         viewModel.startSignUpActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
-                StartActivity.callActivity(this, SignUpActivity())
+                StartActivityUtil.callActivity(this, SignUpActivity())
             }
         })
 
         viewModel.startForgotActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
-                StartActivity.callActivity(this, ForgotActivity())
+                StartActivityUtil.callActivity(this, ForgotActivity())
             }
         })
     }

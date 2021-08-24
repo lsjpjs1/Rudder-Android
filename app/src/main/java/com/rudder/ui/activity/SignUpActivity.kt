@@ -1,29 +1,27 @@
 package com.rudder.ui.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.rudder.R
 import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.ChangeUIState
 import com.rudder.util.FragmentShowHide
-import com.rudder.util.StartActivity
+import com.rudder.util.ProgressBarUtil
+import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.SignUpViewModel
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_create_account.*
-import kotlinx.android.synthetic.main.fragment_create_account.view.*
-import kotlinx.android.synthetic.main.fragment_terms_of_service.*
-import java.util.*
+import kotlinx.android.synthetic.main.fragment_create_account.verifyBtn
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -77,8 +75,18 @@ class SignUpActivity : AppCompatActivity() {
 
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
 
+
         viewModel.callSchoolList()
 
+
+        ProgressBarUtil.progressBarFlag.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it)
+                    ProgressBarUtil.progressBarVisible(progressBarSignUP,signUp_container,R.color.transparent)
+                else
+                    ProgressBarUtil.progressBarGone(progressBarSignUP,signUp_container,R.color.white)
+            }
+        })
 
 
         viewModel.termsOfServiceNext.observe(this, Observer {
@@ -87,7 +95,9 @@ class SignUpActivity : AppCompatActivity() {
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                     fragmentShowHide.addToBackStack()
                     fragmentShowHide.showFragment(schoolSelectFragment, R.id.signUp_container)
-                } }})
+                } }
+            //progressBarSignUP.visibility = View.VISIBLE
+        })
 
         viewModel.termsOfServiceBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
@@ -139,7 +149,7 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.profileSettingNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
-                    StartActivity.callActivity(this, LoginActivity())
+                    StartActivityUtil.callActivity(this, LoginActivity())
                     finish()
                     toastSignUpComplete.show()
                 }
