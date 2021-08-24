@@ -4,10 +4,8 @@ package com.rudder.ui.fragment
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
+import android.view.*
+import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -73,9 +71,33 @@ class ShowPostFragment: Fragment() {
                 }
         )
 
+        fragmentBinding.postMoreImageView.setOnClickListener (postMoreOnclickListener)
 
 
         return fragmentBinding.root
+    }
+
+    val postMoreOnclickListener = object : View.OnClickListener{
+        override fun onClick(p0: View?) {
+            val popupMenu = PopupMenu(lazyContext,view)
+            MenuInflater(lazyContext).inflate(R.menu.post_pop_up_menu,popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
+                override fun onMenuItemClick(p0: MenuItem?): Boolean {
+                    if (p0 != null) {
+                        when (p0.itemId){
+                            R.id.post_edit->Log.d("edit","edit")
+                            R.id.post_delete->Log.d("delete","delete")
+                        }
+
+                    }else{
+                        return false
+                    }
+                    return false
+                }
+            })
+            popupMenu.show()
+        }
+
     }
 
     override fun onPause() {
