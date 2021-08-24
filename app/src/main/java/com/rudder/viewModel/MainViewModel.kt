@@ -3,7 +3,6 @@ package com.rudder.viewModel
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
-import com.google.gson.JsonElement
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -46,6 +45,7 @@ class MainViewModel : ViewModel() {
     private val _isAddPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isLikePost = MutableLiveData<Boolean>()
     private val _commentCountChange = MutableLiveData<Event<Boolean>>()
+
 
     val commentCountChange: LiveData<Event<Boolean>> = _commentCountChange
     val isLikePost: LiveData<Boolean> = _isLikePost
@@ -156,10 +156,10 @@ class MainViewModel : ViewModel() {
             else 1
         _posts.value!![_selectedPostPosition.value!!].likeCount =_posts.value!![_selectedPostPosition.value!!].likeCount+plusValue
         _isLikePost.value = !(_isLikePost.value)!!//like button 체크 혹은 해제
-        addLike(plusValue)
+        addLikePost(plusValue)
     }
 
-    fun addLike(plusValue:Int){
+    fun addLikePost(plusValue:Int){
         GlobalScope.launch {
             val addLikePostInfo = AddLikePostInfo(
                 _posts.value!![_selectedPostPosition.value!!].postId,
@@ -169,6 +169,14 @@ class MainViewModel : ViewModel() {
             val res = Repository().addLikePost(addLikePostInfo)
 
         }
+    }
+
+    fun clickCommentLike(position: Int) {
+        val plusValue =
+            if (_isLikePost.value!!) -1
+            else 1
+        _comments.value!![position].likeCount = _comments.value!![position].likeCount+1
+
     }
 
 

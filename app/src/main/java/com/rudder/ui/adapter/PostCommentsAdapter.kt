@@ -88,6 +88,7 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
         holder.postCommentsBinding.mainVM = viewModel
         holder.postCommentsBinding.comment = commentList[position]
         holder.postCommentsBinding.timeago = timeago
+        holder.postCommentsBinding.position = position
     }
 
     override fun getItemCount(): Int {

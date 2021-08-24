@@ -7,6 +7,9 @@
             name="comment"
             type="com.rudder.data.Comment" />
         <variable
+            name="position"
+            type="Integer" />
+        <variable
             name="timeago"
             type="String" />
         <variable
@@ -140,22 +143,25 @@
                     app:layout_constraintWidth_default="percent"
                     app:layout_constraintWidth_percent="@dimen/post_preview_tail_like_count_width">
 
-                    <ImageView
-                        android:id="@+id/imageView6"
+                    <TextView
+                        android:id="@+id/postPreviewTailLikeTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Like"
+                        android:textColor="@color/purple_rudder"
+                        android:onClick="@{()->mainVM.clickCommentLike(position)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_outline_thumb_up_24" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/postPreviewTailLikeCountTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/purple_rudder"
                         android:text="@{` `+Integer.toString(comment.likeCount)}"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView6"
+                        app:layout_constraintStart_toEndOf="@+id/postPreviewTailLikeTV"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -171,22 +177,16 @@
                     app:layout_constraintWidth_default="percent"
                     app:layout_constraintWidth_percent="@dimen/post_preview_tail_comment_count_width">
 
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_baseline_subdirectory_arrow_right_24" />
+
 
                     <TextView
                         android:id="@+id/postPreviewTailCommentCountTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/purple_rudder"
                         android:text="Reply"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView7"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
