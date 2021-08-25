@@ -77,6 +77,7 @@ class SignUpActivity : AppCompatActivity() {
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
 
 
+
         viewModel.callSchoolList()
 
 
