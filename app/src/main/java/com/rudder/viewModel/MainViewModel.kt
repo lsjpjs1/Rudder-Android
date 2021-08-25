@@ -81,7 +81,8 @@ class MainViewModel : ViewModel() {
                 2,
                 3,
                 "",
-                0
+                0,
+                false
             )
         )
         _comments.value = arrayListOf(
@@ -183,7 +184,7 @@ class MainViewModel : ViewModel() {
     fun getPosts() {
         _isScrollBottomTouch.value = Event(true)
         GlobalScope.launch {
-            val resPosts = Repository().getPosts(pagingIndex, endPostId,categories.value!![selectedCategoryPosition.value!!].categoryId)
+            val resPosts = Repository().getPosts(pagingIndex, endPostId,categories.value!![selectedCategoryPosition.value!!].categoryId,App.prefs.getValue(tokenKey)!!)
             viewModelScope.launch {
                 if (_posts.value!!.size == 0) {
                     _posts.value = resPosts
