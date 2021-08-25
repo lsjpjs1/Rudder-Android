@@ -1,15 +1,11 @@
 package com.rudder.ui.fragment
 
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.view.*
+import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -18,10 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentShowPostBinding
 import com.rudder.ui.adapter.PostCommentsAdapter
-import com.rudder.ui.adapter.PostPreviewAdapter
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_show_post.*
-import kotlinx.android.synthetic.main.fragment_show_post.view.*
 
 class ShowPostFragment: Fragment() {
     private val viewModel :MainViewModel by activityViewModels()
@@ -35,7 +29,7 @@ class ShowPostFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val fragmentBinding= DataBindingUtil.inflate<FragmentShowPostBinding>(inflater,R.layout.fragment_show_post,container,false)
-        val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext)
+        val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel)
         fragmentBinding.commentDisplayRV.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
                 override fun canScrollVertically(): Boolean {
@@ -45,17 +39,30 @@ class ShowPostFragment: Fragment() {
             it.setHasFixedSize(false)
             it.adapter = adapter
         }
-        fragmentBinding.commentCount=viewModel.comments.value!!.size
-        fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        val currentPost = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        fragmentBinding.post = currentPost
         fragmentBinding.mainVM = viewModel
         viewModel.comments.observe(viewLifecycleOwner, Observer {
             adapter.updateComments(it)
-            fragmentBinding.commentCount=viewModel.comments.value!!.size
+        })
+
+        viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
+            fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
         })
 
         viewModel.selectedPostPosition.observe(viewLifecycleOwner, Observer {
             fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
         })
+        viewModel.isLikePost.observe(viewLifecycleOwner, Observer {
+            fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        })
+
+        viewModel.commentLikeCountChange.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                adapter.notifyItemChanged(it)
+            }
+        })
+
         childFragmentManager.beginTransaction()
                 .add(R.id.showPostHeader,ShowPostHeaderFragment())
                 .commit()
@@ -71,11 +78,38 @@ class ShowPostFragment: Fragment() {
                 }
         )
 
-        viewModel.isLikeClick.observe(viewLifecycleOwner , Observer {
-            showPostLikeImageView.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-        })
+        fragmentBinding.postMoreImageView.setOnClickListener (postMoreOnclickListener)
+
 
         return fragmentBinding.root
+    }
+
+    val postMoreOnclickListener = object : View.OnClickListener{
+        override fun onClick(p0: View?) {
+            val popupMenu = PopupMenu(lazyContext,view)
+            MenuInflater(lazyContext).inflate(R.menu.post_pop_up_menu,popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
+                override fun onMenuItemClick(p0: MenuItem?): Boolean {
+                    if (p0 != null) {
+                        when (p0.itemId){
+                            R.id.post_edit->Log.d("edit","edit")
+                            R.id.post_delete->Log.d("delete","delete")
+                        }
+
+                    }else{
+                        return false
+                    }
+                    return false
+                }
+            })
+            popupMenu.show()
+        }
+
+    }
+
+    override fun onPause() {
+        viewModel.clearNestedCommentInfo()
+        super.onPause()
     }
 
 
@@ -105,6 +139,7 @@ class ShowPostFragment: Fragment() {
         lp=constraintLayout10.layoutParams
         lp.height=(showPostBodyHeight*postInfoHeightRatio).toInt()
         constraintLayout10.layoutParams=lp
+
 
 
     }

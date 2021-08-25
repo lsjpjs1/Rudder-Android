@@ -7,9 +7,6 @@
             name="post"
             type="com.rudder.data.PreviewPost" />
         <variable
-            name="commentCount"
-            type="Integer" />
-        <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
     </data>
@@ -82,6 +79,24 @@
                                     app:layout_constraintRight_toRightOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="0.1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                >
+
+                                <ImageView
+                                    android:id="@+id/postMoreImageView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@drawable/ic_baseline_more_horiz_24"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"/>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,22 +111,14 @@
                             app:layout_constraintWidth_percent="@dimen/width_default">
 
                             <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{post.postTitle}"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/textView2"
+                                android:id="@+id/postBodyTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{post.postBody}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"/>
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -142,7 +149,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    android:onClick="@{()->mainVM.clickLike()}"
+                                    android:onClick="@{()->mainVM.clickPostLike()}"
                                     app:srcCompat="@drawable/ic_outline_thumb_up_24" />
 
                                 <TextView
@@ -177,7 +184,7 @@
                                     android:id="@+id/postPreviewTailCommentCountTV"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@{` `+Integer.toString(commentCount)}"
+                                    android:text="@{` `+Integer.toString(post.commentCount)}"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/imageView7"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -220,7 +227,7 @@
                                     android:id="@+id/textView8"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@{@string/comment_title+`(`+Integer.toString(commentCount)+`)`}"
+                                    android:text="@{@string/comment_title+`(`+Integer.toString(post.commentCount)+`)`}"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintRight_toRightOf="parent"

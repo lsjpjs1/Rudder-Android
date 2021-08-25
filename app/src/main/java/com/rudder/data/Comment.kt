@@ -13,7 +13,7 @@ data class Comment(
         @SerializedName(value = "post_time")
         val postTime : Timestamp,
         @SerializedName(value = "like_count")
-        val likeCount : Int,
+        var likeCount : Int,
         @SerializedName(value = "status")
         val status : String,
         @SerializedName(value = "order_in_group")
@@ -21,7 +21,9 @@ data class Comment(
         @SerializedName(value = "group_num")
         val groupNum : Int,
         @SerializedName(value = "isMine")
-        val isMine : Boolean
+        val isMine : Boolean,
+        @SerializedName(value = "isLiked")
+        var isLiked: Boolean
 )
 
 

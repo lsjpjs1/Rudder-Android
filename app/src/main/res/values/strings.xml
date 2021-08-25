@@ -35,5 +35,5 @@
     <string name="Report">Report</string>
     <string name="Delete">Delete</string>
     <string name="Edit">Edit</string>
-
+    <string name="comment_send_text">Reply</string>
 </resources>

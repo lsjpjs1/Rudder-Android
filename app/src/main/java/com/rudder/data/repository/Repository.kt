@@ -5,7 +5,6 @@ import android.util.Log
 import com.google.gson.JsonArray
 import com.rudder.BuildConfig
 import com.rudder.data.*
-import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.data.remote.LoginApi
 import com.rudder.data.remote.PostApi
@@ -74,13 +73,19 @@ class Repository {
     }
 
 
-    suspend fun getPosts(pagingIndex:Int, endPostId:Int, token: String): ArrayList<PreviewPost>{
-        return PostApi.instance.getPosts(pagingIndex, endPostId, token).await()
+
+    suspend fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String): ArrayList<PreviewPost>{
+        return PostApi.instance.getPosts(pagingIndex, endPostId,categoryId,token).await()
     }
 
     suspend fun getComments(getCommentInfo: GetCommentInfo): ArrayList<Comment> {
         val resJson :Response<ArrayList<Comment>> = CommentApi.instance.getComments(getCommentInfo).await()
         return resJson.results
+    }
+
+    suspend fun addComment(addCommentInfo: AddCommentInfo) : Boolean{
+        val resJson = CommentApi.instance.addComment(addCommentInfo).await()
+        return resJson.results.get("isSuccess").asBoolean
     }
 
     suspend fun addPost(addPostInfo: AddPostInfo): Boolean{
@@ -111,6 +116,26 @@ class Repository {
         val sendAccountPasswordAPIResult = ForgotApi.instance.sendPassword(verifyInfo).await()
         Log.d(TAG, "sendAccountPasswordAPIResult : ${sendAccountPasswordAPIResult.results}")
         return sendAccountPasswordAPIResult.results.get("isSuccessForgot").asBoolean
+    }
+
+    suspend fun getCategories(): ArrayList<Category>{
+        return BoardInfoApi.instance.getCategoryList().await().results
+    }
+
+    suspend fun isLikePost(isLikePostInfo: IsLikePostInfo): Boolean{
+        return PostApi.instance.isLikePost(isLikePostInfo).await().results.get("isSuccess").asBoolean
+    }
+
+    suspend fun addLikePost(addLikePostInfo: AddLikePostInfo): Boolean{
+        return PostApi.instance.addLikePost(addLikePostInfo).await().results.get("isSuccess").asBoolean
+    }
+
+    suspend fun addLikeComment(addLikeCommentInfo: AddLikeCommentInfo): Boolean{
+        return CommentApi.instance.addLikeComment(addLikeCommentInfo).await().results.get("isSuccess").asBoolean
+    }
+
+    suspend fun addPostViewCount(addPostViewCountInfo: AddPostViewCountInfo): Boolean{
+        return PostApi.instance.addPostViewCount(addPostViewCountInfo).await().results.get("isSuccess").asBoolean
     }
 
 }

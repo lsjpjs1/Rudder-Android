@@ -49,6 +49,12 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
             })
         }
 
+        viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
+            adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
+        })
+        viewModel.isLikePost.observe(viewLifecycleOwner, Observer {
+            adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
+        })
         viewModel.posts.observe(viewLifecycleOwner, Observer {
             adapter.updatePosts(it)
         })
@@ -56,10 +62,13 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
         return communityDisplay.root
     }
 
-    override fun onPostPreviewClick(view: View, position: Int) {
+    override fun onClick(view: View, position: Int) {
         (activity as MainActivity).changeSelectedPostPosition(position)
         (activity as MainActivity).showPost()
         (activity as MainActivity).showAddComment()
+        if(!viewModel.isAlreadyReadPost()){
+            viewModel.addPostViewCount()
+        }
         viewModel.getComments()
     }
 

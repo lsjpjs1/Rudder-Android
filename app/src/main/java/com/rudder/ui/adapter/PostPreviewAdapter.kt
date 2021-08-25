@@ -19,24 +19,30 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PostPreviewAdapter(val previewPostList: ArrayList<PreviewPost>, val listener: CustomOnclickListener, val context : Context): RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
+class PostPreviewAdapter(
+    val previewPostList: ArrayList<PreviewPost>,
+    val listener: CustomOnclickListener,
+    val context: Context
+) : RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
     private val MAX_POST_BODY_LENGTH = 50
-    inner class CustomViewHolder(val postPreviewBinding: PostPreviewBinding) : RecyclerView.ViewHolder(postPreviewBinding.root)
+
+    inner class CustomViewHolder(val postPreviewBinding: PostPreviewBinding) :
+        RecyclerView.ViewHolder(postPreviewBinding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PostPreviewAdapter.CustomViewHolder{
+    ): PostPreviewAdapter.CustomViewHolder {
         val bind = DataBindingUtil.inflate<PostPreviewBinding>(
             LayoutInflater.from(parent.context),
             R.layout.post_preview,
             parent,
             false
         )
-        Log.d("parentHeight",parent.height.toString())
+        Log.d("parentHeight", parent.height.toString())
         val params = bind.root.layoutParams
         val typedValue = TypedValue()
-        context.resources.getValue(R.dimen.post_preview_height, typedValue,true)
+        context.resources.getValue(R.dimen.post_preview_height, typedValue, true)
         val heightRatio = typedValue.float
         params.height = (parent.height * heightRatio).toInt() // 아이템뷰 높이 고정값으로 되어있는 것 상대값으로 수정해야함
         bind.root.layoutParams = params
@@ -50,30 +56,30 @@ class PostPreviewAdapter(val previewPostList: ArrayList<PreviewPost>, val listen
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(previewPostList[position].postTime.time))
+        val timeago =
+            PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(previewPostList[position].postTime.time))
         holder.postPreviewBinding.post = previewPostList[position]
         holder.postPreviewBinding.timeago = timeago
         holder.postPreviewBinding.also {
             it.post = previewPostList[position]
             it.timeago = timeago
-            it.maxpostbodylength=MAX_POST_BODY_LENGTH
+            it.maxpostbodylength = MAX_POST_BODY_LENGTH
         }
-        holder.postPreviewBinding.postPreview.setOnClickListener{
-            listener.onPostPreviewClick(holder.postPreviewBinding.postPreview,position)
-        }
-    }
-
-    fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>){
-        if(newPreviewPosts.size>0) {
-            val diffCallback: PostsDiffCallback = PostsDiffCallback(previewPostList, newPreviewPosts)
-            val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
-
-            previewPostList.clear()
-            previewPostList.addAll(newPreviewPosts)
-            diffResult.dispatchUpdatesTo(this)
+        holder.postPreviewBinding.postPreview.setOnClickListener {
+            listener.onClick(holder.postPreviewBinding.postPreview, position)
         }
     }
 
+    fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) {
+
+        val diffCallback: PostsDiffCallback = PostsDiffCallback(previewPostList, newPreviewPosts)
+        val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
+        Log.d("newPost", newPreviewPosts.toString())
+        previewPostList.clear()
+        previewPostList.addAll(newPreviewPosts)
+        diffResult.dispatchUpdatesTo(this)
+
+    }
 
 
 }

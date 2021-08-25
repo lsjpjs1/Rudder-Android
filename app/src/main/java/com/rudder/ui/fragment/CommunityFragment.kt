@@ -23,6 +23,7 @@ class CommunityFragment: Fragment() {
         childFragmentManager.beginTransaction()
             .add(R.id.communityDisplay,CommunityDisplayFragment(parentFragmentManager))
             .add(R.id.communityHeader,CommunityHeaderFragment())
+            .add(R.id.communitySelector,CommunitySelectorFragment())
             .commit()
         return community
     }

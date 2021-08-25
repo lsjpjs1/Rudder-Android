@@ -24,7 +24,7 @@
             app:layout_constraintBottom_toTopOf="@+id/communityDisplay"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/community_selector_height"
-            android:background="@color/purple_rudder">
+            android:background="@color/white">
 
         </FrameLayout>
 
