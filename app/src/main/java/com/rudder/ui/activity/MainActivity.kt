@@ -1,5 +1,6 @@
 package com.rudder.ui.activity
 
+import android.content.res.Resources
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
@@ -9,12 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.rudder.R
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_community_bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 
@@ -30,6 +33,9 @@ class MainActivity : AppCompatActivity() {
     private val purpleRudder by lazy { ContextCompat.getColor(this,R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this,R.color.grey) }
 
+
+    private lateinit var communityBottomSheetFragment: CommunityBottomSheetFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
@@ -41,8 +47,11 @@ class MainActivity : AppCompatActivity() {
         communityFragment = CommunityFragment()
         myPageFragment = MyPageFragment()
         addPostFragment = AddPostFragment()
-
         addCommentFragment = AddCommentFragment()
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        communityBottomSheetFragment = CommunityBottomSheetFragment()
+        //////////////////////////////////////////////////////////////////////////////////////////
 
 
         supportFragmentManager.beginTransaction()
@@ -50,7 +59,20 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.mainDisplay,myPageFragment,"myPage")
             .hide(myPageFragment)
             .add(R.id.mainDisplay,communityFragment,"community")
+
+//            .add(R.id.mainBottomSheet,communityBottomSheetFragment,"communityBottomSheetFragment")
+//            .hide(communityBottomSheetFragment)
+
             .commit()
+
+
+        viewModel.isPostMore.observe(this, Observer {
+            if(it.getContentIfNotHandled()!!) {
+                communityBottomSheetFragment.show(supportFragmentManager, communityBottomSheetFragment.tag)
+                //BottomSheetBehavior.from(postBottomSheetCL0).peekHeight = Resources.getSystem().getDisplayMetrics().heightPixels
+            }
+        })
+
 
         viewModel.selectedTab.observe(this, Observer {
             when(it){

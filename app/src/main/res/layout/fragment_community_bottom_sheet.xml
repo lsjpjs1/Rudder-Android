@@ -1,12 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    >
     <data>
         <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
     </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/postBottomSheetCL0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/postBottomSheetCL4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.24"
+
+
+            android:background="#FFFFFF"
+
+            app:layout_constrainedHeight="true"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="INFO"
+                >
+
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/postBottomSheetCL1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.24"
+            android:background="#E81515"
+
+            app:layout_constrainedHeight="true"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL4"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/Report"
+                android:textSize="30dp"
+                >
+
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/postBottomSheetCL2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.24"
+            android:background="#00FF73"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/Delete"
+                android:textSize="30dp">
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/postBottomSheetCL3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.24"
+            android:background="#154AE8"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/Edit"
+                android:textSize="30dp"></TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/postBottomSheetCL5"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:visibility="invisible"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL3">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 </layout>
+
+
+

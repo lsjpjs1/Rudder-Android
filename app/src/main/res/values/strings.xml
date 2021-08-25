@@ -32,5 +32,8 @@
     <string name="text_hint">Text</string>
     <string name="email_address">EMAIL ADDRESS</string>
     <string name="logout">Logout</string>
+    <string name="Report">Report</string>
+    <string name="Delete">Delete</string>
+    <string name="Edit">Edit</string>
 
 </resources>

@@ -46,12 +46,15 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:id="@+id/constraintLayoutMyPage0"
 
                     >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
-                        android:layout_height="200dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.13                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "
 
                         app:layout_constraintWidth_default="percent"
                         app:layout_constraintWidth_percent="0.8"
@@ -162,7 +165,9 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
-                        android:layout_height="200dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.13"
 
                         app:layout_constraintWidth_default="percent"
                         app:layout_constraintWidth_percent="0.8"
@@ -270,7 +275,9 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
-                        android:layout_height="200dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.25"
 
                         app:layout_constraintWidth_default="percent"
                         app:layout_constraintWidth_percent="0.8"
@@ -378,7 +385,9 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="0dp"
-                        android:layout_height="200dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.25"
 
                         app:layout_constraintWidth_default="percent"
                         app:layout_constraintWidth_percent="0.8"
@@ -469,6 +478,20 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="#111111"
+
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage19"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        android:id="@+id/constraintLayoutMyPage30"
+                        >
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

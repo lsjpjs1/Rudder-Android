@@ -74,8 +74,8 @@ class Repository {
     }
 
 
-    suspend fun getPosts(pagingIndex:Int, endPostId:Int): ArrayList<PreviewPost>{
-        return PostApi.instance.getPosts(pagingIndex, endPostId).await()
+    suspend fun getPosts(pagingIndex:Int, endPostId:Int, token: String): ArrayList<PreviewPost>{
+        return PostApi.instance.getPosts(pagingIndex, endPostId, token).await()
     }
 
     suspend fun getComments(getCommentInfo: GetCommentInfo): ArrayList<Comment> {

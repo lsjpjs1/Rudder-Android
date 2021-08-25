@@ -41,11 +41,19 @@ class CommunityBottomSheetFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        communityBottomSheetBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_community_bottom_sheet,container,false)
-        communityBottomSheetBinding.mainVM = viewModel
-        communityBottomSheetBinding.lifecycleOwner = this
-
-
-        return communityBottomSheetBinding.root
+        super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_community_bottom_sheet, container, false)
     }
+
+//    {
+//        communityBottomSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_community_bottom_sheet, container,false)
+//        communityBottomSheetBinding.mainVM = viewModel
+//        communityBottomSheetBinding.lifecycleOwner = this
+//
+//
+//        return communityBottomSheetBinding.root
+//    }
+
+
+
 }

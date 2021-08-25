@@ -34,7 +34,7 @@ class MainViewModel : ViewModel() {
     private val _isAddPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isLikeClick = MutableLiveData<Event<Boolean>>()
 
-    private val _islogoutButton = MutableLiveData<Event<Boolean>>()
+    private val _isPostMore = MutableLiveData<Event<Boolean>>()
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
 
 
@@ -47,7 +47,7 @@ class MainViewModel : ViewModel() {
     val selectedPostPosition: LiveData<Int> = _selectedPostPosition
 
 
-    val islogoutButton : LiveData<Event<Boolean>> = _islogoutButton
+    val isPostMore : LiveData<Event<Boolean>> = _isPostMore
     val startLoginActivity : LiveData<Event<Boolean>> = _startLoginActivity
 
 
@@ -102,8 +102,10 @@ class MainViewModel : ViewModel() {
 
     fun getPosts(){
         _isScrollBottomTouch.value = Event(true)
+        val key = BuildConfig.TOKEN_KEY
+        val token = App.prefs.getValue(key)
         GlobalScope.launch {
-            val resPosts = Repository().getPosts(pagingIndex, endPostId)
+            val resPosts = Repository().getPosts(pagingIndex, endPostId, token!!)
             viewModelScope.launch {
                 if(_posts.value!!.size == 0){
                     _posts.value = resPosts
@@ -149,12 +151,8 @@ class MainViewModel : ViewModel() {
     }
 
 
-//    fun callLoginOut() { // SEMI!!!
-//        Log.d("token", "token")
-//        val key = BuildConfig.TOKEN_KEY
-//        App.prefs.removeValue(key)
-//        var a = App.prefs.getValue(key)
-//        Log.d("token123", "$a")
-//    }
+    fun clickPostMore(){
+        _isPostMore.value = Event(true)
+    }
 
 }
