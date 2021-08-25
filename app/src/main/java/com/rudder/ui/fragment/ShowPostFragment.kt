@@ -56,6 +56,13 @@ class ShowPostFragment: Fragment() {
         viewModel.isLikePost.observe(viewLifecycleOwner, Observer {
             fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
         })
+
+        viewModel.commentLikeCountChange.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                adapter.notifyItemChanged(it)
+            }
+        })
+
         childFragmentManager.beginTransaction()
                 .add(R.id.showPostHeader,ShowPostHeaderFragment())
                 .commit()

@@ -21,7 +21,9 @@ data class Comment(
         @SerializedName(value = "group_num")
         val groupNum : Int,
         @SerializedName(value = "isMine")
-        val isMine : Boolean
+        val isMine : Boolean,
+        @SerializedName(value = "isLiked")
+        var isLiked: Boolean
 )
 
 

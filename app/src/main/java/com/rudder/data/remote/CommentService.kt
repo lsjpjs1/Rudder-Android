@@ -20,6 +20,11 @@ interface CommentService {
     suspend fun addComment(
         @Body addCommentInfo: AddCommentInfo
     ) : Response<JsonObject>
+
+    @POST("/comment/addlike")
+    suspend fun addLikeComment(
+        @Body addLikeCommentInfo: AddLikeCommentInfo
+    ): Response<JsonObject>
 }
 
 data class AddCommentInfo(
@@ -33,4 +38,13 @@ data class AddCommentInfo(
     val status : String,
     @SerializedName(value = "group_num")
     val groupNum : Int
+)
+
+data class AddLikeCommentInfo(
+    @SerializedName("comment_id")
+    val commentId:Int,
+    @SerializedName("token")
+    val token:String,
+    @SerializedName("plusValue")
+    val plusValue:Int
 )

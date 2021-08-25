@@ -45,8 +45,9 @@ class MainViewModel : ViewModel() {
     private val _isAddPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isLikePost = MutableLiveData<Boolean>()
     private val _commentCountChange = MutableLiveData<Event<Boolean>>()
+    private val _commentLikeCountChange = MutableLiveData<Int>()
 
-
+    val commentLikeCountChange: LiveData<Int> = _commentLikeCountChange
     val commentCountChange: LiveData<Event<Boolean>> = _commentCountChange
     val isLikePost: LiveData<Boolean> = _isLikePost
     val isAddPostSuccess: LiveData<Event<Boolean>> = _isAddPostSuccess
@@ -95,6 +96,7 @@ class MainViewModel : ViewModel() {
                 "parent",
                 0,
                 0,
+                false,
                 false
             )
         )
@@ -174,10 +176,24 @@ class MainViewModel : ViewModel() {
 
     fun clickCommentLike(position: Int) {
         val plusValue =
-            if (_isLikePost.value!!) -1
+            if (_comments.value!![position].isLiked) -1
             else 1
-        _comments.value!![position].likeCount = _comments.value!![position].likeCount+1
+        _comments.value!![position].likeCount = _comments.value!![position].likeCount+plusValue
+        _comments.value!![position].isLiked = !_comments.value!![position].isLiked
+        _commentLikeCountChange.value = position
+        addLikeComment(plusValue,position)
+    }
 
+    fun addLikeComment(plusValue:Int,position:Int){
+        GlobalScope.launch {
+            val addLikeCommentInfo = AddLikeCommentInfo(
+                _comments.value!![position].commentId,
+                App.prefs.getValue(tokenKey)!!,
+                plusValue
+            )
+            val res = Repository().addLikeComment(addLikeCommentInfo)
+
+        }
     }
 
 

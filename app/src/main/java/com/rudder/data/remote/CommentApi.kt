@@ -28,4 +28,10 @@ class CommentApi {
         }
     }
 
+    fun addLikeComment(addLikeCommentInfo: AddLikeCommentInfo):Deferred<Response<JsonObject>>{
+        return GlobalScope.async(Dispatchers.IO){
+            commentService.addLikeComment(addLikeCommentInfo)
+        }
+    }
+
 }
