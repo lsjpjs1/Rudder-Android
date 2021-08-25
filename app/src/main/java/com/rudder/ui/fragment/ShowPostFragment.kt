@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentShowPostBinding
 import com.rudder.ui.adapter.PostCommentsAdapter
+import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_show_post.*
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 class ShowPostFragment: Fragment() {
     private val viewModel :MainViewModel by activityViewModels()
@@ -40,8 +43,10 @@ class ShowPostFragment: Fragment() {
             it.adapter = adapter
         }
         val currentPost = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        val timeago = PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(currentPost.postTime.time))
         fragmentBinding.post = currentPost
         fragmentBinding.mainVM = viewModel
+        fragmentBinding.timeago = timeago
         viewModel.comments.observe(viewLifecycleOwner, Observer {
             adapter.updateComments(it)
         })
