@@ -23,20 +23,7 @@
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/without_main_bottom_height"
             tools:layout_editor_absoluteX="0dp">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
-                android:text="semi_more"
-                android:id="@+id/semiBtn"
-                android:onClick="@{()->mainVM.clickPostMore()}"
-                >
-            </Button>
-
-
         </FrameLayout>
-
 
         <View
             android:id="@+id/view"

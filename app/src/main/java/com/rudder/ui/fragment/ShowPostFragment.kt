@@ -78,34 +78,34 @@ class ShowPostFragment: Fragment() {
                 }
         )
 
-        fragmentBinding.postMoreImageView.setOnClickListener (postMoreOnclickListener)
+        //fragmentBinding.postMoreImageView.setOnClickListener (postMoreOnclickListener)
 
 
         return fragmentBinding.root
     }
 
-    val postMoreOnclickListener = object : View.OnClickListener{
-        override fun onClick(p0: View?) {
-            val popupMenu = PopupMenu(lazyContext,view)
-            MenuInflater(lazyContext).inflate(R.menu.post_pop_up_menu,popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
-                override fun onMenuItemClick(p0: MenuItem?): Boolean {
-                    if (p0 != null) {
-                        when (p0.itemId){
-                            R.id.post_edit->Log.d("edit","edit")
-                            R.id.post_delete->Log.d("delete","delete")
-                        }
-
-                    }else{
-                        return false
-                    }
-                    return false
-                }
-            })
-            popupMenu.show()
-        }
-
-    }
+//    val postMoreOnclickListener = object : View.OnClickListener{
+//        override fun onClick(p0: View?) {
+//            val popupMenu = PopupMenu(lazyContext,view)
+//            MenuInflater(lazyContext).inflate(R.menu.post_pop_up_menu,popupMenu.menu)
+//            popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
+//                override fun onMenuItemClick(p0: MenuItem?): Boolean {
+//                    if (p0 != null) {
+//                        when (p0.itemId){
+//                            R.id.post_edit->Log.d("edit","edit")
+//                            R.id.post_delete->Log.d("delete","delete")
+//                        }
+//
+//                    }else{
+//                        return false
+//                    }
+//                    return false
+//                }
+//            })
+//            popupMenu.show()
+//        }
+//
+//    }
 
     override fun onPause() {
         viewModel.clearNestedCommentInfo()

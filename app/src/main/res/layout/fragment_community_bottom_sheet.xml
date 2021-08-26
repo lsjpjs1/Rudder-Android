@@ -13,7 +13,8 @@
         android:id="@+id/postBottomSheetCL0"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey">
+        android:background="@color/white"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postBottomSheetCL4"
@@ -42,6 +43,16 @@
 
             </TextView>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.01"
+                android:background="#9E9D9D"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </View>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -52,7 +63,7 @@
 
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.24"
-            android:background="#E81515"
+
 
             app:layout_constrainedHeight="true"
 
@@ -61,18 +72,61 @@
             app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL4"
             >
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/reportImageView"
+                app:tint="@color/purple_rudder"
+                app:srcCompat="@drawable/ic_baseline_report_24"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.20"
+                >
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textStyle="bold"
+
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.6"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/reportImageView"
+
+                android:gravity="fill_vertical"
                 android:text="@string/Report"
-                android:textSize="30dp"
+                android:textSize="18dp"
                 >
 
             </TextView>
 
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.01"
+                android:background="#9E9D9D"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </View>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postBottomSheetCL2"
@@ -81,18 +135,59 @@
 
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.24"
-            android:background="#00FF73"
+
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL1">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textStyle="bold"
+
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.6"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/deleteImageView"
+
+                android:gravity="fill_vertical"
                 android:text="@string/Delete"
-                android:textSize="30dp">
+                android:textSize="18dp">
             </TextView>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:tint="@color/purple_rudder"
+                android:id="@+id/deleteImageView"
+                app:srcCompat="@drawable/ic_baseline_delete_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.2"
+                >
+
+            </ImageView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.01"
+                android:background="#9E9D9D"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </View>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -103,18 +198,47 @@
 
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.24"
-            android:background="#154AE8"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL2">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textStyle="bold"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.6"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/editImageView"
+                android:gravity="fill_vertical"
                 android:text="@string/Edit"
-                android:textSize="30dp"></TextView>
+                android:textSize="18dp">
+            </TextView>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:tint="@color/purple_rudder"
+                android:id="@+id/editImageView"
+                app:srcCompat="@drawable/ic_baseline_edit_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.2"
+                >
+
+            </ImageView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="header_text_size" type="dimen">20sp</item>
+
+
+<!--    <style name="CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">-->
+<!--        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>-->
+<!--    </style>-->
+
+<!--    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">-->
+<!--        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>-->
+<!--    </style>-->
+
+<!--    <style name="CustomShapeAppearanceBottomSheetDialog" parent="">-->
+<!--        <item name="cornerFamily">rounded</item>-->
+<!--        <item name="cornerSizeTopRight">16dp</item>-->
+<!--        <item name="cornerSizeTopLeft">16dp</item>-->
+<!--        <item name="cornerSizeBottomRight">0dp</item>-->
+<!--        <item name="cornerSizeBottomLeft">0dp</item>-->
+<!--    </style>-->
+
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_radius</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+
+
+
 </resources>
+

@@ -34,7 +34,7 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
         savedInstanceState: Bundle?
     ): View? {
         val communityDisplay = DataBindingUtil.inflate<FragmentCommunityDisplayBinding>(inflater,R.layout.fragment_community_display,container,false)
-        val adapter = PostPreviewAdapter(viewModel.posts.value!!,this,lazyContext)
+        val adapter = PostPreviewAdapter(viewModel.posts.value!!,this,lazyContext, viewModel)
         communityDisplay.postPreviewRV.also{
             it.layoutManager=LinearLayoutManager(lazyContext)
             it.setHasFixedSize(false)

@@ -12,6 +12,9 @@
         <variable
             name="MAX_POST_BODY_LENGTH"
             type="Integer" />
+        <variable
+            name="mainVM"
+            type="com.rudder.viewModel.MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/postPreview"
@@ -34,19 +37,43 @@
                 app:layout_constraintWidth_percent="@dimen/width_default"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/postPreviewHead"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintHeight_default="percent"
                     app:layout_constraintHeight_percent="@dimen/post_preview_head_height"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_editor_absoluteX="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/postPreviewMore"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        app:layout_constraintWidth_default="percent"
+                        app:layout_constraintWidth_percent="0.15"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <ImageView
+                            android:id="@+id/postPreviewMoreImageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_baseline_more_horiz_24"
+                            android:onClick="@{()->mainVM.clickPostMore()}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/postPreviewHeadName"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         app:layout_constraintStart_toStartOf="parent">
+
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
@@ -67,13 +94,14 @@
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintHeight_default="percent"
                             app:layout_constraintHeight_percent="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent">
+                            app:layout_constraintStart_toStartOf="parent">
 
                             <TextView
                                 android:id="@+id/postPreviewHeadNameTV"
@@ -90,7 +118,6 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -105,20 +132,21 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintHeight_default="percent"
                             app:layout_constraintHeight_percent="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent">
-                        <TextView
-                            android:id="@+id/postPreviewHeadPostTimeTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{timeago}"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <TextView
+                                android:id="@+id/postPreviewHeadPostTimeTV"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{timeago}"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>

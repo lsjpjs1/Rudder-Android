@@ -15,6 +15,7 @@ import com.rudder.databinding.PostPreviewBinding
 import com.rudder.util.CustomOnclickListener
 import com.rudder.util.LocaleUtil
 import com.rudder.util.PostsDiffCallback
+import com.rudder.viewModel.MainViewModel
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,7 +23,8 @@ import kotlin.collections.ArrayList
 class PostPreviewAdapter(
     val previewPostList: ArrayList<PreviewPost>,
     val listener: CustomOnclickListener,
-    val context: Context
+    val context: Context,
+    val viewModel: MainViewModel
 ) : RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
     private val MAX_POST_BODY_LENGTH = 50
 
@@ -60,6 +62,7 @@ class PostPreviewAdapter(
             PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(previewPostList[position].postTime.time))
         holder.postPreviewBinding.post = previewPostList[position]
         holder.postPreviewBinding.timeago = timeago
+        holder.postPreviewBinding.mainVM = viewModel
         holder.postPreviewBinding.also {
             it.post = previewPostList[position]
             it.timeago = timeago
@@ -68,6 +71,7 @@ class PostPreviewAdapter(
         holder.postPreviewBinding.postPreview.setOnClickListener {
             listener.onClick(holder.postPreviewBinding.postPreview, position)
         }
+
     }
 
     fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) {

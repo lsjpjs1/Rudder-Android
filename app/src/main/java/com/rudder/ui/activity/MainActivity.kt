@@ -38,11 +38,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var myPageFragment : MyPageFragment
     private lateinit var addPostFragment: AddPostFragment
     private lateinit var showPostFragment : ShowPostFragment
+    private lateinit var communityBottomSheetFragment : CommunityBottomSheetFragment
+
     private val purpleRudder by lazy { ContextCompat.getColor(this,R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this,R.color.grey) }
-
-
-    private lateinit var communityBottomSheetFragment: CommunityBottomSheetFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +54,9 @@ class MainActivity : AppCompatActivity() {
         communityFragment = CommunityFragment()
         myPageFragment = MyPageFragment()
         addPostFragment = AddPostFragment()
-
         showPostFragment = ShowPostFragment()
         addCommentFragment = AddCommentFragment()
-
-        //////////////////////////////////////////////////////////////////////////////////////////
         communityBottomSheetFragment = CommunityBottomSheetFragment()
-        //////////////////////////////////////////////////////////////////////////////////////////
 
 
         supportFragmentManager.beginTransaction()
@@ -69,20 +64,19 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.mainDisplay,myPageFragment,"myPage")
             .hide(myPageFragment)
             .add(R.id.mainDisplay,communityFragment,"community")
-
-//            .add(R.id.mainBottomSheet,communityBottomSheetFragment,"communityBottomSheetFragment")
-//            .hide(communityBottomSheetFragment)
-
             .commit()
 
 
         viewModel.isPostMore.observe(this, Observer {
-            if(it.getContentIfNotHandled()!!) {
+            if(it.getContentIfNotHandled()!!)
                 communityBottomSheetFragment.show(supportFragmentManager, communityBottomSheetFragment.tag)
-                //BottomSheetBehavior.from(postBottomSheetCL0).peekHeight = Resources.getSystem().getDisplayMetrics().heightPixels
-            }
         })
 
+
+        viewModel.isCommentMore.observe(this, Observer {
+            if(it.getContentIfNotHandled()!!)
+                communityBottomSheetFragment.show(supportFragmentManager, communityBottomSheetFragment.tag)
+        })
 
         viewModel.selectedTab.observe(this, Observer {
             when(it){
