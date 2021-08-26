@@ -181,6 +181,8 @@ class MainViewModel : ViewModel() {
                 else 1
             _posts.value!![_selectedPostPosition.value!!].likeCount =
                 _posts.value!![_selectedPostPosition.value!!].likeCount + plusValue
+            _posts.value!![_selectedPostPosition.value!!].isLiked =
+                !_posts.value!![_selectedPostPosition.value!!].isLiked
             _isLikePost.value = !(_isLikePost.value)!!//like button 체크 혹은 해제
             addLikePost(plusValue)
         }

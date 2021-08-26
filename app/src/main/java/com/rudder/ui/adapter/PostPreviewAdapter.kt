@@ -68,6 +68,11 @@ class PostPreviewAdapter(
         holder.postPreviewBinding.postPreview.setOnClickListener {
             listener.onClick(holder.postPreviewBinding.postPreview, position)
         }
+        if(previewPostList[position].isLiked){
+            holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+        }else{
+            holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_outline_thumb_up_24)
+        }
     }
 
     fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) {
