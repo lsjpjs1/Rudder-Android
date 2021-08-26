@@ -20,7 +20,7 @@ class PostApi {
 
     private val postService : PostService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(PostService::class.java)
 
-
+//test commit 210826
 
     fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String) : Deferred<ArrayList<PreviewPost>> {
         return GlobalScope.async(Dispatchers.IO){
