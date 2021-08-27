@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var addPostFragment: AddPostFragment
     private lateinit var showPostFragment : ShowPostFragment
     private lateinit var communityBottomSheetFragment : CommunityBottomSheetFragment
+    private lateinit var communityPostReportFragment : CommunityPostReportFragment
 
     private val purpleRudder by lazy { ContextCompat.getColor(this,R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this,R.color.grey) }
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         showPostFragment = ShowPostFragment()
         addCommentFragment = AddCommentFragment()
         communityBottomSheetFragment = CommunityBottomSheetFragment()
+        communityPostReportFragment = CommunityPostReportFragment()
 
 
         supportFragmentManager.beginTransaction()
@@ -77,6 +79,12 @@ class MainActivity : AppCompatActivity() {
             if(it.getContentIfNotHandled()!!)
                 communityBottomSheetFragment.show(supportFragmentManager, communityBottomSheetFragment.tag)
         })
+
+        viewModel.isPostReport.observe(this, Observer {
+            if(it.getContentIfNotHandled()!!)
+                communityPostReportFragment.show(supportFragmentManager, communityBottomSheetFragment.tag)
+        })
+
 
         viewModel.selectedTab.observe(this, Observer {
             when(it){

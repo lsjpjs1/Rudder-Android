@@ -95,7 +95,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:textStyle="bold"
-
+                android:onClick="@{()->mainVM.clickPostReport()}"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintWidth_default="percent"
@@ -218,6 +218,7 @@
                 app:layout_constraintStart_toEndOf="@+id/editImageView"
                 android:gravity="fill_vertical"
                 android:text="@string/Edit"
+                android:onClick="@{()->mainVM.clickPostEdit()}"
                 android:textSize="18dp">
             </TextView>
 

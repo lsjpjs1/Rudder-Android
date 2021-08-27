@@ -50,6 +50,9 @@ class MainViewModel : ViewModel() {
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
+    private val _isPostReport = MutableLiveData<Event<Boolean>>()
+    private val _isPostEdit = MutableLiveData<Event<Boolean>>()
+
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
 
 
@@ -72,6 +75,8 @@ class MainViewModel : ViewModel() {
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
     val isCommentMore: LiveData<Event<Boolean>> = _isCommentMore
+    val isPostReport: LiveData<Event<Boolean>> = _isPostReport
+    val isPostEdit: LiveData<Event<Boolean>> = _isPostEdit
 
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
 
@@ -342,13 +347,20 @@ class MainViewModel : ViewModel() {
 
     fun clickPostMore() {
         _isPostMore.value = Event(true)
-        Log.d("clickPostMore","clickPostMore")
     }
 
 
     fun clickCommentMore() {
         _isCommentMore.value = Event(true)
-        Log.d("clickPostMore","clickPostMore")
+    }
+
+
+    fun clickPostReport() {
+        _isPostReport.value = Event(true)
+    }
+
+    fun clickPostEdit() {
+        _isPostEdit.value = Event(true)
     }
 
 
