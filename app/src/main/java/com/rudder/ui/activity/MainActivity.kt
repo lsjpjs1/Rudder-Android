@@ -144,12 +144,16 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isLikePost.observe(this, Observer {
 
-            if(it!!){
-                showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_baseline_thumb_up_24)//showPost post 좋아요 색바꾸기
-            }else{
-                showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_outline_thumb_up_24)
-            }
+            it?.let{
+                if(it){
+                    showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_baseline_thumb_up_24)//showPost post 좋아요 색바꾸기
+                }else{
+                    showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_outline_thumb_up_24)
+                }
+        }
+
         })
+
 
     }
 

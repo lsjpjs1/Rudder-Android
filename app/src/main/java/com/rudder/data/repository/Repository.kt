@@ -3,6 +3,7 @@ package com.rudder.data.repository
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.*
 import com.rudder.data.local.App.Companion.prefs
@@ -126,12 +127,12 @@ class Repository {
         return PostApi.instance.isLikePost(isLikePostInfo).await().results.get("isSuccess").asBoolean
     }
 
-    suspend fun addLikePost(addLikePostInfo: AddLikePostInfo): Boolean{
-        return PostApi.instance.addLikePost(addLikePostInfo).await().results.get("isSuccess").asBoolean
+    suspend fun addLikePost(addLikePostInfo: AddLikePostInfo): JsonObject{
+        return PostApi.instance.addLikePost(addLikePostInfo).await().results
     }
 
-    suspend fun addLikeComment(addLikeCommentInfo: AddLikeCommentInfo): Boolean{
-        return CommentApi.instance.addLikeComment(addLikeCommentInfo).await().results.get("isSuccess").asBoolean
+    suspend fun addLikeComment(addLikeCommentInfo: AddLikeCommentInfo): JsonObject{
+        return CommentApi.instance.addLikeComment(addLikeCommentInfo).await().results
     }
 
     suspend fun addPostViewCount(addPostViewCountInfo: AddPostViewCountInfo): Boolean{

@@ -46,16 +46,16 @@ class MainViewModel : ViewModel() {
     private val _isLikePost = MutableLiveData<Boolean>()
     private val _commentCountChange = MutableLiveData<Event<Boolean>>()
     private val _commentLikeCountChange = MutableLiveData<Int>()
-
-
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
+    private val _postInnerValueChangeSwitch = MutableLiveData<Boolean>()
+    private val _commentInnerValueChangeSwitch = MutableLiveData<Boolean>()
 
-
+    val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
+    val postInnerValueChangeSwitch:LiveData<Boolean> = _postInnerValueChangeSwitch
     val commentLikeCountChange: LiveData<Int> = _commentLikeCountChange
     val commentCountChange: LiveData<Event<Boolean>> = _commentCountChange
     val isLikePost: LiveData<Boolean> = _isLikePost
-
     val isAddPostSuccess: LiveData<Event<Boolean>> = _isAddPostSuccess
     val isScrollBottomTouch: LiveData<Event<Boolean>> = _isScrollBottomTouch
     val isBackClick: LiveData<Event<Boolean>> = _isBackClick
@@ -115,6 +115,8 @@ class MainViewModel : ViewModel() {
         _categories.value = arrayListOf(
             Category(0, "All")
         )
+        _postInnerValueChangeSwitch.value=true
+        _commentInnerValueChangeSwitch.value=true
         clearNestedCommentInfo()
         getPosts()
         getCategories()
@@ -184,6 +186,7 @@ class MainViewModel : ViewModel() {
             _posts.value!![_selectedPostPosition.value!!].isLiked =
                 !_posts.value!![_selectedPostPosition.value!!].isLiked
             _isLikePost.value = !(_isLikePost.value)!!//like button 체크 혹은 해제
+            _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
             addLikePost(plusValue)
         }
 
@@ -194,7 +197,13 @@ class MainViewModel : ViewModel() {
                     App.prefs.getValue(tokenKey)!!,
                     plusValue
                 )
-                val res = Repository().addLikePost(addLikePostInfo)
+                val resJson = Repository().addLikePost(addLikePostInfo)
+                viewModelScope.launch {
+                    if (resJson.get("isSuccess").asBoolean){
+                        _posts.value!![selectedPostPosition.value!!].likeCount = resJson.get("like_count").asInt
+                        _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
+                    }
+                }
 
             }
         }
@@ -207,6 +216,7 @@ class MainViewModel : ViewModel() {
                 _comments.value!![position].likeCount + plusValue
             _comments.value!![position].isLiked = !_comments.value!![position].isLiked
             _commentLikeCountChange.value = position
+            _commentInnerValueChangeSwitch.value = !_commentInnerValueChangeSwitch.value!!
             addLikeComment(plusValue, position)
         }
 
@@ -217,8 +227,13 @@ class MainViewModel : ViewModel() {
                     App.prefs.getValue(tokenKey)!!,
                     plusValue
                 )
-                val res = Repository().addLikeComment(addLikeCommentInfo)
-
+                val resJson = Repository().addLikeComment(addLikeCommentInfo)
+                viewModelScope.launch {
+                    if (resJson.get("isSuccess").asBoolean){
+                        _comments.value!![position].likeCount = resJson.get("like_count").asInt
+                        _commentInnerValueChangeSwitch.value = !_commentInnerValueChangeSwitch.value!!
+                    }
+                }
             }
         }
 

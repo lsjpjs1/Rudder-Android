@@ -58,13 +58,22 @@ class ShowPostFragment: Fragment() {
         viewModel.selectedPostPosition.observe(viewLifecycleOwner, Observer {
             fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
         })
-        viewModel.isLikePost.observe(viewLifecycleOwner, Observer {
-            fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
+
+            it?.let {
+
+                    fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+
+            }
+
         })
 
-        viewModel.commentLikeCountChange.observe(viewLifecycleOwner, Observer {
+        viewModel.commentInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
             it?.let{
-                adapter.notifyItemChanged(it)
+                viewModel.commentLikeCountChange.value?.let {
+                    position-> adapter.notifyItemChanged(position)
+                }
+
             }
         })
 
