@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var communityBottomSheetFragment : CommunityBottomSheetFragment
     private lateinit var communityPostReportFragment : CommunityPostReportFragment
 
+    private lateinit var editPostFragment: EditPostFragment
+
     private val purpleRudder by lazy { ContextCompat.getColor(this,R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this,R.color.grey) }
 
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         addCommentFragment = AddCommentFragment()
         communityBottomSheetFragment = CommunityBottomSheetFragment()
         communityPostReportFragment = CommunityPostReportFragment()
+        editPostFragment = EditPostFragment()
 
 
         supportFragmentManager.beginTransaction()
@@ -83,6 +86,19 @@ class MainActivity : AppCompatActivity() {
         viewModel.isPostReport.observe(this, Observer {
             if(it.getContentIfNotHandled()!!)
                 communityPostReportFragment.show(supportFragmentManager, communityBottomSheetFragment.tag)
+        })
+
+
+        viewModel.isPostEdit.observe(this, Observer {
+
+            if(it.getContentIfNotHandled()!!){
+                viewModel.clearAddPost()
+                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                fragmentShowHide.addToBackStack()
+                fragmentShowHide.addFragment(editPostFragment,R.id.mainDisplay,"editPost")
+                fragmentShowHide.showFragment(editPostFragment,R.id.mainDisplay)
+            }
+
         })
 
 

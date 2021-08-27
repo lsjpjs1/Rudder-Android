@@ -47,6 +47,9 @@ class MainViewModel : ViewModel() {
     private val _commentCountChange = MutableLiveData<Event<Boolean>>()
     private val _commentLikeCountChange = MutableLiveData<Int>()
 
+    private val _selectedPostMorePosition = MutableLiveData<Int>()
+
+
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
@@ -71,6 +74,8 @@ class MainViewModel : ViewModel() {
     val selectedCommentGroupNum: LiveData<Int> = _selectedCommentGroupNum
     val selectedCategoryView: LiveData<View> = _selectedCategoryView
     val selectedCategoryNameInAddPost: LiveData<String> = _selectedCategoryNameInAddPost
+
+    val selectedPostMorePosition: LiveData<Int> = _selectedPostMorePosition
 
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
@@ -345,8 +350,11 @@ class MainViewModel : ViewModel() {
     }
 
 
-    fun clickPostMore() {
+    fun clickPostMore(position: Int) {
         _isPostMore.value = Event(true)
+
+        _selectedPostMorePosition.value = position
+
     }
 
 
@@ -361,6 +369,9 @@ class MainViewModel : ViewModel() {
 
     fun clickPostEdit() {
         _isPostEdit.value = Event(true)
+
+
+        _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
     }
 
 

@@ -42,6 +42,7 @@ class ShowPostFragment: Fragment() {
         val currentPost = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
         fragmentBinding.post = currentPost
         fragmentBinding.mainVM = viewModel
+        fragmentBinding.position = viewModel.selectedPostPosition.value!!
         viewModel.comments.observe(viewLifecycleOwner, Observer {
             adapter.updateComments(it)
         })

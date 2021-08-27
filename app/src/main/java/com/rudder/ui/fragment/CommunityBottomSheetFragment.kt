@@ -48,6 +48,14 @@ class CommunityBottomSheetFragment : BottomSheetDialogFragment() {
         communityBottomSheetBinding.mainVM = viewModel
         communityBottomSheetBinding.lifecycleOwner = this
 
+        viewModel.selectedPostMorePosition.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                communityBottomSheetBinding.position = it
+
+                Log.d("selectedPostMorePo","${communityBottomSheetBinding.position}")
+
+            }
+        })
 
         return communityBottomSheetBinding.root
     }

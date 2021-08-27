@@ -13,6 +13,9 @@
             name="MAX_POST_BODY_LENGTH"
             type="Integer" />
         <variable
+            name="position"
+            type="Integer" />
+        <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
     </data>
@@ -60,7 +63,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/ic_baseline_more_horiz_24"
-                            android:onClick="@{()->mainVM.clickPostMore()}"
+                            android:onClick="@{()->mainVM.clickPostMore(position)}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"

@@ -7,7 +7,12 @@
         <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
+
+        <variable
+            name="position"
+            type="Integer" />
     </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/postBottomSheetCL0"

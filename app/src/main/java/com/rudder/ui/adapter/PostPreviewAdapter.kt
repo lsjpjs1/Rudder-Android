@@ -63,6 +63,7 @@ class PostPreviewAdapter(
         holder.postPreviewBinding.post = previewPostList[position]
         holder.postPreviewBinding.timeago = timeago
         holder.postPreviewBinding.mainVM = viewModel
+        holder.postPreviewBinding.position = position
         holder.postPreviewBinding.also {
             it.post = previewPostList[position]
             it.timeago = timeago
