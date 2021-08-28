@@ -62,7 +62,6 @@ class ForgotViewModel() : ViewModel() {
     fun callCheckEmail() { // FIND ID Email Check
         GlobalScope.launch {
             val result = repository.findAccountID(EmailInfo(_forgotEmail.value!!))
-            Log.d(ContentValues.TAG, "callCheckEmail 결과 : ${result}")
             _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
         }
     }
@@ -70,7 +69,6 @@ class ForgotViewModel() : ViewModel() {
     fun callSendVeriCode() { // Find Password Email Check
         GlobalScope.launch {
             val result = repository.findAccountPassword(EmailInfo(_forgotEmail.value!!))
-            Log.d(ContentValues.TAG, "callSendVeriCode 결과 : ${result}")
             _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
         }
     }
@@ -78,7 +76,6 @@ class ForgotViewModel() : ViewModel() {
     fun callSendPassword() {
         GlobalScope.launch {
             val result = repository.sendAccountPassword(CheckVerifyCodeInfo(_forgotEmail.value!!, _forgotverifyCode.value!!))
-            Log.d(ContentValues.TAG, "callSendPassword 결과 : ${result}")
             _verifyCodeCheckFlag.postValue(Event(result))
         }
     }

@@ -39,7 +39,6 @@ class PostPreviewAdapter(
             parent,
             false
         )
-        Log.d("parentHeight", parent.height.toString())
         val params = bind.root.layoutParams
         val typedValue = TypedValue()
         context.resources.getValue(R.dimen.post_preview_height, typedValue, true)
@@ -79,7 +78,6 @@ class PostPreviewAdapter(
 
         val diffCallback: PostsDiffCallback = PostsDiffCallback(previewPostList, newPreviewPosts)
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
-        Log.d("newPost", newPreviewPosts.toString())
         previewPostList.clear()
         previewPostList.addAll(newPreviewPosts)
         diffResult.dispatchUpdatesTo(this)

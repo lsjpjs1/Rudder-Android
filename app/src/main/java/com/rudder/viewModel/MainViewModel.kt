@@ -1,5 +1,6 @@
 package com.rudder.viewModel
 
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
@@ -39,6 +40,7 @@ class MainViewModel : ViewModel() {
     private val _selectedCommentGroupNum = MutableLiveData<Int>()
     private val _selectedCategoryView = MutableLiveData<View>()
     private val _selectedCategoryNameInAddPost = MutableLiveData<String>()
+    private val _selectedPhotoUriList = MutableLiveData<ArrayList<Uri>>()
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
     private val _isBackClick = MutableLiveData<Event<Boolean>>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
@@ -50,7 +52,9 @@ class MainViewModel : ViewModel() {
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
     private val _postInnerValueChangeSwitch = MutableLiveData<Boolean>()
     private val _commentInnerValueChangeSwitch = MutableLiveData<Boolean>()
+    private val _photoPickerClickSwitch = MutableLiveData<Boolean?>()
 
+    val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
     val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
     val postInnerValueChangeSwitch:LiveData<Boolean> = _postInnerValueChangeSwitch
     val commentLikeCountChange: LiveData<Int> = _commentLikeCountChange
@@ -67,6 +71,7 @@ class MainViewModel : ViewModel() {
     val selectedCommentGroupNum: LiveData<Int> = _selectedCommentGroupNum
     val selectedCategoryView: LiveData<View> = _selectedCategoryView
     val selectedCategoryNameInAddPost: LiveData<String> = _selectedCategoryNameInAddPost
+    val selectedPhotoUriList : LiveData<ArrayList<Uri>> = _selectedPhotoUriList
 
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
@@ -79,9 +84,15 @@ class MainViewModel : ViewModel() {
     val categories: LiveData<ArrayList<Category>> = _categories
 
     init {
-        Log.d("call", "call")
         _selectedTab.value = R.id.communityButton
         _selectedCategoryPosition.value = 0
+        _postInnerValueChangeSwitch.value=true
+        _commentInnerValueChangeSwitch.value=true
+        _selectedPhotoUriList.value = arrayListOf()
+        _postBody.value = ""
+        _categories.value = arrayListOf(
+            Category(0, "All")
+        )
         _posts.value = arrayListOf(
             PreviewPost(
                 1,
@@ -111,15 +122,25 @@ class MainViewModel : ViewModel() {
                 false
             )
         )
-        _postBody.value = ""
-        _categories.value = arrayListOf(
-            Category(0, "All")
-        )
-        _postInnerValueChangeSwitch.value=true
-        _commentInnerValueChangeSwitch.value=true
         clearNestedCommentInfo()
         getPosts()
         getCategories()
+    }
+
+    fun deletePhotoUriPosition(position: Int){
+        val tmpList = _selectedPhotoUriList.value!!
+        tmpList.removeAt(position)
+        _selectedPhotoUriList.value = tmpList
+    }
+
+    fun setSelectedPhotoUriList(uriList:ArrayList<Uri>){
+        val tmpList = _selectedPhotoUriList.value!!
+        tmpList.addAll(uriList)
+        _selectedPhotoUriList.value = tmpList
+    }
+
+    fun onPhotoPickerClick(){
+        switch(_photoPickerClickSwitch)
     }
 
     fun clickNestedCommentReply(groupNum: Int, commentBody: String) {
@@ -128,7 +149,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun callLoginOut() {
-        Log.d("callLoginOut", "callLoginOut")
         _startLoginActivity.value = Event(true)
 
         val key = BuildConfig.TOKEN_KEY
@@ -143,8 +163,10 @@ class MainViewModel : ViewModel() {
         }
 
         fun clearAddPost() {
+            _selectedPhotoUriList.value = arrayListOf()
             _postBody.value = ""
             _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
+            _photoPickerClickSwitch.value = null
         }
 
         fun commentBodyClear() {
@@ -256,7 +278,6 @@ class MainViewModel : ViewModel() {
                     } else {
                         val oldPosts = _posts.value
                         oldPosts!!.addAll(resPosts)
-                        Log.d("oldPost", oldPosts.toString())
                         _posts.value = oldPosts!!
                     }
                     _isScrollBottomTouch.value = Event(false)
@@ -280,7 +301,6 @@ class MainViewModel : ViewModel() {
                 val resComments = Repository().getComments(getCommentInfo)
                 viewModelScope.launch {
                     _comments.value = resComments
-                    Log.d("comment", _comments.value.toString())
 
                 }
             }
@@ -422,4 +442,9 @@ class MainViewModel : ViewModel() {
             }
         }
 
+        fun switch(mutableLiveData: MutableLiveData<Boolean?>){
+
+            mutableLiveData.value = if(mutableLiveData.value==null) true else !mutableLiveData.value!!
+
+        }
     }

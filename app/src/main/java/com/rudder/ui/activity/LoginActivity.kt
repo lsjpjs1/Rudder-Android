@@ -54,16 +54,11 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("mytag","onDestoryLogin")
-    }
 
 
 
     fun autoLoginCheckbox(){
         val autoLoginPref = prefs.getValue("autoLogin")
-        Log.d("autoLoginPref","$autoLoginPref")
         autoLoginCheckbox.isChecked = autoLoginPref == "true"
     }
 }

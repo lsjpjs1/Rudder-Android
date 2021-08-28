@@ -1,11 +1,13 @@
 package com.rudder.ui.activity
 
-import android.content.res.Resources
+import android.app.Activity
 import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -13,21 +15,16 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.rudder.R
-import com.rudder.data.local.App
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_community_bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
-import java.util.*
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -99,11 +96,12 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isAddPostClick.observe(this, Observer {
             if(it.getContentIfNotHandled()!!){
-                viewModel.clearAddPost()
+
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
                 fragmentShowHide.addFragment(addPostFragment,R.id.mainDisplay,"addPost")
                 fragmentShowHide.showFragment(addPostFragment,R.id.mainDisplay)
+                viewModel.clearAddPost()
             }
         })
 
@@ -112,9 +110,7 @@ class MainActivity : AppCompatActivity() {
                 onBackPressed()
             }
         })
-        viewModel.selectedPostPosition.observe(this, Observer {
-            Log.d("select",it.toString())
-        })
+
 
         viewModel.isScrollBottomTouch.observe(this, Observer {
             if(it.getContentIfNotHandled()!!){
@@ -187,6 +183,22 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun getDisplaySize():ArrayList<Int>{
+        return if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+            val windowMetrics = Activity().windowManager.currentWindowMetrics
+            val insets = windowMetrics.windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+            val width = windowMetrics.bounds.width() - insets.left - insets.right
+            val height = windowMetrics.bounds.height() - insets.top - insets.bottom
+            arrayListOf(width,height)
+        }else{
+            val displayMertrics = DisplayMetrics()
+            this.windowManager.defaultDisplay.getMetrics(displayMertrics)
+            val width = displayMertrics.widthPixels
+            val height = displayMertrics.heightPixels
+            arrayListOf(width,height)
+        }
+    }
+
     fun swapMainBottomBar(){
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
         fragmentShowHide.removeFragment(addCommentFragment)
@@ -242,10 +254,6 @@ class MainActivity : AppCompatActivity() {
         mainBottomBarFragment.communityIcon.setColorFilter(grey, PorterDuff.Mode.SRC_IN)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("mytag","onDestorymain")
-    }
 
 
 }

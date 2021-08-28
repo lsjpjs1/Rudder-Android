@@ -165,7 +165,6 @@ class SignUpViewModel : ViewModel() {
 
     fun onTextChangeEmailDomain() {
         val emailDomainChunk = _userEmailDomain.value!!.split('.')[0]
-        Log.d("emailDomainChunk","emailDomainChunk : ${emailDomainChunk}")
         if (_userEmailDomain.value!!.trim().matches(emailRg) && _userEmailID.value!!.isNotEmpty()) {
             if (emailDomainChunk == _userSchoolName.value!!)
                 _emailDomainFlag.value = Event(true)
@@ -185,7 +184,6 @@ class SignUpViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        Log.d("onCleared","onCleared")
     }
 
 
@@ -225,12 +223,10 @@ class SignUpViewModel : ViewModel() {
         //parent.getAdapter().getItem(pos)    get item by pos
         //parent.getCount()                   get item count
         //parent.getSelectedItem()            get selected item
-        Log.d("parent.getAdapter","$pos, $id, ${parent.selectedItem}")
         if (pos != 0){
             _schoolSelectFlag.value = Event(true)
             _userSchoolInt.value = pos + 1
             _userSchoolName.value = parent.selectedItem.toString().split(" ")[0].toLowerCase()
-            Log.d(ContentValues.TAG, "_userSchoolName.value : ${_userSchoolName.value }")
         }else{
             _schoolSelectFlag.value = Event(false)
         }
@@ -239,12 +235,10 @@ class SignUpViewModel : ViewModel() {
     fun callSchoolList() {
         GlobalScope.launch {
             val resultSchoolList = repository.signUpSchoolList()
-            Log.d(ContentValues.TAG, "resultSchoolList 결과 : ${resultSchoolList}")
 
             for (i in 0 until resultSchoolList.size() ) {
                 val iObject = resultSchoolList[i].asJsonObject
                 val schoolName = iObject.get("school_name").asString
-                Log.d(ContentValues.TAG, "callIdCheck 결과 : ${schoolName}")
                 _schoolList.value!!.add(schoolName)
             }
         }
@@ -256,7 +250,6 @@ class SignUpViewModel : ViewModel() {
 
             val idInput = _userId.value!!
             val result = repository.signUpIdDuplicated(IdDuplicatedInfo(idInput))
-            Log.d(ContentValues.TAG, "callIdCheck 결과 : ${result}")
             _idCheckFlag.postValue(Event(!result && _userId.value!!.isNotEmpty()))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
@@ -267,7 +260,6 @@ class SignUpViewModel : ViewModel() {
         GlobalScope.launch {
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpSendVerifyCode(EmailInfo(emailInput))
-            Log.d(ContentValues.TAG, "callSendVeriCode 결과 : ${result}")
             _emailCheckFlag.postValue(Event(result))
             _userVerificationCode.postValue("")
         }
@@ -278,7 +270,6 @@ class SignUpViewModel : ViewModel() {
             val verifyCodeInput = _userVerificationCode.value!!
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpCheckVerifyCode(CheckVerifyCodeInfo(emailInput, verifyCodeInput))
-            Log.d(ContentValues.TAG, "callCheckVeriCode 결과 : ${result}")
             _verifyCodeCheckFlag.postValue(Event(result))
         }
     }
@@ -290,7 +281,6 @@ class SignUpViewModel : ViewModel() {
                 _userSchoolInt.value!!,"",_userIntroduce.value!!,_userNickName.value!! )
 
             val result = repository.signUpCreateAccount(inputInfo)
-            Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
             _profileSettingNext.postValue(Event(result))
         }
     }

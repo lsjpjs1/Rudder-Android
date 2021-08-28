@@ -160,13 +160,11 @@ class SignUpActivity : AppCompatActivity() {
 
 
     override fun onResume() {
-        Log.d("mytag","onResume")
         super.onResume()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("mytag","onDestory")
     }
 
 }

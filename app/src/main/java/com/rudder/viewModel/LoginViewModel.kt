@@ -66,7 +66,6 @@ class LoginViewModel() : ViewModel() {
     fun callLogin(){
         GlobalScope.launch {
             val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!))
-            Log.d("result", "${result}" )
             viewModelScope.launch{
                 if(result){
                     _startMainActivity.value = Event(true)
