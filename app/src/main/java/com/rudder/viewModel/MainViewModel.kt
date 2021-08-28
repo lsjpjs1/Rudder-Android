@@ -129,6 +129,7 @@ class MainViewModel : ViewModel() {
 
     fun deletePhotoUriPosition(position: Int){
         val tmpList = _selectedPhotoUriList.value!!
+        Log.d("list",tmpList.toString())
         tmpList.removeAt(position)
         _selectedPhotoUriList.value = tmpList
     }

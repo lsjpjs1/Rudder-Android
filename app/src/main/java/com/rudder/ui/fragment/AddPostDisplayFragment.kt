@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -22,8 +23,8 @@ import com.rudder.databinding.FragmentAddPostDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.AddPostShowImagesAdapter
 import com.rudder.util.AddPostImagesOnclickListener
-import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_add_post_display.*
 
 class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
     private val viewModel : MainViewModel by activityViewModels()
@@ -70,10 +71,10 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
         viewModel.selectedPhotoUriList.observe(viewLifecycleOwner, Observer {
 
             it?.let {
-                if (it.size>0){
+                if (it.size>0){ // 이미지 추가했을때만 이미지 리스트 표시되게
                     display.showPhoto.visibility=View.VISIBLE
-                    addPostShowImagesAdapter.notifyDataSetChanged()
                 }
+                addPostShowImagesAdapter.notifyDataSetChanged()
             }
 
         })
@@ -84,6 +85,16 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
                 openPhotoPicker()
             }
         })
+
+        display.addPostDisplayEntire.viewTreeObserver.addOnGlobalLayoutListener(
+            object : ViewTreeObserver.OnGlobalLayoutListener{
+                override fun onGlobalLayout() {
+                    fixOtherViewHeight()
+                    display.addPostDisplayEntire.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+
+            }
+        )
 
         return display.root
     }
@@ -121,5 +132,34 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
 
     override fun onClickDeleteImage(view: View, position: Int) {
         viewModel.deletePhotoUriPosition(position)
+    }
+
+    fun fixOtherViewHeight(){
+        val addPostDisplayEntireHeight = addPostDisplayEntire.height
+        val chooseCategoryHeightRatio = 0.1
+        val textTitleRatio = 0.03
+        val lineRatio = 0.005
+
+        //뷰의 높이 고정
+        var lp = chooseCategoryConstraintLayout.layoutParams
+        lp.height=(addPostDisplayEntireHeight*chooseCategoryHeightRatio).toInt()
+        chooseCategoryConstraintLayout.layoutParams=lp
+
+        lp=addPostDisplayTextTitle.layoutParams
+        lp.height=(addPostDisplayEntireHeight*textTitleRatio).toInt()
+        addPostDisplayTextTitle.layoutParams=lp
+
+        lp=addPostDisplayImagesTitle.layoutParams
+        lp.height=(addPostDisplayEntireHeight*textTitleRatio).toInt()
+        addPostDisplayImagesTitle.layoutParams=lp
+
+        lp=addPostDisplayTextLine.layoutParams
+        lp.height=(addPostDisplayEntireHeight*lineRatio).toInt()
+        addPostDisplayTextLine.layoutParams=lp
+
+        lp=addPostDisplayImagesLine.layoutParams
+        lp.height=(addPostDisplayEntireHeight*lineRatio).toInt()
+        addPostDisplayImagesLine.layoutParams=lp
+
     }
 }
