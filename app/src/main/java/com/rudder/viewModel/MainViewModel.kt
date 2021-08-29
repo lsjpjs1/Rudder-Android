@@ -411,31 +411,31 @@ class MainViewModel : ViewModel() {
             }
         }
 
-        fun isAlreadyReadPost(): Boolean {
-            val alreadyReadPostIdJsonString = App.prefs.getValue(ALREADY_READ_POST_ID_KEY)
-            return if (alreadyReadPostIdJsonString == null || alreadyReadPostIdJsonString == "") { // 조회글 목록 json 자체가 없으면 방금 읽은 postid를 키로 넣고 하나 새로 생성
-                val alreadyReadPostIdJson = JsonObject()
-                alreadyReadPostIdJson.add(
-                    _posts.value!![_selectedPostPosition.value!!].postId.toString(),
-                    JsonNull.INSTANCE
-                )
-                App.prefs.setValue(ALREADY_READ_POST_ID_KEY, alreadyReadPostIdJson.toString())
-                false
-            } else {//조회글 목록 json이 있으면 해당 json에 현재 읽은 postid가 존재하는 지 확인
-                val alreadyReadPostIdJson =
-                    JsonParser().parse(alreadyReadPostIdJsonString).asJsonObject
-                if (alreadyReadPostIdJson.has(_posts.value!![_selectedPostPosition.value!!].postId.toString())) {
-                    true
-                } else {
-                    alreadyReadPostIdJson.add(
-                        _posts.value!![_selectedPostPosition.value!!].postId.toString(),
-                        JsonNull.INSTANCE
-                    )
-                    App.prefs.setValue(ALREADY_READ_POST_ID_KEY, alreadyReadPostIdJson.toString())
-                    false
-                }
-            }
-        }
+//        fun isAlreadyReadPost(): Boolean {
+//            val alreadyReadPostIdJsonString = App.prefs.getValue(ALREADY_READ_POST_ID_KEY)
+//            return if (alreadyReadPostIdJsonString == null || alreadyReadPostIdJsonString == "") { // 조회글 목록 json 자체가 없으면 방금 읽은 postid를 키로 넣고 하나 새로 생성
+//                val alreadyReadPostIdJson = JsonObject()
+//                alreadyReadPostIdJson.add(
+//                    _posts.value!![_selectedPostPosition.value!!].postId.toString(),
+//                    JsonNull.INSTANCE
+//                )
+//                App.prefs.setValue(ALREADY_READ_POST_ID_KEY, alreadyReadPostIdJson.toString())
+//                false
+//            } else {//조회글 목록 json이 있으면 해당 json에 현재 읽은 postid가 존재하는 지 확인
+//                val alreadyReadPostIdJson =
+//                    JsonParser().parse(alreadyReadPostIdJsonString).asJsonObject
+//                if (alreadyReadPostIdJson.has(_posts.value!![_selectedPostPosition.value!!].postId.toString())) {
+//                    true
+//                } else {
+//                    alreadyReadPostIdJson.add(
+//                        _posts.value!![_selectedPostPosition.value!!].postId.toString(),
+//                        JsonNull.INSTANCE
+//                    )
+//                    App.prefs.setValue(ALREADY_READ_POST_ID_KEY, alreadyReadPostIdJson.toString())
+//                    false
+//                }
+//            }
+//        }
 
         fun addPostViewCount() {
             GlobalScope.launch {

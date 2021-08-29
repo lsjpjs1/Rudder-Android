@@ -19,6 +19,7 @@ class Repository {
     suspend fun login(loginInfo: LoginInfo) : Boolean{
         val key = BuildConfig.TOKEN_KEY
         val result : Boolean
+        val userIdKey = "userId"
 
         if(prefs.getValue(key) == null || prefs.getValue(key) == "" ){ // 토큰이 비어있는 상태, 로그인의 서버요청이 필요한 상태
             val resLogin =  LoginApi.instance.login(loginInfo).await()
@@ -27,6 +28,7 @@ class Repository {
             if (flag){
                 val loginToken = value.get("token").asString
                 prefs.setValue(key, loginToken)
+                prefs.setValue(userIdKey,loginInfo.userId)
                 result = true
             } else{
                 result = false
