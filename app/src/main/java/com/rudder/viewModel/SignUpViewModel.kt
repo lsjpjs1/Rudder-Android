@@ -12,10 +12,12 @@ import android.widget.ProgressBar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.rudder.data.CheckVerifyCodeInfo
 import com.rudder.data.EmailInfo
 import com.rudder.data.IdDuplicatedInfo
 import com.rudder.data.SignUpInsertInfo
+import com.rudder.data.remote.Category
 import com.rudder.data.repository.Repository
 import com.rudder.ui.activity.SignUpActivity
 import com.rudder.util.Event
@@ -67,8 +69,12 @@ class SignUpViewModel : ViewModel() {
     val _nickNameFlag = MutableLiveData<Event<Boolean>>()
     val _verifiCodeChangeFlag = MutableLiveData<Event<Boolean>>()
     val _termsOfServiceFlag = MutableLiveData<Event<Boolean>>()
-
     val _schoolList = MutableLiveData<MutableList<String>>()
+
+    val _categories = MutableLiveData<ArrayList<Category>>()
+    val _categoryNames = MutableLiveData<ArrayList<String>>()
+
+
 
     val userId: LiveData<String> = _userId
     val userPassword: LiveData<String> = _userPassword
@@ -102,8 +108,11 @@ class SignUpViewModel : ViewModel() {
     val nickNameFlag: LiveData<Event<Boolean>> = _nickNameFlag
     val verifiCodeChangeFlag : LiveData<Event<Boolean>> = _verifiCodeChangeFlag
     val termsOfServiceFlag : LiveData<Event<Boolean>> = _termsOfServiceFlag
-
     val schoolList : LiveData<MutableList<String>> = _schoolList
+
+
+    val categories: LiveData<ArrayList<Category>> = _categories
+    val categoryNames: LiveData<ArrayList<String>> = _categoryNames
 
     private val repository = Repository()
 
@@ -118,6 +127,9 @@ class SignUpViewModel : ViewModel() {
         _schoolList.value = mutableListOf("Select Your School!")
         _userSchoolName.value = ""
         _userSchoolInt.value = 0
+
+
+        getCategories()
 
     }
 
@@ -294,6 +306,28 @@ class SignUpViewModel : ViewModel() {
             _profileSettingNext.postValue(Event(result))
         }
     }
+
+
+    fun splitCategoryNames(categoryList: ArrayList<Category>): ArrayList<String> {
+        var categoryNames = ArrayList<String>()
+        for (category in categoryList) {
+            categoryNames.add(category.categoryName)
+        }
+        return categoryNames
+    }
+
+
+    fun getCategories() {
+        GlobalScope.launch {
+            var categoryList = Repository().getCategories()
+            viewModelScope.launch {
+                _categoryNames.value = splitCategoryNames((categoryList))
+                _categories.value = categoryList
+                Log.d("_categoryNames.value", "${_categoryNames.value}")
+            }
+        }
+    }
+
 
 
 }

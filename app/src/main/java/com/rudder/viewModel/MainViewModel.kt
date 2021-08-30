@@ -1,7 +1,9 @@
 package com.rudder.viewModel
 
+import android.content.ContentValues
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.*
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
@@ -437,6 +439,24 @@ class MainViewModel : ViewModel() {
     fun addPostViewCount() {
         GlobalScope.launch {
             Repository().addPostViewCount(AddPostViewCountInfo(_posts.value!![_selectedPostPosition.value!!].postId))
+        }
+    }
+
+
+    fun onSelectItem(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        //pos                                 get selected item position
+        //view.getText()                      get lable of selected item
+        //parent.getAdapter().getItem(pos)    get item by pos
+        //parent.getCount()                   get item count
+        //parent.getSelectedItem()            get selected item
+        Log.d("parent.getAdapter","$pos, $id, ${parent.selectedItem}")
+        if (pos != 0){
+            _schoolSelectFlag.value = Event(true)
+            _userSchoolInt.value = pos + 1
+            _userSchoolName.value = parent.selectedItem.toString().split(" ")[0].toLowerCase()
+            Log.d(ContentValues.TAG, "_userSchoolName.value : ${_userSchoolName.value }")
+        }else{
+            _schoolSelectFlag.value = Event(false)
         }
     }
 

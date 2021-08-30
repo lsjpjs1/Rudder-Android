@@ -32,6 +32,8 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var createAccountFragment : CreateAccountFragment
     private lateinit var profileSettingFragment : ProfileSettingFragment
     private lateinit var schoolSelectFragment: SchoolSelectFragment
+    private lateinit var categorySelectFragment: CategorySelectFragment
+
 
     // id가 명시되어있지 않은 다른 부분을 터치했을 때 키보드가 보여져있는 상태면 키보드를 내림.
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -58,6 +60,7 @@ class SignUpActivity : AppCompatActivity() {
         createAccountFragment = CreateAccountFragment()
         profileSettingFragment = ProfileSettingFragment()
         schoolSelectFragment = SchoolSelectFragment()
+        categorySelectFragment = CategorySelectFragment()
 
 
         supportFragmentManager.beginTransaction()
@@ -67,7 +70,10 @@ class SignUpActivity : AppCompatActivity() {
             .hide(profileSettingFragment)
             .add(R.id.signUp_container, schoolSelectFragment)
             .hide(schoolSelectFragment)
-            .add(R.id.signUp_container, termsOfServiceFragment)
+
+            //.add(R.id.signUp_container, termsOfServiceFragment)
+            .add(R.id.signUp_container, categorySelectFragment)
+
             .commit()
 
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
