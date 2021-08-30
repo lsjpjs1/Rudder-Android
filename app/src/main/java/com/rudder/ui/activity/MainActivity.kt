@@ -1,6 +1,5 @@
 package com.rudder.ui.activity
 
-import android.content.res.Resources
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
@@ -13,21 +12,16 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.rudder.R
-import com.rudder.data.local.App
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_community_bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
-import java.util.*
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,8 +32,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var myPageFragment : MyPageFragment
     private lateinit var addPostFragment: AddPostFragment
     private lateinit var showPostFragment : ShowPostFragment
-    private lateinit var communityBottomSheetFragment : CommunityBottomSheetFragment
+    private lateinit var communityPostBottomSheetFragment : CommunityPostBottomSheetFragment
+    private lateinit var communityCommentBottomSheetFragment : CommunityCommentBottomSheetFragment
     private lateinit var communityPostReportFragment : CommunityPostReportFragment
+    private lateinit var communityCommentEditFragment : CommunityCommentEditFragment
 
     private lateinit var editPostFragment: EditPostFragment
 
@@ -59,8 +55,10 @@ class MainActivity : AppCompatActivity() {
         addPostFragment = AddPostFragment()
         showPostFragment = ShowPostFragment()
         addCommentFragment = AddCommentFragment()
-        communityBottomSheetFragment = CommunityBottomSheetFragment()
+        communityPostBottomSheetFragment = CommunityPostBottomSheetFragment()
+        communityCommentBottomSheetFragment = CommunityCommentBottomSheetFragment()
         communityPostReportFragment = CommunityPostReportFragment()
+        communityCommentEditFragment = CommunityCommentEditFragment()
         editPostFragment = EditPostFragment()
 
 
@@ -73,32 +71,45 @@ class MainActivity : AppCompatActivity() {
 
 
         viewModel.isPostMore.observe(this, Observer {
-            if(it.getContentIfNotHandled()!!)
-                communityBottomSheetFragment.show(supportFragmentManager, communityBottomSheetFragment.tag)
+            if(it.getContentIfNotHandled()!!) {
+                communityPostBottomSheetFragment.show(supportFragmentManager, communityPostBottomSheetFragment.tag)
+            }
         })
-
 
         viewModel.isCommentMore.observe(this, Observer {
-            if(it.getContentIfNotHandled()!!)
-                communityBottomSheetFragment.show(supportFragmentManager, communityBottomSheetFragment.tag)
+            if(it.getContentIfNotHandled()!!) {
+                communityCommentBottomSheetFragment.show(supportFragmentManager, communityCommentBottomSheetFragment.tag)
+            }
         })
+
 
         viewModel.isPostReport.observe(this, Observer {
-            if(it.getContentIfNotHandled()!!)
-                communityPostReportFragment.show(supportFragmentManager, communityBottomSheetFragment.tag)
+            if(it.getContentIfNotHandled()!!) {
+                communityPostReportFragment.show(supportFragmentManager, communityPostReportFragment.tag)
+            }
         })
 
-
         viewModel.isPostEdit.observe(this, Observer {
-
             if(it.getContentIfNotHandled()!!){
-                viewModel.clearAddPost()
+                communityPostBottomSheetFragment.dismiss()
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
                 fragmentShowHide.addFragment(editPostFragment,R.id.mainDisplay,"editPost")
                 fragmentShowHide.showFragment(editPostFragment,R.id.mainDisplay)
             }
+        })
 
+
+        viewModel.isCommentReport.observe(this, Observer {
+            if(it.getContentIfNotHandled()!!) {
+                communityPostReportFragment.show(supportFragmentManager, communityPostReportFragment.tag)
+            }
+        })
+
+        viewModel.isCommentEdit.observe(this, Observer {
+            if(it.getContentIfNotHandled()!!){
+                communityCommentEditFragment.show(supportFragmentManager, communityCommentEditFragment.tag)
+            }
         })
 
 

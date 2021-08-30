@@ -7,7 +7,6 @@
         <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
-
         <variable
             name="position"
             type="Integer" />
@@ -43,7 +42,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="INFO"
+                android:text="INFO COMMENT"
                 >
 
             </TextView>
@@ -100,7 +99,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:textStyle="bold"
-                android:onClick="@{()->mainVM.clickPostReport()}"
+                android:onClick="@{()->mainVM.clickCommentReport()}"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintWidth_default="percent"
@@ -223,7 +222,7 @@
                 app:layout_constraintStart_toEndOf="@+id/editImageView"
                 android:gravity="fill_vertical"
                 android:text="@string/Edit"
-                android:onClick="@{()->mainVM.clickPostEdit()}"
+                android:onClick="@{()->mainVM.clickCommentEdit()}"
                 android:textSize="18dp">
             </TextView>
 

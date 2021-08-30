@@ -29,6 +29,10 @@ class FragmentShowHide(val supportedFragmentManager: FragmentManager) {
         transaction.addToBackStack(null)
     }
 
+    fun hideFragment(fragment: Fragment){
+        transaction.hide(fragment)
+    }
+
 
     private fun hideAllFragmentsInId(fragment: Fragment, id: Int){
         val otherFragments = findFragmentsInId(id)

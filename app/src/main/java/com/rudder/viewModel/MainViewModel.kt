@@ -50,6 +50,7 @@ class MainViewModel : ViewModel() {
     private val _commentLikeCountChange = MutableLiveData<Int>()
 
     private val _selectedPostMorePosition = MutableLiveData<Int>()
+    private val _selectedCommentMorePosition = MutableLiveData<Int>()
 
     val _postCategoryInt = MutableLiveData<Int>()
 
@@ -58,6 +59,9 @@ class MainViewModel : ViewModel() {
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
     private val _isPostReport = MutableLiveData<Event<Boolean>>()
     private val _isPostEdit = MutableLiveData<Event<Boolean>>()
+
+    private val _isCommentReport = MutableLiveData<Event<Boolean>>()
+    private val _isCommentEdit = MutableLiveData<Event<Boolean>>()
 
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
 
@@ -79,12 +83,17 @@ class MainViewModel : ViewModel() {
     val selectedCategoryNameInAddPost: LiveData<String> = _selectedCategoryNameInAddPost
 
     val selectedPostMorePosition: LiveData<Int> = _selectedPostMorePosition
+
+    val selectedCommentMorePosition: LiveData<Int> = _selectedCommentMorePosition
     val postCategoryInt: LiveData<Int> = _postCategoryInt
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
     val isCommentMore: LiveData<Event<Boolean>> = _isCommentMore
+
     val isPostReport: LiveData<Event<Boolean>> = _isPostReport
     val isPostEdit: LiveData<Event<Boolean>> = _isPostEdit
+    val isCommentReport: LiveData<Event<Boolean>> = _isCommentReport
+    val isCommentEdit: LiveData<Event<Boolean>> = _isCommentEdit
 
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
 
@@ -345,6 +354,7 @@ class MainViewModel : ViewModel() {
         _selectedCategoryPosition.value = position
     }
 
+
     fun setSelectedCategoryView(view: View) {
         _selectedCategoryView.value = view
     }
@@ -352,14 +362,12 @@ class MainViewModel : ViewModel() {
 
     fun clickPostMore(position: Int) {
         _isPostMore.value = Event(true)
-
         _selectedPostMorePosition.value = position
-
     }
 
-
-    fun clickCommentMore() {
+    fun clickCommentMore(position: Int) {
         _isCommentMore.value = Event(true)
+        _selectedCommentMorePosition.value = position
     }
 
 
@@ -370,11 +378,24 @@ class MainViewModel : ViewModel() {
     fun clickPostEdit() {
         _isPostEdit.value = Event(true)
         _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
-
-
-
         _postCategoryInt.value = _posts.value!![selectedPostMorePosition.value!!].categoryId - 1
     }
+
+
+    fun clickCommentReport() {
+        _isCommentReport.value = Event(true)
+    }
+
+    fun clickCommentEdit() {
+        Log.d("clickCommentEdit","clickCommentEdit")
+        _isCommentEdit.value = Event(true)
+        _commentBody.value = _comments.value!![selectedCommentMorePosition.value!!].commentBody
+//        _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
+//        _postCategoryInt.value = _posts.value!![selectedPostMorePosition.value!!].categoryId - 1
+    }
+
+
+
 
 
     fun getCategories() {
@@ -452,7 +473,6 @@ class MainViewModel : ViewModel() {
         Log.d("onSelectItem","$pos, $id, ${parent.selectedItem}")
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
         _postCategoryInt.value = pos - 1
-
     }
 
 }

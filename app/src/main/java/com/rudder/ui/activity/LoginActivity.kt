@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.databinding.ActivityLoginBinding
-import com.rudder.ui.fragment.CommunityBottomSheetFragment
-import com.rudder.ui.fragment.SchoolSelectFragment
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
