@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
+import com.rudder.data.FileInfo
 import com.rudder.databinding.AddPostImagesBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.util.AddPostImagesDiffCallback
@@ -16,7 +17,7 @@ import com.rudder.util.AddPostImagesOnclickListener
 import com.rudder.util.CategoriesDiffCallback
 import com.rudder.util.CustomOnclickListener
 
-class AddPostShowImagesAdapter(var imageUriList: ArrayList<Uri>,val displaySize:ArrayList<Int>,val addPostImagesOnclickListener: AddPostImagesOnclickListener) :
+class AddPostShowImagesAdapter(var imageUriList: ArrayList<FileInfo>,val displaySize:ArrayList<Int>,val addPostImagesOnclickListener: AddPostImagesOnclickListener) :
     RecyclerView.Adapter<AddPostShowImagesAdapter.CustomViewHolder>() {
     inner class CustomViewHolder(val addPostImagesBinding: AddPostImagesBinding) :
         RecyclerView.ViewHolder(addPostImagesBinding.root)
@@ -65,7 +66,7 @@ class AddPostShowImagesAdapter(var imageUriList: ArrayList<Uri>,val displaySize:
                 }
             }
             holder.addPostImagesBinding.addPostImageView.also {
-                it.setImageURI(imageUriList[position])
+                it.setImageURI(imageUriList[position].uri)
                 it.setOnClickListener {  }
             }
         }
@@ -76,7 +77,7 @@ class AddPostShowImagesAdapter(var imageUriList: ArrayList<Uri>,val displaySize:
         return imageUriList.size+1
     }
 
-    fun updateImageUri(newUriList: ArrayList<Uri>) {
+    fun updateImageUri(newUriList: ArrayList<FileInfo>) {
 
         val diffCallback: AddPostImagesDiffCallback =
             AddPostImagesDiffCallback(imageUriList, newUriList)

@@ -10,6 +10,7 @@ import com.google.gson.JsonParser
 import com.rudder.BuildConfig
 import com.rudder.R
 import com.rudder.data.Comment
+import com.rudder.data.FileInfo
 import com.rudder.data.GetCommentInfo
 import com.rudder.data.PreviewPost
 import com.rudder.data.local.App
@@ -18,6 +19,9 @@ import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import java.io.File
 import java.sql.Timestamp
 
 
@@ -40,7 +44,7 @@ class MainViewModel : ViewModel() {
     private val _selectedCommentGroupNum = MutableLiveData<Int>()
     private val _selectedCategoryView = MutableLiveData<View>()
     private val _selectedCategoryNameInAddPost = MutableLiveData<String>()
-    private val _selectedPhotoUriList = MutableLiveData<ArrayList<Uri>>()
+    private val _selectedPhotoUriList = MutableLiveData<ArrayList<FileInfo>>()
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
     private val _isBackClick = MutableLiveData<Event<Boolean>>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
@@ -71,7 +75,7 @@ class MainViewModel : ViewModel() {
     val selectedCommentGroupNum: LiveData<Int> = _selectedCommentGroupNum
     val selectedCategoryView: LiveData<View> = _selectedCategoryView
     val selectedCategoryNameInAddPost: LiveData<String> = _selectedCategoryNameInAddPost
-    val selectedPhotoUriList : LiveData<ArrayList<Uri>> = _selectedPhotoUriList
+    val selectedPhotoUriList : LiveData<ArrayList<FileInfo>> = _selectedPhotoUriList
 
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
@@ -134,10 +138,27 @@ class MainViewModel : ViewModel() {
         _selectedPhotoUriList.value = tmpList
     }
 
-    fun setSelectedPhotoUriList(uriList:ArrayList<Uri>){
+    fun setSelectedPhotoUriList(uriList:ArrayList<FileInfo>){
         val tmpList = _selectedPhotoUriList.value!!
         tmpList.addAll(uriList)
         _selectedPhotoUriList.value = tmpList
+        GlobalScope.launch {
+            val list = Repository().getUploadUrls(GetUploadUrlsInfo(getMimeTypeList(),App.prefs.getValue(tokenKey)!!) )
+            for(i in 0 until list.size){
+                val file = RequestBody.create(MediaType.parse(_selectedPhotoUriList.value!![i].mimeType),_selectedPhotoUriList.value!![i].uri.toString())
+
+                Repository().uploadImage(file,list[i])
+            }
+        }
+
+    }
+
+    fun getMimeTypeList():ArrayList<String>{
+        var mimeTypeList = arrayListOf<String>()
+        for(fileInfo in _selectedPhotoUriList.value!!){
+            mimeTypeList.add(fileInfo.mimeType)
+        }
+        return mimeTypeList
     }
 
     fun onPhotoPickerClick(){

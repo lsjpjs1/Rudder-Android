@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment
 
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -19,6 +21,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
+import com.rudder.data.FileInfo
 import com.rudder.databinding.FragmentAddPostDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.AddPostShowImagesAdapter
@@ -102,18 +105,18 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
         if (result.resultCode == Activity.RESULT_OK){
             val data : Intent? = result.data
             data?.let {
-                var uriList = arrayListOf<Uri>()
+                var uriList = arrayListOf<FileInfo>()
                 when{
-                    it.data !=null-> uriList.add(it.data!!)
+                    it.data !=null-> uriList.add(FileInfo(it.data!!,lazyContext.contentResolver.getType(it.data!!)!!))
                     it.clipData != null ->{
                         for(i in 0 until it.clipData!!.itemCount){
-                            uriList.add(it.clipData!!.getItemAt(i).uri)
+                            uriList.add(FileInfo(it.clipData!!.getItemAt(i).uri,lazyContext.contentResolver.getType(it.clipData!!.getItemAt(i).uri)!!))
                         }
                     }
                     else ->{
                     }
                 }
-                if (uriList!=arrayListOf<Uri>()){
+                if (uriList!=arrayListOf<FileInfo>()){
                     viewModel.setSelectedPhotoUriList(uriList)
                 }
             }

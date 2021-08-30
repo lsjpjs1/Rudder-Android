@@ -2,9 +2,10 @@ package com.rudder.util
 
 import android.net.Uri
 import androidx.recyclerview.widget.DiffUtil
+import com.rudder.data.FileInfo
 import com.rudder.data.remote.Category
 
-class AddPostImagesDiffCallback (private val oldList:ArrayList<Uri>, private val newList: ArrayList<Uri>) : DiffUtil.Callback() {
+class AddPostImagesDiffCallback (private val oldList:ArrayList<FileInfo>, private val newList: ArrayList<FileInfo>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size
     }
