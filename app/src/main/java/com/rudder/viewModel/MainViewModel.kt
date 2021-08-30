@@ -37,10 +37,10 @@ class MainViewModel : ViewModel() {
     private val _categories = MutableLiveData<ArrayList<Category>>()
     private val _categoryNames = MutableLiveData<ArrayList<String>>()
     private val _selectedPostPosition = MutableLiveData<Int>()
-    private val _selectedCategoryPosition = MutableLiveData<Int>()
+    val _selectedCategoryPosition = MutableLiveData<Int>()
     private val _selectedCommentGroupNum = MutableLiveData<Int>()
     private val _selectedCategoryView = MutableLiveData<View>()
-    private val _selectedCategoryNameInAddPost = MutableLiveData<String>()
+    val _selectedCategoryNameInAddPost = MutableLiveData<String>()
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
     private val _isBackClick = MutableLiveData<Event<Boolean>>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
@@ -51,6 +51,7 @@ class MainViewModel : ViewModel() {
 
     private val _selectedPostMorePosition = MutableLiveData<Int>()
 
+    val _postCategoryInt = MutableLiveData<Int>()
 
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
@@ -78,7 +79,7 @@ class MainViewModel : ViewModel() {
     val selectedCategoryNameInAddPost: LiveData<String> = _selectedCategoryNameInAddPost
 
     val selectedPostMorePosition: LiveData<Int> = _selectedPostMorePosition
-
+    val postCategoryInt: LiveData<Int> = _postCategoryInt
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
     val isCommentMore: LiveData<Event<Boolean>> = _isCommentMore
@@ -184,6 +185,7 @@ class MainViewModel : ViewModel() {
 
     fun clickAddPost() {
         _isAddPostClick.value = Event(true)
+        _postCategoryInt.value = 0
     }
 
     fun clickBack() {
@@ -347,10 +349,6 @@ class MainViewModel : ViewModel() {
         _selectedCategoryView.value = view
     }
 
-    fun setSelectedCategoryNameInAddPost(position: Int) {
-        _selectedCategoryNameInAddPost.value = _categoryNames.value!![position]
-    }
-
 
     fun clickPostMore(position: Int) {
         _isPostMore.value = Event(true)
@@ -371,9 +369,11 @@ class MainViewModel : ViewModel() {
 
     fun clickPostEdit() {
         _isPostEdit.value = Event(true)
-
-
         _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
+
+
+
+        _postCategoryInt.value = _posts.value!![selectedPostMorePosition.value!!].categoryId - 1
     }
 
 
@@ -449,15 +449,10 @@ class MainViewModel : ViewModel() {
         //parent.getAdapter().getItem(pos)    get item by pos
         //parent.getCount()                   get item count
         //parent.getSelectedItem()            get selected item
-        Log.d("parent.getAdapter","$pos, $id, ${parent.selectedItem}")
-        if (pos != 0){
-            _schoolSelectFlag.value = Event(true)
-            _userSchoolInt.value = pos + 1
-            _userSchoolName.value = parent.selectedItem.toString().split(" ")[0].toLowerCase()
-            Log.d(ContentValues.TAG, "_userSchoolName.value : ${_userSchoolName.value }")
-        }else{
-            _schoolSelectFlag.value = Event(false)
-        }
+        Log.d("onSelectItem","$pos, $id, ${parent.selectedItem}")
+        _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
+        _postCategoryInt.value = pos - 1
+
     }
 
 }

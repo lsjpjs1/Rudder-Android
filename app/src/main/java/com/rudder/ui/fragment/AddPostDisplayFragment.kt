@@ -37,19 +37,22 @@ class AddPostDisplayFragment : Fragment() {
         display.mainVM=viewModel
         display.categorySpinner.adapter=spinnerAdapter
 
-        display.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                viewModel.setSelectedCategoryNameInAddPost(position)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
+//        display.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                viewModel.setSelectedCategoryNameInAddPost(position)
+//
+//                viewModel.qwe(position)
+//
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//            }
+//        } MVVM 정신 위반!
 
         return display.root
     }

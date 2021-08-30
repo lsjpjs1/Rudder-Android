@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
@@ -63,7 +62,13 @@
                         <Spinner
                             android:id="@+id/categorySpinner"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+
+
+                            android:selectedItemPosition="@={mainVM._asd}"
+                            android:onItemSelected="@{(parent,view,pos,id)->mainVM.onSelectItem(parent,view,pos,id)}"
+
+                            >
 
                         </Spinner>
                     </androidx.constraintlayout.widget.ConstraintLayout>
