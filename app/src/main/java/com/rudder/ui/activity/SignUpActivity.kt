@@ -71,8 +71,8 @@ class SignUpActivity : AppCompatActivity() {
             .add(R.id.signUp_container, schoolSelectFragment)
             .hide(schoolSelectFragment)
 
-            //.add(R.id.signUp_container, termsOfServiceFragment)
-            .add(R.id.signUp_container, categorySelectFragment)
+            .add(R.id.signUp_container, termsOfServiceFragment)
+            //.add(R.id.signUp_container, categorySelectFragment)
 
             .commit()
 

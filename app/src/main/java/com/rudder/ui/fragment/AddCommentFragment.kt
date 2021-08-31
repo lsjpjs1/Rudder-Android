@@ -26,6 +26,7 @@ class AddCommentFragment : Fragment() {
             R.layout.fragment_add_comment,container,false)
         viewModel.commentBodyClear()
         AddComment.mainVM = viewModel
+        AddComment.lifecycleOwner = this
         return AddComment.root
     }
 

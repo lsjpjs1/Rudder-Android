@@ -327,6 +327,7 @@ class MainViewModel : ViewModel() {
             val isSuccess = Repository().addComment(addCommentInfo)
             if (isSuccess) {
                 getComments()
+                _commentBody.postValue("")
             }
         }
     }
