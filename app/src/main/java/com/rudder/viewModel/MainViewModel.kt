@@ -55,7 +55,7 @@ class MainViewModel : ViewModel() {
     val _postCategoryInt = MutableLiveData<Int>()
 
 
-    private val _asd = MutableLiveData<Event<Boolean>>()
+    private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
 
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
@@ -90,7 +90,7 @@ class MainViewModel : ViewModel() {
     val selectedCommentMorePosition: LiveData<Int> = _selectedCommentMorePosition
     val postCategoryInt: LiveData<Int> = _postCategoryInt
 
-    val asd: LiveData<Event<Boolean>> = _asd
+    val commentBodyCheck: LiveData<Event<Boolean>> = _commentBodyCheck
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
     val isCommentMore: LiveData<Event<Boolean>> = _isCommentMore
@@ -476,6 +476,14 @@ class MainViewModel : ViewModel() {
         Log.d("onSelectItem","$pos, $id, ${parent.selectedItem}")
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
         _postCategoryInt.value = pos - 1
+    }
+
+
+    fun onTextChangeComment() {
+        if (_commentBody.value!!.isNotBlank())
+            _commentBodyCheck.value = Event(true)
+        else
+            _commentBodyCheck.value = Event(false)
     }
 
 }

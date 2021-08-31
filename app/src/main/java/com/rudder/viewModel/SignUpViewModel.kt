@@ -157,19 +157,19 @@ class SignUpViewModel : ViewModel() {
 
 
     fun onTextChangePW() {
-        if (_userPassword.value!!.trim().matches(passwordRg) && _userPassword.value!!.isNotEmpty())
+        if (_userPassword.value!!.trim().matches(passwordRg) && _userPassword.value!!.isNotBlank())
             _passwordFlag.value = Event(true)
         else
             _passwordFlag.value = Event(false)
 
-        if (_userPassword.value!!.trim() == _userPasswordCheck.value!!.trim() && _userPassword.value!!.isNotEmpty())
+        if (_userPassword.value!!.trim() == _userPasswordCheck.value!!.trim() && _userPassword.value!!.isNotBlank())
             _passwordCheckFlag.value = Event(true)
         else
             _passwordCheckFlag.value = Event(false)
     }
 
     fun onTextChangePWCheck() {
-        if (_userPasswordCheck.value!!.trim() == _userPassword.value!!.trim() && _userPasswordCheck.value!!.isNotEmpty())
+        if (_userPasswordCheck.value!!.trim() == _userPassword.value!!.trim() && _userPasswordCheck.value!!.isNotBlank())
             _passwordCheckFlag.value = Event(true)
         else
             _passwordCheckFlag.value = Event(false)
@@ -178,7 +178,7 @@ class SignUpViewModel : ViewModel() {
     fun onTextChangeEmailDomain() {
         val emailDomainChunk = _userEmailDomain.value!!.split('.')[0]
         Log.d("emailDomainChunk","emailDomainChunk : ${emailDomainChunk}")
-        if (_userEmailDomain.value!!.trim().matches(emailRg) && _userEmailID.value!!.isNotEmpty()) {
+        if (_userEmailDomain.value!!.trim().matches(emailRg) && _userEmailID.value!!.isNotBlank()) {
             if (emailDomainChunk == _userSchoolName.value!!)
                 _emailDomainFlag.value = Event(true)
             else
@@ -188,7 +188,7 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun onTextChangeNickName() {
-        if (_userNickName.value!!.trim().matches(nickNameRg) && _userNickName.value!!.isNotEmpty())
+        if (_userNickName.value!!.trim().matches(nickNameRg) && _userNickName.value!!.isNotBlank())
             _nickNameFlag.value = Event(true)
         else
             _nickNameFlag.value = Event(false)
@@ -269,7 +269,7 @@ class SignUpViewModel : ViewModel() {
             val idInput = _userId.value!!
             val result = repository.signUpIdDuplicated(IdDuplicatedInfo(idInput))
             Log.d(ContentValues.TAG, "callIdCheck 결과 : ${result}")
-            _idCheckFlag.postValue(Event(!result && _userId.value!!.isNotEmpty()))
+            _idCheckFlag.postValue(Event(!result && _userId.value!!.isNotBlank()))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
