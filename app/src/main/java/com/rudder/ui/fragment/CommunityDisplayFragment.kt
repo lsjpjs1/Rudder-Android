@@ -65,6 +65,7 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
             viewModel.getPosts()
         })
 
+
         return communityDisplay.root
     }
 

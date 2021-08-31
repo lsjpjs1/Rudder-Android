@@ -138,4 +138,12 @@ class Repository {
         return PostApi.instance.addPostViewCount(addPostViewCountInfo).await().results.get("isSuccess").asBoolean
     }
 
+    suspend fun deletePostRepository(deletePostInfo: DeletePostInfo) : Boolean{
+        return DeleteApi.instance.deletePostApi(deletePostInfo).await().results.get("isSuccess").asBoolean
+    }
+
+    suspend fun deleteCommentRepository(deleteCommentInfo: DeleteCommentInfo) : Boolean{
+        return DeleteApi.instance.deletecommentApi(deleteCommentInfo).await().results.get("isSuccess").asBoolean
+    }
+
 }

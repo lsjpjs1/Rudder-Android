@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -16,9 +17,11 @@ import com.rudder.R
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
+import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
@@ -60,6 +63,9 @@ class MainActivity : AppCompatActivity() {
         communityPostReportFragment = CommunityPostReportFragment()
         communityCommentEditFragment = CommunityCommentEditFragment()
         editPostFragment = EditPostFragment()
+
+        val toastDeletePostComplete = Toast.makeText(this, "Delete Post Complete!", Toast.LENGTH_SHORT)
+        val toastDeleteCommentComplete = Toast.makeText(this, "Delete Comment Complete!", Toast.LENGTH_SHORT)
 
 
         supportFragmentManager.beginTransaction()
@@ -103,6 +109,24 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.isPostDelete.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it){
+                    toastDeletePostComplete.show()
+                    communityPostBottomSheetFragment.dismiss()
+                    viewModel.clearPosts()
+                    viewModel.getPosts()
+
+//                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+//                    fragmentShowHide.hideFragment(showPostFragment)
+
+                    if (showPostFragment.isAdded())
+                        onBackPressed()
+
+                }
+            }
+        })
+
 
         viewModel.isCommentReport.observe(this, Observer {
             if(it.getContentIfNotHandled()!!) {
@@ -113,6 +137,15 @@ class MainActivity : AppCompatActivity() {
         viewModel.isCommentEdit.observe(this, Observer {
             if(it.getContentIfNotHandled()!!){
                 communityCommentEditFragment.show(supportFragmentManager, communityCommentEditFragment.tag)
+            }
+        })
+
+        viewModel.isCommentDelete.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it){
+                    toastDeleteCommentComplete.show()
+                    communityCommentBottomSheetFragment.dismiss()
+                }
             }
         })
 

@@ -10,9 +10,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.rudder.BuildConfig
 import com.rudder.R
-import com.rudder.data.Comment
-import com.rudder.data.GetCommentInfo
-import com.rudder.data.PreviewPost
+import com.rudder.data.*
 import com.rudder.data.local.App
 import com.rudder.data.remote.*
 import com.rudder.data.repository.Repository
@@ -60,11 +58,14 @@ class MainViewModel : ViewModel() {
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
+
     private val _isPostReport = MutableLiveData<Event<Boolean>>()
     private val _isPostEdit = MutableLiveData<Event<Boolean>>()
+    private val _isPostDelete = MutableLiveData<Event<Boolean>>()
 
     private val _isCommentReport = MutableLiveData<Event<Boolean>>()
     private val _isCommentEdit = MutableLiveData<Event<Boolean>>()
+    private val _isCommentDelete = MutableLiveData<Event<Boolean>>()
 
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
 
@@ -94,14 +95,14 @@ class MainViewModel : ViewModel() {
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
     val isCommentMore: LiveData<Event<Boolean>> = _isCommentMore
-
     val isPostReport: LiveData<Event<Boolean>> = _isPostReport
     val isPostEdit: LiveData<Event<Boolean>> = _isPostEdit
+    val isPostDelete: LiveData<Event<Boolean>> = _isPostDelete
     val isCommentReport: LiveData<Event<Boolean>> = _isCommentReport
     val isCommentEdit: LiveData<Event<Boolean>> = _isCommentEdit
+    val isCommentDelete: LiveData<Event<Boolean>> = _isCommentDelete
 
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
-
 
     val posts: LiveData<ArrayList<PreviewPost>>
         get() = _posts
@@ -386,6 +387,14 @@ class MainViewModel : ViewModel() {
         _postCategoryInt.value = _posts.value!![selectedPostMorePosition.value!!].categoryId - 1
     }
 
+    fun clickPostDelete() {
+        GlobalScope.launch {
+            var result = Repository().deletePostRepository(DeletePostInfo( _posts.value!![selectedPostMorePosition.value!!].postId ))
+            _isPostDelete.postValue(Event(result))
+        }
+
+    }
+
 
     fun clickCommentReport() {
         _isCommentReport.value = Event(true)
@@ -397,6 +406,21 @@ class MainViewModel : ViewModel() {
         _commentBody.value = _comments.value!![selectedCommentMorePosition.value!!].commentBody
     }
 
+
+    fun clickCommentDelete() {
+        val commentInt = _comments.value!![_selectedCommentMorePosition.value!!].commentId
+        val postInt = _posts.value!![selectedPostMorePosition.value!!].postId
+        GlobalScope.launch {
+            var result = Repository().deleteCommentRepository(DeleteCommentInfo(commentInt, postInt))
+            _isCommentDelete.postValue(Event(result))
+//            viewModelScope.launch {
+//                _isCommentDelete.value = Event(result)
+//            }
+
+        }
+
+
+    }
 
 
 

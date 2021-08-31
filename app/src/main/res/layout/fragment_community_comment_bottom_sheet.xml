@@ -159,6 +159,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/deleteImageView"
 
+                android:onClick="@{()->mainVM.clickCommentDelete()}"
                 android:gravity="fill_vertical"
                 android:text="@string/Delete"
                 android:textSize="18dp">
