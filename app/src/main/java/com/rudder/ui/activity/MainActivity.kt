@@ -94,6 +94,10 @@ class MainActivity : AppCompatActivity() {
                 communityPostBottomSheetFragment.dismiss()
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
+
+                fragmentShowHide.removeFragment(mainBottomBarFragment)
+                fragmentShowHide.removeFragment(addCommentFragment)
+
                 fragmentShowHide.addFragment(editPostFragment,R.id.mainDisplay,"editPost")
                 fragmentShowHide.showFragment(editPostFragment,R.id.mainDisplay)
             }
@@ -131,6 +135,9 @@ class MainActivity : AppCompatActivity() {
                 viewModel.clearAddPost()
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
+
+                fragmentShowHide.removeFragment(mainBottomBarFragment)
+
                 fragmentShowHide.addFragment(addPostFragment,R.id.mainDisplay,"addPost")
                 fragmentShowHide.showFragment(addPostFragment,R.id.mainDisplay)
             }

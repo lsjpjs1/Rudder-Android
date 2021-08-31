@@ -14,6 +14,7 @@
         android:id="@+id/main_container"
         tools:context=".ui.activity.MainActivity">
 
+
         <FrameLayout
             android:id="@+id/mainDisplay"
             android:layout_width="match_parent"
