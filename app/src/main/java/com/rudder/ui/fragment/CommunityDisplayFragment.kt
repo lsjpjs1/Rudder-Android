@@ -56,7 +56,13 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
             adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
         })
         viewModel.posts.observe(viewLifecycleOwner, Observer {
+            Log.d("posts.observe","posts.observe")
             adapter.updatePosts(it)
+        })
+
+        viewModel.isAddPostSuccess.observe(viewLifecycleOwner, Observer {
+            viewModel.clearPosts()
+            viewModel.getPosts()
         })
 
         return communityDisplay.root

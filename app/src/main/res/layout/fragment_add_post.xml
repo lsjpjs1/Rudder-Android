@@ -15,7 +15,7 @@
             android:id="@+id/addPostHeader"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/communitySelector"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHeight_default="percent"
 
             app:layout_constraintHeight_percent="@dimen/add_post_header_height">
