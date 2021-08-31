@@ -3,6 +3,7 @@ package com.rudder.data.remote
 
 
 import com.google.gson.GsonBuilder
+import com.rudder.util.NullOnEmptyConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,6 +30,7 @@ object RetrofitClient {
 
                 //.addConverterFactory(ScalarsConverterFactory.create())
                 //.addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(NullOnEmptyConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create()) //210811 merge issue, comment 정상적으로 오게끔 하는게 이거임.
 
                 .build()

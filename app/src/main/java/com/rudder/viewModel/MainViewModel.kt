@@ -18,6 +18,7 @@ import com.rudder.data.remote.*
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -109,7 +110,8 @@ class MainViewModel : ViewModel() {
                 3,
                 "",
                 0,
-                false
+                false,
+                arrayListOf()
             )
         )
         _comments.value = arrayListOf(
@@ -131,6 +133,18 @@ class MainViewModel : ViewModel() {
         getCategories()
     }
 
+    suspend fun uploadPhoto(postId:Int){
+        GlobalScope.async {
+            val list = Repository().getUploadUrls(GetUploadUrlsInfo(getMimeTypeList(),App.prefs.getValue(tokenKey)!!,postId) )
+            for(i in 0 until list.size()){
+                val file = RequestBody.create(MediaType.parse(_selectedPhotoUriList.value!![i].mimeType),File(_selectedPhotoUriList.value!![i].filePath))
+                Repository().uploadImage(file,list[i].asJsonObject.get("url").asString)
+            }
+            viewModelScope.launch {
+                _isAddPostSuccess.value = Event(true)
+            }
+        }
+    }
     fun deletePhotoUriPosition(position: Int){
         val tmpList = _selectedPhotoUriList.value!!
         Log.d("list",tmpList.toString())
@@ -142,14 +156,6 @@ class MainViewModel : ViewModel() {
         val tmpList = _selectedPhotoUriList.value!!
         tmpList.addAll(uriList)
         _selectedPhotoUriList.value = tmpList
-        GlobalScope.launch {
-            val list = Repository().getUploadUrls(GetUploadUrlsInfo(getMimeTypeList(),App.prefs.getValue(tokenKey)!!) )
-            for(i in 0 until list.size){
-                val file = RequestBody.create(MediaType.parse(_selectedPhotoUriList.value!![i].mimeType),_selectedPhotoUriList.value!![i].uri.toString())
-
-                Repository().uploadImage(file,list[i])
-            }
-        }
 
     }
 
@@ -361,7 +367,7 @@ class MainViewModel : ViewModel() {
 
 
         fun addPost() {
-            GlobalScope.launch {
+            GlobalScope.async {
                 val key = BuildConfig.TOKEN_KEY
                 val addPostInfo = AddPostInfo(
                     "bulletin",
@@ -372,9 +378,10 @@ class MainViewModel : ViewModel() {
                     _selectedCategoryNameInAddPost.value!!
                 )
                 val res = Repository().addPost(addPostInfo)
-                viewModelScope.launch {
-                    _isAddPostSuccess.value = Event(res)
-                }
+                val isSuccess=res.isSuccess
+                val postId = res.postId
+                if(isSuccess) uploadPhoto(postId)
+
             }
         }
 

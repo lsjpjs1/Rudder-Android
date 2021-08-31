@@ -1,8 +1,5 @@
 package com.rudder.data.repository
 
-import android.content.ContentValues.TAG
-import android.util.Log
-import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.rudder.BuildConfig
@@ -84,9 +81,9 @@ class Repository {
         return resJson.results.get("isSuccess").asBoolean
     }
 
-    suspend fun addPost(addPostInfo: AddPostInfo): Boolean{
+    suspend fun addPost(addPostInfo: AddPostInfo): AddPostResponse{
         val response = PostApi.instance.addPostApi(addPostInfo).await()
-        return response.results.isSuccess
+        return response.results
     }
 
     suspend fun signUpCreateAccount(signUpInsertInfo: SignUpInsertInfo) : Boolean { // Sign up, Complete!
@@ -130,9 +127,8 @@ class Repository {
         return PostApi.instance.addPostViewCount(addPostViewCountInfo).await().results.get("isSuccess").asBoolean
     }
 
-    suspend fun getUploadUrls(getUploadUrlsInfo: GetUploadUrlsInfo): ArrayList<String>{
-        val tmp = FileApi.instance.getUploadUrls(getUploadUrlsInfo).await().results.get("urls")
-        return Gson().fromJson(tmp,ArrayList<String>().javaClass)
+    suspend fun getUploadUrls(getUploadUrlsInfo: GetUploadUrlsInfo): JsonArray{
+        return FileApi.instance.getUploadUrls(getUploadUrlsInfo).await().results.get("urls").asJsonArray
     }
     suspend fun uploadImage(file:RequestBody,url:String){
         FileApi.instance.uploadImage(file,url).await()

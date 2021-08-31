@@ -1,14 +1,13 @@
 package com.rudder.data.remote
 
 import com.google.gson.JsonObject
+import com.google.gson.annotations.SerializedName
 import com.rudder.data.LoginInfo
 import com.rudder.data.Response
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Url
+import retrofit2.http.*
 
 interface FileService {
     @POST("/board/getUploadSignedUrls")
@@ -18,11 +17,13 @@ interface FileService {
 
     @PUT
     suspend fun uploadImage(
-        @Body file:RequestBody
+        @Url path:String,@Body file:RequestBody
     ) : Call<Void>
 }
 
 data class GetUploadUrlsInfo(
     val contentTypes:ArrayList<String>,
-    val token:String
+    val token:String,
+    @SerializedName("post_id")
+    val postId:Int
 )

@@ -5,6 +5,7 @@ import android.content.ContentResolver
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ import com.rudder.databinding.FragmentAddPostDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.AddPostShowImagesAdapter
 import com.rudder.util.AddPostImagesOnclickListener
+import com.rudder.util.FileUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_add_post_display.*
 
@@ -107,10 +109,16 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
             data?.let {
                 var uriList = arrayListOf<FileInfo>()
                 when{
-                    it.data !=null-> uriList.add(FileInfo(it.data!!,lazyContext.contentResolver.getType(it.data!!)!!))
+                    it.data !=null-> {
+                        val uri = it.data!!
+                        val path = FileUtil.createCopyAndReturnRealPath(lazyContext,uri).toString()
+                        uriList.add(FileInfo(uri,lazyContext.contentResolver.getType(uri)!!,path))
+                    }
                     it.clipData != null ->{
                         for(i in 0 until it.clipData!!.itemCount){
-                            uriList.add(FileInfo(it.clipData!!.getItemAt(i).uri,lazyContext.contentResolver.getType(it.clipData!!.getItemAt(i).uri)!!))
+                            val uri = it.clipData!!.getItemAt(i).uri
+                            val path = FileUtil.createCopyAndReturnRealPath(lazyContext,uri).toString()
+                            uriList.add(FileInfo(uri,lazyContext.contentResolver.getType(uri)!!,path))
                         }
                     }
                     else ->{

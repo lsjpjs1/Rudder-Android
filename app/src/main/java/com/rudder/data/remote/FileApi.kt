@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 
 class FileApi {
@@ -24,9 +25,9 @@ class FileApi {
         }
     }
     suspend fun uploadImage(file:RequestBody, signedUrl:String): Deferred<Call<Void>> {
-        val fileTransferService : FileService = RetrofitClient.getClient(signedUrl).create(FileService::class.java)
+
         return GlobalScope.async(Dispatchers.IO) {
-            fileTransferService.uploadImage(file)
+            fileService.uploadImage(signedUrl,file)
         }
     }
 }

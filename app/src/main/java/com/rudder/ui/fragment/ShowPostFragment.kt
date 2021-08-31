@@ -13,6 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentShowPostBinding
+import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.adapter.DisplayImagesAdapter
 import com.rudder.ui.adapter.PostCommentsAdapter
 import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
@@ -42,6 +44,16 @@ class ShowPostFragment: Fragment() {
             it.setHasFixedSize(false)
             it.adapter = adapter
         }
+        val displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+        fragmentBinding.showPostImageDisplayRecyclerView.also {
+            it.layoutManager = object : LinearLayoutManager(lazyContext){
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
+            it.setHasFixedSize(false)
+            it.adapter = displayImagesAdapter
+        }
         val currentPost = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(currentPost.postTime.time))
         fragmentBinding.post = currentPost
@@ -57,6 +69,8 @@ class ShowPostFragment: Fragment() {
 
         viewModel.selectedPostPosition.observe(viewLifecycleOwner, Observer {
             fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+            displayImagesAdapter.imageUrlList = viewModel.posts.value!![it].imageUrls
+            displayImagesAdapter.notifyDataSetChanged()
         })
         viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
 
