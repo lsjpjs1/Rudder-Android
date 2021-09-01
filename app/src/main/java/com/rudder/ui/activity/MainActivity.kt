@@ -78,20 +78,23 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isPostMore.observe(this, Observer {
             if(it.getContentIfNotHandled()!!) {
-                communityPostBottomSheetFragment.show(supportFragmentManager, communityPostBottomSheetFragment.tag)
+                if (!communityPostBottomSheetFragment.isAdded)
+                    communityPostBottomSheetFragment.show(supportFragmentManager, communityPostBottomSheetFragment.tag)
             }
         })
 
         viewModel.isCommentMore.observe(this, Observer {
             if(it.getContentIfNotHandled()!!) {
-                communityCommentBottomSheetFragment.show(supportFragmentManager, communityCommentBottomSheetFragment.tag)
+                if (!communityCommentBottomSheetFragment.isAdded)
+                    communityCommentBottomSheetFragment.show(supportFragmentManager, communityCommentBottomSheetFragment.tag)
             }
         })
 
 
         viewModel.isPostReport.observe(this, Observer {
             if(it.getContentIfNotHandled()!!) {
-                communityPostReportFragment.show(supportFragmentManager, communityPostReportFragment.tag)
+                if (!communityPostReportFragment.isAdded)
+                    communityPostReportFragment.show(supportFragmentManager, communityPostReportFragment.tag)
             }
         })
 
@@ -125,13 +128,15 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isCommentReport.observe(this, Observer {
             if(it.getContentIfNotHandled()!!) {
-                communityPostReportFragment.show(supportFragmentManager, communityPostReportFragment.tag)
+                if (!communityPostReportFragment.isAdded)
+                    communityPostReportFragment.show(supportFragmentManager, communityPostReportFragment.tag)
             }
         })
 
         viewModel.isCommentEdit.observe(this, Observer {
             if(it.getContentIfNotHandled()!!){
-                communityCommentEditFragment.show(supportFragmentManager, communityCommentEditFragment.tag)
+                if (!communityPostReportFragment.isAdded)
+                    communityPostReportFragment.show(supportFragmentManager, communityCommentEditFragment.tag)
             }
         })
 

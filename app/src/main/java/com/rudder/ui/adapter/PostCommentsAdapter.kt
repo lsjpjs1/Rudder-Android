@@ -82,7 +82,9 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
                     }
             )
         }
-
+//
+//        if(commentList[position]이 차일드 이고 그룹명이 N이고, , 그룹명은 N-1이면)
+//            commentList 중간에 하나 추가하자.
 
 
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(commentList[position].postTime.time))
