@@ -6,13 +6,22 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
-import com.rudder.databinding.PostCommentsBinding
 import com.rudder.databinding.ShowPostDisplayImageBinding
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
-class DisplayImagesAdapter(var imageUrlList:ArrayList<String>, val context:Context, val displaySize:ArrayList<Int>): RecyclerView.Adapter<DisplayImagesAdapter.CustomViewHolder>() {
-    inner class CustomViewHolder(val showPostDisplayImageBinding: ShowPostDisplayImageBinding) : RecyclerView.ViewHolder(showPostDisplayImageBinding.root)
+
+class DisplayImagesAdapter(
+    var imageUrlList: ArrayList<String>,
+    val context: Context,
+    val displaySize: ArrayList<Int>
+): RecyclerView.Adapter<DisplayImagesAdapter.CustomViewHolder>() {
+    inner class CustomViewHolder(val showPostDisplayImageBinding: ShowPostDisplayImageBinding) : RecyclerView.ViewHolder(
+        showPostDisplayImageBinding.root
+    )
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -31,9 +40,11 @@ class DisplayImagesAdapter(var imageUrlList:ArrayList<String>, val context:Conte
     }
 
     override fun onBindViewHolder(holder: DisplayImagesAdapter.CustomViewHolder, position: Int) {
-        Glide.with(holder.showPostDisplayImageBinding.showPostDisplayImageImageView.context)
+        Glide.with(holder.showPostDisplayImageBinding.root.context)
             .load(imageUrlList[position])
-            .into(holder.showPostDisplayImageBinding.showPostDisplayImageImageView)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(holder.showPostDisplayImageBinding.root.showPostDisplayImageImageView)
+
     }
 
     override fun getItemCount(): Int {
