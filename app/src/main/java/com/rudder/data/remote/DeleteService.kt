@@ -8,26 +8,17 @@ import com.rudder.data.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface DeletePostService {
+interface DeleteService {
     @POST("/board/deletePost")
     suspend fun deletePostService(
             @Body deletePostInfo: DeletePostInfo
 
     ) : Response<JsonObject>
-}
 
 
-
-interface DeleteCommentService {
     @POST("/comment/deleteComment")
     suspend fun deleteCommentService(
         @Body deleteCommentInfo: DeleteCommentInfo
 
     ) : Response<JsonObject>
 }
-
-
-
-
-
-

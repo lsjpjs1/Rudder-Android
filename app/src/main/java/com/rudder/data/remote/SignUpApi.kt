@@ -15,43 +15,34 @@ class SignUpApi {
     companion object{
         val instance = SignUpApi()
     }
+    private val singUpService : SignUpService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(SignUpService::class.java)
 
-    private val singUpEmailService : SingUpEmailService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(SingUpEmailService::class.java)
 
     fun emailSignUp(emailInfo: EmailInfo) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){
-            singUpEmailService.emailSignUp(emailInfo)
+            singUpService.emailSignUp(emailInfo)
         } }
-
-
-    private val idDuplicatedService : IdDuplicatedService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(IdDuplicatedService::class.java)
 
     fun idDuplicatedSignUp(idDuplicatedInfo: IdDuplicatedInfo) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){
-            idDuplicatedService.idDuplicatedSignup(idDuplicatedInfo)
+            singUpService.idDuplicatedSignup(idDuplicatedInfo)
         } }
-
-
-    private val checkVerifyCodeService : CheckVerifyCodeService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(CheckVerifyCodeService::class.java)
 
     fun checkVerifySignUp(checkVeriCodeInfo: CheckVerifyCodeInfo) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){
-            checkVerifyCodeService.verifyCodeSignUp(checkVeriCodeInfo)
+            singUpService.verifyCodeSignUp(checkVeriCodeInfo)
         } }
 
-
-    private val schoolListService : SchoolListService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(SchoolListService::class.java)
 
     fun schoolListSignUp() : Deferred<Response<JsonArray>> {
         return GlobalScope.async(Dispatchers.IO){
-            schoolListService.schoolListSignUp()
+            singUpService.schoolListSignUp()
         } }
 
-    private val createAccountService : CreateAccountService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(CreateAccountService::class.java)
 
     fun createAccountSignUp(signUpInsertInfo: SignUpInsertInfo) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){
-            createAccountService.createAccountSignUp(signUpInsertInfo)
+            singUpService.createAccountSignUp(signUpInsertInfo)
         } }
 
 

@@ -17,18 +17,17 @@ class DeleteApi {
         val instance = DeleteApi()
     }
 
-    private val deletePostService : DeletePostService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(DeletePostService::class.java)
+    private val deleteService : DeleteService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(DeleteService::class.java)
+
     fun deletePostApi(deletePostInfo : DeletePostInfo) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){
-            deletePostService.deletePostService(deletePostInfo)
+            deleteService.deletePostService(deletePostInfo)
         }
     }
 
-
-    private val deletecommentService : DeleteCommentService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(DeleteCommentService::class.java)
     fun deletecommentApi(deletecommentInfo : DeleteCommentInfo) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){
-            deletecommentService.deleteCommentService(deletecommentInfo)
+            deleteService.deleteCommentService(deletecommentInfo)
         }
     }
     

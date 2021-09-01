@@ -116,13 +116,8 @@ class MainActivity : AppCompatActivity() {
                     communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
                     viewModel.getPosts()
-
-//                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-//                    fragmentShowHide.hideFragment(showPostFragment)
-
-                    if (showPostFragment.isAdded())
+                    if (showPostFragment.isAdded)
                         onBackPressed()
-
                 }
             }
         })

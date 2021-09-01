@@ -10,40 +10,33 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import org.json.JSONObject
 
-interface SingUpEmailService {
+
+interface SignUpService{
     @POST("/schoolverify/verifyEmail")
     suspend fun emailSignUp(
-            @Body email : EmailInfo
+        @Body email : EmailInfo
     ) : Response<JsonObject>
-}
 
-interface IdDuplicatedService {
     @POST("/signupin/checkduplication")
     suspend fun idDuplicatedSignup(
         @Body userId : IdDuplicatedInfo
     ) : Response<JsonObject>
-}
 
-interface CheckVerifyCodeService {
     @POST("/schoolverify/checkCode")
     suspend fun verifyCodeSignUp(
         @Body verifyInfo : CheckVerifyCodeInfo
     ) : Response<JsonObject>
-}
 
-
-interface SchoolListService {
     @POST("/signupin/schoolList")
     suspend fun schoolListSignUp(
     ) : Response<JsonArray>
-}
 
-interface CreateAccountService {
     @POST("/signupin/signupinsert")
     suspend fun createAccountSignUp(
         @Body signUpInsertInfo : SignUpInsertInfo
     ) : Response<JsonObject>
 }
+
 
 
 
