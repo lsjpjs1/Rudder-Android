@@ -3,7 +3,7 @@ package com.rudder.util
 import androidx.recyclerview.widget.DiffUtil
 import com.rudder.data.Comment
 
-class CommentsDiffCallback(private val oldList:ArrayList<Comment>, private val newList: ArrayList<Comment>) : DiffUtil.Callback() {
+class CommentsDiffCallback(private val oldList:ArrayList<Comment>, private val newList: ArrayList<Comment>, private val flag : Boolean) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size
     }
@@ -13,10 +13,16 @@ class CommentsDiffCallback(private val oldList:ArrayList<Comment>, private val n
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].commentId == newList[newItemPosition].commentId
+        return if (flag)
+                oldList[oldItemPosition].commentId == newList[newItemPosition].commentId
+            else
+                false
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return (oldList[oldItemPosition].likeCount == newList[newItemPosition].likeCount)
+        return if (flag)
+            oldList[oldItemPosition].likeCount == newList[newItemPosition].likeCount
+        else
+            false
     }
 }

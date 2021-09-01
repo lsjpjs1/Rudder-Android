@@ -44,7 +44,6 @@ class CommunityCommentBottomSheetFragment : BottomSheetDialogFragment() {
             it?.let {
                 communityCommentBottomSheetBinding.position = it
                 Log.d("comttomSheetBinding","${communityCommentBottomSheetBinding.position}")
-
             }
         })
 

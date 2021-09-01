@@ -25,7 +25,7 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Context, val viewModel: MainViewModel): RecyclerView.Adapter<PostCommentsAdapter.CustomViewHolder>() {
+class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Context, val viewModel: MainViewModel): RecyclerView.Adapter<PostCommentsAdapter.CustomViewHolder>() {
     inner class CustomViewHolder(val postCommentsBinding: PostCommentsBinding) : RecyclerView.ViewHolder(postCommentsBinding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostCommentsAdapter.CustomViewHolder {
         val bind = DataBindingUtil.inflate<PostCommentsBinding>(
@@ -82,6 +82,8 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
                     }
             )
         }
+
+//        if(commentList[position].)
 //
 //        if(commentList[position]이 차일드 이고 그룹명이 N이고, , 그룹명은 N-1이면)
 //            commentList 중간에 하나 추가하자.
@@ -98,9 +100,10 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
         return commentList.size
     }
 
-    fun updateComments(newComments: ArrayList<Comment>){
-        if(newComments.size>0) {
-            val diffCallback: CommentsDiffCallback = CommentsDiffCallback(commentList, newComments)
+    fun updateComments(newComments: ArrayList<Comment>, deleteFlag : Boolean){
+        if(newComments.size>=0) {
+            Log.d("updateComments","updateComments")
+            val diffCallback: CommentsDiffCallback = CommentsDiffCallback(commentList, newComments, deleteFlag)
             val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
 
             commentList.clear()
@@ -108,5 +111,17 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
             diffResult.dispatchUpdatesTo(this)
         }
     }
+
+//    fun deleteComments(newComments: ArrayList<Comment>){
+//        if(newComments.size>0) {
+//            Log.d("deleteComments","deleteComments")
+//            val diffCallback: CommentsDiffCallback = CommentsDiffCallback(commentList, newComments, false)
+//            val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
+//
+//            commentList.clear()
+//            commentList.addAll(newComments)
+//            diffResult.dispatchUpdatesTo(this)
+//        }
+//    }
 
 }

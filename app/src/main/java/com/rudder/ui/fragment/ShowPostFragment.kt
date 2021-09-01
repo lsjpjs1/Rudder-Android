@@ -43,12 +43,15 @@ class ShowPostFragment: Fragment() {
         fragmentBinding.post = currentPost
         fragmentBinding.mainVM = viewModel
         fragmentBinding.position = viewModel.selectedPostPosition.value!!
-
         fragmentBinding.lifecycleOwner = this
 
 
         viewModel.comments.observe(viewLifecycleOwner, Observer {
-            adapter.updateComments(it)
+            var deleteCommentflag = false
+            viewModel.commentDeleteComplete.value!!.getContentIfNotHandled()?.let{
+                deleteCommentflag = it
+            }
+            adapter.updateComments(viewModel.comments.value!!, !deleteCommentflag)
         })
 
         viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {

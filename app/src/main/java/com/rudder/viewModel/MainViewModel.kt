@@ -67,6 +67,8 @@ class MainViewModel : ViewModel() {
     private val _isCommentEdit = MutableLiveData<Event<Boolean>>()
     private val _isCommentDelete = MutableLiveData<Event<Boolean>>()
 
+    private val _commentDeleteComplete = MutableLiveData<Event<Boolean>>()
+
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
 
 
@@ -101,6 +103,8 @@ class MainViewModel : ViewModel() {
     val isCommentReport: LiveData<Event<Boolean>> = _isCommentReport
     val isCommentEdit: LiveData<Event<Boolean>> = _isCommentEdit
     val isCommentDelete: LiveData<Event<Boolean>> = _isCommentDelete
+
+    val commentDeleteComplete: LiveData<Event<Boolean>> = _commentDeleteComplete
 
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
 
@@ -149,6 +153,9 @@ class MainViewModel : ViewModel() {
         clearNestedCommentInfo()
         getPosts()
         getCategories()
+
+
+        _commentDeleteComplete.value = Event(false)
     }
 
 
@@ -414,12 +421,17 @@ class MainViewModel : ViewModel() {
         GlobalScope.launch {
             var result = Repository().deleteCommentRepository(DeleteCommentInfo(commentInt, postInt))
             _isCommentDelete.postValue(Event(result))
+
+            _commentDeleteComplete.postValue(Event(result))
+
             if (result) {
                 _posts.value!![_selectedPostPosition.value!!].commentCount = _posts.value!![_selectedPostPosition.value!!].commentCount - 1
                 _commentCountChange.postValue(Event(result))
                 getComments()
             }
         }
+
+
     }
 
 
