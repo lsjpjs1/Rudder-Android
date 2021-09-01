@@ -11,9 +11,6 @@ class StartActivityUtil() {
     companion object {
         fun callActivity(fromActivity: AppCompatActivity, toActivity: AppCompatActivity) {
             val intent = Intent(fromActivity, toActivity::class.java)
-
-
-
             startActivity(fromActivity, intent, null)
         }
 

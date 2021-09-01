@@ -191,6 +191,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.startLoginActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 StartActivityUtil.callActivity(this, LoginActivity())
+
+                finish()
             }
         })
 

@@ -37,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.startMainActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 StartActivityUtil.callActivity(this, MainActivity() )
+                finish()
             }
         })
         viewModel.startSignUpActivity.observe(this, Observer {
