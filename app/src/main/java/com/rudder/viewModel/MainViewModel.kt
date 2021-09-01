@@ -411,9 +411,6 @@ class MainViewModel : ViewModel() {
         val commentInt = _comments.value!![_selectedCommentMorePosition.value!!].commentId
         val postInt = _posts.value!![_selectedPostPosition.value!!].postId
 
-        Log.d("deletee_commentInt", "$commentInt")
-        Log.d("deletee_postInt", "$postInt")
-
         GlobalScope.launch {
             var result = Repository().deleteCommentRepository(DeleteCommentInfo(commentInt, postInt))
             _isCommentDelete.postValue(Event(result))

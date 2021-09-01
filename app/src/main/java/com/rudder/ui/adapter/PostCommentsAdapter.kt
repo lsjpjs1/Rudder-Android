@@ -84,6 +84,7 @@ class PostCommentsAdapter(val commentList: ArrayList<Comment>,val context: Conte
         }
 
 
+
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(commentList[position].postTime.time))
         holder.postCommentsBinding.mainVM = viewModel
         holder.postCommentsBinding.comment = commentList[position]
