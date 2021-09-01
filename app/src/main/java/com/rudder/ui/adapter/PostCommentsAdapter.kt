@@ -112,16 +112,5 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
         }
     }
 
-//    fun deleteComments(newComments: ArrayList<Comment>){
-//        if(newComments.size>0) {
-//            Log.d("deleteComments","deleteComments")
-//            val diffCallback: CommentsDiffCallback = CommentsDiffCallback(commentList, newComments, false)
-//            val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
-//
-//            commentList.clear()
-//            commentList.addAll(newComments)
-//            diffResult.dispatchUpdatesTo(this)
-//        }
-//    }
 
 }
