@@ -57,6 +57,8 @@ class SignUpViewModel : ViewModel() {
     val _createAccountBack = MutableLiveData<Event<Boolean>>()
     val _profileSettingNext = MutableLiveData<Event<Boolean>>()
     val _profileSettingBack = MutableLiveData<Event<Boolean>>()
+    val _categorySelectNext = MutableLiveData<Event<Boolean>>()
+    val _categorySelectBack = MutableLiveData<Event<Boolean>>()
 
     val _idChangeFlag = MutableLiveData<Event<Boolean>>()
     val _passwordFlag = MutableLiveData<Event<Boolean>>()
@@ -96,6 +98,10 @@ class SignUpViewModel : ViewModel() {
     val createAccountBack: LiveData<Event<Boolean>> = _createAccountBack
     val profileSettingNext: LiveData<Event<Boolean>> = _profileSettingNext
     val profileSettingBack: LiveData<Event<Boolean>> = _profileSettingBack
+    val categorySelectNext: LiveData<Event<Boolean>> = _categorySelectNext
+    val categorySelectBack: LiveData<Event<Boolean>> = _categorySelectBack
+
+
 
     val idChangeFlag : LiveData<Event<Boolean>> = _idChangeFlag
     val passwordFlag : LiveData<Event<Boolean>> = _passwordFlag
@@ -129,9 +135,8 @@ class SignUpViewModel : ViewModel() {
         _userSchoolInt.value = 0
         _userIntroduce.value = ""
 
-
+        callSchoolList()
         getCategories()
-
     }
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
@@ -151,7 +156,7 @@ class SignUpViewModel : ViewModel() {
         _verifiCodeChangeFlag.value = Event(true)
     }
 
-    fun clearValue() {
+    fun clearEmailValue() {
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
     }
@@ -198,7 +203,7 @@ class SignUpViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        Log.d("onCleared","onCleared")
+        Log.d("onClearedSignUpVM","onClearedSignUpVM")
     }
 
 
@@ -230,6 +235,15 @@ class SignUpViewModel : ViewModel() {
     fun clickBackProfileSetting(){
         _profileSettingBack.value = Event(true)
     }
+
+    fun clickNextProfileSetting(){
+        _profileSettingNext.value = Event(true)
+    }
+
+    fun clickBackCategorySelect(){
+        _categorySelectBack.value = Event(true)
+    }
+
 
 
     fun onSelectItem(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
@@ -304,7 +318,7 @@ class SignUpViewModel : ViewModel() {
 
             val result = repository.signUpCreateAccount(inputInfo)
             Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
-            _profileSettingNext.postValue(Event(result))
+            _categorySelectNext.postValue(Event(result))
         }
     }
 

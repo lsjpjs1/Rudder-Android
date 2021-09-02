@@ -48,7 +48,7 @@ class ProfileSettingFragment : Fragment() {
                     ChangeUIState.changeCheckBoxFalseState(nickNameCheckbox)
                     toastNickName.show()
                     }
-                ChangeUIState.buttonEnable(signUpFinishBtn,nickNameCheckbox.isChecked)
+                ChangeUIState.buttonEnable(profileSettingNextBtn,nickNameCheckbox.isChecked)
             }})
 
         profileSettingBinding.root.introduceCheckbox.isChecked = true
@@ -57,7 +57,7 @@ class ProfileSettingFragment : Fragment() {
         profileSettingBinding.root.imageSettingCheckbox.isChecked = true
         profileSettingBinding.root.imageSettingCheckbox.isEnabled = false
 
-        profileSettingBinding.root.signUpFinishBtn.isEnabled = false
+        profileSettingBinding.root.profileSettingNextBtn.isEnabled = false
 
         return profileSettingBinding.root
     }

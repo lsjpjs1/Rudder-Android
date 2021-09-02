@@ -55,25 +55,23 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         termsOfServiceFragment = TermsOfServiceFragment()
         createAccountFragment = CreateAccountFragment()
         profileSettingFragment = ProfileSettingFragment()
         schoolSelectFragment = SchoolSelectFragment()
         categorySelectFragment = CategorySelectFragment()
 
-
         supportFragmentManager.beginTransaction()
+            .add(R.id.signUp_container, termsOfServiceFragment)
+
+            .add(R.id.signUp_container, schoolSelectFragment)
+            .hide(schoolSelectFragment)
             .add(R.id.signUp_container, createAccountFragment)
             .hide(createAccountFragment)
             .add(R.id.signUp_container, profileSettingFragment)
             .hide(profileSettingFragment)
-            .add(R.id.signUp_container, schoolSelectFragment)
-            .hide(schoolSelectFragment)
-
-            .add(R.id.signUp_container, termsOfServiceFragment)
-            //.add(R.id.signUp_container, categorySelectFragment)
-
+            .add(R.id.signUp_container, categorySelectFragment)
+            .hide(categorySelectFragment)
             .commit()
 
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
@@ -81,10 +79,6 @@ class SignUpActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
-
-
-
-        viewModel.callSchoolList()
 
 
         ProgressBarUtil.progressBarFlag.observe(this, Observer {
@@ -113,8 +107,6 @@ class SignUpActivity : AppCompatActivity() {
             }})
 
 
-
-
         viewModel.schoolSelectNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
@@ -126,7 +118,7 @@ class SignUpActivity : AppCompatActivity() {
                     submitBtn.isEnabled = false
                     createAccountNextBtn.isEnabled = false
                     ChangeUIState.changeCheckBoxFalseState(veifyCodeCheckbox)
-                    viewModel.clearValue()
+                    viewModel.clearEmailValue()
                 }
             }})
 
@@ -154,7 +146,22 @@ class SignUpActivity : AppCompatActivity() {
                 if (it) onBackPressed()
             }})
 
+
         viewModel.profileSettingNext.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) {
+                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                    fragmentShowHide.addToBackStack()
+                    fragmentShowHide.showFragment(categorySelectFragment, R.id.signUp_container)
+                } }})
+
+
+        viewModel.categorySelectBack.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) onBackPressed()
+            }})
+
+        viewModel.categorySelectNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     StartActivityUtil.callActivity(this, LoginActivity())
@@ -162,6 +169,7 @@ class SignUpActivity : AppCompatActivity() {
                     toastSignUpComplete.show()
                 }
             }}) // signUP Complete !
+
     }
 
 

@@ -158,14 +158,14 @@
 
 
             <Button
-                android:id="@+id/signUpFinishBtn"
+                android:id="@+id/profileSettingNextBtn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
 
                 android:backgroundTint="#9329D1"
                 android:gravity="center"
-                android:onClick="@{()->signUpVM.callCreateAccount()}"
-                android:text="@string/sign_up"
+                android:onClick="@{()->signUpVM.clickNextProfileSetting()}"
+                android:text="@string/next"
 
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.15"
