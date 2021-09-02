@@ -14,14 +14,14 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/postBottomSheetCL0"
+        android:id="@+id/commentBottomSheetCL0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/postBottomSheetCL4"
+            android:id="@+id/commentBottomSheetCL4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -33,7 +33,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="INFO COMMENT"
@@ -55,13 +55,13 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/postBottomSheetCL1"
+            android:id="@+id/commentBottomSheetCL1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL4"
+            app:layout_constraintTop_toBottomOf="@+id/commentBottomSheetCL4"
             >
 
             <ImageView
@@ -121,11 +121,11 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/postBottomSheetCL2"
+            android:id="@+id/commentBottomSheetCL2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL1">
+            app:layout_constraintTop_toBottomOf="@+id/commentBottomSheetCL1">
 
             <TextView
                 android:layout_width="0dp"
@@ -180,14 +180,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/postBottomSheetCL3"
+            android:id="@+id/commentBottomSheetCL3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL2">
+            app:layout_constraintTop_toBottomOf="@+id/commentBottomSheetCL2">
 
             <TextView
                 android:layout_width="0dp"
