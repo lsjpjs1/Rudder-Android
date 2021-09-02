@@ -386,9 +386,6 @@ class MainViewModel : ViewModel() {
         _isPostMore.value = Event(true)
         _selectedPostMorePosition.value = position
 
-        val key = BuildConfig.TOKEN_KEY
-        val token = App.prefs.getValue(key)
-
         if (_posts.value!![selectedPostMorePosition.value!!].isMine)
             _isPostMine.value = Event(true)
         else
@@ -399,6 +396,11 @@ class MainViewModel : ViewModel() {
     fun clickCommentMore(position: Int) {
         _isCommentMore.value = Event(true)
         _selectedCommentMorePosition.value = position
+
+        if (_comments.value!![_selectedCommentMorePosition.value!!].isMine)
+            _isCommentMine.value = Event(true)
+        else
+            _isCommentMine.value = Event(false)
     }
 
 

@@ -20,6 +20,7 @@ import com.rudder.databinding.FragmentCommunityPostBottomSheetBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_community_post_bottom_sheet.*
+import kotlinx.android.synthetic.main.fragment_community_post_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_school_select.*
 
 
@@ -34,6 +35,7 @@ class CommunityPostBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +45,8 @@ class CommunityPostBottomSheetFragment : BottomSheetDialogFragment() {
         communityPostBottomSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_community_post_bottom_sheet, container,false)
         communityPostBottomSheetBinding.mainVM = viewModel
         communityPostBottomSheetBinding.lifecycleOwner = this
+
+        val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
 
         viewModel.selectedPostMorePosition.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -57,31 +61,32 @@ class CommunityPostBottomSheetFragment : BottomSheetDialogFragment() {
                     postBottomSheetCL2.visibility = View.GONE
                     postBottomSheetCL3.visibility = View.GONE
 
-//                    var lp = communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams
-//                    Log.d("height","${lp.height}")
-//                    lp.height = 300
-//                    communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams = lp
+                    var lp4 = communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams
+                    lp4.height = (displayDpValue[1] * 0.1).toInt()
+                    communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams = lp4
+
+                    var lp1 = communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams
+                    lp1.height = (displayDpValue[1] * 0.1).toInt()
+                    communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams = lp1
                 }
         }})
 
-        val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
 
-        var lp = communityPostBottomSheetBinding.postBottomSheetCL2.layoutParams
-        lp.height = (displayDpValue[1] * 0.1).toInt()
+        var lp1 = communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams
+        lp1.height = (displayDpValue[1] * 0.1).toInt()
+        communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams = lp1
 
-        communityPostBottomSheetBinding.postBottomSheetCL2.layoutParams = lp
-        //communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams = lp
+        var lp2 = communityPostBottomSheetBinding.postBottomSheetCL2.layoutParams
+        lp2.height = (displayDpValue[1] * 0.1).toInt()
+        communityPostBottomSheetBinding.postBottomSheetCL2.layoutParams = lp2
 
-        communityPostBottomSheetBinding.postBottomSheetCL3.layoutParams = lp
-        communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams = lp
+        var lp3 = communityPostBottomSheetBinding.postBottomSheetCL3.layoutParams
+        lp3.height = (displayDpValue[1] * 0.1).toInt()
+        communityPostBottomSheetBinding.postBottomSheetCL3.layoutParams = lp3
 
-        Log.d("height1","${postBottomSheetCL1.height}")
-        Log.d("height3","${postBottomSheetCL3.height}")
-        Log.d("height4","${postBottomSheetCL4.height}")
-
-
-
-
+        var lp4 = communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams
+        lp4.height = (displayDpValue[1] * 0.1).toInt()
+        communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams = lp4
 
         return communityPostBottomSheetBinding.root
     }
