@@ -58,6 +58,8 @@ class MainViewModel : ViewModel() {
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
+    private val _isPostMine = MutableLiveData<Event<Boolean>>()
+    private val _isCommentMine = MutableLiveData<Event<Boolean>>()
 
     private val _isPostReport = MutableLiveData<Event<Boolean>>()
     private val _isPostEdit = MutableLiveData<Event<Boolean>>()
@@ -97,6 +99,8 @@ class MainViewModel : ViewModel() {
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
     val isCommentMore: LiveData<Event<Boolean>> = _isCommentMore
+    val isPostMine: LiveData<Event<Boolean>> = _isPostMine
+    val isCommentMine: LiveData<Event<Boolean>> = _isCommentMine
     val isPostReport: LiveData<Event<Boolean>> = _isPostReport
     val isPostEdit: LiveData<Event<Boolean>> = _isPostEdit
     val isPostDelete: LiveData<Event<Boolean>> = _isPostDelete
@@ -105,6 +109,10 @@ class MainViewModel : ViewModel() {
     val isCommentDelete: LiveData<Event<Boolean>> = _isCommentDelete
 
     val commentDeleteComplete: LiveData<Event<Boolean>> = _commentDeleteComplete
+
+
+
+
 
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
 
@@ -129,6 +137,7 @@ class MainViewModel : ViewModel() {
                 3,
                 "",
                 0,
+                false,
                 false
             )
         )
@@ -376,6 +385,15 @@ class MainViewModel : ViewModel() {
     fun clickPostMore(position: Int) {
         _isPostMore.value = Event(true)
         _selectedPostMorePosition.value = position
+
+        val key = BuildConfig.TOKEN_KEY
+        val token = App.prefs.getValue(key)
+
+        if (_posts.value!![selectedPostMorePosition.value!!].isMine)
+            _isPostMine.value = Event(true)
+        else
+            _isPostMine.value = Event(false)
+
     }
 
     fun clickCommentMore(position: Int) {

@@ -127,6 +127,7 @@ class SignUpViewModel : ViewModel() {
         _schoolList.value = mutableListOf("Select Your School!")
         _userSchoolName.value = ""
         _userSchoolInt.value = 0
+        _userIntroduce.value = ""
 
 
         getCategories()

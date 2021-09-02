@@ -1,10 +1,14 @@
 package com.rudder.ui.activity
 
+import android.app.Activity
 import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -314,5 +318,22 @@ class MainActivity : AppCompatActivity() {
         Log.d("mytag","onDestorymain")
     }
 
+
+
+    fun getDisplaySize():ArrayList<Int>{
+        return if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.R){
+            val windowMetrics = Activity().windowManager.currentWindowMetrics
+            val insets = windowMetrics.windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+            val width = windowMetrics.bounds.width() - insets.left - insets.right
+            val height = windowMetrics.bounds.height() - insets.top - insets.bottom
+            arrayListOf(width,height)
+        }else{
+            val displayMertrics = DisplayMetrics()
+            this.windowManager.defaultDisplay.getMetrics(displayMertrics)
+            val width = displayMertrics.widthPixels
+            val height = displayMertrics.heightPixels
+            arrayListOf(width,height)
+        }
+    }
 
 }

@@ -16,14 +16,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/postBottomSheetCL0"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postBottomSheetCL4"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
 
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.24"
@@ -63,7 +63,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postBottomSheetCL1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="1dp"
 
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.24"
@@ -135,7 +135,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postBottomSheetCL2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
 
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.24"
@@ -199,7 +199,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postBottomSheetCL3"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
 
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.24"
@@ -250,17 +250,17 @@
 
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/postBottomSheetCL5"
-            android:layout_width="match_parent"
-            android:layout_height="12dp"
-            android:visibility="invisible"
-            android:background="@color/grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL3">
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/postBottomSheetCL5"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="12dp"-->
+<!--            android:visibility="invisible"-->
+<!--            android:background="@color/grey"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/postBottomSheetCL3">-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
 
