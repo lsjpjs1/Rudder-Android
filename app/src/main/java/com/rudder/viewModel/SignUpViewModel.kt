@@ -118,7 +118,7 @@ class SignUpViewModel : ViewModel() {
         _schoolList.value = mutableListOf("Select Your School!")
         _userSchoolName.value = ""
         _userSchoolInt.value = 0
-
+        _userIntroduce.value = ""
     }
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()

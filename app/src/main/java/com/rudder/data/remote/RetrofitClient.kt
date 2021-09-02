@@ -23,7 +23,13 @@ object RetrofitClient {
         if(!this::retrofit.isInitialized){
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
-            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+//            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+            val client = OkHttpClient.Builder().addInterceptor(interceptor).addNetworkInterceptor { chain ->
+                val requestBuilder = chain.request().newBuilder()
+                    .removeHeader("User-Agent")
+                    .addHeader("User-Agent","Android")
+                chain.proceed(requestBuilder.build())
+            }.build()
             retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
