@@ -2,6 +2,7 @@ package com.rudder.ui.adapter
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Typeface
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -78,15 +79,15 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
 
                             holder.postCommentsBinding.constraintLayout11.viewTreeObserver.removeOnGlobalLayoutListener(this)
                         }
-
                     }
             )
+        } else if(commentList[position].userId == "-"){ // reply가 있는 삭제된 parent, Comment
+            holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.light_grey_2,null)
+            holder.postCommentsBinding.textView5.setTypeface(holder.postCommentsBinding.textView5.typeface, Typeface.ITALIC)
+            holder.postCommentsBinding.commentHeadPostTimeTV.visibility = View.GONE
+            holder.postCommentsBinding.postPreviewTailLikeCount.visibility = View.GONE
         }
 
-//        if(commentList[position].)
-//
-//        if(commentList[position]이 차일드 이고 그룹명이 N이고, , 그룹명은 N-1이면)
-//            commentList 중간에 하나 추가하자.
 
 
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(commentList[position].postTime.time))

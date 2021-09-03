@@ -311,10 +311,34 @@ class MainViewModel : ViewModel() {
         GlobalScope.launch {
             val resComments = Repository().getComments(getCommentInfo)
             viewModelScope.launch {
-                _comments.value = resComments
+                var tmpCommentList = ArrayList<Comment>()
+                for(idx in resComments.indices) {
+                    Log.d("for_comment", "${resComments[idx]}")
+                    if (idx == 0){
+                        if(resComments[idx].status == "child" ) { // 그 패턴이면
+                            tmpCommentList.add(
+                                Comment("-", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false) //dummyComment
+                            )
+                            tmpCommentList.add(resComments[idx])
+                        }
+                        else
+                            tmpCommentList.add(resComments[idx])
+                    } else {
+                        if(resComments[idx].status == "child" && resComments[idx].groupNum != resComments[idx - 1].groupNum ) { // 그 패턴이면
+                            tmpCommentList.add(
+                                Comment("-", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false) // dummyComment
+                            )
+                            tmpCommentList.add(resComments[idx])
+                        }
+                        else
+                            tmpCommentList.add(resComments[idx])
+                    }
+                }
+                _comments.value = tmpCommentList
                 Log.d("comment", _comments.value.toString())
 
             }
+
         }
     }
 
@@ -441,7 +465,6 @@ class MainViewModel : ViewModel() {
         GlobalScope.launch {
             var result = Repository().deleteCommentRepository(DeleteCommentInfo(commentInt, postInt))
             _isCommentDelete.postValue(Event(result))
-
             _commentDeleteComplete.postValue(Event(result))
 
             if (result) {

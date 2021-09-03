@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +30,8 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
+import kotlinx.android.synthetic.main.post_comments.*
+import java.security.AccessController.getContext
 
 
 class MainActivity : AppCompatActivity() {
