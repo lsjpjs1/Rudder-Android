@@ -111,9 +111,6 @@ class MainViewModel : ViewModel() {
     val commentDeleteComplete: LiveData<Event<Boolean>> = _commentDeleteComplete
 
 
-
-
-
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
 
     val posts: LiveData<ArrayList<PreviewPost>>
@@ -484,7 +481,7 @@ class MainViewModel : ViewModel() {
         GlobalScope.launch {
             var categoryList = Repository().getCategories()
             viewModelScope.launch {
-                _categoryNames.value = splitCategoryNames((categoryList))
+                _categoryNames.value = splitCategoryNames(categoryList)
                 _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
                 categoryList.add(0, Category(0, "All"))
                 _categories.value = categoryList

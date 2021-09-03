@@ -1,10 +1,14 @@
 package com.rudder.ui.activity
 
+import android.app.Activity
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -19,6 +23,7 @@ import com.rudder.util.ChangeUIState
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
+import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.SignUpViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_create_account.*
@@ -26,7 +31,9 @@ import kotlinx.android.synthetic.main.fragment_create_account.verifyBtn
 
 
 class SignUpActivity : AppCompatActivity() {
-    private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
+    private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel::class.java) }
+
+    //private val viewModel: MainViewModel by lazy {ViewModelProvider(this).get(MainViewModel::class.java)  }
 
     private lateinit var termsOfServiceFragment : TermsOfServiceFragment
     private lateinit var createAccountFragment : CreateAccountFragment
@@ -52,6 +59,24 @@ class SignUpActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
+
+    fun getDisplaySize():ArrayList<Int>{
+        return if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.R){
+            val windowMetrics = Activity().windowManager.currentWindowMetrics
+            val insets = windowMetrics.windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+            val width = windowMetrics.bounds.width() - insets.left - insets.right
+            val height = windowMetrics.bounds.height() - insets.top - insets.bottom
+            arrayListOf(width,height)
+        }else{
+            val displayMertrics = DisplayMetrics()
+            this.windowManager.defaultDisplay.getMetrics(displayMertrics)
+            val width = displayMertrics.widthPixels
+            val height = displayMertrics.heightPixels
+            arrayListOf(width,height)
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,7 +87,9 @@ class SignUpActivity : AppCompatActivity() {
         categorySelectFragment = CategorySelectFragment()
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.signUp_container, termsOfServiceFragment)
+            .add(R.id.signUp_container, categorySelectFragment)
+
+            //.add(R.id.signUp_container, termsOfServiceFragment)
 
             .add(R.id.signUp_container, schoolSelectFragment)
             .hide(schoolSelectFragment)
@@ -70,8 +97,8 @@ class SignUpActivity : AppCompatActivity() {
             .hide(createAccountFragment)
             .add(R.id.signUp_container, profileSettingFragment)
             .hide(profileSettingFragment)
-            .add(R.id.signUp_container, categorySelectFragment)
-            .hide(categorySelectFragment)
+            //.add(R.id.signUp_container, categorySelectFragment)
+            //.hide(categorySelectFragment)
             .commit()
 
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
@@ -79,6 +106,8 @@ class SignUpActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
+
+
 
 
         ProgressBarUtil.progressBarFlag.observe(this, Observer {

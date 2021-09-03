@@ -35,6 +35,7 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
                 parent,
                 false
         )
+
         val showPostBodyHeight by lazy {
             (context as Activity).findViewById<ConstraintLayout>(R.id.showPostBody).height
         }

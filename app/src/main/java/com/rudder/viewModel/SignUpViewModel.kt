@@ -27,15 +27,16 @@ import kotlinx.coroutines.launch
 
 
 class SignUpViewModel : ViewModel() {
-    fun getInstance() : SignUpViewModel{
-        return if(this::signUpViewModel.isInitialized){
-            signUpViewModel
-        }else{
-            signUpViewModel = SignUpViewModel()
-            signUpViewModel
-        }
-    }
-    private lateinit var signUpViewModel : SignUpViewModel
+
+//    fun getInstance() : SignUpViewModel{
+//        return if(this::signUpViewModel.isInitialized){
+//            signUpViewModel
+//        }else{
+//            signUpViewModel = SignUpViewModel()
+//            signUpViewModel
+//        }
+//    }
+//    private lateinit var signUpViewModel : SignUpViewModel
 
     val _userId = MutableLiveData<String>()
     val _userPassword = MutableLiveData<String>()
@@ -73,8 +74,8 @@ class SignUpViewModel : ViewModel() {
     val _termsOfServiceFlag = MutableLiveData<Event<Boolean>>()
     val _schoolList = MutableLiveData<MutableList<String>>()
 
-    val _categories = MutableLiveData<ArrayList<Category>>()
-    val _categoryNames = MutableLiveData<ArrayList<String>>()
+    var _categories = MutableLiveData<ArrayList<Category>>()
+    var _categoryNames = MutableLiveData<ArrayList<String>>()
 
 
 
@@ -117,8 +118,8 @@ class SignUpViewModel : ViewModel() {
     val schoolList : LiveData<MutableList<String>> = _schoolList
 
 
-    val categories: LiveData<ArrayList<Category>> = _categories
-    val categoryNames: LiveData<ArrayList<String>> = _categoryNames
+    var categories: LiveData<ArrayList<Category>> = _categories
+    var categoryNames: LiveData<ArrayList<String>> = _categoryNames
 
     private val repository = Repository()
 
@@ -135,6 +136,7 @@ class SignUpViewModel : ViewModel() {
         _userSchoolInt.value = 0
         _userIntroduce.value = ""
 
+        _categoryNames.value = ArrayList()
         callSchoolList()
         getCategories()
     }
@@ -334,11 +336,11 @@ class SignUpViewModel : ViewModel() {
 
     fun getCategories() {
         GlobalScope.launch {
-            var categoryList = Repository().getCategories()
+            var categoryList = repository.getCategories()
             viewModelScope.launch {
-                _categoryNames.value = splitCategoryNames((categoryList))
+                _categoryNames.value = splitCategoryNames(categoryList)
                 _categories.value = categoryList
-                Log.d("_categoryNames.value", "${_categoryNames.value}")
+                Log.d("_categoryNames_VM", "${_categoryNames.value}")
             }
         }
     }

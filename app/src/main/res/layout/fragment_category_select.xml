@@ -76,6 +76,7 @@
             android:id="@+id/constraintLayoutSS2"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:gravity="center_horizontal"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.68"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -85,21 +86,24 @@
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipsPrograms"
-                android:layout_width="match_parent"
+                android:background="@color/purple_200"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
+
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.9"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.9"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0.1"
 
 
-                android:paddingStart="100dp"
-                android:paddingEnd="100dp"
-                android:paddingBottom="100dp"
-
-
-                app:chipSpacing="8dp"
+                app:chipSpacing="0dp"
                 app:singleSelection="false">
 
             </com.google.android.material.chip.ChipGroup>

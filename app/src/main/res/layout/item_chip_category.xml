@@ -1,27 +1,28 @@
-<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.chip.Chip
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     style="@style/Widget.MaterialComponents.Chip.Action"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
+
+    android:layout_width="260dp"
+    android:layout_height="240dp"
 
     android:gravity="center"
-    android:paddingLeft="8dp"
-
     android:checkable="true"
-    android:paddingRight="8dp"
-    android:textAppearance="?android:attr/textAppearance"
+
+
+    android:text="asdasdaserwersd"
+    android:textSize="20dp"
+    android:textStyle="italic"
+
+
+
     android:textColor="@color/black"
     app:chipIcon="@drawable/ic_baseline_check_circle_24"
     app:chipIconTint="@color/grey"
-
     app:checkedIcon="@drawable/ic_baseline_check_circle_24"
     app:checkedIconTint="@color/purple_rudder"
-
     android:layoutDirection="rtl"
 
-    app:layout_constraintHeight_default="percent"
-    app:layout_constraintHeight_percent="0.4"
-    app:layout_constraintWidth_default="percent"
-    app:layout_constraintWidth_percent="1"
+
     />

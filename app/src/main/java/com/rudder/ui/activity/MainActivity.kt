@@ -1,6 +1,7 @@
 package com.rudder.ui.activity
 
 import android.app.Activity
+import android.content.res.Resources
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
@@ -221,7 +222,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.isLikePost.observe(this, Observer {
-
             if(it!!){
                 showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_baseline_thumb_up_24)
             }else{
