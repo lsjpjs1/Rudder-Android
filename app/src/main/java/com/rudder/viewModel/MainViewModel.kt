@@ -96,7 +96,7 @@ class MainViewModel : ViewModel() {
         _selectedPhotoUriList.value = arrayListOf()
         _postBody.value = ""
         _categories.value = arrayListOf(
-            Category(0, "All")
+            Category(-1, "All")
         )
         _posts.value = arrayListOf(
             PreviewPost(
@@ -412,7 +412,7 @@ class MainViewModel : ViewModel() {
                 viewModelScope.launch {
                     _categoryNames.value = splitCategoryNames((categoryList))
                     _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
-                    categoryList.add(0, Category(0, "All"))
+                    categoryList.add(0, Category(-1, "All"))
                     _categories.value = categoryList
                 }
             }
