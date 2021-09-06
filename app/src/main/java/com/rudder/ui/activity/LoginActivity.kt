@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        App.prefs.removeValue(BuildConfig.TOKEN_KEY)
         val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
         binding.loginVM = viewModel
         binding.lifecycleOwner = this
