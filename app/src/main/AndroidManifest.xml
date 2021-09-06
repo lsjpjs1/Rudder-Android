@@ -3,6 +3,8 @@
     package="com.rudder">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
     <application
         android:name=".data.local.App"
@@ -31,6 +33,12 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <service
+            android:name=".util.MyFireBaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

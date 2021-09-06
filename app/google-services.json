@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "320171705838",
+    "project_id": "rudder-new",
+    "storage_bucket": "rudder-new.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320171705838:android:53437b2709bfb2977fbaff",
+        "android_client_info": {
+          "package_name": "com.rudder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320171705838-4ajgfj9bkeplevld8h5flnrmc18qehkn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rudder",
+            "certificate_hash": "fced4ca097e11073e77646f9ee0d9b43ce50bbd5"
+          }
+        },
+        {
+          "client_id": "320171705838-fn9vm4046nse1bempu9qed69q234ncnd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgd8viedlq1eKhBVUFqGSRVqYPyo6aVWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320171705838-fn9vm4046nse1bempu9qed69q234ncnd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 
 
 class LoginViewModel() : ViewModel() {
+    private val NOTIFICATION_TOKEN_KEY = "notificationKey"
     val _userId = MutableLiveData<String>()
     val _userPassword = MutableLiveData<String>()
     private val _showLoginErrorToast = MutableLiveData<Event<Boolean>>()
@@ -65,7 +66,7 @@ class LoginViewModel() : ViewModel() {
 
     fun callLogin(){
         GlobalScope.launch {
-            val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!))
+            val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!,App.prefs.getValue(NOTIFICATION_TOKEN_KEY)!!))
             viewModelScope.launch{
                 if(result){
                     _startMainActivity.value = Event(true)
