@@ -10,6 +10,8 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rudder.R
@@ -32,6 +34,14 @@ object ProgressBarUtil {
         activityID.setBackgroundResource(colorResource)
         activity.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
+
+
+//    fun asd(progressBar: View, activityID: ViewGroup, colorResource: Int, fragment: Fragment){
+//        progressBar.visibility = View.VISIBLE
+//        activityID.setBackgroundResource(colorResource)
+//        fragment.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+//
+//    }
 
 }
 

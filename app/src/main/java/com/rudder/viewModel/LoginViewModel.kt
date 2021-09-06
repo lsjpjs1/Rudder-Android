@@ -15,6 +15,7 @@ import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
+import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -65,6 +66,8 @@ class LoginViewModel() : ViewModel() {
 
     fun callLogin(){
         GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
             val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!))
             Log.d("result", "${result}" )
             viewModelScope.launch{
@@ -74,6 +77,7 @@ class LoginViewModel() : ViewModel() {
                     _showLoginErrorToast.value = Event(true)
                 }
             }
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 

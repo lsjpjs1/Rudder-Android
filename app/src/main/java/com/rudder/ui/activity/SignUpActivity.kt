@@ -87,9 +87,9 @@ class SignUpActivity : AppCompatActivity() {
         categorySelectFragment = CategorySelectFragment()
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.signUp_container, categorySelectFragment)
+            //.add(R.id.signUp_container, categorySelectFragment)
 
-            //.add(R.id.signUp_container, termsOfServiceFragment)
+            .add(R.id.signUp_container, termsOfServiceFragment)
 
             .add(R.id.signUp_container, schoolSelectFragment)
             .hide(schoolSelectFragment)
@@ -97,8 +97,8 @@ class SignUpActivity : AppCompatActivity() {
             .hide(createAccountFragment)
             .add(R.id.signUp_container, profileSettingFragment)
             .hide(profileSettingFragment)
-            //.add(R.id.signUp_container, categorySelectFragment)
-            //.hide(categorySelectFragment)
+            .add(R.id.signUp_container, categorySelectFragment)
+            .hide(categorySelectFragment)
             .commit()
 
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)

@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment
 
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentShowPostBinding
 import com.rudder.ui.adapter.PostCommentsAdapter
+import com.rudder.util.ProgressBarUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_show_post.*
 
@@ -85,6 +87,7 @@ class ShowPostFragment: Fragment() {
 
                 }
         )
+
 
         //fragmentBinding.postMoreImageView.setOnClickListener (postMoreOnclickListener)
 

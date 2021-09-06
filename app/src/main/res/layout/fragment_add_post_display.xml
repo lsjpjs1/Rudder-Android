@@ -64,13 +64,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
 
-
                             android:selectedItemPosition="@={mainVM._postCategoryInt}"
                             android:onItemSelected="@{(parent,view,pos,id)->mainVM.onSelectItem(parent,view,pos,id)}"
-
                             >
-
                         </Spinner>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

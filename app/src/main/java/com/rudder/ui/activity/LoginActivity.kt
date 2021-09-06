@@ -10,9 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.databinding.ActivityLoginBinding
+import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -51,6 +53,18 @@ class LoginActivity : AppCompatActivity() {
                 StartActivityUtil.callActivity(this, ForgotActivity())
             }
         })
+
+
+        ProgressBarUtil.progressBarFlag.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it){
+                    ProgressBarUtil.progressBarVisible(progressBarLogin,loginContainer,R.color.transparent, this)
+                }
+                else
+                    ProgressBarUtil.progressBarGone(progressBarLogin,loginContainer,R.color.white, this)
+            }
+        })
+
     }
 
     override fun onDestroy() {

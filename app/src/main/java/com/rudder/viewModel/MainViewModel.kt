@@ -15,6 +15,7 @@ import com.rudder.data.local.App
 import com.rudder.data.remote.*
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
+import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.sql.Timestamp
@@ -62,7 +63,7 @@ class MainViewModel : ViewModel() {
     private val _isCommentMine = MutableLiveData<Event<Boolean>>()
 
     private val _isPostReport = MutableLiveData<Event<Boolean>>()
-    private val _isPostEdit = MutableLiveData<Event<Boolean>>()
+    private val _isPostEdit = MutableLiveData<Boolean?>()
     private val _isPostDelete = MutableLiveData<Event<Boolean>>()
 
     private val _isCommentReport = MutableLiveData<Event<Boolean>>()
@@ -102,11 +103,12 @@ class MainViewModel : ViewModel() {
     val isPostMine: LiveData<Event<Boolean>> = _isPostMine
     val isCommentMine: LiveData<Event<Boolean>> = _isCommentMine
     val isPostReport: LiveData<Event<Boolean>> = _isPostReport
-    val isPostEdit: LiveData<Event<Boolean>> = _isPostEdit
+    val isPostEdit: LiveData<Boolean?> = _isPostEdit
     val isPostDelete: LiveData<Event<Boolean>> = _isPostDelete
     val isCommentReport: LiveData<Event<Boolean>> = _isCommentReport
     val isCommentEdit: LiveData<Event<Boolean>> = _isCommentEdit
     val isCommentDelete: LiveData<Event<Boolean>> = _isCommentDelete
+
 
     val commentDeleteComplete: LiveData<Event<Boolean>> = _commentDeleteComplete
 
@@ -154,12 +156,11 @@ class MainViewModel : ViewModel() {
         )
         _postBody.value = ""
         _categories.value = arrayListOf(
-            Category(0, "All")
+            Category(-1, "All")
         )
         clearNestedCommentInfo()
         getPosts()
         getCategories()
-
 
         _commentDeleteComplete.value = Event(false)
     }
@@ -345,6 +346,8 @@ class MainViewModel : ViewModel() {
             _posts.value!![_selectedPostPosition.value!!].commentCount + 1
         _commentCountChange.value = Event(true)
         GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
             if (_selectedCommentGroupNum.value == -1) { // _selectedCommentGroupNum.value==-1 -> parent인 댓글
                 addCommentInfo = AddCommentInfo(
                     _posts.value!![_selectedPostPosition.value!!].postId,
@@ -367,6 +370,7 @@ class MainViewModel : ViewModel() {
                 getComments()
                 _commentBody.postValue("")
             }
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 
@@ -430,7 +434,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun clickPostEdit() {
-        _isPostEdit.value = Event(true)
+        switch(_isPostEdit)
         _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
         _postCategoryInt.value = _posts.value!![selectedPostMorePosition.value!!].categoryId - 1
     }
@@ -483,7 +487,8 @@ class MainViewModel : ViewModel() {
             viewModelScope.launch {
                 _categoryNames.value = splitCategoryNames(categoryList)
                 _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
-                categoryList.add(0, Category(0, "All"))
+                categoryList.add(0, Category(-1, "All"))
+
                 _categories.value = categoryList
             }
         }
@@ -560,6 +565,11 @@ class MainViewModel : ViewModel() {
             _commentBodyCheck.value = Event(true)
         else
             _commentBodyCheck.value = Event(false)
+    }
+
+
+    fun switch(mutableLiveData: MutableLiveData<Boolean?>){
+        mutableLiveData.value = if(mutableLiveData.value==null) true else !mutableLiveData.value!!
     }
 
 }

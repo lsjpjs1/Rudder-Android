@@ -26,8 +26,10 @@ import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.fragment_add_post_display.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
@@ -107,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.isPostEdit.observe(this, Observer {
-            if(it.getContentIfNotHandled()!!){
+            it?.let{
                 communityPostBottomSheetFragment.dismiss()
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
@@ -117,6 +119,7 @@ class MainActivity : AppCompatActivity() {
 
                 fragmentShowHide.addFragment(editPostFragment,R.id.mainDisplay,"editPost")
                 fragmentShowHide.showFragment(editPostFragment,R.id.mainDisplay)
+
             }
         })
 
@@ -143,8 +146,8 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isCommentEdit.observe(this, Observer {
             if(it.getContentIfNotHandled()!!){
-                if (!communityPostReportFragment.isAdded)
-                    communityPostReportFragment.show(supportFragmentManager, communityCommentEditFragment.tag)
+                if (!communityCommentEditFragment.isAdded)
+                    communityCommentEditFragment.show(supportFragmentManager, communityCommentEditFragment.tag)
             }
         })
 
@@ -226,6 +229,18 @@ class MainActivity : AppCompatActivity() {
                 showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_baseline_thumb_up_24)
             }else{
                 showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_outline_thumb_up_24)
+            }
+        })
+
+
+        ProgressBarUtil.progressBarFlag.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                Log.d("ProgressBarUtil","$it")
+                if (it){
+                    ProgressBarUtil.progressBarVisible(progressBarMain,mainDisplay,R.color.transparent, this)
+                }
+                else
+                    ProgressBarUtil.progressBarGone(progressBarMain,mainDisplay,R.color.white, this)
             }
         })
 

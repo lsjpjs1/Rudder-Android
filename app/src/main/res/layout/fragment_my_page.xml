@@ -54,10 +54,10 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         app:layout_constraintHeight_default="percent"
-                        app:layout_constraintHeight_percent="0.13                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "
+                        app:layout_constraintHeight_percent="0.3"
 
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.8"
+                        app:layout_constraintWidth_percent="0.9"
 
                         android:background="#C4CF84FF"
                         app:layout_constraintTop_toTopOf="parent"
@@ -69,7 +69,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.25"
+                            app:layout_constraintHeight_percent="0.1"
                             android:id="@+id/constraintLayoutMyPage2"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -94,10 +94,40 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent">
 
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+
+                                android:id="@+id/logoutImageView"
+                                app:tint="@color/purple_rudder"
+                                app:srcCompat="@drawable/ic_logout_raw"
+
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/textView2"
+
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="0.1"
+                                >
+
+                            </ImageView>
+
                             <TextView
                                 android:id="@+id/textView2"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="0.8"
                                 android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+
+                                app:layout_constraintStart_toEndOf="@+id/logoutImageView"
+                                app:layout_constraintEnd_toEndOf="parent"
+
+
                                 android:onClick="@{()->mainVM.callLoginOut()}"
                                 android:text="@string/logout"
                                 />
@@ -115,11 +145,42 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent">
 
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+
+                                android:id="@+id/deleteAccountImageView"
+                                app:tint="@color/purple_rudder"
+                                app:srcCompat="@drawable/ic_delete_account"
+
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/textView3"
+
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="0.1"
+                                >
+
+                            </ImageView>
+
                             <TextView
                                 android:id="@+id/textView3"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:text="asdasd" />
+                                android:text="@string/delete_account"
+
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="0.8"
+
+                                android:gravity="center_vertical"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+
+                                app:layout_constraintStart_toEndOf="@+id/deleteAccountImageView"
+                                app:layout_constraintEnd_toEndOf="parent"
+
+                                />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -134,11 +195,43 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent">
 
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+
+                                android:id="@+id/changeNicknameImageView"
+                                app:tint="@color/purple_rudder"
+                                app:srcCompat="@drawable/ic_change_nickname"
+
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/textView4"
+
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="0.1"
+                                >
+
+                            </ImageView>
+
                             <TextView
                                 android:id="@+id/textView4"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:text="asdasd" />
+                                android:text="@string/change_nickname"
+
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="0.8"
+
+                                android:gravity="center_vertical"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+
+                                app:layout_constraintStart_toEndOf="@+id/changeNicknameImageView"
+                                app:layout_constraintEnd_toEndOf="parent"
+
+                                />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -153,7 +246,7 @@
                         app:layout_constraintHeight_default="percent"
                         app:layout_constraintHeight_percent="0.03"
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.8"
+                        app:layout_constraintWidth_percent="0.9"
 
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage1"
                         app:layout_constraintStart_toStartOf="parent"
@@ -170,7 +263,7 @@
                         app:layout_constraintHeight_percent="0.13"
 
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.8"
+                        app:layout_constraintWidth_percent="0.9"
 
                         android:background="#C4CF84FF"
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage6"
@@ -261,7 +354,7 @@
                         app:layout_constraintHeight_default="percent"
                         app:layout_constraintHeight_percent="0.03"
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.8"
+                        app:layout_constraintWidth_percent="0.9"
 
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage7"
                         app:layout_constraintStart_toStartOf="parent"
@@ -280,218 +373,18 @@
                         app:layout_constraintHeight_percent="0.25"
 
                         app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.8"
+                        app:layout_constraintWidth_percent="0.9"
 
-                        android:background="#C4CF84FF"
+                        android:background="@color/grey"
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage12"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:id="@+id/constraintLayoutMyPage13">
 
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.25"
-                            android:id="@+id/constraintLayoutMyPage14"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-
-                            <TextView
-                                android:id="@+id/textView9"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="33333" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.25"
-                            android:id="@+id/constraintLayoutMyPage15"
-                            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage14"
-
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-
-
-                            <TextView
-                                android:id="@+id/textView10"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="asdasd" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.25"
-                            android:id="@+id/constraintLayoutMyPage16"
-                            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage15"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-
-                            <TextView
-                                android:id="@+id/textView11"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="asdasd" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.25"
-                            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage16"
-                            android:id="@+id/constraintLayoutMyPag17"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-
-                            <TextView
-                                android:id="@+id/textView12"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="asdasd" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-
-                        app:layout_constraintHeight_default="percent"
-                        app:layout_constraintHeight_percent="0.03"
-                        app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.8"
-
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage13"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:id="@+id/constraintLayoutMyPage18">
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        app:layout_constraintHeight_default="percent"
-                        app:layout_constraintHeight_percent="0.25"
-
-                        app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.8"
-
-                        android:background="#C4CF84FF"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage18"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:id="@+id/constraintLayoutMyPage19">
-
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.25"
-                            android:id="@+id/constraintLayoutMyPage20"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-
-                            <TextView
-                                android:id="@+id/textView13"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="444444" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.25"
-                            android:id="@+id/constraintLayoutMyPage21"
-                            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage20"
-
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-
-
-                            <TextView
-                                android:id="@+id/textView14"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="asdasd" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.25"
-                            android:id="@+id/constraintLayoutMyPage22"
-                            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage21"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-
-                            <TextView
-                                android:id="@+id/textView15"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="asdasd" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.25"
-                            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage22"
-                            android:id="@+id/constraintLayoutMyPag23"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-
-                            <TextView
-                                android:id="@+id/textView16"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="asdasd" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="#111111"
-
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage19"
-
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-
-                        android:id="@+id/constraintLayoutMyPage30"
-                        >
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    
 
 
 

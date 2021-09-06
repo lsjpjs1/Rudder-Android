@@ -14,6 +14,12 @@
         android:id="@+id/loginContainer"
         tools:context=".ui.activity.LoginActivity">
 
+
+        <include
+            android:id="@+id/progressBarLogin"
+            android:visibility="gone"
+            layout="@layout/progressbar"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutLogin1"
             android:layout_width="0dp"
@@ -60,7 +66,6 @@
             app:layout_constraintWidth_percent="1"
             app:layout_constraintLeft_toLeftOf="parent"
             >
-
 
 
             <CheckBox

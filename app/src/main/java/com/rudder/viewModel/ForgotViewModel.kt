@@ -14,6 +14,7 @@ import com.rudder.data.LoginInfo
 import com.rudder.data.local.App
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
+import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -61,25 +62,37 @@ class ForgotViewModel() : ViewModel() {
 
     fun callCheckEmail() { // FIND ID Email Check
         GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
             val result = repository.findAccountID(EmailInfo(_forgotEmail.value!!))
             Log.d(ContentValues.TAG, "callCheckEmail 결과 : ${result}")
             _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 
     fun callSendVeriCode() { // Find Password Email Check
         GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
             val result = repository.findAccountPassword(EmailInfo(_forgotEmail.value!!))
             Log.d(ContentValues.TAG, "callSendVeriCode 결과 : ${result}")
             _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 
     fun callSendPassword() {
         GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
             val result = repository.sendAccountPassword(CheckVerifyCodeInfo(_forgotEmail.value!!, _forgotverifyCode.value!!))
             Log.d(ContentValues.TAG, "callSendPassword 결과 : ${result}")
             _verifyCodeCheckFlag.postValue(Event(result))
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 

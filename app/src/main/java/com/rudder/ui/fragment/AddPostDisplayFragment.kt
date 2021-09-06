@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import com.rudder.R
 import com.rudder.databinding.FragmentAddPostDisplayBinding
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_add_post_display.view.*
 
 class AddPostDisplayFragment : Fragment() {
     private val viewModel : MainViewModel by activityViewModels()
@@ -36,23 +37,11 @@ class AddPostDisplayFragment : Fragment() {
 
         display.mainVM=viewModel
         display.categorySpinner.adapter=spinnerAdapter
+        display.lifecycleOwner = this
 
-//        display.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-//            override fun onItemSelected(
-//                parent: AdapterView<*>?,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//                viewModel.setSelectedCategoryNameInAddPost(position)
-//
-//                viewModel.qwe(position)
-//
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//            }
-//        } MVVM 정신 위반!
+
+        display.root.categorySpinner.isEnabled = true
+
 
         return display.root
     }

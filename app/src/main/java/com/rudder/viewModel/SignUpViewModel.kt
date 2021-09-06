@@ -294,26 +294,36 @@ class SignUpViewModel : ViewModel() {
 
     fun callSendVeriCode() {
         GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpSendVerifyCode(EmailInfo(emailInput))
             Log.d(ContentValues.TAG, "callSendVeriCode 결과 : ${result}")
             _emailCheckFlag.postValue(Event(result))
             _userVerificationCode.postValue("")
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 
     fun callCheckVeriCode() {
         GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
             val verifyCodeInput = _userVerificationCode.value!!
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpCheckVerifyCode(CheckVerifyCodeInfo(emailInput, verifyCodeInput))
             Log.d(ContentValues.TAG, "callCheckVeriCode 결과 : ${result}")
             _verifyCodeCheckFlag.postValue(Event(result))
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 
     fun callCreateAccount() { // Sign Up, Complete!
         GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val inputInfo = SignUpInsertInfo(_userId.value!!, _userPassword.value!!,emailInput,_userRecommendCode.value!!,
                 _userSchoolInt.value!!,"",_userIntroduce.value!!,_userNickName.value!! )
@@ -321,6 +331,8 @@ class SignUpViewModel : ViewModel() {
             val result = repository.signUpCreateAccount(inputInfo)
             Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
             _categorySelectNext.postValue(Event(result))
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 

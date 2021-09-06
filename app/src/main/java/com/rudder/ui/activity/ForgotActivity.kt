@@ -9,8 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
 import com.rudder.databinding.ActivityForgotBinding
+import com.rudder.util.ProgressBarUtil
 import com.rudder.viewModel.ForgotViewModel
 import kotlinx.android.synthetic.main.activity_forgot.*
+import kotlinx.android.synthetic.main.activity_login.*
 
 class ForgotActivity : AppCompatActivity() {
     private val viewModel: ForgotViewModel by lazy { ViewModelProvider(this).get(ForgotViewModel::class.java)  }
@@ -65,6 +67,16 @@ class ForgotActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) toastVerifyCodeTrue.show()
                 else toastVerifyCodeFalse.show()
+            }
+        })
+
+        ProgressBarUtil.progressBarFlag.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it){
+                    ProgressBarUtil.progressBarVisible(progressBarForgot,forgotContainer,R.color.transparent, this)
+                }
+                else
+                    ProgressBarUtil.progressBarGone(progressBarForgot,forgotContainer,R.color.white, this)
             }
         })
 

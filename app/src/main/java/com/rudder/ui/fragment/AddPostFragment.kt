@@ -13,7 +13,9 @@ import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentAddPostBinding
 import com.rudder.databinding.FragmentShowPostBinding
+import com.rudder.util.ChangeUIState
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_school_select.*
 
 class AddPostFragment : Fragment() {
     private val viewModel : MainViewModel by activityViewModels()
@@ -30,7 +32,11 @@ class AddPostFragment : Fragment() {
             .add(R.id.addPostDisplay,AddPostDisplayFragment())
             .commit()
 
-        fragmentBinding.mainVM=viewModel
+        fragmentBinding.mainVM = viewModel
+        fragmentBinding.lifecycleOwner = this
+
+
+
 
 
         return fragmentBinding.root

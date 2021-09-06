@@ -13,7 +13,9 @@ import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentAddPostBinding
 import com.rudder.databinding.FragmentShowPostBinding
+import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_add_post_display.view.*
 
 class EditPostFragment : Fragment() {
     private val viewModel : MainViewModel by activityViewModels()
@@ -31,7 +33,13 @@ class EditPostFragment : Fragment() {
             .commit()
 
         fragmentBinding.mainVM=viewModel
+        fragmentBinding.lifecycleOwner = this
 
+        viewModel.isPostEdit.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                fragmentBinding.root.categorySpinner.isEnabled = false
+            }
+        })
 
         return fragmentBinding.root
     }

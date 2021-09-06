@@ -39,4 +39,9 @@
     <string name="edit_post_title">Edit Post</string>
     <string name="category">Category</string>
     <string name="apply">Apply</string>
+
+    <string name="change_password">Change Password</string>
+    <string name="change_nickname">Change Nickname</string>
+    <string name="delete_account">Delete Account</string>
+
 </resources>

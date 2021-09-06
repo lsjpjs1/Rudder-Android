@@ -15,6 +15,12 @@
         tools:context=".ui.activity.MainActivity">
 
 
+<!--        <include-->
+<!--            android:id="@+id/progressBarMain"-->
+<!--            android:visibility="gone"-->
+<!--            layout="@layout/progressbar"/>-->
+
+
         <FrameLayout
             android:id="@+id/mainDisplay"
             android:layout_width="match_parent"
@@ -24,6 +30,13 @@
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/without_main_bottom_height"
             tools:layout_editor_absoluteX="0dp">
+
+
+            <include
+                android:id="@+id/progressBarMain"
+                android:visibility="gone"
+                layout="@layout/progressbar"/>
+
         </FrameLayout>
 
         <View
