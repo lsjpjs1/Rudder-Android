@@ -72,6 +72,9 @@ class MainViewModel : ViewModel() {
 
     private val _commentDeleteComplete = MutableLiveData<Event<Boolean>>()
 
+
+    private val _isEditPostSuccess = MutableLiveData<Event<Boolean>>()
+
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
 
 
@@ -111,6 +114,9 @@ class MainViewModel : ViewModel() {
 
 
     val commentDeleteComplete: LiveData<Event<Boolean>> = _commentDeleteComplete
+
+
+    val isEditPostSuccess : LiveData<Event<Boolean>> = _isEditPostSuccess
 
 
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
@@ -479,8 +485,6 @@ class MainViewModel : ViewModel() {
     }
 
 
-
-
     fun getCategories() {
         GlobalScope.launch {
             var categoryList = Repository().getCategories()
@@ -571,5 +575,19 @@ class MainViewModel : ViewModel() {
     fun switch(mutableLiveData: MutableLiveData<Boolean?>){
         mutableLiveData.value = if(mutableLiveData.value==null) true else !mutableLiveData.value!!
     }
+
+
+    fun editPost() {
+        GlobalScope.launch {
+            val key = BuildConfig.TOKEN_KEY
+            val editPostInfo = EditPostInfo( _postBody.value!!, _posts.value!![_selectedPostPosition.value!!].postId, App.prefs.getValue(key)!! )
+
+            val res = Repository().editPostRepository(editPostInfo)
+            viewModelScope.launch {
+                _isEditPostSuccess.value = Event(res)
+            }
+        }
+    }
+
 
 }

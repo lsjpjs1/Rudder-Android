@@ -15,11 +15,6 @@
         tools:context=".ui.activity.MainActivity">
 
 
-<!--        <include-->
-<!--            android:id="@+id/progressBarMain"-->
-<!--            android:visibility="gone"-->
-<!--            layout="@layout/progressbar"/>-->
-
 
         <FrameLayout
             android:id="@+id/mainDisplay"
@@ -32,10 +27,6 @@
             tools:layout_editor_absoluteX="0dp">
 
 
-            <include
-                android:id="@+id/progressBarMain"
-                android:visibility="gone"
-                layout="@layout/progressbar"/>
 
         </FrameLayout>
 

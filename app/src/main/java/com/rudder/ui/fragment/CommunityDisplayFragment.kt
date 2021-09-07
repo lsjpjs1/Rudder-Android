@@ -66,6 +66,13 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
         })
 
 
+        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
+            viewModel.clearPosts()
+            viewModel.getPosts()
+        })
+
+
+
         return communityDisplay.root
     }
 

@@ -57,11 +57,10 @@ class LoginActivity : AppCompatActivity() {
 
         ProgressBarUtil.progressBarFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
-                if (it){
-                    ProgressBarUtil.progressBarVisible(progressBarLogin,loginContainer,R.color.transparent, this)
-                }
+                if (it)
+                    ProgressBarUtil.progressBarVisibleActivity(progressBarLogin, this)
                 else
-                    ProgressBarUtil.progressBarGone(progressBarLogin,loginContainer,R.color.white, this)
+                    ProgressBarUtil.progressBarGoneActivity(progressBarLogin, this)
             }
         })
 

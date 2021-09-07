@@ -108,15 +108,12 @@ class SignUpActivity : AppCompatActivity() {
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
 
 
-
-
         ProgressBarUtil.progressBarFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
-                if (it){
-                    ProgressBarUtil.progressBarVisible(progressBarSignUP,signUp_container,R.color.transparent, this)
-                    }
+                if (it)
+                    ProgressBarUtil.progressBarVisibleActivity(progressBarSignUP, this)
                 else
-                    ProgressBarUtil.progressBarGone(progressBarSignUP,signUp_container,R.color.white, this)
+                    ProgressBarUtil.progressBarGoneActivity(progressBarSignUP, this)
             }
         })
 

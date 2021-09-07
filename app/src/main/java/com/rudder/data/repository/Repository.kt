@@ -146,4 +146,12 @@ class Repository {
         return DeleteApi.instance.deletecommentApi(deleteCommentInfo).await().results.get("isSuccess").asBoolean
     }
 
+    suspend fun editPostRepository(editPostInfo: EditPostInfo) : Boolean{
+        return EditApi.instance.editPostApi(editPostInfo).await().results.get("isSuccess").asBoolean
+    }
+
+    suspend fun editCommentRepository(editCommentInfo: EditCommentInfo) : Boolean{
+        return EditApi.instance.editCommentApi(editCommentInfo).await().results.get("isSuccess").asBoolean
+    }
+
 }

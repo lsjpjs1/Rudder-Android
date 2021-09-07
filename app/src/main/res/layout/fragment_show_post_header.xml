@@ -20,6 +20,8 @@
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="@dimen/community_header_title_width">
 
+
+
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"

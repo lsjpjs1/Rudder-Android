@@ -22,26 +22,27 @@ object ProgressBarUtil {
     val _progressBarFlag = MutableLiveData<Event<Boolean>>()
     val progressBarFlag : LiveData<Event<Boolean>> = _progressBarFlag
 
-    fun progressBarVisible(progressBar: View, activityID: ViewGroup, colorResource: Int, activity: Activity){
+    fun progressBarVisibleActivity(progressBar: View,  activity: Activity){
         progressBar.visibility = View.VISIBLE
-        activityID.setBackgroundResource(colorResource)
         activity.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
     }
 
-    fun progressBarGone(progressBar: View, activityID: ViewGroup, colorResource: Int, activity: Activity){
+    fun progressBarGoneActivity(progressBar: View,  activity: Activity){
         progressBar.visibility = View.GONE
-        activityID.setBackgroundResource(colorResource)
         activity.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
 
-//    fun asd(progressBar: View, activityID: ViewGroup, colorResource: Int, fragment: Fragment){
-//        progressBar.visibility = View.VISIBLE
-//        activityID.setBackgroundResource(colorResource)
-//        fragment.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-//
-//    }
+    fun progressBarVisibleFragment(progressBar: View, fragment: Fragment){
+        progressBar.visibility = View.VISIBLE
+        fragment.activity?.window?.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+
+    fun progressBarGoneFragment(progressBar: View, fragment: Fragment){
+        progressBar.visibility = View.GONE
+        fragment.activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
 
 }
 

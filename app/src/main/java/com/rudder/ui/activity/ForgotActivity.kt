@@ -72,11 +72,10 @@ class ForgotActivity : AppCompatActivity() {
 
         ProgressBarUtil.progressBarFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
-                if (it){
-                    ProgressBarUtil.progressBarVisible(progressBarForgot,forgotContainer,R.color.transparent, this)
-                }
+                if (it)
+                    ProgressBarUtil.progressBarVisibleActivity(progressBarForgot, this)
                 else
-                    ProgressBarUtil.progressBarGone(progressBarForgot,forgotContainer,R.color.white, this)
+                    ProgressBarUtil.progressBarGoneActivity(progressBarForgot, this)
             }
         })
 

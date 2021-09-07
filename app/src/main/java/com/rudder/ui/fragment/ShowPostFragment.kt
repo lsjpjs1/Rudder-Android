@@ -17,7 +17,9 @@ import com.rudder.databinding.FragmentShowPostBinding
 import com.rudder.ui.adapter.PostCommentsAdapter
 import com.rudder.util.ProgressBarUtil
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
+
 
 class ShowPostFragment: Fragment() {
     private val viewModel :MainViewModel by activityViewModels()
@@ -89,7 +91,15 @@ class ShowPostFragment: Fragment() {
         )
 
 
-        //fragmentBinding.postMoreImageView.setOnClickListener (postMoreOnclickListener)
+        ProgressBarUtil.progressBarFlag.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                Log.d("ProgressBarUtil","$it")
+                if (it)
+                    ProgressBarUtil.progressBarVisibleFragment(progressBarShowPost, this)
+                else
+                    ProgressBarUtil.progressBarGoneFragment(progressBarShowPost, this)
+            }
+        })
 
 
         return fragmentBinding.root

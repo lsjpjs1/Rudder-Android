@@ -233,16 +233,6 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        ProgressBarUtil.progressBarFlag.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                Log.d("ProgressBarUtil","$it")
-                if (it){
-                    ProgressBarUtil.progressBarVisible(progressBarMain,mainDisplay,R.color.transparent, this)
-                }
-                else
-                    ProgressBarUtil.progressBarGone(progressBarMain,mainDisplay,R.color.white, this)
-            }
-        })
 
     }
 

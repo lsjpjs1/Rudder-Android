@@ -12,4 +12,7 @@
     <color name="light_grey">#F4F4F4</color>
     <color name="transparent">#B3000000</color>
     <color name="light_grey_2">#E1E1E1</color>
+
+
+    <color name="transparent_light">#4D000000</color>
 </resources>
