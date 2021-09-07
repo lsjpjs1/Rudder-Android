@@ -233,6 +233,17 @@ class MainActivity : AppCompatActivity() {
         })
 
 
+        viewModel.isEditPostSuccess.observe(this, Observer {
+            super.onBackPressed()
+
+            if (showPostFragment.isAdded) {
+                //updatePost()
+
+                super.onBackPressed()
+                showPost()
+            }
+        })
+
 
     }
 
@@ -298,6 +309,7 @@ class MainActivity : AppCompatActivity() {
     fun showPost(){
         viewModel.isLikePost()
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+
         fragmentShowHide.addToBackStack()
         fragmentShowHide.addFragment(showPostFragment,R.id.mainDisplay,"showPost")
         fragmentShowHide.showFragment(showPostFragment,R.id.mainDisplay)
@@ -342,6 +354,20 @@ class MainActivity : AppCompatActivity() {
             val height = displayMertrics.heightPixels
             arrayListOf(width,height)
         }
+    }
+
+    fun updatePost(){ // editPost 시 실행
+        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+
+
+        fragmentShowHide.removeFragment(showPostFragment)
+        val showPostFragmentNew = ShowPostFragment()
+
+
+        fragmentShowHide.addToBackStack()
+        fragmentShowHide.addFragment(showPostFragmentNew,R.id.mainDisplay,"showPost")
+        fragmentShowHide.showFragment(showPostFragmentNew,R.id.mainDisplay)
+
     }
 
 }

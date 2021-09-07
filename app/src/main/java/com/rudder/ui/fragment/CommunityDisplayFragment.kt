@@ -20,6 +20,8 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.PostPreviewAdapter
 import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclickListener {
 
@@ -66,10 +68,23 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
         })
 
 
-        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
-            viewModel.clearPosts()
-            viewModel.getPosts()
-        })
+//        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
+//            viewModel.clearPosts()
+//            viewModel.getPosts()
+//
+//            GlobalScope.launch {
+//                viewModel.getPosts()
+//                (activity as MainActivity).showPost()
+//            }
+//
+//            //(activity as MainActivity).showPost()
+//        })
+
+
+
+//        viewModel.asd.observe(viewLifecycleOwner, Observer {
+//            (activity as MainActivity).showPost()
+//        })
 
 
 

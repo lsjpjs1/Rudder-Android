@@ -43,6 +43,8 @@ class ShowPostFragment: Fragment() {
             it.setHasFixedSize(false)
             it.adapter = adapter
         }
+
+        Log.d("showpost","${viewModel.posts.value!!}")
         val currentPost = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
         fragmentBinding.post = currentPost
         fragmentBinding.mainVM = viewModel
@@ -91,6 +93,7 @@ class ShowPostFragment: Fragment() {
         )
 
 
+
         ProgressBarUtil.progressBarFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 Log.d("ProgressBarUtil","$it")
@@ -100,7 +103,6 @@ class ShowPostFragment: Fragment() {
                     ProgressBarUtil.progressBarGoneFragment(progressBarShowPost, this)
             }
         })
-
 
         return fragmentBinding.root
     }

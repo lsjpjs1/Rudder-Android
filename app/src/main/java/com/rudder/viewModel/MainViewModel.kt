@@ -27,11 +27,13 @@ class MainViewModel : ViewModel() {
     private var pagingIndex = 0
     private var endPostId = -1
 
+
+    val _postId = MutableLiveData<Int>()
     val _postBody = MutableLiveData<String>()
     val _commentBody = MutableLiveData<String>()
     val _selectedParentCommentBody = MutableLiveData<String>()
     private val _selectedTab = MutableLiveData<Int>()
-    private val _posts = MutableLiveData<ArrayList<PreviewPost>>()
+    private var _posts = MutableLiveData<ArrayList<PreviewPost>>()
     private val _comments = MutableLiveData<ArrayList<Comment>>()
     private val _categories = MutableLiveData<ArrayList<Category>>()
     private val _categoryNames = MutableLiveData<ArrayList<String>>()
@@ -121,8 +123,7 @@ class MainViewModel : ViewModel() {
 
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
 
-    val posts: LiveData<ArrayList<PreviewPost>>
-        get() = _posts
+    var posts: LiveData<ArrayList<PreviewPost>> = _posts
     val comments: LiveData<ArrayList<Comment>> = _comments
     val categories: LiveData<ArrayList<Category>> = _categories
 
@@ -416,6 +417,8 @@ class MainViewModel : ViewModel() {
     fun clickPostMore(position: Int) {
         _isPostMore.value = Event(true)
         _selectedPostMorePosition.value = position
+        _postId.value = _posts.value!![_selectedPostMorePosition.value!!].postId
+
 
         if (_posts.value!![selectedPostMorePosition.value!!].isMine)
             _isPostMine.value = Event(true)
@@ -580,11 +583,16 @@ class MainViewModel : ViewModel() {
     fun editPost() {
         GlobalScope.launch {
             val key = BuildConfig.TOKEN_KEY
-            val editPostInfo = EditPostInfo( _postBody.value!!, _posts.value!![_selectedPostPosition.value!!].postId, App.prefs.getValue(key)!! )
-
+            val editPostInfo = EditPostInfo( _postBody.value!!, _postId.value!!, App.prefs.getValue(key)!! )
             val res = Repository().editPostRepository(editPostInfo)
+
+            Log.d("editpost123", "${selectedPostMorePosition.value},${selectedPostPosition.value} ")
             viewModelScope.launch {
                 _isEditPostSuccess.value = Event(res)
+                clearPosts()
+                getPosts()
+//                Log.d("editpostgetcomment_1","${_posts.value!![_selectedPostPosition.value!!]}")
+//                getComments()
             }
         }
     }
