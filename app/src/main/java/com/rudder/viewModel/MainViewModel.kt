@@ -136,9 +136,9 @@ class MainViewModel : ViewModel() {
     suspend fun uploadPhoto(postId:Int){
         GlobalScope.async {
             val list = Repository().getUploadUrls(GetUploadUrlsInfo(getMimeTypeList(),App.prefs.getValue(tokenKey)!!,postId) )
-            for(i in 0 until list.size()){
+            for(i in 0 until list.size){
                 val file = RequestBody.create(MediaType.parse(_selectedPhotoUriList.value!![i].mimeType),File(_selectedPhotoUriList.value!![i].filePath))
-                Repository().uploadImage(file,list[i].asJsonObject.get("url").asString)
+                Repository().uploadImage(file,list[i])
             }
             viewModelScope.launch {
                 _isAddPostSuccess.value = Event(true)

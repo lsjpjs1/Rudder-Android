@@ -1,7 +1,9 @@
 package com.rudder.data.repository
 
+import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import com.rudder.BuildConfig
 import com.rudder.data.*
 import com.rudder.data.local.App.Companion.prefs
@@ -127,8 +129,9 @@ class Repository {
         return PostApi.instance.addPostViewCount(addPostViewCountInfo).await().results.get("isSuccess").asBoolean
     }
 
-    suspend fun getUploadUrls(getUploadUrlsInfo: GetUploadUrlsInfo): JsonArray{
-        return FileApi.instance.getUploadUrls(getUploadUrlsInfo).await().results.get("urls").asJsonArray
+    suspend fun getUploadUrls(getUploadUrlsInfo: GetUploadUrlsInfo): ArrayList<String>{
+        val arrayListType = object : TypeToken<ArrayList<String>>(){}.type
+        return Gson().fromJson<ArrayList<String>>(FileApi.instance.getUploadUrls(getUploadUrlsInfo).await().results.get("urls"),arrayListType)
     }
     suspend fun uploadImage(file:RequestBody,url:String){
         FileApi.instance.uploadImage(file,url).await()
