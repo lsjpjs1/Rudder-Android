@@ -27,7 +27,7 @@ class MainViewModel : ViewModel() {
     private var pagingIndex = 0
     private var endPostId = -1
 
-
+    val _commentEditBody = MutableLiveData<String>()
     val _postId = MutableLiveData<Int>()
     val _postBody = MutableLiveData<String>()
     val _commentBody = MutableLiveData<String>()
@@ -59,6 +59,7 @@ class MainViewModel : ViewModel() {
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
 
 
+
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
     private val _isPostMine = MutableLiveData<Event<Boolean>>()
@@ -72,10 +73,14 @@ class MainViewModel : ViewModel() {
     private val _isCommentEdit = MutableLiveData<Event<Boolean>>()
     private val _isCommentDelete = MutableLiveData<Event<Boolean>>()
 
-    private val _commentDeleteComplete = MutableLiveData<Event<Boolean>>()
-
+    private val _isDeleteCommentSuccess = MutableLiveData<Event<Boolean>>()
+    private val _isEditCommentSuccess = MutableLiveData<Event<Boolean>>()
 
     private val _isEditPostSuccess = MutableLiveData<Event<Boolean>>()
+
+
+    private val _isCancelClick = MutableLiveData<Event<Boolean>>()
+
 
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
 
@@ -115,11 +120,13 @@ class MainViewModel : ViewModel() {
     val isCommentDelete: LiveData<Event<Boolean>> = _isCommentDelete
 
 
-    val commentDeleteComplete: LiveData<Event<Boolean>> = _commentDeleteComplete
+    val isDeleteCommentSuccess: LiveData<Event<Boolean>> = _isDeleteCommentSuccess
+    val isEditCommentSuccess: LiveData<Event<Boolean>> = _isEditCommentSuccess
 
 
     val isEditPostSuccess : LiveData<Event<Boolean>> = _isEditPostSuccess
 
+    val isCancelClick : LiveData<Event<Boolean>> = _isCancelClick
 
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
 
@@ -169,7 +176,8 @@ class MainViewModel : ViewModel() {
         getPosts()
         getCategories()
 
-        _commentDeleteComplete.value = Event(false)
+        _isDeleteCommentSuccess.value = Event(false)
+
     }
 
 
@@ -384,7 +392,7 @@ class MainViewModel : ViewModel() {
 
     fun addPost() {
         GlobalScope.launch {
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+            //ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
 
             val key = BuildConfig.TOKEN_KEY
             val addPostInfo = AddPostInfo(
@@ -400,7 +408,7 @@ class MainViewModel : ViewModel() {
                 _isAddPostSuccess.value = Event(res)
             }
 
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+            //ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 
@@ -466,9 +474,9 @@ class MainViewModel : ViewModel() {
     }
 
     fun clickCommentEdit() {
-        Log.d("clickCommentEdit","clickCommentEdit")
         _isCommentEdit.value = Event(true)
-        _commentBody.value = _comments.value!![selectedCommentMorePosition.value!!].commentBody
+        _commentEditBody.value = _comments.value!![selectedCommentMorePosition.value!!].commentBody
+        _commentBody.value = ""
     }
 
 
@@ -479,7 +487,7 @@ class MainViewModel : ViewModel() {
         GlobalScope.launch {
             var result = Repository().deleteCommentRepository(DeleteCommentInfo(commentInt, postInt))
             _isCommentDelete.postValue(Event(result))
-            _commentDeleteComplete.postValue(Event(result))
+            _isDeleteCommentSuccess.postValue(Event(result))
 
             if (result) {
                 _posts.value!![_selectedPostPosition.value!!].commentCount = _posts.value!![_selectedPostPosition.value!!].commentCount - 1
@@ -493,9 +501,11 @@ class MainViewModel : ViewModel() {
 
 
     fun getCategories() {
-        GlobalScope.launch {
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
 
+        ProgressBarUtil._progressBarDialogFlag.value = Event(true)
+
+        GlobalScope.launch {
+            Log.d("progressBarDialogFlag","${ProgressBarUtil._progressBarDialogFlag.value}")
             var categoryList = Repository().getCategories()
             viewModelScope.launch {
                 _categoryNames.value = splitCategoryNames(categoryList)
@@ -591,17 +601,39 @@ class MainViewModel : ViewModel() {
         GlobalScope.launch {
             val key = BuildConfig.TOKEN_KEY
             val editPostInfo = EditPostInfo( _postBody.value!!, _postId.value!!, App.prefs.getValue(key)!! )
-            val res = Repository().editPostRepository(editPostInfo)
+            val result = Repository().editPostRepository(editPostInfo)
 
             Log.d("editpost123", "${selectedPostMorePosition.value},${selectedPostPosition.value} ")
             viewModelScope.launch {
-                _isEditPostSuccess.value = Event(res)
+                _isEditPostSuccess.value = Event(result)
                 clearPosts()
                 getPosts()
 //                Log.d("editpostgetcomment_1","${_posts.value!![_selectedPostPosition.value!!]}")
 //                getComments()
             }
         }
+    }
+
+
+    fun editComment() {
+        GlobalScope.launch {
+            val key = BuildConfig.TOKEN_KEY
+            val commentInt = _comments.value!![_selectedCommentMorePosition.value!!].commentId
+            val editCommentInfo = EditCommentInfo( _commentEditBody.value!!, commentInt, App.prefs.getValue(key)!! )
+            val result = Repository().editCommentRepository(editCommentInfo)
+            _isEditCommentSuccess.postValue(Event(result))
+
+            if (result){
+                getComments()
+                _commentBody.postValue("")
+            }
+        }
+    }
+
+
+    fun clickCancel() {
+        _isCancelClick.value = Event(true)
+        _commentBody.value = ""
     }
 
 

@@ -26,6 +26,7 @@ import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_add_comment.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
@@ -97,6 +98,7 @@ class MainActivity : AppCompatActivity() {
             if(it.getContentIfNotHandled()!!) {
                 if (!communityCommentBottomSheetFragment.isAdded)
                     communityCommentBottomSheetFragment.show(supportFragmentManager, communityCommentBottomSheetFragment.tag)
+
             }
         })
 
@@ -207,7 +209,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.startLoginActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 StartActivityUtil.callActivity(this, LoginActivity())
-
                 finish()
             }
         })
@@ -245,8 +246,22 @@ class MainActivity : AppCompatActivity() {
         })
 
 
+        viewModel.isEditCommentSuccess.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it){
+                    communityCommentEditFragment.dismiss()
+                    communityCommentBottomSheetFragment.dismiss()
+                }
+            }
+        })
 
-        ProgressBarUtil._progressBarDialogFlag.observe(this, Observer {
+
+        viewModel.isCancelClick.observe(this, Observer {
+            communityCommentEditFragment.dismiss()
+        })
+
+
+        ProgressBarUtil.progressBarDialogFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it)
                     progressDialog.show()
@@ -254,6 +269,7 @@ class MainActivity : AppCompatActivity() {
                     progressDialog.dismiss()
             }
         })
+
 
 
     }

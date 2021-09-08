@@ -19,7 +19,6 @@ import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_add_post.*
 import kotlinx.android.synthetic.main.fragment_school_select.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
-import kotlinx.android.synthetic.main.fragment_show_post.progressBarShowPost
 
 class AddPostFragment : Fragment() {
     private val viewModel : MainViewModel by activityViewModels()

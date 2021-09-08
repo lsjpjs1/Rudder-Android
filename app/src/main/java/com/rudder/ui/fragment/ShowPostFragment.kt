@@ -54,7 +54,7 @@ class ShowPostFragment: Fragment() {
 
         viewModel.comments.observe(viewLifecycleOwner, Observer {
             var deleteCommentflag = false
-            viewModel.commentDeleteComplete.value!!.getContentIfNotHandled()?.let{
+            viewModel.isDeleteCommentSuccess.value!!.getContentIfNotHandled()?.let{
                 deleteCommentflag = it
             }
             adapter.updateComments(viewModel.comments.value!!, !deleteCommentflag)
@@ -76,6 +76,19 @@ class ShowPostFragment: Fragment() {
                 adapter.notifyItemChanged(it)
             }
         })
+
+
+        viewModel.isEditCommentSuccess.observe(viewLifecycleOwner, Observer {
+
+            it?.let{
+                Log.d("isEditCommentSuccess","isEditCommentSuccess")
+                //adapter.notifyItemChanged(viewModel.commentLikeCountChange.value!!)
+                adapter.updateComments(viewModel.comments.value!!, true)
+            }
+            //Log.d("isEditCommentSuccess","isEditCommentSuccess")
+        })
+
+
 
         childFragmentManager.beginTransaction()
                 .add(R.id.showPostHeader,ShowPostHeaderFragment())
