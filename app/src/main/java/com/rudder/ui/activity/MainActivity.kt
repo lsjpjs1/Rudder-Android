@@ -263,10 +263,14 @@ class MainActivity : AppCompatActivity() {
 
         ProgressBarUtil.progressBarDialogFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
-                if (it)
+                if (it){
                     progressDialog.show()
-                else
+                    Log.d("progressBarDialogFlag","progressDialog.show()")
+                }
+                else {
                     progressDialog.dismiss()
+                    Log.d("progressBarDialogFlag","progressDialog.dismiss()")
+                }
             }
         })
 

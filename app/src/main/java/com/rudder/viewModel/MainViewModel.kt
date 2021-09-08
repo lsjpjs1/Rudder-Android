@@ -75,6 +75,7 @@ class MainViewModel : ViewModel() {
 
     private val _isDeleteCommentSuccess = MutableLiveData<Event<Boolean>>()
     private val _isEditCommentSuccess = MutableLiveData<Event<Boolean>>()
+    private val _isReportCommentSuccess = MutableLiveData<Event<Boolean>>()
 
     private val _isEditPostSuccess = MutableLiveData<Event<Boolean>>()
 
@@ -122,6 +123,7 @@ class MainViewModel : ViewModel() {
 
     val isDeleteCommentSuccess: LiveData<Event<Boolean>> = _isDeleteCommentSuccess
     val isEditCommentSuccess: LiveData<Event<Boolean>> = _isEditCommentSuccess
+    val isReportCommentSuccess: LiveData<Event<Boolean>> = _isReportCommentSuccess
 
 
     val isEditPostSuccess : LiveData<Event<Boolean>> = _isEditPostSuccess
@@ -287,6 +289,8 @@ class MainViewModel : ViewModel() {
         _isScrollBottomTouch.value = Event(true)
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
+        Log.d("progressbar_getPost","progressbar_getPost")
+
         GlobalScope.launch {
 
             val resPosts = Repository().getPosts(
@@ -392,8 +396,8 @@ class MainViewModel : ViewModel() {
 
     fun addPost() {
         GlobalScope.launch {
-            //ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+            val tmpCategoryId = _postCategoryInt.value!! + 1
             val key = BuildConfig.TOKEN_KEY
             val addPostInfo = AddPostInfo(
                 "bulletin",
@@ -401,14 +405,14 @@ class MainViewModel : ViewModel() {
                 _postBody.value!!,
                 App.prefs.getValue(key)!!,
                 arrayListOf(),
-                _selectedCategoryNameInAddPost.value!!
+                tmpCategoryId
             )
             val res = Repository().addPost(addPostInfo)
             viewModelScope.launch {
                 _isAddPostSuccess.value = Event(res)
             }
 
-            //ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 
@@ -462,8 +466,10 @@ class MainViewModel : ViewModel() {
 
     fun clickPostDelete() {
         GlobalScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             var result = Repository().deletePostRepository(DeletePostInfo( _posts.value!![selectedPostMorePosition.value!!].postId ))
             _isPostDelete.postValue(Event(result))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
 
     }
@@ -599,6 +605,7 @@ class MainViewModel : ViewModel() {
 
     fun editPost() {
         GlobalScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             val key = BuildConfig.TOKEN_KEY
             val editPostInfo = EditPostInfo( _postBody.value!!, _postId.value!!, App.prefs.getValue(key)!! )
             val result = Repository().editPostRepository(editPostInfo)
@@ -611,6 +618,8 @@ class MainViewModel : ViewModel() {
 //                Log.d("editpostgetcomment_1","${_posts.value!![_selectedPostPosition.value!!]}")
 //                getComments()
             }
+
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 
