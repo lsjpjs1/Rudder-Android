@@ -21,7 +21,7 @@ class ForecdTerminationService : Service() {
         val key = BuildConfig.TOKEN_KEY
 
         if (autoLoginPref == "false") { // 자동로그인을 안하고, 앱을 종료하면, 토큰 사라짐(로그아웃)
-            prefs.setValue(key, "")
+            prefs.removeValue(key)
         }
 
         stopSelf() //서비스 종료
