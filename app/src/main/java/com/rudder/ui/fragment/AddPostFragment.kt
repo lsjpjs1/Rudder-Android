@@ -14,8 +14,12 @@ import com.rudder.R
 import com.rudder.databinding.FragmentAddPostBinding
 import com.rudder.databinding.FragmentShowPostBinding
 import com.rudder.util.ChangeUIState
+import com.rudder.util.ProgressBarUtil
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_add_post.*
 import kotlinx.android.synthetic.main.fragment_school_select.*
+import kotlinx.android.synthetic.main.fragment_show_post.*
+import kotlinx.android.synthetic.main.fragment_show_post.progressBarShowPost
 
 class AddPostFragment : Fragment() {
     private val viewModel : MainViewModel by activityViewModels()
@@ -34,7 +38,6 @@ class AddPostFragment : Fragment() {
 
         fragmentBinding.mainVM = viewModel
         fragmentBinding.lifecycleOwner = this
-
 
 
 

@@ -22,6 +22,15 @@ object ProgressBarUtil {
     val _progressBarFlag = MutableLiveData<Event<Boolean>>()
     val progressBarFlag : LiveData<Event<Boolean>> = _progressBarFlag
 
+
+    val _progressBarMiniFlag = MutableLiveData<Event<Boolean>>()
+    val progressBarMiniFlag : LiveData<Event<Boolean>> = _progressBarMiniFlag
+
+
+    val _progressBarDialogFlag = MutableLiveData<Event<Boolean>>()
+    val progressBarDialogFlag : LiveData<Event<Boolean>> = _progressBarDialogFlag
+
+
     fun progressBarVisibleActivity(progressBar: View,  activity: Activity){
         progressBar.visibility = View.VISIBLE
         activity.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)

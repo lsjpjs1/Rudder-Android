@@ -10,17 +10,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
         android:id="@+id/main_container"
         tools:context=".ui.activity.MainActivity">
-
 
 
         <FrameLayout
             android:id="@+id/mainDisplay"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/without_main_bottom_height"

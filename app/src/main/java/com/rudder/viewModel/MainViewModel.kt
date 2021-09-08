@@ -297,8 +297,8 @@ class MainViewModel : ViewModel() {
                     _posts.value = oldPosts!!
                 }
                 _isScrollBottomTouch.value = Event(false)
-
             }
+
         }
     }
 
@@ -314,6 +314,9 @@ class MainViewModel : ViewModel() {
         val getCommentInfo =
             GetCommentInfo(_posts.value!![_selectedPostPosition.value!!].postId, token!!)
         GlobalScope.launch {
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
             val resComments = Repository().getComments(getCommentInfo)
             viewModelScope.launch {
                 var tmpCommentList = ArrayList<Comment>()
@@ -343,7 +346,7 @@ class MainViewModel : ViewModel() {
                 Log.d("comment", _comments.value.toString())
 
             }
-
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 
@@ -353,8 +356,6 @@ class MainViewModel : ViewModel() {
             _posts.value!![_selectedPostPosition.value!!].commentCount + 1
         _commentCountChange.value = Event(true)
         GlobalScope.launch {
-            ProgressBarUtil._progressBarFlag.postValue(Event(true))
-
             if (_selectedCommentGroupNum.value == -1) { // _selectedCommentGroupNum.value==-1 -> parent인 댓글
                 addCommentInfo = AddCommentInfo(
                     _posts.value!![_selectedPostPosition.value!!].postId,
@@ -377,13 +378,14 @@ class MainViewModel : ViewModel() {
                 getComments()
                 _commentBody.postValue("")
             }
-            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 
 
     fun addPost() {
         GlobalScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
             val key = BuildConfig.TOKEN_KEY
             val addPostInfo = AddPostInfo(
                 "bulletin",
@@ -397,6 +399,8 @@ class MainViewModel : ViewModel() {
             viewModelScope.launch {
                 _isAddPostSuccess.value = Event(res)
             }
+
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 
@@ -490,6 +494,8 @@ class MainViewModel : ViewModel() {
 
     fun getCategories() {
         GlobalScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
             var categoryList = Repository().getCategories()
             viewModelScope.launch {
                 _categoryNames.value = splitCategoryNames(categoryList)
@@ -498,6 +504,7 @@ class MainViewModel : ViewModel() {
 
                 _categories.value = categoryList
             }
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 

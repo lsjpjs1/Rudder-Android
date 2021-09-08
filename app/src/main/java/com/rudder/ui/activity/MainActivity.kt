@@ -1,7 +1,7 @@
 package com.rudder.ui.activity
 
 import android.app.Activity
-import android.content.res.Resources
+import android.app.ProgressDialog
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
@@ -15,7 +15,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,15 +25,10 @@ import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
-import kotlinx.android.synthetic.main.fragment_add_post_display.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
-import kotlinx.android.synthetic.main.post_comments.*
-import java.security.AccessController.getContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -60,6 +54,12 @@ class MainActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.mainVM = viewModel
         binding.lifecycleOwner = this
+
+
+        val progressDialog = ProgressDialog(this, R.style.MyAlertDialogStyle)
+        progressDialog.setMessage("Please wait ...")
+        progressDialog.setCancelable(false)
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal)
 
 
         mainBottomBarFragment = MainBottomBarFragment()
@@ -241,6 +241,17 @@ class MainActivity : AppCompatActivity() {
 
                 super.onBackPressed()
                 showPost()
+            }
+        })
+
+
+
+        ProgressBarUtil._progressBarDialogFlag.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it)
+                    progressDialog.show()
+                else
+                    progressDialog.dismiss()
             }
         })
 

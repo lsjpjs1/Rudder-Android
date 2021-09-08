@@ -93,10 +93,8 @@ class ShowPostFragment: Fragment() {
         )
 
 
-
         ProgressBarUtil.progressBarFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
-                Log.d("ProgressBarUtil","$it")
                 if (it)
                     ProgressBarUtil.progressBarVisibleFragment(progressBarShowPost, this)
                 else
