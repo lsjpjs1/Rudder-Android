@@ -226,22 +226,11 @@ class MainViewModel : ViewModel() {
             endPostId = _posts.value!![_posts.value!!.size - 1].postId
             getPosts()
         }
-
     }
-
 
     fun scrollTouchTop() {
         clearPosts()
         getPosts()
-    }
-
-
-    fun scrollTouchBottomComment() {
-        getComments()
-    }
-
-    fun scrollTouchTopComment() {
-        getComments()
     }
 
 
