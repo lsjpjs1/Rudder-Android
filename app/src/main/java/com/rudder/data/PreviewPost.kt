@@ -25,8 +25,9 @@ data class PreviewPost(
     @SerializedName(value = "category_id")
     val categoryId: Int,
     @SerializedName(value = "isLiked")
-    val isLiked: Boolean,
+    var isLiked: Boolean,
     @SerializedName(value = "isMine")
-    val isMine: Boolean
-
+    val isMine: Boolean,
+    @SerializedName(value = "imageUrls")
+    val imageUrls: ArrayList<String>
 )

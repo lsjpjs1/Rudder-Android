@@ -36,7 +36,7 @@ class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selecte
 
     override fun onBindViewHolder(holder: CategorySelectorAdapter.CustomViewHolder, position: Int) {
         holder.categorySelectorBinding.category = categoryList[position]
-        if (categoryList[position].categoryName == NO_CATEGORY_NAME){
+        if (categoryList[position].categoryName==NO_CATEGORY_NAME ){
             var lp = holder.categorySelectorBinding.root.layoutParams
             lp.width = 0
             lp.height = 0

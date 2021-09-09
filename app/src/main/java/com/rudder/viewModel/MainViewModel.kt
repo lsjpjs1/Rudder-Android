@@ -1,6 +1,8 @@
 package com.rudder.viewModel
 
+
 import android.content.ContentValues
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -11,13 +13,21 @@ import com.google.gson.JsonParser
 import com.rudder.BuildConfig
 import com.rudder.R
 import com.rudder.data.*
+import com.rudder.data.Comment
+import com.rudder.data.FileInfo
+import com.rudder.data.GetCommentInfo
+import com.rudder.data.PreviewPost
 import com.rudder.data.local.App
 import com.rudder.data.remote.*
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import java.io.File
 import java.sql.Timestamp
 
 
@@ -43,6 +53,8 @@ class MainViewModel : ViewModel() {
     private val _selectedCommentGroupNum = MutableLiveData<Int>()
     private val _selectedCategoryView = MutableLiveData<View>()
     val _selectedCategoryNameInAddPost = MutableLiveData<String>()
+
+    private val _selectedPhotoUriList = MutableLiveData<ArrayList<FileInfo>>()
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
     private val _isBackClick = MutableLiveData<Event<Boolean>>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
@@ -50,16 +62,12 @@ class MainViewModel : ViewModel() {
     private val _isLikePost = MutableLiveData<Boolean>()
     private val _commentCountChange = MutableLiveData<Event<Boolean>>()
     private val _commentLikeCountChange = MutableLiveData<Int>()
-
     private val _selectedPostMorePosition = MutableLiveData<Int>()
     private val _selectedCommentMorePosition = MutableLiveData<Int>()
 
     val _postCategoryInt = MutableLiveData<Int>()
 
-
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
-
-
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
@@ -89,12 +97,16 @@ class MainViewModel : ViewModel() {
 
 
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
+    private val _postInnerValueChangeSwitch = MutableLiveData<Boolean>()
+    private val _commentInnerValueChangeSwitch = MutableLiveData<Boolean>()
+    private val _photoPickerClickSwitch = MutableLiveData<Boolean?>()
 
-
+    val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
+    val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
+    val postInnerValueChangeSwitch:LiveData<Boolean> = _postInnerValueChangeSwitch
     val commentLikeCountChange: LiveData<Int> = _commentLikeCountChange
     val commentCountChange: LiveData<Event<Boolean>> = _commentCountChange
     val isLikePost: LiveData<Boolean> = _isLikePost
-
     val isAddPostSuccess: LiveData<Event<Boolean>> = _isAddPostSuccess
     val isScrollBottomTouch: LiveData<Event<Boolean>> = _isScrollBottomTouch
     val isBackClick: LiveData<Event<Boolean>> = _isBackClick
@@ -106,6 +118,7 @@ class MainViewModel : ViewModel() {
     val selectedCommentGroupNum: LiveData<Int> = _selectedCommentGroupNum
     val selectedCategoryView: LiveData<View> = _selectedCategoryView
     val selectedCategoryNameInAddPost: LiveData<String> = _selectedCategoryNameInAddPost
+    val selectedPhotoUriList : LiveData<ArrayList<FileInfo>> = _selectedPhotoUriList
 
     val selectedPostMorePosition: LiveData<Int> = _selectedPostMorePosition
 
@@ -146,9 +159,15 @@ class MainViewModel : ViewModel() {
     val categories: LiveData<ArrayList<Category>> = _categories
 
     init {
-        Log.d("call", "call")
         _selectedTab.value = R.id.communityButton
         _selectedCategoryPosition.value = 0
+        _postInnerValueChangeSwitch.value=true
+        _commentInnerValueChangeSwitch.value=true
+        _selectedPhotoUriList.value = arrayListOf()
+        _postBody.value = ""
+        _categories.value = arrayListOf(
+            Category(-1, "All")
+        )
         _posts.value = arrayListOf(
             PreviewPost(
                 1,
@@ -162,7 +181,8 @@ class MainViewModel : ViewModel() {
                 "",
                 0,
                 false,
-                false
+                false,
+                arrayListOf()
             )
         )
         _comments.value = arrayListOf(
@@ -183,11 +203,51 @@ class MainViewModel : ViewModel() {
         _categories.value = arrayListOf(
             Category(-1, "All")
         )
+
         clearNestedCommentInfo()
         getPosts()
         getCategories()
 
         _isDeleteCommentSuccess.value = Event(false)
+    }
+
+
+    suspend fun uploadPhoto(postId:Int){
+        GlobalScope.async {
+            val list = Repository().getUploadUrls(GetUploadUrlsInfo(getMimeTypeList(),App.prefs.getValue(tokenKey)!!,postId) )
+            for(i in 0 until list.size){
+                val file = RequestBody.create(MediaType.parse(_selectedPhotoUriList.value!![i].mimeType),File(_selectedPhotoUriList.value!![i].filePath))
+                Repository().uploadImage(file,list[i])
+            }
+            viewModelScope.launch {
+                _isAddPostSuccess.value = Event(true)
+            }
+        }
+    }
+    fun deletePhotoUriPosition(position: Int){
+        val tmpList = _selectedPhotoUriList.value!!
+        Log.d("list",tmpList.toString())
+        tmpList.removeAt(position)
+        _selectedPhotoUriList.value = tmpList
+    }
+
+    fun setSelectedPhotoUriList(uriList:ArrayList<FileInfo>){
+        val tmpList = _selectedPhotoUriList.value!!
+        tmpList.addAll(uriList)
+        _selectedPhotoUriList.value = tmpList
+
+    }
+
+    fun getMimeTypeList():ArrayList<String>{
+        var mimeTypeList = arrayListOf<String>()
+        for(fileInfo in _selectedPhotoUriList.value!!){
+            mimeTypeList.add(fileInfo.mimeType)
+        }
+        return mimeTypeList
+    }
+
+    fun onPhotoPickerClick(){
+        switch(_photoPickerClickSwitch)
     }
 
 
@@ -197,7 +257,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun callLoginOut() {
-        Log.d("callLoginOut", "callLoginOut")
         _startLoginActivity.value = Event(true)
 
         val key = BuildConfig.TOKEN_KEY
@@ -207,14 +266,20 @@ class MainViewModel : ViewModel() {
 
 
     fun clearNestedCommentInfo() {
-        _selectedParentCommentBody.value = ""
-        _selectedCommentGroupNum.value = -1
+//        _selectedParentCommentBody.value = ""
+//        _selectedCommentGroupNum.value = -1
+        _selectedParentCommentBody.postValue( "" )
+        _selectedCommentGroupNum.postValue( -1 )
     }
 
+
     fun clearAddPost() {
+        _selectedPhotoUriList.value = arrayListOf()
         _postBody.value = ""
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
+        _photoPickerClickSwitch.value = null
     }
+
 
     fun commentBodyClear() {
         _commentBody.value = ""
@@ -252,13 +317,15 @@ class MainViewModel : ViewModel() {
     }
 
     fun clickPostLike() {
-
         val plusValue =
             if (_isLikePost.value!!) -1
             else 1
         _posts.value!![_selectedPostPosition.value!!].likeCount =
             _posts.value!![_selectedPostPosition.value!!].likeCount + plusValue
+        _posts.value!![_selectedPostPosition.value!!].isLiked =
+            !_posts.value!![_selectedPostPosition.value!!].isLiked
         _isLikePost.value = !(_isLikePost.value)!!//like button 체크 혹은 해제
+        _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
         addLikePost(plusValue)
     }
 
@@ -269,10 +336,19 @@ class MainViewModel : ViewModel() {
                 App.prefs.getValue(tokenKey)!!,
                 plusValue
             )
-            val res = Repository().addLikePost(addLikePostInfo)
-
+            val resJson = Repository().addLikePost(addLikePostInfo)
+            viewModelScope.launch {
+                if (resJson.get("isSuccess").asBoolean){
+                    _posts.value!![selectedPostPosition.value!!].likeCount = resJson.get("like_count").asInt
+                    _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
+                }
+            }
         }
     }
+
+
+
+
 
     fun clickCommentLike(position: Int) {
         val plusValue =
@@ -282,20 +358,10 @@ class MainViewModel : ViewModel() {
             _comments.value!![position].likeCount + plusValue
         _comments.value!![position].isLiked = !_comments.value!![position].isLiked
         _commentLikeCountChange.value = position
+        _commentInnerValueChangeSwitch.value = !_commentInnerValueChangeSwitch.value!!
         addLikeComment(plusValue, position)
     }
 
-    fun addLikeComment(plusValue: Int, position: Int) {
-        GlobalScope.launch {
-            val addLikeCommentInfo = AddLikeCommentInfo(
-                _comments.value!![position].commentId,
-                App.prefs.getValue(tokenKey)!!,
-                plusValue
-            )
-            val res = Repository().addLikeComment(addLikeCommentInfo)
-
-        }
-    }
 
 
     fun getPosts() {
@@ -320,12 +386,36 @@ class MainViewModel : ViewModel() {
                     oldPosts!!.addAll(resPosts)
                     Log.d("oldPost", oldPosts.toString())
                     _posts.value = oldPosts!!
+
                 }
                 _isScrollBottomTouch.value = Event(false)
             }
 
         }
     }
+
+        fun addLikeComment(plusValue: Int, position: Int) {
+            GlobalScope.launch {
+                val addLikeCommentInfo = AddLikeCommentInfo(
+                    _comments.value!![position].commentId,
+                    App.prefs.getValue(tokenKey)!!,
+                    plusValue
+                )
+                val resJson = Repository().addLikeComment(addLikeCommentInfo)
+                viewModelScope.launch {
+                    if (resJson.get("isSuccess").asBoolean) {
+                        _comments.value!![position].likeCount = resJson.get("like_count").asInt
+                        _commentInnerValueChangeSwitch.value =
+                            !_commentInnerValueChangeSwitch.value!!
+                    }
+                }
+            }
+        }
+
+    fun clearComments() {
+        _comments.postValue(ArrayList<Comment>())
+    }
+
 
     fun clearPosts() {
         _posts.value = ArrayList<PreviewPost>()
@@ -365,6 +455,7 @@ class MainViewModel : ViewModel() {
                         }
                         else
                             tmpCommentList.add(resComments[idx])
+
                     }
                 }
                 _comments.value = tmpCommentList
@@ -402,6 +493,7 @@ class MainViewModel : ViewModel() {
             if (isSuccess) {
                 getComments()
                 _commentBody.postValue("")
+                clearNestedCommentInfo()
             }
         }
     }
@@ -421,13 +513,17 @@ class MainViewModel : ViewModel() {
                 tmpCategoryId
             )
             val res = Repository().addPost(addPostInfo)
+            val isSuccess=res.isSuccess
+            val postId = res.postId
+            if(isSuccess) uploadPhoto(postId)
             viewModelScope.launch {
-                _isAddPostSuccess.value = Event(res)
+                _isAddPostSuccess.value = Event(isSuccess)
             }
 
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
+
 
     fun setSelectedPostPosition(position: Int) {
         _selectedPostPosition.value = position
@@ -514,6 +610,7 @@ class MainViewModel : ViewModel() {
                 _posts.value!![_selectedPostPosition.value!!].commentCount = _posts.value!![_selectedPostPosition.value!!].commentCount - 1
                 _commentCountChange.postValue(Event(result))
                 getComments()
+
             }
         }
 
@@ -532,8 +629,8 @@ class MainViewModel : ViewModel() {
                 _categoryNames.value = splitCategoryNames(categoryList)
                 _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
                 categoryList.add(0, Category(-1, "All"))
-
                 _categories.value = categoryList
+
             }
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
@@ -560,32 +657,6 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun isAlreadyReadPost(): Boolean {
-        val alreadyReadPostIdJsonString = App.prefs.getValue(ALREADY_READ_POST_ID_KEY)
-        return if (alreadyReadPostIdJsonString == null || alreadyReadPostIdJsonString == "") { // 조회글 목록 json 자체가 없으면 방금 읽은 postid를 키로 넣고 하나 새로 생성
-            val alreadyReadPostIdJson = JsonObject()
-            alreadyReadPostIdJson.add(
-                _posts.value!![_selectedPostPosition.value!!].postId.toString(),
-                JsonNull.INSTANCE
-            )
-            App.prefs.setValue(ALREADY_READ_POST_ID_KEY, alreadyReadPostIdJson.toString())
-            false
-        } else {//조회글 목록 json이 있으면 해당 json에 현재 읽은 postid가 존재하는 지 확인
-            val alreadyReadPostIdJson =
-                JsonParser().parse(alreadyReadPostIdJsonString).asJsonObject
-            if (alreadyReadPostIdJson.has(_posts.value!![_selectedPostPosition.value!!].postId.toString())) {
-                true
-            } else {
-                alreadyReadPostIdJson.add(
-                    _posts.value!![_selectedPostPosition.value!!].postId.toString(),
-                    JsonNull.INSTANCE
-                )
-                App.prefs.setValue(ALREADY_READ_POST_ID_KEY, alreadyReadPostIdJson.toString())
-                false
-            }
-        }
-    }
-
     fun addPostViewCount() {
         GlobalScope.launch {
             Repository().addPostViewCount(AddPostViewCountInfo(_posts.value!![_selectedPostPosition.value!!].postId))
@@ -603,6 +674,32 @@ class MainViewModel : ViewModel() {
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
         _postCategoryInt.value = pos - 1
     }
+
+//        fun isAlreadyReadPost(): Boolean {
+//            val alreadyReadPostIdJsonString = App.prefs.getValue(ALREADY_READ_POST_ID_KEY)
+//            return if (alreadyReadPostIdJsonString == null || alreadyReadPostIdJsonString == "") { // 조회글 목록 json 자체가 없으면 방금 읽은 postid를 키로 넣고 하나 새로 생성
+//                val alreadyReadPostIdJson = JsonObject()
+//                alreadyReadPostIdJson.add(
+//                    _posts.value!![_selectedPostPosition.value!!].postId.toString(),
+//                    JsonNull.INSTANCE
+//                )
+//                App.prefs.setValue(ALREADY_READ_POST_ID_KEY, alreadyReadPostIdJson.toString())
+//                false
+//            } else {//조회글 목록 json이 있으면 해당 json에 현재 읽은 postid가 존재하는 지 확인
+//                val alreadyReadPostIdJson =
+//                    JsonParser().parse(alreadyReadPostIdJsonString).asJsonObject
+//                if (alreadyReadPostIdJson.has(_posts.value!![_selectedPostPosition.value!!].postId.toString())) {
+//                    true
+//                } else {
+//                    alreadyReadPostIdJson.add(
+//                        _posts.value!![_selectedPostPosition.value!!].postId.toString(),
+//                        JsonNull.INSTANCE
+//                    )
+//                    App.prefs.setValue(ALREADY_READ_POST_ID_KEY, alreadyReadPostIdJson.toString())
+//                    false
+//                }
+//            }
+//        }
 
 
     fun onTextChangeComment() {
@@ -639,6 +736,7 @@ class MainViewModel : ViewModel() {
     }
 
 
+
     fun editComment() {
         GlobalScope.launch {
             val commentInt = _comments.value!![_selectedCommentMorePosition.value!!].commentId
@@ -647,6 +745,7 @@ class MainViewModel : ViewModel() {
             _isEditCommentSuccess.postValue(Event(result))
 
             if (result){
+                clearComments()
                 getComments()
                 _commentBody.postValue("")
             }
@@ -662,9 +761,9 @@ class MainViewModel : ViewModel() {
             _isReportCommentSuccess.postValue(Event(result))
 
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
-
         }
     }
+
 
 
     fun reportPost() {

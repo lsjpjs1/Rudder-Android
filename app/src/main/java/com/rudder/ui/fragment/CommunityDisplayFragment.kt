@@ -1,12 +1,10 @@
 package com.rudder.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -56,8 +54,15 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
         viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
             adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
         })
-        viewModel.isLikePost.observe(viewLifecycleOwner, Observer {
-            adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
+        viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
+
+            it?.let {
+                viewModel.selectedPostPosition.value?.let {
+                    adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
+                }
+
+            }
+
         })
         viewModel.posts.observe(viewLifecycleOwner, Observer {
             Log.d("posts.observe","posts.observe")
@@ -97,9 +102,10 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
         (activity as MainActivity).changeSelectedPostPosition(position)
         (activity as MainActivity).showPost()
         (activity as MainActivity).showAddComment()
-        if(!viewModel.isAlreadyReadPost()){
-            viewModel.addPostViewCount()
-        }
+//        if(!viewModel.isAlreadyReadPost()){
+//            viewModel.addPostViewCount()
+//        }
+        viewModel.addPostViewCount()
         viewModel.getComments()
     }
 

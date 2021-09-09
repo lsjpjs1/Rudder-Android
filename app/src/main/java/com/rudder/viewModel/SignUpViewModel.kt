@@ -28,15 +28,6 @@ import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
 
-//    fun getInstance() : SignUpViewModel{
-//        return if(this::signUpViewModel.isInitialized){
-//            signUpViewModel
-//        }else{
-//            signUpViewModel = SignUpViewModel()
-//            signUpViewModel
-//        }
-//    }
-//    private lateinit var signUpViewModel : SignUpViewModel
 
     val _userId = MutableLiveData<String>()
     val _userPassword = MutableLiveData<String>()
@@ -139,6 +130,7 @@ class SignUpViewModel : ViewModel() {
         _categoryNames.value = ArrayList()
         callSchoolList()
         getCategories()
+
     }
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
@@ -254,12 +246,10 @@ class SignUpViewModel : ViewModel() {
         //parent.getAdapter().getItem(pos)    get item by pos
         //parent.getCount()                   get item count
         //parent.getSelectedItem()            get selected item
-        Log.d("parent.getAdapter","$pos, $id, ${parent.selectedItem}")
         if (pos != 0){
             _schoolSelectFlag.value = Event(true)
             _userSchoolInt.value = pos + 1
             _userSchoolName.value = parent.selectedItem.toString().split(" ")[0].toLowerCase()
-            Log.d(ContentValues.TAG, "_userSchoolName.value : ${_userSchoolName.value }")
         }else{
             _schoolSelectFlag.value = Event(false)
         }
@@ -268,12 +258,10 @@ class SignUpViewModel : ViewModel() {
     fun callSchoolList() {
         GlobalScope.launch {
             val resultSchoolList = repository.signUpSchoolList()
-            Log.d(ContentValues.TAG, "resultSchoolList 결과 : ${resultSchoolList}")
 
             for (i in 0 until resultSchoolList.size() ) {
                 val iObject = resultSchoolList[i].asJsonObject
                 val schoolName = iObject.get("school_name").asString
-                Log.d(ContentValues.TAG, "callIdCheck 결과 : ${schoolName}")
                 _schoolList.value!!.add(schoolName)
             }
         }
@@ -298,7 +286,6 @@ class SignUpViewModel : ViewModel() {
 
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpSendVerifyCode(EmailInfo(emailInput))
-            Log.d(ContentValues.TAG, "callSendVeriCode 결과 : ${result}")
             _emailCheckFlag.postValue(Event(result))
             _userVerificationCode.postValue("")
 
@@ -313,7 +300,6 @@ class SignUpViewModel : ViewModel() {
             val verifyCodeInput = _userVerificationCode.value!!
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpCheckVerifyCode(CheckVerifyCodeInfo(emailInput, verifyCodeInput))
-            Log.d(ContentValues.TAG, "callCheckVeriCode 결과 : ${result}")
             _verifyCodeCheckFlag.postValue(Event(result))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
@@ -329,6 +315,7 @@ class SignUpViewModel : ViewModel() {
                 _userSchoolInt.value!!,"",_userIntroduce.value!!,_userNickName.value!! )
 
             val result = repository.signUpCreateAccount(inputInfo)
+
             Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
             _categorySelectNext.postValue(Event(result))
 
@@ -354,6 +341,8 @@ class SignUpViewModel : ViewModel() {
                 _categories.value = categoryList
                 Log.d("_categoryNames_VM", "${_categoryNames.value}")
             }
+
+            //_profileSettingNext.postValue(Event(result))
         }
     }
 

@@ -14,11 +14,17 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentShowPostBinding
+import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.adapter.DisplayImagesAdapter
 import com.rudder.ui.adapter.PostCommentsAdapter
+
 import com.rudder.util.ProgressBarUtil
+import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 
 class ShowPostFragment: Fragment() {
@@ -45,11 +51,24 @@ class ShowPostFragment: Fragment() {
         }
 
         Log.d("showpost","${viewModel.posts.value!!}")
+
+        val displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+        fragmentBinding.showPostImageDisplayRecyclerView.also {
+            it.layoutManager = object : LinearLayoutManager(lazyContext){
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
+            it.setHasFixedSize(false)
+            it.adapter = displayImagesAdapter
+        }
         val currentPost = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        val timeago = PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(currentPost.postTime.time))
         fragmentBinding.post = currentPost
         fragmentBinding.mainVM = viewModel
         fragmentBinding.position = viewModel.selectedPostPosition.value!!
         fragmentBinding.lifecycleOwner = this
+        fragmentBinding.timeago = timeago
 
 
         viewModel.comments.observe(viewLifecycleOwner, Observer {
@@ -66,27 +85,27 @@ class ShowPostFragment: Fragment() {
 
         viewModel.selectedPostPosition.observe(viewLifecycleOwner, Observer {
             fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+            displayImagesAdapter.imageUrlList = viewModel.posts.value!![it].imageUrls
+            displayImagesAdapter.notifyDataSetChanged()
         })
-        viewModel.isLikePost.observe(viewLifecycleOwner, Observer {
-            fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                    fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+            }
+
         })
 
-        viewModel.commentLikeCountChange.observe(viewLifecycleOwner, Observer {
+        viewModel.commentInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
             it?.let{
-                adapter.notifyItemChanged(it)
+                viewModel.commentLikeCountChange.value?.let {
+                    position-> adapter.notifyItemChanged(position)
+                }
+
             }
         })
 
 
-        viewModel.isEditCommentSuccess.observe(viewLifecycleOwner, Observer {
 
-            it?.let{
-                Log.d("isEditCommentSuccess","isEditCommentSuccess")
-                //adapter.notifyItemChanged(viewModel.commentLikeCountChange.value!!)
-                adapter.updateComments(viewModel.comments.value!!, true)
-            }
-            //Log.d("isEditCommentSuccess","isEditCommentSuccess")
-        })
 
 
 
@@ -101,7 +120,6 @@ class ShowPostFragment: Fragment() {
                         fixOtherViewHeight()
                         fragmentBinding.showPostBody.viewTreeObserver.removeOnGlobalLayoutListener(this)
                     }
-
                 }
         )
 

@@ -309,7 +309,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout6"
+            android:id="@+id/addPostDisplayTextLine"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="5dp"

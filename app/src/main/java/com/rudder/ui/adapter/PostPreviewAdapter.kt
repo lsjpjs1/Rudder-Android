@@ -41,7 +41,6 @@ class PostPreviewAdapter(
             parent,
             false
         )
-        Log.d("parentHeight", parent.height.toString())
         val params = bind.root.layoutParams
         val typedValue = TypedValue()
         context.resources.getValue(R.dimen.post_preview_height, typedValue, true)
@@ -73,13 +72,18 @@ class PostPreviewAdapter(
             listener.onClick(holder.postPreviewBinding.postPreview, position)
         }
 
+        if(previewPostList[position].isLiked){
+            holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+        }else{
+            holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_outline_thumb_up_24)
+        }
+
     }
 
     fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) {
 
         val diffCallback: PostsDiffCallback = PostsDiffCallback(previewPostList, newPreviewPosts)
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
-        Log.d("newPost", newPreviewPosts.toString())
         previewPostList.clear()
         previewPostList.addAll(newPreviewPosts)
         diffResult.dispatchUpdatesTo(this)

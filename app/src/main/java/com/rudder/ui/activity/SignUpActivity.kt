@@ -61,8 +61,8 @@ class SignUpActivity : AppCompatActivity() {
 
 
     fun getDisplaySize():ArrayList<Int>{
-        return if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.R){
-            val windowMetrics = Activity().windowManager.currentWindowMetrics
+        return if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+            val windowMetrics = this@SignUpActivity.windowManager.currentWindowMetrics
             val insets = windowMetrics.windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
             val width = windowMetrics.bounds.width() - insets.left - insets.right
             val height = windowMetrics.bounds.height() - insets.top - insets.bottom
@@ -200,13 +200,11 @@ class SignUpActivity : AppCompatActivity() {
 
 
     override fun onResume() {
-        Log.d("mytag","onResume")
         super.onResume()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("mytag","onDestory")
     }
 
 }

@@ -6,8 +6,11 @@ data class LoginInfo(
     @SerializedName(value = "user_id")
     val userId: String,
     @SerializedName(value = "user_password")
-    val userPassword: String
-
+    val userPassword: String,
+    @SerializedName(value = "notification_token")
+    val notificationToken: String,
+    @SerializedName(value = "os")
+    val os: String
 )
 
 

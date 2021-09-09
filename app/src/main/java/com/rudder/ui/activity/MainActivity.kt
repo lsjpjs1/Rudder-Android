@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.fragment_add_comment.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
@@ -181,7 +182,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isAddPostClick.observe(this, Observer {
             if(it.getContentIfNotHandled()!!){
-                viewModel.clearAddPost()
+
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
 
@@ -189,6 +190,7 @@ class MainActivity : AppCompatActivity() {
 
                 fragmentShowHide.addFragment(addPostFragment,R.id.mainDisplay,"addPost")
                 fragmentShowHide.showFragment(addPostFragment,R.id.mainDisplay)
+                viewModel.clearAddPost()
             }
         })
 
@@ -197,9 +199,7 @@ class MainActivity : AppCompatActivity() {
                 onBackPressed()
             }
         })
-        viewModel.selectedPostPosition.observe(this, Observer {
-            Log.d("select",it.toString())
-        })
+
 
         viewModel.isScrollBottomTouch.observe(this, Observer {
             if(it.getContentIfNotHandled()!!){
@@ -305,7 +305,6 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-
     }
 
     // id가 명시되어있지 않은 다른 부분을 터치했을 때 키보드가 보여져있는 상태면 키보드를 내림.
@@ -336,6 +335,24 @@ class MainActivity : AppCompatActivity() {
             moveTaskToBack(true)
         }
 
+    }
+
+
+
+    fun getDisplaySize():ArrayList<Int>{
+        return if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+            val windowMetrics = this@MainActivity.windowManager.currentWindowMetrics
+            val insets = windowMetrics.windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+            val width = windowMetrics.bounds.width() - insets.left - insets.right
+            val height = windowMetrics.bounds.height() - insets.top - insets.bottom
+            arrayListOf(width,height)
+        }else{
+            val displayMertrics = DisplayMetrics()
+            this.windowManager.defaultDisplay.getMetrics(displayMertrics)
+            val width = displayMertrics.widthPixels
+            val height = displayMertrics.heightPixels
+            arrayListOf(width,height)
+        }
     }
 
     fun swapMainBottomBar(){
@@ -394,28 +411,8 @@ class MainActivity : AppCompatActivity() {
         mainBottomBarFragment.communityIcon.setColorFilter(grey, PorterDuff.Mode.SRC_IN)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("mytag","onDestorymain")
-    }
 
 
-
-    fun getDisplaySize():ArrayList<Int>{
-        return if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.R){
-            val windowMetrics = Activity().windowManager.currentWindowMetrics
-            val insets = windowMetrics.windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
-            val width = windowMetrics.bounds.width() - insets.left - insets.right
-            val height = windowMetrics.bounds.height() - insets.top - insets.bottom
-            arrayListOf(width,height)
-        }else{
-            val displayMertrics = DisplayMetrics()
-            this.windowManager.defaultDisplay.getMetrics(displayMertrics)
-            val width = displayMertrics.widthPixels
-            val height = displayMertrics.heightPixels
-            arrayListOf(width,height)
-        }
-    }
 
     fun updatePost(){ // editPost 시 실행
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)

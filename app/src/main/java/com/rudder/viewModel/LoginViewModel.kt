@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 
 
 class LoginViewModel() : ViewModel() {
+    private val NOTIFICATION_TOKEN_KEY = "notificationKey"
     val _userId = MutableLiveData<String>()
     val _userPassword = MutableLiveData<String>()
     private val _showLoginErrorToast = MutableLiveData<Event<Boolean>>()
@@ -68,8 +69,7 @@ class LoginViewModel() : ViewModel() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
-            val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!))
-            Log.d("result", "${result}" )
+            val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!,App.prefs.getValue(NOTIFICATION_TOKEN_KEY)!!,"android"))
             viewModelScope.launch{
                 if(result){
                     _startMainActivity.value = Event(true)

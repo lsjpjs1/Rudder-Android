@@ -12,6 +12,9 @@
         <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
+        <variable
+            name="timeago"
+            type="String" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -74,21 +77,33 @@
                             app:layout_constraintWidth_percent="@dimen/width_default">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintWidth_default="percent"
-                                app:layout_constraintWidth_percent="@dimen/show_post_header_name_width">
+                                app:layout_constraintStart_toStartOf="parent">
 
                                 <TextView
                                     android:id="@+id/textView6"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@{post.userId}"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintRight_toRightOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/postPreviewHeadPostTimeTV"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{timeago}"
+                                        android:textSize="12sp"
+                                        android:layout_marginLeft="7dp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintLeft_toRightOf="@id/textView6"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+
                             </androidx.constraintlayout.widget.ConstraintLayout>
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="0dp"
@@ -113,13 +128,33 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/showPostImageDisplay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/showPostImageDisplayRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </androidx.recyclerview.widget.RecyclerView>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/constraintLayout7"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
 
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8"
+                            app:layout_constraintTop_toBottomOf="@+id/showPostImageDisplay"
                             app:layout_constraintWidth_default="percent"
                             app:layout_constraintWidth_percent="@dimen/width_default">
 
@@ -128,7 +163,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{post.postBody}"
-                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"/>

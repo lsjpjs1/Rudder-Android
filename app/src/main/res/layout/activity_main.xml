@@ -23,9 +23,8 @@
             app:layout_constraintHeight_percent="@dimen/without_main_bottom_height"
             tools:layout_editor_absoluteX="0dp">
 
-
-
         </FrameLayout>
+
 
         <View
             android:id="@+id/view"

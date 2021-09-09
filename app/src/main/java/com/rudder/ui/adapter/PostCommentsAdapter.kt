@@ -72,7 +72,6 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
             holder.postCommentsBinding.constraintLayout11.viewTreeObserver.addOnGlobalLayoutListener(
                     object : ViewTreeObserver.OnGlobalLayoutListener{
                         override fun onGlobalLayout() {
-                            Log.d("position$position",holder.postCommentsBinding.constraintLayout11.height.toString())
                             holder.postCommentsBinding.nestedCommentImage.minHeight = holder.postCommentsBinding.constraintLayout11.height
                             val lp = holder.postCommentsBinding.constraintLayout14.layoutParams as ConstraintLayout.LayoutParams
                             lp.startToStart = ConstraintLayout.LayoutParams.UNSET

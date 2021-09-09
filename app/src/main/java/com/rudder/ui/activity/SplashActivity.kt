@@ -66,7 +66,6 @@ class SplashActivity : AppCompatActivity() {
     fun autoLogin(){
         GlobalScope.launch {
             val autoLoginPref = App.prefs.getValue("autoLogin")
-            Log.d("autoLoginPref","$autoLoginPref")
             if (autoLoginPref == "true") {
                 viewModel.callLogin()
             }
@@ -82,8 +81,4 @@ class SplashActivity : AppCompatActivity() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("onDestorySplash","onDestorySplash")
-    }
 }

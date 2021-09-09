@@ -88,5 +88,7 @@ data class ImageInfo(
 )
 
 data class AddPostResponse(
-        val isSuccess:Boolean
+        val isSuccess:Boolean,
+        @SerializedName("post_id")
+        val postId:Int
 )

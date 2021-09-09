@@ -65,7 +65,6 @@ class ForgotViewModel() : ViewModel() {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
             val result = repository.findAccountID(EmailInfo(_forgotEmail.value!!))
-            Log.d(ContentValues.TAG, "callCheckEmail 결과 : ${result}")
             _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
@@ -77,7 +76,6 @@ class ForgotViewModel() : ViewModel() {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
             val result = repository.findAccountPassword(EmailInfo(_forgotEmail.value!!))
-            Log.d(ContentValues.TAG, "callSendVeriCode 결과 : ${result}")
             _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
@@ -89,7 +87,6 @@ class ForgotViewModel() : ViewModel() {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
             val result = repository.sendAccountPassword(CheckVerifyCodeInfo(_forgotEmail.value!!, _forgotverifyCode.value!!))
-            Log.d(ContentValues.TAG, "callSendPassword 결과 : ${result}")
             _verifyCodeCheckFlag.postValue(Event(result))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))

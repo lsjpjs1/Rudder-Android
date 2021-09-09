@@ -7,7 +7,9 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.rudder.BuildConfig
 import com.rudder.R
+import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.databinding.ActivityLoginBinding
 import com.rudder.util.ProgressBarUtil
@@ -23,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
         binding.loginVM = viewModel
         binding.lifecycleOwner = this
@@ -66,16 +67,11 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("mytag","onDestoryLogin")
-    }
 
 
 
     fun autoLoginCheckbox(){
         val autoLoginPref = prefs.getValue("autoLogin")
-        Log.d("autoLoginPref","$autoLoginPref")
         autoLoginCheckbox.isChecked = autoLoginPref == "true"
     }
 }

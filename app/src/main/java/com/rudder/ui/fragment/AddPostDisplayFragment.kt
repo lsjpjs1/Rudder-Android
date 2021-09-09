@@ -1,21 +1,40 @@
 package com.rudder.ui.fragment
 
+import android.app.Activity
+import android.content.ContentResolver
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
+import com.rudder.data.FileInfo
 import com.rudder.databinding.FragmentAddPostDisplayBinding
+import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.adapter.AddPostShowImagesAdapter
+import com.rudder.util.AddPostImagesOnclickListener
+import com.rudder.util.FileUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_add_post_display.view.*
+import kotlinx.android.synthetic.main.fragment_add_post_display.*
 
-class AddPostDisplayFragment : Fragment() {
+
+
+class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
     private val viewModel : MainViewModel by activityViewModels()
     private val lazyContext by lazy {
         requireContext()
@@ -34,15 +53,120 @@ class AddPostDisplayFragment : Fragment() {
                 return view
             }
         }
-
+        val addPostShowImagesAdapter = AddPostShowImagesAdapter(viewModel.selectedPhotoUriList.value!!,(activity as MainActivity).getDisplaySize(),this)
         display.mainVM=viewModel
         display.categorySpinner.adapter=spinnerAdapter
         display.lifecycleOwner = this
 
 
+        display.showPhotoRV.also {
+            it.layoutManager=LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)
+            it.setHasFixedSize(false)
+            it.adapter = addPostShowImagesAdapter
+        }
+
+
         display.root.categorySpinner.isEnabled = true
 
 
+        viewModel.selectedPhotoUriList.observe(viewLifecycleOwner, Observer {
+
+            it?.let {
+                if (it.size>0){ // 이미지 추가했을때만 이미지 리스트 표시되게
+                    display.showPhoto.visibility=View.VISIBLE
+                }
+                addPostShowImagesAdapter.notifyDataSetChanged()
+            }
+
+        })
+
+        viewModel.photoPickerClickSwitch.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Log.d("photopicker",it.toString())
+                openPhotoPicker()
+            }
+        })
+
+        display.addPostDisplayEntire.viewTreeObserver.addOnGlobalLayoutListener(
+            object : ViewTreeObserver.OnGlobalLayoutListener{
+                override fun onGlobalLayout() {
+                    fixOtherViewHeight()
+                    display.addPostDisplayEntire.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+
+            }
+        )
+
         return display.root
+    }
+    var photoPickerResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == Activity.RESULT_OK){
+            val data : Intent? = result.data
+            data?.let {
+                var uriList = arrayListOf<FileInfo>()
+                when{
+                    it.data !=null-> {
+                        val uri = it.data!!
+                        val path = FileUtil.createCopyAndReturnRealPath(lazyContext,uri).toString()
+                        uriList.add(FileInfo(uri,lazyContext.contentResolver.getType(uri)!!,path))
+                    }
+                    it.clipData != null ->{
+                        for(i in 0 until it.clipData!!.itemCount){
+                            val uri = it.clipData!!.getItemAt(i).uri
+                            val path = FileUtil.createCopyAndReturnRealPath(lazyContext,uri).toString()
+                            uriList.add(FileInfo(uri,lazyContext.contentResolver.getType(uri)!!,path))
+                        }
+                    }
+                    else ->{
+                    }
+                }
+                if (uriList!=arrayListOf<FileInfo>()){
+                    viewModel.setSelectedPhotoUriList(uriList)
+                }
+            }
+        }
+    }
+    fun openPhotoPicker(){
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.setType("image/*")
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true)
+        photoPickerResultLauncher.launch(Intent.createChooser(intent,"photoPicker"))
+    }
+
+    override fun onClickAddImage(view: View, position: Int) {
+        viewModel.onPhotoPickerClick()
+    }
+
+    override fun onClickDeleteImage(view: View, position: Int) {
+        viewModel.deletePhotoUriPosition(position)
+    }
+
+    fun fixOtherViewHeight(){
+        val addPostDisplayEntireHeight = addPostDisplayEntire.height
+        val chooseCategoryHeightRatio = 0.1
+        val textTitleRatio = 0.03
+        val lineRatio = 0.005
+
+        //뷰의 높이 고정
+        var lp = chooseCategoryConstraintLayout.layoutParams
+        lp.height=(addPostDisplayEntireHeight*chooseCategoryHeightRatio).toInt()
+        chooseCategoryConstraintLayout.layoutParams=lp
+
+        lp=addPostDisplayTextTitle.layoutParams
+        lp.height=(addPostDisplayEntireHeight*textTitleRatio).toInt()
+        addPostDisplayTextTitle.layoutParams=lp
+
+        lp=addPostDisplayImagesTitle.layoutParams
+        lp.height=(addPostDisplayEntireHeight*textTitleRatio).toInt()
+        addPostDisplayImagesTitle.layoutParams=lp
+
+        lp=addPostDisplayTextLine.layoutParams
+        lp.height=(addPostDisplayEntireHeight*lineRatio).toInt()
+        addPostDisplayTextLine.layoutParams=lp
+
+        lp=addPostDisplayImagesLine.layoutParams
+        lp.height=(addPostDisplayEntireHeight*lineRatio).toInt()
+        addPostDisplayImagesLine.layoutParams=lp
+
     }
 }
