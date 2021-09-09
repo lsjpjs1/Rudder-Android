@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var communityPostBottomSheetFragment : CommunityPostBottomSheetFragment
     private lateinit var communityCommentBottomSheetFragment : CommunityCommentBottomSheetFragment
     private lateinit var communityPostReportFragment : CommunityPostReportFragment
+    private lateinit var communityCommentReportFragment : CommunityCommentReportFragment
     private lateinit var communityCommentEditFragment : CommunityCommentEditFragment
 
     private lateinit var editPostFragment: EditPostFragment
@@ -72,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         communityPostBottomSheetFragment = CommunityPostBottomSheetFragment()
         communityCommentBottomSheetFragment = CommunityCommentBottomSheetFragment()
         communityPostReportFragment = CommunityPostReportFragment()
+        communityCommentReportFragment = CommunityCommentReportFragment()
         communityCommentEditFragment = CommunityCommentEditFragment()
         editPostFragment = EditPostFragment()
 
@@ -98,7 +100,6 @@ class MainActivity : AppCompatActivity() {
             if(it.getContentIfNotHandled()!!) {
                 if (!communityCommentBottomSheetFragment.isAdded)
                     communityCommentBottomSheetFragment.show(supportFragmentManager, communityCommentBottomSheetFragment.tag)
-
             }
         })
 
@@ -109,6 +110,14 @@ class MainActivity : AppCompatActivity() {
                     communityPostReportFragment.show(supportFragmentManager, communityPostReportFragment.tag)
             }
         })
+
+        viewModel.isCommentReport.observe(this, Observer {
+            if(it.getContentIfNotHandled()!!) {
+                if (!communityCommentReportFragment.isAdded)
+                    communityCommentReportFragment.show(supportFragmentManager, communityCommentReportFragment.tag)
+            }
+        })
+
 
         viewModel.isPostEdit.observe(this, Observer {
             it?.let{
@@ -139,12 +148,6 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        viewModel.isCommentReport.observe(this, Observer {
-            if(it.getContentIfNotHandled()!!) {
-                if (!communityPostReportFragment.isAdded)
-                    communityPostReportFragment.show(supportFragmentManager, communityPostReportFragment.tag)
-            }
-        })
 
         viewModel.isCommentEdit.observe(this, Observer {
             if(it.getContentIfNotHandled()!!){
@@ -255,9 +258,36 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.isReportPostSuccess.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it){
+                    communityPostReportFragment.dismiss()
+                    communityPostBottomSheetFragment.dismiss()
+                }
+            }
+        })
+
+
+        viewModel.isReportCommentSuccess.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it){
+                    communityCommentReportFragment.dismiss()
+                    communityCommentBottomSheetFragment.dismiss()
+                }
+            }
+        })
+
 
         viewModel.isCancelClick.observe(this, Observer {
-            communityCommentEditFragment.dismiss()
+            if (communityCommentEditFragment.isAdded)
+                communityCommentEditFragment.dismiss()
+
+            else if (communityPostReportFragment.isAdded)
+                communityPostReportFragment.dismiss()
+
+            else if (communityCommentReportFragment.isAdded)
+                communityCommentReportFragment.dismiss()
+
         })
 
 

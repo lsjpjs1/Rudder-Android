@@ -17,11 +17,11 @@ class ReportApi {
         val instance = ReportApi()
     }
 
-    private val deleteService : DeleteService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(DeleteService::class.java)
+    private val reportService : ReportService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(ReportService::class.java)
 
-    fun deletePostApi(deletePostInfo : DeletePostInfo) : Deferred<Response<JsonObject>>{
+    fun reportApi(reportInfo: ReportInfo) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){
-            deleteService.deletePostService(deletePostInfo)
+            reportService.reportService(reportInfo)
         }
     }
 

@@ -154,4 +154,8 @@ class Repository {
         return EditApi.instance.editCommentApi(editCommentInfo).await().results.get("isSuccess").asBoolean
     }
 
+    suspend fun reportRepository(reportInfo: ReportInfo) : Boolean{
+        return ReportApi.instance.reportApi(reportInfo).await().results.get("isSuccess").asBoolean
+    }
+
 }
