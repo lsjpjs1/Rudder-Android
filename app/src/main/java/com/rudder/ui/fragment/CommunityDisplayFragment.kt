@@ -46,6 +46,8 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
                     super.onScrolled(recyclerView, dx, dy)
                     if(!it.canScrollVertically(1)){
                         viewModel.scrollTouchBottom()
+                    } else if (!it.canScrollVertically(-1) && dy < 0) {
+                        viewModel.scrollTouchTop()
                     }
                 }
             })

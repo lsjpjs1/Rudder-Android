@@ -229,6 +229,13 @@ class MainViewModel : ViewModel() {
 
     }
 
+
+    fun scrollTouchTop() {
+        clearPosts()
+        getPosts()
+    }
+
+
     fun clickCommunity() {
         _selectedTab.value = R.id.communityButton
     }
