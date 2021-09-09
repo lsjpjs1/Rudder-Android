@@ -236,6 +236,15 @@ class MainViewModel : ViewModel() {
     }
 
 
+    fun scrollTouchBottomComment() {
+        getComments()
+    }
+
+    fun scrollTouchTopComment() {
+        getComments()
+    }
+
+
     fun clickCommunity() {
         _selectedTab.value = R.id.communityButton
     }
