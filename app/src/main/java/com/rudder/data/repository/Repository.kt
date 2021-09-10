@@ -41,9 +41,13 @@ class Repository {
     }
 
 
-    suspend fun signUpSendVerifyCode(emailInfo : EmailInfo) : Boolean{
+    suspend fun signUpSendVerifyCode(emailInfo : EmailInfo) : String{
         val verifyAPIResult = SignUpApi.instance.emailSignUp(emailInfo).await()
-        return verifyAPIResult.results.get("isVerify").asBoolean
+
+//        val asd = verifyAPIResult.results.get("fail").asString
+//
+//        if (asd == true)
+        return verifyAPIResult.results.get("fail").asString
     }
 
     suspend fun signUpIdDuplicated(idDuplicatedInfo: IdDuplicatedInfo) : Boolean{

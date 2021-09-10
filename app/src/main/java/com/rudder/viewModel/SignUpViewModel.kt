@@ -52,6 +52,8 @@ class SignUpViewModel : ViewModel() {
     val _categorySelectNext = MutableLiveData<Event<Boolean>>()
     val _categorySelectBack = MutableLiveData<Event<Boolean>>()
 
+
+    val _emailDomainChangeFlag = MutableLiveData<Event<Boolean>>()
     val _idChangeFlag = MutableLiveData<Event<Boolean>>()
     val _passwordFlag = MutableLiveData<Event<Boolean>>()
     val _passwordCheckFlag = MutableLiveData<Event<Boolean>>()
@@ -67,7 +69,7 @@ class SignUpViewModel : ViewModel() {
 
     var _categories = MutableLiveData<ArrayList<Category>>()
     var _categoryNames = MutableLiveData<ArrayList<String>>()
-
+    val _emailToast = MutableLiveData<String>()
 
 
     val userId: LiveData<String> = _userId
@@ -93,8 +95,7 @@ class SignUpViewModel : ViewModel() {
     val categorySelectNext: LiveData<Event<Boolean>> = _categorySelectNext
     val categorySelectBack: LiveData<Event<Boolean>> = _categorySelectBack
 
-
-
+    val emailDomainChangeFlag : LiveData<Event<Boolean>> = _emailDomainChangeFlag
     val idChangeFlag : LiveData<Event<Boolean>> = _idChangeFlag
     val passwordFlag : LiveData<Event<Boolean>> = _passwordFlag
     val passwordCheckFlag : LiveData<Event<Boolean>> = _passwordCheckFlag
@@ -112,6 +113,8 @@ class SignUpViewModel : ViewModel() {
     var categories: LiveData<ArrayList<Category>> = _categories
     var categoryNames: LiveData<ArrayList<String>> = _categoryNames
 
+    val emailToast: LiveData<String> = _emailToast
+
     private val repository = Repository()
 
     init {
@@ -126,6 +129,7 @@ class SignUpViewModel : ViewModel() {
         _userSchoolName.value = ""
         _userSchoolInt.value = 0
         _userIntroduce.value = ""
+        _emailToast.value = ""
 
         _categoryNames.value = ArrayList()
         callSchoolList()
@@ -157,38 +161,37 @@ class SignUpViewModel : ViewModel() {
 
 
     fun onTextChangePW() {
-        if (_userPassword.value!!.trim().matches(passwordRg) && _userPassword.value!!.isNotBlank())
+        if (_userPassword.value!!.matches(passwordRg) && _userPassword.value!!.isNotBlank())
             _passwordFlag.value = Event(true)
         else
             _passwordFlag.value = Event(false)
 
-        if (_userPassword.value!!.trim() == _userPasswordCheck.value!!.trim() && _userPassword.value!!.isNotBlank())
+        if (_userPassword.value!! == _userPasswordCheck.value!! && _userPassword.value!!.isNotBlank())
             _passwordCheckFlag.value = Event(true)
         else
             _passwordCheckFlag.value = Event(false)
     }
 
     fun onTextChangePWCheck() {
-        if (_userPasswordCheck.value!!.trim() == _userPassword.value!!.trim() && _userPasswordCheck.value!!.isNotBlank())
+        if (_userPasswordCheck.value!! == _userPassword.value!! && _userPasswordCheck.value!!.isNotBlank())
             _passwordCheckFlag.value = Event(true)
         else
             _passwordCheckFlag.value = Event(false)
     }
 
     fun onTextChangeEmailDomain() {
-        val emailDomainChunk = _userEmailDomain.value!!.split('.')[0]
-        Log.d("emailDomainChunk","emailDomainChunk : ${emailDomainChunk}")
-        if (_userEmailDomain.value!!.trim().matches(emailRg) && _userEmailID.value!!.isNotBlank()) {
-            if (emailDomainChunk == _userSchoolName.value!!)
-                _emailDomainFlag.value = Event(true)
-            else
-                _emailDomainFlag.value = Event(false)
-        } else
+        if (_userEmailDomain.value!!.matches(emailRg) && _userEmailID.value!!.isNotBlank()) {
+            _emailDomainFlag.value = Event(true)
+        }
+        else {
             _emailDomainFlag.value = Event(false)
+        }
+
+        _emailDomainChangeFlag.value = Event(true)
     }
 
     fun onTextChangeNickName() {
-        if (_userNickName.value!!.trim().matches(nickNameRg) && _userNickName.value!!.isNotBlank())
+        if (_userNickName.value!!.matches(nickNameRg) && _userNickName.value!!.isNotBlank())
             _nickNameFlag.value = Event(true)
         else
             _nickNameFlag.value = Event(false)
@@ -249,7 +252,6 @@ class SignUpViewModel : ViewModel() {
         if (pos != 0){
             _schoolSelectFlag.value = Event(true)
             _userSchoolInt.value = pos + 1
-            _userSchoolName.value = parent.selectedItem.toString().split(" ")[0].toLowerCase()
         }else{
             _schoolSelectFlag.value = Event(false)
         }
@@ -280,15 +282,20 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun callSendVeriCode() {
+    fun callSendVeriCode() { //verifyEmail
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
-            val result = repository.signUpSendVerifyCode(EmailInfo(emailInput))
-            _emailCheckFlag.postValue(Event(result))
+            val result = repository.signUpSendVerifyCode(EmailInfo(emailInput,_userSchoolInt.value!!))
+            if (result == "") {
+                _emailToast.postValue("-")
+                _emailCheckFlag.postValue(Event(true))
+            } else {
+                _emailToast.postValue(result)
+                _emailCheckFlag.postValue(Event(false))
+            }
             _userVerificationCode.postValue("")
-
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }

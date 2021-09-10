@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class EmailInfo(
     @SerializedName(value = "email")
-    val email: String
+    val email: String,
+    @SerializedName(value = "school_id")
+    val schoolId: Int
 )
 
 data class IdDuplicatedInfo(

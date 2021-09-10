@@ -2,6 +2,7 @@ package com.rudder.ui.fragment
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,6 @@ import kotlinx.android.synthetic.main.fragment_create_account.view.*
 
 class CreateAccountFragment : Fragment() {
 
-    //private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
     private val viewModel: SignUpViewModel by activityViewModels()
 
     private lateinit var createAccountBinding : FragmentCreateAccountBinding
@@ -39,7 +39,6 @@ class CreateAccountFragment : Fragment() {
         val toastPassword = Toast.makeText(activity, "비밀번호는 숫자,문자,특수문자 중 2가지 포함(8~15자)", Toast.LENGTH_SHORT)
         val toastPasswordCheck = Toast.makeText(activity, "Please Check, Password and Password Confirm",Toast.LENGTH_SHORT)
         val toastEmailDomain = Toast.makeText(activity, "Please Check, Right Email Address", Toast.LENGTH_SHORT)
-        val toastEmailCheck = Toast.makeText(activity, "Email must be Naver Email", Toast.LENGTH_SHORT)
         val toastverifyCodeCheck = Toast.makeText(activity, "Wrong Verification Code", Toast.LENGTH_SHORT)
 
 
@@ -47,9 +46,25 @@ class CreateAccountFragment : Fragment() {
             it.getContentIfNotHandled()?.let{
                 ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
                 idDuplicatedCheck.isEnabled = true
-                ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+                ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
+                ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
                 ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
             }})
+
+        viewModel.idCheckFlag.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    ChangeUIState.changeCheckBoxTrueState(IDcheckbox)
+                    idDuplicatedCheck.isEnabled = false
+                } else {
+                    ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
+                    Toast.makeText(activity, "ID is duplicated", Toast.LENGTH_SHORT).show()
+                }
+            }
+            ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
+            ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+            ChangeUIState.buttonEnable( createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
+        })
 
         viewModel.verifiCodeChangeFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{
@@ -67,7 +82,8 @@ class CreateAccountFragment : Fragment() {
                     ChangeUIState.changeCheckBoxFalseState(PWcheckbox1)
                     toastPassword.show()
                 }
-                ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+                ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
+                ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
                 ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
         }})
 
@@ -82,52 +98,55 @@ class CreateAccountFragment : Fragment() {
                     if (viewModel.userPassword.value.toString().length == viewModel.userPasswordCheck.value.toString().length)
                         toastPasswordCheck.show()
                 }
-                ChangeUIState.buttonEnable( verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+                ChangeUIState.buttonEnable( verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
+                ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
                 ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
             } })
 
         viewModel.emailDomainFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if(it) {
-                    ChangeUIState.changeCheckBoxTrueState(emailCheckbox)
+                    verifyBtn.isEnabled = true
                     toastEmailDomain.cancel()
                 }
                 else{
-                    ChangeUIState.changeCheckBoxFalseState(emailCheckbox)
+                    verifyBtn.isEnabled = false
                     toastEmailDomain.show()
                 }
-                ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+                ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
+                ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
                 ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
         }})
 
-        viewModel.idCheckFlag.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    ChangeUIState.changeCheckBoxTrueState(IDcheckbox)
-                    idDuplicatedCheck.isEnabled = false
-                } else {
-                    ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
-                    Toast.makeText(activity, "ID is duplicated", Toast.LENGTH_SHORT).show()
-                }
-            }
-            ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
-            ChangeUIState.buttonEnable( createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
-        })
 
-        viewModel.emailCheckFlag.observe(viewLifecycleOwner, Observer {
+        viewModel.emailDomainChangeFlag.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let{
+                ChangeUIState.changeCheckBoxFalseState(emailCheckbox)
+                verifyBtn.isEnabled = true
+                ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
+                ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+                ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
+            }})
+
+
+
+        viewModel.emailCheckFlag.observe(viewLifecycleOwner, Observer { // Send verify code
             it.getContentIfNotHandled()?.let { it ->
+                val toastEmailCheck = Toast.makeText(activity, viewModel.emailToast.value!!, Toast.LENGTH_SHORT)
+
                 if (it){
-                    submitBtn.isEnabled = true
+                    ChangeUIState.changeCheckBoxTrueState(emailCheckbox)
                     toastEmailCheck.cancel()
                 }
                 else {
-                    submitBtn.isEnabled = false
+                    ChangeUIState.changeCheckBoxFalseState(emailCheckbox)
                     toastEmailCheck.show()
                 }
             }
             ChangeUIState.changeCheckBoxFalseState(veifyCodeCheckbox)
             verifyCode.text.clear()
-            ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+
+            ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
             ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
         })
 

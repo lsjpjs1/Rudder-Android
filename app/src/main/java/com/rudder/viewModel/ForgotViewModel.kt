@@ -64,7 +64,7 @@ class ForgotViewModel() : ViewModel() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
-            val result = repository.findAccountID(EmailInfo(_forgotEmail.value!!))
+            val result = repository.findAccountID(EmailInfo(_forgotEmail.value!!,-1))
             _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
@@ -75,7 +75,7 @@ class ForgotViewModel() : ViewModel() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
-            val result = repository.findAccountPassword(EmailInfo(_forgotEmail.value!!))
+            val result = repository.findAccountPassword(EmailInfo(_forgotEmail.value!!,-1))
             _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
