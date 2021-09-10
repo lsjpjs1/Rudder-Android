@@ -37,7 +37,7 @@ class MainViewModel : ViewModel() {
     private var pagingIndex = 0
     private var endPostId = -1
 
-
+    val _postEditBody = MutableLiveData<String>()
     val _commentEditBody = MutableLiveData<String>()
     val _postId = MutableLiveData<Int>()
     val _postBody = MutableLiveData<String>()

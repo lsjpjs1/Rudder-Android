@@ -43,6 +43,7 @@ class DisplayImagesAdapter(
         Glide.with(holder.showPostDisplayImageBinding.root.context)
             .load(imageUrlList[position])
             .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .placeholder(R.raw.post_loading_raw)
             .into(holder.showPostDisplayImageBinding.root.showPostDisplayImageImageView)
 
     }
