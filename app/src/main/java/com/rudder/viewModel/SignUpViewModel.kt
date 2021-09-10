@@ -13,10 +13,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rudder.data.CheckVerifyCodeInfo
-import com.rudder.data.EmailInfo
-import com.rudder.data.IdDuplicatedInfo
-import com.rudder.data.SignUpInsertInfo
+import com.rudder.data.*
 import com.rudder.data.remote.Category
 import com.rudder.data.repository.Repository
 import com.rudder.ui.activity.SignUpActivity
@@ -27,7 +24,6 @@ import kotlinx.coroutines.launch
 
 
 class SignUpViewModel : ViewModel() {
-
 
     val _userId = MutableLiveData<String>()
     val _userPassword = MutableLiveData<String>()
@@ -125,7 +121,7 @@ class SignUpViewModel : ViewModel() {
         _userEmailID.value = ""
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
-        _schoolList.value = mutableListOf("Select Your School!")
+        _schoolList.value = mutableListOf("Select Your University!")
         _userSchoolName.value = ""
         _userSchoolInt.value = 0
         _userIntroduce.value = ""
@@ -287,7 +283,7 @@ class SignUpViewModel : ViewModel() {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
-            val result = repository.signUpSendVerifyCode(EmailInfo(emailInput,_userSchoolInt.value!!))
+            val result = repository.signUpSendVerifyCode(EmailInfoSignUp(emailInput,_userSchoolInt.value!!))
             if (result == "") {
                 _emailToast.postValue("-")
                 _emailCheckFlag.postValue(Event(true))

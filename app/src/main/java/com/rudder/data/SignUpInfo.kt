@@ -2,12 +2,20 @@ package com.rudder.data
 
 import com.google.gson.annotations.SerializedName
 
-data class EmailInfo(
+
+data class EmailInfoSignUp(
     @SerializedName(value = "email")
     val email: String,
     @SerializedName(value = "school_id")
     val schoolId: Int
 )
+
+
+data class EmailInfo(
+    @SerializedName(value = "email")
+    val email: String
+)
+
 
 data class IdDuplicatedInfo(
     @SerializedName(value = "user_id")

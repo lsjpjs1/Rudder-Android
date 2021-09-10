@@ -50,8 +50,6 @@ class ForgotViewModel() : ViewModel() {
     val emailRg = android.util.Patterns.EMAIL_ADDRESS.toRegex()
 
 
-
-
     fun clickID(){
         _findIDClick.value = Event(true)
     }
@@ -64,7 +62,7 @@ class ForgotViewModel() : ViewModel() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
-            val result = repository.findAccountID(EmailInfo(_forgotEmail.value!!,-1))
+            val result = repository.findAccountID(EmailInfo(_forgotEmail.value!!))
             _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
@@ -75,7 +73,7 @@ class ForgotViewModel() : ViewModel() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
-            val result = repository.findAccountPassword(EmailInfo(_forgotEmail.value!!,-1))
+            val result = repository.findAccountPassword(EmailInfo(_forgotEmail.value!!))
             _emailCheckFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))

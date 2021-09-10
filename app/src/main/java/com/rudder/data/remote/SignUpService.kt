@@ -14,7 +14,7 @@ import org.json.JSONObject
 interface SignUpService{
     @POST("/schoolverify/verifyEmail")
     suspend fun emailSignUp(
-        @Body email : EmailInfo
+        @Body email : EmailInfoSignUp
     ) : Response<JsonObject>
 
     @POST("/signupin/checkduplication")

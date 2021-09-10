@@ -41,12 +41,8 @@ class Repository {
     }
 
 
-    suspend fun signUpSendVerifyCode(emailInfo : EmailInfo) : String{
-        val verifyAPIResult = SignUpApi.instance.emailSignUp(emailInfo).await()
-
-//        val asd = verifyAPIResult.results.get("fail").asString
-//
-//        if (asd == true)
+    suspend fun signUpSendVerifyCode(emailInfoSignUp : EmailInfoSignUp) : String{
+        val verifyAPIResult = SignUpApi.instance.emailSignUp(emailInfoSignUp).await()
         return verifyAPIResult.results.get("fail").asString
     }
 

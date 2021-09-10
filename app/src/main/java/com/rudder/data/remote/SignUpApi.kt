@@ -18,9 +18,9 @@ class SignUpApi {
     private val singUpService : SignUpService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(SignUpService::class.java)
 
 
-    fun emailSignUp(emailInfo: EmailInfo) : Deferred<Response<JsonObject>>{
+    fun emailSignUp(emailInfoSignUp: EmailInfoSignUp) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){
-            singUpService.emailSignUp(emailInfo)
+            singUpService.emailSignUp(emailInfoSignUp)
         } }
 
     fun idDuplicatedSignUp(idDuplicatedInfo: IdDuplicatedInfo) : Deferred<Response<JsonObject>>{
