@@ -150,12 +150,24 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/showPhotoBlank"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.02"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/addPostDisplayText">
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/showPhoto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
+
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/addPostDisplayText">
+                        app:layout_constraintTop_toBottomOf="@id/showPhotoBlank">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/addPostDisplayImagesTitle"
@@ -208,14 +220,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="5dp">
-            <ImageView
-                android:id="@+id/photoPickerImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{()->mainVM.onPhotoPickerClick()}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

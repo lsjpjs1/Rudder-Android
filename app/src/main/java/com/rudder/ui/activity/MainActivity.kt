@@ -125,9 +125,7 @@ class MainActivity : AppCompatActivity() {
                 communityPostBottomSheetFragment.dismiss()
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
-
                 fragmentShowHide.removeFragment(mainBottomBarFragment)
-                fragmentShowHide.removeFragment(addCommentFragment)
 
                 fragmentShowHide.addFragment(editPostFragment,R.id.mainDisplay,"editPost")
                 fragmentShowHide.showFragment(editPostFragment,R.id.mainDisplay)
@@ -196,6 +194,10 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isBackClick.observe(this, Observer {
             if(it.getContentIfNotHandled()!!){
+                if (!mainBottomBarFragment.isAdded) {
+                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                    fragmentShowHide.addFragment(mainBottomBarFragment,R.id.mainBottomBar,"addPost")
+                }
                 onBackPressed()
             }
         })
@@ -239,11 +241,12 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isEditPostSuccess.observe(this, Observer {
             super.onBackPressed()
-
             if (showPostFragment.isAdded) {
+                if(addCommentFragment.isVisible){
+                    swapMainBottomBar()
+                }
+
                 super.onBackPressed()
-                //updatePost()
-                //showPost()
             }
         })
 
@@ -324,6 +327,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        Log.d("onBackPressed","onBackPressed")
         val isBackButtonAvailable = (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) &&(!supportFragmentManager.findFragmentByTag("community")!!.isVisible)
         if(isBackButtonAvailable){ // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
             if(addCommentFragment.isVisible){

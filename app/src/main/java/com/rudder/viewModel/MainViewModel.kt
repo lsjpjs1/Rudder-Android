@@ -233,6 +233,7 @@ class MainViewModel : ViewModel() {
             viewModelScope.launch {
                 _isAddPostSuccess.value = Event(true)
             }
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
     fun deletePhotoUriPosition(position: Int){
@@ -527,11 +528,8 @@ class MainViewModel : ViewModel() {
             val isSuccess=res.isSuccess
             val postId = res.postId
             if(isSuccess) uploadPhoto(postId)
-            viewModelScope.launch {
-                _isAddPostSuccess.value = Event(isSuccess)
-            }
 
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+
         }
     }
 
@@ -630,7 +628,6 @@ class MainViewModel : ViewModel() {
 
 
     fun getCategories() {
-
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
 
         GlobalScope.launch {
@@ -738,8 +735,6 @@ class MainViewModel : ViewModel() {
                 _isEditPostSuccess.value = Event(result)
                 clearPosts()
                 getPosts()
-//                Log.d("editpostgetcomment_1","${_posts.value!![_selectedPostPosition.value!!]}")
-//                getComments()
             }
 
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))

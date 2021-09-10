@@ -63,13 +63,10 @@ class PostPreviewAdapter(
 
         val imageCount = previewPostList[position].imageUrls.size
 
-        //viewModel.imageSizeCount(position)
-
         holder.postPreviewBinding.post = previewPostList[position]
         holder.postPreviewBinding.timeago = timeago
         holder.postPreviewBinding.mainVM = viewModel
         holder.postPreviewBinding.position = position
-        holder.postPreviewBinding.imageCount = imageCount
         holder.postPreviewBinding.also {
             it.post = previewPostList[position]
             it.timeago = timeago
@@ -86,7 +83,7 @@ class PostPreviewAdapter(
         }
 
 
-        if(viewModel.imageCount.value!! == 0) {
+        if(imageCount == 0) {
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.GONE
         } else {
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.VISIBLE

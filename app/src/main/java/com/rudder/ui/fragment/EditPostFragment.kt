@@ -38,6 +38,7 @@ class EditPostFragment : Fragment() {
         viewModel.isPostEdit.observe(viewLifecycleOwner, Observer {
             it?.let {
                 fragmentBinding.root.categorySpinner.isEnabled = false
+                fragmentBinding.root.showPhoto.visibility = View.GONE
             }
         })
 

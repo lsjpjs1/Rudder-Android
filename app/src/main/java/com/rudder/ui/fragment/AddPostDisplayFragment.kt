@@ -16,6 +16,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -70,14 +71,12 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
 
 
         viewModel.selectedPhotoUriList.observe(viewLifecycleOwner, Observer {
-
             it?.let {
-                if (it.size>0){ // 이미지 추가했을때만 이미지 리스트 표시되게
-                    display.showPhoto.visibility=View.VISIBLE
-                }
+//                if (it.size>0){ // 이미지 추가했을때만 이미지 리스트 표시되게
+//                    display.showPhoto.visibility=View.VISIBLE
+//                }
                 addPostShowImagesAdapter.notifyDataSetChanged()
             }
-
         })
 
         viewModel.photoPickerClickSwitch.observe(viewLifecycleOwner, Observer {
@@ -167,6 +166,12 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
         lp=addPostDisplayImagesLine.layoutParams
         lp.height=(addPostDisplayEntireHeight*lineRatio).toInt()
         addPostDisplayImagesLine.layoutParams=lp
+
+
+        //writePost.maxHeight = (addPostDisplayEntireHeight * 0.3).toInt()
+        editTextTextPersonName.maxHeight = (addPostDisplayEntireHeight * 0.3).toInt()
+
+
 
     }
 }
