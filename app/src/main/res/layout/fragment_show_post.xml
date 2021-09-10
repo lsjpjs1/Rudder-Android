@@ -15,6 +15,9 @@
         <variable
             name="timeago"
             type="String" />
+        <variable
+            name="imageCount"
+            type="Integer" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -76,10 +79,82 @@
                             app:layout_constraintWidth_default="percent"
                             app:layout_constraintWidth_percent="@dimen/width_default">
 
+
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="0dp"
+                                app:layout_constraintHeight_default="percent"
+                                app:layout_constraintHeight_percent="0.8"
+
+                                android:id="@+id/showPostHeadImageCL"
+
+                                app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintStart_toStartOf="parent">
+
+                                <ImageView
+                                    android:id="@+id/showPostImageView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    app:srcCompat="@drawable/ic_delete_account"
+                                    >
+
+                                </ImageView>
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="0.02"
+                                app:layout_constraintHeight_default="percent"
+                                app:layout_constraintHeight_percent="0.8"
+
+                                android:id="@+id/showPostHeadImageCL1"
+
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/showPostHeadImageCL">
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                app:layout_constraintHeight_default="percent"
+                                app:layout_constraintHeight_percent="0.4"
+
+                                android:id="@+id/showPostHeadCategoryCL"
+
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/showPostHeadImageCL1">
+
+                                <TextView
+                                    android:id="@+id/showPostHeadCategoryTV"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{post.categoryId==1?``:post.categoryName}"
+                                    android:textColor="@color/purple_rudder"
+                                    android:textSize="16sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                app:layout_constraintHeight_default="percent"
+                                app:layout_constraintHeight_percent="0.4"
+
+                                app:layout_constraintTop_toBottomOf="@+id/showPostHeadCategoryCL"
+                                app:layout_constraintStart_toEndOf="@+id/showPostHeadImageCL1">
 
                                 <TextView
                                     android:id="@+id/textView6"
@@ -236,6 +311,37 @@
                                     app:layout_constraintStart_toEndOf="@+id/imageView7"
                                     app:layout_constraintTop_toTopOf="parent" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/postPreviewTailImageCountShowPost"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                app:layout_constraintStart_toEndOf="@+id/postPreviewTailCommentCount"
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="@dimen/post_preview_tail_comment_count_width">
+
+                                <ImageView
+                                    android:id="@+id/imageView8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_baseline_image_24" />
+
+                                <TextView
+                                    android:id="@+id/postPreviewTailImageCountTVShowPost"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{` `+Integer.toString(imageCount)}"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/imageView8"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 

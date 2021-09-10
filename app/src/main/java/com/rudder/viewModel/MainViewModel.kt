@@ -94,12 +94,19 @@ class MainViewModel : ViewModel() {
 
     private val _isCancelClick = MutableLiveData<Event<Boolean>>()
 
-
-
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
     private val _postInnerValueChangeSwitch = MutableLiveData<Boolean>()
     private val _commentInnerValueChangeSwitch = MutableLiveData<Boolean>()
     private val _photoPickerClickSwitch = MutableLiveData<Boolean?>()
+
+
+    private val _imageCount = MutableLiveData<Int>()
+
+
+
+
+
+
 
     val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
     val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
@@ -158,6 +165,9 @@ class MainViewModel : ViewModel() {
     val comments: LiveData<ArrayList<Comment>> = _comments
     val categories: LiveData<ArrayList<Category>> = _categories
 
+    val imageCount: LiveData<Int> = _imageCount
+
+
     init {
         _selectedTab.value = R.id.communityButton
         _selectedCategoryPosition.value = 0
@@ -209,6 +219,7 @@ class MainViewModel : ViewModel() {
         getCategories()
 
         _isDeleteCommentSuccess.value = Event(false)
+        _imageCount.value = 0
     }
 
 
@@ -786,6 +797,10 @@ class MainViewModel : ViewModel() {
         _reportCommentBody.value = ""
     }
 
+
+    fun imageSizeCount(position: Int) {
+        _imageCount.value = _posts.value!![position].imageUrls.size
+    }
 
 
 

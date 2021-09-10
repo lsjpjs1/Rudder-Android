@@ -53,6 +53,7 @@ class ShowPostFragment: Fragment() {
         Log.d("showpost","${viewModel.posts.value!!}")
 
         val displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+
         fragmentBinding.showPostImageDisplayRecyclerView.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
                 override fun canScrollVertically(): Boolean {

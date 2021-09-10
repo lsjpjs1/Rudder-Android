@@ -241,10 +241,9 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
 
             if (showPostFragment.isAdded) {
-                //updatePost()
-
                 super.onBackPressed()
-                showPost()
+                //updatePost()
+                //showPost()
             }
         })
 
@@ -414,13 +413,11 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    fun updatePost(){ // editPost 시 실행
+    fun updatePost(){ // editPost 시 실행, 미완성, 임시방편
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-
 
         fragmentShowHide.removeFragment(showPostFragment)
         val showPostFragmentNew = ShowPostFragment()
-
 
         fragmentShowHide.addToBackStack()
         fragmentShowHide.addFragment(showPostFragmentNew,R.id.mainDisplay,"showPost")

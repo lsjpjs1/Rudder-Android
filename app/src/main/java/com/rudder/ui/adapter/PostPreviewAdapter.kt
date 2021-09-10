@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -59,10 +60,16 @@ class PostPreviewAdapter(
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val timeago =
             PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(previewPostList[position].postTime.time))
+
+        val imageCount = previewPostList[position].imageUrls.size
+
+        //viewModel.imageSizeCount(position)
+
         holder.postPreviewBinding.post = previewPostList[position]
         holder.postPreviewBinding.timeago = timeago
         holder.postPreviewBinding.mainVM = viewModel
         holder.postPreviewBinding.position = position
+        holder.postPreviewBinding.imageCount = imageCount
         holder.postPreviewBinding.also {
             it.post = previewPostList[position]
             it.timeago = timeago
@@ -78,6 +85,12 @@ class PostPreviewAdapter(
             holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_outline_thumb_up_24)
         }
 
+
+        if(viewModel.imageCount.value!! == 0) {
+            holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.GONE
+        } else {
+            holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.VISIBLE
+        }
     }
 
     fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) {

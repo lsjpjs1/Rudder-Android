@@ -48,7 +48,7 @@
     <item name="show_post_body_height" type="dimen" format="float">0.92</item>
 
 
-    <item name="post_info_height" type="dimen" format="float">0.08</item>
+    <item name="post_info_height" type="dimen" format="float">0.12</item>
     <item name="post_count_height" type="dimen" format="float">0.08</item>
 
     <item name="comment_height" type="dimen" format="float">0.4</item>
