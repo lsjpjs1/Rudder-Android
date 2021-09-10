@@ -29,6 +29,7 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.File
 import java.sql.Timestamp
+import com.rudder.util.FileUtil
 
 
 class MainViewModel : ViewModel() {
@@ -227,7 +228,8 @@ class MainViewModel : ViewModel() {
         GlobalScope.async {
             val list = Repository().getUploadUrls(GetUploadUrlsInfo(getMimeTypeList(),App.prefs.getValue(tokenKey)!!,postId) )
             for(i in 0 until list.size){
-                val file = RequestBody.create(MediaType.parse(_selectedPhotoUriList.value!![i].mimeType),File(_selectedPhotoUriList.value!![i].filePath))
+                val file = RequestBody.create(MediaType.parse(_selectedPhotoUriList.value!![i].mimeType),
+                    FileUtil.getDownsizedImageBytes(_selectedPhotoUriList.value!![i].filePath))
                 Repository().uploadImage(file,list[i])
             }
             viewModelScope.launch {
