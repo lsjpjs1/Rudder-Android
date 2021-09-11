@@ -44,11 +44,11 @@
                 />
 
                 <ImageView
-                    android:id="@+id/back_______"
+                    android:id="@+id/termsOfServiceBackBtn"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-
+                    android:onClick="@{()->signUpVM.clickBackTermsOfService()}"
                     app:layout_constraintWidth_default="percent"
                     app:layout_constraintWidth_percent="0.1"
                     app:layout_constraintHeight_default="percent"
@@ -151,22 +151,6 @@
             app:layout_constraintWidth_percent="1"
             >
 
-            <Button
-                android:id="@+id/termsOfServiceBackBtn"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:backgroundTint="#9329D1"
-                android:gravity="center"
-                android:text="@string/back"
-                app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.6"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{()->signUpVM.clickBackTermsOfService()}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout4"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.8" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -176,7 +160,7 @@
             android:layout_height="0dp"
             android:id="@+id/constraintLayout5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintWidth_default="percent"
@@ -196,8 +180,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.8" />
+                app:layout_constraintWidth_percent="0.7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
