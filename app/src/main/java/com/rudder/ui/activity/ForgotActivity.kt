@@ -12,6 +12,7 @@ import com.rudder.databinding.ActivityForgotBinding
 import com.rudder.util.ProgressBarUtil
 import com.rudder.viewModel.ForgotViewModel
 import kotlinx.android.synthetic.main.activity_forgot.*
+import kotlinx.android.synthetic.main.activity_forgot.view.*
 import kotlinx.android.synthetic.main.activity_login.*
 
 class ForgotActivity : AppCompatActivity() {
@@ -37,6 +38,8 @@ class ForgotActivity : AppCompatActivity() {
                 if (it) {
                     constraintLayoutForgot3.visibility = View.GONE
                     constraintLayoutForgot4.visibility = View.VISIBLE
+                    forgotIdSelect.isEnabled = false
+                    forgotPasswordSelect.isEnabled = true
                     findpasswordFlag = false
                 } }
         })
@@ -46,6 +49,8 @@ class ForgotActivity : AppCompatActivity() {
                 if (it) {
                     constraintLayoutForgot4.visibility = View.GONE
                     constraintLayoutForgot3.visibility = View.VISIBLE
+                    forgotPasswordSelect.isEnabled = false
+                    forgotIdSelect.isEnabled = true
                     findpasswordFlag = true
                 } }
         })
@@ -70,6 +75,15 @@ class ForgotActivity : AppCompatActivity() {
             }
         })
 
+
+
+        viewModel.isBackClick.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                super.onBackPressed()
+            }
+        })
+
+
         ProgressBarUtil.progressBarFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it)
@@ -81,6 +95,8 @@ class ForgotActivity : AppCompatActivity() {
 
 
         forgotSendPasswordBtn.isEnabled = false
+        forgotIdSelect.isEnabled = false
+
     }
 
 

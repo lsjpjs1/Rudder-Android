@@ -26,29 +26,46 @@
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintHeight_percent="0.08"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="1">
 
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Find Account"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.8"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.6" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="Find Account"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+            <ImageView
+                android:id="@+id/forgotBackBtn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.7"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{()->forgotVM.clickBack()}"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+                app:tint="#000000"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -74,7 +91,7 @@
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.25"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.4"
+                app:layout_constraintWidth_percent="0.45"
                 android:backgroundTint="#9329D1"
                 android:text="Find ID"
                 android:onClick="@{()->forgotVM.clickID()}"
@@ -91,7 +108,7 @@
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.25"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.4"
+                app:layout_constraintWidth_percent="0.45"
                 android:backgroundTint="#9329D1"
                 android:text="Find Password"
                 android:onClick="@{()->forgotVM.clickPassword()}"
@@ -108,9 +125,9 @@
                 android:layout_height="0dp"
                 android:backgroundTint="#9329D1"
                 app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.3"
+                app:layout_constraintHeight_percent="0.28"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.8"
+                app:layout_constraintWidth_percent="0.9"
                 android:hint="@string/email_address"
                 android:inputType="text"
                 android:text="@={forgotVM._forgotEmail}"
@@ -123,37 +140,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutForgot4"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/constraintLayoutForgot2"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="1">
-
-            <Button
-                android:id="@+id/forgotSendIDBtn"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.15"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.8"
-                android:backgroundTint="#9329D1"
-                android:text="Send Account ID"
-                android:onClick="@{()->forgotVM.callCheckEmail()}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintVertical_bias="0.8"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutForgot4" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -177,12 +163,12 @@
                 android:layout_height="0dp"
                 android:backgroundTint="#9329D1"
                 app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintHeight_percent="0.14"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintWidth_percent="0.9"
                 android:hint="@string/verify_code"
                 android:inputType="text"
-                app:layout_constraintVertical_bias="0.2"
+                app:layout_constraintVertical_bias="0.05"
                 android:text="@={forgotVM._forgotverifyCode}"
 
                 app:layout_constraintEnd_toEndOf="parent"
@@ -197,16 +183,17 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintHeight_percent="0.12"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.8"
+                app:layout_constraintWidth_percent="0.9"
+
                 android:backgroundTint="#9329D1"
                 android:text="Send Account Password"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:onClick="@{()->forgotVM.callSendPassword()}"
-                app:layout_constraintVertical_bias="0.4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.9"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/verifyCodeForgot"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutForgot3" />
 
             <Button
@@ -217,16 +204,51 @@
                 android:onClick="@{()->forgotVM.callSendVeriCode()}"
                 android:text="@string/verify_capital"
                 app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintHeight_percent="0.12"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.01"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayoutForgot3"
-                app:layout_constraintBottom_toTopOf="@+id/verifyCodeForgot"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.8" />
+                app:layout_constraintWidth_percent="0.9" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutForgot4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constraintLayoutForgot2"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="1">
+
+            <Button
+                android:id="@+id/forgotSendIDBtn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.12"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.9"
+                android:backgroundTint="#9329D1"
+                android:text="Send Account ID"
+                android:onClick="@{()->forgotVM.callCheckEmail()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutForgot4" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

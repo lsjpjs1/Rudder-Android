@@ -28,6 +28,8 @@ class ForgotViewModel() : ViewModel() {
     val _emailCheckFlag = MutableLiveData<Event<Boolean>>()
     val _verifyCodeCheckFlag = MutableLiveData<Event<Boolean>>()
 
+    val _isBackClick = MutableLiveData<Event<Boolean>>()
+
 
     val forgotEmail: LiveData<String> = _forgotEmail
     val forgotverifyCode: LiveData<String> = _forgotverifyCode
@@ -36,6 +38,8 @@ class ForgotViewModel() : ViewModel() {
     val findIDClick : LiveData<Event<Boolean>> = _findIDClick
     val emailCheckFlag : LiveData<Event<Boolean>> = _emailCheckFlag
     val verifyCodeCheckFlag: LiveData<Event<Boolean>> = _verifyCodeCheckFlag
+
+    val isBackClick : LiveData<Event<Boolean>> = _isBackClick
 
 
     private val repository = Repository()
@@ -52,10 +56,14 @@ class ForgotViewModel() : ViewModel() {
 
     fun clickID(){
         _findIDClick.value = Event(true)
+        _forgotEmail.value = ""
+        _forgotverifyCode.value = ""
     }
 
     fun clickPassword(){
         _findPasswordClick.value = Event(true)
+        _forgotEmail.value = ""
+        _forgotverifyCode.value = ""
     }
 
     fun callCheckEmail() { // FIND ID Email Check
@@ -91,6 +99,9 @@ class ForgotViewModel() : ViewModel() {
         }
     }
 
+    fun clickBack() {
+        _isBackClick.value = Event(true)
+    }
 
 
 }
