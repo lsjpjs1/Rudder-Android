@@ -36,8 +36,10 @@ class CreateAccountFragment : Fragment() {
         createAccountBinding.signUpVM = viewModel
         createAccountBinding.lifecycleOwner = this
 
-        val toastPassword = Toast.makeText(activity, "비밀번호는 숫자,문자,특수문자 중 2가지 포함(8~15자)", Toast.LENGTH_SHORT)
-        val toastPasswordCheck = Toast.makeText(activity, "Please Check, Password and Password Confirm",Toast.LENGTH_SHORT)
+
+        val toastId = Toast.makeText(activity, "ID (4-15 characters) can be numbers, upper or lower letters.", Toast.LENGTH_SHORT)
+        val toastPassword = Toast.makeText(activity, "Password (8-15 characters) Should be include two of numbers, letters, and special characters.", Toast.LENGTH_SHORT)
+        val toastPasswordCheck = Toast.makeText(activity, "Please Check, 'Password' and 'Password Confirm'",Toast.LENGTH_SHORT)
         val toastEmailDomain = Toast.makeText(activity, "Please Check, Right Email Address", Toast.LENGTH_SHORT)
         val toastverifyCodeCheck = Toast.makeText(activity, "Wrong Verification Code", Toast.LENGTH_SHORT)
 
@@ -45,11 +47,24 @@ class CreateAccountFragment : Fragment() {
         viewModel.idChangeFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{
                 ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
-                idDuplicatedCheck.isEnabled = true
                 ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
                 ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
                 ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
             }})
+
+
+        viewModel.idRgCheckFlag.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let{ it ->
+                if(it) {
+                    idDuplicatedCheck.isEnabled = true
+                    toastId.cancel()
+                }
+                else{
+                    idDuplicatedCheck.isEnabled = false
+                    toastId.show()
+                }
+            }})
+
 
         viewModel.idCheckFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
@@ -174,6 +189,7 @@ class CreateAccountFragment : Fragment() {
         createAccountBinding.root.Recommendcheckbox.isEnabled = false
         createAccountBinding.root.veifyCodeCheckbox.isEnabled = false
 
+        createAccountBinding.root.idDuplicatedCheck.isEnabled = false
         createAccountBinding.root.verifyBtn.isEnabled = false
         createAccountBinding.root.submitBtn.isEnabled = false
         createAccountBinding.root.createAccountNextBtn.isEnabled = false

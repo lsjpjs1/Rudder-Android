@@ -118,6 +118,7 @@
                     android:backgroundTint="#9329D1"
                     android:gravity="center"
                     android:text="CHECK"
+                    android:onClick="@{()->signUpVM.callNickNameCheck()}"
                     app:layout_constraintStart_toEndOf="@+id/editTextNickName"
                     app:layout_constraintHeight_default="percent"
                     app:layout_constraintHeight_percent="0.8"
@@ -204,7 +205,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.7"
+                app:layout_constraintVertical_bias="0.75"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.9">
 

@@ -48,7 +48,9 @@ class SignUpViewModel : ViewModel() {
     val _categorySelectNext = MutableLiveData<Event<Boolean>>()
     val _categorySelectBack = MutableLiveData<Event<Boolean>>()
 
-
+    val _nickNameDuplicatedCheck = MutableLiveData<Event<Boolean>>()
+    val _nickNameChangeFlag = MutableLiveData<Event<Boolean>>()
+    val _idRgCheckFlag = MutableLiveData<Event<Boolean>>()
     val _emailDomainChangeFlag = MutableLiveData<Event<Boolean>>()
     val _idChangeFlag = MutableLiveData<Event<Boolean>>()
     val _passwordFlag = MutableLiveData<Event<Boolean>>()
@@ -58,7 +60,7 @@ class SignUpViewModel : ViewModel() {
     val _idCheckFlag = MutableLiveData<Event<Boolean>>()
     val _emailCheckFlag = MutableLiveData<Event<Boolean>>()
     val _verifyCodeCheckFlag = MutableLiveData<Event<Boolean>>()
-    val _nickNameFlag = MutableLiveData<Event<Boolean>>()
+    val _nickbnameRgCheck = MutableLiveData<Event<Boolean>>()
     val _verifiCodeChangeFlag = MutableLiveData<Event<Boolean>>()
     val _termsOfServiceFlag = MutableLiveData<Event<Boolean>>()
     val _schoolList = MutableLiveData<MutableList<String>>()
@@ -91,6 +93,10 @@ class SignUpViewModel : ViewModel() {
     val categorySelectNext: LiveData<Event<Boolean>> = _categorySelectNext
     val categorySelectBack: LiveData<Event<Boolean>> = _categorySelectBack
 
+
+    val nickNameDuplicatedCheck : LiveData<Event<Boolean>> = _nickNameDuplicatedCheck
+    val nickNameChangeFlag : LiveData<Event<Boolean>> = _nickNameChangeFlag
+    val idRgCheckFlag : LiveData<Event<Boolean>> = _idRgCheckFlag
     val emailDomainChangeFlag : LiveData<Event<Boolean>> = _emailDomainChangeFlag
     val idChangeFlag : LiveData<Event<Boolean>> = _idChangeFlag
     val passwordFlag : LiveData<Event<Boolean>> = _passwordFlag
@@ -100,7 +106,7 @@ class SignUpViewModel : ViewModel() {
     val idCheckFlag : LiveData<Event<Boolean>> = _idCheckFlag
     val emailCheckFlag : LiveData<Event<Boolean>> = _emailCheckFlag
     val verifyCodeCheckFlag: LiveData<Event<Boolean>> = _verifyCodeCheckFlag
-    val nickNameFlag: LiveData<Event<Boolean>> = _nickNameFlag
+    val nickbnameRgCheck: LiveData<Event<Boolean>> = _nickbnameRgCheck
     val verifiCodeChangeFlag : LiveData<Event<Boolean>> = _verifiCodeChangeFlag
     val termsOfServiceFlag : LiveData<Event<Boolean>> = _termsOfServiceFlag
     val schoolList : LiveData<MutableList<String>> = _schoolList
@@ -135,7 +141,8 @@ class SignUpViewModel : ViewModel() {
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
     val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
-    val nickNameRg = "^[a-zA-Z0-9-_]{5,10}\$".toRegex()
+    val nickNameRg = "^[a-zA-Z0-9-_]{4,15}\$".toRegex()
+    val idRg = "^[a-zA-Z0-9-_]{4,15}\$".toRegex()
 
 
     fun onCheckedChange(button: CompoundButton?, check: Boolean) {
@@ -143,6 +150,11 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun onTextChangeId() {
+        if (_userId.value!!.matches(idRg) && _userId.value!!.isNotBlank())
+            _idRgCheckFlag.value = Event(true)
+        else
+            _idRgCheckFlag.value = Event(false)
+
         _idChangeFlag.value = Event(true)
     }
 
@@ -188,9 +200,11 @@ class SignUpViewModel : ViewModel() {
 
     fun onTextChangeNickName() {
         if (_userNickName.value!!.matches(nickNameRg) && _userNickName.value!!.isNotBlank())
-            _nickNameFlag.value = Event(true)
+            _nickbnameRgCheck.value = Event(true)
         else
-            _nickNameFlag.value = Event(false)
+            _nickbnameRgCheck.value = Event(false)
+
+        _nickNameChangeFlag.value = Event(true)
     }
 
 
@@ -349,6 +363,16 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
+    fun callNickNameCheck() {
+        GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
+            val result = repository.signUpNickNameDuplicated(nickNameDuplicatedInfo(_userNickName.value!!))
+            _nickNameDuplicatedCheck.postValue(Event(!result && _userNickName.value!!.isNotBlank()))
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+        }
+    }
 
 
 }

@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Report"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -35,8 +35,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:hint="report_string_comment"
-
+                android:hint="@string/report_comment_content"
                 android:text="@={mainVM._reportCommentBody}"
                 android:maxLength="180"
                 android:gravity="top|left"
@@ -71,10 +70,12 @@
                 android:gravity="center"
                 android:onClick="@{()->mainVM.reportComment()}"
                 android:text="@string/sumbit"
-                app:layout_constraintEnd_toStartOf="@id/reportCancel"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+
+
                 app:layout_constraintTop_toBottomOf="@+id/editTextReport"
+                app:layout_constraintStart_toEndOf="@+id/reportCancel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             <Button
@@ -90,10 +91,14 @@
                 android:gravity="center"
                 android:text="Cancel"
                 android:onClick="@{()->mainVM.clickCancel()}"
-                app:layout_constraintTop_toBottomOf="@+id/editTextReport"
-                app:layout_constraintStart_toEndOf="@+id/reportSubmit"
+
+                app:layout_constraintEnd_toStartOf="@id/reportSubmit"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextReport"
+
+
+
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

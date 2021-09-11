@@ -68,6 +68,11 @@ class Repository {
     }
 
 
+    suspend fun signUpNickNameDuplicated(nickNameDuplicatedInfo: nickNameDuplicatedInfo) : Boolean{
+        val nickNameDuplicatedAPIResultJson = SignUpApi.instance.nickNameDuplicatedSignUpApi(nickNameDuplicatedInfo).await()
+        return nickNameDuplicatedAPIResultJson.results.get("isDuplicated").asBoolean
+    }
+
 
     suspend fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String): ArrayList<PreviewPost>{
         return PostApi.instance.getPosts(pagingIndex, endPostId,categoryId,token).await()

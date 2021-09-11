@@ -35,6 +35,12 @@ interface SignUpService{
     suspend fun createAccountSignUp(
         @Body signUpInsertInfo : SignUpInsertInfo
     ) : Response<JsonObject>
+
+
+    @POST("/signupin/checkDuplicationNickname")
+    suspend fun nickNameDuplicatedService(
+        @Body nickNameDuplicatedInfo: nickNameDuplicatedInfo
+    ) : Response<JsonObject>
 }
 
 

@@ -68,10 +68,11 @@
                 android:gravity="center"
                 android:text="@string/Edit"
                 android:onClick="@{()->mainVM.editComment()}"
-                app:layout_constraintEnd_toStartOf="@id/reportCancel"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextReport"
+                app:layout_constraintStart_toEndOf="@+id/reportCancel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
                 />
 
             <Button
@@ -87,10 +88,10 @@
                 android:gravity="center"
                 android:text="Cancel"
                 android:onClick="@{()->mainVM.clickCancel()}"
-                app:layout_constraintTop_toBottomOf="@+id/editTextReport"
-                app:layout_constraintStart_toEndOf="@+id/reportSubmit"
+                app:layout_constraintEnd_toStartOf="@id/reportSubmit"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextReport"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

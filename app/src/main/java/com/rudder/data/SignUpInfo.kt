@@ -16,6 +16,12 @@ data class EmailInfo(
     val email: String
 )
 
+data class nickNameDuplicatedInfo(
+    @SerializedName(value = "nickname")
+    val userNickName: String
+)
+
+
 
 data class IdDuplicatedInfo(
     @SerializedName(value = "user_id")

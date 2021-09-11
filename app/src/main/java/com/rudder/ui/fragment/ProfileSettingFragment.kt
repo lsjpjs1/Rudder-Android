@@ -16,6 +16,7 @@ import com.rudder.R
 import com.rudder.databinding.FragmentProfileSettingBinding
 import com.rudder.util.ChangeUIState
 import com.rudder.viewModel.SignUpViewModel
+import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.android.synthetic.main.fragment_profile_setting.*
 import kotlinx.android.synthetic.main.fragment_profile_setting.view.*
 
@@ -36,20 +37,45 @@ class ProfileSettingFragment : Fragment() {
         profileSettingBinding.signUpVM = viewModel
         profileSettingBinding.lifecycleOwner = this
 
-        val toastNickName = Toast.makeText(activity, "Write Right Nickname !", Toast.LENGTH_SHORT)
+        val toastNickName = Toast.makeText(activity, "NickName (4-15 characters) can be numbers, upper or lower letters.", Toast.LENGTH_SHORT)
 
-        viewModel.nickNameFlag.observe(viewLifecycleOwner, Observer {
+        viewModel.nickbnameRgCheck.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if(it) {
-                    ChangeUIState.changeCheckBoxTrueState(nickNameCheckbox)
+                    nickNameDuplicatedCheck.isEnabled = true
                     toastNickName.cancel()
                      }
                 else{
-                    ChangeUIState.changeCheckBoxFalseState(nickNameCheckbox)
+                    nickNameDuplicatedCheck.isEnabled = false
                     toastNickName.show()
                     }
-                ChangeUIState.buttonEnable(profileSettingNextBtn,nickNameCheckbox.isChecked)
+                ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked)
             }})
+
+
+        viewModel.nickNameDuplicatedCheck.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    ChangeUIState.changeCheckBoxTrueState(nickNameCheckbox)
+                    nickNameDuplicatedCheck.isEnabled = false
+                } else {
+                    ChangeUIState.changeCheckBoxFalseState(nickNameCheckbox)
+                    Toast.makeText(activity, "NickName is duplicated", Toast.LENGTH_SHORT).show()
+                }
+            }
+            ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked)
+        })
+
+
+
+        viewModel.nickNameChangeFlag.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let{
+                ChangeUIState.changeCheckBoxFalseState(nickNameCheckbox)
+                ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked)
+            }
+        })
+
+
 
         profileSettingBinding.root.introduceCheckbox.isChecked = true
         profileSettingBinding.root.introduceCheckbox.isEnabled = false
@@ -57,6 +83,8 @@ class ProfileSettingFragment : Fragment() {
         profileSettingBinding.root.imageSettingCheckbox.isChecked = true
         profileSettingBinding.root.imageSettingCheckbox.isEnabled = false
 
+
+        profileSettingBinding.root.nickNameDuplicatedCheck.isEnabled = false
         profileSettingBinding.root.profileSettingNextBtn.isEnabled = false
 
         return profileSettingBinding.root
