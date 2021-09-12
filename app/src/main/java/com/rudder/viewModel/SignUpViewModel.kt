@@ -22,6 +22,7 @@ import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.FieldPosition
 
 
 class SignUpViewModel : ViewModel() {
@@ -71,6 +72,8 @@ class SignUpViewModel : ViewModel() {
     val _emailToast = MutableLiveData<String>()
 
     var _profileImageList = MutableLiveData<ArrayList<String>>()
+    val _profileImageClick = MutableLiveData<Event<Boolean>>()
+    val _selectedProfileImage = MutableLiveData<Int>()
 
 
     val userId: LiveData<String> = _userId
@@ -120,6 +123,10 @@ class SignUpViewModel : ViewModel() {
     val emailToast: LiveData<String> = _emailToast
     var profileImageList: LiveData<ArrayList<String>> = _profileImageList
 
+    val profileImageClick: LiveData<Event<Boolean>> = _profileImageClick
+    val selectedProfileImage: LiveData<Int> = _selectedProfileImage
+
+
 
     private val repository = Repository()
 
@@ -140,8 +147,10 @@ class SignUpViewModel : ViewModel() {
         _categoryNames.value = ArrayList()
         callSchoolList()
         getCategories()
-        getProfileImageList()
 
+        _profileImageList.value = ArrayList<String>()
+        getProfileImageList()
+        _selectedProfileImage.value = -1
     }
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
@@ -383,13 +392,29 @@ class SignUpViewModel : ViewModel() {
 
     fun getProfileImageList() {
         GlobalScope.launch {
-            val asd = repository.profileImageListRepository()
-            //val qwe = asd.asJsonObject
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+            val profileImageJsonArray = repository.profileImageListRepository()
+            Log.d("_profileImageList.value", "${profileImageJsonArray}")
 
 
-            Log.d("_profileImageList.value", "${asd}")
+            for (idx in 0 until profileImageJsonArray.size() ) {
+                val idxObject = profileImageJsonArray[idx].asJsonObject
+                val imagePreviewUrl = idxObject.get("hdLink").asString
+                _profileImageList.value!!.add(imagePreviewUrl)
             }
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+        }
     }
+
+    fun clickProfileImage(position: Int){
+        _profileImageClick.value = Event(true)
+        Log.d("_profileImageClick","${position}")
+
+        _selectedProfileImage.value = position
+    }
+
+
 
 
 }

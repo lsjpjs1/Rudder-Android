@@ -1,11 +1,12 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 체크박스 해제 상태 -->
     <item android:state_checked="false"
-        android:drawable="@drawable/ic_checkbox_notchecked3">
+        android:drawable="@drawable/ic_baseline_check_circle_24">
     </item>
     <!-- 체크박스 선택 상태 -->
     <item android:state_checked="true"
         android:drawable="@drawable/ic_baseline_check_circle_24">
+
     </item>
 
 </selector>

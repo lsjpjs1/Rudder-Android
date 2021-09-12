@@ -87,7 +87,9 @@ class SignUpActivity : AppCompatActivity() {
         categorySelectFragment = CategorySelectFragment()
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.signUp_container, categorySelectFragment)
+
+            .add(R.id.signUp_container, profileSettingFragment)
+            //.add(R.id.signUp_container, categorySelectFragment)
 
             .add(R.id.signUp_container, termsOfServiceFragment)
             .hide(termsOfServiceFragment)
@@ -96,8 +98,8 @@ class SignUpActivity : AppCompatActivity() {
             .hide(schoolSelectFragment)
             .add(R.id.signUp_container, createAccountFragment)
             .hide(createAccountFragment)
-            .add(R.id.signUp_container, profileSettingFragment)
-            .hide(profileSettingFragment)
+           // .add(R.id.signUp_container, profileSettingFragment)
+            //.hide(profileSettingFragment)
 //            .add(R.id.signUp_container, categorySelectFragment)
 //            .hide(categorySelectFragment)
             .commit()

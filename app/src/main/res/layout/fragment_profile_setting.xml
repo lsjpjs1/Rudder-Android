@@ -134,7 +134,8 @@
                     android:id="@+id/nickNameCheckbox"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:buttonTint="#5AEF0A"
+                    android:button="@drawable/custom_checkbox"
+                    app:buttonTint="@drawable/checkbox_green_state_list"
                     app:layout_constraintHeight_default="percent"
                     app:layout_constraintHeight_percent="0.5"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -150,6 +151,7 @@
                 android:id="@+id/constraintLayoutPS3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:visibility="gone"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -184,7 +186,8 @@
                     android:id="@+id/introduceCheckbox"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:buttonTint="#5AEF0A"
+                    android:button="@drawable/custom_checkbox"
+                    app:buttonTint="@drawable/checkbox_green_state_list"
                     app:layout_constraintHeight_default="percent"
                     app:layout_constraintHeight_percent="0.2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -200,26 +203,14 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.6"
+                app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="1"
+                app:layout_constraintVertical_bias="0.2"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.9">
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/profileSettingRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </androidx.recyclerview.widget.RecyclerView>
 
 
 
@@ -235,11 +226,11 @@
                     android:textSize="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_default="percent"
-                    app:layout_constraintHeight_percent="0.12"
+                    app:layout_constraintHeight_percent="0.7"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias="0.1"
+
                     app:layout_constraintHorizontal_bias="0.01"
                     app:layout_constraintWidth_default="percent"
                     app:layout_constraintWidth_percent="0.85"
@@ -250,17 +241,48 @@
                     android:id="@+id/imageSettingCheckbox"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:buttonTint="#5AEF0A"
+                    android:button="@drawable/custom_checkbox"
+                    app:buttonTint="@drawable/checkbox_green_state_list"
                     app:layout_constraintHeight_default="percent"
-                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintHeight_percent="0.5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintWidth_default="percent"
                     app:layout_constraintWidth_percent="0.1"   />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutPS5"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.6"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.9">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/profileSettingRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 

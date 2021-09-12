@@ -104,18 +104,18 @@
             >
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Accept"
                 android:textColor="#000000"
-                android:textSize="20dp"
+                android:textSize="18sp"
                 android:id="@+id/textview1"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_bias="0.45"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/termsOfServiceCheckBox"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintWidth_default="percent"
@@ -125,13 +125,15 @@
                 android:id="@+id/termsOfServiceCheckBox"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:buttonTint="#5AEF0A"
+                android:button="@drawable/custom_checkbox"
+                app:buttonTint="@drawable/checkbox_green_state_list"
                 android:onCheckedChanged="@{(compoundButton, checked) -> signUpVM.onCheckedChange(compoundButton, checked)}"
 
                 app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintHorizontal_bias="0.62"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textview1"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintWidth_default="percent"
@@ -140,16 +142,15 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
             android:id="@+id/constraintLayout4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            android:layout_width="393dp"
+            android:layout_height="88dp"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="1"
-            >
+            app:layout_constraintWidth_percent="1">
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

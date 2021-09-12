@@ -125,8 +125,8 @@
                 android:id="@+id/schoolSelectCheckbox"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-
-                android:buttonTint="#5AEF0A"
+                android:button="@drawable/custom_checkbox"
+                app:buttonTint="@drawable/checkbox_green_state_list"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="0.28"
 

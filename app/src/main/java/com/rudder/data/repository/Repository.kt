@@ -163,8 +163,13 @@ class Repository {
         FileApi.instance.uploadImage(file,url).await()
     }
 
-
     suspend fun profileImageListRepository() : JsonArray {
         return SignUpApi.instance.profileImageListSignUpApi().await().results.get("profileImageList").asJsonArray
     }
+
+
+    suspend fun categorySelectRepository(categorySelectInfo: CategorySelectInfo) : Boolean{
+        return CategorySelectApi.instance.categorySelectApi(categorySelectInfo).await().results.get("isSuccess").asBoolean
+    }
+
 }

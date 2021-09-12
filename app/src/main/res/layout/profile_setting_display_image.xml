@@ -1,19 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="signUpVM"
+            type="com.rudder.viewModel.SignUpViewModel" />
+        <variable
+            name="position"
+            type="Integer" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->signUpVM.clickProfileImage(position)}"
+        >
 
         <ImageView
             android:id="@+id/profileSettingImageImageView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{()->signUpVM.clickProfileImage(position)}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+
+            />
+
+        <CheckBox
+            android:id="@+id/profileSettingImageCheckBox"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:button="@drawable/custom_checkbox"
+            app:buttonTint="@drawable/checkbox_purple_state_list"
+            app:layout_constraintStart_toEndOf="@+id/profileSettingImageImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{()->signUpVM.clickProfileImage(position)}"
+
+            >
+        </CheckBox>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

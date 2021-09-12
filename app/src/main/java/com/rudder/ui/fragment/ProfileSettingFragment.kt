@@ -24,6 +24,7 @@ import com.rudder.viewModel.SignUpViewModel
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.android.synthetic.main.fragment_profile_setting.*
 import kotlinx.android.synthetic.main.fragment_profile_setting.view.*
+import kotlinx.android.synthetic.main.profile_setting_display_image.*
 
 
 class ProfileSettingFragment : Fragment() {
@@ -48,23 +49,25 @@ class ProfileSettingFragment : Fragment() {
         val toastNickName = Toast.makeText(activity, "NickName (4-15 characters) can be numbers, upper or lower letters.", Toast.LENGTH_SHORT)
 
 
+        val profileSettingImagesAdapter = ProfileSettingImagesAdapter(viewModel.profileImageList.value!!,  lazyContext, (activity as SignUpActivity).getDisplaySize(), viewModel, viewLifecycleOwner)
+
+        profileSettingBinding.profileSettingRecyclerView.also {
+            it.layoutManager = object : LinearLayoutManager(lazyContext, HORIZONTAL, false){
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
+            it.setHasFixedSize(true)
+            it.adapter = profileSettingImagesAdapter
+        }
 
 
-        //val profileSettingImagesAdapter = ProfileSettingImagesAdapter(,  lazyContext, (activity as SignUpActivity).getDisplaySize())
-
-//        profileSettingBinding.profileSettingRecyclerView.also {
-//            it.layoutManager = object : LinearLayoutManager(lazyContext){
-//                override fun canScrollVertically(): Boolean {
-//                    return false
-//                }
-//            }
-//            it.setHasFixedSize(false)
-//            it.adapter = profileSettingImagesAdapter
-//        }
-
-
-
-
+        viewModel.profileImageList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                profileSettingImagesAdapter.imageUrlList = it
+                profileSettingImagesAdapter.notifyDataSetChanged()
+            }
+        })
 
         viewModel.nickbnameRgCheck.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->
@@ -103,13 +106,24 @@ class ProfileSettingFragment : Fragment() {
         })
 
 
+        viewModel.profileImageClick.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let{
+                if (it) {
+                    //profileSettingImageCheckBox.isEnabled = false
+                    Log.d("profileImageClick","${profileSettingImageCheckBox.tag}")
+                } else {
+                    //profileSettingImageCheckBox.isEnabled = true
+                    Log.d("profileImageClick","${profileSettingImageCheckBox.tag}")
+                }
+            }
+        })
+
+
 
         profileSettingBinding.root.introduceCheckbox.isChecked = true
         profileSettingBinding.root.introduceCheckbox.isEnabled = false
         profileSettingBinding.root.nickNameCheckbox.isEnabled = false
-        profileSettingBinding.root.imageSettingCheckbox.isChecked = true
         profileSettingBinding.root.imageSettingCheckbox.isEnabled = false
-
 
         profileSettingBinding.root.nickNameDuplicatedCheck.isEnabled = false
         profileSettingBinding.root.profileSettingNextBtn.isEnabled = false
