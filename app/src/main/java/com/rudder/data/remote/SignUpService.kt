@@ -41,6 +41,10 @@ interface SignUpService{
     suspend fun nickNameDuplicatedService(
         @Body nickNameDuplicatedInfo: nickNameDuplicatedInfo
     ) : Response<JsonObject>
+
+
+    @POST("/signupin/profileImageList")
+    suspend fun profileImageListService() : Response<JsonObject>
 }
 
 

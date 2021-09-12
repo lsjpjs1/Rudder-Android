@@ -1,21 +1,23 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="signUpVM"
+            type="com.rudder.viewModel.SignUpViewModel" />
+    </data>
+
+
 <com.google.android.material.chip.Chip
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     style="@style/Widget.MaterialComponents.Chip.Action"
 
-    android:layout_width="260dp"
-    android:layout_height="240dp"
+    android:layout_width="100dp"
+    android:layout_height="50dp"
 
     android:gravity="center"
     android:checkable="true"
-
-
-    android:text="asdasdaserwersd"
-    android:textSize="20dp"
-    android:textStyle="italic"
-
-
+    android:clickable="true"
+    android:textSize="18sp"
 
     android:textColor="@color/black"
     app:chipIcon="@drawable/ic_baseline_check_circle_24"
@@ -24,5 +26,6 @@
     app:checkedIconTint="@color/purple_rudder"
     android:layoutDirection="rtl"
 
-
     />
+
+</layout>

@@ -154,12 +154,17 @@ class Repository {
         return ReportApi.instance.reportApi(reportInfo).await().results.get("isSuccess").asBoolean
     }
 
-
     suspend fun getUploadUrls(getUploadUrlsInfo: GetUploadUrlsInfo): ArrayList<String>{
         val arrayListType = object : TypeToken<ArrayList<String>>(){}.type
         return Gson().fromJson<ArrayList<String>>(FileApi.instance.getUploadUrls(getUploadUrlsInfo).await().results.get("urls"),arrayListType)
     }
+
     suspend fun uploadImage(file:RequestBody,url:String){
         FileApi.instance.uploadImage(file,url).await()
+    }
+
+
+    suspend fun profileImageListRepository() : JsonArray {
+        return SignUpApi.instance.profileImageListSignUpApi().await().results.get("profileImageList").asJsonArray
     }
 }

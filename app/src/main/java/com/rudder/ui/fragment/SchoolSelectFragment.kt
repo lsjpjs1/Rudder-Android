@@ -43,7 +43,7 @@ class SchoolSelectFragment : Fragment() {
         schoolSelectBinding.signUpVM = viewModel
         schoolSelectBinding.lifecycleOwner = this
 
-        val toastSchoolSelect = Toast.makeText(activity, "Please Select, Your School", Toast.LENGTH_SHORT)
+        val toastSchoolSelect = Toast.makeText(activity, "Please Select, Your University", Toast.LENGTH_SHORT)
 
         viewModel.schoolSelectFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->

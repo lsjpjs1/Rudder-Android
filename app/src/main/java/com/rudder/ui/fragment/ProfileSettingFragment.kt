@@ -12,8 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentProfileSettingBinding
+import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.activity.SignUpActivity
+import com.rudder.ui.adapter.DisplayImagesAdapter
+import com.rudder.ui.adapter.ProfileSettingImagesAdapter
 import com.rudder.util.ChangeUIState
 import com.rudder.viewModel.SignUpViewModel
 import kotlinx.android.synthetic.main.fragment_create_account.*
@@ -25,8 +30,11 @@ class ProfileSettingFragment : Fragment() {
 
     //private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
     private val viewModel: SignUpViewModel by activityViewModels()
-
     private lateinit var profileSettingBinding : FragmentProfileSettingBinding
+
+    private val lazyContext by lazy {
+        requireContext()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +46,25 @@ class ProfileSettingFragment : Fragment() {
         profileSettingBinding.lifecycleOwner = this
 
         val toastNickName = Toast.makeText(activity, "NickName (4-15 characters) can be numbers, upper or lower letters.", Toast.LENGTH_SHORT)
+
+
+
+
+        //val profileSettingImagesAdapter = ProfileSettingImagesAdapter(,  lazyContext, (activity as SignUpActivity).getDisplaySize())
+
+//        profileSettingBinding.profileSettingRecyclerView.also {
+//            it.layoutManager = object : LinearLayoutManager(lazyContext){
+//                override fun canScrollVertically(): Boolean {
+//                    return false
+//                }
+//            }
+//            it.setHasFixedSize(false)
+//            it.adapter = profileSettingImagesAdapter
+//        }
+
+
+
+
 
         viewModel.nickbnameRgCheck.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->

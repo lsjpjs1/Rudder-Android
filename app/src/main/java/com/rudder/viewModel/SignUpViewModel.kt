@@ -14,6 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rudder.data.*
+import com.rudder.data.local.App
 import com.rudder.data.remote.Category
 import com.rudder.data.repository.Repository
 import com.rudder.ui.activity.SignUpActivity
@@ -69,6 +70,8 @@ class SignUpViewModel : ViewModel() {
     var _categoryNames = MutableLiveData<ArrayList<String>>()
     val _emailToast = MutableLiveData<String>()
 
+    var _profileImageList = MutableLiveData<ArrayList<String>>()
+
 
     val userId: LiveData<String> = _userId
     val userPassword: LiveData<String> = _userPassword
@@ -114,8 +117,9 @@ class SignUpViewModel : ViewModel() {
 
     var categories: LiveData<ArrayList<Category>> = _categories
     var categoryNames: LiveData<ArrayList<String>> = _categoryNames
-
     val emailToast: LiveData<String> = _emailToast
+    var profileImageList: LiveData<ArrayList<String>> = _profileImageList
+
 
     private val repository = Repository()
 
@@ -136,6 +140,7 @@ class SignUpViewModel : ViewModel() {
         _categoryNames.value = ArrayList()
         callSchoolList()
         getCategories()
+        getProfileImageList()
 
     }
 
@@ -145,9 +150,6 @@ class SignUpViewModel : ViewModel() {
     val idRg = "^[a-zA-Z0-9-_]{4,15}\$".toRegex()
 
 
-    fun onCheckedChange(button: CompoundButton?, check: Boolean) {
-        _termsOfServiceFlag.value = Event (check)
-    }
 
     fun onTextChangeId() {
         if (_userId.value!!.matches(idRg) && _userId.value!!.isNotBlank())
@@ -356,7 +358,6 @@ class SignUpViewModel : ViewModel() {
             viewModelScope.launch {
                 _categoryNames.value = splitCategoryNames(categoryList)
                 _categories.value = categoryList
-                Log.d("_categoryNames_VM", "${_categoryNames.value}")
             }
 
             //_profileSettingNext.postValue(Event(result))
@@ -372,6 +373,22 @@ class SignUpViewModel : ViewModel() {
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
+    }
+
+
+    fun onCheckedChange(button: CompoundButton?, check: Boolean) {
+        _termsOfServiceFlag.value = Event (check)
+    }
+
+
+    fun getProfileImageList() {
+        GlobalScope.launch {
+            val asd = repository.profileImageListRepository()
+            //val qwe = asd.asJsonObject
+
+
+            Log.d("_profileImageList.value", "${asd}")
+            }
     }
 
 

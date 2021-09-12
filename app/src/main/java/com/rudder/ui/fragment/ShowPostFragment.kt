@@ -101,12 +101,8 @@ class ShowPostFragment: Fragment() {
                 viewModel.commentLikeCountChange.value?.let {
                     position-> adapter.notifyItemChanged(position)
                 }
-
             }
         })
-
-
-
 
 
 

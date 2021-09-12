@@ -89,10 +89,6 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
 
 
 
-//        viewModel.asd.observe(viewLifecycleOwner, Observer {
-//            (activity as MainActivity).showPost()
-//        })
-
 
 
         return communityDisplay.root

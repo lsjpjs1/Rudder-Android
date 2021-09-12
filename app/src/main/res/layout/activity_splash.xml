@@ -23,7 +23,7 @@
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintWidth_percent="0.5"
             android:src="@drawable/rudder_icon"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayoutSplash1"
             app:layout_constraintEnd_toEndOf="parent"

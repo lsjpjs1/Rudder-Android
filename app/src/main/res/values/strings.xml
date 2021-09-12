@@ -46,5 +46,6 @@
 
     <string name="report_comment_content">Comment Report Content</string>
     <string name="report_post_content">Post Report Content</string>
+    <string name="choose_profile_image">Choose Profile Image</string>
 
 </resources>

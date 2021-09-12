@@ -51,4 +51,9 @@ class SignUpApi {
             singUpService.nickNameDuplicatedService(nickNameDuplicatedInfo)
         } }
 
+
+    fun profileImageListSignUpApi() : Deferred<Response<JsonObject>>{
+        return GlobalScope.async(Dispatchers.IO){
+            singUpService.profileImageListService()
+        } }
 }
