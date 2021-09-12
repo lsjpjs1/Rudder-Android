@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.data.PreviewPost
 import com.rudder.databinding.PostPreviewBinding
@@ -17,6 +19,7 @@ import com.rudder.util.CustomOnclickListener
 import com.rudder.util.LocaleUtil
 import com.rudder.util.PostsDiffCallback
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.show_post_display_image.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
@@ -76,18 +79,27 @@ class PostPreviewAdapter(
             listener.onClick(holder.postPreviewBinding.postPreview, position)
         }
 
-        if(previewPostList[position].isLiked){
+        if (previewPostList[position].isLiked) {
             holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-        }else{
+        } else {
             holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_outline_thumb_up_24)
         }
 
 
-        if(imageCount == 0) {
+        if (imageCount == 0) {
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.GONE
         } else {
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.VISIBLE
         }
+
+            Glide.with(holder.postPreviewBinding.postPreviewImageView.context)
+                .load(previewPostList[position].userProfileImageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.postPreviewBinding.postPreviewImageView)
+
+
+
+
     }
 
     fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) {
