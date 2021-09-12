@@ -29,5 +29,7 @@ data class PreviewPost(
     @SerializedName(value = "isMine")
     val isMine: Boolean,
     @SerializedName(value = "imageUrls")
-    val imageUrls: ArrayList<String>
+    val imageUrls: ArrayList<String>,
+    @SerializedName(value = "userProfileImageUrl")
+    val userProfileImageUrl: String
 )

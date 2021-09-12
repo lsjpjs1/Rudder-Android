@@ -15,6 +15,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.data.Comment
 import com.rudder.databinding.PostCommentsBinding
@@ -30,10 +32,10 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
     inner class CustomViewHolder(val postCommentsBinding: PostCommentsBinding) : RecyclerView.ViewHolder(postCommentsBinding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostCommentsAdapter.CustomViewHolder {
         val bind = DataBindingUtil.inflate<PostCommentsBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.post_comments,
-                parent,
-                false
+            LayoutInflater.from(parent.context),
+            R.layout.post_comments,
+            parent,
+            false
         )
 
         val showPostBodyHeight by lazy {
@@ -70,16 +72,16 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
             holder.postCommentsBinding.postPreviewTailCommentCount.visibility=View.GONE
             holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.light_grey,null)
             holder.postCommentsBinding.constraintLayout11.viewTreeObserver.addOnGlobalLayoutListener(
-                    object : ViewTreeObserver.OnGlobalLayoutListener{
-                        override fun onGlobalLayout() {
-                            holder.postCommentsBinding.nestedCommentImage.minHeight = holder.postCommentsBinding.constraintLayout11.height
-                            val lp = holder.postCommentsBinding.constraintLayout14.layoutParams as ConstraintLayout.LayoutParams
-                            lp.startToStart = ConstraintLayout.LayoutParams.UNSET
-                            holder.postCommentsBinding.constraintLayout14.layoutParams=lp
+                object : ViewTreeObserver.OnGlobalLayoutListener{
+                    override fun onGlobalLayout() {
+                        holder.postCommentsBinding.nestedCommentImage.minHeight = holder.postCommentsBinding.constraintLayout11.height
+                        val lp = holder.postCommentsBinding.constraintLayout14.layoutParams as ConstraintLayout.LayoutParams
+                        lp.startToStart = ConstraintLayout.LayoutParams.UNSET
+                        holder.postCommentsBinding.constraintLayout14.layoutParams=lp
 
-                            holder.postCommentsBinding.constraintLayout11.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                        }
+                        holder.postCommentsBinding.constraintLayout11.viewTreeObserver.removeOnGlobalLayoutListener(this)
                     }
+                }
             )
         } else if(commentList[position].userId == "-"){ // reply가 있는 삭제된 parent, Comment
             holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.light_grey_2,null)
@@ -95,6 +97,11 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
         holder.postCommentsBinding.comment = commentList[position]
         holder.postCommentsBinding.timeago = timeago
         holder.postCommentsBinding.position = position
+
+        Glide.with(holder.postCommentsBinding.postPreviewImageView.context)
+            .load(commentList[position].userProfileImageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(holder.postCommentsBinding.postPreviewImageView)
     }
 
     override fun getItemCount(): Int {

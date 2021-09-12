@@ -29,6 +29,7 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.File
 import java.sql.Timestamp
+import com.rudder.util.FileUtil
 
 
 class MainViewModel : ViewModel() {
@@ -192,7 +193,8 @@ class MainViewModel : ViewModel() {
                 0,
                 false,
                 false,
-                arrayListOf()
+                arrayListOf(),
+                ""
             )
         )
         _comments.value = arrayListOf(
@@ -206,7 +208,8 @@ class MainViewModel : ViewModel() {
                 0,
                 0,
                 false,
-                false
+                false,
+                ""
             )
         )
         _postBody.value = ""
@@ -227,7 +230,8 @@ class MainViewModel : ViewModel() {
         GlobalScope.async {
             val list = Repository().getUploadUrls(GetUploadUrlsInfo(getMimeTypeList(),App.prefs.getValue(tokenKey)!!,postId) )
             for(i in 0 until list.size){
-                val file = RequestBody.create(MediaType.parse(_selectedPhotoUriList.value!![i].mimeType),File(_selectedPhotoUriList.value!![i].filePath))
+                val file = RequestBody.create(MediaType.parse(_selectedPhotoUriList.value!![i].mimeType),
+                    FileUtil.getDownsizedImageBytes(_selectedPhotoUriList.value!![i].filePath))
                 Repository().uploadImage(file,list[i])
             }
             viewModelScope.launch {
@@ -452,7 +456,7 @@ class MainViewModel : ViewModel() {
                     if (idx == 0){
                         if(resComments[idx].status == "child" ) { // 그 패턴이면
                             tmpCommentList.add(
-                                Comment("-", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false) //dummyComment
+                                Comment("-", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false,"" ) //dummyComment
                             )
                             tmpCommentList.add(resComments[idx])
                         }
@@ -461,7 +465,7 @@ class MainViewModel : ViewModel() {
                     } else {
                         if(resComments[idx].status == "child" && resComments[idx].groupNum != resComments[idx - 1].groupNum ) { // 그 패턴이면
                             tmpCommentList.add(
-                                Comment("-", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false) // dummyComment
+                                Comment("-", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false,"") // dummyComment
                             )
                             tmpCommentList.add(resComments[idx])
                         }

@@ -51,4 +51,12 @@ class DisplayImagesAdapter(
     override fun getItemCount(): Int {
         return imageUrlList.size
     }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 }
