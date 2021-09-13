@@ -172,4 +172,8 @@ class Repository {
         return CategorySelectApi.instance.categorySelectApi(categorySelectInfo).await().results.get("isSuccess").asBoolean
     }
 
+    suspend fun getNotice(noticeRequest: NoticeRequest): NoticeResponse{
+        return NoticeApi.instance.getNotice(noticeRequest).await().results
+    }
+
 }

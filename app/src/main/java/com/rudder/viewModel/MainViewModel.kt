@@ -102,13 +102,9 @@ class MainViewModel : ViewModel() {
 
 
     private val _imageCount = MutableLiveData<Int>()
-
-
-
-
-
-
-
+//    private val _noticeResponse = MutableLiveData<NoticeResponse>()
+//
+//    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
     val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
     val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
     val postInnerValueChangeSwitch:LiveData<Boolean> = _postInnerValueChangeSwitch
@@ -220,11 +216,19 @@ class MainViewModel : ViewModel() {
         clearNestedCommentInfo()
         getPosts()
         getCategories()
-
         _isDeleteCommentSuccess.value = Event(false)
         _imageCount.value = 0
     }
 
+//    fun getNotice(){
+//        GlobalScope.async {
+//            val version = BuildConfig.VERSION_NAME
+//            val response = Repository().getNotice(NoticeRequest("android",version))
+//            viewModelScope.launch{
+//                _noticeResponse.value = response
+//            }
+//        }
+//    }
 
     suspend fun uploadPhoto(postId:Int){
         GlobalScope.async {

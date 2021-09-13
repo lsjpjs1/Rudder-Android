@@ -11,6 +11,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.activity.SplashActivity
 
 class MyFireBaseMessagingService: FirebaseMessagingService() {
     private val TAG = "FirebaseService"
@@ -34,7 +35,7 @@ class MyFireBaseMessagingService: FirebaseMessagingService() {
 
     // FCM 메시지를 보내는 메시지
     private fun sendNotification(body: String?, title: String?) {
-        val intent = Intent(this, MainActivity::class.java).apply {
+        val intent = Intent(this, SplashActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("Notification", body)
             putExtra("Notification",title)
