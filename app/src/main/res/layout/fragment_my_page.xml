@@ -75,10 +75,10 @@
                             android:id="@+id/constraintLayoutMyPage1"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_marginTop="60dp"
+                            android:layout_marginTop="40dp"
 
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHeight_percent="0.3"
+                            app:layout_constraintHeight_percent="0.4"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
                             app:layout_constraintWidth_percent="0.9">
@@ -91,12 +91,12 @@
                                 android:layout_height="0dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHeight_default="percent"
-                                app:layout_constraintHeight_percent="0.25"
+                                app:layout_constraintHeight_percent="0.2"
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:layout_marginTop="15dp"
                                 android:backgroundTint="@color/red"
                                 android:onClick="@{()->mainVM.callLoginOut()}"
-                                app:layout_constraintTop_toBottomOf="@id/constraintLayoutMyPage4"
+                                app:layout_constraintTop_toBottomOf="@id/constraintLayoutMyPage6"
                                 android:background="@drawable/my_page_button_style">
 
 
@@ -128,7 +128,7 @@
                                 android:layout_height="0dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHeight_default="percent"
-                                app:layout_constraintHeight_percent="0.25"
+                                app:layout_constraintHeight_percent="0.2"
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:layout_marginTop="15dp"
                                 android:background="@drawable/my_page_button_style"
@@ -165,13 +165,10 @@
                                 android:layout_height="0dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHeight_default="percent"
-                                app:layout_constraintHeight_percent="0.25"
+                                app:layout_constraintHeight_percent="0.22"
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:background="@drawable/my_page_button_style"
                                 app:layout_constraintTop_toTopOf="parent">
-
-
-
 
                                 <TextView
                                     android:id="@+id/textView4"
@@ -191,6 +188,40 @@
                                     android:textSize="20dp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold"
+                                    />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/constraintLayoutMyPage6"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHeight_default="percent"
+                                app:layout_constraintHeight_percent="0.2"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginTop="15dp"
+                                android:background="@drawable/my_page_button_style"
+                                android:onClick="@{()->mainVM.clickCategorySelection()}"
+                                app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage4">
+
+                                <TextView
+                                    android:id="@+id/textView6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/category_select"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:textSize="20dp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    app:layout_constraintWidth_default="percent"
+                                    app:layout_constraintWidth_percent="0.8"
+
                                     />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>

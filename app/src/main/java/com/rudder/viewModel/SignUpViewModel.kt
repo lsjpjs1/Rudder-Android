@@ -447,7 +447,11 @@ class SignUpViewModel : ViewModel() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
-            val result = repository.categorySelectSignUpRepository(CategorySelectSignUpInfo(_categoryIdSelectList.value!! ,_userId.value!!) )
+            val tmpIdList = _categoryIdSelectList.value!!.sorted()
+            val sortCategoryIdArrayList = ArrayList<Int>()
+            sortCategoryIdArrayList.addAll(tmpIdList)
+
+            val result = repository.categorySelectSignUpRepository(CategorySelectSignUpInfo(sortCategoryIdArrayList ,_userId.value!!) )
             _categorySelectApply.postValue(Event(result))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
