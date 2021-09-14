@@ -59,16 +59,10 @@ class ProfileSettingImagesAdapter(
 
 
 
-//        if(holder.profileSettingDisplayImageBinding.profileSettingImageCheckBox.isChecked == true) {
-//            Log.d("checkbox","${position}")
-//        }
-
 
         viewModel.selectedProfileImage.observe(lifecycleOwner, Observer {
             it?.let{
-                Log.d("asd","asd")
                 holder.profileSettingDisplayImageBinding.profileSettingImageCheckBox.isChecked = it == position
-
             }
         })
 

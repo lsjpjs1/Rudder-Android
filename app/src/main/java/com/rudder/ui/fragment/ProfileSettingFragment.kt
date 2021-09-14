@@ -79,7 +79,7 @@ class ProfileSettingFragment : Fragment() {
                     nickNameDuplicatedCheck.isEnabled = false
                     toastNickName.show()
                     }
-                ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked)
+                ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked, imageSettingCheckbox.isChecked)
             }})
 
 
@@ -93,7 +93,7 @@ class ProfileSettingFragment : Fragment() {
                     Toast.makeText(activity, "NickName is duplicated", Toast.LENGTH_SHORT).show()
                 }
             }
-            ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked)
+            ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked,imageSettingCheckbox.isChecked)
         })
 
 
@@ -101,21 +101,16 @@ class ProfileSettingFragment : Fragment() {
         viewModel.nickNameChangeFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{
                 ChangeUIState.changeCheckBoxFalseState(nickNameCheckbox)
-                ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked)
+                ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked, imageSettingCheckbox.isChecked)
             }
         })
 
 
         viewModel.profileImageClick.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{
-                if (it) {
-                    //profileSettingImageCheckBox.isEnabled = false
-                    Log.d("profileImageClick","${profileSettingImageCheckBox.tag}")
-                } else {
-                    //profileSettingImageCheckBox.isEnabled = true
-                    Log.d("profileImageClick","${profileSettingImageCheckBox.tag}")
-                }
+                imageSettingCheckbox.isChecked = it
             }
+            ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked,imageSettingCheckbox.isChecked)
         })
 
 

@@ -74,6 +74,8 @@ class SignUpViewModel : ViewModel() {
     var _profileImageList = MutableLiveData<ArrayList<String>>()
     val _profileImageClick = MutableLiveData<Event<Boolean>>()
     val _selectedProfileImage = MutableLiveData<Int>()
+    var _profileIdSelectList = MutableLiveData<ArrayList<Int>>()
+    val _selectedProfileId = MutableLiveData<Int>()
 
 
     val userId: LiveData<String> = _userId
@@ -125,6 +127,8 @@ class SignUpViewModel : ViewModel() {
 
     val profileImageClick: LiveData<Event<Boolean>> = _profileImageClick
     val selectedProfileImage: LiveData<Int> = _selectedProfileImage
+    var profileIdSelectList: LiveData<ArrayList<Int>> = _profileIdSelectList
+    val selectedProfileId: LiveData<Int> = _selectedProfileId
 
 
 
@@ -151,6 +155,7 @@ class SignUpViewModel : ViewModel() {
         _profileImageList.value = ArrayList<String>()
         getProfileImageList()
         _selectedProfileImage.value = -1
+        _profileIdSelectList.value = ArrayList<Int>()
     }
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
@@ -399,8 +404,10 @@ class SignUpViewModel : ViewModel() {
 
             for (idx in 0 until profileImageJsonArray.size() ) {
                 val idxObject = profileImageJsonArray[idx].asJsonObject
+                val imagePreviewId = idxObject.get("_id").asInt
                 val imagePreviewUrl = idxObject.get("hdLink").asString
                 _profileImageList.value!!.add(imagePreviewUrl)
+                _profileIdSelectList.value!!.add(imagePreviewId)
             }
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
@@ -409,11 +416,13 @@ class SignUpViewModel : ViewModel() {
 
     fun clickProfileImage(position: Int){
         _profileImageClick.value = Event(true)
-        Log.d("_profileImageClick","${position}")
-
+        _selectedProfileId.value =  _profileIdSelectList.value!![position]
         _selectedProfileImage.value = position
-    }
 
+        Log.d("_profileImageClick","${position}")
+        Log.d("_profileImageClick","${_profileIdSelectList.value}")
+        Log.d("_profileImageClick","${_selectedProfileId.value}")
+    }
 
 
 

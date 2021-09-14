@@ -301,6 +301,7 @@
             app:layout_constraintWidth_percent="1"
             >
 
+                        <!-- sign UP 최종 완료 버튼 (반영)           -->
             <Button
                 android:id="@+id/profileSettingNextBtn"
                 android:layout_width="0dp"
@@ -308,7 +309,7 @@
                 android:backgroundTint="#9329D1"
                 android:gravity="center"
                 android:onClick="@{()->signUpVM.clickNextProfileSetting()}"
-                android:text="@string/next"
+                android:text="@string/sign_up"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.6"
                 app:layout_constraintStart_toStartOf="parent"
