@@ -106,9 +106,6 @@ class MainViewModel : ViewModel() {
 
 
 
-
-
-
     val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
     val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
     val postInnerValueChangeSwitch:LiveData<Boolean> = _postInnerValueChangeSwitch
@@ -220,6 +217,7 @@ class MainViewModel : ViewModel() {
         clearNestedCommentInfo()
         getPosts()
         getCategories()
+        getSelectedCategories()
 
         _isDeleteCommentSuccess.value = Event(false)
         _imageCount.value = 0
@@ -363,9 +361,6 @@ class MainViewModel : ViewModel() {
     }
 
 
-
-
-
     fun clickCommentLike(position: Int) {
         val plusValue =
             if (_comments.value!![position].isLiked) -1
@@ -377,7 +372,6 @@ class MainViewModel : ViewModel() {
         _commentInnerValueChangeSwitch.value = !_commentInnerValueChangeSwitch.value!!
         addLikeComment(plusValue, position)
     }
-
 
 
     fun getPosts() {
@@ -406,27 +400,26 @@ class MainViewModel : ViewModel() {
                 }
                 _isScrollBottomTouch.value = Event(false)
             }
-
         }
     }
 
-        fun addLikeComment(plusValue: Int, position: Int) {
-            GlobalScope.launch {
-                val addLikeCommentInfo = AddLikeCommentInfo(
-                    _comments.value!![position].commentId,
-                    App.prefs.getValue(tokenKey)!!,
-                    plusValue
-                )
-                val resJson = Repository().addLikeComment(addLikeCommentInfo)
-                viewModelScope.launch {
-                    if (resJson.get("isSuccess").asBoolean) {
-                        _comments.value!![position].likeCount = resJson.get("like_count").asInt
-                        _commentInnerValueChangeSwitch.value =
-                            !_commentInnerValueChangeSwitch.value!!
-                    }
+    fun addLikeComment(plusValue: Int, position: Int) {
+        GlobalScope.launch {
+            val addLikeCommentInfo = AddLikeCommentInfo(
+                _comments.value!![position].commentId,
+                App.prefs.getValue(tokenKey)!!,
+                plusValue
+            )
+            val resJson = Repository().addLikeComment(addLikeCommentInfo)
+            viewModelScope.launch {
+                if (resJson.get("isSuccess").asBoolean) {
+                    _comments.value!![position].likeCount = resJson.get("like_count").asInt
+                    _commentInnerValueChangeSwitch.value =
+                        !_commentInnerValueChangeSwitch.value!!
                 }
             }
         }
+    }
 
     fun clearComments() {
         _comments.postValue(ArrayList<Comment>())
@@ -626,8 +619,21 @@ class MainViewModel : ViewModel() {
 
             }
         }
+    }
 
 
+    fun getSelectedCategories() { // selected 된 것 불러오기
+        ProgressBarUtil._progressBarDialogFlag.value = Event(true)
+
+        GlobalScope.launch {
+            var categoryList = Repository().getSelectedCategoriesRepository( Token(App.prefs.getValue(tokenKey)!!) )
+            viewModelScope.launch {
+                categoryList.add(0, Category(-1, "All"))
+                _categories.value = categoryList
+
+            }
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+        }
     }
 
 
@@ -635,14 +641,10 @@ class MainViewModel : ViewModel() {
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
 
         GlobalScope.launch {
-            Log.d("progressBarDialogFlag","${ProgressBarUtil._progressBarDialogFlag.value}")
             var categoryList = Repository().getCategories()
             viewModelScope.launch {
                 _categoryNames.value = splitCategoryNames(categoryList)
                 _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
-                categoryList.add(0, Category(-1, "All"))
-                _categories.value = categoryList
-
             }
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }

@@ -39,7 +39,7 @@ interface SignUpService{
 
     @POST("/signupin/checkDuplicationNickname")
     suspend fun nickNameDuplicatedService(
-        @Body nickNameDuplicatedInfo: nickNameDuplicatedInfo
+        @Body nickNameDuplicatedInfo: NickNameDuplicatedInfo
     ) : Response<JsonObject>
 
 

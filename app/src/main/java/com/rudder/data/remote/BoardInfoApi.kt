@@ -18,10 +18,17 @@ class BoardInfoApi {
     private val boardInfoService : BoardInfoService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(BoardInfoService::class.java)
 
     fun getCategoryList() : Deferred<Response<ArrayList<Category>>> {
-
         return GlobalScope.async(Dispatchers.IO){
             boardInfoService.getCategories()
         }
     }
+
+    fun getSelectedCategoryListApi(token : Token) : Deferred<Response<ArrayList<Category>>> {
+        return GlobalScope.async(Dispatchers.IO){
+            boardInfoService.getSelectedCategories(token)
+        }
+    }
+
+
 
 }

@@ -68,7 +68,7 @@ class Repository {
     }
 
 
-    suspend fun signUpNickNameDuplicated(nickNameDuplicatedInfo: nickNameDuplicatedInfo) : Boolean{
+    suspend fun signUpNickNameDuplicated(nickNameDuplicatedInfo: NickNameDuplicatedInfo) : Boolean{
         val nickNameDuplicatedAPIResultJson = SignUpApi.instance.nickNameDuplicatedSignUpApi(nickNameDuplicatedInfo).await()
         return nickNameDuplicatedAPIResultJson.results.get("isDuplicated").asBoolean
     }
@@ -174,6 +174,11 @@ class Repository {
 
     suspend fun categorySelectMyPageRepository(categorySelectMyPageInfo: CategorySelectMyPageInfo) : Boolean{
         return CategorySelectApi.instance.categorySelectMyPageApi(categorySelectMyPageInfo).await().results.get("isSuccess").asBoolean
+    }
+
+
+    suspend fun getSelectedCategoriesRepository(token : Token): ArrayList<Category> {
+        return BoardInfoApi.instance.getSelectedCategoryListApi(token).await().results
     }
 
 

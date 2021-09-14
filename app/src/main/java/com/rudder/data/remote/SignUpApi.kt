@@ -46,7 +46,7 @@ class SignUpApi {
         } }
 
 
-    fun nickNameDuplicatedSignUpApi(nickNameDuplicatedInfo: nickNameDuplicatedInfo) : Deferred<Response<JsonObject>>{
+    fun nickNameDuplicatedSignUpApi(nickNameDuplicatedInfo: NickNameDuplicatedInfo) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){
             singUpService.nickNameDuplicatedService(nickNameDuplicatedInfo)
         } }

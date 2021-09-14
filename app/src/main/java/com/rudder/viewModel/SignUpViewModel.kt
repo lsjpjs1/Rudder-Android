@@ -77,6 +77,7 @@ class SignUpViewModel : ViewModel() {
     var _profileIdSelectList = MutableLiveData<ArrayList<Int>>()
     val _userSelectedProfileId = MutableLiveData<Int>()
     var _categoryIdSelectList = MutableLiveData<ArrayList<Int>>()
+    var _categoryIdAllList = MutableLiveData<ArrayList<Int>>()
 
 
     val userId: LiveData<String> = _userId
@@ -131,6 +132,8 @@ class SignUpViewModel : ViewModel() {
     var profileIdSelectList: LiveData<ArrayList<Int>> = _profileIdSelectList
     val userSelectedProfileId: LiveData<Int> = _userSelectedProfileId
     var categoryIdSelectList: LiveData<ArrayList<Int>> = _categoryIdSelectList
+    var categoryIdAllList: LiveData<ArrayList<Int>> = _categoryIdAllList
+
 
 
 
@@ -157,6 +160,8 @@ class SignUpViewModel : ViewModel() {
         _profileIdSelectList.value = ArrayList<Int>()
         _userSelectedProfileId.value = -1
         _categoryIdSelectList.value = ArrayList<Int>()
+        _categoryIdAllList.value = ArrayList<Int>()
+
 
         callSchoolList()
         getCategories()
@@ -364,8 +369,10 @@ class SignUpViewModel : ViewModel() {
 
     fun splitCategoryNames(categoryList: ArrayList<Category>): ArrayList<String> {
         var categoryNames = ArrayList<String>()
+
         for (category in categoryList) {
             categoryNames.add(category.categoryName)
+            _categoryIdAllList.value!!.add(category.categoryId)
         }
         return categoryNames
     }
@@ -374,6 +381,7 @@ class SignUpViewModel : ViewModel() {
     fun getCategories() {
         GlobalScope.launch {
             var categoryList = repository.getCategories()
+            Log.d("categoryList","${categoryList}")
             viewModelScope.launch {
                 _categoryNames.value = splitCategoryNames(categoryList)
                 _categories.value = categoryList
@@ -385,7 +393,7 @@ class SignUpViewModel : ViewModel() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
-            val result = repository.signUpNickNameDuplicated(nickNameDuplicatedInfo(_userNickName.value!!))
+            val result = repository.signUpNickNameDuplicated(NickNameDuplicatedInfo(_userNickName.value!!))
             _nickNameDuplicatedCheck.postValue(Event(!result && _userNickName.value!!.isNotBlank()))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
@@ -404,7 +412,6 @@ class SignUpViewModel : ViewModel() {
             val profileImageJsonArray = repository.profileImageListRepository()
             Log.d("_profileImageList.value", "${profileImageJsonArray}")
 
-
             for (idx in 0 until profileImageJsonArray.size() ) {
                 val idxObject = profileImageJsonArray[idx].asJsonObject
                 val imagePreviewId = idxObject.get("_id").asInt
@@ -421,18 +428,26 @@ class SignUpViewModel : ViewModel() {
         _profileImageClick.value = Event(true)
         _userSelectedProfileId.value =  _profileIdSelectList.value!![position]
         _selectedProfileImage.value = position
-
-        Log.d("_profileImageClick","${position}")
-        Log.d("_profileImageClick","${_userSelectedProfileId.value}")
     }
 
+
+
+    fun categoryIdSelect(id : Int, checked: Boolean){
+        if (checked) {
+            categoryIdSelectList.value!!.add(id)
+        } else {
+            categoryIdSelectList.value!!.remove(id)
+        }
+
+        Log.d("categoryIdSelectList","${categoryIdSelectList.value!!}")
+    }
 
 
     fun clickApplyCategorySelect(){ // Apply
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
-            val result = repository.categorySelectSignUpRepository(categorySelectSignUpInfo(_categoryIdSelectList.value!! ,_userId.value!!) )
+            val result = repository.categorySelectSignUpRepository(CategorySelectSignUpInfo(_categoryIdSelectList.value!! ,_userId.value!!) )
             _categorySelectApply.postValue(Event(result))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))

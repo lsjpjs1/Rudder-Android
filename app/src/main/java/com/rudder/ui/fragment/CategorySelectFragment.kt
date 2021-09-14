@@ -27,23 +27,19 @@ class CategorySelectFragment : Fragment() {
     private lateinit var categorySelectBindinginding : FragmentSignUpCategorySelectBinding
 
 
-    fun setCategoryChips(categorys : ArrayList<String>, width : Int, height : Int ) {
+    fun setCategoryChips(categorys : ArrayList<String>, categoryId : ArrayList<Int> ,width : Int, height : Int ) {
         for ( i in 0 until categorys.size ) {
             val mChip = this.layoutInflater.inflate(R.layout.item_chip_category, null, false) as Chip
 
             mChip.width = width
             mChip.height = height
             mChip.text = categorys[i]
-            mChip.tag = i
+            mChip.tag = categoryId[i]
 
             mChip.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, boolean ->
-                Log.d("mchip","${boolean},${compoundButton.tag}")
+                viewModel.categoryIdSelect(compoundButton.tag.toString().toInt(), boolean)
             })
 
-
-            //mChip.id = R.id.test_id_01
-            //val paddingDp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10L, resources.displayMetrics) as Int
-            //mChip.setPadding(1000, 500, 50, 50)
 
             categorySelectBindinginding.root.chipsPrograms.addView(mChip)
         }
@@ -63,7 +59,7 @@ class CategorySelectFragment : Fragment() {
         val chipHeight = (displayDpValue[1] * 0.1).toInt()
 
         viewModel.categoryNames.observe(viewLifecycleOwner, Observer {
-            setCategoryChips(viewModel.categoryNames.value!!,chipWidth, chipHeight)
+            setCategoryChips(viewModel.categoryNames.value!!, viewModel.categoryIdAllList.value!!, chipWidth, chipHeight)
         })
 
 
