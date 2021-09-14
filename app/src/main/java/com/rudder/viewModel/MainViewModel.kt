@@ -103,8 +103,11 @@ class MainViewModel : ViewModel() {
 
     private val _imageCount = MutableLiveData<Int>()
 
-
-
+    private val _myProfileImageUrl = MutableLiveData<String>()
+//    private val _noticeResponse = MutableLiveData<NoticeResponse>()
+//
+//    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
+    val myProfileImageUrl:LiveData<String> = _myProfileImageUrl
 
     val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
     val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
@@ -219,10 +222,29 @@ class MainViewModel : ViewModel() {
         getCategories()
         getSelectedCategories()
 
+
         _isDeleteCommentSuccess.value = Event(false)
         _imageCount.value = 0
     }
+        fun getMyProfileImageUrl(){
+        GlobalScope.async {
+            val url = Repository().getMyProfileImageUrl(MyProfileImageRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!)).url
+            viewModelScope.launch{
+                _myProfileImageUrl.value = url
+                Log.d("myprofile","call123")
+            }
+        }
+    }
 
+//    fun getNotice(){
+//        GlobalScope.async {
+//            val version = BuildConfig.VERSION_NAME
+//            val response = Repository().getNotice(NoticeRequest("android",version))
+//            viewModelScope.launch{
+//                _noticeResponse.value = response
+//            }
+//        }
+//    }
 
     suspend fun uploadPhoto(postId:Int){
         GlobalScope.async {

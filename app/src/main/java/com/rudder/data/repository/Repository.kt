@@ -167,7 +167,6 @@ class Repository {
         return SignUpApi.instance.profileImageListSignUpApi().await().results.get("profileImageList").asJsonArray
     }
 
-
     suspend fun categorySelectSignUpRepository(categorySelectSignUpInfo: CategorySelectSignUpInfo) : Boolean{
         return CategorySelectApi.instance.categorySelectSignUpApi(categorySelectSignUpInfo).await().results.get("isSuccess").asBoolean
     }
@@ -181,5 +180,13 @@ class Repository {
         return BoardInfoApi.instance.getSelectedCategoryListApi(token).await().results
     }
 
+
+    suspend fun getNotice(noticeRequest: NoticeRequest): NoticeResponse{
+        return NoticeApi.instance.getNotice(noticeRequest).await().results
+    }
+
+    suspend fun getMyProfileImageUrl(myProfileImageRequest:MyProfileImageRequest): MyProfileImageResponse{
+        return MyPageApi.instance.getMyProfileImageUrl(myProfileImageRequest).await().results
+    }
 
 }
