@@ -308,7 +308,7 @@
                 android:layout_height="0dp"
                 android:backgroundTint="#9329D1"
                 android:gravity="center"
-                android:onClick="@{()->signUpVM.clickNextProfileSetting()}"
+                android:onClick="@{()->signUpVM.callCreateAccount()}"
                 android:text="@string/sign_up"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.6"

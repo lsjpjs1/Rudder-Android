@@ -75,4 +75,6 @@ class CategorySelectFragment : Fragment() {
 
         return categorySelectBindinginding.root
     }
+
+
 }

@@ -62,12 +62,13 @@ data class SignUpInsertInfo(
     @SerializedName(value = "school_id")
     val userSchoolInt: Int,
 
-    @SerializedName(value = "character_index")
-    val userCharacter: String,
-
-    @SerializedName(value = "profile_body")
+    @SerializedName(value = "profile_body") // dummy
     val userIntroduce: String,
 
     @SerializedName(value = "user_nickname")
-    val userNickName: String
+    val userNickName: String,
+
+    @SerializedName(value = "user_profile_image_id") // profile Image ID
+    val userProfileImageId: Int
+
 )

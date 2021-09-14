@@ -168,8 +168,13 @@ class Repository {
     }
 
 
-    suspend fun categorySelectRepository(categorySelectInfo: CategorySelectInfo) : Boolean{
-        return CategorySelectApi.instance.categorySelectApi(categorySelectInfo).await().results.get("isSuccess").asBoolean
+    suspend fun categorySelectSignUpRepository(categorySelectSignUpInfo: CategorySelectSignUpInfo) : Boolean{
+        return CategorySelectApi.instance.categorySelectSignUpApi(categorySelectSignUpInfo).await().results.get("isSuccess").asBoolean
     }
+
+    suspend fun categorySelectMyPageRepository(categorySelectMyPageInfo: CategorySelectMyPageInfo) : Boolean{
+        return CategorySelectApi.instance.categorySelectMyPageApi(categorySelectMyPageInfo).await().results.get("isSuccess").asBoolean
+    }
+
 
 }

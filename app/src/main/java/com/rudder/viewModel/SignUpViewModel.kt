@@ -47,7 +47,7 @@ class SignUpViewModel : ViewModel() {
     val _createAccountBack = MutableLiveData<Event<Boolean>>()
     val _profileSettingNext = MutableLiveData<Event<Boolean>>()
     val _profileSettingBack = MutableLiveData<Event<Boolean>>()
-    val _categorySelectNext = MutableLiveData<Event<Boolean>>()
+    val _categorySelectApply = MutableLiveData<Event<Boolean>>()
     val _categorySelectBack = MutableLiveData<Event<Boolean>>()
 
     val _nickNameDuplicatedCheck = MutableLiveData<Event<Boolean>>()
@@ -75,7 +75,8 @@ class SignUpViewModel : ViewModel() {
     val _profileImageClick = MutableLiveData<Event<Boolean>>()
     val _selectedProfileImage = MutableLiveData<Int>()
     var _profileIdSelectList = MutableLiveData<ArrayList<Int>>()
-    val _selectedProfileId = MutableLiveData<Int>()
+    val _userSelectedProfileId = MutableLiveData<Int>()
+    var _categoryIdSelectList = MutableLiveData<ArrayList<Int>>()
 
 
     val userId: LiveData<String> = _userId
@@ -98,7 +99,7 @@ class SignUpViewModel : ViewModel() {
     val createAccountBack: LiveData<Event<Boolean>> = _createAccountBack
     val profileSettingNext: LiveData<Event<Boolean>> = _profileSettingNext
     val profileSettingBack: LiveData<Event<Boolean>> = _profileSettingBack
-    val categorySelectNext: LiveData<Event<Boolean>> = _categorySelectNext
+    val categorySelectApply: LiveData<Event<Boolean>> = _categorySelectApply // Apply button
     val categorySelectBack: LiveData<Event<Boolean>> = _categorySelectBack
 
 
@@ -128,7 +129,8 @@ class SignUpViewModel : ViewModel() {
     val profileImageClick: LiveData<Event<Boolean>> = _profileImageClick
     val selectedProfileImage: LiveData<Int> = _selectedProfileImage
     var profileIdSelectList: LiveData<ArrayList<Int>> = _profileIdSelectList
-    val selectedProfileId: LiveData<Int> = _selectedProfileId
+    val userSelectedProfileId: LiveData<Int> = _userSelectedProfileId
+    var categoryIdSelectList: LiveData<ArrayList<Int>> = _categoryIdSelectList
 
 
 
@@ -149,13 +151,16 @@ class SignUpViewModel : ViewModel() {
         _emailToast.value = ""
 
         _categoryNames.value = ArrayList()
-        callSchoolList()
-        getCategories()
 
         _profileImageList.value = ArrayList<String>()
-        getProfileImageList()
         _selectedProfileImage.value = -1
         _profileIdSelectList.value = ArrayList<Int>()
+        _userSelectedProfileId.value = -1
+        _categoryIdSelectList.value = ArrayList<Int>()
+
+        callSchoolList()
+        getCategories()
+        getProfileImageList()
     }
 
     val emailRg = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$".toRegex()
@@ -259,13 +264,12 @@ class SignUpViewModel : ViewModel() {
         _profileSettingBack.value = Event(true)
     }
 
-    fun clickNextProfileSetting(){
-        _profileSettingNext.value = Event(true)
-    }
+
 
     fun clickBackCategorySelect(){
         _categorySelectBack.value = Event(true)
     }
+
 
 
 
@@ -339,18 +343,19 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun callCreateAccount() { // Sign Up, Complete!
+    fun callCreateAccount() { // Sign Up, Complete!, Profile Setting Fragment에서 실행
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val inputInfo = SignUpInsertInfo(_userId.value!!, _userPassword.value!!,emailInput,_userRecommendCode.value!!,
-                _userSchoolInt.value!!,"",_userIntroduce.value!!,_userNickName.value!! )
+                _userSchoolInt.value!!,"",_userNickName.value!!, _userSelectedProfileId.value!! )
 
             val result = repository.signUpCreateAccount(inputInfo)
 
             Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
-            _categorySelectNext.postValue(Event(result))
+            _profileSettingNext.postValue(Event(result))
+
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
@@ -373,8 +378,6 @@ class SignUpViewModel : ViewModel() {
                 _categoryNames.value = splitCategoryNames(categoryList)
                 _categories.value = categoryList
             }
-
-            //_profileSettingNext.postValue(Event(result))
         }
     }
 
@@ -416,14 +419,25 @@ class SignUpViewModel : ViewModel() {
 
     fun clickProfileImage(position: Int){
         _profileImageClick.value = Event(true)
-        _selectedProfileId.value =  _profileIdSelectList.value!![position]
+        _userSelectedProfileId.value =  _profileIdSelectList.value!![position]
         _selectedProfileImage.value = position
 
         Log.d("_profileImageClick","${position}")
-        Log.d("_profileImageClick","${_profileIdSelectList.value}")
-        Log.d("_profileImageClick","${_selectedProfileId.value}")
+        Log.d("_profileImageClick","${_userSelectedProfileId.value}")
     }
 
+
+
+    fun clickApplyCategorySelect(){ // Apply
+        GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
+            val result = repository.categorySelectSignUpRepository(categorySelectSignUpInfo(_categoryIdSelectList.value!! ,_userId.value!!) )
+            _categorySelectApply.postValue(Event(result))
+
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+        }
+    }
 
 
 }

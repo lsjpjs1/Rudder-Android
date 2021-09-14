@@ -87,21 +87,17 @@ class SignUpActivity : AppCompatActivity() {
         categorySelectFragment = CategorySelectFragment()
 
         supportFragmentManager.beginTransaction()
-
-            .add(R.id.signUp_container, profileSettingFragment)
-            //.add(R.id.signUp_container, categorySelectFragment)
-
             .add(R.id.signUp_container, termsOfServiceFragment)
-            .hide(termsOfServiceFragment)
-
             .add(R.id.signUp_container, schoolSelectFragment)
             .hide(schoolSelectFragment)
             .add(R.id.signUp_container, createAccountFragment)
             .hide(createAccountFragment)
-           // .add(R.id.signUp_container, profileSettingFragment)
-            //.hide(profileSettingFragment)
+            .add(R.id.signUp_container, profileSettingFragment)
+            .hide(profileSettingFragment)
+
 //            .add(R.id.signUp_container, categorySelectFragment)
 //            .hide(categorySelectFragment)
+
             .commit()
 
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
@@ -179,26 +175,48 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.profileSettingNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
+                    toastSignUpComplete.show()
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                    fragmentShowHide.addToBackStack()
+
+                    fragmentShowHide.removeFragment(termsOfServiceFragment)
+                    fragmentShowHide.removeFragment(schoolSelectFragment)
+                    fragmentShowHide.removeFragment(createAccountFragment)
+                    fragmentShowHide.removeFragment(profileSettingFragment)
+
+
+                    fragmentShowHide.addFragment(categorySelectFragment,R.id.signUp_container,"categorySelectFragment")
                     fragmentShowHide.showFragment(categorySelectFragment, R.id.signUp_container)
-                } }})
+                }
+            }})  // signUP Complete !
+
 
 
         viewModel.categorySelectBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
-                if (it) onBackPressed()
+                StartActivityUtil.callActivity(this, LoginActivity())
+                finish()
             }})
 
-        viewModel.categorySelectNext.observe(this, Observer {
+
+        viewModel.categorySelectApply.observe(this, Observer { // Apply 버튼
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     StartActivityUtil.callActivity(this, LoginActivity())
                     finish()
-                    toastSignUpComplete.show()
                 }
-            }}) // signUP Complete !
+            }})
 
+    }
+
+
+
+
+    override fun onBackPressed() {
+        if(categorySelectFragment.isVisible) {
+            StartActivityUtil.callActivity(this, LoginActivity())
+            finish()
+        } else
+            super.onBackPressed()
     }
 
 

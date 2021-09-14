@@ -6,8 +6,17 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface CategorySelectService {
-    @POST("/board/addUserSelectCategory")
-    suspend fun categorySelectService(
-            @Body categorySelectInfo: CategorySelectInfo
+    @POST("/board/updateUserSelectCategory")
+    suspend fun categorySelectSignUpService(
+            @Body categorySelectSignUpInfo: CategorySelectSignUpInfo
     ) : Response<JsonObject>
+
+
+
+    @POST("/board/updateUserSelectCategory")
+    suspend fun categorySelectMyPageService(
+        @Body categorySelectMyPageInfo: CategorySelectMyPageInfo
+    ) : Response<JsonObject>
+
+
 }

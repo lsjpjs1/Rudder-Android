@@ -19,10 +19,19 @@ class CategorySelectApi {
 
     private val categorySelectService : CategorySelectService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(CategorySelectService::class.java)
 
-    fun categorySelectApi(categorySelectInfo: CategorySelectInfo) : Deferred<Response<JsonObject>>{
+
+
+    fun categorySelectSignUpApi(categorySelectSignUpInfo: CategorySelectSignUpInfo) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){
-            categorySelectService.categorySelectService(categorySelectInfo)
+            categorySelectService.categorySelectSignUpService(categorySelectSignUpInfo)
         }
     }
 
+
+
+    fun categorySelectMyPageApi(categorySelectMyPageInfo: CategorySelectMyPageInfo) : Deferred<Response<JsonObject>>{
+        return GlobalScope.async(Dispatchers.IO){
+            categorySelectService.categorySelectMyPageService(categorySelectMyPageInfo)
+        }
+    }
 }
