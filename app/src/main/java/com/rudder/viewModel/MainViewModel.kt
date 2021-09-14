@@ -147,6 +147,7 @@ class MainViewModel : ViewModel() {
     val isCommentDelete: LiveData<Event<Boolean>> = _isCommentDelete
 
 
+
     val isDeleteCommentSuccess: LiveData<Event<Boolean>> = _isDeleteCommentSuccess
     val isEditCommentSuccess: LiveData<Event<Boolean>> = _isEditCommentSuccess
     val isReportCommentSuccess: LiveData<Event<Boolean>> = _isReportCommentSuccess
@@ -600,6 +601,8 @@ class MainViewModel : ViewModel() {
         switch(_isPostEdit)
         _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
         _postCategoryInt.value = _posts.value!![selectedPostMorePosition.value!!].categoryId - 1
+
+        _photoPickerClickSwitch.value = null
     }
 
     fun clickPostDelete() {

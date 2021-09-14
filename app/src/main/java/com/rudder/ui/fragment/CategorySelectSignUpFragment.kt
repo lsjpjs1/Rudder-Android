@@ -21,7 +21,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class CategorySelectFragment : Fragment() {
+class CategorySelectSignUpFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by activityViewModels()
     private lateinit var categorySelectBindinginding : FragmentSignUpCategorySelectBinding
