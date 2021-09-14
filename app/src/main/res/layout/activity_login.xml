@@ -47,6 +47,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/purple_rudder"
 
+                android:fontFamily="sans-serif-medium"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,11 +73,13 @@
                 android:id="@+id/editTextUserId"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:backgroundTint="#9329D1"
+
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.9"
+
+                android:theme="@style/MyEditTextTheme"
 
                 android:hint="@string/id_placeholder"
                 android:inputType="text"
@@ -98,7 +101,7 @@
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.9"
-                android:backgroundTint="#9329D1"
+                android:theme="@style/MyEditTextTheme"
                 android:hint="@string/password_placeholder"
                 android:inputType="textPassword"
                 android:text="@={loginVM._userPassword}"

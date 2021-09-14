@@ -381,6 +381,7 @@ class SignUpViewModel : ViewModel() {
     fun getCategories() {
         GlobalScope.launch {
             var categoryList = repository.getCategories()
+            categoryList.removeAt(0)
             Log.d("categoryList","${categoryList}")
             viewModelScope.launch {
                 _categoryNames.value = splitCategoryNames(categoryList)

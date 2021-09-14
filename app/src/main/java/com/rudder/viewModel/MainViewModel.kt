@@ -103,6 +103,8 @@ class MainViewModel : ViewModel() {
     val _categorySelectApply = MutableLiveData<Event<Boolean>>()
     val _clickCategorySelect = MutableLiveData<Event<Boolean>>()
 
+    val _categoryNamesForSelection = MutableLiveData<ArrayList<String>>()
+
 
 
     val myProfileImageUrl:LiveData<String> = _myProfileImageUrl
@@ -167,6 +169,9 @@ class MainViewModel : ViewModel() {
     val clickCategorySelect : LiveData<Event<Boolean>> = _clickCategorySelect
 
 
+    val categoryNamesForSelection: LiveData<ArrayList<String>> = _categoryNamesForSelection
+
+
     init {
         _selectedTab.value = R.id.communityButton
         _selectedCategoryPosition.value = 0
@@ -226,6 +231,7 @@ class MainViewModel : ViewModel() {
 
         _categoryIdSelectList.value = ArrayList<Int>()
         _categoryIdAllList.value = ArrayList<Int>()
+        _categoryNamesForSelection.value = ArrayList<String>()
 
     }
         fun getMyProfileImageUrl(){
@@ -675,14 +681,23 @@ class MainViewModel : ViewModel() {
 
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
+
     }
 
     fun splitCategoryNames(categoryList: ArrayList<Category>): ArrayList<String> {
         var categoryNames = ArrayList<String>()
+
+        Log.d("categoryNames", "$categoryList")
         for (category in categoryList) {
             categoryNames.add(category.categoryName)
-            _categoryIdAllList.value!!.add(category.categoryId)
         }
+
+        categoryList.removeAt(0)
+        for (category in categoryList) {
+            _categoryIdAllList.value!!.add(category.categoryId)
+            _categoryNamesForSelection.value!!.add(category.categoryName)
+        }
+
         return categoryNames
     }
 

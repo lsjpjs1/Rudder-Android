@@ -56,8 +56,8 @@ class CategorySelectMyPageFragment : Fragment() {
         val chipWidth = (displayDpValue[0] * 0.4).toInt()
         val chipHeight = (displayDpValue[1] * 0.1).toInt()
 
-        viewModel.categoryNames.observe(viewLifecycleOwner, Observer {
-            setCategoryChips(viewModel.categoryNames.value!!, viewModel.categoryIdAllList.value!!, chipWidth, chipHeight)
+        viewModel.categoryNamesForSelection.observe(viewLifecycleOwner, Observer {
+            setCategoryChips(viewModel.categoryNamesForSelection.value!!, viewModel.categoryIdAllList.value!!, chipWidth, chipHeight)
         })
 
 
