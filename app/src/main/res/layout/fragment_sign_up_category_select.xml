@@ -37,7 +37,7 @@
                 app:layout_constraintWidth_percent="0.5"
                 android:gravity="center"
                 android:textColor="#000000"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"

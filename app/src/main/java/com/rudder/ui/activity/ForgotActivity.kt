@@ -26,10 +26,10 @@ class ForgotActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
 
-        val toastEmailTrue = Toast.makeText(this, "Complete to Send Your ID to Email Address", Toast.LENGTH_SHORT)
-        val toastEmailFalse = Toast.makeText(this, "Not Valid Email Address", Toast.LENGTH_SHORT)
-        val toastVerifyCodeTrue = Toast.makeText(this, "Complete to Send Your Password to Email Address", Toast.LENGTH_SHORT)
-        val toastVerifyCodeFalse = Toast.makeText(this, "Not Valid Verification Code", Toast.LENGTH_SHORT)
+        val toastEmailTrue = Toast.makeText(this, "Complete to Send Your ID to Email Address", Toast.LENGTH_LONG)
+        val toastEmailFalse = Toast.makeText(this, "Not Valid Email Address", Toast.LENGTH_LONG)
+        val toastVerifyCodeTrue = Toast.makeText(this, "Complete to Send Your Password to Email Address", Toast.LENGTH_LONG)
+        val toastVerifyCodeFalse = Toast.makeText(this, "Not Valid Verification Code", Toast.LENGTH_LONG)
 
         var findpasswordFlag = false
 

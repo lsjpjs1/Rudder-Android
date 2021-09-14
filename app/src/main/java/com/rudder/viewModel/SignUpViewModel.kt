@@ -381,6 +381,7 @@ class SignUpViewModel : ViewModel() {
     fun getCategories() {
         GlobalScope.launch {
             var categoryList = repository.getCategories()
+            categoryList.removeAt(0)
             Log.d("categoryList","${categoryList}")
             viewModelScope.launch {
                 _categoryNames.value = splitCategoryNames(categoryList)
@@ -447,7 +448,11 @@ class SignUpViewModel : ViewModel() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
-            val result = repository.categorySelectSignUpRepository(CategorySelectSignUpInfo(_categoryIdSelectList.value!! ,_userId.value!!) )
+            val tmpIdList = _categoryIdSelectList.value!!.sorted()
+            val sortCategoryIdArrayList = ArrayList<Int>()
+            sortCategoryIdArrayList.addAll(tmpIdList)
+
+            val result = repository.categorySelectSignUpRepository(CategorySelectSignUpInfo(sortCategoryIdArrayList ,_userId.value!!) )
             _categorySelectApply.postValue(Event(result))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))

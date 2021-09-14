@@ -46,7 +46,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var communityPostReportFragment : CommunityPostReportFragment
     private lateinit var communityCommentReportFragment : CommunityCommentReportFragment
     private lateinit var communityCommentEditFragment : CommunityCommentEditFragment
+
     private lateinit var contactUsFragment: ContactUsFragment
+
+    private lateinit var categorySelectMyPageFragment : CategorySelectMyPageFragment
+
 
     private lateinit var editPostFragment: EditPostFragment
 
@@ -82,16 +86,18 @@ class MainActivity : AppCompatActivity() {
         communityCommentEditFragment = CommunityCommentEditFragment()
         contactUsFragment = ContactUsFragment()
         editPostFragment = EditPostFragment()
+        categorySelectMyPageFragment = CategorySelectMyPageFragment()
+
 
         val toastDeletePostComplete = Toast.makeText(
             this,
             "Delete Post Complete!",
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_LONG
         )
         val toastDeleteCommentComplete = Toast.makeText(
             this,
             "Delete Comment Complete!",
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_LONG
         )
 
 
@@ -208,17 +214,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.selectedTab.observe(this, Observer {
             when (it) {
                 R.id.communityButton -> {
-                    FragmentShowHide(supportFragmentManager).showFragment(
-                        communityFragment,
-                        R.id.mainDisplay
-                    )
+                    FragmentShowHide(supportFragmentManager).showFragment(communityFragment,R.id.mainDisplay)
                     changeColorCommunity()
                 }
                 R.id.myPageButton -> {
-                    FragmentShowHide(supportFragmentManager).showFragment(
-                        myPageFragment,
-                        R.id.mainDisplay
-                    )
+                    FragmentShowHide(supportFragmentManager).showFragment(myPageFragment,R.id.mainDisplay)
                     changeColorMyPage()
                 }
             }
@@ -242,12 +242,10 @@ class MainActivity : AppCompatActivity() {
             if (it.getContentIfNotHandled()!!) {
                 if (!mainBottomBarFragment.isAdded) {
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                    fragmentShowHide.addFragment(
-                        mainBottomBarFragment,
-                        R.id.mainBottomBar,
-                        "addPost"
-                    )
+                    fragmentShowHide.addFragment(mainBottomBarFragment, R.id.mainBottomBar,"addPost")
+
                 }
+
                 onBackPressed()
             }
         })
@@ -381,6 +379,31 @@ class MainActivity : AppCompatActivity() {
         })
 
 
+        viewModel.clickCategorySelect.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                    fragmentShowHide.addToBackStack()
+                    fragmentShowHide.removeFragment(mainBottomBarFragment)
+
+                    fragmentShowHide.addFragment(categorySelectMyPageFragment, R.id.mainDisplay, "categorySelectMyPageFragment")
+                    fragmentShowHide.showFragment(categorySelectMyPageFragment, R.id.mainDisplay)
+
+                }
+            }
+        })
+
+        viewModel.categorySelectApply.observe(this, Observer { // Apply 버튼
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) {
+                    viewModel.getSelectedCategories()
+                    onBackPressed()
+                }
+            }
+        })
+
+
+
     }
 
     // id가 명시되어있지 않은 다른 부분을 터치했을 때 키보드가 보여져있는 상태면 키보드를 내림.
@@ -415,6 +438,10 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         } else {
             moveTaskToBack(true)
+        }
+
+        if (viewModel.selectedTab.value == R.id.myPageButton) {
+            changeColorMyPage()
         }
 
     }

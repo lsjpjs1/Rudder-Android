@@ -1,35 +1,27 @@
 package com.rudder.viewModel
 
 
-import android.content.ContentValues
-import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.*
-import com.google.gson.JsonNull
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.rudder.BuildConfig
 import com.rudder.R
 import com.rudder.data.*
-import com.rudder.data.Comment
-import com.rudder.data.FileInfo
-import com.rudder.data.GetCommentInfo
-import com.rudder.data.PreviewPost
 import com.rudder.data.local.App
 import com.rudder.data.remote.*
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
+import com.rudder.util.FileUtil
 import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.RequestBody
-import java.io.File
 import java.sql.Timestamp
-import com.rudder.util.FileUtil
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainViewModel : ViewModel() {
@@ -74,28 +66,24 @@ class MainViewModel : ViewModel() {
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
     private val _isPostMine = MutableLiveData<Event<Boolean>>()
     private val _isCommentMine = MutableLiveData<Event<Boolean>>()
-
     private val _isPostReport = MutableLiveData<Event<Boolean>>()
     private val _isPostEdit = MutableLiveData<Boolean?>()
     private val _isPostDelete = MutableLiveData<Event<Boolean>>()
-
     private val _isCommentReport = MutableLiveData<Event<Boolean>>()
     private val _isContactUs = MutableLiveData<Event<Boolean>>()
     private val _isCommentEdit = MutableLiveData<Event<Boolean>>()
     private val _isCommentDelete = MutableLiveData<Event<Boolean>>()
-
     private val _isDeleteCommentSuccess = MutableLiveData<Event<Boolean>>()
     private val _isEditCommentSuccess = MutableLiveData<Event<Boolean>>()
     private val _isReportCommentSuccess = MutableLiveData<Event<Boolean>>()
-
     private val _isEditPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isReportPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isContactUsSuccess = MutableLiveData<Event<Boolean>>()
 
+
     val _reportPostBody = MutableLiveData<String>()
     val _userRequestBody = MutableLiveData<String>()
     val _reportCommentBody = MutableLiveData<String>()
-
     private val _isCancelClick = MutableLiveData<Event<Boolean>>()
 
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
@@ -107,10 +95,28 @@ class MainViewModel : ViewModel() {
     private val _imageCount = MutableLiveData<Int>()
 
     private val _myProfileImageUrl = MutableLiveData<String>()
+
     var noticeAlreadyShow = false
     private val _noticeResponse = MutableLiveData<NoticeResponse>()
 
     val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
+
+
+//    private val _noticeResponse = MutableLiveData<NoticeResponse>()
+//
+//    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
+
+
+
+
+    var _categoryIdSelectList = MutableLiveData<ArrayList<Int>>()
+    var _categoryIdAllList = MutableLiveData<ArrayList<Int>>()
+    val _categorySelectApply = MutableLiveData<Event<Boolean>>()
+    val _clickCategorySelect = MutableLiveData<Event<Boolean>>()
+
+    val _categoryNamesForSelection = MutableLiveData<ArrayList<String>>()
+
+
     val myProfileImageUrl:LiveData<String> = _myProfileImageUrl
 
     val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
@@ -150,20 +156,17 @@ class MainViewModel : ViewModel() {
     val isContactUs: LiveData<Event<Boolean>> = _isContactUs
     val isCommentEdit: LiveData<Event<Boolean>> = _isCommentEdit
     val isCommentDelete: LiveData<Event<Boolean>> = _isCommentDelete
-
-
     val isDeleteCommentSuccess: LiveData<Event<Boolean>> = _isDeleteCommentSuccess
     val isEditCommentSuccess: LiveData<Event<Boolean>> = _isEditCommentSuccess
     val isReportCommentSuccess: LiveData<Event<Boolean>> = _isReportCommentSuccess
-
-
     val isEditPostSuccess : LiveData<Event<Boolean>> = _isEditPostSuccess
     val isReportPostSuccess : LiveData<Event<Boolean>> = _isReportPostSuccess
+
     val isContactUsSuccess : LiveData<Event<Boolean>> = _isContactUsSuccess
+
 
     val reportPostBody: LiveData<String> = _reportPostBody
     val reportCommentBody: LiveData<String> = _reportCommentBody
-
     val isCancelClick : LiveData<Event<Boolean>> = _isCancelClick
 
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
@@ -173,6 +176,15 @@ class MainViewModel : ViewModel() {
     val categories: LiveData<ArrayList<Category>> = _categories
 
     val imageCount: LiveData<Int> = _imageCount
+
+
+    var categoryIdSelectList: LiveData<ArrayList<Int>> = _categoryIdSelectList
+    var categoryIdAllList: LiveData<ArrayList<Int>> = _categoryIdAllList
+    val categorySelectApply: LiveData<Event<Boolean>> = _categorySelectApply // Apply button
+    val clickCategorySelect : LiveData<Event<Boolean>> = _clickCategorySelect
+
+
+    val categoryNamesForSelection: LiveData<ArrayList<String>> = _categoryNamesForSelection
 
 
     init {
@@ -231,6 +243,11 @@ class MainViewModel : ViewModel() {
 
         _isDeleteCommentSuccess.value = Event(false)
         _imageCount.value = 0
+
+        _categoryIdSelectList.value = ArrayList<Int>()
+        _categoryIdAllList.value = ArrayList<Int>()
+        _categoryNamesForSelection.value = ArrayList<String>()
+
     }
         fun getMyProfileImageUrl(){
         GlobalScope.async {
@@ -607,6 +624,8 @@ class MainViewModel : ViewModel() {
         switch(_isPostEdit)
         _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
         _postCategoryInt.value = _posts.value!![selectedPostMorePosition.value!!].categoryId - 1
+
+        _photoPickerClickSwitch.value = null
     }
 
     fun clickPostDelete() {
@@ -664,14 +683,14 @@ class MainViewModel : ViewModel() {
             viewModelScope.launch {
                 categoryList.add(0, Category(-1, "All"))
                 _categories.value = categoryList
-
             }
+
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 
 
-    fun getCategories() {
+    fun getCategories() { // 전체 카테고리 불러오기
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
 
         GlobalScope.launch {
@@ -680,15 +699,26 @@ class MainViewModel : ViewModel() {
                 _categoryNames.value = splitCategoryNames(categoryList)
                 _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
             }
+
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
+
     }
 
     fun splitCategoryNames(categoryList: ArrayList<Category>): ArrayList<String> {
         var categoryNames = ArrayList<String>()
+
+        Log.d("categoryNames", "$categoryList")
         for (category in categoryList) {
             categoryNames.add(category.categoryName)
         }
+
+        categoryList.removeAt(0)
+        for (category in categoryList) {
+            _categoryIdAllList.value!!.add(category.categoryId)
+            _categoryNamesForSelection.value!!.add(category.categoryName)
+        }
+
         return categoryNames
     }
 
@@ -852,6 +882,38 @@ class MainViewModel : ViewModel() {
         _imageCount.value = _posts.value!![position].imageUrls.size
     }
 
+
+    fun categoryIdSelect(id : Int, checked: Boolean){
+        if (checked) {
+            categoryIdSelectList.value!!.add(id)
+        } else {
+            categoryIdSelectList.value!!.remove(id)
+        }
+
+        Log.d("categoryIdSelectList","${categoryIdSelectList.value!!}")
+    }
+
+
+    fun clickApplyCategorySelect(){ // Apply
+        GlobalScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
+            val tmpIdList = _categoryIdSelectList.value!!.sorted()
+            val sortCategoryIdArrayList = ArrayList<Int>()
+            sortCategoryIdArrayList.addAll(tmpIdList)
+
+            val result = Repository().categorySelectMyPageRepository(CategorySelectMyPageInfo( App.prefs.getValue(tokenKey)!!, sortCategoryIdArrayList!!) )
+            _categorySelectApply.postValue(Event(result))
+
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+        }
+    }
+
+
+    fun clickCategorySelection() {
+        _categoryIdSelectList.value = ArrayList<Int>()
+        _clickCategorySelect.value = Event(true)
+    }
 
 
 }

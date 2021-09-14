@@ -46,7 +46,7 @@ class ProfileSettingFragment : Fragment() {
         profileSettingBinding.signUpVM = viewModel
         profileSettingBinding.lifecycleOwner = this
 
-        val toastNickName = Toast.makeText(activity, "NickName (4-15 characters) can be numbers, upper or lower letters.", Toast.LENGTH_SHORT)
+        val toastNickName = Toast.makeText(activity, "NickName (4-15 characters) can be numbers, upper or lower letters.", Toast.LENGTH_LONG)
 
 
         val profileSettingImagesAdapter = ProfileSettingImagesAdapter(viewModel.profileImageList.value!!,  lazyContext, (activity as SignUpActivity).getDisplaySize(), viewModel, viewLifecycleOwner)
@@ -90,7 +90,7 @@ class ProfileSettingFragment : Fragment() {
                     nickNameDuplicatedCheck.isEnabled = false
                 } else {
                     ChangeUIState.changeCheckBoxFalseState(nickNameCheckbox)
-                    Toast.makeText(activity, "NickName is duplicated", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "NickName is duplicated", Toast.LENGTH_LONG).show()
                 }
             }
             ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked,imageSettingCheckbox.isChecked)

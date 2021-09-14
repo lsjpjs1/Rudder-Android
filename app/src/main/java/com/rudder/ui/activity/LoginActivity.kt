@@ -59,8 +59,10 @@ class LoginActivity : AppCompatActivity() {
         viewModel.showLoginErrorToast.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it)
+
                     Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show()
                 ProgressBarUtil._progressBarFlag.postValue(Event(false))
+
             }
         })
         viewModel.startMainActivity.observe(this, Observer {

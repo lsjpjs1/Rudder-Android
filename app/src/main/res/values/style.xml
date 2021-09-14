@@ -35,6 +35,11 @@
         <item name="colorAccent">@color/purple_rudder</item>
     </style>
 
+    <style name="MyEditTextTheme">
+        <item name="colorControlActivated">@color/purple_rudder</item>
+        <item name="colorControlHighlight">@color/purple_rudder</item>
+    </style>
+
 
 
 </resources>

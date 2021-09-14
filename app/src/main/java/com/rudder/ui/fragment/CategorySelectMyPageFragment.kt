@@ -1,7 +1,6 @@
 package com.rudder.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,19 +11,18 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
 import com.rudder.R
-import com.rudder.databinding.FragmentSignUpCategorySelectBinding
-import com.rudder.ui.activity.SignUpActivity
-import com.rudder.viewModel.SignUpViewModel
+import com.rudder.databinding.FragmentMyPageCategorySelectBinding
+import com.rudder.ui.activity.MainActivity
+import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_my_page_category_select.view.*
 import kotlinx.android.synthetic.main.fragment_school_select.*
-import kotlinx.android.synthetic.main.fragment_sign_up_category_select.view.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
-class CategorySelectFragment : Fragment() {
+class CategorySelectMyPageFragment : Fragment() {
 
-    private val viewModel: SignUpViewModel by activityViewModels()
-    private lateinit var categorySelectBindinginding : FragmentSignUpCategorySelectBinding
+    private val viewModel: MainViewModel by activityViewModels()
+    private lateinit var fragmentMyPageCategorySelectBinding : FragmentMyPageCategorySelectBinding
 
 
     fun setCategoryChips(categorys : ArrayList<String>, categoryId : ArrayList<Int> ,width : Int, height : Int ) {
@@ -41,7 +39,7 @@ class CategorySelectFragment : Fragment() {
             })
 
 
-            categorySelectBindinginding.root.chipsPrograms.addView(mChip)
+            fragmentMyPageCategorySelectBinding.root.chipsPrograms.addView(mChip)
         }
 
     }
@@ -49,27 +47,21 @@ class CategorySelectFragment : Fragment() {
 
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        categorySelectBindinginding = DataBindingUtil.inflate(inflater,R.layout.fragment_sign_up_category_select,container,false)
-        categorySelectBindinginding.signUpVM = viewModel
-        categorySelectBindinginding.lifecycleOwner = this
+        fragmentMyPageCategorySelectBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_my_page_category_select,container,false)
+        fragmentMyPageCategorySelectBinding.mainVM = viewModel
+        fragmentMyPageCategorySelectBinding.lifecycleOwner = this
 
 
-        val displayDpValue = (activity as SignUpActivity).getDisplaySize() // [0] == width, [1] == height
+        val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
         val chipWidth = (displayDpValue[0] * 0.4).toInt()
         val chipHeight = (displayDpValue[1] * 0.1).toInt()
 
-        viewModel.categoryNames.observe(viewLifecycleOwner, Observer {
-            setCategoryChips(viewModel.categoryNames.value!!, viewModel.categoryIdAllList.value!!, chipWidth, chipHeight)
+        viewModel.categoryNamesForSelection.observe(viewLifecycleOwner, Observer {
+            setCategoryChips(viewModel.categoryNamesForSelection.value!!, viewModel.categoryIdAllList.value!!, chipWidth, chipHeight)
         })
 
 
-//
-//        viewModel.asd.observe(viewLifecycleOwner, Observer {
-//            Log.d("asd","${it}")
-//        })
-
-
-        return categorySelectBindinginding.root
+        return fragmentMyPageCategorySelectBinding.root
     }
 
 

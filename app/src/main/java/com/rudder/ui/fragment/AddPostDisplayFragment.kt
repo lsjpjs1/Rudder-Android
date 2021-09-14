@@ -28,11 +28,12 @@ import com.rudder.databinding.FragmentAddPostDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.AddPostShowImagesAdapter
 import com.rudder.util.AddPostImagesOnclickListener
+import com.rudder.util.ChangeUIState
 import com.rudder.util.FileUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_add_post_display.view.*
 import kotlinx.android.synthetic.main.fragment_add_post_display.*
-
+import kotlinx.android.synthetic.main.fragment_school_select.*
 
 
 class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
@@ -78,6 +79,8 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
                 addPostShowImagesAdapter.notifyDataSetChanged()
             }
         })
+
+
 
         viewModel.photoPickerClickSwitch.observe(viewLifecycleOwner, Observer {
             it?.let {
