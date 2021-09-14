@@ -2,7 +2,6 @@ package com.rudder.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,7 @@ import com.rudder.util.CustomOnclickListener
 import com.rudder.util.LocaleUtil
 import com.rudder.util.PostsDiffCallback
 import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.show_post_display_image.view.*
+import kotlinx.android.synthetic.main.post_preview.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
@@ -61,6 +60,7 @@ class PostPreviewAdapter(
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+
         val timeago =
             PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(previewPostList[position].postTime.time))
 
@@ -92,10 +92,12 @@ class PostPreviewAdapter(
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.VISIBLE
         }
 
-            Glide.with(holder.postPreviewBinding.postPreviewImageView.context)
-                .load(previewPostList[position].userProfileImageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.postPreviewBinding.postPreviewImageView)
+//            Glide.clear(holder.postPreviewBinding.previewPostProfileImageView)
+//            Glide.with(holder.postPreviewBinding.previewPostProfileImageView.context)
+//                .load(previewPostList[position].userProfileImageUrl)
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(holder.postPreviewBinding.previewPostProfileImageView)
+
 
 
 

@@ -1,5 +1,6 @@
 package com.rudder.ui.activity
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.databinding.ActivityLoginBinding
+import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.LoginViewModel
@@ -58,12 +60,14 @@ class LoginActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let { it ->
                 if (it)
                     Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show()
+                ProgressBarUtil._progressBarFlag.postValue(Event(false))
             }
         })
         viewModel.startMainActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 StartActivityUtil.callActivity(this, MainActivity() )
                 finish()
+                ProgressBarUtil._progressBarFlag.postValue(Event(false))
             }
         })
         viewModel.startSignUpActivity.observe(this, Observer {
@@ -87,6 +91,24 @@ class LoginActivity : AppCompatActivity() {
                     ProgressBarUtil.progressBarGoneActivity(progressBarLogin, this)
             }
         })
+
+        if(viewModel.noticeResponse.value==null){
+            viewModel.getNotice()
+        }
+
+        viewModel.noticeResponse.observe(this, Observer {
+            it?.let {
+                if(it.isExist){
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                    builder.setTitle("Notice").setMessage(it.notice)
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.show()
+                    App.prefs.setValue("isNoticeAlreadyPopUp","true")
+                }
+
+            }
+        })
+
 
     }
 

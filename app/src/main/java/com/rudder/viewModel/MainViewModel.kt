@@ -80,6 +80,7 @@ class MainViewModel : ViewModel() {
     private val _isPostDelete = MutableLiveData<Event<Boolean>>()
 
     private val _isCommentReport = MutableLiveData<Event<Boolean>>()
+    private val _isContactUs = MutableLiveData<Event<Boolean>>()
     private val _isCommentEdit = MutableLiveData<Event<Boolean>>()
     private val _isCommentDelete = MutableLiveData<Event<Boolean>>()
 
@@ -89,8 +90,10 @@ class MainViewModel : ViewModel() {
 
     private val _isEditPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isReportPostSuccess = MutableLiveData<Event<Boolean>>()
+    private val _isContactUsSuccess = MutableLiveData<Event<Boolean>>()
 
     val _reportPostBody = MutableLiveData<String>()
+    val _userRequestBody = MutableLiveData<String>()
     val _reportCommentBody = MutableLiveData<String>()
 
     private val _isCancelClick = MutableLiveData<Event<Boolean>>()
@@ -104,9 +107,10 @@ class MainViewModel : ViewModel() {
     private val _imageCount = MutableLiveData<Int>()
 
     private val _myProfileImageUrl = MutableLiveData<String>()
-//    private val _noticeResponse = MutableLiveData<NoticeResponse>()
-//
-//    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
+    var noticeAlreadyShow = false
+    private val _noticeResponse = MutableLiveData<NoticeResponse>()
+
+    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
     val myProfileImageUrl:LiveData<String> = _myProfileImageUrl
 
     val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
@@ -143,6 +147,7 @@ class MainViewModel : ViewModel() {
     val isPostEdit: LiveData<Boolean?> = _isPostEdit
     val isPostDelete: LiveData<Event<Boolean>> = _isPostDelete
     val isCommentReport: LiveData<Event<Boolean>> = _isCommentReport
+    val isContactUs: LiveData<Event<Boolean>> = _isContactUs
     val isCommentEdit: LiveData<Event<Boolean>> = _isCommentEdit
     val isCommentDelete: LiveData<Event<Boolean>> = _isCommentDelete
 
@@ -154,6 +159,7 @@ class MainViewModel : ViewModel() {
 
     val isEditPostSuccess : LiveData<Event<Boolean>> = _isEditPostSuccess
     val isReportPostSuccess : LiveData<Event<Boolean>> = _isReportPostSuccess
+    val isContactUsSuccess : LiveData<Event<Boolean>> = _isContactUsSuccess
 
     val reportPostBody: LiveData<String> = _reportPostBody
     val reportCommentBody: LiveData<String> = _reportCommentBody
@@ -236,15 +242,16 @@ class MainViewModel : ViewModel() {
         }
     }
 
-//    fun getNotice(){
-//        GlobalScope.async {
-//            val version = BuildConfig.VERSION_NAME
-//            val response = Repository().getNotice(NoticeRequest("android",version))
-//            viewModelScope.launch{
-//                _noticeResponse.value = response
-//            }
-//        }
-//    }
+    fun getNotice(){
+        GlobalScope.async {
+            val version = BuildConfig.VERSION_NAME
+            val response = Repository().getNotice(NoticeRequest("android",version))
+            viewModelScope.launch{
+                _noticeResponse.value = response
+                noticeAlreadyShow=true
+            }
+        }
+    }
 
     suspend fun uploadPhoto(postId:Int){
         GlobalScope.async {
@@ -618,6 +625,11 @@ class MainViewModel : ViewModel() {
         _reportCommentBody.value = ""
     }
 
+    fun clickContactUs() {
+        _isContactUs.value = Event(true)
+        _userRequestBody.value = ""
+    }
+
     fun clickCommentEdit() {
         _isCommentEdit.value = Event(true)
         _commentEditBody.value = _comments.value!![selectedCommentMorePosition.value!!].commentBody
@@ -812,13 +824,28 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun addUserRequest() {
+        GlobalScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
+            val addUserRequestRequest = AddUserRequestRequest( App.prefs.getValue(tokenKey)!!, _userRequestBody.value!! )
+            val result = Repository().addUserRequest(addUserRequestRequest)
+            _isContactUsSuccess.postValue(Event(result))
+
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+        }
+    }
+
+
 
     fun clickCancel() {
         _isCancelClick.value = Event(true)
         _commentBody.value = ""
         _reportPostBody.value = ""
         _reportCommentBody.value = ""
+        _userRequestBody.value=""
     }
+
 
 
     fun imageSizeCount(position: Int) {

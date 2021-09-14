@@ -1,12 +1,16 @@
 package com.rudder.ui.fragment
 
-import android.graphics.PorterDuff
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.webkit.WebSettings
+import android.webkit.WebViewClient
+import android.widget.EditText
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,12 +19,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.databinding.FragmentMyPageBinding
-import com.rudder.databinding.FragmentSchoolSelectBinding
 import com.rudder.viewModel.MainViewModel
-import com.rudder.viewModel.SignUpViewModel
+import kotlinx.android.synthetic.main.activity_webview_modal.view.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.view.*
 import kotlinx.android.synthetic.main.fragment_my_page.*
+import kotlinx.android.synthetic.main.fragment_terms_of_service.view.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
+
 
 class MyPageFragment: Fragment() {
 
@@ -36,7 +41,12 @@ class MyPageFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        myPageBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_my_page,container,false)
+        myPageBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_my_page,
+            container,
+            false
+        )
         myPageBinding.mainVM = viewModel
         myPageBinding.lifecycleOwner = this
 
@@ -46,7 +56,7 @@ class MyPageFragment: Fragment() {
 
         viewModel.getMyProfileImageUrl()
         viewModel.myProfileImageUrl.value?.let {
-            Log.d("myImage",it)
+            Log.d("myImage", it)
             Glide.with(myPageBinding.myProfileImageImageView.context)
                 .load(it)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -55,7 +65,7 @@ class MyPageFragment: Fragment() {
         }
         viewModel.myProfileImageUrl.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("myImage",it)
+                Log.d("myImage", it)
                 Glide.with(myPageBinding.myProfileImageImageView.context)
                     .load(it)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -63,6 +73,23 @@ class MyPageFragment: Fragment() {
                     .into(myPageBinding.myProfileImageImageView)
             }
         })
+
+        myPageBinding.constraintLayoutMyPage4.setOnClickListener {
+            val dialogView: View = layoutInflater.inflate(R.layout.activity_webview_modal, null)
+            val termsOfServiceURL = "https://sites.google.com/view/mateprivacyterms"
+            dialogView.termsWebView.apply {
+                webViewClient = WebViewClient()
+                settings.builtInZoomControls = true
+                settings.javaScriptEnabled = true
+                settings.cacheMode = WebSettings.LOAD_DEFAULT
+            }
+
+            dialogView.termsWebView.loadUrl(termsOfServiceURL)
+            val builder: AlertDialog.Builder = AlertDialog.Builder(lazyContext)
+            builder.setView(dialogView)
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+        }
 
 
         return myPageBinding.root

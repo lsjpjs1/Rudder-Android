@@ -25,7 +25,7 @@ class TermsOfServiceFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by activityViewModels()
     private lateinit var termsOfServiceBinding : FragmentTermsOfServiceBinding
-    private val termsOfServiceURL = "https://sites.google.com/view/mate-privacy-policy"
+    private val termsOfServiceURL = "https://sites.google.com/view/mateprivacyterms"
 
     override fun onCreateView(
         inflater: LayoutInflater,

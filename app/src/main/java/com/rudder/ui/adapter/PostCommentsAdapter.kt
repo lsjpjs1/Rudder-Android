@@ -98,10 +98,10 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
         holder.postCommentsBinding.timeago = timeago
         holder.postCommentsBinding.position = position
 
-        Glide.with(holder.postCommentsBinding.postPreviewImageView.context)
-            .load(commentList[position].userProfileImageUrl)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(holder.postCommentsBinding.postPreviewImageView)
+//        Glide.with(holder.postCommentsBinding.commentProfileImageView.context)
+//            .load(commentList[position].userProfileImageUrl)
+//            .diskCacheStrategy(DiskCacheStrategy.ALL)
+//            .into(holder.postCommentsBinding.commentProfileImageView)
     }
 
     override fun getItemCount(): Int {

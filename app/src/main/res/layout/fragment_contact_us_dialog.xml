@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <variable
+            name="mainVM"
+            type="com.rudder.viewModel.MainViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="30dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="360dp"
+            android:layout_height="300dp">
+
+            <TextView
+                android:id="@+id/textViewReport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact Us"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:hint="Send us any comments, questions, or suggestions"
+
+                android:text="@={mainVM._userRequestBody}"
+                android:maxLength="180"
+                android:gravity="top|left"
+                android:background="@drawable/edge"
+
+
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.6"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.9"
+                app:layout_constraintVertical_bias="0.2"
+
+                android:id="@+id/editTextReport"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewReport"
+                >
+            </EditText>
+
+
+            <Button
+                android:id="@+id/reportSubmit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.4"
+                android:clickable="true"
+                android:backgroundTint="#9329D1"
+                android:gravity="center"
+                android:onClick="@{()->mainVM.addUserRequest()}"
+                android:text="@string/sumbit"
+
+                app:layout_constraintTop_toBottomOf="@+id/editTextReport"
+                app:layout_constraintStart_toEndOf="@+id/reportCancel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <Button
+                android:id="@+id/reportCancel"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.4"
+                android:clickable="true"
+                android:backgroundTint="#9329D1"
+                android:gravity="center"
+                android:text="Cancel"
+                android:onClick="@{()->mainVM.clickCancel()}"
+
+                app:layout_constraintEnd_toStartOf="@id/reportSubmit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextReport"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
+
+
+

@@ -29,7 +29,7 @@ class MyFireBaseMessagingService: FirebaseMessagingService() {
 
         // 앱이 포어그라운드 상태에서 Notificiation을 받는 경우
         if(remoteMessage.notification != null) {
-            sendNotification(remoteMessage.notification?.body, remoteMessage.notification?.title)
+
         }
     }
 

@@ -13,10 +13,13 @@ import com.rudder.BuildConfig
 import com.rudder.data.LoginInfo
 import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
+import com.rudder.data.remote.NoticeRequest
+import com.rudder.data.remote.NoticeResponse
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -29,7 +32,9 @@ class LoginViewModel() : ViewModel() {
     private val _startMainActivity = MutableLiveData<Event<Boolean>>()
     private val _startSignUpActivity = MutableLiveData<Event<Boolean>>()
     private val _startForgotActivity = MutableLiveData<Event<Boolean>>()
-
+    private val _noticeResponse = MutableLiveData<NoticeResponse>()
+    var noticeAlreadyShow = false
+    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
     val _autoLogin = MutableLiveData<Event<Boolean>>()
 
     val userId: LiveData<String> = _userId
@@ -49,6 +54,16 @@ class LoginViewModel() : ViewModel() {
         _showLoginErrorToast.value = Event(false)
     }
 
+    fun getNotice(){
+        GlobalScope.async {
+            val version = BuildConfig.VERSION_NAME
+            val response = Repository().getNotice(NoticeRequest("android",version))
+            viewModelScope.launch{
+                _noticeResponse.value = response
+                var noticeAlreadyShow = true
+            }
+        }
+    }
 
     fun onCheckedChange(button: CompoundButton?, check: Boolean) {
         if (check) {
@@ -76,8 +91,9 @@ class LoginViewModel() : ViewModel() {
                 }else{
                     _showLoginErrorToast.value = Event(true)
                 }
+
             }
-            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+//            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 

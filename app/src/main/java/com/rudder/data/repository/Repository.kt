@@ -189,4 +189,8 @@ class Repository {
         return MyPageApi.instance.getMyProfileImageUrl(myProfileImageRequest).await().results
     }
 
+    suspend fun addUserRequest(addUserRequestRequest: AddUserRequestRequest): Boolean{
+        return MyPageApi.instance.addUserRequest(addUserRequestRequest).await().results.get("isSuccess").asBoolean
+    }
+
 }

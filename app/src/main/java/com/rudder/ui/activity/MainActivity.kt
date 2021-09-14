@@ -19,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
+import com.rudder.data.local.App
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
 import com.rudder.util.FragmentShowHide
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var communityPostReportFragment : CommunityPostReportFragment
     private lateinit var communityCommentReportFragment : CommunityCommentReportFragment
     private lateinit var communityCommentEditFragment : CommunityCommentEditFragment
+    private lateinit var contactUsFragment: ContactUsFragment
 
     private lateinit var editPostFragment: EditPostFragment
 
@@ -78,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         communityPostReportFragment = CommunityPostReportFragment()
         communityCommentReportFragment = CommunityCommentReportFragment()
         communityCommentEditFragment = CommunityCommentEditFragment()
+        contactUsFragment = ContactUsFragment()
         editPostFragment = EditPostFragment()
 
         val toastDeletePostComplete = Toast.makeText(
@@ -131,12 +134,24 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+
+
         viewModel.isCommentReport.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
                 if (!communityCommentReportFragment.isAdded)
                     communityCommentReportFragment.show(
                         supportFragmentManager,
                         communityCommentReportFragment.tag
+                    )
+            }
+        })
+
+        viewModel.isContactUs.observe(this, Observer {
+            if (it.getContentIfNotHandled()!!) {
+                if (!contactUsFragment.isAdded)
+                    contactUsFragment.show(
+                        supportFragmentManager,
+                        contactUsFragment.tag
                     )
             }
         })
@@ -304,6 +319,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.isContactUsSuccess.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    contactUsFragment.dismiss()
+                }
+            }
+        })
+
 
         viewModel.isReportCommentSuccess.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
@@ -322,6 +345,8 @@ class MainActivity : AppCompatActivity() {
                 communityPostReportFragment.dismiss()
             else if (communityCommentReportFragment.isAdded)
                 communityCommentReportFragment.dismiss()
+            else if (contactUsFragment.isAdded)
+                contactUsFragment.dismiss()
 
         })
 
@@ -338,13 +363,22 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        if(viewModel.noticeResponse.value==null){
+            viewModel.getNotice()
+        }
 
-        builder.setTitle("Notice").setMessage("공지사항 내용")
+        viewModel.noticeResponse.observe(this, Observer {
+            it?.let {
+                if(it.isExist){
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                    builder.setTitle("Notice").setMessage(it.notice)
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.show()
+                    App.prefs.setValue("isNoticeAlreadyPopUp","true")
+                }
 
-        val alertDialog: AlertDialog = builder.create()
-
-        alertDialog.show()
+            }
+        })
 
 
     }

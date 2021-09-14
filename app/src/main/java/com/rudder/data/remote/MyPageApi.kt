@@ -25,4 +25,12 @@ class MyPageApi {
         }
 
     }
+
+    fun addUserRequest(userRequestRequest: AddUserRequestRequest) : Deferred<Response<JsonObject>> {
+
+        return GlobalScope.async(Dispatchers.IO){
+            myPageService.addUserRequest(userRequestRequest)
+        }
+
+    }
 }
