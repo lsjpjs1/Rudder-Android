@@ -99,7 +99,7 @@ class SignUpActivity : AppCompatActivity() {
         binding.signUpVM = viewModel
         binding.lifecycleOwner = this
 
-        val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_SHORT)
+        val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_LONG)
 
 
         ProgressBarUtil.progressBarFlag.observe(this, Observer {

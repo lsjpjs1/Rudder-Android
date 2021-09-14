@@ -87,12 +87,12 @@ class MainActivity : AppCompatActivity() {
         val toastDeletePostComplete = Toast.makeText(
             this,
             "Delete Post Complete!",
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_LONG
         )
         val toastDeleteCommentComplete = Toast.makeText(
             this,
             "Delete Comment Complete!",
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_LONG
         )
 
 

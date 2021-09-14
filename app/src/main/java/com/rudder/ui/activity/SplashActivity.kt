@@ -47,7 +47,7 @@ class SplashActivity : AppCompatActivity() {
         viewModel.showLoginErrorToast.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
-                    Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.login_error, Toast.LENGTH_LONG).show()
                     StartActivityUtil.callActivity(this, LoginActivity())
                     finish()
                 }

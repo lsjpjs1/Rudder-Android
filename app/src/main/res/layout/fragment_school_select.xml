@@ -149,18 +149,19 @@
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="1"
+
             >
 
             <Button
                 android:id="@+id/schoolSelectNextBtn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:backgroundTint="#9329D1"
                 android:onClick="@{()->signUpVM.clickNextSchoolSelect()}"
                 android:gravity="center"
                 android:text="@string/next"
                 android:textStyle="bold"
                 android:textSize="14sp"
+                android:background="@drawable/button_enabled"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.6"
                 app:layout_constraintStart_toStartOf="parent"

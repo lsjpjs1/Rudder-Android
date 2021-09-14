@@ -73,7 +73,7 @@
                 android:id="@+id/editTextUserId"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-
+                android:textSize="16sp"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintWidth_default="percent"
@@ -96,7 +96,7 @@
                 android:id="@+id/editTextUserPassword"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-
+                android:textSize="16sp"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintWidth_default="percent"
