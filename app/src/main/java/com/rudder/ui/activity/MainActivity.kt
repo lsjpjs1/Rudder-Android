@@ -448,15 +448,11 @@ class MainActivity : AppCompatActivity() {
             changeColorMyPage()
         }
 
-
-        ///////
         if(showPostFragment.isAdded) {
             val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-            fragmentShowHide.addToBackStack()
-            fragmentShowHide.removeFragment(mainBottomBarFragment)
+            fragmentShowHide.hideFragment(mainBottomBarFragment)
+            fragmentShowHide.showFragment(addCommentFragment, R.id.mainBottomBar)
         }
-        ///////
-
 
     }
 
