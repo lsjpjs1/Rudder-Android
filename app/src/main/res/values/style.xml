@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="header_text_size" type="dimen">20sp</item>
+    <item name="header_text_size" type="dimen">24sp</item>
 
 
 <!--    <style name="CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">-->
@@ -39,6 +39,16 @@
         <item name="colorControlActivated">@color/purple_rudder</item>
         <item name="colorControlHighlight">@color/purple_rudder</item>
     </style>
+
+
+
+
+<!--    <style name="ButtonStlye123" >-->
+<!--        <item name="android:layout_margin">8dp</item>-->
+<!--        <item name="android:padding">8dp</item>-->
+<!--        <item name="android:textStyle">bold</item>-->
+<!--        <item name="android:background">@color/purple_rudder</item>-->
+<!--    </style>-->
 
 
 

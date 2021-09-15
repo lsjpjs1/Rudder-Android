@@ -37,8 +37,9 @@
                 app:layout_constraintWidth_percent="0.5"
                 android:gravity="center"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,8 +65,8 @@
                 />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/apply"
 
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -74,13 +75,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintHorizontal_bias="0.95"
                 android:gravity="center"
+                android:textSize="18sp"
 
                 android:onClick="@{()->signUpVM.clickApplyCategorySelect()}"
                 android:textColor="@color/purple_rudder"
-                app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.4"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.15" />
+/>
 
 
 

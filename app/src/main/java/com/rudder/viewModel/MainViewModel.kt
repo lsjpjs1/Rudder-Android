@@ -867,15 +867,18 @@ class MainViewModel : ViewModel() {
     }
 
 
-
-    fun clickCancel() {
-        _isCancelClick.value = Event(true)
-        _commentBody.value = ""
-        _reportPostBody.value = ""
-        _reportCommentBody.value = ""
-        _userRequestBody.value=""
+    fun clearValue( item :  MutableLiveData<String> ) {
+        item.value  = ""
     }
 
+
+    fun clickDialogCancel() {
+        _isCancelClick.value = Event(true)
+        clearValue(_commentBody)
+        clearValue(_reportPostBody)
+        clearValue(_reportCommentBody)
+        clearValue(_userRequestBody)
+    }
 
 
     fun imageSizeCount(position: Int) {

@@ -19,8 +19,8 @@
     <item name="add_post_header_title_width" format="float" type="dimen">0.7</item>
     <item name="add_post_header_post_button_width" format="float" type="dimen">0.15</item>
 
-    <item name="add_post_display_text_title_height" format="float" type="dimen">0.1</item>
-    <item name="add_post_display_line_height" format="float" type="dimen">0.005</item>
+    <item name="add_post_display_text_title_height" format="float" type="dimen">0.4</item>
+    <item name="add_post_display_line_height" format="float" type="dimen">0.01</item>
     <item name="add_post_display_edit_text_height" format="float" type="dimen">0.8</item>
 
     <item name="community_header_title_width" type="dimen" format="float">0.45</item>

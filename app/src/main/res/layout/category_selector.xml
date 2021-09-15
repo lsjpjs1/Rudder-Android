@@ -17,6 +17,8 @@
             android:layout_height="wrap_content"
             android:text="@{category.categoryName}"
             android:textStyle="bold"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

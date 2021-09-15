@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="Contact Us"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -71,6 +71,7 @@
                 android:gravity="center"
                 android:onClick="@{()->mainVM.addUserRequest()}"
                 android:text="@string/sumbit"
+                android:textStyle="bold"
 
                 app:layout_constraintTop_toBottomOf="@+id/editTextReport"
                 app:layout_constraintStart_toEndOf="@+id/reportCancel"
@@ -89,8 +90,9 @@
                 android:clickable="true"
                 android:backgroundTint="#9329D1"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="Cancel"
-                android:onClick="@{()->mainVM.clickCancel()}"
+                android:onClick="@{()->mainVM.clickDialogCancel()}"
 
                 app:layout_constraintEnd_toStartOf="@id/reportSubmit"
                 app:layout_constraintStart_toStartOf="parent"

@@ -25,8 +25,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/community_title"
                 android:textColor="#000000"
-                android:textSize="20dp"
+                android:textSize="24dp"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -47,6 +48,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout14"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.05">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +66,7 @@
             android:layout_height="match_parent"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout13"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="@dimen/community_header_add_width">
+            app:layout_constraintWidth_percent="0.1">
 
 
             <ImageView
@@ -76,9 +87,9 @@
             android:id="@+id/constraintLayout13"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout14"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="@dimen/community_header_find_width">
+            app:layout_constraintWidth_percent="0.1">
 
 
             <ImageView

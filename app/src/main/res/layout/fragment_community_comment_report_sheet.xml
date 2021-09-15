@@ -68,6 +68,7 @@
                 android:clickable="true"
                 android:backgroundTint="#9329D1"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:onClick="@{()->mainVM.reportComment()}"
                 android:text="@string/sumbit"
 
@@ -89,8 +90,9 @@
                 android:clickable="true"
                 android:backgroundTint="#9329D1"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="Cancel"
-                android:onClick="@{()->mainVM.clickCancel()}"
+                android:onClick="@{()->mainVM.clickDialogCancel()}"
 
                 app:layout_constraintEnd_toStartOf="@id/reportSubmit"
                 app:layout_constraintStart_toStartOf="parent"
