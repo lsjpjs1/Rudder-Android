@@ -160,7 +160,7 @@
                                     android:text="@{post.userId}"
                                     android:textStyle="bold"
                                     android:textColor="@color/black"
-                                    android:fontFamily="sans-serif-medium"
+                                    android:fontFamily="@font/sf_pro_text_bold"
                                     android:textSize="14sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintLeft_toLeftOf="parent"

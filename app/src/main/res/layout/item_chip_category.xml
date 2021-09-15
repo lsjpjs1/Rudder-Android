@@ -19,7 +19,7 @@
     android:clickable="true"
     android:textSize="14sp"
     android:textStyle="bold"
-    android:fontFamily="sans-serif-medium"
+    android:fontFamily="@font/sf_pro_text_bold"
     android:textColor="@color/black"
     app:chipIcon="@drawable/ic_baseline_check_circle_24"
     app:chipIconTint="@color/grey"

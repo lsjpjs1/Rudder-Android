@@ -44,10 +44,9 @@
                 app:layout_constraintWidth_percent="0.33"
                 android:gravity="center"
                 android:textSize="36sp"
-                android:textStyle="bold"
-                android:textColor="@color/purple_rudder"
 
-                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/purple_rudder"
+                android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

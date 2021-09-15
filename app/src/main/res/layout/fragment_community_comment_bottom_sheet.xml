@@ -24,9 +24,7 @@
             android:id="@+id/commentBottomSheetCL4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:background="#FFFFFF"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -36,7 +34,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="INFO COMMENT"
+                android:text="COMMENT INFO"
+                android:fontFamily="@font/sf_pro_text_bold"
                 >
 
             </TextView>
@@ -79,6 +78,7 @@
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.20"
+                android:fontFamily="@font/sf_pro_text_bold"
                 >
 
             </ImageView>
@@ -86,7 +86,6 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:textStyle="bold"
                 android:onClick="@{()->mainVM.clickCommentReport()}"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
@@ -97,7 +96,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/reportImageView"
-
+                android:fontFamily="@font/sf_pro_text_bold"
                 android:gravity="fill_vertical"
                 android:text="@string/Report"
                 android:textSize="18dp"
@@ -130,8 +129,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:textStyle="bold"
-
+                android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintWidth_default="percent"
@@ -192,7 +190,6 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:textStyle="bold"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintWidth_default="percent"
@@ -201,6 +198,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintStart_toEndOf="@+id/editImageView"
                 android:gravity="fill_vertical"
                 android:text="@string/Edit"

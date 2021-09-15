@@ -66,6 +66,7 @@
                             app:srcCompat="@drawable/ic_baseline_more_horiz_24"
                             android:onClick="@{()->mainVM.clickPostMore(position)}"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.8"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -146,7 +147,7 @@
                                 android:text="@{post.userId}"
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
-                                android:fontFamily="sans-serif-medium"
+                                android:fontFamily="@font/sf_pro_text_bold"
                                 android:textStyle="bold"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"
@@ -193,19 +194,29 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/postPreviewBlank"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintHeight_default="percent"
+                    app:layout_constraintHeight_percent="0.05"
+                    app:layout_constraintTop_toBottomOf="@+id/postPreviewHead"
+                    tools:layout_editor_absoluteX="0dp">
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/postPreviewBody"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintHeight_default="percent"
                     app:layout_constraintHeight_percent="@dimen/post_preview_body_height"
-                    app:layout_constraintTop_toBottomOf="@+id/postPreviewHead"
+                    app:layout_constraintTop_toBottomOf="@+id/postPreviewBlank"
                     tools:layout_editor_absoluteX="0dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/postPreviewBodyPostTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/purple_200"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
 
@@ -216,9 +227,9 @@
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:text="@{post.postBody.length()>50?post.postBody.substring(0,MAX_POST_BODY_LENGTH)+`  ...`:post.postBody}"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -312,6 +323,7 @@
                             android:id="@+id/postPreviewTailImageCountTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="12sp"
                             android:text="@{` `+Integer.toString(post.imageUrls.size)}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView8"

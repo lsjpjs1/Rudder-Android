@@ -37,7 +37,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="INFO POST"
+                android:text="POST INFO"
+                android:fontFamily="@font/sf_pro_text_bold"
                 >
 
             </TextView>
@@ -87,7 +88,6 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:textStyle="bold"
                 android:onClick="@{()->mainVM.clickPostReport()}"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
@@ -98,6 +98,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/reportImageView"
+                android:fontFamily="@font/sf_pro_text_bold"
 
                 android:gravity="fill_vertical"
                 android:text="@string/Report"
@@ -132,8 +133,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:textStyle="bold"
-
+                android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintWidth_default="percent"
@@ -193,7 +193,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:textStyle="bold"
+
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintWidth_default="percent"
@@ -204,6 +204,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/editImageView"
                 android:gravity="fill_vertical"
+                android:fontFamily="@font/sf_pro_text_bold"
                 android:text="@string/Edit"
                 android:onClick="@{()->mainVM.clickPostEdit()}"
                 android:textSize="18dp">

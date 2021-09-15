@@ -37,8 +37,8 @@
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
-                app:layout_constraintHorizontal_bias="0.1"
+                android:fontFamily="@font/sf_pro_text_bold"
+                app:layout_constraintHorizontal_bias="0.05"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -473,6 +473,13 @@
                     android:id="@+id/verifyCode"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+
+
+                    android:paddingTop="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp"
+
                     android:maxLength="10"
                     android:background="@drawable/edge"
                     android:theme="@style/MyEditTextTheme"

@@ -60,7 +60,7 @@
                     android:textStyle="bold"
                     android:textColor="#000000"
                     android:textSize="@dimen/header_text_size"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/sf_pro_text_bold"
                     android:text="@string/add_post_title" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

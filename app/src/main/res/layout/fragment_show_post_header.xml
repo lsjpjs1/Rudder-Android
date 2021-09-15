@@ -30,7 +30,7 @@
                 android:textColor="#000000"
                 android:textSize="@dimen/header_text_size"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

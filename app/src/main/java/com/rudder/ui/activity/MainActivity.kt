@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     private val purpleRudder by lazy { ContextCompat.getColor(this, R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this, R.color.grey) }
+    private val black by lazy { ContextCompat.getColor(this, R.color.black) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,7 +169,11 @@ class MainActivity : AppCompatActivity() {
                 communityPostBottomSheetFragment.dismiss()
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
-                fragmentShowHide.removeFragment(mainBottomBarFragment)
+                fragmentShowHide.hideFragment(mainBottomBarFragment)
+
+                if (addCommentFragment.isAdded) {
+                    fragmentShowHide.hideFragment(addCommentFragment)
+                }
 
                 fragmentShowHide.addFragment(editPostFragment, R.id.mainDisplay, "editPost")
                 fragmentShowHide.showFragment(editPostFragment, R.id.mainDisplay)
@@ -230,7 +235,7 @@ class MainActivity : AppCompatActivity() {
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
 
-                fragmentShowHide.removeFragment(mainBottomBarFragment)
+                fragmentShowHide.hideFragment(mainBottomBarFragment)
 
                 fragmentShowHide.addFragment(addPostFragment, R.id.mainDisplay, "addPost")
                 fragmentShowHide.showFragment(addPostFragment, R.id.mainDisplay)
@@ -242,8 +247,7 @@ class MainActivity : AppCompatActivity() {
             if (it.getContentIfNotHandled()!!) {
                 if (!mainBottomBarFragment.isAdded) {
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                    fragmentShowHide.addFragment(mainBottomBarFragment, R.id.mainBottomBar,"addPost")
-
+                    fragmentShowHide.showFragment(mainBottomBarFragment, R.id.mainBottomBar)
                 }
 
                 onBackPressed()
@@ -444,6 +448,16 @@ class MainActivity : AppCompatActivity() {
             changeColorMyPage()
         }
 
+
+        ///////
+        if(showPostFragment.isAdded) {
+            val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+            fragmentShowHide.addToBackStack()
+            fragmentShowHide.removeFragment(mainBottomBarFragment)
+        }
+        ///////
+
+
     }
 
 
@@ -513,11 +527,11 @@ class MainActivity : AppCompatActivity() {
 
     fun changeColorCommunity(){
         mainBottomBarFragment.communityIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
-        mainBottomBarFragment.myPageIcon.setColorFilter(grey, PorterDuff.Mode.SRC_IN)
+        mainBottomBarFragment.myPageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
     }
     fun changeColorMyPage(){
         mainBottomBarFragment.myPageIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
-        mainBottomBarFragment.communityIcon.setColorFilter(grey, PorterDuff.Mode.SRC_IN)
+        mainBottomBarFragment.communityIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
     }
 
 

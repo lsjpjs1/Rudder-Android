@@ -41,6 +41,10 @@
                 android:gravity="top|left"
                 android:background="@drawable/edge"
 
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
 
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.6"

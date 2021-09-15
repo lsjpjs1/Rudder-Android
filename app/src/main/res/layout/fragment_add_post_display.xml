@@ -59,7 +59,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:text="Choose a category"
-                                android:fontFamily="sans-serif-medium"
+                                android:fontFamily="@font/sf_pro_text_bold"
                                 android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -105,7 +105,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/addPostDisplayTextTitle"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="wrap_content"
                             app:layout_constraintHeight_default="percent"
                             app:layout_constraintHeight_percent="@dimen/add_post_display_text_title_height"
                             app:layout_constraintTop_toTopOf="parent">
@@ -118,7 +118,7 @@
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
                                 android:textSize="18sp"
-                                android:fontFamily="sans-serif-medium"
+                                android:fontFamily="@font/sf_pro_text_bold"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -182,7 +182,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/addPostDisplayImagesTitle"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="wrap_content"
                             app:layout_constraintHeight_default="percent"
                             app:layout_constraintHeight_percent="0.1"
                             app:layout_constraintTop_toTopOf="parent">
@@ -194,7 +194,7 @@
                                 android:text="Image"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
-                                android:fontFamily="sans-serif-medium"
+                                android:fontFamily="@font/sf_pro_text_bold"
                                 android:textSize="18sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"

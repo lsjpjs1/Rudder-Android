@@ -33,7 +33,7 @@
     <item name="post_preview_white_place_height" format="float" type="dimen">0.98</item>
 
     <item name="post_preview_head_height" format="float" type="dimen">0.33</item>
-    <item name="post_preview_body_height" format="float" type="dimen">0.33</item>
+    <item name="post_preview_body_height" format="float" type="dimen">0.28</item>
     <item name="post_preview_tail_height" format="float" type="dimen">0.34</item>
 
 <!--    <item name="post_preview_head_name_width" format="float" type="dimen">0.33</item>-->

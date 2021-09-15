@@ -39,7 +39,7 @@
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,6 +75,7 @@
                 app:layout_constraintHorizontal_bias="0.95"
                 android:gravity="center"
                 android:textSize="18sp"
+                android:fontFamily="@font/sf_pro_text_regular"
 
                 android:textColor="@color/purple_rudder"
                 app:layout_constraintHeight_default="percent"
