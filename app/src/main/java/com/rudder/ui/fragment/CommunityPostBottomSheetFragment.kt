@@ -62,7 +62,7 @@ class CommunityPostBottomSheetFragment : BottomSheetDialogFragment() {
                     postBottomSheetCL3.visibility = View.GONE
 
                     var lp4 = communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams
-                    lp4.height = (displayDpValue[1] * 0.1).toInt()
+                    lp4.height = (displayDpValue[1] * 0.05).toInt()
                     communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams = lp4
 
                     var lp1 = communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams
@@ -85,7 +85,7 @@ class CommunityPostBottomSheetFragment : BottomSheetDialogFragment() {
         communityPostBottomSheetBinding.postBottomSheetCL3.layoutParams = lp3
 
         var lp4 = communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams
-        lp4.height = (displayDpValue[1] * 0.1).toInt()
+        lp4.height = (displayDpValue[1] * 0.05).toInt()
         communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams = lp4
 
         return communityPostBottomSheetBinding.root

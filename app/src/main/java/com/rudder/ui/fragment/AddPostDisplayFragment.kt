@@ -145,7 +145,7 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
 
     fun fixOtherViewHeight(){
         val addPostDisplayEntireHeight = addPostDisplayEntire.height
-        val chooseCategoryHeightRatio = 0.1
+        val chooseCategoryHeightRatio = 0.15
         val textTitleRatio = 0.03
         val lineRatio = 0.005
 

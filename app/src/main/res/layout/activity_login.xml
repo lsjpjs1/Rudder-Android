@@ -26,31 +26,42 @@
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintHeight_percent="0.28"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="1">
 
 
-            <TextView
-                android:id="@+id/rudderLogoText2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.3"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.33"
-                android:gravity="center"
-                android:textSize="36sp"
-
-                android:textColor="@color/purple_rudder"
-                android:fontFamily="@font/sf_pro_text_bold"
+            <ImageView
+                android:layout_width="124dp"
+                android:layout_height="48dp"
+                android:src="@drawable/login_rudder_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/rudderLogoText2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/app_name"-->
+<!--                app:layout_constraintHeight_default="percent"-->
+<!--                app:layout_constraintHeight_percent="0.3"-->
+<!--                app:layout_constraintWidth_default="percent"-->
+<!--                app:layout_constraintWidth_percent="0.33"-->
+<!--                android:gravity="center"-->
+<!--                android:textSize="36sp"-->
+
+<!--                android:textColor="@color/purple_rudder"-->
+<!--                android:fontFamily="@font/sf_pro_text_bold"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
