@@ -71,7 +71,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.7"
+                            app:layout_constraintHeight_percent="0.4"
                             app:layout_constraintTop_toBottomOf="@id/chooseCategoryTextConstraintLayout">
 
                             <Spinner
@@ -94,7 +94,7 @@
                         android:id="@+id/addPostDisplayText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="5dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHeight_default="percent"
                         app:layout_constraintHeight_percent="0.9"
@@ -114,7 +114,7 @@
                             <TextView
                                 android:id="@+id/textView11"
                                 android:layout_width="wrap_content"
-                                android:layout_height="35dp"
+                                android:layout_height="wrap_content"
                                 android:text="@string/text_title"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
@@ -131,7 +131,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:background="@color/light_grey"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             app:layout_constraintHeight_default="percent"
                             app:layout_constraintHeight_percent="@dimen/add_post_display_line_height"
                             app:layout_constraintTop_toBottomOf="@+id/addPostDisplayTextTitle">
@@ -191,7 +191,7 @@
                             <TextView
                                 android:id="@+id/addPostDisplayImagesTitleTextView"
                                 android:layout_width="wrap_content"
-                                android:layout_height="40dp"
+                                android:layout_height="wrap_content"
                                 android:text="Image"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
@@ -207,7 +207,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:background="@color/light_grey"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             app:layout_constraintHeight_default="percent"
                             app:layout_constraintHeight_percent="@dimen/add_post_display_line_height"
                             app:layout_constraintTop_toBottomOf="@+id/addPostDisplayImagesTitle">

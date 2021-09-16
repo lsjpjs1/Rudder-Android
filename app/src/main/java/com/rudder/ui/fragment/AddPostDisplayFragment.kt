@@ -55,6 +55,7 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
                 return view
             }
         }
+
         val addPostShowImagesAdapter = AddPostShowImagesAdapter(viewModel.selectedPhotoUriList.value!!,(activity as MainActivity).getDisplaySize(),this)
         display.mainVM=viewModel
         display.categorySpinner.adapter=spinnerAdapter
@@ -145,8 +146,8 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
 
     fun fixOtherViewHeight(){
         val addPostDisplayEntireHeight = addPostDisplayEntire.height
-        val chooseCategoryHeightRatio = 0.15
-        val textTitleRatio = 0.03
+        val chooseCategoryHeightRatio = 0.13
+        val textTitleRatio = 0.05
         val lineRatio = 0.005
 
         //뷰의 높이 고정

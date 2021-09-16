@@ -1,11 +1,11 @@
 package com.rudder.viewModel
 
 
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import android.widget.TextView
 import androidx.lifecycle.*
 import com.rudder.BuildConfig
 import com.rudder.R
@@ -13,7 +13,6 @@ import com.rudder.data.*
 import com.rudder.data.local.App
 import com.rudder.data.remote.*
 import com.rudder.data.repository.Repository
-import com.rudder.ui.activity.MainActivity
 import com.rudder.util.Event
 import com.rudder.util.FileUtil
 import com.rudder.util.ProgressBarUtil
@@ -753,6 +752,7 @@ class MainViewModel : ViewModel() {
         Log.d("onSelectItem","$pos, $id, ${parent.selectedItem}")
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
         _postCategoryInt.value = pos - 1
+        (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
     }
 
 //        fun isAlreadyReadPost(): Boolean {
