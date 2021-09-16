@@ -55,7 +55,7 @@ class CategorySelectSignUpFragment : Fragment() {
 
 
         val displayDpValue = (activity as SignUpActivity).getDisplaySize() // [0] == width, [1] == height
-        val chipWidth = (displayDpValue[0] * 0.4).toInt()
+        val chipWidth = (displayDpValue[0] * 0.42).toInt()
         val chipHeight = (displayDpValue[1] * 0.1).toInt()
 
         viewModel.categoryNames.observe(viewLifecycleOwner, Observer {

@@ -84,5 +84,11 @@
 
 
 
+    <style name="AppTheme.GenderChip" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/sf_pro_text_bold</item>
+    </style>
+
+
 </resources>
 
