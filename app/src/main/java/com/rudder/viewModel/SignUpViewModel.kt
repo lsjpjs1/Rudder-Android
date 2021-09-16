@@ -4,11 +4,13 @@ package com.rudder.viewModel
 import android.R
 import android.app.ProgressDialog
 import android.content.ContentValues
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -290,6 +292,7 @@ class SignUpViewModel : ViewModel() {
         }else{
             _schoolSelectFlag.value = Event(false)
         }
+        (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
     }
 
     fun callSchoolList() {
