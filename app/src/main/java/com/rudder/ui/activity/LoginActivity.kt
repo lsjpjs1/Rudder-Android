@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -54,7 +55,11 @@ class LoginActivity : AppCompatActivity() {
         binding.loginVM = viewModel
         binding.lifecycleOwner = this
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         autoLoginCheckbox()
+
+
 
         viewModel.showLoginErrorToast.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->

@@ -9,6 +9,7 @@ import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -99,6 +100,8 @@ class SignUpActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
         binding.signUpVM = viewModel
         binding.lifecycleOwner = this
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_LONG)
 
