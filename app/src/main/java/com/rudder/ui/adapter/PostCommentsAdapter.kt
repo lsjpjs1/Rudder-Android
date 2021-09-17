@@ -88,6 +88,7 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
             holder.postCommentsBinding.textView5.setTypeface(holder.postCommentsBinding.textView5.typeface, Typeface.ITALIC)
             holder.postCommentsBinding.commentHeadPostTimeTV.visibility = View.GONE
             holder.postCommentsBinding.postPreviewTailLikeCount.visibility = View.GONE
+            holder.postCommentsBinding.postPreviewTailCommentCount.visibility = View.GONE
         }
 
 

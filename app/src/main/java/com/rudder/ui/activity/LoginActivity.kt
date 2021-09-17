@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         if (view != null && (ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE) && view is EditText && !view.javaClass.name.startsWith(
                 "android.webkit.")
         ) {
+            Log.d("asd","asd")
             val scrcoords = IntArray(2)
             view.getLocationOnScreen(scrcoords)
             val x = ev.rawX + view.getLeft() - scrcoords[0]

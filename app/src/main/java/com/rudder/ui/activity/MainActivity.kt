@@ -486,17 +486,13 @@ class MainActivity : AppCompatActivity() {
         fragmentShowHide.showFragment(mainBottomBarFragment, R.id.mainBottomBar)
     }
 
+
     fun showParentCommentInfo(){
         parentCommentInfo.visibility = View.VISIBLE
-        addCommentBodyEditText.hint = "Reply Comment"
     }
 
     fun hideParentCommentInfo(){
         parentCommentInfo.visibility = View.GONE
-        addCommentBodyEditText?.let{
-            addCommentBodyEditText.hint = "Comment" }
-
-
     }
 
     fun showProgressBar(){

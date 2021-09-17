@@ -93,22 +93,15 @@ class MainViewModel : ViewModel() {
     private val _commentInnerValueChangeSwitch = MutableLiveData<Boolean>()
     private val _photoPickerClickSwitch = MutableLiveData<Boolean?>()
 
-
     private val _imageCount = MutableLiveData<Int>()
-
     private val _myProfileImageUrl = MutableLiveData<String>()
-
     var noticeAlreadyShow = false
     private val _noticeResponse = MutableLiveData<NoticeResponse>()
-
-    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
 
 
 //    private val _noticeResponse = MutableLiveData<NoticeResponse>()
 //
 //    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
-
-
 
 
     var _categoryIdSelectList = MutableLiveData<ArrayList<Int>>()
@@ -119,6 +112,9 @@ class MainViewModel : ViewModel() {
     val _categoryNamesForSelection = MutableLiveData<ArrayList<String>>()
 
 
+
+
+    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
     val myProfileImageUrl:LiveData<String> = _myProfileImageUrl
 
     val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch

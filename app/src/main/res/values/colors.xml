@@ -16,5 +16,6 @@
     <color name="green">#11BE17</color>
     <color name="red">#ff3232</color>
     <color name="real_transparent">#00000000</color>
+    <color name="light_grey_3">#F1F1F1</color>
 
 </resources>
