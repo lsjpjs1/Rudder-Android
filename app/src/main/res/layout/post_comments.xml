@@ -89,8 +89,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/commentHeadImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     app:layout_constraintHeight_default="percent"
                     app:layout_constraintHeight_percent="1"
 
@@ -100,10 +100,13 @@
 
                     <ImageView
                         android:id="@+id/commentProfileImageView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:srcCompat="@drawable/ic_delete_account"
-                        android:visibility="gone"
                         >
 
                     </ImageView>

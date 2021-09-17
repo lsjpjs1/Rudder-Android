@@ -38,7 +38,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/parentCommentInfo"
             android:visibility="gone"
-            android:background="@color/light_grey_3"
+            android:background="@color/purple_100"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/view"
@@ -81,6 +81,7 @@
                         android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/black"
                         android:text="@={mainVM._selectedParentCommentBody}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"

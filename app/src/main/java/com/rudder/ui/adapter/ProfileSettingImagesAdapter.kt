@@ -54,7 +54,6 @@ class ProfileSettingImagesAdapter(
         Glide.with(holder.profileSettingDisplayImageBinding.root.context)
             .load(imageUrlList[position])
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(R.raw.post_loading_raw)
             .into(holder.profileSettingDisplayImageBinding.root.profileSettingImageImageView)
 
 
