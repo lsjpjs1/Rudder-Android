@@ -323,6 +323,17 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ic_baseline_image_24" />
 
+                        <View
+                            android:id="@+id/blankView"
+                            android:layout_width="3dp"
+                            android:layout_height="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageView8"
+                            app:layout_constraintTop_toTopOf="parent"
+                            >
+                        </View>
+
+
                         <TextView
                             android:id="@+id/postPreviewTailImageCountTV"
                             android:layout_width="wrap_content"
@@ -330,7 +341,7 @@
                             android:textSize="12sp"
                             android:text="@{` `+Integer.toString(post.imageUrls.size)}"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageView8"
+                            app:layout_constraintStart_toEndOf="@+id/blankView"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
