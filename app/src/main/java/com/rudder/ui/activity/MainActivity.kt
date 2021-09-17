@@ -106,6 +106,11 @@ class MainActivity : AppCompatActivity() {
             "Delete Comment Complete!",
             Toast.LENGTH_LONG
         )
+        val toastStringBlank = Toast.makeText(
+            this,
+            "Content can not be blank.",
+            Toast.LENGTH_LONG
+        )
 
 
         supportFragmentManager.beginTransaction()
@@ -408,6 +413,15 @@ class MainActivity : AppCompatActivity() {
                 if (it) {
                     viewModel.getSelectedCategories()
                     onBackPressed()
+                }
+            }
+        })
+
+
+        viewModel.isStringBlank.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) {
+                    toastStringBlank.show()
                 }
             }
         })

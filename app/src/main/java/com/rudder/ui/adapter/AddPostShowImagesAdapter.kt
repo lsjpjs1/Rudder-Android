@@ -35,7 +35,7 @@ class AddPostShowImagesAdapter(var imageUriList: ArrayList<FileInfo>,val display
 
         //이미지 표시되는 전체 영역 크기 조절
         var lp = bind.root.layoutParams
-        lp.width = (displaySize[0]*0.2).toInt()
+        lp.width = (displaySize[0]*0.3).toInt()
         lp.height = lp.width
         bind.root.layoutParams = lp
 
@@ -52,7 +52,7 @@ class AddPostShowImagesAdapter(var imageUriList: ArrayList<FileInfo>,val display
     ) {
         if (position == itemCount-1){
             holder.addPostImagesBinding.addPostImageView.also {
-                it.setImageResource(R.drawable.ic_baseline_add_24)
+                it.setImageResource(R.drawable.ic_baseline_add_image)
                 it.setOnClickListener{
                     addPostImagesOnclickListener.onClickAddImage(holder.addPostImagesBinding.root,position)
                 }
