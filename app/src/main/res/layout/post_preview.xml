@@ -249,7 +249,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/postPreviewTailLikeCount"
-                        android:layout_width="0dp"
+                        android:layout_width="60dp"
                         android:layout_height="match_parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintWidth_default="percent"
@@ -257,28 +257,39 @@
 
                         <ImageView
                             android:id="@+id/imageView6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ic_outline_thumb_up_24" />
 
+                        <View
+                            android:id="@+id/blankView2"
+                            android:layout_width="6dp"
+                            android:layout_height="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageView6"
+                            app:layout_constraintTop_toTopOf="parent" >
+
+                        </View>
+
                         <TextView
                             android:id="@+id/postPreviewTailLikeCountTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
+                            app:layout_constraintVertical_bias="0.58"
                             android:text="@{` `+Integer.toString(post.likeCount)}"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageView6"
+                            app:layout_constraintStart_toEndOf="@+id/blankView2"
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/postPreviewTailCommentCount"
-                        android:layout_width="0dp"
+                        android:layout_width="60dp"
                         android:layout_height="match_parent"
                         app:layout_constraintStart_toEndOf="@+id/postPreviewTailLikeCount"
                         app:layout_constraintWidth_default="percent"
@@ -286,28 +297,39 @@
 
                         <ImageView
                             android:id="@+id/imageView7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ic_outline_chat_bubble_outline_24" />
 
+                        <View
+                            android:id="@+id/blankView3"
+                            android:layout_width="5dp"
+                            android:layout_height="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageView7"
+                            app:layout_constraintTop_toTopOf="parent" >
+
+                        </View>
+
                         <TextView
                             android:id="@+id/postPreviewTailCommentCountTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
+                            app:layout_constraintVertical_bias="0.58"
                             android:text="@{` `+Integer.toString(post.commentCount)}"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageView7"
+                            app:layout_constraintStart_toEndOf="@+id/blankView3"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/postPreviewTailImageCount"
-                        android:layout_width="0dp"
+                        android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:visibility="gone"
                         app:layout_constraintStart_toEndOf="@+id/postPreviewTailCommentCount"
@@ -316,8 +338,8 @@
 
                         <ImageView
                             android:id="@+id/imageView8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -325,7 +347,7 @@
 
                         <View
                             android:id="@+id/blankView"
-                            android:layout_width="3dp"
+                            android:layout_width="8dp"
                             android:layout_height="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView8"
@@ -338,7 +360,8 @@
                             android:id="@+id/postPreviewTailImageCountTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
+                            app:layout_constraintVertical_bias="0.58"
                             android:text="@{` `+Integer.toString(post.imageUrls.size)}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/blankView"
