@@ -38,7 +38,6 @@
                 android:gravity="center"
                 android:textColor="#000000"
                 android:textSize="24sp"
-                android:textStyle="bold"
                 android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"

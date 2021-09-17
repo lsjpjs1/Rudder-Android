@@ -157,7 +157,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@{post.userId}"
-                                    android:textStyle="bold"
                                     android:textColor="@color/black"
                                     android:fontFamily="@font/sf_pro_text_bold"
                                     android:textSize="14sp"

@@ -46,6 +46,7 @@
                 android:gravity="top|left"
                 android:background="@drawable/edge"
                 android:text="@={mainVM._commentEditBody}"
+                android:theme="@style/MyEditTextTheme"
 
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"

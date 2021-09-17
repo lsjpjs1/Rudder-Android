@@ -49,6 +49,7 @@
                 android:paddingBottom="10dp"
                 android:paddingRight="10dp"
                 android:text="@={mainVM._userRequestBody}"
+                android:theme="@style/MyEditTextTheme"
                 android:maxLength="180"
                 android:gravity="top|left"
                 android:background="@drawable/edge"

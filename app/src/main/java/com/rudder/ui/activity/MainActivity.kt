@@ -3,6 +3,7 @@ package com.rudder.ui.activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.graphics.PorterDuff
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -32,6 +33,8 @@ import kotlinx.android.synthetic.main.fragment_add_comment.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
+import kotlinx.android.synthetic.main.fragment_show_post.postPreviewTailCommentCountTV
+import kotlinx.android.synthetic.main.post_comments.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -485,9 +488,15 @@ class MainActivity : AppCompatActivity() {
 
     fun showParentCommentInfo(){
         parentCommentInfo.visibility = View.VISIBLE
+        addCommentBodyEditText.hint = "Reply Comment"
     }
+
     fun hideParentCommentInfo(){
         parentCommentInfo.visibility = View.GONE
+        addCommentBodyEditText?.let{
+            addCommentBodyEditText.hint = "Comment" }
+
+
     }
 
     fun showProgressBar(){

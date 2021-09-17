@@ -120,8 +120,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-
-
     fun autoLoginCheckbox(){
         val autoLoginPref = prefs.getValue("autoLogin")
         autoLoginCheckbox.isChecked = autoLoginPref == "true"

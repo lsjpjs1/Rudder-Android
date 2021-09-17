@@ -151,6 +151,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@null"
+                                android:textCursorDrawable="@drawable/curser_color"
                                 android:ems="10"
                                 android:hint="@string/text_hint"
                                 android:inputType="textMultiLine"
