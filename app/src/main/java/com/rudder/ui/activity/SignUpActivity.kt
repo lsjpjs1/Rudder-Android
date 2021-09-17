@@ -31,14 +31,12 @@ class SignUpActivity : AppCompatActivity() {
     private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel::class.java) }
 
     //private val viewModel: MainViewModel by lazy {ViewModelProvider(this).get(MainViewModel::class.java)  }
-    // merge 전 210914
 
     private lateinit var termsOfServiceFragment : TermsOfServiceFragment
     private lateinit var createAccountFragment : CreateAccountFragment
     private lateinit var profileSettingFragment : ProfileSettingFragment
     private lateinit var schoolSelectFragment: SchoolSelectFragment
     private lateinit var categorySelectSignUpFragment: CategorySelectSignUpFragment
-
 
 
     private fun hideSoftKeyboard(){
