@@ -66,22 +66,22 @@ class CommunityPostBottomSheetFragment : BottomSheetDialogFragment() {
                     communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams = lp4
 
                     var lp1 = communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams
-                    lp1.height = (displayDpValue[1] * 0.1).toInt()
+                    lp1.height = (displayDpValue[1] * 0.08).toInt()
                     communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams = lp1
                 }
         }})
 
 
         var lp1 = communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams
-        lp1.height = (displayDpValue[1] * 0.1).toInt()
+        lp1.height = (displayDpValue[1] * 0.08).toInt()
         communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams = lp1
 
         var lp2 = communityPostBottomSheetBinding.postBottomSheetCL2.layoutParams
-        lp2.height = (displayDpValue[1] * 0.1).toInt()
+        lp2.height = (displayDpValue[1] * 0.08).toInt()
         communityPostBottomSheetBinding.postBottomSheetCL2.layoutParams = lp2
 
         var lp3 = communityPostBottomSheetBinding.postBottomSheetCL3.layoutParams
-        lp3.height = (displayDpValue[1] * 0.1).toInt()
+        lp3.height = (displayDpValue[1] * 0.08).toInt()
         communityPostBottomSheetBinding.postBottomSheetCL3.layoutParams = lp3
 
         var lp4 = communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams

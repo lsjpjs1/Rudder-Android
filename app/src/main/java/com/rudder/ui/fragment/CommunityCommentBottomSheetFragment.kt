@@ -63,22 +63,22 @@ class CommunityCommentBottomSheetFragment : BottomSheetDialogFragment() {
                     communityCommentBottomSheetBinding.commentBottomSheetCL4.layoutParams = lp4
 
                     var lp1 = communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams
-                    lp1.height = (displayDpValue[1] * 0.1).toInt()
+                    lp1.height = (displayDpValue[1] * 0.08).toInt()
                     communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams = lp1
                 }
             }})
 
 
         var lp1 = communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams
-        lp1.height = (displayDpValue[1] * 0.1).toInt()
+        lp1.height = (displayDpValue[1] * 0.08).toInt()
         communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams = lp1
 
         var lp2 = communityCommentBottomSheetBinding.commentBottomSheetCL2.layoutParams
-        lp2.height = (displayDpValue[1] * 0.1).toInt()
+        lp2.height = (displayDpValue[1] * 0.08).toInt()
         communityCommentBottomSheetBinding.commentBottomSheetCL2.layoutParams = lp2
 
         var lp3 = communityCommentBottomSheetBinding.commentBottomSheetCL3.layoutParams
-        lp3.height = (displayDpValue[1] * 0.1).toInt()
+        lp3.height = (displayDpValue[1] * 0.08).toInt()
         communityCommentBottomSheetBinding.commentBottomSheetCL3.layoutParams = lp3
 
         var lp4 = communityCommentBottomSheetBinding.commentBottomSheetCL4.layoutParams
