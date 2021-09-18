@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:320171705838:android:53437b2709bfb2977fbaff",
         "android_client_info": {
-          "package_name": "com.rudder"
+          "package_name": "com.rudder.coursereview"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "320171705838-4ajgfj9bkeplevld8h5flnrmc18qehkn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.rudder",
+            "package_name": "com.rudder.coursereview",
             "certificate_hash": "fced4ca097e11073e77646f9ee0d9b43ce50bbd5"
           }
         },

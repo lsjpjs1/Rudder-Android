@@ -867,7 +867,6 @@ class MainViewModel : ViewModel() {
     }
 
 
-
     fun clickCancel() {
         _isCancelClick.value = Event(true)
         _commentBody.value = ""

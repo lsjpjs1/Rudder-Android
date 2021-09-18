@@ -92,11 +92,10 @@ class PostPreviewAdapter(
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.VISIBLE
         }
 
-//            Glide.clear(holder.postPreviewBinding.previewPostProfileImageView)
-//            Glide.with(holder.postPreviewBinding.previewPostProfileImageView.context)
-//                .load(previewPostList[position].userProfileImageUrl)
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .into(holder.postPreviewBinding.previewPostProfileImageView)
+            Glide.with(holder.postPreviewBinding.root.previewPostProfileImageView.context)
+                .load(previewPostList[position].userProfileImageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.postPreviewBinding.root.previewPostProfileImageView)
 
 
 
