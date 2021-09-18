@@ -28,6 +28,7 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/comment_title"
+                android:theme="@style/MyEditTextTheme"
                 android:inputType="textMultiLine"
                 android:text="@={mainVM._commentBody}"
                 android:afterTextChanged="@{() -> mainVM.onTextChangeComment()}"
@@ -48,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/comment_send_text"
+                android:textStyle="bold"
                 android:backgroundTint="@color/purple_rudder"
                 android:onClick='@{()->mainVM.addComment()}'
                 app:layout_constraintBottom_toBottomOf="parent"

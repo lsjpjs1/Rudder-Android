@@ -1,9 +1,11 @@
 package com.rudder.viewModel
 
 
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.TextView
 import androidx.lifecycle.*
 import com.rudder.BuildConfig
 import com.rudder.R
@@ -91,22 +93,15 @@ class MainViewModel : ViewModel() {
     private val _commentInnerValueChangeSwitch = MutableLiveData<Boolean>()
     private val _photoPickerClickSwitch = MutableLiveData<Boolean?>()
 
-
     private val _imageCount = MutableLiveData<Int>()
-
     private val _myProfileImageUrl = MutableLiveData<String>()
-
     var noticeAlreadyShow = false
     private val _noticeResponse = MutableLiveData<NoticeResponse>()
-
-    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
 
 
 //    private val _noticeResponse = MutableLiveData<NoticeResponse>()
 //
 //    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
-
-
 
 
     var _categoryIdSelectList = MutableLiveData<ArrayList<Int>>()
@@ -116,7 +111,12 @@ class MainViewModel : ViewModel() {
 
     val _categoryNamesForSelection = MutableLiveData<ArrayList<String>>()
 
+    val _isStringBlank = MutableLiveData<Event<Boolean>>()
 
+
+
+
+    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
     val myProfileImageUrl:LiveData<String> = _myProfileImageUrl
 
     val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
@@ -186,6 +186,7 @@ class MainViewModel : ViewModel() {
 
     val categoryNamesForSelection: LiveData<ArrayList<String>> = _categoryNamesForSelection
 
+    val isStringBlank : LiveData<Event<Boolean>> = _isStringBlank
 
     init {
         _selectedTab.value = R.id.communityButton
@@ -495,7 +496,7 @@ class MainViewModel : ViewModel() {
                     if (idx == 0){
                         if(resComments[idx].status == "child" ) { // 그 패턴이면
                             tmpCommentList.add(
-                                Comment("-", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false,"" ) //dummyComment
+                                Comment("", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false,"" ) //dummyComment
                             )
                             tmpCommentList.add(resComments[idx])
                         }
@@ -504,7 +505,7 @@ class MainViewModel : ViewModel() {
                     } else {
                         if(resComments[idx].status == "child" && resComments[idx].groupNum != resComments[idx - 1].groupNum ) { // 그 패턴이면
                             tmpCommentList.add(
-                                Comment("-", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false,"") // dummyComment
+                                Comment("", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false,"") // dummyComment
                             )
                             tmpCommentList.add(resComments[idx])
                         }
@@ -555,24 +556,26 @@ class MainViewModel : ViewModel() {
 
 
     fun addPost() {
-        GlobalScope.launch {
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            val tmpCategoryId = _postCategoryInt.value!! + 1
-            val key = BuildConfig.TOKEN_KEY
-            val addPostInfo = AddPostInfo(
-                "bulletin",
-                "",
-                _postBody.value!!,
-                App.prefs.getValue(key)!!,
-                arrayListOf(),
-                tmpCategoryId
-            )
-            val res = Repository().addPost(addPostInfo)
-            val isSuccess=res.isSuccess
-            val postId = res.postId
-            if(isSuccess) uploadPhoto(postId)
-
-
+        if ( _postBody.value!!.isBlank() ) {
+            _isStringBlank.value = Event(true)
+        } else {
+            GlobalScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+                val tmpCategoryId = _postCategoryInt.value!! + 1
+                val key = BuildConfig.TOKEN_KEY
+                val addPostInfo = AddPostInfo(
+                    "bulletin",
+                    "",
+                    _postBody.value!!,
+                    App.prefs.getValue(key)!!,
+                    arrayListOf(),
+                    tmpCategoryId
+                )
+                val res = Repository().addPost(addPostInfo)
+                val isSuccess = res.isSuccess
+                val postId = res.postId
+                if (isSuccess) uploadPhoto(postId)
+            }
         }
     }
 
@@ -741,7 +744,6 @@ class MainViewModel : ViewModel() {
         }
     }
 
-
     fun onSelectItem(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
@@ -751,6 +753,7 @@ class MainViewModel : ViewModel() {
         Log.d("onSelectItem","$pos, $id, ${parent.selectedItem}")
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
         _postCategoryInt.value = pos - 1
+        (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
     }
 
 //        fun isAlreadyReadPost(): Boolean {
@@ -794,87 +797,126 @@ class MainViewModel : ViewModel() {
 
 
     fun editPost() {
-        GlobalScope.launch {
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            val key = BuildConfig.TOKEN_KEY
-            val editPostInfo = EditPostInfo( _postBody.value!!, _postId.value!!, App.prefs.getValue(key)!! )
-            val result = Repository().editPostRepository(editPostInfo)
+        if ( _postBody.value!!.isBlank() ) {
+            _isStringBlank.value = Event(true)
+        } else {
+            GlobalScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+                val key = BuildConfig.TOKEN_KEY
+                val editPostInfo =
+                    EditPostInfo(_postBody.value!!, _postId.value!!, App.prefs.getValue(key)!!)
+                val result = Repository().editPostRepository(editPostInfo)
 
-            Log.d("editpost123", "${selectedPostMorePosition.value},${selectedPostPosition.value} ")
-            viewModelScope.launch {
-                _isEditPostSuccess.value = Event(result)
-                clearPosts()
-                getPosts()
+                Log.d(
+                    "editpost123",
+                    "${selectedPostMorePosition.value},${selectedPostPosition.value} "
+                )
+                viewModelScope.launch {
+                    _isEditPostSuccess.value = Event(result)
+                    clearPosts()
+                    getPosts()
+                }
+
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             }
-
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 
 
 
     fun editComment() {
-        GlobalScope.launch {
-            val commentInt = _comments.value!![_selectedCommentMorePosition.value!!].commentId
-            val editCommentInfo = EditCommentInfo( _commentEditBody.value!!, commentInt, App.prefs.getValue(tokenKey)!! )
-            val result = Repository().editCommentRepository(editCommentInfo)
-            _isEditCommentSuccess.postValue(Event(result))
+        if ( _commentEditBody.value!!.isBlank() ) {
+            _isStringBlank.value = Event(true)
+        } else {
+            GlobalScope.launch {
+                val commentInt = _comments.value!![_selectedCommentMorePosition.value!!].commentId
+                val editCommentInfo = EditCommentInfo(
+                    _commentEditBody.value!!,
+                    commentInt,
+                    App.prefs.getValue(tokenKey)!!
+                )
+                val result = Repository().editCommentRepository(editCommentInfo)
+                _isEditCommentSuccess.postValue(Event(result))
 
-            if (result){
-                clearComments()
-                getComments()
-                _commentBody.postValue("")
+                if (result) {
+                    clearComments()
+                    getComments()
+                    _commentBody.postValue("")
+                }
             }
         }
     }
 
     fun reportComment() {
-        GlobalScope.launch {
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+        if ( _reportCommentBody.value!!.isBlank() ) {
+            _isStringBlank.value = Event(true)
+        } else {
+            GlobalScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
 
-            val reportInfo = ReportInfo( App.prefs.getValue(tokenKey)!!, _comments.value!![_selectedCommentMorePosition.value!!].commentId, _reportCommentBody.value!! ,"comment")
-            val result = Repository().reportRepository(reportInfo)
-            _isReportCommentSuccess.postValue(Event(result))
+                val reportInfo = ReportInfo(
+                    App.prefs.getValue(tokenKey)!!,
+                    _comments.value!![_selectedCommentMorePosition.value!!].commentId,
+                    _reportCommentBody.value!!,
+                    "comment"
+                )
+                val result = Repository().reportRepository(reportInfo)
+                _isReportCommentSuccess.postValue(Event(result))
 
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+            }
         }
     }
 
 
 
     fun reportPost() {
-        GlobalScope.launch {
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+        if ( _reportPostBody.value!!.isBlank() ) {
+            _isStringBlank.value = Event(true)
+        } else {
+            GlobalScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
 
-            val reportInfo = ReportInfo( App.prefs.getValue(tokenKey)!!, _postId.value!!, _reportPostBody.value!! ,"post")
-            val result = Repository().reportRepository(reportInfo)
-            _isReportPostSuccess.postValue(Event(result))
+                val reportInfo = ReportInfo( App.prefs.getValue(tokenKey)!!, _postId.value!!, _reportPostBody.value!! ,"post")
+                val result = Repository().reportRepository(reportInfo)
+                _isReportPostSuccess.postValue(Event(result))
 
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
-        }
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+                }
+            }
     }
 
     fun addUserRequest() {
-        GlobalScope.launch {
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+        if ( _userRequestBody.value!!.isBlank() ) {
+            _isStringBlank.value = Event(true)
+        } else {
+            GlobalScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
 
-            val addUserRequestRequest = AddUserRequestRequest( App.prefs.getValue(tokenKey)!!, _userRequestBody.value!! )
-            val result = Repository().addUserRequest(addUserRequestRequest)
-            _isContactUsSuccess.postValue(Event(result))
+                val addUserRequestRequest =
+                    AddUserRequestRequest(App.prefs.getValue(tokenKey)!!, _userRequestBody.value!!)
+                val result = Repository().addUserRequest(addUserRequestRequest)
+                _isContactUsSuccess.postValue(Event(result))
 
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+            }
         }
     }
 
 
-    fun clickCancel() {
-        _isCancelClick.value = Event(true)
-        _commentBody.value = ""
-        _reportPostBody.value = ""
-        _reportCommentBody.value = ""
-        _userRequestBody.value=""
+
+    fun clearValue( item :  MutableLiveData<String> ) {
+        item.value  = ""
     }
 
+
+    fun clickDialogCancel() {
+        _isCancelClick.value = Event(true)
+        clearValue(_commentBody)
+        clearValue(_reportPostBody)
+        clearValue(_reportCommentBody)
+        clearValue(_userRequestBody)
+    }
 
 
     fun imageSizeCount(position: Int) {

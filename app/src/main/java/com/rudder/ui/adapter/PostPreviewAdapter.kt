@@ -19,6 +19,7 @@ import com.rudder.util.LocaleUtil
 import com.rudder.util.PostsDiffCallback
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.post_preview.view.*
+import kotlinx.android.synthetic.main.profile_setting_display_image.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
@@ -92,14 +93,12 @@ class PostPreviewAdapter(
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.VISIBLE
         }
 
-            Glide.with(holder.postPreviewBinding.root.previewPostProfileImageView.context)
-                .load(previewPostList[position].userProfileImageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.postPreviewBinding.root.previewPostProfileImageView)
 
 
-
-
+        Glide.with(holder.postPreviewBinding.root.previewPostProfileImageView.context)
+            .load(previewPostList[position].userProfileImageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(holder.postPreviewBinding.root.previewPostProfileImageView)
 
     }
 

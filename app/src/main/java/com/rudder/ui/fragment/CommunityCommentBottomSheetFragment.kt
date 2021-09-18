@@ -31,6 +31,9 @@ class CommunityCommentBottomSheetFragment : BottomSheetDialogFragment() {
         requireContext()
     }
 
+
+    override fun getTheme(): Int = R.style.CustomBottomSheetDialog
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,30 +59,30 @@ class CommunityCommentBottomSheetFragment : BottomSheetDialogFragment() {
                     commentBottomSheetCL3.visibility = View.GONE
 
                     var lp4 = communityCommentBottomSheetBinding.commentBottomSheetCL4.layoutParams
-                    lp4.height = (displayDpValue[1] * 0.1).toInt()
+                    lp4.height = (displayDpValue[1] * 0.05).toInt()
                     communityCommentBottomSheetBinding.commentBottomSheetCL4.layoutParams = lp4
 
                     var lp1 = communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams
-                    lp1.height = (displayDpValue[1] * 0.1).toInt()
+                    lp1.height = (displayDpValue[1] * 0.08).toInt()
                     communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams = lp1
                 }
             }})
 
 
         var lp1 = communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams
-        lp1.height = (displayDpValue[1] * 0.1).toInt()
+        lp1.height = (displayDpValue[1] * 0.08).toInt()
         communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams = lp1
 
         var lp2 = communityCommentBottomSheetBinding.commentBottomSheetCL2.layoutParams
-        lp2.height = (displayDpValue[1] * 0.1).toInt()
+        lp2.height = (displayDpValue[1] * 0.08).toInt()
         communityCommentBottomSheetBinding.commentBottomSheetCL2.layoutParams = lp2
 
         var lp3 = communityCommentBottomSheetBinding.commentBottomSheetCL3.layoutParams
-        lp3.height = (displayDpValue[1] * 0.1).toInt()
+        lp3.height = (displayDpValue[1] * 0.08).toInt()
         communityCommentBottomSheetBinding.commentBottomSheetCL3.layoutParams = lp3
 
         var lp4 = communityCommentBottomSheetBinding.commentBottomSheetCL4.layoutParams
-        lp4.height = (displayDpValue[1] * 0.1).toInt()
+        lp4.height = (displayDpValue[1] * 0.05).toInt()
         communityCommentBottomSheetBinding.commentBottomSheetCL4.layoutParams = lp4
 
         return communityCommentBottomSheetBinding.root

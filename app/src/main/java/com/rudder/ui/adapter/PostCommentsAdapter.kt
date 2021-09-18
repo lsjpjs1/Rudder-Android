@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.rudder.R
 import com.rudder.data.Comment
 import com.rudder.databinding.PostCommentsBinding
@@ -83,13 +84,13 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
                     }
                 }
             )
-        } else if(commentList[position].userId == "-"){ // reply가 있는 삭제된 parent, Comment
+        } else if(commentList[position].userId == ""){ // reply가 있는 삭제된 parent, Comment
             holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.light_grey_2,null)
             holder.postCommentsBinding.textView5.setTypeface(holder.postCommentsBinding.textView5.typeface, Typeface.ITALIC)
             holder.postCommentsBinding.commentHeadPostTimeTV.visibility = View.GONE
             holder.postCommentsBinding.postPreviewTailLikeCount.visibility = View.GONE
+            holder.postCommentsBinding.postPreviewTailCommentCount.visibility = View.GONE
         }
-
 
 
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(commentList[position].postTime.time))
@@ -98,10 +99,14 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
         holder.postCommentsBinding.timeago = timeago
         holder.postCommentsBinding.position = position
 
-//        Glide.with(holder.postCommentsBinding.commentProfileImageView.context)
-//            .load(commentList[position].userProfileImageUrl)
-//            .diskCacheStrategy(DiskCacheStrategy.ALL)
-//            .into(holder.postCommentsBinding.commentProfileImageView)
+
+
+        Glide.with(holder.postCommentsBinding.commentProfileImageView.context)
+            .load(commentList[position].userProfileImageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(holder.postCommentsBinding.commentProfileImageView)
+
+
     }
 
     override fun getItemCount(): Int {

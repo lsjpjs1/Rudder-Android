@@ -10,15 +10,14 @@
 <com.google.android.material.chip.Chip
 
     style="@style/Widget.MaterialComponents.Chip.Action"
-
     android:layout_width="100dp"
     android:layout_height="50dp"
-
+    android:textAppearance="@style/AppTheme.GenderChip"
     android:gravity="center"
     android:checkable="true"
     android:clickable="true"
-    android:textSize="18sp"
-
+    app:chipCornerRadius="10dp"
+    android:fontFamily="@font/sf_pro_text_bold"
     android:textColor="@color/black"
     app:chipIcon="@drawable/ic_baseline_check_circle_24"
     app:chipIconTint="@color/grey"

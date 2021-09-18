@@ -9,6 +9,7 @@ import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +21,7 @@ import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.SignUpViewModel
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.android.synthetic.main.fragment_create_account.verifyBtn
@@ -29,7 +31,6 @@ class SignUpActivity : AppCompatActivity() {
     private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel::class.java) }
 
     //private val viewModel: MainViewModel by lazy {ViewModelProvider(this).get(MainViewModel::class.java)  }
-    // merge 전 210914
 
     private lateinit var termsOfServiceFragment : TermsOfServiceFragment
     private lateinit var createAccountFragment : CreateAccountFragment
@@ -38,21 +39,10 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var categorySelectSignUpFragment: CategorySelectSignUpFragment
 
 
-    // id가 명시되어있지 않은 다른 부분을 터치했을 때 키보드가 보여져있는 상태면 키보드를 내림.
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        val view = currentFocus
-        if (view != null && (ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE) && view is EditText && !view.javaClass.name.startsWith(
-                "android.webkit.")
-        ) {
-            val scrcoords = IntArray(2)
-            view.getLocationOnScreen(scrcoords)
-            val x = ev.rawX + view.getLeft() - scrcoords[0]
-            val y = ev.rawY + view.getTop() - scrcoords[1]
-            if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom()) (this.getSystemService(INPUT_METHOD_SERVICE
-            ) as InputMethodManager).hideSoftInputFromWindow(
-                this.window.decorView.applicationWindowToken, 0)
+    private fun hideSoftKeyboard(){
+        (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).apply {
+            hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }
-        return super.dispatchTouchEvent(ev)
     }
 
 
@@ -90,15 +80,18 @@ class SignUpActivity : AppCompatActivity() {
             .hide(createAccountFragment)
             .add(R.id.signUp_container, profileSettingFragment)
             .hide(profileSettingFragment)
-
-//            .add(R.id.signUp_container, categorySelectSignUpFragment)
-//            .hide(categorySelectSignUpFragment)
-
             .commit()
 
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
         binding.signUpVM = viewModel
         binding.lifecycleOwner = this
+
+
+        signUp_container.setOnClickListener {
+            hideSoftKeyboard()
+        }
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_LONG)
 

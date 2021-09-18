@@ -44,9 +44,10 @@
     <string name="change_nickname">Change Nickname</string>
     <string name="delete_account">Delete Account</string>
 
-    <string name="report_comment_content">Report content</string>
+    <string name="report_comment_content">Comment Report content</string>
     <string name="report_post_content">Post Report Content</string>
     <string name="choose_profile_image">Choose Profile Image</string>
     <string name="category_select">Category Selection</string>
-
+    <string name="auto_login_error">Fail to auto sign in</string>
+    <string name="my_page_title">My Page</string>
 </resources>

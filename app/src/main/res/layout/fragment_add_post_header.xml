@@ -60,6 +60,7 @@
                     android:textStyle="bold"
                     android:textColor="#000000"
                     android:textSize="@dimen/header_text_size"
+                    android:fontFamily="@font/sf_pro_text_bold"
                     android:text="@string/add_post_title" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -76,11 +77,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/post_button"
+                    android:textSize="18sp"
                     android:textColor="@color/purple_rudder"
                     android:onClick="@{()->mainVM.addPost()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
