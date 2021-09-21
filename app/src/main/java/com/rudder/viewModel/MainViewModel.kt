@@ -716,6 +716,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun splitCategoryNames(categoryList: ArrayList<Category>,removeZeroIndex:Boolean=true): ArrayList<String> {
+        return if(categoryList.size>0){
         var categoryNames = ArrayList<String>()
 
 
@@ -728,8 +729,10 @@ class MainViewModel : ViewModel() {
             _categoryIdAllList.value!!.add(category.categoryId)
             _categoryNamesForSelection.value!!.add(category.categoryName)
         }
-
-        return categoryNames
+            categoryNames
+        }else{
+            arrayListOf()
+        }
     }
 
     fun isLikePost() {
