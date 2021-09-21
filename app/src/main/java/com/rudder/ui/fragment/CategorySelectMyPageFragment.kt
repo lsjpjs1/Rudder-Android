@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
 import com.rudder.R
+import com.rudder.data.remote.Category
 import com.rudder.databinding.FragmentMyPageCategorySelectBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
@@ -25,14 +26,14 @@ class CategorySelectMyPageFragment : Fragment() {
     private lateinit var fragmentMyPageCategorySelectBinding : FragmentMyPageCategorySelectBinding
 
 
-    fun setCategoryChips(categorys : ArrayList<String>, categoryId : ArrayList<Int> ,width : Int, height : Int ) {
+    fun setCategoryChips(categorys : ArrayList<Category>, categoryId : ArrayList<Int>, width : Int, height : Int ) {
         for ( i in 0 until categorys.size ) {
             val mChip = this.layoutInflater.inflate(R.layout.item_chip_category, null, false) as Chip
 
             mChip.width = width
             mChip.height = height
-            mChip.text = categorys[i]
-            mChip.tag = categoryId[i]
+            mChip.text = categorys[i].categoryName
+            mChip.tag = categorys[i].categoryId
 
             mChip.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, boolean ->
                 viewModel.categoryIdSelect(compoundButton.tag.toString().toInt(), boolean)
@@ -56,8 +57,8 @@ class CategorySelectMyPageFragment : Fragment() {
         val chipWidth = (displayDpValue[0] * 0.42).toInt()
         val chipHeight = (displayDpValue[1] * 0.1).toInt()
 
-        viewModel.categoryNamesForSelection.observe(viewLifecycleOwner, Observer {
-            setCategoryChips(viewModel.categoryNamesForSelection.value!!, viewModel.categoryIdAllList.value!!, chipWidth, chipHeight)
+        viewModel.allCategories.observe(viewLifecycleOwner, Observer {
+            setCategoryChips(viewModel.allCategories.value!!, viewModel.categoryIdAllList.value!!, chipWidth, chipHeight)
         })
 
 

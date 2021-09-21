@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.rudder.BuildConfig
 import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
@@ -34,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        App.prefs.removeValue(BuildConfig.TOKEN_KEY)
         val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
         binding.loginVM = viewModel
         binding.lifecycleOwner = this

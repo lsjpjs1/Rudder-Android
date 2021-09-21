@@ -18,6 +18,7 @@ import androidx.lifecycle.viewModelScope
 import com.rudder.data.*
 import com.rudder.data.local.App
 import com.rudder.data.remote.Category
+import com.rudder.data.remote.GetCategoriesRequest
 import com.rudder.data.repository.Repository
 import com.rudder.ui.activity.SignUpActivity
 import com.rudder.util.Event
@@ -166,7 +167,7 @@ class SignUpViewModel : ViewModel() {
 
 
         callSchoolList()
-        getCategories()
+//        getCategories()
         getProfileImageList()
     }
 
@@ -383,7 +384,7 @@ class SignUpViewModel : ViewModel() {
 
     fun getCategories() {
         GlobalScope.launch {
-            var categoryList = repository.getCategories()
+            var categoryList = repository.getCategories(GetCategoriesRequest(null,_userSchoolInt.value))
             categoryList.removeAt(0)
             Log.d("categoryList","${categoryList}")
             viewModelScope.launch {
