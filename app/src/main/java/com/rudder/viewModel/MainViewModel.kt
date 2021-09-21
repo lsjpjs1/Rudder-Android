@@ -252,7 +252,7 @@ class MainViewModel : ViewModel() {
         _categoryNamesForSelection.value = ArrayList<String>()
 
     }
-        fun getMyProfileImageUrl(){
+    fun getMyProfileImageUrl(){
         GlobalScope.async {
             val url = Repository().getMyProfileImageUrl(MyProfileImageRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!)).url
             viewModelScope.launch{
@@ -716,7 +716,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun splitCategoryNames(categoryList: ArrayList<Category>,removeZeroIndex:Boolean=true): ArrayList<String> {
-        return if(categoryList.size>0){
         var categoryNames = ArrayList<String>()
 
 
@@ -729,10 +728,8 @@ class MainViewModel : ViewModel() {
             _categoryIdAllList.value!!.add(category.categoryId)
             _categoryNamesForSelection.value!!.add(category.categoryName)
         }
-            categoryNames
-        }else{
-            arrayListOf()
-        }
+
+        return categoryNames
     }
 
     fun isLikePost() {
@@ -892,8 +889,8 @@ class MainViewModel : ViewModel() {
                 _isReportPostSuccess.postValue(Event(result))
 
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
-                }
             }
+        }
     }
 
     fun addUserRequest() {

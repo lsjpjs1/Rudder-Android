@@ -126,7 +126,7 @@
                                 android:id="@+id/postPreviewHeadCategoryTV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{post.categoryId==1?``:post.categoryName}"
+                                android:text="@{post.categoryName}"
                                 android:textColor="@color/purple_rudder"
                                 android:textSize="13sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
