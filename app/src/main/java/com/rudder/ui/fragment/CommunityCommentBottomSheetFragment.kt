@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityCommentBottomSheetBinding
@@ -16,7 +17,6 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_community_comment_bottom_sheet.*
-import kotlinx.android.synthetic.main.fragment_community_comment_bottom_sheet.commentBottomSheetCL2
 import kotlinx.android.synthetic.main.fragment_school_select.*
 import kotlinx.android.synthetic.main.fragment_school_select.view.*
 
@@ -32,6 +32,7 @@ class CommunityCommentBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
 
+
     override fun getTheme(): Int = R.style.CustomBottomSheetDialog
 
     override fun onCreateView(
@@ -44,6 +45,7 @@ class CommunityCommentBottomSheetFragment : BottomSheetDialogFragment() {
         communityCommentBottomSheetBinding.lifecycleOwner = this
 
         val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
+
 
         viewModel.selectedCommentMorePosition.observe(viewLifecycleOwner, Observer {
             it?.let {

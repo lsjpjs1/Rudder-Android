@@ -34,7 +34,7 @@ class CommunityPostBottomSheetFragment : BottomSheetDialogFragment() {
         requireContext()
     }
 
-
+    override fun getTheme(): Int = R.style.CustomBottomSheetDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
