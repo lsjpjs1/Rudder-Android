@@ -50,7 +50,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/comment_send_text"
                 android:textStyle="bold"
-                android:backgroundTint="@color/purple_rudder"
+                android:textColor="@color/white"
+                android:background="@drawable/button_enabled"
                 android:onClick='@{()->mainVM.addComment()}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

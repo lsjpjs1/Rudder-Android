@@ -1,13 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="schools_array">
-        <item>학교를 선택하세요.</item>
-        <item>고려대</item>
-        <item>서울대</item>
-        <item>와세다</item>
-        <item>카이스트</item>
-        <item>Naver</item>
-        <item>영국대학1</item>
-        <item>영국대학2</item>
-    </string-array>
-</resources>
+<resources></resources>

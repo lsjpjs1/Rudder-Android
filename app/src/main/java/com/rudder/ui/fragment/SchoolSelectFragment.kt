@@ -56,7 +56,7 @@ class SchoolSelectFragment : Fragment() {
                     toastSchoolSelect.show()
                 }
                 ChangeUIState.buttonEnable(schoolSelectNextBtn,schoolSelectCheckbox.isChecked)
-                schoolSelectBinding.root.schoolSelectNextBtn.isFocusable = true
+                //schoolSelectBinding.root.schoolSelectNextBtn.setBackgroundResource(R.color.teal_200)
         }})
 
         var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,viewModel.schoolList.value!!)

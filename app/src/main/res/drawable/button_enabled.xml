@@ -1,34 +1,8 @@
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
-
-
-<!--    <item android:drawable="@drawable/bg_button_enabled_false" android:state_enabled="false" />-->
-<!--    <item android:drawable="@drawable/bg_button_enabled_true" android:state_enabled="true">-->
-<!--        <shape>-->
-<!--            <solid android:color="@color/purple_rudder">-->
-
-<!--            </solid>-->
-<!--        </shape>-->
-<!--    </item>-->
-
-
-<!--    <item android:drawable="@drawable/bg_button_enabled_normal">-->
-<!--        <shape>-->
-<!--            <solid android:color="@color/purple_rudder">-->
-
-<!--            </solid>-->
-<!--        </shape>-->
-<!--    </item>-->
-
-
-<!--</selector>-->
-
+<?xml version="1.0" encoding="UTF-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/bg_button_enabled_normal" android:state_enabled="true" android:state_window_focused="false"/>
-    <item android:drawable="@drawable/bg_button_enabled_false" android:state_enabled="false" android:state_window_focused="false"/>
-    <item android:drawable="@drawable/bg_button_enabled_true" android:state_pressed="true"/>
-    <item android:drawable="@drawable/bg_button_enabled_true" android:state_enabled="true" android:state_focused="true"/>
-    <item android:drawable="@drawable/bg_button_enabled_normal" android:state_enabled="true"/>
-    <item android:drawable="@drawable/bg_button_enabled_false" android:state_focused="true"/>
-    <item android:drawable="@drawable/bg_button_enabled_false"/>
+
+    <item android:drawable="@drawable/bg_button_enabled_false" android:state_enabled="false"/>
+    <item android:drawable="@drawable/bg_button_enabled_true" android:state_enabled="true"/>
+    <item android:drawable="@drawable/bg_button_enabled_false" />
+
 </selector>
