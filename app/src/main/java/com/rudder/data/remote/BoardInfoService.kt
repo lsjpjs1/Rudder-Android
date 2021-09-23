@@ -11,7 +11,14 @@ import retrofit2.http.POST
 
 interface BoardInfoService {
     @POST("/board/categoryList")
-    suspend fun getCategories() : Response<ArrayList<Category>>
+    suspend fun getCategories(
+        @Body getCategoriesRequestWithToken: GetCategoriesRequestWithToken
+    ) : Response<ArrayList<Category>>
+
+    @POST("/board/categoryList")
+    suspend fun getCategories(
+        @Body getCategoriesRequestWithSchoolId: GetCategoriesRequestWithSchoolId
+    ) : Response<ArrayList<Category>>
 
 
 
@@ -35,3 +42,18 @@ data class Token(
     val token : String
     )
 
+data class GetCategoriesRequest(
+    val token: String?,
+    @SerializedName(value = "school_id")
+    val schoolId : Int?
+)
+
+data class GetCategoriesRequestWithToken(
+    val token: String?
+)
+
+data class GetCategoriesRequestWithSchoolId(
+
+    @SerializedName(value = "school_id")
+    val schoolId : Int?
+)

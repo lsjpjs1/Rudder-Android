@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.sql.Timestamp
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -41,7 +40,8 @@ class MainViewModel : ViewModel() {
     private val _selectedTab = MutableLiveData<Int>()
     private var _posts = MutableLiveData<ArrayList<PreviewPost>>()
     private val _comments = MutableLiveData<ArrayList<Comment>>()
-    private val _categories = MutableLiveData<ArrayList<Category>>()
+    private val _allCategories = MutableLiveData<ArrayList<Category>>()
+    private val _userSelectCategories = MutableLiveData<ArrayList<Category>>()
     private val _categoryNames = MutableLiveData<ArrayList<String>>()
     private val _selectedPostPosition = MutableLiveData<Int>()
     val _selectedCategoryPosition = MutableLiveData<Int>()
@@ -173,7 +173,8 @@ class MainViewModel : ViewModel() {
 
     var posts: LiveData<ArrayList<PreviewPost>> = _posts
     val comments: LiveData<ArrayList<Comment>> = _comments
-    val categories: LiveData<ArrayList<Category>> = _categories
+    val userSelectCategories: LiveData<ArrayList<Category>> = _userSelectCategories
+    val allCategories: LiveData<ArrayList<Category>> = _allCategories
 
     val imageCount: LiveData<Int> = _imageCount
 
@@ -195,7 +196,8 @@ class MainViewModel : ViewModel() {
         _commentInnerValueChangeSwitch.value=true
         _selectedPhotoUriList.value = arrayListOf()
         _postBody.value = ""
-        _categories.value = arrayListOf(
+        _allCategories.value = arrayListOf()
+        _userSelectCategories.value = arrayListOf(
             Category(-1, "All")
         )
         _posts.value = arrayListOf(
@@ -232,7 +234,7 @@ class MainViewModel : ViewModel() {
             )
         )
         _postBody.value = ""
-        _categories.value = arrayListOf(
+        _userSelectCategories.value = arrayListOf(
             Category(-1, "All")
         )
 
@@ -250,7 +252,7 @@ class MainViewModel : ViewModel() {
         _categoryNamesForSelection.value = ArrayList<String>()
 
     }
-        fun getMyProfileImageUrl(){
+    fun getMyProfileImageUrl(){
         GlobalScope.async {
             val url = Repository().getMyProfileImageUrl(MyProfileImageRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!)).url
             viewModelScope.launch{
@@ -425,14 +427,14 @@ class MainViewModel : ViewModel() {
         _isScrollBottomTouch.value = Event(true)
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
-        Log.d("progressbar_getPost","progressbar_getPost")
+        Log.d("progressbar_getPost",selectedCategoryPosition.value!!.toString())
 
         GlobalScope.launch {
 
             val resPosts = Repository().getPosts(
                 pagingIndex,
                 endPostId,
-                categories.value!![selectedCategoryPosition.value!!].categoryId,
+                userSelectCategories.value!![selectedCategoryPosition.value!!].categoryId,
                 App.prefs.getValue(tokenKey)!!
             )
             viewModelScope.launch {
@@ -560,8 +562,9 @@ class MainViewModel : ViewModel() {
             _isStringBlank.value = Event(true)
         } else {
             GlobalScope.launch {
+                Log.d("categoryInt",_postCategoryInt.value!!.toString()+"    "+_allCategories.value!!.toString())
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-                val tmpCategoryId = _postCategoryInt.value!! + 1
+                val tmpCategoryId = _allCategories.value!![_postCategoryInt.value!!].categoryId
                 val key = BuildConfig.TOKEN_KEY
                 val addPostInfo = AddPostInfo(
                     "bulletin",
@@ -684,8 +687,9 @@ class MainViewModel : ViewModel() {
         GlobalScope.launch {
             var categoryList = Repository().getSelectedCategoriesRepository( Token(App.prefs.getValue(tokenKey)!!) )
             viewModelScope.launch {
+                Log.d("categoryNames", "$categoryList")
                 categoryList.add(0, Category(-1, "All"))
-                _categories.value = categoryList
+                _userSelectCategories.value = categoryList
             }
 
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
@@ -697,8 +701,11 @@ class MainViewModel : ViewModel() {
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
 
         GlobalScope.launch {
-            var categoryList = Repository().getCategories()
+
+            var categoryList = Repository().getCategories(GetCategoriesRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY),null))
             viewModelScope.launch {
+
+                _allCategories.value?.addAll(categoryList)
                 _categoryNames.value = splitCategoryNames(categoryList)
                 _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
             }
@@ -708,10 +715,10 @@ class MainViewModel : ViewModel() {
 
     }
 
-    fun splitCategoryNames(categoryList: ArrayList<Category>): ArrayList<String> {
+    fun splitCategoryNames(categoryList: ArrayList<Category>,removeZeroIndex:Boolean=true): ArrayList<String> {
         var categoryNames = ArrayList<String>()
 
-        Log.d("categoryNames", "$categoryList")
+
         for (category in categoryList) {
             categoryNames.add(category.categoryName)
         }
@@ -882,8 +889,8 @@ class MainViewModel : ViewModel() {
                 _isReportPostSuccess.postValue(Event(result))
 
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
-                }
             }
+        }
     }
 
     fun addUserRequest() {
@@ -902,6 +909,7 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
 
 
     fun clearValue( item :  MutableLiveData<String> ) {

@@ -1,5 +1,6 @@
 package com.rudder.data.remote
 
+import android.util.Log
 import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.Comment
@@ -17,9 +18,14 @@ class BoardInfoApi {
 
     private val boardInfoService : BoardInfoService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(BoardInfoService::class.java)
 
-    fun getCategoryList() : Deferred<Response<ArrayList<Category>>> {
+    fun getCategoryList(getCategoriesRequest: GetCategoriesRequest) : Deferred<Response<ArrayList<Category>>> {
         return GlobalScope.async(Dispatchers.IO){
-            boardInfoService.getCategories()
+            Log.d("getcategoriesrequest",getCategoriesRequest.toString())
+            if(getCategoriesRequest.schoolId==null) {
+                boardInfoService.getCategories(GetCategoriesRequestWithToken(getCategoriesRequest.token))
+            }else{
+                boardInfoService.getCategories(GetCategoriesRequestWithSchoolId(getCategoriesRequest.schoolId))
+            }
         }
     }
 

@@ -1,7 +1,6 @@
 package com.rudder.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +30,7 @@ class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
         savedInstanceState: Bundle?
     ): View? {
         val fragmentBinding= DataBindingUtil.inflate<FragmentCommuintySelectorBinding>(inflater,R.layout.fragment_commuinty_selector,container,false)
-        adapter = CategorySelectorAdapter(viewModel.categories.value!!,viewModel.selectedCategoryPosition.value!!,lazyContext,this)
+        adapter = CategorySelectorAdapter(viewModel.userSelectCategories.value!!,viewModel.selectedCategoryPosition.value!!,lazyContext,this)
         fragmentBinding.categoryRecyclerView.also {
             it.layoutManager = LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)
             it.setHasFixedSize(false)
@@ -47,7 +46,7 @@ class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
 
         })
 
-        viewModel.categories.observe(viewLifecycleOwner, Observer {
+        viewModel.userSelectCategories.observe(viewLifecycleOwner, Observer {
             adapter.updateCategories(it)
         })
         return fragmentBinding.root

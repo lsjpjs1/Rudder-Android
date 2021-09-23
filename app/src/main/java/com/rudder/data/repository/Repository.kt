@@ -114,8 +114,8 @@ class Repository {
         return sendAccountPasswordAPIResult.results.get("isSuccessForgot").asBoolean
     }
 
-    suspend fun getCategories(): ArrayList<Category>{
-        return BoardInfoApi.instance.getCategoryList().await().results
+    suspend fun getCategories(getCategoriesRequest: GetCategoriesRequest): ArrayList<Category>{
+        return BoardInfoApi.instance.getCategoryList(getCategoriesRequest).await().results
     }
 
     suspend fun isLikePost(isLikePostInfo: IsLikePostInfo): Boolean{
