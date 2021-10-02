@@ -44,4 +44,5 @@
     <string name="category_select">Category Selection</string>
     <string name="auto_login_error">Fail to auto sign in</string>
     <string name="my_page_title">My Page</string>
+    <string name="club">Club</string>
 </resources>

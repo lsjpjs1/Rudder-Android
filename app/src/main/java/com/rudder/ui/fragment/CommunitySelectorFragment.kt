@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,7 @@ class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
         })
 
         viewModel.userSelectCategories.observe(viewLifecycleOwner, Observer {
+            Log.d("error4",it.toString())
             adapter.updateCategories(it)
         })
         return fragmentBinding.root

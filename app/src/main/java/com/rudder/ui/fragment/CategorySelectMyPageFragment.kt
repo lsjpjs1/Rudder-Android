@@ -1,22 +1,24 @@
 package com.rudder.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.rudder.R
 import com.rudder.data.remote.Category
 import com.rudder.databinding.FragmentMyPageCategorySelectBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_my_page_category_select.view.*
-import kotlinx.android.synthetic.main.fragment_school_select.*
 import java.util.*
 
 
@@ -25,27 +27,9 @@ class CategorySelectMyPageFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var fragmentMyPageCategorySelectBinding : FragmentMyPageCategorySelectBinding
 
-
-    fun setCategoryChips(categorys : ArrayList<Category>, categoryId : ArrayList<Int>, width : Int, height : Int ) {
-        for ( i in 0 until categorys.size ) {
-            val mChip = this.layoutInflater.inflate(R.layout.item_chip_category, null, false) as Chip
-
-            mChip.width = width
-            mChip.height = height
-            mChip.text = categorys[i].categoryName
-            mChip.tag = categorys[i].categoryId
-
-            mChip.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, boolean ->
-                viewModel.categoryIdSelect(compoundButton.tag.toString().toInt(), boolean)
-            })
-
-
-            fragmentMyPageCategorySelectBinding.root.chipsPrograms.addView(mChip)
-        }
-
+    private val lazyContext by lazy {
+        requireContext()
     }
-
-
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentMyPageCategorySelectBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_my_page_category_select,container,false)
@@ -58,12 +42,62 @@ class CategorySelectMyPageFragment : Fragment() {
         val chipHeight = (displayDpValue[1] * 0.1).toInt()
 
         viewModel.allCategories.observe(viewLifecycleOwner, Observer {
-            setCategoryChips(viewModel.allCategories.value!!, viewModel.categoryIdAllList.value!!, chipWidth, chipHeight)
+            setCategoryChips(viewModel.allCategories.value!!,chipWidth, chipHeight,R.layout.item_chip_category,fragmentMyPageCategorySelectBinding.root.chipsPrograms)
+        })
+
+        viewModel.allClubCategories.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Log.d("cate123",it.toString())
+                fragmentMyPageCategorySelectBinding.root.chipsProgramsClub.removeAllViews()
+                setCategoryChips(
+                    it,
+                    chipWidth,
+                    chipHeight,
+                    R.layout.item_chip_category,
+                    fragmentMyPageCategorySelectBinding.root.chipsProgramsClub
+                )
+            }
         })
 
 
         return fragmentMyPageCategorySelectBinding.root
     }
 
+
+    fun setCategoryChips(categories : ArrayList<Category>,width : Int, height : Int, layoutResource : Int, chipGroup: ChipGroup ) {
+        for ( i in 0 until categories.size ) {
+            val mChip = this.layoutInflater.inflate(layoutResource, null, false) as Chip
+
+            mChip.width = width
+            mChip.height = height
+            mChip.text = categories[i].categoryName
+            mChip.tag = categories[i].categoryId
+
+            if(categories[i].isMember==null || categories[i].isMember=="t"){
+                mChip.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, boolean ->
+                    viewModel.categoryIdSelect(compoundButton.tag.toString().toInt(), boolean)
+                })
+            }else if(categories[i].isMember=="r"){
+                mChip.isCheckedIconVisible = false
+                mChip.isChipIconVisible = false
+                mChip.text = mChip.text.toString()+" (pending)"
+                mChip.isCheckable = false
+            }else{
+                // 동아리원이 아닌 경우
+                mChip.isCheckedIconVisible = false
+                mChip.isChipIconVisible = false
+                mChip.text = "Join " +  mChip.text.toString()
+                mChip.isCheckable = false
+                mChip.setOnClickListener {
+                    viewModel.setSelectedRequestJoinClubCategoryId(categories[i].categoryId)
+                    viewModel.clickClubJoinRequest()
+                }
+            }
+
+
+            chipGroup.addView(mChip)
+        }
+
+    }
 
 }

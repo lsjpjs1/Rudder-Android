@@ -20,6 +20,17 @@ interface BoardInfoService {
         @Body getCategoriesRequestWithSchoolId: GetCategoriesRequestWithSchoolId
     ) : Response<ArrayList<Category>>
 
+    @POST("/board/clubCategoryList")
+    suspend fun getClubCategories(
+        @Body getCategoriesRequestWithToken: GetCategoriesRequestWithToken
+    ) : Response<ArrayList<Category>>
+
+    @POST("/board/clubCategoryList")
+    suspend fun getClubCategories(
+        @Body getCategoriesRequestWithSchoolId: GetCategoriesRequestWithSchoolId
+    ) : Response<ArrayList<Category>>
+
+
 
 
     @POST("/board/userSelectCategoryList")
@@ -32,8 +43,14 @@ interface BoardInfoService {
 data class Category(
     @SerializedName(value = "category_id")
     val categoryId : Int,
+
     @SerializedName(value = "category_name")
-    val categoryName : String
+    val categoryName : String,
+
+    val isMember : String?,
+
+    @SerializedName(value = "category_type")
+    val categoryType : String
 )
 
 
@@ -57,3 +74,4 @@ data class GetCategoriesRequestWithSchoolId(
     @SerializedName(value = "school_id")
     val schoolId : Int?
 )
+

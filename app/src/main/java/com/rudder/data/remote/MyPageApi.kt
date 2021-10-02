@@ -33,4 +33,12 @@ class MyPageApi {
         }
 
     }
+
+    fun requestJoinClub(requestJoinClubRequest: RequestJoinClubRequest) : Deferred<Response<RequestJoinClubResponse>> {
+
+        return GlobalScope.async(Dispatchers.IO){
+            myPageService.requestJoinClub(requestJoinClubRequest)
+        }
+
+    }
 }

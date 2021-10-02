@@ -29,6 +29,16 @@ class BoardInfoApi {
         }
     }
 
+    fun getClubCategoryList(getCategoriesRequest: GetCategoriesRequest) : Deferred<Response<ArrayList<Category>>> {
+        return GlobalScope.async(Dispatchers.IO){
+            if(getCategoriesRequest.schoolId==null) {
+                boardInfoService.getClubCategories(GetCategoriesRequestWithToken(getCategoriesRequest.token))
+            }else{
+                boardInfoService.getClubCategories(GetCategoriesRequestWithSchoolId(getCategoriesRequest.schoolId))
+            }
+        }
+    }
+
     fun getSelectedCategoryListApi(token : Token) : Deferred<Response<ArrayList<Category>>> {
         return GlobalScope.async(Dispatchers.IO){
             boardInfoService.getSelectedCategories(token)

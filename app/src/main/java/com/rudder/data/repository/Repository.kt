@@ -74,8 +74,8 @@ class Repository {
     }
 
 
-    suspend fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String): ArrayList<PreviewPost>{
-        return PostApi.instance.getPosts(pagingIndex, endPostId,categoryId,token).await()
+    suspend fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String,searchWord:String = ""): ArrayList<PreviewPost>{
+        return PostApi.instance.getPosts(pagingIndex, endPostId,categoryId,token,searchWord).await()
     }
 
     suspend fun getComments(getCommentInfo: GetCommentInfo): ArrayList<Comment> {
@@ -116,6 +116,10 @@ class Repository {
 
     suspend fun getCategories(getCategoriesRequest: GetCategoriesRequest): ArrayList<Category>{
         return BoardInfoApi.instance.getCategoryList(getCategoriesRequest).await().results
+    }
+
+    suspend fun getClubCategories(getCategoriesRequest: GetCategoriesRequest): ArrayList<Category>{
+        return BoardInfoApi.instance.getClubCategoryList(getCategoriesRequest).await().results
     }
 
     suspend fun isLikePost(isLikePostInfo: IsLikePostInfo): Boolean{
@@ -191,6 +195,10 @@ class Repository {
 
     suspend fun addUserRequest(addUserRequestRequest: AddUserRequestRequest): Boolean{
         return MyPageApi.instance.addUserRequest(addUserRequestRequest).await().results.get("isSuccess").asBoolean
+    }
+
+    suspend fun requestJoinClub(requestJoinClubRequest: RequestJoinClubRequest): Boolean{
+        return MyPageApi.instance.requestJoinClub(requestJoinClubRequest).await().results.isSuccess
     }
 
 }

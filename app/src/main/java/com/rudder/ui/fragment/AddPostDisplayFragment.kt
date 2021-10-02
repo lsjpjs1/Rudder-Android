@@ -71,6 +71,11 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
 
         display.root.categorySpinner.isEnabled = true
 
+        viewModel.categoryNames.observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    Log.d("categoryNames2",it.toString())
+                }
+        })
 
         viewModel.selectedPhotoUriList.observe(viewLifecycleOwner, Observer {
             it?.let {

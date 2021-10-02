@@ -21,9 +21,9 @@ class PostApi {
     private val postService : PostService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(PostService::class.java)
 
 
-    fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String) : Deferred<ArrayList<PreviewPost>> {
+    fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String,searchWord:String) : Deferred<ArrayList<PreviewPost>> {
         return GlobalScope.async(Dispatchers.IO){
-            postService.renderPost(GetPostInfo("bulletin",pagingIndex,endPostId,categoryId,token))
+            postService.renderPost(GetPostInfo("bulletin",pagingIndex,endPostId,categoryId,token,searchWord))
         }
     }
 

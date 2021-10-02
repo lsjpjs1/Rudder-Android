@@ -28,9 +28,6 @@ class CommunityHeaderFragment : Fragment() {
         val header = DataBindingUtil.inflate<FragmentCommunityHeaderBinding>(inflater,R.layout.fragment_community_header,container,false)
         header.mainVM = viewModel
 
-        header.constraintLayout13.setOnClickListener {
-            Toast.makeText(lazyContext, "Coming soon!", Toast.LENGTH_SHORT).show()
-        }
 
         return header.root
     }

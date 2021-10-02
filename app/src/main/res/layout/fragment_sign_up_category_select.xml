@@ -90,12 +90,17 @@
             android:layout_height="0dp"
             android:gravity="center_horizontal"
             app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintHeight_percent="0.92"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/constraintLayoutSS1"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.9">
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:fillViewport="true">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipsPrograms"
@@ -110,6 +115,7 @@
                 app:singleSelection="false">
 
             </com.google.android.material.chip.ChipGroup>
+            </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

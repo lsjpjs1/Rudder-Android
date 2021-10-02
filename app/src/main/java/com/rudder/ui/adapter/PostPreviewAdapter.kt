@@ -1,36 +1,30 @@
 package com.rudder.ui.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.data.PreviewPost
 import com.rudder.databinding.PostPreviewBinding
 import com.rudder.util.CustomOnclickListener
-import com.rudder.util.LocaleUtil
 import com.rudder.util.PostsDiffCallback
-import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.post_preview.view.*
-import kotlinx.android.synthetic.main.profile_setting_display_image.view.*
-import org.ocpsoft.prettytime.PrettyTime
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlin.collections.ArrayList
 
-class PostPreviewAdapter(
+abstract class PostPreviewAdapter<out VM>(
     val previewPostList: ArrayList<PreviewPost>,
     val listener: CustomOnclickListener,
     val context: Context,
-    val viewModel: MainViewModel
-) : RecyclerView.Adapter<PostPreviewAdapter.CustomViewHolder>() {
-    private val MAX_POST_BODY_LENGTH = 50
+    val viewModel: VM
+) : RecyclerView.Adapter<PostPreviewAdapter<out VM>.CustomViewHolder>() {
+    val MAX_POST_BODY_LENGTH = 50
 
     inner class CustomViewHolder(val postPreviewBinding: PostPreviewBinding) :
         RecyclerView.ViewHolder(postPreviewBinding.root)
@@ -38,7 +32,7 @@ class PostPreviewAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PostPreviewAdapter.CustomViewHolder {
+    ): PostPreviewAdapter<out VM>.CustomViewHolder {
         val bind = DataBindingUtil.inflate<PostPreviewBinding>(
             LayoutInflater.from(parent.context),
             R.layout.post_preview,
@@ -59,58 +53,22 @@ class PostPreviewAdapter(
         return previewPostList.size
     }
 
-    @SuppressLint("ResourceAsColor")
-    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+    suspend fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) =
+        withContext(Dispatchers.Main){
+            Log.d("previewPostList",previewPostList.toString())
+            Log.d("newPostList",newPreviewPosts.toString())
+            val diffCallback: PostsDiffCallback = PostsDiffCallback(previewPostList, newPreviewPosts)
+            val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
+            withContext(Dispatchers.Main){
+                previewPostList.clear()
+                previewPostList.addAll(newPreviewPosts)
+                diffResult.dispatchUpdatesTo(this@PostPreviewAdapter)
 
-        val timeago =
-            PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(previewPostList[position].postTime.time))
-
-        val imageCount = previewPostList[position].imageUrls.size
-
-        holder.postPreviewBinding.post = previewPostList[position]
-        holder.postPreviewBinding.timeago = timeago
-        holder.postPreviewBinding.mainVM = viewModel
-        holder.postPreviewBinding.position = position
-        holder.postPreviewBinding.also {
-            it.post = previewPostList[position]
-            it.timeago = timeago
-            it.maxpostbodylength = MAX_POST_BODY_LENGTH
-        }
-        holder.postPreviewBinding.postPreview.setOnClickListener {
-            listener.onClick(holder.postPreviewBinding.postPreview, position)
-        }
-
-        if (previewPostList[position].isLiked) {
-            holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-        } else {
-            holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_outline_thumb_up_24)
-        }
-
-
-        if (imageCount == 0) {
-            holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.GONE
-        } else {
-            holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.VISIBLE
+            }
         }
 
 
 
-        Glide.with(holder.postPreviewBinding.root.previewPostProfileImageView.context)
-            .load(previewPostList[position].userProfileImageUrl)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(holder.postPreviewBinding.root.previewPostProfileImageView)
-
-    }
-
-    fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) {
-
-        val diffCallback: PostsDiffCallback = PostsDiffCallback(previewPostList, newPreviewPosts)
-        val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
-        previewPostList.clear()
-        previewPostList.addAll(newPreviewPosts)
-        diffResult.dispatchUpdatesTo(this)
-
-    }
 
 
 }

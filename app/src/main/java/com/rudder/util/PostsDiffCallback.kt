@@ -1,5 +1,6 @@
 package com.rudder.util
 
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.rudder.data.PreviewPost
 
@@ -17,7 +18,9 @@ class PostsDiffCallback(private val oldList:ArrayList<PreviewPost>, private val 
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return (oldList[oldItemPosition].commentCount == newList[newItemPosition].commentCount
+        val res = (oldList[oldItemPosition].commentCount == newList[newItemPosition].commentCount
                 && oldList[oldItemPosition].likeCount == newList[newItemPosition].likeCount)
+        Log.d("diffcallback", "$oldItemPosition $newItemPosition "+oldList[oldItemPosition].commentCount.toString()+newList[newItemPosition].commentCount.toString())
+        return res
     }
 }

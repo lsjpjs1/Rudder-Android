@@ -17,7 +17,24 @@ interface MyPageService {
     suspend fun addUserRequest(
         @Body addUserRequestRequest: AddUserRequestRequest
     ) : Response<JsonObject>
+
+    @POST("/board/requestJoinClub")
+    suspend fun requestJoinClub(
+        @Body requestJoinClubRequest: RequestJoinClubRequest
+    ) : Response<RequestJoinClubResponse>
 }
+
+data class RequestJoinClubRequest(
+    val token: String,
+    @SerializedName("category_id")
+    val categoryId: Int,
+    @SerializedName("request_body")
+    val requestBody: String
+)
+
+data class RequestJoinClubResponse(
+    val isSuccess: Boolean
+)
 
 data class  MyProfileImageRequest(
     val token : String

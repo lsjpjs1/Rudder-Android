@@ -77,6 +77,7 @@
             android:layout_height="match_parent"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout13"
             app:layout_constraintWidth_default="percent"
+            android:onClick="@{()->mainVM.clickAddPost()}"
             app:layout_constraintWidth_percent="0.1">
 
 
@@ -90,7 +91,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_add_24"
                 tools:srcCompat="@drawable/ic_baseline_add_24"
-                android:onClick="@{()->mainVM.clickAddPost()}"
                 app:tint="#000000" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -99,6 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout14"
+            android:onClick="@{()->mainVM.clickSearchPost()}"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.1">
 
