@@ -53,18 +53,17 @@ abstract class PostPreviewAdapter<out VM>(
         return previewPostList.size
     }
 
-    suspend fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) =
-        withContext(Dispatchers.Main){
+    fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) {
             Log.d("previewPostList",previewPostList.toString())
             Log.d("newPostList",newPreviewPosts.toString())
-            val diffCallback: PostsDiffCallback = PostsDiffCallback(previewPostList, newPreviewPosts)
+            val diffCallback: PostsDiffCallback = PostsDiffCallback()
+            diffCallback.newList = ArrayList(newPreviewPosts)
+            diffCallback.oldList = ArrayList(previewPostList)
             val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
-            withContext(Dispatchers.Main){
                 previewPostList.clear()
                 previewPostList.addAll(newPreviewPosts)
                 diffResult.dispatchUpdatesTo(this@PostPreviewAdapter)
 
-            }
         }
 
 

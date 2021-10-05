@@ -532,7 +532,7 @@ class MainViewModel : ViewModel() {
             val resPosts = Repository().getPosts(
                 pagingIndex,
                 endPostId,
-                userSelectCategories.value!![selectedCategoryPosition.value!!].categoryId,
+                -1,
                 App.prefs.getValue(tokenKey)!!
             )
             viewModelScope.launch {

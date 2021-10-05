@@ -164,18 +164,23 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.profileSettingNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
+                // 여기 주석 풀면 회원가입 후 카테고리 선택 창으로 넘어감
+//                if (it) {
+//                    toastSignUpComplete.show()
+//                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+//
+//                    fragmentShowHide.removeFragment(termsOfServiceFragment)
+//                    fragmentShowHide.removeFragment(schoolSelectFragment)
+//                    fragmentShowHide.removeFragment(createAccountFragment)
+//                    fragmentShowHide.removeFragment(profileSettingFragment)
+//
+//
+//                    fragmentShowHide.addFragment(categorySelectSignUpFragment,R.id.signUp_container,"categorySelectSignUpFragment")
+//                    fragmentShowHide.showFragment(categorySelectSignUpFragment, R.id.signUp_container)
+//                }
                 if (it) {
-                    toastSignUpComplete.show()
-                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-
-                    fragmentShowHide.removeFragment(termsOfServiceFragment)
-                    fragmentShowHide.removeFragment(schoolSelectFragment)
-                    fragmentShowHide.removeFragment(createAccountFragment)
-                    fragmentShowHide.removeFragment(profileSettingFragment)
-
-
-                    fragmentShowHide.addFragment(categorySelectSignUpFragment,R.id.signUp_container,"categorySelectSignUpFragment")
-                    fragmentShowHide.showFragment(categorySelectSignUpFragment, R.id.signUp_container)
+                    StartActivityUtil.callActivity(this, LoginActivity())
+                    finish()
                 }
             }})  // signUP Complete !
 

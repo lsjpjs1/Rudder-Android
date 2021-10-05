@@ -34,7 +34,7 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
         savedInstanceState: Bundle?
     ): View? {
         val communityDisplay = DataBindingUtil.inflate<FragmentCommunityDisplayBinding>(inflater,R.layout.fragment_community_display,container,false)
-        val adapter = MainPostPreviewAdapter(viewModel.posts.value!!,this,lazyContext, viewModel)
+        val adapter = MainPostPreviewAdapter(ArrayList(viewModel.posts.value!!),this,lazyContext, viewModel)
         communityDisplay.lifecycleOwner = this
         communityDisplay.postPreviewRV.also{
             it.layoutManager=LinearLayoutManager(lazyContext)
@@ -52,9 +52,9 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
             })
         }
 
-//        viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
-//            adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
-//        })
+        viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
+            adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
+        })
         viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
 
             it?.let {
@@ -68,9 +68,7 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
         viewModel.posts.observe(viewLifecycleOwner, Observer {
             Log.d("posts community display",it.toString())
             Log.d("previewPostListAtObserv",adapter.previewPostList.toString())
-            viewLifecycleOwner.lifecycleScope.launch{
                 adapter.updatePosts(it)
-            }
         })
 
         viewModel.isAddPostSuccess.observe(viewLifecycleOwner, Observer {

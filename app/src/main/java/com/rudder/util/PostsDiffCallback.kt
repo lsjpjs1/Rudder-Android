@@ -4,7 +4,10 @@ import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.rudder.data.PreviewPost
 
-class PostsDiffCallback(private val oldList:ArrayList<PreviewPost>, private val newList: ArrayList<PreviewPost>) : DiffUtil.Callback() {
+class PostsDiffCallback() : DiffUtil.Callback() {
+    lateinit var oldList:ArrayList<PreviewPost>
+    lateinit var newList: ArrayList<PreviewPost>
+
     override fun getOldListSize(): Int {
         return oldList.size
     }

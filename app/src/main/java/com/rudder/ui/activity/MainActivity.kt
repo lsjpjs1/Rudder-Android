@@ -278,13 +278,14 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isSearchPostClick.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
-                searchPostFragment = SearchPostFragment()
-                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                fragmentShowHide.addToBackStack()
-                fragmentShowHide.hideFragment(mainBottomBarFragment)
-
-                fragmentShowHide.addFragment(searchPostFragment, R.id.mainDisplay, "searchPost")
-                fragmentShowHide.showFragment(searchPostFragment, R.id.mainDisplay)
+//                searchPostFragment = SearchPostFragment()
+//                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+//                fragmentShowHide.addToBackStack()
+//                fragmentShowHide.hideFragment(mainBottomBarFragment)
+//
+//                fragmentShowHide.addFragment(searchPostFragment, R.id.mainDisplay, "searchPost")
+//                fragmentShowHide.showFragment(searchPostFragment, R.id.mainDisplay)
+                Toast.makeText(this,"Coming Soon!",Toast.LENGTH_SHORT).show()
             }
         })
 
