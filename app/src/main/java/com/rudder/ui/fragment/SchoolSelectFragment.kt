@@ -59,7 +59,8 @@ class SchoolSelectFragment : Fragment() {
                 //schoolSelectBinding.root.schoolSelectNextBtn.setBackgroundResource(R.color.teal_200)
         }})
 
-        var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,viewModel.schoolList.value!!)
+        val schoolNameList: List<String> = viewModel.schoolList.value!!.map{it.schoolName}
+        var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,schoolNameList)
         schoolSelectBinding.schoolSelectSpinner.adapter = adapter
 
         schoolSelectBinding.root.schoolSelectCheckbox.isEnabled = false

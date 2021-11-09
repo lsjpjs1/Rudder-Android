@@ -2,6 +2,7 @@ package com.rudder.viewModel
 
 
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.CompoundButton
 
@@ -55,14 +56,19 @@ class LoginViewModel() : ViewModel() {
     }
 
     fun getNotice(){
-        GlobalScope.async {
-            val version = BuildConfig.VERSION_NAME
-            val response = Repository().getNotice(NoticeRequest("android",version))
-            viewModelScope.launch{
-                _noticeResponse.value = response
-                var noticeAlreadyShow = true
+        try{
+            GlobalScope.async {
+                val version = BuildConfig.VERSION_NAME
+                val response = Repository().getNotice(NoticeRequest("android",version))
+                viewModelScope.launch{
+                    _noticeResponse.value = response
+                }
             }
+        }catch (e: Exception){
+            Log.d("exception",e.message!!)
+            _noticeResponse.value = NoticeResponse(true,"Error Exist")
         }
+
     }
 
     fun onCheckedChange(button: CompoundButton?, check: Boolean) {
@@ -73,7 +79,7 @@ class LoginViewModel() : ViewModel() {
             _autoLogin.value = Event(false)
             prefs.setValue("autoLogin","false")
         }
-    }
+}
 
 
     fun callSignUp(){
@@ -81,20 +87,26 @@ class LoginViewModel() : ViewModel() {
     }
 
     fun callLogin(){
-        GlobalScope.launch {
-            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+        try{
+            GlobalScope.launch {
+                ProgressBarUtil._progressBarFlag.postValue(Event(true))
 
-            val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!,App.prefs.getValue(NOTIFICATION_TOKEN_KEY)!!,"android"))
-            viewModelScope.launch{
-                if(result){
-                    _startMainActivity.value = Event(true)
-                }else{
-                    _showLoginErrorToast.value = Event(true)
+                val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!,App.prefs.getValue(NOTIFICATION_TOKEN_KEY)!!,"android"))
+                viewModelScope.launch{
+                    if(result){
+                        _startMainActivity.value = Event(true)
+                    }else{
+                        _showLoginErrorToast.value = Event(true)
+                    }
+
                 }
-
-            }
 //            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+            }
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            _showLoginErrorToast.value = Event(true)
         }
+
     }
 
 

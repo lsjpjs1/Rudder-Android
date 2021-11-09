@@ -481,10 +481,12 @@ class MainViewModel : ViewModel() {
         val plusValue =
             if (_isLikePost.value!!) -1
             else 1
-        _posts.value!![_selectedPostPosition.value!!].likeCount =
+        var tmpPosts = _posts.value
+        tmpPosts!![_selectedPostPosition.value!!].likeCount =
             _posts.value!![_selectedPostPosition.value!!].likeCount + plusValue
-        _posts.value!![_selectedPostPosition.value!!].isLiked =
+        tmpPosts!![_selectedPostPosition.value!!].isLiked =
             !_posts.value!![_selectedPostPosition.value!!].isLiked
+        _posts.postValue(tmpPosts!!)
         _isLikePost.value = !(_isLikePost.value)!!//like button 체크 혹은 해제
         _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
         addLikePost(plusValue)
@@ -500,7 +502,10 @@ class MainViewModel : ViewModel() {
             val resJson = Repository().addLikePost(addLikePostInfo)
             viewModelScope.launch {
                 if (resJson.get("isSuccess").asBoolean){
-                    _posts.value!![selectedPostPosition.value!!].likeCount = resJson.get("like_count").asInt
+                    var tmpPosts = _posts.value
+                    tmpPosts!![_selectedPostPosition.value!!].likeCount =
+                        resJson.get("like_count").asInt
+                    _posts.postValue(tmpPosts!!)
                     _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
                 }
             }
@@ -525,14 +530,19 @@ class MainViewModel : ViewModel() {
         _isScrollBottomTouch.value = Event(true)
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
-        Log.d("progressbar_getPost",selectedCategoryPosition.value!!.toString())
 
         viewModelScope.launch {
+
+            val categoryId = if(userSelectCategories.value!!.size-1>=selectedCategoryPosition.value!!){
+                userSelectCategories.value!![selectedCategoryPosition.value!!].categoryId
+            }else{
+                -1
+            }
 
             val resPosts = Repository().getPosts(
                 pagingIndex,
                 endPostId,
-                -1,
+                categoryId,
                 App.prefs.getValue(tokenKey)!!
             )
             viewModelScope.launch {
@@ -627,12 +637,7 @@ class MainViewModel : ViewModel() {
 //        _posts.value!![_selectedPostPosition.value!!].commentCount =
 //            _posts.value!![_selectedPostPosition.value!!].commentCount + 1
 
-        var tmpPosts = _posts.value
-        tmpPosts!![_selectedPostPosition.value!!].commentCount =
-            _posts.value!![_selectedPostPosition.value!!].commentCount + 1
-        _posts.postValue(tmpPosts!!)
 
-        _commentCountChange.value = Event(true)
         GlobalScope.launch {
             if (_selectedCommentGroupNum.value == -1) { // _selectedCommentGroupNum.value==-1 -> parent인 댓글
                 addCommentInfo = AddCommentInfo(
@@ -656,6 +661,14 @@ class MainViewModel : ViewModel() {
                 getComments()
                 _commentBody.postValue("")
                 clearNestedCommentInfo()
+                viewModelScope.launch {
+                    var tmpPosts = _posts.value
+                    tmpPosts!![_selectedPostPosition.value!!].commentCount =
+                        _posts.value!![_selectedPostPosition.value!!].commentCount + 1
+                    _posts.postValue(tmpPosts!!)
+
+                    _commentCountChange.value = Event(true)
+                }
             }
         }
     }
@@ -687,6 +700,7 @@ class MainViewModel : ViewModel() {
                 val isSuccess = res.isSuccess
                 val postId = res.postId
                 if (isSuccess) uploadPhoto(postId)
+                else ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             }
         }
     }
@@ -785,7 +799,10 @@ class MainViewModel : ViewModel() {
             _isDeleteCommentSuccess.postValue(Event(result))
 
             if (result) {
-                _posts.value!![_selectedPostPosition.value!!].commentCount = _posts.value!![_selectedPostPosition.value!!].commentCount - 1
+                var tmpPosts = _posts.value
+                tmpPosts!![_selectedPostPosition.value!!].commentCount =
+                    _posts.value!![_selectedPostPosition.value!!].commentCount - 1
+                _posts.postValue(tmpPosts!!)
                 _commentCountChange.postValue(Event(result))
                 getComments()
 

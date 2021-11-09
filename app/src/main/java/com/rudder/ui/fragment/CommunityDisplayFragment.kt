@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
+import com.rudder.data.PreviewPost
 import com.rudder.databinding.FragmentCommunityDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.MainPostPreviewAdapter
@@ -34,7 +35,8 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
         savedInstanceState: Bundle?
     ): View? {
         val communityDisplay = DataBindingUtil.inflate<FragmentCommunityDisplayBinding>(inflater,R.layout.fragment_community_display,container,false)
-        val adapter = MainPostPreviewAdapter(ArrayList(viewModel.posts.value!!),this,lazyContext, viewModel)
+        val adapter = MainPostPreviewAdapter(this,lazyContext, viewModel)
+        adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
         communityDisplay.lifecycleOwner = this
         communityDisplay.postPreviewRV.also{
             it.layoutManager=LinearLayoutManager(lazyContext)
@@ -52,23 +54,9 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
             })
         }
 
-        viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
-            adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
-        })
-        viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
 
-            it?.let {
-                viewModel.selectedPostPosition.value?.let {
-                    adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
-                }
-
-            }
-
-        })
         viewModel.posts.observe(viewLifecycleOwner, Observer {
-            Log.d("posts community display",it.toString())
-            Log.d("previewPostListAtObserv",adapter.previewPostList.toString())
-                adapter.updatePosts(it)
+            adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
         })
 
         viewModel.isAddPostSuccess.observe(viewLifecycleOwner, Observer {

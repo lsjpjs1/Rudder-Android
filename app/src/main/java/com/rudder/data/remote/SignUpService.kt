@@ -47,6 +47,11 @@ interface SignUpService{
     suspend fun profileImageListService() : Response<JsonObject>
 }
 
+data class School(
+    val schoolId: Int,
+    val schoolName: String
+)
+
 
 
 

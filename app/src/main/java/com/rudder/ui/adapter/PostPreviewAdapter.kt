@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
 import com.rudder.data.PreviewPost
@@ -19,15 +20,31 @@ import kotlinx.coroutines.withContext
 import kotlin.collections.ArrayList
 
 abstract class PostPreviewAdapter<out VM>(
-    val previewPostList: ArrayList<PreviewPost>,
     val listener: CustomOnclickListener,
     val context: Context,
     val viewModel: VM
-) : RecyclerView.Adapter<PostPreviewAdapter<out VM>.CustomViewHolder>() {
+) : ListAdapter<PreviewPost,PostPreviewAdapter<out VM>.CustomViewHolder>(diffUtil) {
     val MAX_POST_BODY_LENGTH = 50
 
     inner class CustomViewHolder(val postPreviewBinding: PostPreviewBinding) :
         RecyclerView.ViewHolder(postPreviewBinding.root)
+
+    companion object {
+        val diffUtil = object: DiffUtil.ItemCallback<PreviewPost>() {
+            override fun areContentsTheSame(oldItem: PreviewPost, newItem: PreviewPost): Boolean {
+                Log.d("items","$oldItem , $newItem")
+                return (oldItem.commentCount == newItem.commentCount
+                        && oldItem.likeCount == newItem.likeCount)
+            }
+
+
+            override fun areItemsTheSame(oldItem: PreviewPost, newItem: PreviewPost): Boolean {
+                Log.d("items","$oldItem , $newItem")
+                return oldItem.postId == newItem.postId
+            }
+
+        }
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -47,26 +64,6 @@ abstract class PostPreviewAdapter<out VM>(
         bind.root.layoutParams = params
         return CustomViewHolder(bind)
     }
-
-
-    override fun getItemCount(): Int {
-        return previewPostList.size
-    }
-
-    fun updatePosts(newPreviewPosts: ArrayList<PreviewPost>) {
-            Log.d("previewPostList",previewPostList.toString())
-            Log.d("newPostList",newPreviewPosts.toString())
-            val diffCallback: PostsDiffCallback = PostsDiffCallback()
-            diffCallback.newList = ArrayList(newPreviewPosts)
-            diffCallback.oldList = ArrayList(previewPostList)
-            val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
-                previewPostList.clear()
-                previewPostList.addAll(newPreviewPosts)
-                diffResult.dispatchUpdatesTo(this@PostPreviewAdapter)
-
-        }
-
-
 
 
 

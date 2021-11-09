@@ -1,5 +1,6 @@
 package com.rudder.data.repository
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -13,35 +14,43 @@ import com.rudder.data.remote.SignUpApi
 import com.rudder.data.remote.TokenApi
 import com.rudder.data.remote.*
 import okhttp3.RequestBody
+import java.sql.Timestamp
+import kotlin.Exception
 
 
 class Repository {
 
     suspend fun login(loginInfo: LoginInfo) : Boolean{
-        val key = BuildConfig.TOKEN_KEY
-        val result : Boolean
-        val userIdKey = "userId"
+        try{
+            val key = BuildConfig.TOKEN_KEY
+            val result : Boolean
+            val userIdKey = "userId"
 
-        if(prefs.getValue(key) == null || prefs.getValue(key) == "" ){ // 토큰이 비어있는 상태, 로그인의 서버요청이 필요한 상태
-            val resLogin =  LoginApi.instance.login(loginInfo).await()
-            val value = resLogin.results
-            val flag = value.get("success").asBoolean
-            if (flag){
-                val loginToken = value.get("token").asString
-                prefs.setValue(key, loginToken)
-                prefs.setValue(userIdKey,loginInfo.userId)
-                result = true
-            } else{
-                result = false
+            if(prefs.getValue(key) == null || prefs.getValue(key) == "" ){ // 토큰이 비어있는 상태, 로그인의 서버요청이 필요한 상태
+                val resLogin =  LoginApi.instance.login(loginInfo).await()
+                if (resLogin.results.success){
+                    val loginToken = resLogin.results.token
+                    prefs.setValue(key, loginToken)
+                    prefs.setValue(userIdKey,loginInfo.userId)
+                    result = true
+                } else{
+                    result = false
+                }
+            } else { //      자동 로그인 하는 상태, 로그인의 서버요청이 필요하지 않는 상태, 토큰이 차있는 상태, 토큰 유효 검사 해야됨.
+                result = checkToken(TokenInfo(prefs.getValue(key)!!))
             }
-        } else { //      자동 로그인 하는 상태, 로그인의 서버요청이 필요하지 않는 상태, 토큰이 차있는 상태, 토큰 유효 검사 해야됨.
-            result = checkToken(TokenInfo(prefs.getValue(key)!!))
+            return result
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return false
         }
-        return result
+
     }
 
 
     suspend fun signUpSendVerifyCode(emailInfoSignUp : EmailInfoSignUp) : String{
+
         val verifyAPIResult = SignUpApi.instance.emailSignUp(emailInfoSignUp).await()
         return verifyAPIResult.results.get("fail").asString
     }
@@ -57,8 +66,15 @@ class Repository {
     }
 
     private suspend fun checkToken(tokenInfo: TokenInfo): Boolean {
-        val tokenAPIResultJson = TokenApi.instance.tokenValidation(tokenInfo).await()
-        return tokenAPIResultJson.results.get("isTokenValid").asBoolean
+        try{
+            val tokenAPIResultJson = TokenApi.instance.tokenValidation(tokenInfo).await()
+            return tokenAPIResultJson.results.get("isTokenValid").asBoolean
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return false
+        }
+
     }
 
 
@@ -75,22 +91,50 @@ class Repository {
 
 
     suspend fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String,searchWord:String = ""): ArrayList<PreviewPost>{
-        return PostApi.instance.getPosts(pagingIndex, endPostId,categoryId,token,searchWord).await()
+        try{
+            return PostApi.instance.getPosts(pagingIndex, endPostId,categoryId,token,searchWord).await()
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return arrayListOf()
+        }
+
     }
 
     suspend fun getComments(getCommentInfo: GetCommentInfo): ArrayList<Comment> {
-        val resJson :Response<ArrayList<Comment>> = CommentApi.instance.getComments(getCommentInfo).await()
-        return resJson.results
+        try {
+            val resJson :Response<ArrayList<Comment>> = CommentApi.instance.getComments(getCommentInfo).await()
+            return resJson.results
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return arrayListOf()
+        }
+
     }
 
     suspend fun addComment(addCommentInfo: AddCommentInfo) : Boolean{
-        val resJson = CommentApi.instance.addComment(addCommentInfo).await()
-        return resJson.results.get("isSuccess").asBoolean
+        try{
+            val resJson = CommentApi.instance.addComment(addCommentInfo).await()
+            return resJson.results.get("isSuccess").asBoolean
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return false
+        }
+
     }
 
     suspend fun addPost(addPostInfo: AddPostInfo): AddPostResponse{
-        val response = PostApi.instance.addPostApi(addPostInfo).await()
-        return response.results
+        try{
+            val response = PostApi.instance.addPostApi(addPostInfo).await()
+            return response.results
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return AddPostResponse(false,-1)
+        }
+
     }
 
     suspend fun signUpCreateAccount(signUpInsertInfo: SignUpInsertInfo) : Boolean { // Sign up, Complete!
@@ -123,7 +167,13 @@ class Repository {
     }
 
     suspend fun isLikePost(isLikePostInfo: IsLikePostInfo): Boolean{
-        return PostApi.instance.isLikePost(isLikePostInfo).await().results.get("isSuccess").asBoolean
+        try{
+            return PostApi.instance.isLikePost(isLikePostInfo).await().results.get("isSuccess").asBoolean
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return false
+        }
     }
 
     suspend fun addLikePost(addLikePostInfo: AddLikePostInfo): JsonObject{
@@ -135,7 +185,14 @@ class Repository {
     }
 
     suspend fun addPostViewCount(addPostViewCountInfo: AddPostViewCountInfo): Boolean{
-        return PostApi.instance.addPostViewCount(addPostViewCountInfo).await().results.get("isSuccess").asBoolean
+        try{
+            return PostApi.instance.addPostViewCount(addPostViewCountInfo).await().results.get("isSuccess").asBoolean
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return false
+        }
+
     }
 
     suspend fun deletePostRepository(deletePostInfo: DeletePostInfo) : Boolean{
@@ -159,12 +216,26 @@ class Repository {
     }
 
     suspend fun getUploadUrls(getUploadUrlsInfo: GetUploadUrlsInfo): ArrayList<String>{
-        val arrayListType = object : TypeToken<ArrayList<String>>(){}.type
-        return Gson().fromJson<ArrayList<String>>(FileApi.instance.getUploadUrls(getUploadUrlsInfo).await().results.get("urls"),arrayListType)
+        try{
+            val arrayListType = object : TypeToken<ArrayList<String>>(){}.type
+            return Gson().fromJson<ArrayList<String>>(FileApi.instance.getUploadUrls(getUploadUrlsInfo).await().results.get("urls"),arrayListType)
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return arrayListOf()
+        }
+
     }
 
     suspend fun uploadImage(file:RequestBody,url:String){
-        FileApi.instance.uploadImage(file,url).await()
+        try{
+            FileApi.instance.uploadImage(file,url).await()
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return
+        }
+
     }
 
     suspend fun profileImageListRepository() : JsonArray {
@@ -186,19 +257,41 @@ class Repository {
 
 
     suspend fun getNotice(noticeRequest: NoticeRequest): NoticeResponse{
-        return NoticeApi.instance.getNotice(noticeRequest).await().results
+        try{
+            return NoticeApi.instance.getNotice(noticeRequest).await().results
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return NoticeResponse(false,"")
+        }
+
     }
 
     suspend fun getMyProfileImageUrl(myProfileImageRequest:MyProfileImageRequest): MyProfileImageResponse{
+
         return MyPageApi.instance.getMyProfileImageUrl(myProfileImageRequest).await().results
     }
 
     suspend fun addUserRequest(addUserRequestRequest: AddUserRequestRequest): Boolean{
-        return MyPageApi.instance.addUserRequest(addUserRequestRequest).await().results.get("isSuccess").asBoolean
+        try{
+            return MyPageApi.instance.addUserRequest(addUserRequestRequest).await().results.get("isSuccess").asBoolean
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return false
+        }
+
     }
 
     suspend fun requestJoinClub(requestJoinClubRequest: RequestJoinClubRequest): Boolean{
-        return MyPageApi.instance.requestJoinClub(requestJoinClubRequest).await().results.isSuccess
+        try{
+            return MyPageApi.instance.requestJoinClub(requestJoinClubRequest).await().results.isSuccess
+        }catch (e: Exception){
+            Log.d("Exception",e.message!!)
+            e.printStackTrace()
+            return false
+        }
+
     }
 
 }

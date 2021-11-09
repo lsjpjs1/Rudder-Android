@@ -19,6 +19,7 @@ import com.rudder.data.*
 import com.rudder.data.local.App
 import com.rudder.data.remote.Category
 import com.rudder.data.remote.GetCategoriesRequest
+import com.rudder.data.remote.School
 import com.rudder.data.repository.Repository
 import com.rudder.ui.activity.SignUpActivity
 import com.rudder.util.Event
@@ -68,7 +69,7 @@ class SignUpViewModel : ViewModel() {
     val _nickbnameRgCheck = MutableLiveData<Event<Boolean>>()
     val _verifiCodeChangeFlag = MutableLiveData<Event<Boolean>>()
     val _termsOfServiceFlag = MutableLiveData<Event<Boolean>>()
-    val _schoolList = MutableLiveData<MutableList<String>>()
+    val _schoolList = MutableLiveData<ArrayList<School>>()
 
     var _categories = MutableLiveData<ArrayList<Category>>()
     var _categoryNames = MutableLiveData<ArrayList<String>>()
@@ -122,7 +123,7 @@ class SignUpViewModel : ViewModel() {
     val nickbnameRgCheck: LiveData<Event<Boolean>> = _nickbnameRgCheck
     val verifiCodeChangeFlag : LiveData<Event<Boolean>> = _verifiCodeChangeFlag
     val termsOfServiceFlag : LiveData<Event<Boolean>> = _termsOfServiceFlag
-    val schoolList : LiveData<MutableList<String>> = _schoolList
+    val schoolList : LiveData<ArrayList<School>> = _schoolList
 
 
     var categories: LiveData<ArrayList<Category>> = _categories
@@ -150,7 +151,7 @@ class SignUpViewModel : ViewModel() {
         _userEmailID.value = ""
         _userEmailDomain.value = ""
         _userVerificationCode.value = ""
-        _schoolList.value = mutableListOf("Select Your University!")
+        _schoolList.value = arrayListOf(School(-1,"Select Your University!"))
         _userSchoolName.value = ""
         _userSchoolInt.value = 0
         _userIntroduce.value = ""
@@ -289,7 +290,7 @@ class SignUpViewModel : ViewModel() {
         //parent.getSelectedItem()            get selected item
         if (pos != 0){
             _schoolSelectFlag.value = Event(true)
-            _userSchoolInt.value = pos + 1
+            _userSchoolInt.value = _schoolList.value!![pos].schoolId
         }else{
             _schoolSelectFlag.value = Event(false)
         }
@@ -303,7 +304,8 @@ class SignUpViewModel : ViewModel() {
             for (i in 0 until resultSchoolList.size() ) {
                 val iObject = resultSchoolList[i].asJsonObject
                 val schoolName = iObject.get("school_name").asString
-                _schoolList.value!!.add(schoolName)
+                val schoolId = iObject.get("school_id").asInt
+                _schoolList.value!!.add(School(schoolId,schoolName))
             }
         }
     }

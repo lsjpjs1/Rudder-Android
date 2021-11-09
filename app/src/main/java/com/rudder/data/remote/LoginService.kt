@@ -14,6 +14,11 @@ interface LoginService {
     suspend fun login(
             @Body loginInfo: LoginInfo
 
-    ) : Response<JsonObject>
+    ) : Response<LoginResponse>
 }
 
+data class LoginResponse(
+    val success:Boolean,
+    val error:String,
+    val token:String
+)
