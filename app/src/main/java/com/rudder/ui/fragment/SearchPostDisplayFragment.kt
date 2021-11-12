@@ -39,28 +39,16 @@ class SearchPostDisplayFragment  : Fragment(),CustomOnclickListener {
         searchDisplayBinding.lifecycleOwner = this
 
         val adapter = MainPostPreviewAdapter(this,lazyContext, viewModel)
-        adapter.submitList(viewModel.searchPosts.value!!)
+        adapter.submitList(viewModel.searchPosts.value!!.toMutableList().map { it.copy() })
         searchDisplayBinding.searchPostPreviewRV.also{
             it.layoutManager= LinearLayoutManager(lazyContext)
             it.setHasFixedSize(false)
             it.adapter = adapter
         }
 
-        viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
-            adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
-        })
-        viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
 
-            it?.let {
-                viewModel.selectedPostPosition.value?.let {
-                    adapter.notifyItemChanged(viewModel.selectedPostPosition.value!!)
-                }
-
-            }
-
-        })
-        viewModel.searchPosts.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+        viewModel.searchPosts.observe(viewLifecycleOwner, Observer { items ->
+            adapter.submitList(items.toMutableList().map { it.copy() })
         })
         return searchDisplayBinding.root
     }
