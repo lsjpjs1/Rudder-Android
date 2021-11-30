@@ -305,7 +305,14 @@ class SignUpViewModel : ViewModel() {
                 val iObject = resultSchoolList[i].asJsonObject
                 val schoolName = iObject.get("school_name").asString
                 val schoolId = iObject.get("school_id").asInt
+
                 _schoolList.value!!.add(School(schoolId,schoolName))
+            }
+            viewModelScope.launch {
+                val tmpList = _schoolList.value
+                tmpList?.let {
+                    _schoolList.value = it
+                }
             }
         }
     }

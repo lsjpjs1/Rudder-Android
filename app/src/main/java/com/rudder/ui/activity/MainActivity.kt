@@ -16,7 +16,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -37,30 +39,31 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
 import kotlinx.android.synthetic.main.fragment_show_post.postPreviewTailCommentCountTV
 import kotlinx.android.synthetic.main.post_comments.*
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
-    private lateinit var mainBottomBarFragment: MainBottomBarFragment
-    private lateinit var addCommentFragment: AddCommentFragment
+    lateinit var mainBottomBarFragment: MainBottomBarFragment
+    lateinit var addCommentFragment: AddCommentFragment
     private lateinit var communityFragment: CommunityFragment
     private lateinit var myPageFragment: MyPageFragment
     private lateinit var addPostFragment: AddPostFragment
     private lateinit var searchPostFragment: SearchPostFragment
-    private lateinit var showPostFragment: ShowPostFragment
-    private lateinit var communityPostBottomSheetFragment: CommunityPostBottomSheetFragment
-    private lateinit var communityCommentBottomSheetFragment: CommunityCommentBottomSheetFragment
-    private lateinit var communityPostReportFragment: CommunityPostReportFragment
-    private lateinit var communityCommentReportFragment: CommunityCommentReportFragment
+    lateinit var showPostFragment: ShowPostFragment
+    lateinit var communityPostBottomSheetFragment: CommunityPostBottomSheetFragment
+    lateinit var communityCommentBottomSheetFragment: CommunityCommentBottomSheetFragment
+    lateinit var communityPostReportFragment: CommunityPostReportFragment
+    lateinit var communityCommentReportFragment: CommunityCommentReportFragment
     private lateinit var clubJoinRequestDialogFragment: ClubJoinRequestDialogFragment
-    private lateinit var communityCommentEditFragment: CommunityCommentEditFragment
+    lateinit var communityCommentEditFragment: CommunityCommentEditFragment
 
     private lateinit var contactUsFragment: ContactUsFragment
 
     private lateinit var categorySelectMyPageFragment: CategorySelectMyPageFragment
 
 
-    private lateinit var editPostFragment: EditPostFragment
+    lateinit var editPostFragment: EditPostFragment
 
     private val purpleRudder by lazy { ContextCompat.getColor(this, R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this, R.color.grey) }
@@ -82,24 +85,26 @@ class MainActivity : AppCompatActivity() {
         progressDialog.setMessage("Please wait ...")
         progressDialog.setCancelable(false)
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal)
-
+        progressBar.bringToFront()
 
         mainBottomBarFragment = MainBottomBarFragment()
         communityFragment = CommunityFragment()
         myPageFragment = MyPageFragment()
         addPostFragment = AddPostFragment()
 
-        showPostFragment = ShowPostFragment()
-        addCommentFragment = AddCommentFragment()
-        communityPostBottomSheetFragment = CommunityPostBottomSheetFragment()
-        communityCommentBottomSheetFragment = CommunityCommentBottomSheetFragment()
-        communityPostReportFragment = CommunityPostReportFragment()
-        communityCommentReportFragment = CommunityCommentReportFragment()
+        showPostFragment = ShowPostFragment(viewModel)
+        addCommentFragment = AddCommentFragment(viewModel)
+        communityPostBottomSheetFragment = CommunityPostBottomSheetFragment(viewModel)
+        communityCommentBottomSheetFragment = CommunityCommentBottomSheetFragment(viewModel)
+        communityPostReportFragment = CommunityPostReportFragment(viewModel)
+        communityCommentReportFragment = CommunityCommentReportFragment(viewModel)
         clubJoinRequestDialogFragment = ClubJoinRequestDialogFragment()
-        communityCommentEditFragment = CommunityCommentEditFragment()
+        communityCommentEditFragment = CommunityCommentEditFragment(viewModel)
         contactUsFragment = ContactUsFragment()
-        editPostFragment = EditPostFragment()
+        editPostFragment = EditPostFragment(viewModel)
         categorySelectMyPageFragment = CategorySelectMyPageFragment()
+        searchPostFragment = SearchPostFragment()
+
 
 
         val toastDeletePostComplete = Toast.makeText(
@@ -127,48 +132,16 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
 
-        viewModel.isPostMore.observe(this, Observer {
-            if (it.getContentIfNotHandled()!!) {
-                if (!communityPostBottomSheetFragment.isAdded)
-                    communityPostBottomSheetFragment.show(
-                        supportFragmentManager,
-                        communityPostBottomSheetFragment.tag
-                    )
-            }
-        })
-
-        viewModel.isCommentMore.observe(this, Observer {
-            if (it.getContentIfNotHandled()!!) {
-                if (!communityCommentBottomSheetFragment.isAdded)
-                    communityCommentBottomSheetFragment.show(
-                        supportFragmentManager,
-                        communityCommentBottomSheetFragment.tag
-                    )
-            }
-        })
-
-
-        viewModel.isPostReport.observe(this, Observer {
-            if (it.getContentIfNotHandled()!!) {
-                if (!communityPostReportFragment.isAdded)
-                    communityPostReportFragment.show(
-                        supportFragmentManager,
-                        communityPostReportFragment.tag
-                    )
-            }
-        })
 
 
 
-        viewModel.isCommentReport.observe(this, Observer {
-            if (it.getContentIfNotHandled()!!) {
-                if (!communityCommentReportFragment.isAdded)
-                    communityCommentReportFragment.show(
-                        supportFragmentManager,
-                        communityCommentReportFragment.tag
-                    )
-            }
-        })
+
+
+
+
+
+
+
 
         viewModel.isContactUs.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
@@ -181,47 +154,13 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        viewModel.isPostEdit.observe(this, Observer {
-            it?.let {
-                communityPostBottomSheetFragment.dismiss()
-                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                fragmentShowHide.addToBackStack()
-                fragmentShowHide.hideFragment(mainBottomBarFragment)
-
-                if (addCommentFragment.isAdded) {
-                    fragmentShowHide.hideFragment(addCommentFragment)
-                }
-
-                fragmentShowHide.addFragment(editPostFragment, R.id.mainDisplay, "editPost")
-                fragmentShowHide.showFragment(editPostFragment, R.id.mainDisplay)
-
-            }
-        })
-
-        viewModel.isPostDelete.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    toastDeletePostComplete.show()
-                    communityPostBottomSheetFragment.dismiss()
-                    viewModel.clearPosts()
-                    viewModel.getPosts()
-                    if (showPostFragment.isAdded)
-                        onBackPressed()
-                }
-            }
-        })
 
 
 
-        viewModel.isCommentEdit.observe(this, Observer {
-            if (it.getContentIfNotHandled()!!) {
-                if (!communityCommentEditFragment.isAdded)
-                    communityCommentEditFragment.show(
-                        supportFragmentManager,
-                        communityCommentEditFragment.tag
-                    )
-            }
-        })
+
+
+
+
 
         viewModel.isClubJoinRequest.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
@@ -233,14 +172,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.isCommentDelete.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    toastDeleteCommentComplete.show()
-                    communityCommentBottomSheetFragment.dismiss()
-                }
-            }
-        })
+
 
 
         viewModel.selectedTab.observe(this, Observer {
@@ -278,36 +210,21 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.isSearchPostClick.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
-//                searchPostFragment = SearchPostFragment()
-//                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-//                fragmentShowHide.addToBackStack()
-//                fragmentShowHide.hideFragment(mainBottomBarFragment)
-//
-//                fragmentShowHide.addFragment(searchPostFragment, R.id.mainDisplay, "searchPost")
-//                fragmentShowHide.showFragment(searchPostFragment, R.id.mainDisplay)
-                Toast.makeText(this,"Coming Soon!",Toast.LENGTH_SHORT).show()
-            }
-        })
+                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                fragmentShowHide.addToBackStack()
+                fragmentShowHide.hideFragment(mainBottomBarFragment)
 
-        viewModel.isBackClick.observe(this, Observer {
-            if (it.getContentIfNotHandled()!!) {
-                if (!mainBottomBarFragment.isAdded) {
-                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                    fragmentShowHide.showFragment(mainBottomBarFragment, R.id.mainBottomBar)
-                }
+                fragmentShowHide.addFragment(searchPostFragment, R.id.mainDisplay, "searchPost")
+                fragmentShowHide.showFragment(searchPostFragment, R.id.mainDisplay)
 
-                onBackPressed()
             }
         })
 
 
-        viewModel.isScrollBottomTouch.observe(this, Observer {
-            if (it.getContentIfNotHandled()!!) {
-                showProgressBar()
-            } else {
-                hideProgressBar()
-            }
-        })
+
+
+
+
 
         viewModel.startLoginActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
@@ -316,56 +233,21 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.selectedCommentGroupNum.observe(this, Observer {
-            if (it != -1) {
-                showParentCommentInfo()
-            } else {
-                hideParentCommentInfo()
-            }
-        })
+
 
         viewModel.isAddPostSuccess.observe(this, Observer {
             super.onBackPressed()
         })
 
-        viewModel.isLikePost.observe(this, Observer {
-            if (it!!) {
-                showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_baseline_thumb_up_24)
-            } else {
-                showPostFragment?.showPostLikeImageView?.setImageResource(R.drawable.ic_outline_thumb_up_24)
-            }
-        })
 
 
-        viewModel.isEditPostSuccess.observe(this, Observer {
-            super.onBackPressed()
-            if (showPostFragment.isAdded) {
-                if (addCommentFragment.isVisible) {
-                    swapMainBottomBar()
-                }
-
-                super.onBackPressed()
-            }
-        })
 
 
-        viewModel.isEditCommentSuccess.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    communityCommentEditFragment.dismiss()
-                    communityCommentBottomSheetFragment.dismiss()
-                }
-            }
-        })
 
-        viewModel.isReportPostSuccess.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    communityPostReportFragment.dismiss()
-                    communityPostBottomSheetFragment.dismiss()
-                }
-            }
-        })
+
+
+
+
 
         viewModel.isContactUsSuccess.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
@@ -376,27 +258,21 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        viewModel.isReportCommentSuccess.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    communityCommentReportFragment.dismiss()
-                    communityCommentBottomSheetFragment.dismiss()
-                }
-            }
-        })
+
 
 
         viewModel.isCancelClick.observe(this, Observer {
-            if (communityCommentEditFragment.isAdded)
-                communityCommentEditFragment.dismiss()
-            else if (communityPostReportFragment.isAdded)
-                communityPostReportFragment.dismiss()
-            else if (communityCommentReportFragment.isAdded)
-                communityCommentReportFragment.dismiss()
-            else if (contactUsFragment.isAdded)
-                contactUsFragment.dismiss()
-            else if (clubJoinRequestDialogFragment.isAdded)
-                clubJoinRequestDialogFragment.dismiss()
+            event ->
+            event.getContentIfNotHandled()?.let {
+                if(it){
+                    if (communityCommentEditFragment.isAdded)
+                        communityCommentEditFragment.dismiss()
+                    else if (contactUsFragment.isAdded)
+                        contactUsFragment.dismiss()
+                    else if (clubJoinRequestDialogFragment.isAdded)
+                        clubJoinRequestDialogFragment.dismiss()
+                }
+            }
 
         })
 
@@ -492,28 +368,35 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         Log.d("onBackPressed", "onBackPressed")
-        val isBackButtonAvailable =
-            (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) && (!supportFragmentManager.findFragmentByTag(
-                "community"
-            )!!.isVisible)
-        if (isBackButtonAvailable) { // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
-            if (addCommentFragment.isVisible) {
-                swapMainBottomBar()
+        try {
+            val isBackButtonAvailable =
+                (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) && (!supportFragmentManager.findFragmentByTag(
+                    "community"
+                )!!.isVisible)
+            if (isBackButtonAvailable) { // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
+                Log.d("call",addCommentFragment.isVisible.toString())
+
+                super.onBackPressed()
+                if (addCommentFragment.isVisible) {
+                    swapMainBottomBar()
+                }
+            } else {
+                moveTaskToBack(true)
             }
-            super.onBackPressed()
-        } else {
-            moveTaskToBack(true)
+
+            if (viewModel.selectedTab.value == R.id.myPageButton) {
+                changeColorMyPage()
+            }
+
+            if (showPostFragment.isVisible) {
+                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+                fragmentShowHide.hideFragment(mainBottomBarFragment)
+                fragmentShowHide.showFragment(addCommentFragment, R.id.mainBottomBar)
+            }
+        }catch (e: Exception){
+            e.printStackTrace()
         }
 
-        if (viewModel.selectedTab.value == R.id.myPageButton) {
-            changeColorMyPage()
-        }
-
-        if (showPostFragment.isAdded) {
-            val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-            fragmentShowHide.hideFragment(mainBottomBarFragment)
-            fragmentShowHide.showFragment(addCommentFragment, R.id.mainBottomBar)
-        }
 
     }
 
@@ -537,8 +420,12 @@ class MainActivity : AppCompatActivity() {
 
     fun swapMainBottomBar() {
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-        fragmentShowHide.removeFragment(addCommentFragment)
-        fragmentShowHide.showFragment(mainBottomBarFragment, R.id.mainBottomBar)
+        if(searchPostFragment.isVisible){
+            fragmentShowHide.hideAllFragment(R.id.mainBottomBar)
+        }else{
+            fragmentShowHide.showFragment(mainBottomBarFragment, R.id.mainBottomBar)
+        }
+
     }
 
 
@@ -566,21 +453,27 @@ class MainActivity : AppCompatActivity() {
         viewModel.setSelectedPostPosition(position)
     }
 
-    fun showPost() {
+    fun showPost(viewModel: MainViewModel,showPostFragment: ShowPostFragment) {
         viewModel.isLikePost()
+        this.showPostFragment = showPostFragment
+
+        parentCommentInfoClose.setOnClickListener {
+            this.showPostFragment.closeParentCommentInfo()
+        }
+        Log.d("has",parentCommentInfoClose.hasOnClickListeners().toString())
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
 
         fragmentShowHide.addToBackStack()
-        fragmentShowHide.addFragment(showPostFragment, R.id.mainDisplay, "showPost")
-        fragmentShowHide.showFragment(showPostFragment, R.id.mainDisplay)
+        fragmentShowHide.addFragment(this.showPostFragment, R.id.mainDisplay, "showPost")
+        fragmentShowHide.showFragment(this.showPostFragment, R.id.mainDisplay)
     }
 
 
-    fun showAddComment() {
-        addCommentFragment = AddCommentFragment()
+    fun showAddComment(addCommentFragment: AddCommentFragment) {
+        this.addCommentFragment = addCommentFragment
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-        fragmentShowHide.addFragment(addCommentFragment, R.id.mainBottomBar, "addComment")
-        fragmentShowHide.showFragment(addCommentFragment, R.id.mainBottomBar)
+        fragmentShowHide.addFragment(this.addCommentFragment, R.id.mainBottomBar, "addComment")
+        fragmentShowHide.showFragment(this.addCommentFragment, R.id.mainBottomBar)
     }
 
 
@@ -595,16 +488,45 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun updatePost() { // editPost 시 실행, 미완성, 임시방편
-        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-
-        fragmentShowHide.removeFragment(showPostFragment)
-        val showPostFragmentNew = ShowPostFragment()
-
-        fragmentShowHide.addToBackStack()
-        fragmentShowHide.addFragment(showPostFragmentNew, R.id.mainDisplay, "showPost")
-        fragmentShowHide.showFragment(showPostFragmentNew, R.id.mainDisplay)
-
+    fun validateBack(tag: String): Boolean {
+        return if (supportFragmentManager.findFragmentByTag(tag)==null){
+            false
+        }else{
+            supportFragmentManager.findFragmentByTag(tag)!!.isVisible
+        }
     }
+
+    fun showPostMore(communityPostBottomSheetFragment: CommunityPostBottomSheetFragment){
+        this.communityPostBottomSheetFragment = communityPostBottomSheetFragment
+        if (!communityPostBottomSheetFragment.isAdded)
+            communityPostBottomSheetFragment.show(
+                supportFragmentManager,
+                communityPostBottomSheetFragment.tag
+            )
+    }
+
+    fun setParentCommentInfoText(string: String){
+        parentCommentInfoTextTextView.text = string
+    }
+
+    fun showCommentMore(communityCommentBottomSheetFragment: CommunityCommentBottomSheetFragment){
+        this.communityCommentBottomSheetFragment = communityCommentBottomSheetFragment
+        if (!this.communityCommentBottomSheetFragment.isAdded)
+            this.communityCommentBottomSheetFragment.show(
+                supportFragmentManager,
+                this.communityCommentBottomSheetFragment.tag
+            )
+    }
+
+    fun closeCommunityBottomSheetFragment(){
+
+        Toast.makeText(
+            this,
+            "Delete Comment Complete!",
+            Toast.LENGTH_LONG
+        ).show()
+        communityCommentBottomSheetFragment.dismiss()
+    }
+
 
 }

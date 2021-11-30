@@ -25,15 +25,6 @@
 
         </FrameLayout>
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@drawable/shadow"
-            app:layout_constraintBottom_toTopOf="@+id/mainBottomBar"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/parentCommentInfo"
             android:visibility="gone"
@@ -52,7 +43,6 @@
                     android:id="@+id/parentCommentInfoClose"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:onClick="@{()->mainVM.clearNestedCommentInfo()}"
                     app:layout_constraintStart_toEndOf="@+id/parentCommentInfoText"
                     app:layout_constraintWidth_default="percent"
                     app:layout_constraintWidth_percent="0.1">
@@ -77,11 +67,11 @@
                     app:layout_constraintWidth_percent="0.8">
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/parentCommentInfoTextTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="@={mainVM._selectedParentCommentBody}"
+                        android:text=""
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -109,6 +99,17 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/shadow"
+            app:layout_constraintBottom_toTopOf="@+id/mainBottomBar"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height" />
+
+
         <FrameLayout
             android:id="@+id/mainBottomBar"
             android:layout_width="match_parent"
@@ -119,6 +120,19 @@
             tools:layout_editor_absoluteX="0dp">
 
         </FrameLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:indeterminateTint="@color/grey"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/community_display_progress_bar_height"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
 

@@ -40,7 +40,7 @@ class CommunityFragment: Fragment() {
         val community = DataBindingUtil.inflate<FragmentCommunityBinding>(inflater,R.layout.fragment_community,container,false)
 
         childFragmentManager.beginTransaction()
-            .add(R.id.communityDisplay,CommunityDisplayFragment(parentFragmentManager))
+            .add(R.id.communityDisplay,CommunityDisplayFragment(viewModel))
             .add(R.id.communityHeader,CommunityHeaderFragment())
             .add(R.id.communitySelector,CommunitySelectorFragment())
             .commit()

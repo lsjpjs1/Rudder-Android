@@ -22,8 +22,7 @@ import kotlinx.android.synthetic.main.fragment_create_account.verifyBtn
 import kotlinx.android.synthetic.main.fragment_create_account.view.*
 import kotlinx.android.synthetic.main.fragment_create_account.view.verifyBtn
 
-class AddCommentFragment : Fragment() {
-    private val viewModel :MainViewModel by activityViewModels()
+class AddCommentFragment(val viewModel: MainViewModel) : Fragment() {
     private lateinit var addComment: FragmentAddCommentBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +37,7 @@ class AddCommentFragment : Fragment() {
 
         viewModel.commentBodyCheck.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{
-                ChangeUIState.buttonEnable(replyButton, it)
+                ChangeUIState.buttonEnable(addComment.root.replyButton, it)
             }})
 
         addComment.root.replyButton.isEnabled = false

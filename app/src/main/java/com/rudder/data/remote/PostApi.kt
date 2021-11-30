@@ -7,10 +7,8 @@ import com.rudder.BuildConfig
 import com.rudder.data.GetPostInfo
 import com.rudder.data.PreviewPost
 import com.rudder.data.Response
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.*
+import kotlin.Exception
 
 class PostApi {
 
@@ -23,7 +21,12 @@ class PostApi {
 
     fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String,searchWord:String) : Deferred<ArrayList<PreviewPost>> {
         return GlobalScope.async(Dispatchers.IO){
-            postService.renderPost(GetPostInfo("bulletin",pagingIndex,endPostId,categoryId,token,searchWord))
+            try {
+
+                postService.renderPost(GetPostInfo("bulletin",pagingIndex,endPostId,categoryId,token,searchWord))
+            }catch (e: Exception){
+                CompletableDeferred<ArrayList<PreviewPost>>(arrayListOf()).await()
+            }
         }
     }
 

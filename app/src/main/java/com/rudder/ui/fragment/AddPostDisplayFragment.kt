@@ -34,10 +34,10 @@ import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_add_post_display.view.*
 import kotlinx.android.synthetic.main.fragment_add_post_display.*
 import kotlinx.android.synthetic.main.fragment_school_select.*
+import kotlinx.android.synthetic.main.fragment_show_post.view.*
 
 
-class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
-    private val viewModel : MainViewModel by activityViewModels()
+class AddPostDisplayFragment(val viewModel: MainViewModel,val isEdit: Boolean) : Fragment(),AddPostImagesOnclickListener {
     private val lazyContext by lazy {
         requireContext()
     }
@@ -56,6 +56,13 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
             }
         }
 
+        if (isEdit){
+            display.root.categorySpinner.isEnabled=false
+            display.root.showPhoto.visibility=View.GONE
+        }else{
+            display.root.categorySpinner.isEnabled = true
+            display.root.showPhoto.visibility=View.VISIBLE
+        }
         val addPostShowImagesAdapter = AddPostShowImagesAdapter(viewModel.selectedPhotoUriList.value!!,(activity as MainActivity).getDisplaySize(),this)
         display.mainVM=viewModel
         display.categorySpinner.adapter=spinnerAdapter
@@ -69,7 +76,7 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
         }
 
 
-        display.root.categorySpinner.isEnabled = true
+
 
         viewModel.categoryNames.observe(viewLifecycleOwner, Observer {
                 it?.let {
@@ -104,6 +111,7 @@ class AddPostDisplayFragment : Fragment(),AddPostImagesOnclickListener {
 
             }
         )
+
 
         return display.root
     }

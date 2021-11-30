@@ -12,6 +12,7 @@ import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityCommentReportSheetBinding
 import com.rudder.databinding.FragmentCommunityPostReportSheetBinding
@@ -23,14 +24,16 @@ import kotlinx.android.synthetic.main.fragment_school_select.*
 import kotlinx.android.synthetic.main.fragment_school_select.view.*
 
 
-class CommunityCommentReportFragment : DialogFragment() {
+class CommunityCommentReportFragment(val viewModel: MainViewModel) : DialogFragment() {
 
-    private val viewModel : MainViewModel by activityViewModels()
 
     private lateinit var communityCommentReportFragmentBinding : FragmentCommunityCommentReportSheetBinding
 
     private val lazyContext by lazy {
         requireContext()
+    }
+    private val parentActivity by lazy {
+        activity as MainActivity
     }
 
     override fun onCreateView(
@@ -51,6 +54,26 @@ class CommunityCommentReportFragment : DialogFragment() {
         lp1.width = (displayDpValue[0] * 0.9).toInt()
         communityCommentReportFragmentBinding.constraintLayout1.layoutParams = lp1
 
+        viewModel.isCommentReportDialogCancel.observe(this, Observer {
+                event ->
+            event.getContentIfNotHandled()?.let {
+                if(it){
+                    if (parentActivity.communityCommentReportFragment.isAdded){
+                        parentActivity.communityCommentReportFragment.dismiss()
+                    }
+                }
+            }
+
+        })
+
+        viewModel.isReportCommentSuccess.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    parentActivity.communityCommentReportFragment.dismiss()
+                    parentActivity.communityCommentBottomSheetFragment.dismiss()
+                }
+            }
+        })
 
         return communityCommentReportFragmentBinding.root
     }

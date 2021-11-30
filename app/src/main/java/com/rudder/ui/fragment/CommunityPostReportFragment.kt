@@ -11,6 +11,7 @@ import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityPostReportSheetBinding
 import com.rudder.ui.activity.MainActivity
@@ -20,14 +21,17 @@ import kotlinx.android.synthetic.main.fragment_school_select.*
 import kotlinx.android.synthetic.main.fragment_school_select.view.*
 
 
-class CommunityPostReportFragment : DialogFragment() {
+class CommunityPostReportFragment(val viewModel: MainViewModel) : DialogFragment() {
 
-    private val viewModel : MainViewModel by activityViewModels()
 
     private lateinit var communityPostReportFragmentBinding : FragmentCommunityPostReportSheetBinding
 
     private val lazyContext by lazy {
         requireContext()
+    }
+
+    private val parentActivity by lazy {
+        activity as MainActivity
     }
 
     override fun onCreateView(
@@ -40,6 +44,28 @@ class CommunityPostReportFragment : DialogFragment() {
         communityPostReportFragmentBinding.lifecycleOwner = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+
+
+        viewModel.isReportPostSuccess.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    parentActivity.communityPostReportFragment.dismiss()
+                    parentActivity.communityPostBottomSheetFragment.dismiss()
+                }
+            }
+        })
+
+        viewModel.isReportDialogCancel.observe(this, Observer {
+                event ->
+            event.getContentIfNotHandled()?.let {
+                if(it){
+                    if (parentActivity.communityPostReportFragment.isAdded){
+                        parentActivity.communityPostReportFragment.dismiss()
+                    }
+                }
+            }
+
+        })
 
 
         val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height

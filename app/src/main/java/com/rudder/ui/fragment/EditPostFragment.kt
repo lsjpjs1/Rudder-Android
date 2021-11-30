@@ -13,13 +13,15 @@ import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentAddPostBinding
 import com.rudder.databinding.FragmentShowPostBinding
+import com.rudder.ui.activity.MainActivity
 import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_add_post_display.*
 import kotlinx.android.synthetic.main.fragment_add_post_display.view.*
 
-class EditPostFragment : Fragment() {
-    private val viewModel : MainViewModel by activityViewModels()
-
+class EditPostFragment(val viewModel: MainViewModel) : Fragment() {
+    private val parentActivity : MainActivity by lazy { activity as MainActivity }
+    lateinit var addPostDisplayFragment: AddPostDisplayFragment
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -27,19 +29,22 @@ class EditPostFragment : Fragment() {
     ): View? {
 
         val fragmentBinding= DataBindingUtil.inflate<FragmentAddPostBinding>(inflater,R.layout.fragment_add_post,container,false)
+        addPostDisplayFragment = AddPostDisplayFragment(viewModel,true)
+
         childFragmentManager.beginTransaction()
-            .add(R.id.addPostHeader, EditPostHeaderFragment())
-            .add(R.id.addPostDisplay, AddPostDisplayFragment())
+            .add(R.id.addPostHeader, EditPostHeaderFragment(viewModel))
+            .add(R.id.addPostDisplay, addPostDisplayFragment)
             .commit()
 
         fragmentBinding.mainVM=viewModel
         fragmentBinding.lifecycleOwner = this
 
-        viewModel.isPostEdit.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                fragmentBinding.root.categorySpinner.isEnabled = false
-                fragmentBinding.root.showPhoto.visibility = View.GONE
-            }
+
+
+
+
+        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
+            parentActivity.onBackPressed()
         })
 
         return fragmentBinding.root

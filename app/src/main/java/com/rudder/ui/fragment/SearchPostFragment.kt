@@ -14,10 +14,11 @@ import com.rudder.R
 import com.rudder.databinding.FragmentSearchPostBinding
 import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.SearchViewModel
 
 class SearchPostFragment : Fragment() {
-    private val viewModel: MainViewModel by activityViewModels()
     private lateinit var callback: OnBackPressedCallback
+    private val viewModel: SearchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,8 +31,8 @@ class SearchPostFragment : Fragment() {
 
         fragmentBinding.lifecycleOwner = this
         childFragmentManager.beginTransaction()
-            .add(R.id.searchPostHeader,SearchPostHeaderFragment())
-            .add(R.id.searchPostDisplay,SearchPostDisplayFragment())
+            .add(R.id.searchPostHeader,SearchPostHeaderFragment(viewModel))
+            .add(R.id.searchPostDisplay,SearchPostDisplayFragment(viewModel))
             .commit()
 
 
@@ -42,4 +43,7 @@ class SearchPostFragment : Fragment() {
         super.onDestroy()
         Log.d("destroy","dest")
     }
+
+
+
 }

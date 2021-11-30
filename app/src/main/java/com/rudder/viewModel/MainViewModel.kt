@@ -26,20 +26,23 @@ import java.sql.Timestamp
 import kotlin.collections.ArrayList
 
 
-class MainViewModel : ViewModel() {
+open class MainViewModel : ViewModel() {
+    enum class PostMode{
+        NORMAL,SEARCH
+    }
     private val tokenKey = BuildConfig.TOKEN_KEY
     private val ALREADY_READ_POST_ID_KEY = "alreadyReadPostIdJson"
-    private var pagingIndex = 0
-    private var endPostId = -1
+    var pagingIndex = 0
+    var endPostId = -1
 
     val _postEditBody = MutableLiveData<String>()
     val _commentEditBody = MutableLiveData<String>()
     val _postId = MutableLiveData<Int>()
     val _postBody = MutableLiveData<String>()
     val _commentBody = MutableLiveData<String>()
-    val _selectedParentCommentBody = MutableLiveData<String>()
+    private val _selectedParentCommentBody = MutableLiveData<String>()
     private val _selectedTab = MutableLiveData<Int>()
-    private var _posts = MutableLiveData<ArrayList<PreviewPost>>()
+    var _posts = MutableLiveData<ArrayList<PreviewPost>>()
     private val _comments = MutableLiveData<ArrayList<Comment>>()
     private val _allCategories = MutableLiveData<ArrayList<Category>>()
     private val _allClubCategories = MutableLiveData<ArrayList<Category>>()
@@ -53,7 +56,7 @@ class MainViewModel : ViewModel() {
     private val _selectedRequestJoinClubCategoryId = MutableLiveData<Int>()
     private val _selectedPhotoUriList = MutableLiveData<ArrayList<FileInfo>>()
     private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
-    private val _isBackClick = MutableLiveData<Event<Boolean>>()
+    private val _isBackClick = MutableLiveData<Boolean?>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
     private val _isAddPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isLikePost = MutableLiveData<Boolean>()
@@ -81,7 +84,7 @@ class MainViewModel : ViewModel() {
     private val _isDeleteCommentSuccess = MutableLiveData<Event<Boolean>>()
     private val _isEditCommentSuccess = MutableLiveData<Event<Boolean>>()
     private val _isReportCommentSuccess = MutableLiveData<Event<Boolean>>()
-    private val _isEditPostSuccess = MutableLiveData<Event<Boolean>>()
+    val _isEditPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isReportPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isContactUsSuccess = MutableLiveData<Event<Boolean>>()
     private val _isSearchPostClick = MutableLiveData<Event<Boolean>>()
@@ -92,7 +95,9 @@ class MainViewModel : ViewModel() {
     val _reportCommentBody = MutableLiveData<String>()
     val _clubJoinRequestBody = MutableLiveData<String>()
     private val _isCancelClick = MutableLiveData<Event<Boolean>>()
-
+    private val _isReportDialogCancel = MutableLiveData<Event<Boolean>>()
+    private val _isCommentReportDialogCancel = MutableLiveData<Event<Boolean>>()
+    private val _isCommentEditDialogCancel = MutableLiveData<Event<Boolean>>()
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
     private val _postInnerValueChangeSwitch = MutableLiveData<Boolean>()
     private val _commentInnerValueChangeSwitch = MutableLiveData<Boolean>()
@@ -108,7 +113,9 @@ class MainViewModel : ViewModel() {
 //
 //    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
 
-
+    var isCommentReportDialogCancel: LiveData<Event<Boolean>> = _isCommentReportDialogCancel
+    var isReportDialogCancel: LiveData<Event<Boolean>> = _isReportDialogCancel
+    var isCommentEditDialogCancel: LiveData<Event<Boolean>> = _isCommentEditDialogCancel
     var _categoryIdSelectList = MutableLiveData<ArrayList<Int>>()
     var _categoryIdAllList = MutableLiveData<ArrayList<Int>>()
     val _categorySelectApply = MutableLiveData<Event<Boolean>>()
@@ -136,7 +143,7 @@ class MainViewModel : ViewModel() {
     val isLikePost: LiveData<Boolean> = _isLikePost
     val isAddPostSuccess: LiveData<Event<Boolean>> = _isAddPostSuccess
     val isScrollBottomTouch: LiveData<Event<Boolean>> = _isScrollBottomTouch
-    val isBackClick: LiveData<Event<Boolean>> = _isBackClick
+    val isBackClick: LiveData<Boolean?> = _isBackClick
     val isAddPostClick: LiveData<Event<Boolean>> = _isAddPostClick
     val selectedTab: LiveData<Int> = _selectedTab
     val categoryNames: LiveData<ArrayList<String>> = _categoryNames
@@ -197,9 +204,12 @@ class MainViewModel : ViewModel() {
 
 
     val categoryNamesForSelection: LiveData<ArrayList<String>> = _categoryNamesForSelection
+    val selectedParentCommentBody: LiveData<String> = _selectedParentCommentBody
 
     val isStringBlank : LiveData<Event<Boolean>> = _isStringBlank
+    var postMode : PostMode = PostMode.NORMAL
 
+    open var qwe = true
     init {
         _selectedTab.value = R.id.communityButton
         _selectedCategoryPosition.value = 0
@@ -249,7 +259,9 @@ class MainViewModel : ViewModel() {
 
         clearSearchPost()
         clearNestedCommentInfo()
+        if(qwe)
         getPosts()
+
         viewModelScope.async {
             getCategories().await()
             getClubCategories()
@@ -269,23 +281,42 @@ class MainViewModel : ViewModel() {
     }
 
     fun clearSearchPost(){
-        _searchPosts.value = arrayListOf()
+        _posts.value = arrayListOf()
         _searchWord.value = MutableLiveData<String>().value
     }
 
-    fun searchPost(){
+    fun searchPost(isScroll: Boolean){
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
         GlobalScope.launch {
-            val resPosts = Repository().getPosts(
-                -1,
-                -1,
-                -1,
-                token!!,
-                _searchWord.value!!
-            )
+            val resPosts = if (isScroll){
+                Repository().getPosts(
+                    pagingIndex,
+                    endPostId,
+                    -1,
+                    App.prefs.getValue(tokenKey)!!,
+                    _searchWord.value!!
+                )
+            }else{
+                Repository().getPosts(
+                    -1,
+                    -1,
+                    -1,
+                    token!!,
+                    _searchWord.value!!
+                )
+            }
+
             viewModelScope.launch {
-                _searchPosts.value = resPosts
+
+                if (isScroll){
+                    val oldPosts = _posts.value
+                    oldPosts!!.addAll(resPosts)
+                    Log.d("oldPost", oldPosts.toString())
+                    _posts.value = oldPosts!!
+                }else{
+                    _posts.value = resPosts
+                }
             }
         }
     }
@@ -317,6 +348,19 @@ class MainViewModel : ViewModel() {
 
     fun setSelectedRequestJoinClubCategoryId(id: Int){
         _selectedRequestJoinClubCategoryId.value = id
+    }
+
+    fun findCategoryIndexById(id: Int) : Int {
+        var index = 0
+        val tmpList: ArrayList<Category> = arrayListOf()
+        tmpList.addAll(_allCategories.value!!)
+        tmpList.addAll(_allClubCategories.value!!)
+        for(i in 0 until tmpList.size) {
+            if (tmpList[i].categoryId == id){
+                index = i
+            }
+        }
+        return index
     }
 
     fun getClubCategories() { // 동아리 카테고리 불러오기
@@ -446,7 +490,7 @@ class MainViewModel : ViewModel() {
         _commentBody.value = ""
     }
 
-    fun scrollTouchBottom() {
+    open fun scrollTouchBottom() {
         if (_posts.value!!.size > 0) {
             pagingIndex += 1
             endPostId = _posts.value!![_posts.value!!.size - 1].postId
@@ -454,7 +498,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun scrollTouchTop() {
+    open fun scrollTouchTop() {
         clearPosts()
         getPosts()
     }
@@ -474,7 +518,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun clickBack() {
-        _isBackClick.value = Event(true)
+        switch(_isBackClick)
     }
 
     fun clickPostLike() {
@@ -588,12 +632,12 @@ class MainViewModel : ViewModel() {
         pagingIndex = 0
         endPostId = -1
     }
-
     fun getComments() {
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
         val getCommentInfo =
-            GetCommentInfo(_posts.value!![_selectedPostPosition.value!!].postId, token!!)
+                GetCommentInfo(_posts.value!![_selectedPostPosition.value!!].postId, token!!)
+
         GlobalScope.launch {
 
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
@@ -631,6 +675,7 @@ class MainViewModel : ViewModel() {
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
+
 
     fun addComment() {
         lateinit var addCommentInfo: AddCommentInfo
@@ -708,6 +753,7 @@ class MainViewModel : ViewModel() {
 
     fun setSelectedPostPosition(position: Int) {
         _selectedPostPosition.value = position
+        Log.d("setselectpos",_selectedPostPosition.value!!.toString())
     }
 
     fun setSelectedCategoryPosition(position: Int) {
@@ -749,10 +795,16 @@ class MainViewModel : ViewModel() {
         _reportPostBody.value = ""
     }
 
+    fun setIsPostEdit(boolean: Boolean?){
+        _isPostEdit.value = boolean
+    }
+
     fun clickPostEdit() {
+
         switch(_isPostEdit)
         _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
-        _postCategoryInt.value = _posts.value!![selectedPostMorePosition.value!!].categoryId - 1
+        Log.d("postcatint",findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId ).toString())
+        _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
 
         _photoPickerClickSwitch.value = null
     }
@@ -834,6 +886,7 @@ class MainViewModel : ViewModel() {
             var categoryList = Repository().getCategories(GetCategoriesRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY),null))
             viewModelScope.launch {
 
+                Log.d("categories",categoryList.toString())
                 _allCategories.value?.addAll(categoryList)
                 _categoryNames.value = splitCategoryNames(categoryList)
                 _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
@@ -843,6 +896,8 @@ class MainViewModel : ViewModel() {
             return@async
         }
     }
+
+
 
 
 
@@ -934,7 +989,7 @@ class MainViewModel : ViewModel() {
     }
 
 
-    fun editPost() {
+    open fun editPost() {
         if ( _postBody.value!!.isBlank() ) {
             _isStringBlank.value = Event(true)
         } else {
@@ -945,10 +1000,6 @@ class MainViewModel : ViewModel() {
                     EditPostInfo(_postBody.value!!, _postId.value!!, App.prefs.getValue(key)!!)
                 val result = Repository().editPostRepository(editPostInfo)
 
-                Log.d(
-                    "editpost123",
-                    "${selectedPostMorePosition.value},${selectedPostPosition.value} "
-                )
                 viewModelScope.launch {
                     _isEditPostSuccess.value = Event(result)
                     clearPosts()
@@ -1014,7 +1065,7 @@ class MainViewModel : ViewModel() {
         } else {
             GlobalScope.launch {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
+                Log.d("rep",_reportPostBody.value.toString())
                 val reportInfo = ReportInfo( App.prefs.getValue(tokenKey)!!, _postId.value!!, _reportPostBody.value!! ,"post")
                 val result = Repository().reportRepository(reportInfo)
                 _isReportPostSuccess.postValue(Event(result))
@@ -1050,11 +1101,27 @@ class MainViewModel : ViewModel() {
 
     fun clickDialogCancel() {
         _isCancelClick.value = Event(true)
-        clearValue(_commentBody)
-        clearValue(_reportPostBody)
-        clearValue(_reportCommentBody)
+
+
         clearValue(_userRequestBody)
         clearValue(_clubJoinRequestBody)
+    }
+
+    fun clickCommentEditDialogCancel() {
+        _isCommentEditDialogCancel.value = Event(true)
+        clearValue(_commentBody)
+    }
+
+    fun clickPostReportDialogCancel() {
+        _isReportDialogCancel.value = Event(true)
+        clearValue(_reportPostBody)
+        clearValue(_reportCommentBody)
+    }
+
+    fun clickCommentReportDialogCancel() {
+        _isCommentReportDialogCancel.value = Event(true)
+        clearValue(_reportPostBody)
+        clearValue(_reportCommentBody)
     }
 
 

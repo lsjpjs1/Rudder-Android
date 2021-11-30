@@ -32,7 +32,7 @@ class AddPostFragment : Fragment() {
         val fragmentBinding= DataBindingUtil.inflate<FragmentAddPostBinding>(inflater,R.layout.fragment_add_post,container,false)
         childFragmentManager.beginTransaction()
             .add(R.id.addPostHeader,AddPostHeaderFragment())
-            .add(R.id.addPostDisplay,AddPostDisplayFragment())
+            .add(R.id.addPostDisplay,AddPostDisplayFragment(viewModel,false))
             .commit()
 
         fragmentBinding.mainVM = viewModel

@@ -8,13 +8,16 @@ import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentSearchPostHeaderBinding
+import com.rudder.ui.activity.MainActivity
+import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.SearchViewModel
 
-class SearchPostHeaderFragment  : Fragment() {
+class SearchPostHeaderFragment(val viewModel: MainViewModel)  : Fragment() {
 
-    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +32,7 @@ class SearchPostHeaderFragment  : Fragment() {
         header.searchPostSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let{
-                    viewModel.searchPost()
+                    viewModel.searchPost(false)
                 }
                 return true
             }
@@ -41,6 +44,17 @@ class SearchPostHeaderFragment  : Fragment() {
                 return true
             }
         })
+
+        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                if ((activity as MainActivity).validateBack("searchPost")){
+                    viewModel.clearSearchPost()
+                    (activity as MainActivity).onBackPressed()
+                }
+            }
+        })
+
         return header.root
     }
+
 }

@@ -83,18 +83,18 @@
                 android:id="@+id/constraintLayout11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent">
-
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/commentHeadImage"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    app:layout_constraintHeight_default="percent"
-                    app:layout_constraintHeight_percent="1"
-
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHeight_default="percent"
+
+                    app:layout_constraintHeight_percent="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -103,11 +103,10 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:srcCompat="@drawable/ic_delete_account"
-                        >
+                        app:srcCompat="@drawable/ic_delete_account">
 
                     </ImageView>
 
@@ -119,13 +118,12 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
 
-                    app:layout_constraintWidth_default="percent"
-                    app:layout_constraintWidth_percent="0.02"
-
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/commentHeadImage"
-                    app:layout_constraintTop_toTopOf="parent">
-                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent="0.02"></androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -169,7 +167,6 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

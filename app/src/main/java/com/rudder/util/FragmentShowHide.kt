@@ -8,13 +8,16 @@ class FragmentShowHide(val supportedFragmentManager: FragmentManager) {
     private val transaction = supportedFragmentManager.beginTransaction()
 
     fun showFragment(fragment: Fragment, id: Int){
-        hideAllFragmentsInId(fragment,id)
+        hideAllFragmentsInId(id)
         transaction.show(fragment).commit()
     }
 
 
     fun addFragment(fragment: Fragment, id: Int, tag: String){
-        if(supportedFragmentManager.findFragmentByTag(tag)==null){
+        if(supportedFragmentManager.findFragmentByTag(tag)==null ){
+            transaction.add(id,fragment,tag)
+        }else if(supportedFragmentManager.findFragmentByTag(tag)!=fragment){
+            transaction.remove(supportedFragmentManager.findFragmentByTag(tag)!!)
             transaction.add(id,fragment,tag)
         }
     }
@@ -33,8 +36,15 @@ class FragmentShowHide(val supportedFragmentManager: FragmentManager) {
         transaction.hide(fragment)
     }
 
+    fun hideAllFragment(id: Int){
+        val otherFragments = findFragmentsInId(id)
+        for(frag in otherFragments){
+            if(frag.isVisible) transaction.hide(frag)
+        }
+        transaction.commit()
+    }
 
-    private fun hideAllFragmentsInId(fragment: Fragment, id: Int){
+    private fun hideAllFragmentsInId(id: Int){
         val otherFragments = findFragmentsInId(id)
         for(frag in otherFragments){
             if(frag.isVisible) transaction.hide(frag)

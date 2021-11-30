@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -22,12 +23,14 @@ import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
 import kotlinx.coroutines.launch
 
-class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclickListener {
+class CommunityDisplayFragment(val viewModel: MainViewModel): Fragment(),CustomOnclickListener {
 
-    private val viewModel :MainViewModel by activityViewModels()
 
     private val lazyContext by lazy {
         requireContext()
+    }
+    private val parentActivity by lazy {
+        activity as MainActivity
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,6 +67,43 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
             viewModel.getPosts()
         })
 
+        viewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
+            it.getContentIfNotHandled()?.let {
+                    bool ->
+                if(bool)
+                    (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
+            }
+        })
+
+        viewModel.isPostDelete.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    Toast.makeText(
+                        context,
+                        "Delete Post Complete!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    parentActivity.communityPostBottomSheetFragment.dismiss()
+                    viewModel.clearPosts()
+                    viewModel.getPosts()
+                    if (parentActivity.showPostFragment.isVisible){
+                        parentActivity.onBackPressed()
+                    }
+                }
+            }
+        })
+
+        viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled().let {
+                it?.let{
+                    if (it){
+                        parentActivity.showProgressBar()
+                    } else {
+                        parentActivity.hideProgressBar()
+                    }
+                }
+            }
+        })
 
 //        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
 //            viewModel.clearPosts()
@@ -86,8 +126,8 @@ class CommunityDisplayFragment(val fm: FragmentManager): Fragment(),CustomOnclic
 
     override fun onClick(view: View, position: Int) {
         (activity as MainActivity).changeSelectedPostPosition(position)
-        (activity as MainActivity).showPost()
-        (activity as MainActivity).showAddComment()
+        (activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
+        (activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
 //        if(!viewModel.isAlreadyReadPost()){
 //            viewModel.addPostViewCount()
 //        }

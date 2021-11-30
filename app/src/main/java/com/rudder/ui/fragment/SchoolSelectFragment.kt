@@ -43,7 +43,7 @@ class SchoolSelectFragment : Fragment() {
         schoolSelectBinding.signUpVM = viewModel
         schoolSelectBinding.lifecycleOwner = this
 
-        val toastSchoolSelect = Toast.makeText(activity, "Please Select, Your University", Toast.LENGTH_LONG)
+        val toastSchoolSelect = Toast.makeText(activity, "Please Select Your University", Toast.LENGTH_LONG)
 
         viewModel.schoolSelectFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->
@@ -58,6 +58,15 @@ class SchoolSelectFragment : Fragment() {
                 ChangeUIState.buttonEnable(schoolSelectNextBtn,schoolSelectCheckbox.isChecked)
                 //schoolSelectBinding.root.schoolSelectNextBtn.setBackgroundResource(R.color.teal_200)
         }})
+
+        viewModel.schoolList.observe(viewLifecycleOwner, Observer {
+            it?.let { schoolList ->
+                Log.d("schoollist",viewModel.toString())
+                val schoolNameList: List<String> = schoolList.map{it.schoolName}
+                var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,schoolNameList)
+                schoolSelectBinding.schoolSelectSpinner.adapter = adapter
+            }
+        })
 
         val schoolNameList: List<String> = viewModel.schoolList.value!!.map{it.schoolName}
         var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,schoolNameList)

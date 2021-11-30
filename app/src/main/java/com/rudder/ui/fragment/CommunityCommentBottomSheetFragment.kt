@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment
 
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,9 +22,8 @@ import kotlinx.android.synthetic.main.fragment_school_select.*
 import kotlinx.android.synthetic.main.fragment_school_select.view.*
 
 
-class CommunityCommentBottomSheetFragment : BottomSheetDialogFragment() {
+class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : BottomSheetDialogFragment() {
 
-    private val viewModel : MainViewModel by activityViewModels()
 
     private lateinit var communityCommentBottomSheetBinding : FragmentCommunityCommentBottomSheetBinding
 
@@ -31,7 +31,9 @@ class CommunityCommentBottomSheetFragment : BottomSheetDialogFragment() {
         requireContext()
     }
 
-
+    private val parentActivity by lazy {
+        activity as MainActivity
+    }
 
     override fun getTheme(): Int = R.style.CustomBottomSheetDialog
 
@@ -70,6 +72,35 @@ class CommunityCommentBottomSheetFragment : BottomSheetDialogFragment() {
                 }
             }})
 
+        viewModel.isCommentDelete.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    (activity as MainActivity).closeCommunityBottomSheetFragment()
+                }
+            }
+        })
+
+        viewModel.isCommentReport.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {
+                if (!parentActivity.communityCommentReportFragment.isAdded)
+                    parentActivity.communityCommentReportFragment = CommunityCommentReportFragment(viewModel)
+                    parentActivity.communityCommentReportFragment.show(
+                        parentActivity.supportFragmentManager,
+                        parentActivity.communityCommentReportFragment.tag
+                    )
+            }
+        })
+
+        viewModel.isCommentEdit.observe(this, Observer {
+            it.getContentIfNotHandled().let{
+                if (!parentActivity.communityCommentEditFragment.isAdded)
+                    parentActivity.communityCommentEditFragment = CommunityCommentEditFragment(viewModel)
+                    parentActivity.communityCommentEditFragment.show(
+                        parentActivity.supportFragmentManager,
+                        parentActivity.communityCommentEditFragment.tag
+                    )
+            }
+        })
 
         var lp1 = communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams
         lp1.height = (displayDpValue[1] * 0.08).toInt()
@@ -89,6 +120,7 @@ class CommunityCommentBottomSheetFragment : BottomSheetDialogFragment() {
 
         return communityCommentBottomSheetBinding.root
     }
+
 
 
 }
