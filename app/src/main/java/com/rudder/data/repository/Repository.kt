@@ -294,4 +294,12 @@ class Repository {
 
     }
 
+    suspend fun blockUser(blockUserRequest: BlockUserRequest): Boolean{
+        return try {
+            BlockUserApi.instance.blockUser(blockUserRequest).await().results.isSuccess
+        }catch (e: Exception){
+            e.printStackTrace()
+            false
+        }
+    }
 }

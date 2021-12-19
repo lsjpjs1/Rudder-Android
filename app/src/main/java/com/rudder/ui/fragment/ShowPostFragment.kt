@@ -135,7 +135,7 @@ class ShowPostFragment(val viewModel: MainViewModel): Fragment() {
         fragmentBinding.showPostBody.viewTreeObserver.addOnGlobalLayoutListener(
                 object : ViewTreeObserver.OnGlobalLayoutListener{
                     override fun onGlobalLayout() {
-                        fixOtherViewHeight()
+                        fixOtherViewHeight(fragmentBinding.showPostBody)
                         fragmentBinding.showPostBody.viewTreeObserver.removeOnGlobalLayoutListener(this)
                     }
                 }
@@ -226,7 +226,7 @@ class ShowPostFragment(val viewModel: MainViewModel): Fragment() {
 
 
     //스크롤 뷰 높이에 따라 바뀌는 view의 높이를 고정시켜주는 함수
-   fun fixOtherViewHeight(){
+   fun fixOtherViewHeight(showPostBody: View){
         val showPostBodyHeight = showPostBody.height
         val typedValue = TypedValue()
         val typedValue2 = TypedValue()

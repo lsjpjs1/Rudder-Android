@@ -4,6 +4,9 @@
         <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
+        <variable
+            name="mainBottomBarFragment"
+            type="com.rudder.ui.fragment.MainBottomBarFragment" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -17,7 +20,7 @@
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintWidth_percent="0.33"
             android:onClick="@{()->mainVM.clickCommunity()}"
             android:clickable="true">
 
@@ -33,12 +36,33 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/notificationPageButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toEndOf="@id/communityButton"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.33"
+            android:onClick="@{()->mainBottomBarFragment.openNotificationPage()}"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/notificationPageIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_outline_notifications_24" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/myPageButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/notificationPageButton"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintWidth_percent="0.33"
             android:onClick="@{()->mainVM.clickMyPage()}"
             android:clickable="true">
 

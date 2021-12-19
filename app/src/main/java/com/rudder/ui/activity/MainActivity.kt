@@ -20,6 +20,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -32,6 +34,8 @@ import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.NotificationViewModel
+import com.rudder.viewModel.SearchViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_comment.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
@@ -42,7 +46,7 @@ import kotlinx.android.synthetic.main.post_comments.*
 import java.lang.Exception
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),MainActivityInterface {
     private val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     lateinit var mainBottomBarFragment: MainBottomBarFragment
     lateinit var addCommentFragment: AddCommentFragment
@@ -65,6 +69,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var editPostFragment: EditPostFragment
 
+    private lateinit var notificationFragment: NotificationFragment
+
     private val purpleRudder by lazy { ContextCompat.getColor(this, R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this, R.color.grey) }
     private val black by lazy { ContextCompat.getColor(this, R.color.black) }
@@ -86,8 +92,7 @@ class MainActivity : AppCompatActivity() {
         progressDialog.setCancelable(false)
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal)
         progressBar.bringToFront()
-
-        mainBottomBarFragment = MainBottomBarFragment()
+        mainBottomBarFragment = MainBottomBarFragment(this)
         communityFragment = CommunityFragment()
         myPageFragment = MyPageFragment()
         addPostFragment = AddPostFragment()
@@ -526,6 +531,17 @@ class MainActivity : AppCompatActivity() {
             Toast.LENGTH_LONG
         ).show()
         communityCommentBottomSheetFragment.dismiss()
+    }
+
+    fun showFragment(fragment: Fragment,id: Int, tag: String){
+        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+        fragmentShowHide.addFragment(fragment, id, tag)
+        fragmentShowHide.showFragment(fragment,id)
+    }
+
+    override fun showNotificationFragment() {
+        notificationFragment = NotificationFragment(this)
+        showFragment(notificationFragment, R.id.mainDisplay,"notification")
     }
 
 

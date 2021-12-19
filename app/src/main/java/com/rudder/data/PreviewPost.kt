@@ -8,6 +8,8 @@ data class PreviewPost(
     val postId: Int,
     @SerializedName(value = "user_id")
     val userId: String,
+    @SerializedName(value = "user_info_id")
+    val userInfoId: Int,
     @SerializedName(value = "post_body")
     var postBody: String,
     @SerializedName(value = "post_title")

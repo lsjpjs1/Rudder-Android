@@ -92,6 +92,24 @@ class SearchPostDisplayFragment(val viewModel: MainViewModel)  : Fragment(),Cust
             }
         })
 
+        viewModel.isBlockUser.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    Toast.makeText(
+                        context,
+                        "Block User Complete!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    parentActivity.communityPostBottomSheetFragment.dismiss()
+                    viewModel.clearPosts()
+                    viewModel.searchPost(false)
+                    if (parentActivity.showPostFragment.isVisible){
+                        parentActivity.onBackPressed()
+                    }
+                }
+            }
+        })
+
         viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled().let {
                 it?.let{

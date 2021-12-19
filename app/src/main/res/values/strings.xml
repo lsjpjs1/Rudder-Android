@@ -33,6 +33,7 @@
     <string name="Report">Report</string>
     <string name="Delete">Delete</string>
     <string name="Edit">Edit</string>
+    <string name="block_user">Block User</string>
     <string name="comment_send_text">Reply</string>
     <string name="edit_post_title">Edit Post</string>
     <string name="category">Category</string>

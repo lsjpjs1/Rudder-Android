@@ -93,6 +93,24 @@ class CommunityDisplayFragment(val viewModel: MainViewModel): Fragment(),CustomO
             }
         })
 
+        viewModel.isBlockUser.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    Toast.makeText(
+                        context,
+                        "Block User Complete!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    parentActivity.communityPostBottomSheetFragment.dismiss()
+                    viewModel.clearPosts()
+                    viewModel.getPosts()
+                    if (parentActivity.showPostFragment.isVisible){
+                        parentActivity.onBackPressed()
+                    }
+                }
+            }
+        })
+
         viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled().let {
                 it?.let{

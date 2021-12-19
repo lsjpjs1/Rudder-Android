@@ -71,6 +71,13 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                     var lp1 = communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams
                     lp1.height = (displayDpValue[1] * 0.08).toInt()
                     communityPostBottomSheetBinding.postBottomSheetCL1.layoutParams = lp1
+
+                    var lp5 = communityPostBottomSheetBinding.postBottomSheetCL5.layoutParams
+                    lp5.height = (displayDpValue[1] * 0.08).toInt()
+                    communityPostBottomSheetBinding.postBottomSheetCL5.layoutParams = lp5
+                }else{
+                    postBottomSheetCL1.visibility = View.GONE
+                    postBottomSheetCL5.visibility = View.GONE
                 }
         }})
 
@@ -122,6 +129,10 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         var lp4 = communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams
         lp4.height = (displayDpValue[1] * 0.05).toInt()
         communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams = lp4
+
+        var lp5 = communityPostBottomSheetBinding.postBottomSheetCL5.layoutParams
+        lp5.height = (displayDpValue[1] * 0.08).toInt()
+        communityPostBottomSheetBinding.postBottomSheetCL5.layoutParams = lp5
 
         return communityPostBottomSheetBinding.root
     }

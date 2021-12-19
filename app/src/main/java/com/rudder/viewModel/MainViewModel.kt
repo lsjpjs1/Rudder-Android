@@ -76,6 +76,7 @@ open class MainViewModel : ViewModel() {
     private val _isPostReport = MutableLiveData<Event<Boolean>>()
     private val _isPostEdit = MutableLiveData<Boolean?>()
     private val _isPostDelete = MutableLiveData<Event<Boolean>>()
+    private val _isBlockUser = MutableLiveData<Event<Boolean>>()
     private val _isCommentReport = MutableLiveData<Event<Boolean>>()
     private val _isContactUs = MutableLiveData<Event<Boolean>>()
     private val _isCommentEdit = MutableLiveData<Event<Boolean>>()
@@ -168,6 +169,7 @@ open class MainViewModel : ViewModel() {
     val isPostReport: LiveData<Event<Boolean>> = _isPostReport
     val isPostEdit: LiveData<Boolean?> = _isPostEdit
     val isPostDelete: LiveData<Event<Boolean>> = _isPostDelete
+    val isBlockUser: LiveData<Event<Boolean>> = _isBlockUser
     val isCommentReport: LiveData<Event<Boolean>> = _isCommentReport
     val isContactUs: LiveData<Event<Boolean>> = _isContactUs
     val isCommentEdit: LiveData<Event<Boolean>> = _isCommentEdit
@@ -226,6 +228,7 @@ open class MainViewModel : ViewModel() {
             PreviewPost(
                 1,
                 "abc",
+                0,
                 "body",
                 "title",
                 Timestamp.valueOf("2021-07-13 11:11:11"),
@@ -807,6 +810,18 @@ open class MainViewModel : ViewModel() {
         _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
 
         _photoPickerClickSwitch.value = null
+    }
+
+    fun clickBlockUser() {
+
+        GlobalScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+            Log.d("userID",_posts.value!![selectedPostMorePosition.value!!].userId)
+            var result = Repository().blockUser(BlockUserRequest(App.prefs.getValue(tokenKey)!!,_posts.value!![selectedPostMorePosition.value!!].userInfoId))
+            _isBlockUser.postValue(Event(result))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+
+        }
     }
 
     fun clickPostDelete() {
