@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.33"
+            app:layout_constraintWidth_percent="0.5"
             android:onClick="@{()->mainVM.clickCommunity()}"
             android:clickable="true">
 
@@ -39,6 +39,7 @@
             android:id="@+id/notificationPageButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/communityButton"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.33"
@@ -60,9 +61,9 @@
             android:id="@+id/myPageButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:layout_constraintStart_toEndOf="@+id/notificationPageButton"
+            app:layout_constraintStart_toEndOf="@+id/communityButton"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.33"
+            app:layout_constraintWidth_percent="0.5"
             android:onClick="@{()->mainVM.clickMyPage()}"
             android:clickable="true">
 
