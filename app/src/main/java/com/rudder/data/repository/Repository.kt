@@ -7,6 +7,7 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.rudder.BuildConfig
 import com.rudder.data.*
+import com.rudder.data.dto.ProfileImage
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.data.remote.LoginApi
 import com.rudder.data.remote.PostApi
@@ -14,7 +15,6 @@ import com.rudder.data.remote.SignUpApi
 import com.rudder.data.remote.TokenApi
 import com.rudder.data.remote.*
 import okhttp3.RequestBody
-import java.sql.Timestamp
 import kotlin.Exception
 
 
@@ -303,12 +303,32 @@ class Repository {
         }
     }
 
-    suspend fun updateNickname(updateNicknameRequest: UpdateNicknameRequest): UpdateNicknameResponse{
+    suspend fun updateNickname(updateNicknameRequest: UpdateNicknameRequest): UpdateResponse{
         return try{
-            EditUserApi.instance.updataNickname(updateNicknameRequest).await().results
+            EditUserApi.instance.updateNickname(updateNicknameRequest).await().results
         }catch (e: Exception){
             e.printStackTrace()
-            UpdateNicknameResponse(false,ResponseEnum.UNKNOWN)
+            UpdateResponse(false,ResponseEnum.UNKNOWN)
         }
+    }
+
+    suspend fun getProfileImages() : ArrayList<ProfileImage> {
+        return try {
+            MyPageApi.instance.getProfileImages().await().results.profileImageList
+        }catch (e: Exception){
+            e.printStackTrace()
+            arrayListOf<ProfileImage>()
+        }
+
+    }
+
+    suspend fun updateProfileImage(updateProfileImageRequest: UpdateProfileImageRequest): UpdateResponse{
+        return try{
+            EditUserApi.instance.updateProfileImage(updateProfileImageRequest).await().results
+        }catch (e: Exception){
+            e.printStackTrace()
+            UpdateResponse(false,ResponseEnum.UNKNOWN)
+        }
+
     }
 }

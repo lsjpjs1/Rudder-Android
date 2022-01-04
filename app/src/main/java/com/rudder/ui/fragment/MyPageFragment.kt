@@ -30,11 +30,12 @@ import kotlinx.android.synthetic.main.fragment_terms_of_service.view.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
 
-class MyPageFragment: Fragment() {
+class MyPageFragment: Fragment(),MyPageFragmentInterface {
 
 
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var editNicknameDialogFragment: EditNicknameDialogFragment
+    private lateinit var editProfileImageDialogFragment: EditProfileImageDialogFragment
     private lateinit var myPageBinding : FragmentMyPageBinding
     private val lazyContext by lazy {
         requireContext()
@@ -58,7 +59,7 @@ class MyPageFragment: Fragment() {
         )
         myPageBinding.mainVM = viewModel
         myPageBinding.myPageFragment = this
-        myPageBinding.lifecycleOwner = this
+        myPageBinding.lifecycleOwner = viewLifecycleOwner
 
         val divideChildTarget = myPageBinding.constraintLayoutMyPage1
         val displaySize = parentActivity.getDisplaySize()
@@ -81,6 +82,7 @@ class MyPageFragment: Fragment() {
         viewModel.myProfileImageUrl.observe(viewLifecycleOwner, Observer {
             it?.let {
                 Log.d("myImage", it)
+
                 Glide.with(myPageBinding.myProfileImageImageView.context)
                     .load(it)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -115,6 +117,15 @@ class MyPageFragment: Fragment() {
         editNicknameDialogFragment.show(childFragmentManager,"editNicknameDialog")
     }
 
+    fun showEditProfileImageDialog(){
+        editProfileImageDialogFragment = EditProfileImageDialogFragment(this)
+        editProfileImageDialogFragment.show(childFragmentManager, "editProfileImageDialog")
+    }
+
+    override fun setMyProfileImageUrl(url : String){
+        viewModel.setMyProfileImageUrl(url)
+
+    }
 
 
 

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="editProfileImageVM"
+            type="com.rudder.viewModel.EditProfileImageDialogViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/dialog_radius"
+            android:id="@+id/editProfileImageDialogDisplayConstraintLayout"
+            >
+            <TextView
+                android:id="@+id/editProfileImageTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="@string/edit_profile_image"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/editProfileImageRVDisplayConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintTop_toBottomOf="@id/editProfileImageTitleTextView">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/editProfileImageRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.3"
+                app:layout_constraintTop_toBottomOf="@+id/editProfileImageRVDisplayConstraintLayout">
+                <Button
+                    android:id="@+id/editProfileImageButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintHeight_default="percent"
+                    app:layout_constraintHeight_percent="0.9"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent="0.4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:clickable="true"
+                    android:backgroundTint="#9329D1"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="@string/Edit"
+                    android:onClick="@{()->editProfileImageVM.updateProfileImage()}"
+
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

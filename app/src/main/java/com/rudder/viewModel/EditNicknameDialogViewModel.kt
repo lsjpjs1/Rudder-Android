@@ -42,7 +42,7 @@ class EditNicknameDialogViewModel : ViewModel() {
                 when(result.error){
 
                     ResponseEnum.SUCCESS -> {
-                        _toastMessage.value = "Successfully edited!"
+                        _toastMessage.value = "Successfully changed!"
                         _closeFlag.value = Event(true)
                     }
                     ResponseEnum.UNKNOWN -> {
@@ -52,7 +52,7 @@ class EditNicknameDialogViewModel : ViewModel() {
                         _toastMessage.value = "Database failure"
                     }
                     ResponseEnum.DUPLICATE -> {
-                        _toastMessage.value = "Nickname duplicated.\nPlease try to other nickname"
+                        _toastMessage.value = "Nickname duplicated.\nPlease try with a different nickname"
                     }
 
                 }

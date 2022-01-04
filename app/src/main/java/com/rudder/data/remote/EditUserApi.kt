@@ -14,9 +14,15 @@ class EditUserApi {
 
     private val editUserService : EditUserService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(EditUserService::class.java)
 
-    fun updataNickname(updateNicknameRequest: UpdateNicknameRequest) : Deferred<Response<UpdateNicknameResponse>> {
+    fun updateNickname(updateNicknameRequest: UpdateNicknameRequest) : Deferred<Response<UpdateResponse>> {
         return GlobalScope.async(Dispatchers.IO){
             editUserService.updateNickname(updateNicknameRequest)
+        }
+    }
+
+    fun  updateProfileImage(updateProfileImageRequest: UpdateProfileImageRequest): Deferred<Response<UpdateResponse>> {
+        return GlobalScope.async(Dispatchers.IO) {
+            editUserService.updateProfileImage(updateProfileImageRequest)
         }
     }
 }

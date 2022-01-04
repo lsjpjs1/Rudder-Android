@@ -4,6 +4,8 @@ import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.LoginInfo
 import com.rudder.data.Response
+import com.rudder.data.dto.ProfileImage
+import com.rudder.data.dto.ProfileImageResponse
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -40,5 +42,11 @@ class MyPageApi {
             myPageService.requestJoinClub(requestJoinClubRequest)
         }
 
+    }
+
+    fun getProfileImages() : Deferred<Response<ProfileImageResponse>> {
+        return GlobalScope.async(Dispatchers.IO) {
+            myPageService.getProfileImages()
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import com.rudder.data.LoginInfo
 import com.rudder.data.Response
+import com.rudder.data.dto.ProfileImageResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -22,6 +23,9 @@ interface MyPageService {
     suspend fun requestJoinClub(
         @Body requestJoinClubRequest: RequestJoinClubRequest
     ) : Response<RequestJoinClubResponse>
+
+    @POST("/signupin/profileImageList")
+    suspend fun getProfileImages() : Response<ProfileImageResponse>
 }
 
 data class RequestJoinClubRequest(

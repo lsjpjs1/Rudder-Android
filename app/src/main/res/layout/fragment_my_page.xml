@@ -62,6 +62,7 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_marginTop="40dp"
+                            android:onClick="@{()->myPageFragment.showEditProfileImageDialog()}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHeight_percent="0.4"
                             app:layout_constraintStart_toStartOf="parent"

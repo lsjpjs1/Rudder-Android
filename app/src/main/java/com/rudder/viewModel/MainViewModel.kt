@@ -283,6 +283,10 @@ open class MainViewModel : ViewModel() {
 
     }
 
+    fun setMyProfileImageUrl(url:String){
+        _myProfileImageUrl.value = url
+    }
+
     fun clearSearchPost(){
         _posts.value = arrayListOf()
         _searchWord.value = MutableLiveData<String>().value
@@ -402,7 +406,6 @@ open class MainViewModel : ViewModel() {
             val url = Repository().getMyProfileImageUrl(MyProfileImageRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!)).url
             viewModelScope.launch{
                 _myProfileImageUrl.value = url
-                Log.d("myprofile","call123")
             }
         }
     }
