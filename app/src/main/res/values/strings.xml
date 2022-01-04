@@ -38,7 +38,7 @@
     <string name="edit_post_title">Edit Post</string>
     <string name="category">Category</string>
     <string name="apply">Apply</string>
-
+    <string name="edit_nickname">Edit Nickname</string>
     <string name="report_comment_content">Comment Report content</string>
     <string name="report_post_content">Post Report Content</string>
     <string name="choose_profile_image">Choose Profile Image</string>
@@ -46,4 +46,5 @@
     <string name="auto_login_error">Fail to auto sign in</string>
     <string name="my_page_title">My Page</string>
     <string name="club">Club</string>
+    <string name="nickname_hint">New Nickname</string>
 </resources>

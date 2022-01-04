@@ -6,6 +6,9 @@
         <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
+        <variable
+            name="myPageFragment"
+            type="com.rudder.ui.fragment.MyPageFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,11 +77,10 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/constraintLayoutMyPage1"
                             android:layout_width="0dp"
-                            android:layout_height="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="40dp"
 
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHeight_percent="0.4"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
                             app:layout_constraintWidth_percent="0.9">
@@ -157,33 +159,68 @@
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/changeNicknameConstraintLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:background="@drawable/my_page_button_style"
+                                android:onClick="@{()->myPageFragment.showEditNicknameDialog()}"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHeight_default="percent"
+                                app:layout_constraintHeight_percent="0.2"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+
+
+                                <TextView
+                                    android:id="@+id/changeNicknameTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+
+                                    android:text="@string/edit_nickname"
+                                    android:textColor="@color/white"
+
+                                    android:textSize="20dp"
+                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintWidth_default="percent"
+                                    app:layout_constraintWidth_percent="0.8" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/constraintLayoutMyPage5"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:background="@drawable/my_page_button_style"
+                                android:onClick="@{()->mainVM.clickContactUs()}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHeight_default="percent"
                                 app:layout_constraintHeight_percent="0.2"
                                 app:layout_constraintHorizontal_bias="0.0"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:onClick="@{()->mainVM.clickContactUs()}">
-
+                                android:layout_marginTop="15dp"
+                                app:layout_constraintTop_toBottomOf="@+id/changeNicknameConstraintLayout">
 
 
                                 <TextView
                                     android:id="@+id/textView4"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center_vertical"
-
-                                    android:text="Contact Us"
-                                    android:textColor="@color/white"
-
-                                    android:textSize="20dp"
                                     android:fontFamily="@font/sf_pro_text_bold"
+
+                                    android:gravity="center_vertical"
+                                    android:text="Contact Us"
+
+                                    android:textColor="@color/white"
+                                    android:textSize="20dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
 
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -229,11 +266,13 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
             </androidx.core.widget.NestedScrollView>

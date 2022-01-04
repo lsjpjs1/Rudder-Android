@@ -19,6 +19,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.databinding.FragmentMyPageBinding
+import com.rudder.ui.activity.MainActivity
+import com.rudder.util.uiUtils.PercentDivide
+import com.rudder.util.uiUtils.PercentDivideImpl
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_webview_modal.view.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.view.*
@@ -31,10 +34,16 @@ class MyPageFragment: Fragment() {
 
 
     private val viewModel: MainViewModel by activityViewModels()
+    private lateinit var editNicknameDialogFragment: EditNicknameDialogFragment
     private lateinit var myPageBinding : FragmentMyPageBinding
     private val lazyContext by lazy {
         requireContext()
     }
+
+    private val parentActivity by lazy{
+        activity as MainActivity
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,7 +57,13 @@ class MyPageFragment: Fragment() {
             false
         )
         myPageBinding.mainVM = viewModel
+        myPageBinding.myPageFragment = this
         myPageBinding.lifecycleOwner = this
+
+        val divideChildTarget = myPageBinding.constraintLayoutMyPage1
+        val displaySize = parentActivity.getDisplaySize()
+        val percentDivide : PercentDivide = PercentDivideImpl(divideChildTarget,displaySize,0.4f)
+        percentDivide.divideChildSameRatio()
 
         childFragmentManager.beginTransaction()
             .add(R.id.myPageHeader, MyPageHeaderFragment())
@@ -94,6 +109,12 @@ class MyPageFragment: Fragment() {
 
         return myPageBinding.root
     }
+
+    fun showEditNicknameDialog(){
+        editNicknameDialogFragment = EditNicknameDialogFragment()
+        editNicknameDialogFragment.show(childFragmentManager,"editNicknameDialog")
+    }
+
 
 
 

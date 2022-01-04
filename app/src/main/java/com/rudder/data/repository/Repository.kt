@@ -302,4 +302,13 @@ class Repository {
             false
         }
     }
+
+    suspend fun updateNickname(updateNicknameRequest: UpdateNicknameRequest): UpdateNicknameResponse{
+        return try{
+            EditUserApi.instance.updataNickname(updateNicknameRequest).await().results
+        }catch (e: Exception){
+            e.printStackTrace()
+            UpdateNicknameResponse(false,ResponseEnum.UNKNOWN)
+        }
+    }
 }

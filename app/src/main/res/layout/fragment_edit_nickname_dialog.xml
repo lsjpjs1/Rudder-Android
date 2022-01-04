@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="editNicknameDialogFragment"
+            type="com.rudder.ui.fragment.EditNicknameDialogFragment" />
+        <variable
+            name="editNicknameDialogVM"
+            type="com.rudder.viewModel.EditNicknameDialogViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/editNicknameDialogConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/editNicknameDialogDisplayConstraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/dialog_radius">
+
+            <TextView
+                android:id="@+id/editNicknameTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="@string/edit_nickname"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            <EditText
+                android:id="@+id/editNicknameEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/nickname_hint"
+                android:text="@={editNicknameDialogVM._newNickname}"
+                android:maxLength="30"
+                android:gravity="top|left"
+                android:background="@drawable/edge"
+                android:theme="@style/MyEditTextTheme"
+                android:layout_marginTop="15dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.3"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.9"
+
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@id/editNicknameTitleTextView"
+
+
+                >
+            </EditText>
+
+            <Button
+                android:id="@+id/editNicknameEditButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.4"
+                android:clickable="true"
+                android:backgroundTint="#9329D1"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/Edit"
+                android:onClick="@{()->editNicknameDialogVM.updateNickname()}"
+
+
+                app:layout_constraintTop_toBottomOf="@+id/editNicknameEditText"
+                app:layout_constraintStart_toEndOf="@+id/editNicknameCancelButton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <Button
+                android:id="@+id/editNicknameCancelButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.4"
+                android:clickable="true"
+                android:onClick="@{()->editNicknameDialogFragment.close()}"
+                android:backgroundTint="#9329D1"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="Cancel"
+
+                app:layout_constraintEnd_toStartOf="@id/editNicknameEditButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editNicknameEditText"
+
+
+
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
