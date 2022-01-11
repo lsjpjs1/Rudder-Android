@@ -9,6 +9,7 @@ import com.rudder.data.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
+
 interface BoardInfoService {
     @POST("/board/categoryList")
     suspend fun getCategories(

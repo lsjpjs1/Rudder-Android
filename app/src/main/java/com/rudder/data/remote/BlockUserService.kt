@@ -4,6 +4,7 @@ import com.rudder.data.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
+// spring 완료
 interface BlockUserService {
     @POST("/users/blockUser")
     suspend fun blockUser(

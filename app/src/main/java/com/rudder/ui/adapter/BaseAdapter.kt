@@ -20,7 +20,7 @@ abstract class BaseAdapter<T,VB : ViewDataBinding>(
     inner class BaseViewHolder(val viewBinding: VB) :
         RecyclerView.ViewHolder(viewBinding.root)
 
-    //이 부분 커스터마이징 할 땐 super 사
+    //이 부분 커스터마이징 할 땐 super 사용
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
     ): BaseAdapter<T,VB>.BaseViewHolder {
