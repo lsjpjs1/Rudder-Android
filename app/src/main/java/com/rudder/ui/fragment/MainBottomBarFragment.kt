@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.gms.common.util.CollectionUtils.listOf
 import com.rudder.R
 import com.rudder.databinding.FragmentMainBottomBarBinding
 import com.rudder.ui.activity.ActivityInterface
