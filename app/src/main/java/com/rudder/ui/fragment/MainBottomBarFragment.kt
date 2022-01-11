@@ -48,6 +48,12 @@ class MainBottomBarFragment(val activityInterface: ActivityInterface): Fragment(
         activityInterface.showNotificationFragment()
     }
 
+    fun openPostMessagePage() {
+        val root = bottomBar.root
+        swapIconColor(root.notificationPageIcon)
+        activityInterface.showNotificationFragment()
+    }
+
     private fun swapIconColor(imageView: ImageView){
         for (icon in ICONS){
             if (icon == imageView){
