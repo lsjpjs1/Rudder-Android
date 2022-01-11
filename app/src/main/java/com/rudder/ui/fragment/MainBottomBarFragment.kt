@@ -48,6 +48,7 @@ class MainBottomBarFragment(val activityInterface: ActivityInterface): Fragment(
         swapIconColor(root.postMessagePageIcon)
         activityInterface.showNotificationFragment()
     }
+    //21 01 11 tkl test commit
 
     fun openPostMessagePage() {
         val root = bottomBar.root
