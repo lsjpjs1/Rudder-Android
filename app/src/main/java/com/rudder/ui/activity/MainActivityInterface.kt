@@ -1,5 +1,5 @@
 package com.rudder.ui.activity
 
-interface MainActivityInterface: ActivityInterface {
-
+interface MainActivityInterface : ActivityInterface {
+    fun showNotificationFragment()
 }

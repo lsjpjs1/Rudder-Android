@@ -16,11 +16,12 @@ import com.google.android.gms.common.util.CollectionUtils.listOf
 import com.rudder.R
 import com.rudder.databinding.FragmentMainBottomBarBinding
 import com.rudder.ui.activity.ActivityInterface
+import com.rudder.ui.activity.MainActivityInterface
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.view.*
 
-class MainBottomBarFragment(val activityInterface: ActivityInterface): Fragment() {
+class MainBottomBarFragment(val mainActivityInterface : MainActivityInterface): Fragment() {
 
     private val viewModel :MainViewModel by activityViewModels()
     private lateinit var bottomBar: FragmentMainBottomBarBinding
@@ -46,13 +47,13 @@ class MainBottomBarFragment(val activityInterface: ActivityInterface): Fragment(
     fun openNotificationPage() {
         val root = bottomBar.root
         swapIconColor(root.postMessagePageIcon)
-        activityInterface.showNotificationFragment()
+        mainActivityInterface.showNotificationFragment()
     }
 
     fun openPostMessagePage() {
         val root = bottomBar.root
         swapIconColor(root.postMessagePageIcon)
-        activityInterface.showNotificationFragment()
+        mainActivityInterface.showNotificationFragment()
     }
 
     private fun swapIconColor(imageView: ImageView){

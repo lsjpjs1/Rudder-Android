@@ -46,7 +46,7 @@ import kotlinx.android.synthetic.main.post_comments.*
 import java.lang.Exception
 
 
-class MainActivity : AppCompatActivity(),MainActivityInterface {
+class MainActivity : AppCompatActivity(), MainActivityInterface {
     private val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     lateinit var mainBottomBarFragment: MainBottomBarFragment
     lateinit var addCommentFragment: AddCommentFragment
