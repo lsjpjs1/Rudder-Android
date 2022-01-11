@@ -27,7 +27,7 @@ class MainBottomBarFragment(val activityInterface: ActivityInterface): Fragment(
         context
     }
     private val ICONS by lazy { listOf<ImageView>(bottomBar.root.communityIcon,
-        bottomBar.root.notificationPageIcon,bottomBar.root.myPageIcon) }
+        bottomBar.root.postMessagePageIcon,bottomBar.root.myPageIcon) }
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(lazyContext!!, R.color.grey) }
     private val black by lazy { ContextCompat.getColor(lazyContext!!, R.color.black) }
@@ -44,13 +44,13 @@ class MainBottomBarFragment(val activityInterface: ActivityInterface): Fragment(
 
     fun openNotificationPage() {
         val root = bottomBar.root
-        swapIconColor(root.notificationPageIcon)
+        swapIconColor(root.postMessagePageIcon)
         activityInterface.showNotificationFragment()
     }
 
     fun openPostMessagePage() {
         val root = bottomBar.root
-        swapIconColor(root.notificationPageIcon)
+        swapIconColor(root.postMessagePageIcon)
         activityInterface.showNotificationFragment()
     }
 
