@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity(),MainActivityInterface {
     lateinit var communityCommentReportFragment: CommunityCommentReportFragment
     private lateinit var clubJoinRequestDialogFragment: ClubJoinRequestDialogFragment
     lateinit var communityCommentEditFragment: CommunityCommentEditFragment
+    private lateinit var postMessageFragment: PostMessageFragment
 
     private lateinit var contactUsFragment: ContactUsFragment
 
@@ -542,6 +543,11 @@ class MainActivity : AppCompatActivity(),MainActivityInterface {
     override fun showNotificationFragment() {
         notificationFragment = NotificationFragment(this)
         showFragment(notificationFragment, R.id.mainDisplay,"notification")
+    }
+
+    override fun showPostMessageFragment() {
+        postMessageFragment = PostMessageFragment()
+        showFragment(postMessageFragment, R.id.mainDisplay, "postMessage")
     }
 
 

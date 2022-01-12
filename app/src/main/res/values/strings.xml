@@ -49,4 +49,5 @@
     <string name="nickname_hint">New Nickname</string>
     <string name="edit_profile_image">Change Profile Image</string>
     <string name="send_post_message">Send Message</string>
+    <string name="post_message">Message</string>
 </resources>
