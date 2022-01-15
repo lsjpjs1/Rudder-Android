@@ -497,6 +497,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         mainBottomBarFragment.postMessagePageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
     }
 
+    ///
 
     fun validateBack(tag: String): Boolean {
         return if (supportFragmentManager.findFragmentByTag(tag)==null){
