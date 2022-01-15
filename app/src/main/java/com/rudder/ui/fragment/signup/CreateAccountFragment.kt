@@ -1,8 +1,7 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.signup
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,6 @@ import com.rudder.viewModel.SignUpViewModel
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.util.ChangeUIState
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.android.synthetic.main.fragment_create_account.view.*

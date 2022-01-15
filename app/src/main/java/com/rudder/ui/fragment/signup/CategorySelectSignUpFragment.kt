@@ -1,7 +1,6 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.signup
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +14,7 @@ import com.rudder.R
 import com.rudder.databinding.FragmentSignUpCategorySelectBinding
 import com.rudder.ui.activity.SignUpActivity
 import com.rudder.viewModel.SignUpViewModel
-import kotlinx.android.synthetic.main.fragment_school_select.*
 import kotlinx.android.synthetic.main.fragment_sign_up_category_select.view.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 

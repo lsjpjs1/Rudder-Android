@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
 import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.ui.fragment.*
-import com.rudder.ui.fragment.signup.SchoolSelectFragment
+import com.rudder.ui.fragment.signup.*
 import com.rudder.util.ChangeUIState
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil

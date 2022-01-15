@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.signup
 
 
 import android.os.Bundle
@@ -15,8 +15,6 @@ import com.rudder.R
 import com.rudder.databinding.FragmentTermsOfServiceBinding
 import com.rudder.util.ChangeUIState
 import com.rudder.viewModel.SignUpViewModel
-import kotlinx.android.synthetic.main.fragment_school_select.*
-import kotlinx.android.synthetic.main.fragment_school_select.view.*
 import kotlinx.android.synthetic.main.fragment_terms_of_service.*
 import kotlinx.android.synthetic.main.fragment_terms_of_service.view.*
 
