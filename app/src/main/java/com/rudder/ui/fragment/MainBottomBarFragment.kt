@@ -20,7 +20,9 @@ import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.view.*
 
+
 class MainBottomBarFragment(val mainActivityInterface: MainActivityInterface): Fragment() {
+
 
     private val viewModel :MainViewModel by activityViewModels()
     private lateinit var bottomBar: FragmentMainBottomBarBinding
@@ -54,7 +56,9 @@ class MainBottomBarFragment(val mainActivityInterface: MainActivityInterface): F
     fun openPostMessagePage() {
         val root = bottomBar.root
         swapIconColor(root.postMessagePageIcon)
+
         mainActivityInterface.showPostMessageFragment()
+
     }
 
     private fun swapIconColor(imageView: ImageView){

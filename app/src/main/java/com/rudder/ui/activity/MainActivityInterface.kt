@@ -1,5 +1,6 @@
 package com.rudder.ui.activity
 
+
 interface MainActivityInterface: ActivityInterface {
 
     fun showNotificationFragment()
@@ -7,3 +8,4 @@ interface MainActivityInterface: ActivityInterface {
     fun showPostMessageFragment()
 
     }
+

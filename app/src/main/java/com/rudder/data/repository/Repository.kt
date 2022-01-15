@@ -331,4 +331,14 @@ class Repository {
         }
 
     }
+
+    suspend fun sendPostMessage(sendPostMessageRequest: SendPostMessageRequest): SendPostMessageResponse{
+        return try{
+            MessageApi.instance.sendPostMessage(sendPostMessageRequest).await().results
+        }catch (e: Exception){
+            e.printStackTrace()
+            SendPostMessageResponse(false,ResponseEnum.UNKNOWN)
+        }
+
+    }
 }

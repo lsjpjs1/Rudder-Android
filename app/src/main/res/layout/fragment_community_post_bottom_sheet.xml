@@ -11,6 +11,10 @@
         <variable
             name="position"
             type="Integer" />
+
+        <variable
+            name="communityPostBottomSheetFragment"
+            type="com.rudder.ui.fragment.CommunityPostBottomSheetFragment" />
     </data>
 
 
@@ -244,6 +248,15 @@
                 >
 
             </ImageView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.01"
+                android:background="#9E9D9D"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </View>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -294,11 +307,20 @@
                 >
 
             </ImageView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.01"
+                android:background="#9E9D9D"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </View>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/postBottomSheetCL6"
+            android:id="@+id/sendPostMessageCL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -322,7 +344,7 @@
                 android:gravity="fill_vertical"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:text="@string/send_post_message"
-                android:onClick="@{()->mainVM.clickBlockUser()}"
+                android:onClick="@{()->communityPostBottomSheetFragment.showPostMessageDialog()}"
                 android:textSize="16dp">
             </TextView>
 
@@ -331,7 +353,7 @@
                 android:layout_height="0dp"
                 app:tint="@color/purple_rudder"
                 android:id="@+id/sendPostMessageImageView"
-                app:srcCompat="@drawable/ic_outline_block_24"
+                app:srcCompat="@drawable/ic_outline_email_24_purple"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -344,6 +366,15 @@
                 >
 
             </ImageView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.01"
+                android:background="#9E9D9D"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </View>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
