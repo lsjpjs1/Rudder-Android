@@ -487,7 +487,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         mainBottomBarFragment.communityIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
         mainBottomBarFragment.myPageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
         mainBottomBarFragment.postMessagePageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
-
     }
 
     fun changeColorMyPage() {
