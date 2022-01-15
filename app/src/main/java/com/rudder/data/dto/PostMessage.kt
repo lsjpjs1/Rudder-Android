@@ -10,6 +10,6 @@ data class PostMessage(
     val messageSendTime : Timestamp,
     val postMessageId : Int,
     val sendUserNickname : String,
-    val receiveUserNickname : String // 210115
+    val receiveUserNickname : String // 210115,,
 
 )
