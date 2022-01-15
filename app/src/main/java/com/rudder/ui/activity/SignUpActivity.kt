@@ -4,10 +4,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.MotionEvent
 import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
@@ -16,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
 import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.ui.fragment.*
+import com.rudder.ui.fragment.signup.SchoolSelectFragment
 import com.rudder.util.ChangeUIState
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
