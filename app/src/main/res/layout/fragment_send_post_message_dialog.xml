@@ -43,7 +43,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:hint="@string/message_body"
+                android:hint="@string/post_message"
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
                 android:paddingBottom="10dp"

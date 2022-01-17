@@ -32,6 +32,8 @@ class CommunityDisplayFragment(val viewModel: MainViewModel): Fragment(),CustomO
     private val parentActivity by lazy {
         activity as MainActivity
     }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

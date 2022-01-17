@@ -9,5 +9,7 @@ data class PostMessage(
     val isRead : Boolean,
     val messageSendTime : Timestamp,
     val postMessageId : Int,
-    val sendUserNickname : String
+    val sendUserNickname : String,
+    val receiveUserNickname : String // 210115,,,,,,,,,,,,,,,,
+
 )
