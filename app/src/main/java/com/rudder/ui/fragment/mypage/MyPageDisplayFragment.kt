@@ -1,7 +1,6 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.mypage
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebViewClient
-import android.widget.EditText
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -20,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.databinding.FragmentMyPageBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.MyPageFragmentInterface
 import com.rudder.util.uiUtils.PercentDivide
 import com.rudder.util.uiUtils.PercentDivideImpl
 import com.rudder.viewModel.MainViewModel
@@ -30,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_terms_of_service.view.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
 
-class MyPageFragment: Fragment(),MyPageFragmentInterface {
+class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
 
 
     private val viewModel: MainViewModel by activityViewModels()
@@ -58,7 +56,7 @@ class MyPageFragment: Fragment(),MyPageFragmentInterface {
             false
         )
         myPageBinding.mainVM = viewModel
-        myPageBinding.myPageFragment = this
+        myPageBinding.myPageDisplayFragment = this
         myPageBinding.lifecycleOwner = viewLifecycleOwner
 
         val divideChildTarget = myPageBinding.constraintLayoutMyPage1

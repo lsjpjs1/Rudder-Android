@@ -1,7 +1,6 @@
 package com.rudder.ui.adapter
 
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
@@ -10,9 +9,7 @@ import com.rudder.R
 import com.rudder.data.DisplaySize
 import com.rudder.data.dto.ProfileImage
 import com.rudder.databinding.EditProfileImagesBinding
-import com.rudder.ui.fragment.EditProfileImageDialogFragment
-import com.rudder.util.CustomOnclickListener
-import com.rudder.viewModel.EditProfileImageDialogViewModel
+import com.rudder.ui.fragment.mypage.EditProfileImageDialogFragment
 import kotlinx.android.synthetic.main.edit_profile_images.view.*
 
 class EditProfileImagesAdapter(

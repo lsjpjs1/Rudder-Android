@@ -3,7 +3,6 @@ package com.rudder.ui.activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.graphics.PorterDuff
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -16,32 +15,28 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.databinding.ActivityMainBinding
-import com.rudder.databinding.FragmentClubJoinRequestDialogBinding
 import com.rudder.ui.fragment.*
+import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
+import com.rudder.ui.fragment.mypage.ClubJoinRequestDialogFragment
+import com.rudder.ui.fragment.mypage.ContactUsFragment
+import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
-import com.rudder.viewModel.NotificationViewModel
-import com.rudder.viewModel.SearchViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_comment.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
-import kotlinx.android.synthetic.main.fragment_show_post.postPreviewTailCommentCountTV
 import kotlinx.android.synthetic.main.post_comments.*
 import java.lang.Exception
 
@@ -51,7 +46,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     lateinit var mainBottomBarFragment: MainBottomBarFragment
     lateinit var addCommentFragment: AddCommentFragment
     private lateinit var communityFragment: CommunityFragment
-    private lateinit var myPageFragment: MyPageFragment
+    private lateinit var myPageDisplayFragment: MyPageDisplayFragment
     private lateinit var addPostFragment: AddPostFragment
     private lateinit var searchPostFragment: SearchPostFragment
     lateinit var showPostFragment: ShowPostFragment
@@ -95,7 +90,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         progressBar.bringToFront()
         mainBottomBarFragment = MainBottomBarFragment(this)
         communityFragment = CommunityFragment()
-        myPageFragment = MyPageFragment()
+        myPageDisplayFragment = MyPageDisplayFragment()
         addPostFragment = AddPostFragment()
 
         showPostFragment = ShowPostFragment(viewModel)
@@ -132,8 +127,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         supportFragmentManager.beginTransaction()
             .add(R.id.mainBottomBar, mainBottomBarFragment,"mainBottomBar")
-            .add(R.id.mainDisplay, myPageFragment, "myPage")
-            .hide(myPageFragment)
+            .add(R.id.mainDisplay, myPageDisplayFragment, "myPage")
+            .hide(myPageDisplayFragment)
             .add(R.id.mainDisplay, communityFragment, "community")
             .commit()
 
@@ -192,7 +187,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 }
                 R.id.myPageButton -> {
                     FragmentShowHide(supportFragmentManager).showFragment(
-                        myPageFragment,
+                        myPageDisplayFragment,
                         R.id.mainDisplay
                     )
                     changeColorMyPage()

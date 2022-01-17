@@ -1,10 +1,9 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.mypage
 
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +19,7 @@ import com.rudder.data.DisplaySize
 import com.rudder.databinding.FragmentEditProfileImageDialogBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.EditProfileImagesAdapter
+import com.rudder.ui.fragment.MyPageFragmentInterface
 import com.rudder.viewModel.EditProfileImageDialogViewModel
 
 class EditProfileImageDialogFragment(val myPageFragmentInterface: MyPageFragmentInterface) : DialogFragment() {

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="editNicknameDialogFragment"
-            type="com.rudder.ui.fragment.EditNicknameDialogFragment" />
+            type="com.rudder.ui.fragment.mypage.EditNicknameDialogFragment" />
         <variable
             name="editNicknameDialogVM"
             type="com.rudder.viewModel.EditNicknameDialogViewModel" />

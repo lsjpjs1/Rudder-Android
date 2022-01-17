@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.mypage
 
 import android.os.Bundle
 import android.view.LayoutInflater

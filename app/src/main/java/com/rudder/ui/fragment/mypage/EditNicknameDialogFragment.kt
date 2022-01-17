@@ -1,10 +1,9 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.mypage
 
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.rudder.R
 import com.rudder.databinding.FragmentEditNicknameDialogBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.EditNicknameDialogViewModel
-import com.rudder.viewModel.SearchViewModel
 
 class EditNicknameDialogFragment() : DialogFragment() {
     private val viewModel: EditNicknameDialogViewModel by activityViewModels()

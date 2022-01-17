@@ -7,8 +7,8 @@
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
         <variable
-            name="myPageFragment"
-            type="com.rudder.ui.fragment.MyPageFragment" />
+            name="myPageDisplayFragment"
+            type="com.rudder.ui.fragment.mypage.MyPageDisplayFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,7 +64,7 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_marginTop="40dp"
-                            android:onClick="@{()->myPageFragment.showEditProfileImageDialog()}"
+                            android:onClick="@{()->myPageDisplayFragment.showEditProfileImageDialog()}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHeight_percent="0.4"
                             app:layout_constraintStart_toStartOf="parent"
@@ -167,7 +167,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:background="@drawable/my_page_button_style"
-                                android:onClick="@{()->myPageFragment.showEditNicknameDialog()}"
+                                android:onClick="@{()->myPageDisplayFragment.showEditNicknameDialog()}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHeight_default="percent"
                                 app:layout_constraintHeight_percent="0.2"
