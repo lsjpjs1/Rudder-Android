@@ -1,18 +1,13 @@
 package com.rudder.ui.fragment
 
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
-import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -21,13 +16,13 @@ import com.rudder.databinding.FragmentShowPostBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.DisplayImagesAdapter
 import com.rudder.ui.adapter.PostCommentsAdapter
+import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
 
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
-import kotlinx.coroutines.MainCoroutineDispatcher
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 

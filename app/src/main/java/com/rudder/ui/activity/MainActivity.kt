@@ -24,6 +24,10 @@ import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
+import com.rudder.ui.fragment.comment.AddCommentFragment
+import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
+import com.rudder.ui.fragment.comment.CommunityCommentEditFragment
+import com.rudder.ui.fragment.comment.CommunityCommentReportFragment
 import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.ClubJoinRequestDialogFragment
 import com.rudder.ui.fragment.mypage.ContactUsFragment

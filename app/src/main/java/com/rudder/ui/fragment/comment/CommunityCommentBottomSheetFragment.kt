@@ -1,20 +1,18 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.comment
 
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityCommentBottomSheetBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.SendPostMessageDialogFragment
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_community_comment_bottom_sheet.*

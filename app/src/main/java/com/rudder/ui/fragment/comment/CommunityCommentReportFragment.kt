@@ -1,21 +1,18 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.comment
 
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityCommentReportSheetBinding
-import com.rudder.databinding.FragmentCommunityPostReportSheetBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*

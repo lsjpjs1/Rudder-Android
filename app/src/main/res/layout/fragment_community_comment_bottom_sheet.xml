@@ -13,7 +13,7 @@
 
         <variable
             name="communityCommentBottomSheetFragment"
-            type="com.rudder.ui.fragment.CommunityCommentBottomSheetFragment" />
+            type="com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment" />
     </data>
 
 <!---->
