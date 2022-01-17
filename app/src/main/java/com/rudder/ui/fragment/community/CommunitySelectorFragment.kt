@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.community
 
 import android.os.Bundle
 import android.util.Log

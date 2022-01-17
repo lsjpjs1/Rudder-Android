@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.community
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,8 @@ import com.rudder.R
 import com.rudder.databinding.FragmentCommunityDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.MainPostPreviewAdapter
+import com.rudder.ui.fragment.CommunityPostBottomSheetFragment
+import com.rudder.ui.fragment.ShowPostFragment
 import com.rudder.ui.fragment.comment.AddCommentFragment
 import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel

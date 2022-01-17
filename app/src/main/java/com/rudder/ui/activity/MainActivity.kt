@@ -28,6 +28,7 @@ import com.rudder.ui.fragment.comment.AddCommentFragment
 import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
 import com.rudder.ui.fragment.comment.CommunityCommentEditFragment
 import com.rudder.ui.fragment.comment.CommunityCommentReportFragment
+import com.rudder.ui.fragment.community.CommunityFragment
 import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.ClubJoinRequestDialogFragment
 import com.rudder.ui.fragment.mypage.ContactUsFragment
