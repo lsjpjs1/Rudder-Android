@@ -10,6 +10,10 @@
         <variable
             name="position"
             type="Integer" />
+
+        <variable
+            name="communityCommentBottomSheetFragment"
+            type="com.rudder.ui.fragment.CommunityCommentBottomSheetFragment" />
     </data>
 
 <!---->
@@ -245,6 +249,75 @@
                 >
 
             </ImageView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.01"
+                android:background="#9E9D9D"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </View>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sendPostMessageCommentCL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commentBottomSheetCL3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.6"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sendPostMessageCommentImageView"
+                android:gravity="fill_vertical"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:text="@string/send_post_message"
+                android:onClick="@{()->communityCommentBottomSheetFragment.showPostMessageDialog()}"
+                android:textSize="16dp">
+            </TextView>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:tint="@color/purple_rudder"
+                android:id="@+id/sendPostMessageCommentImageView"
+                app:srcCompat="@drawable/ic_outline_email_24_purple"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.06"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.10"
+                >
+
+            </ImageView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.01"
+                android:background="#9E9D9D"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </View>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

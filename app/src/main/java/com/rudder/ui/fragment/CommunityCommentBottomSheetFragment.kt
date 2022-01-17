@@ -27,6 +27,8 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
 
     private lateinit var communityCommentBottomSheetBinding : FragmentCommunityCommentBottomSheetBinding
 
+    private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
+
     private val lazyContext by lazy {
         requireContext()
     }
@@ -45,6 +47,7 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
         communityCommentBottomSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_community_comment_bottom_sheet, container,false)
         communityCommentBottomSheetBinding.mainVM = viewModel
         communityCommentBottomSheetBinding.lifecycleOwner = this
+        communityCommentBottomSheetBinding.communityCommentBottomSheetFragment = this
 
         val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
 
@@ -59,16 +62,14 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
         viewModel.isCommentMine.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if(!it) { // ismine == false, 내께 아니면
-                    commentBottomSheetCL2.visibility = View.GONE
-                    commentBottomSheetCL3.visibility = View.GONE
+                    communityCommentBottomSheetBinding.commentBottomSheetCL2.visibility = View.GONE
+                    communityCommentBottomSheetBinding.commentBottomSheetCL3.visibility = View.GONE
 
-                    var lp4 = communityCommentBottomSheetBinding.commentBottomSheetCL4.layoutParams
-                    lp4.height = (displayDpValue[1] * 0.05).toInt()
-                    communityCommentBottomSheetBinding.commentBottomSheetCL4.layoutParams = lp4
 
-                    var lp1 = communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams
-                    lp1.height = (displayDpValue[1] * 0.08).toInt()
-                    communityCommentBottomSheetBinding.commentBottomSheetCL1.layoutParams = lp1
+                }else{
+                    communityCommentBottomSheetBinding.commentBottomSheetCL4.visibility = View.GONE
+                    communityCommentBottomSheetBinding.commentBottomSheetCL1.visibility = View.GONE
+                    communityCommentBottomSheetBinding.sendPostMessageCommentCL.visibility = View.GONE
                 }
             }})
 
@@ -118,9 +119,19 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
         lp4.height = (displayDpValue[1] * 0.05).toInt()
         communityCommentBottomSheetBinding.commentBottomSheetCL4.layoutParams = lp4
 
+        var lp5 = communityCommentBottomSheetBinding.sendPostMessageCommentCL.layoutParams
+        lp5.height = (displayDpValue[1] * 0.08).toInt()
+        communityCommentBottomSheetBinding.sendPostMessageCommentCL.layoutParams = lp5
+
+
         return communityCommentBottomSheetBinding.root
     }
 
+    fun showPostMessageDialog() {
+        val receiveUserInfoId = viewModel.comments.value!![viewModel.selectedCommentMorePosition.value!!].user_info_id
+        sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId)
+        sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
+    }
 
 
 }

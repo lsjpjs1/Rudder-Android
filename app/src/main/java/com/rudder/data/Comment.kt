@@ -25,7 +25,9 @@ data class Comment(
         @SerializedName(value = "isLiked")
         var isLiked: Boolean,
         @SerializedName(value = "userProfileImageUrl")
-        val userProfileImageUrl: String
+        val userProfileImageUrl: String,
+        @SerializedName(value = "user_info_id")
+        val user_info_id: Int
 )
 
 

@@ -255,8 +255,8 @@ open class MainViewModel : ViewModel() {
                 0,
                 false,
                 false,
-                ""
-            )
+                "",
+                -1)
         )
         _postBody.value = ""
 
@@ -656,7 +656,7 @@ open class MainViewModel : ViewModel() {
                     if (idx == 0){
                         if(resComments[idx].status == "child" ) { // 그 패턴이면
                             tmpCommentList.add(
-                                Comment("", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false,"" ) //dummyComment
+                                Comment("", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false,"" ,-1) //dummyComment
                             )
                             tmpCommentList.add(resComments[idx])
                         }
@@ -665,7 +665,7 @@ open class MainViewModel : ViewModel() {
                     } else {
                         if(resComments[idx].status == "child" && resComments[idx].groupNum != resComments[idx - 1].groupNum ) { // 그 패턴이면
                             tmpCommentList.add(
-                                Comment("", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false,"") // dummyComment
+                                Comment("", 0, "* Deleted Comment", Timestamp.valueOf("2021-07-13 11:11:11"), 0, "parent", 0, resComments[idx].groupNum, false, false,"", -1) // dummyComment
                             )
                             tmpCommentList.add(resComments[idx])
                         }

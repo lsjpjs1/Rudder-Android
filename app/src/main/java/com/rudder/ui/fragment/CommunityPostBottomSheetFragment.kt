@@ -32,9 +32,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         activity as MainActivity
     }
 
-    private val activityInterface by lazy {
-        activity as ActivityInterface
-    }
+
 
     private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
 

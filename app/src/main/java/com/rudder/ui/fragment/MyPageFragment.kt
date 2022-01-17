@@ -70,8 +70,8 @@ class MyPageFragment: Fragment(),MyPageFragmentInterface {
             .add(R.id.myPageHeader, MyPageHeaderFragment())
             .commit()
 
-        viewModel.getMyProfileImageUrl()
         viewModel.myProfileImageUrl.value?.let {
+        viewModel.getMyProfileImageUrl()
             Log.d("myImage", it)
             Glide.with(myPageBinding.myProfileImageImageView.context)
                 .load(it)
