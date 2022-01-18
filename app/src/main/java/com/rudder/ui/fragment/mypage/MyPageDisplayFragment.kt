@@ -45,7 +45,7 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         myPageBinding = DataBindingUtil.inflate(
@@ -124,6 +124,36 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        Log.d("mypage","mypageOnstop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("mypage","mypageOnDestory")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("mypage","mypageOnPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("mypage","mypageOnResume")
+    }
+
+//    override fun onSaveInstanceState(outState: Bundle?) {
+//        super.onSaveInstanceState(outState!!)
+//        // Whatever is there to save
+//    }
 
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("mypage","onSaveInstanceState")
+
+    }
 }

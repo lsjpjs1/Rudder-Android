@@ -107,8 +107,26 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainDisplayContainerView) as NavHostFragment
 
         val navController = navHostFragment.navController
-
         mainBottomNavigation.setupWithNavController(navController)
+
+        mainBottomNavigation.setOnNavigationItemSelectedListener {
+            if (it.itemId != mainBottomNavigation.selectedItemId)
+                NavigationUI.onNavDestinationSelected(it, navController)
+            true
+        }
+
+//
+//        val fragment1: Fragment = HomeFragment()
+//        val fragment2: Fragment = DashboardFragment()
+//        val fragment3: Fragment = ()
+//        //val fm: FragmentManager = supportFragmentManager
+//        val active = fragment1
+
+
+//        supportFragmentManager.beginTransaction().add(R.id.mainDisplayContainerView, fragment3, "3").hide(fragment3).commit();
+//        supportFragmentManager.beginTransaction().add(R.id.mainDisplayContainerView, fragment2, "2").hide(fragment2).commit();
+//        supportFragmentManager.beginTransaction().add(R.id.mainDisplayContainerView,fragment1, "1").commit();
+
 
         //////////////////////
 
@@ -568,6 +586,33 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     override fun showPostMessageFragment() {
         postMessageFragment = PostMessageDisplayFragment()
         showFragment(postMessageFragment, R.id.mainDisplay, "postMessage")
+    }
+
+
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.navigation_home:
+//            fm.beginTransaction().hide(active).show(fragment1).commit();
+//            active = fragment1;
+//            return true;
+//
+//            case R.id.navigation_dashboard:
+//            fm.beginTransaction().hide(active).show(fragment2).commit();
+//            active = fragment2;
+//            return true;
+//
+//            case R.id.navigation_notifications:
+//            fm.beginTransaction().hide(active).show(fragment3).commit();
+//            active = fragment3;
+//            return true;
+//        }
+//        return false;
+//    }
+
+    override fun onNavigateUp(): Boolean {
+        return super.onNavigateUp()
+        Log.d("navi", "navi")
     }
 
 
