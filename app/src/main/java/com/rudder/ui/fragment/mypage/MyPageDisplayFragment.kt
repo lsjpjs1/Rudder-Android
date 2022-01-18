@@ -51,7 +51,7 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
 
         myPageBinding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_my_page,
+            R.layout.fragment_my_page_display,
             container,
             false
         )

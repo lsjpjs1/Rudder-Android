@@ -25,6 +25,46 @@
 
         </FrameLayout>
 
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/mainHeader"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/main_header_height"
+
+            >
+
+        </fragment>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mainDisplayContainerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintTop_toBottomOf="@+id/mainHeader"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/main_middle_height"
+            tools:layout_editor_absoluteX="0dp">
+        </androidx.fragment.app.FragmentContainerView>
+
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/main_bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/main_bottom_height"
+            android:background="@color/white"
+            android:theme="@style/ToolbarTheme"
+            android:elevation="8dp"
+            app:menu="@menu/bottom_nav_menu" />
+
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/parentCommentInfo"
             android:visibility="gone"
@@ -120,6 +160,9 @@
             tools:layout_editor_absoluteX="0dp">
 
         </FrameLayout>
+
+
+
 
         <ProgressBar
             android:id="@+id/progressBar"

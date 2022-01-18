@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/navigation_splash_activity"
+    >
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="wikibook.learnandroid.smart_refrigerator.view.fragment.HomeFragment"
+        android:label="@string/community_title"
+        tools:layout="@layout/fragment_home" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment"
+        android:label="@string/post_message"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.rudder.ui.fragment.mypage.MyPageDisplayFragment"
+        android:label="@string/my_page_title"
+        tools:layout="@layout/fragment_my_page_display" />
+
+
+</navigation>

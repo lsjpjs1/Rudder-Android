@@ -13,7 +13,7 @@ import com.rudder.databinding.FragmentPostMessageBinding
 import com.rudder.ui.adapter.PostMessageAdapter
 import com.rudder.viewModel.PostMessageViewModel
 
-class PostMessageFragment : Fragment() {
+class PostMessageDisplayFragment : Fragment() {
 
     private val viewModel : PostMessageViewModel by viewModels()
     private val lazyContext by lazy {

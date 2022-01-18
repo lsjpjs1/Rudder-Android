@@ -35,6 +35,10 @@
     </style>
 
 
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">@font/sf_pro_text_bold</item>
+        <item name="android:textColorSecondary">@color/purple_rudder</item>
+    </style>
 
 </resources>
 

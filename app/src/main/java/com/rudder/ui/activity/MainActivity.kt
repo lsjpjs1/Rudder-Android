@@ -20,6 +20,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.databinding.ActivityMainBinding
@@ -34,7 +37,7 @@ import com.rudder.ui.fragment.mypage.ClubJoinRequestDialogFragment
 import com.rudder.ui.fragment.mypage.ContactUsFragment
 import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.post.*
-import com.rudder.ui.fragment.postmessage.PostMessageFragment
+import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment
 import com.rudder.ui.fragment.search.SearchPostFragment
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
@@ -64,7 +67,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     lateinit var communityCommentReportFragment: CommunityCommentReportFragment
     private lateinit var clubJoinRequestDialogFragment: ClubJoinRequestDialogFragment
     lateinit var communityCommentEditFragment: CommunityCommentEditFragment
-    private lateinit var postMessageFragment: PostMessageFragment
+    private lateinit var postMessageFragment: PostMessageDisplayFragment
 
     private lateinit var contactUsFragment: ContactUsFragment
 
@@ -114,6 +117,19 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         categorySelectMyPageFragment = CategorySelectMyPageFragment()
         searchPostFragment = SearchPostFragment()
 
+        /////////////////////// 21 01 18 navigation
+        val mainBottomNavigation: BottomNavigationView = binding.mainBottomNavigation
+        val navController = findNavController(R.id.mainDisplayContainerView)
+        // Passing each menu ID as a set of Ids because each`
+        // menu should be considered as top level destinations.
+
+
+        mainBottomNavigation.setupWithNavController(navController)
+
+
+
+        //////////////////////
+
 
 
         val toastDeletePostComplete = Toast.makeText(
@@ -139,18 +155,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             .hide(myPageDisplayFragment)
             .add(R.id.mainDisplay, communityFragment, "community")
             .commit()
-
-
-
-
-
-
-
-
-
-
-
-
 
         viewModel.isContactUs.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
@@ -554,7 +558,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
     override fun showPostMessageFragment() {
-        postMessageFragment = PostMessageFragment()
+        postMessageFragment = PostMessageDisplayFragment()
         showFragment(postMessageFragment, R.id.mainDisplay, "postMessage")
     }
 
