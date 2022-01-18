@@ -3,25 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_graph"
-    app:startDestination="@id/navigation_splash_activity"
+    android:id="@+id/main_navigation_graph"
+    app:startDestination="@id/navigation_mypage"
     >
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="wikibook.learnandroid.smart_refrigerator.view.fragment.HomeFragment"
+        android:id="@+id/navigation_community"
+        android:name="com.rudder.ui.fragment.community.CommunityFragment"
         android:label="@string/community_title"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_community" >
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_postmessage"
         android:name="com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment"
         android:label="@string/post_message"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_post_message_display" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_mypage"
         android:name="com.rudder.ui.fragment.mypage.MyPageDisplayFragment"
         android:label="@string/my_page_title"
         tools:layout="@layout/fragment_my_page_display" />

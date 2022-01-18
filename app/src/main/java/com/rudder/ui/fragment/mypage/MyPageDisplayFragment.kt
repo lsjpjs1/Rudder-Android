@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
-import com.rudder.databinding.FragmentMyPageBinding
+import com.rudder.databinding.FragmentMyPageDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.MyPageFragmentInterface
 import com.rudder.util.uiUtils.PercentDivide
@@ -23,7 +23,6 @@ import com.rudder.util.uiUtils.PercentDivideImpl
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_webview_modal.view.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.view.*
-import kotlinx.android.synthetic.main.fragment_my_page.*
 import kotlinx.android.synthetic.main.fragment_terms_of_service.view.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
@@ -34,7 +33,7 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var editNicknameDialogFragment: EditNicknameDialogFragment
     private lateinit var editProfileImageDialogFragment: EditProfileImageDialogFragment
-    private lateinit var myPageBinding : FragmentMyPageBinding
+    private lateinit var myPageBinding : FragmentMyPageDisplayBinding
     private val lazyContext by lazy {
         requireContext()
     }

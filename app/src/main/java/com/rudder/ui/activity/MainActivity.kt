@@ -21,6 +21,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rudder.R
@@ -84,14 +86,31 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(
-            this,
-            R.layout.activity_main
-        )
+
+
+//        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(
+//            this,
+//            R.layout.activity_main
+//        )
+
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         binding.mainVM = viewModel
         binding.lifecycleOwner = this
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        /////////////////////// 21 01 18 navigation
+        val mainBottomNavigation: BottomNavigationView = binding.mainBottomNavigation
+        //val navController = findNavController(R.id.mainDisplayContainerView)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainDisplayContainerView) as NavHostFragment
+
+        val navController = navHostFragment.navController
+
+        mainBottomNavigation.setupWithNavController(navController)
+
+        //////////////////////
 
 
         val progressDialog = ProgressDialog(this, R.style.MyAlertDialogStyle)
@@ -117,18 +136,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         categorySelectMyPageFragment = CategorySelectMyPageFragment()
         searchPostFragment = SearchPostFragment()
 
-        /////////////////////// 21 01 18 navigation
-        val mainBottomNavigation: BottomNavigationView = binding.mainBottomNavigation
-        val navController = findNavController(R.id.mainDisplayContainerView)
-        // Passing each menu ID as a set of Ids because each`
-        // menu should be considered as top level destinations.
 
-
-        mainBottomNavigation.setupWithNavController(navController)
-
-
-
-        //////////////////////
 
 
 
