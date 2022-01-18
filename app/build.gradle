@@ -47,6 +47,7 @@ android {
 
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
 
 
@@ -94,4 +95,9 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
     implementation 'com.google.firebase:firebase-analytics'
+
+
+    def nav_version = "2.3.5"
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 }

@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.post
 
 
 import android.content.DialogInterface
@@ -12,13 +12,11 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityPostBottomSheetBinding
-import com.rudder.ui.activity.ActivityInterface
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
 import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_community_post_bottom_sheet.*
-import kotlinx.android.synthetic.main.fragment_community_post_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.fragment_school_select.*
 
 
 class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomSheetDialogFragment() {

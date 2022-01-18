@@ -1,6 +1,5 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.postmessage
 
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,14 +10,11 @@ import android.view.Window
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.rudder.R
-import com.rudder.databinding.FragmentEditNicknameDialogBinding
 import com.rudder.databinding.FragmentSendPostMessageDialogBinding
 import com.rudder.ui.activity.MainActivity
-import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.SendPostMessageDialogViewModel
 
 class SendPostMessageDialogFragment(val receiveUserInfoId: Int) : DialogFragment() {

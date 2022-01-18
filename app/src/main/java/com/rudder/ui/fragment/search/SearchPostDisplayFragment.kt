@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,11 +14,11 @@ import com.rudder.R
 import com.rudder.databinding.FragmentSearchPostDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.MainPostPreviewAdapter
+import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
+import com.rudder.ui.fragment.post.ShowPostFragment
 import com.rudder.ui.fragment.comment.AddCommentFragment
 import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.fragment_community.*
-import kotlinx.android.synthetic.main.fragment_community_display.view.*
 
 class SearchPostDisplayFragment(val viewModel: MainViewModel)  : Fragment(),CustomOnclickListener {
 
@@ -124,7 +124,7 @@ class SearchPostDisplayFragment(val viewModel: MainViewModel)  : Fragment(),Cust
         viewModel.setSelectedPostPosition(position)
 //        (activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
 
-        (activity as MainActivity).showPost(viewModel,ShowPostFragment(viewModel))
+        (activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
         (activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
 //        if(!viewModel.isAlreadyReadPost()){
 //            viewModel.addPostViewCount()

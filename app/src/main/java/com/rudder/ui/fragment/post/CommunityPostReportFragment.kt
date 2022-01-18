@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.post
 
 
 import android.graphics.Color
@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityPostReportSheetBinding

@@ -33,6 +33,9 @@ import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.ClubJoinRequestDialogFragment
 import com.rudder.ui.fragment.mypage.ContactUsFragment
 import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
+import com.rudder.ui.fragment.post.*
+import com.rudder.ui.fragment.postmessage.PostMessageFragment
+import com.rudder.ui.fragment.search.SearchPostFragment
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil

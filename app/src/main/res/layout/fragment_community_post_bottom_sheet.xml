@@ -14,7 +14,7 @@
 
         <variable
             name="communityPostBottomSheetFragment"
-            type="com.rudder.ui.fragment.CommunityPostBottomSheetFragment" />
+            type="com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment" />
     </data>
 
 

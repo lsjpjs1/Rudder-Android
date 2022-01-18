@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.search
 
 import android.os.Bundle
 import android.util.Log
@@ -9,11 +9,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentSearchPostBinding
-import com.rudder.util.FragmentShowHide
-import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.SearchViewModel
 
 class SearchPostFragment : Fragment() {
@@ -31,8 +28,8 @@ class SearchPostFragment : Fragment() {
 
         fragmentBinding.lifecycleOwner = this
         childFragmentManager.beginTransaction()
-            .add(R.id.searchPostHeader,SearchPostHeaderFragment(viewModel))
-            .add(R.id.searchPostDisplay,SearchPostDisplayFragment(viewModel))
+            .add(R.id.searchPostHeader, SearchPostHeaderFragment(viewModel))
+            .add(R.id.searchPostDisplay, SearchPostDisplayFragment(viewModel))
             .commit()
 
 

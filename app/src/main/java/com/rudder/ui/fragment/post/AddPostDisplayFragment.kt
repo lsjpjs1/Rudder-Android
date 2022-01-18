@@ -1,25 +1,18 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.post
 
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.webkit.MimeTypeMap
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
@@ -28,13 +21,10 @@ import com.rudder.databinding.FragmentAddPostDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.AddPostShowImagesAdapter
 import com.rudder.util.AddPostImagesOnclickListener
-import com.rudder.util.ChangeUIState
 import com.rudder.util.FileUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_add_post_display.view.*
 import kotlinx.android.synthetic.main.fragment_add_post_display.*
-import kotlinx.android.synthetic.main.fragment_school_select.*
-import kotlinx.android.synthetic.main.fragment_show_post.view.*
 
 
 class AddPostDisplayFragment(val viewModel: MainViewModel,val isEdit: Boolean) : Fragment(),AddPostImagesOnclickListener {

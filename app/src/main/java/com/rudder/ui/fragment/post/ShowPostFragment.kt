@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.post
 
 
 import android.os.Bundle
@@ -123,7 +123,7 @@ class ShowPostFragment(val viewModel: MainViewModel): Fragment() {
 
 
         childFragmentManager.beginTransaction()
-                .add(R.id.showPostHeader,ShowPostHeaderFragment(viewModel))
+                .add(R.id.showPostHeader, ShowPostHeaderFragment(viewModel))
                 .commit()
 
 
