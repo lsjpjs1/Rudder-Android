@@ -20,10 +20,10 @@ import com.rudder.data.otherTab
 import java.util.*
 
 @Navigator.Name("bottom")
-class BottomNavigator(
+class CustomBottomNavigator(
     @IdRes private val fragmentContainerId: Int,
     private val fragmentManager: FragmentManager
-) : Navigator<BottomNavigator.Destination>() {
+) : Navigator<CustomBottomNavigator.Destination>() {
     private val backStack: Deque<String> = ArrayDeque()
 
     override fun createDestination(): Destination = Destination(this)
@@ -99,7 +99,7 @@ class BottomNavigator(
     }
 
     @NavDestination.ClassType(Fragment::class)
-    class Destination(navigator: BottomNavigator) : NavDestination(navigator) {
+    class Destination(navigatorCustom: CustomBottomNavigator) : NavDestination(navigatorCustom) {
         internal var className: String? = null
             private set
 
@@ -114,6 +114,6 @@ class BottomNavigator(
     }
 
     companion object {
-        private const val KEY_BACK_STACK = "BottomNavigator.BackStack"
+        private const val KEY_BACK_STACK = "CustomBottomNavigator.BackStack"
     }
 }

@@ -34,14 +34,10 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var editNicknameDialogFragment: EditNicknameDialogFragment
     private lateinit var editProfileImageDialogFragment: EditProfileImageDialogFragment
-    //private lateinit var myPageBinding : FragmentMyPageDisplayBinding
-    private var myPageBinding : FragmentMyPageDisplayBinding? = null
-
-    //private var _binding: FragmentHomeBinding? = null
-
+    private lateinit var myPageBinding : FragmentMyPageDisplayBinding
 
     companion object{
-        const val TAG = "MyPage"
+        const val TAG = "MyPageDisplayFragment"
     }
 
 
@@ -62,83 +58,64 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         savedInstanceState: Bundle?,
     ): View? {
 
-//        myPageBinding = DataBindingUtil.inflate(
-//            inflater,
-//            R.layout.fragment_my_page_display,
-//            container,
-//            false
-//        )
+        myPageBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_my_page_display,
+            container,
+            false
+        )
 
+        myPageBinding.mainVM = viewModel
+        myPageBinding.myPageDisplayFragment = this
+        myPageBinding.lifecycleOwner = viewLifecycleOwner
 
-        if (myPageBinding == null) {
-            //val myPageBinding = FragmentMyPageDisplayBinding.inflate(inflater, container, false)
+        val divideChildTarget = myPageBinding.constraintLayoutMyPage1
+        val displaySize = parentActivity.getDisplaySize()
+        val percentDivide : PercentDivide = PercentDivideImpl(divideChildTarget,displaySize,0.4f)
+        percentDivide.divideChildSameRatio()
 
-//            val myPageBinding = DataBindingUtil.inflate(
-//            inflater,
-//            R.layout.fragment_my_page_display,
-//            container,
-//            false
-//        )
-            Log.d("mypage","mypagebinding")
+        childFragmentManager.beginTransaction()
+            .add(R.id.myPageHeader, MyPageHeaderFragment())
+            .commit()
 
-            val myPageBinding = DataBindingUtil.inflate<FragmentMyPageDisplayBinding>(inflater,R.layout.fragment_my_page_display,container,false)
-
-
-            myPageBinding.mainVM = viewModel
-            myPageBinding.myPageDisplayFragment = this
-            myPageBinding.lifecycleOwner = viewLifecycleOwner
-
-            val divideChildTarget = myPageBinding.constraintLayoutMyPage1
-            val displaySize = parentActivity.getDisplaySize()
-            val percentDivide : PercentDivide = PercentDivideImpl(divideChildTarget,displaySize,0.4f)
-            percentDivide.divideChildSameRatio()
-
-            childFragmentManager.beginTransaction()
-                .add(R.id.myPageHeader, MyPageHeaderFragment())
-                .commit()
-
-            viewModel.myProfileImageUrl.value?.let {
-                viewModel.getMyProfileImageUrl()
+        viewModel.myProfileImageUrl.value?.let {
+            viewModel.getMyProfileImageUrl()
+            Log.d("myImage", it)
+            Glide.with(myPageBinding.myProfileImageImageView.context)
+                .load(it)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.raw.post_loading_raw)
+                .into(myPageBinding.myProfileImageImageView)
+        }
+        viewModel.myProfileImageUrl.observe(viewLifecycleOwner, Observer {
+            it?.let {
                 Log.d("myImage", it)
+
                 Glide.with(myPageBinding.myProfileImageImageView.context)
                     .load(it)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.raw.post_loading_raw)
                     .into(myPageBinding.myProfileImageImageView)
             }
-            viewModel.myProfileImageUrl.observe(viewLifecycleOwner, Observer {
-                it?.let {
-                    Log.d("myImage", it)
+        })
 
-                    Glide.with(myPageBinding.myProfileImageImageView.context)
-                        .load(it)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(R.raw.post_loading_raw)
-                        .into(myPageBinding.myProfileImageImageView)
-                }
-            })
-
-            myPageBinding.constraintLayoutMyPage4.setOnClickListener {
-                val dialogView: View = layoutInflater.inflate(R.layout.activity_webview_modal, null)
-                val termsOfServiceURL = "https://sites.google.com/view/mateprivacyterms"
-                dialogView.termsWebView.apply {
-                    webViewClient = WebViewClient()
-                    settings.builtInZoomControls = true
-                    settings.javaScriptEnabled = true
-                    settings.cacheMode = WebSettings.LOAD_DEFAULT
-                }
-
-                dialogView.termsWebView.loadUrl(termsOfServiceURL)
-                val builder: AlertDialog.Builder = AlertDialog.Builder(lazyContext)
-                builder.setView(dialogView)
-                val alertDialog: AlertDialog = builder.create()
-                alertDialog.show()
+        myPageBinding.constraintLayoutMyPage4.setOnClickListener {
+            val dialogView: View = layoutInflater.inflate(R.layout.activity_webview_modal, null)
+            val termsOfServiceURL = "https://sites.google.com/view/mateprivacyterms"
+            dialogView.termsWebView.apply {
+                webViewClient = WebViewClient()
+                settings.builtInZoomControls = true
+                settings.javaScriptEnabled = true
+                settings.cacheMode = WebSettings.LOAD_DEFAULT
             }
-            return myPageBinding!!.root
-        } else {
-            return myPageBinding!!.root
-        }
 
+            dialogView.termsWebView.loadUrl(termsOfServiceURL)
+            val builder: AlertDialog.Builder = AlertDialog.Builder(lazyContext)
+            builder.setView(dialogView)
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+        }
+        return myPageBinding!!.root
 
 
 
@@ -162,36 +139,4 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
 
     }
 
-    override fun onStop() {
-        super.onStop()
-        Log.d("mypage","mypageOnstop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("mypage","mypageOnDestory")
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("mypage","mypageOnPause")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("mypage","mypageOnResume")
-    }
-
-//    override fun onSaveInstanceState(outState: Bundle?) {
-//        super.onSaveInstanceState(outState!!)
-//        // Whatever is there to save
-//    }
-
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        Log.d("mypage","onSaveInstanceState")
-
-    }
 }

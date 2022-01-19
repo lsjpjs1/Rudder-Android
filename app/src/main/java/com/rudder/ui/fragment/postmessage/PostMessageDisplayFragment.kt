@@ -21,7 +21,7 @@ class PostMessageDisplayFragment : Fragment() {
     }
 
     companion object{
-        const val TAG = "PostMessage"
+        const val TAG = "PostMessageDisplayFragment"
     }
 
     override fun onCreateView(

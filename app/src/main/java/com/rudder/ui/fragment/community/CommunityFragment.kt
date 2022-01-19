@@ -21,7 +21,7 @@ class CommunityFragment: Fragment() {
 
     companion object{
         var tmpView : View? = null
-        const val TAG = "Community"
+        const val TAG = "CommunityFragment"
     }
 
 

@@ -2,7 +2,6 @@ package com.rudder.ui.activity
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -53,7 +52,7 @@ import kotlinx.android.synthetic.main.post_comments.*
 import java.lang.Exception
 import androidx.navigation.fragment.findNavController
 import com.rudder.data.MainBottomTab
-import com.rudder.util.BottomNavigator
+import com.rudder.util.CustomBottomNavigator
 
 
 class MainActivity : AppCompatActivity(), MainActivityInterface {
@@ -92,11 +91,19 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
 
-    private val navController: NavController by lazy {
+    private val navDisplayController: NavController by lazy {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainDisplayContainerView)
             ?: throw IllegalStateException("the container MUST contain a fragment at least one")
         navHostFragment.findNavController()
     }
+
+    private val navHeaderController: NavController by lazy {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainHeader)
+            ?: throw IllegalStateException("the container MUST contain a fragment at least one")
+        navHostFragment.findNavController()
+    }
+
+
 
     companion object {
         private const val KEY_SELECTED_TAB = "selectedTab"
@@ -128,16 +135,15 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
 
-        navController.apply {
+        navDisplayController.apply {
             navigatorProvider.addNavigator(
-                BottomNavigator(
+                CustomBottomNavigator(
                     R.id.mainDisplayContainerView,
                     supportFragmentManager
                 )
             )
             // set a graph at code not XML, because add a custom navigator
-            setGraph(R.navigation.test_navigation_graph)
-
+            setGraph(R.navigation.main_navigation_graph)
             mainBottomNavigation.setupWithNavController(this)
         }
 
@@ -156,9 +162,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 NavigationUI.onNavDestinationSelected(it, navController)
             true
         }
-
-
-
 
         //////////////////////
 
@@ -619,28 +622,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         postMessageFragment = PostMessageDisplayFragment()
         showFragment(postMessageFragment, R.id.mainDisplay, "postMessage")
     }
-
-
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.navigation_home:
-//            fm.beginTransaction().hide(active).show(fragment1).commit();
-//            active = fragment1;
-//            return true;
-//
-//            case R.id.navigation_dashboard:
-//            fm.beginTransaction().hide(active).show(fragment2).commit();
-//            active = fragment2;
-//            return true;
-//
-//            case R.id.navigation_notifications:
-//            fm.beginTransaction().hide(active).show(fragment3).commit();
-//            active = fragment3;
-//            return true;
-//        }
-//        return false;
-//    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

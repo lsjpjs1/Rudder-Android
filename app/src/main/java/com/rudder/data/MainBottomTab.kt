@@ -10,9 +10,9 @@ enum class MainBottomTab(
     val itemId: Int,
     val tag: String
 ) {
-    APPLE(R.id.navigation_apple, "AppleFragment"),
-    BANANA(R.id.navigation_banana, "BananaFragment"),
-    CECECE(R.id.navigation_cecece, "CececeFragment");
+    COMMUNITY(R.id.navigation_community, CommunityFragment.TAG),
+    POSTMESSAGE(R.id.navigation_postmessage, PostMessageDisplayFragment.TAG),
+    MYPAGE(R.id.navigation_mypage, MyPageDisplayFragment.TAG);
 
     companion object {
         fun from(itemId: Int): MainBottomTab? = values().firstOrNull { it.itemId == itemId }
