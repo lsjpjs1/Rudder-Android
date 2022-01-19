@@ -35,6 +35,7 @@ import com.rudder.ui.fragment.mypage.ContactUsFragment
 import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.post.*
 import com.rudder.ui.fragment.postmessage.PostMessageFragment
+import com.rudder.ui.fragment.postmessage.PostMessageRoomFragment
 import com.rudder.ui.fragment.search.SearchPostFragment
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private lateinit var contactUsFragment: ContactUsFragment
 
     private lateinit var categorySelectMyPageFragment: CategorySelectMyPageFragment
-
+    private lateinit var postMessageRoomFragment: PostMessageRoomFragment
 
     lateinit var editPostFragment: EditPostFragment
 
@@ -542,8 +543,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         communityCommentBottomSheetFragment.dismiss()
     }
 
-    fun showFragment(fragment: Fragment,id: Int, tag: String){
+    fun showFragment(fragment: Fragment,id: Int, tag: String, isAddToBackStack: Boolean = false){
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+        if(isAddToBackStack){
+            fragmentShowHide.addToBackStack()
+        }
         fragmentShowHide.addFragment(fragment, id, tag)
         fragmentShowHide.showFragment(fragment,id)
     }
@@ -556,6 +560,12 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     override fun showPostMessageFragment() {
         postMessageFragment = PostMessageFragment()
         showFragment(postMessageFragment, R.id.mainDisplay, "postMessage")
+    }
+
+    override fun showPostMessageRoomFragment() {
+        postMessageRoomFragment = PostMessageRoomFragment()
+
+        showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
     }
 
 

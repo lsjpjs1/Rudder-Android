@@ -9,8 +9,11 @@ import com.rudder.data.dto.PostMessage
 import com.rudder.data.dto.PostMessageRoom
 import com.rudder.data.dto.ProfileImage
 import com.rudder.databinding.PostMessageItemBinding
+import com.rudder.ui.activity.MainActivityInterface
 
-class PostMessageAdapter : BaseAdapter<PostMessageRoom, PostMessageItemBinding>(diffUtil, R.layout.post_message_item)  {
+class PostMessageAdapter(
+        val mainActivityInterface: MainActivityInterface
+) : BaseAdapter<PostMessageRoom, PostMessageItemBinding>(diffUtil, R.layout.post_message_item)  {
 
 
     companion object {
@@ -30,6 +33,9 @@ class PostMessageAdapter : BaseAdapter<PostMessageRoom, PostMessageItemBinding>(
         holder.viewBinding.postMessageItemSenderNickNameTV.text = getItem(position).userId
         holder.viewBinding.postMessageItemDateTV.text = getItem(position).messageSendTime.toString()
         holder.viewBinding.postMessageItemMessageBodyTV.text = getItem(position).postMessageBody
+        holder.viewBinding.postMessageItemCL.setOnClickListener {
+            mainActivityInterface.showPostMessageRoomFragment()
+        }
 
     }
 
