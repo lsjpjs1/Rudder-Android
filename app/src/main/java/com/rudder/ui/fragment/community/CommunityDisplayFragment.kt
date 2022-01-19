@@ -143,8 +143,8 @@ class CommunityDisplayFragment(val viewModel: MainViewModel): Fragment(),CustomO
 
     override fun onClick(view: View, position: Int) {
         (activity as MainActivity).changeSelectedPostPosition(position)
-        (activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
-        (activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
+        //(activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
+        //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
 //        if(!viewModel.isAlreadyReadPost()){
 //            viewModel.addPostViewCount()
 //        }

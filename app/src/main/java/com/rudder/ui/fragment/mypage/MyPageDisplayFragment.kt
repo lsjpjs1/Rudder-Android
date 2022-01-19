@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
+import com.rudder.databinding.FragmentCommunityDisplayBinding
 import com.rudder.databinding.FragmentMyPageDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.MyPageFragmentInterface
@@ -33,7 +34,18 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var editNicknameDialogFragment: EditNicknameDialogFragment
     private lateinit var editProfileImageDialogFragment: EditProfileImageDialogFragment
-    private lateinit var myPageBinding : FragmentMyPageDisplayBinding
+    //private lateinit var myPageBinding : FragmentMyPageDisplayBinding
+    private var myPageBinding : FragmentMyPageDisplayBinding? = null
+
+    //private var _binding: FragmentHomeBinding? = null
+
+
+    companion object{
+        const val TAG = "MyPage"
+    }
+
+
+
     private val lazyContext by lazy {
         requireContext()
     }
@@ -42,71 +54,97 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         activity as MainActivity
     }
 
+    //var myPageBinding: FragmentMyPageDisplayBinding? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
 
-        myPageBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_my_page_display,
-            container,
-            false
-        )
-        myPageBinding.mainVM = viewModel
-        myPageBinding.myPageDisplayFragment = this
-        myPageBinding.lifecycleOwner = viewLifecycleOwner
+//        myPageBinding = DataBindingUtil.inflate(
+//            inflater,
+//            R.layout.fragment_my_page_display,
+//            container,
+//            false
+//        )
 
-        val divideChildTarget = myPageBinding.constraintLayoutMyPage1
-        val displaySize = parentActivity.getDisplaySize()
-        val percentDivide : PercentDivide = PercentDivideImpl(divideChildTarget,displaySize,0.4f)
-        percentDivide.divideChildSameRatio()
 
-        childFragmentManager.beginTransaction()
-            .add(R.id.myPageHeader, MyPageHeaderFragment())
-            .commit()
+        if (myPageBinding == null) {
+            //val myPageBinding = FragmentMyPageDisplayBinding.inflate(inflater, container, false)
 
-        viewModel.myProfileImageUrl.value?.let {
-        viewModel.getMyProfileImageUrl()
-            Log.d("myImage", it)
-            Glide.with(myPageBinding.myProfileImageImageView.context)
-                .load(it)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.raw.post_loading_raw)
-                .into(myPageBinding.myProfileImageImageView)
-        }
-        viewModel.myProfileImageUrl.observe(viewLifecycleOwner, Observer {
-            it?.let {
+//            val myPageBinding = DataBindingUtil.inflate(
+//            inflater,
+//            R.layout.fragment_my_page_display,
+//            container,
+//            false
+//        )
+            Log.d("mypage","mypagebinding")
+
+            val myPageBinding = DataBindingUtil.inflate<FragmentMyPageDisplayBinding>(inflater,R.layout.fragment_my_page_display,container,false)
+
+
+            myPageBinding.mainVM = viewModel
+            myPageBinding.myPageDisplayFragment = this
+            myPageBinding.lifecycleOwner = viewLifecycleOwner
+
+            val divideChildTarget = myPageBinding.constraintLayoutMyPage1
+            val displaySize = parentActivity.getDisplaySize()
+            val percentDivide : PercentDivide = PercentDivideImpl(divideChildTarget,displaySize,0.4f)
+            percentDivide.divideChildSameRatio()
+
+            childFragmentManager.beginTransaction()
+                .add(R.id.myPageHeader, MyPageHeaderFragment())
+                .commit()
+
+            viewModel.myProfileImageUrl.value?.let {
+                viewModel.getMyProfileImageUrl()
                 Log.d("myImage", it)
-
                 Glide.with(myPageBinding.myProfileImageImageView.context)
                     .load(it)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.raw.post_loading_raw)
                     .into(myPageBinding.myProfileImageImageView)
             }
-        })
+            viewModel.myProfileImageUrl.observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    Log.d("myImage", it)
 
-        myPageBinding.constraintLayoutMyPage4.setOnClickListener {
-            val dialogView: View = layoutInflater.inflate(R.layout.activity_webview_modal, null)
-            val termsOfServiceURL = "https://sites.google.com/view/mateprivacyterms"
-            dialogView.termsWebView.apply {
-                webViewClient = WebViewClient()
-                settings.builtInZoomControls = true
-                settings.javaScriptEnabled = true
-                settings.cacheMode = WebSettings.LOAD_DEFAULT
+                    Glide.with(myPageBinding.myProfileImageImageView.context)
+                        .load(it)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.raw.post_loading_raw)
+                        .into(myPageBinding.myProfileImageImageView)
+                }
+            })
+
+            myPageBinding.constraintLayoutMyPage4.setOnClickListener {
+                val dialogView: View = layoutInflater.inflate(R.layout.activity_webview_modal, null)
+                val termsOfServiceURL = "https://sites.google.com/view/mateprivacyterms"
+                dialogView.termsWebView.apply {
+                    webViewClient = WebViewClient()
+                    settings.builtInZoomControls = true
+                    settings.javaScriptEnabled = true
+                    settings.cacheMode = WebSettings.LOAD_DEFAULT
+                }
+
+                dialogView.termsWebView.loadUrl(termsOfServiceURL)
+                val builder: AlertDialog.Builder = AlertDialog.Builder(lazyContext)
+                builder.setView(dialogView)
+                val alertDialog: AlertDialog = builder.create()
+                alertDialog.show()
             }
-
-            dialogView.termsWebView.loadUrl(termsOfServiceURL)
-            val builder: AlertDialog.Builder = AlertDialog.Builder(lazyContext)
-            builder.setView(dialogView)
-            val alertDialog: AlertDialog = builder.create()
-            alertDialog.show()
+            return myPageBinding!!.root
+        } else {
+            return myPageBinding!!.root
         }
 
 
-        return myPageBinding.root
+
+
+
+
+
     }
 
     fun showEditNicknameDialog(){

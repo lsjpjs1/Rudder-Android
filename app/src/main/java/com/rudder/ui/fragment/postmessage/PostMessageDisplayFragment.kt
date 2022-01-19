@@ -20,6 +20,10 @@ class PostMessageDisplayFragment : Fragment() {
         context
     }
 
+    companion object{
+        const val TAG = "PostMessage"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

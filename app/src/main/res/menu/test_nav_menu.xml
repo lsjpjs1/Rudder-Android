@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_apple"
+        android:icon="@drawable/ic_outline_article_24"
+        android:title="apple" />
+
+    <item
+        android:id="@+id/navigation_banana"
+        android:icon="@drawable/ic_outline_email_24"
+        android:title="banana" />
+
+    <item
+        android:id="@+id/navigation_cecece"
+        android:icon="@drawable/ic_outline_person_outline_24"
+        android:title="cecece" />
+
+</menu>

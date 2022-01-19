@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mainHeader"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/main_middle_height"
-            app:navGraph="@navigation/main_navigation_graph"
+
             />
 
 
@@ -64,7 +64,7 @@
             android:background="@color/white"
             android:theme="@style/ToolbarTheme"
             android:elevation="8dp"
-            app:menu="@menu/bottom_nav_menu" />
+            app:menu="@menu/test_nav_menu" />
 
 
 
@@ -148,22 +148,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/shadow"
-            app:layout_constraintBottom_toTopOf="@+id/mainBottomBar"
+            app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height" />
 
 
-        <FrameLayout
-            android:id="@+id/mainBottomBar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="@dimen/main_bottom_bar_height"
-            tools:layout_editor_absoluteX="0dp">
+<!--        <FrameLayout-->
+<!--            android:id="@+id/mainBottomBar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:visibility="invisible"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintHeight_default="percent"-->
+<!--            app:layout_constraintHeight_percent="@dimen/main_bottom_bar_height"-->
+<!--            tools:layout_editor_absoluteX="0dp">-->
 
-        </FrameLayout>
+<!--        </FrameLayout>-->
 
 
 

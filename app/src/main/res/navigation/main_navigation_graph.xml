@@ -7,20 +7,20 @@
     app:startDestination="@id/navigation_community"
     >
 
-    <fragment
+    <bottom
         android:id="@+id/navigation_community"
         android:name="com.rudder.ui.fragment.community.CommunityFragment"
         android:label="@string/community_title"
         tools:layout="@layout/fragment_community" >
-    </fragment>
+    </bottom>
 
-    <fragment
+    <bottom
         android:id="@+id/navigation_postmessage"
         android:name="com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment"
         android:label="@string/post_message"
         tools:layout="@layout/fragment_post_message_display" />
 
-    <fragment
+    <bottom
         android:id="@+id/navigation_mypage"
         android:name="com.rudder.ui.fragment.mypage.MyPageDisplayFragment"
         android:label="@string/my_page_title"

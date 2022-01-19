@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_graph"
+    app:startDestination="@id/navigation_apple"
+    >
+
+    <bottom
+        android:id="@+id/navigation_apple"
+        android:name="com.rudder.ui.fragment.AppleFragment"
+        android:label="AppleFragment"
+        tools:layout="@layout/fragment_apple" >
+    </bottom>
+
+    <bottom
+        android:id="@+id/navigation_banana"
+        android:name="com.rudder.ui.fragment.BananaFragment"
+        android:label="BananaFragment"
+        tools:layout="@layout/fragment_banana" />
+
+    <bottom
+        android:id="@+id/navigation_cecece"
+        android:name="com.rudder.ui.fragment.CececeFragment"
+        android:label="CececeFragment"
+        tools:layout="@layout/fragment_cecece" />
+
+
+</navigation>

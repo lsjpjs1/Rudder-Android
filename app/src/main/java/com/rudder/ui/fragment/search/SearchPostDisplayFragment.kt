@@ -124,8 +124,8 @@ class SearchPostDisplayFragment(val viewModel: MainViewModel)  : Fragment(),Cust
         viewModel.setSelectedPostPosition(position)
 //        (activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
 
-        (activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
-        (activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
+//        (activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
+        //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
 //        if(!viewModel.isAlreadyReadPost()){
 //            viewModel.addPostViewCount()
 //        }

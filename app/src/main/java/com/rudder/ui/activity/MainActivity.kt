@@ -20,8 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -52,6 +51,9 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
 import kotlinx.android.synthetic.main.post_comments.*
 import java.lang.Exception
+import androidx.navigation.fragment.findNavController
+import com.rudder.data.MainBottomTab
+import com.rudder.util.BottomNavigator
 
 
 class MainActivity : AppCompatActivity(), MainActivityInterface {
@@ -84,17 +86,33 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private val grey by lazy { ContextCompat.getColor(this, R.color.grey) }
     private val black by lazy { ContextCompat.getColor(this, R.color.black) }
 
+
+
+    private val binding: ActivityMainBinding by lazy {
+        DataBindingUtil.setContentView(this, R.layout.activity_main)
+    }
+
+    private val navController: NavController by lazy {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainDisplayContainerView)
+            ?: throw IllegalStateException("the container MUST contain a fragment at least one")
+        navHostFragment.findNavController()
+    }
+
+    companion object {
+        private const val KEY_SELECTED_TAB = "selectedTab"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+////
 //        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(
 //            this,
 //            R.layout.activity_main
 //        )
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        //val binding = ActivityMainBinding.inflate(layoutInflater)
+        //setContentView(binding.root)
 
         binding.mainVM = viewModel
         binding.lifecycleOwner = this
@@ -104,10 +122,34 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         /////////////////////// 21 01 18 navigation
         val mainBottomNavigation: BottomNavigationView = binding.mainBottomNavigation
         //val navController = findNavController(R.id.mainDisplayContainerView)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainDisplayContainerView) as NavHostFragment
+        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainDisplayContainerView) as NavHostFragment
+        //val navController = navHostFragment.navController
+        //mainBottomNavigation.setupWithNavController(navController)
 
-        val navController = navHostFragment.navController
-        mainBottomNavigation.setupWithNavController(navController)
+
+
+        navController.apply {
+            navigatorProvider.addNavigator(
+                BottomNavigator(
+                    R.id.mainDisplayContainerView,
+                    supportFragmentManager
+                )
+            )
+            // set a graph at code not XML, because add a custom navigator
+            setGraph(R.navigation.test_navigation_graph)
+
+            mainBottomNavigation.setupWithNavController(this)
+        }
+
+
+        savedInstanceState?.getInt(KEY_SELECTED_TAB)
+            ?.let {
+                MainBottomTab.from(it)
+            }
+            ?.itemId
+            ?.let {
+                mainBottomNavigation.selectedItemId = it
+            }
 
         mainBottomNavigation.setOnNavigationItemSelectedListener {
             if (it.itemId != mainBottomNavigation.selectedItemId)
@@ -115,17 +157,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             true
         }
 
-//
-//        val fragment1: Fragment = HomeFragment()
-//        val fragment2: Fragment = DashboardFragment()
-//        val fragment3: Fragment = ()
-//        //val fm: FragmentManager = supportFragmentManager
-//        val active = fragment1
 
-
-//        supportFragmentManager.beginTransaction().add(R.id.mainDisplayContainerView, fragment3, "3").hide(fragment3).commit();
-//        supportFragmentManager.beginTransaction().add(R.id.mainDisplayContainerView, fragment2, "2").hide(fragment2).commit();
-//        supportFragmentManager.beginTransaction().add(R.id.mainDisplayContainerView,fragment1, "1").commit();
 
 
         //////////////////////
@@ -175,12 +207,12 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         )
 
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.mainBottomBar, mainBottomBarFragment,"mainBottomBar")
-            .add(R.id.mainDisplay, myPageDisplayFragment, "myPage")
-            .hide(myPageDisplayFragment)
-            .add(R.id.mainDisplay, communityFragment, "community")
-            .commit()
+//        supportFragmentManager.beginTransaction()
+//            .add(R.id.mainBottomBar, mainBottomBarFragment,"mainBottomBar")
+//            .add(R.id.mainDisplay, myPageDisplayFragment, "myPage")
+//            .hide(myPageDisplayFragment)
+//            .add(R.id.mainDisplay, communityFragment, "community")
+//            .commit()
 
         viewModel.isContactUs.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
@@ -213,25 +245,25 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
 
-
-        viewModel.selectedTab.observe(this, Observer {
-            when (it) {
-                R.id.communityButton -> {
-                    FragmentShowHide(supportFragmentManager).showFragment(
-                        communityFragment,
-                        R.id.mainDisplay
-                    )
-                    changeColorCommunity()
-                }
-                R.id.myPageButton -> {
-                    FragmentShowHide(supportFragmentManager).showFragment(
-                        myPageDisplayFragment,
-                        R.id.mainDisplay
-                    )
-                    changeColorMyPage()
-                }
-            }
-        })
+//
+//        viewModel.selectedTab.observe(this, Observer {
+//            when (it) {
+//                R.id.communityButton -> {
+//                    FragmentShowHide(supportFragmentManager).showFragment(
+//                        communityFragment,
+//                        R.id.mainDisplay
+//                    )
+//                    //changeColorCommunity()
+//                }
+//                R.id.myPageButton -> {
+//                    FragmentShowHide(supportFragmentManager).showFragment(
+//                        myPageDisplayFragment,
+//                        R.id.mainDisplay
+//                    )
+//                    //changeColorMyPage()
+//                }
+//            }
+//        })
 
         viewModel.isAddPostClick.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
@@ -417,20 +449,20 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
                 super.onBackPressed()
                 if (addCommentFragment.isVisible) {
-                    swapMainBottomBar()
+                    //swapMainBottomBar()
                 }
             } else {
                 moveTaskToBack(true)
             }
 
             if (viewModel.selectedTab.value == R.id.myPageButton) {
-                changeColorMyPage()
+                //changeColorMyPage()
             }
 
             if (showPostFragment.isVisible) {
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                fragmentShowHide.hideFragment(mainBottomBarFragment)
-                fragmentShowHide.showFragment(addCommentFragment, R.id.mainBottomBar)
+                //fragmentShowHide.hideFragment(mainBottomBarFragment)
+                //fragmentShowHide.showFragment(addCommentFragment, R.id.mainBottomBar)
             }
         }catch (e: Exception){
             e.printStackTrace()
@@ -457,15 +489,15 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         }
     }
 
-    fun swapMainBottomBar() {
-        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-        if(searchPostFragment.isVisible){
-            fragmentShowHide.hideAllFragment(R.id.mainBottomBar)
-        }else{
-            fragmentShowHide.showFragment(mainBottomBarFragment, R.id.mainBottomBar)
-        }
-
-    }
+//    fun swapMainBottomBar() {
+//        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+//        if(searchPostFragment.isVisible){
+//            fragmentShowHide.hideAllFragment(R.id.mainBottomBar)
+//        }else{
+//            fragmentShowHide.showFragment(mainBottomBarFragment, R.id.mainBottomBar)
+//        }
+//
+//    }
 
 
     fun showParentCommentInfo() {
@@ -508,27 +540,27 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
 
-    fun showAddComment(addCommentFragment: AddCommentFragment) {
-        this.addCommentFragment = addCommentFragment
-        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-        fragmentShowHide.addFragment(this.addCommentFragment, R.id.mainBottomBar, "addComment")
-        fragmentShowHide.showFragment(this.addCommentFragment, R.id.mainBottomBar)
-    }
+//    fun showAddComment(addCommentFragment: AddCommentFragment) {
+//        this.addCommentFragment = addCommentFragment
+//        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+//        fragmentShowHide.addFragment(this.addCommentFragment, R.id.mainBottomBar, "addComment")
+//        fragmentShowHide.showFragment(this.addCommentFragment, R.id.mainBottomBar)
+//    }
 
 
 
 
-    fun changeColorCommunity() {
-        mainBottomBarFragment.communityIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
-        mainBottomBarFragment.myPageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
-        mainBottomBarFragment.postMessagePageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
-    }
-
-    fun changeColorMyPage() {
-        mainBottomBarFragment.myPageIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
-        mainBottomBarFragment.communityIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
-        mainBottomBarFragment.postMessagePageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
-    }
+//    fun changeColorCommunity() {
+//        mainBottomBarFragment.communityIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
+//        mainBottomBarFragment.myPageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
+//        mainBottomBarFragment.postMessagePageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
+//    }
+//
+//    fun changeColorMyPage() {
+//        mainBottomBarFragment.myPageIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
+//        mainBottomBarFragment.communityIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
+//        mainBottomBarFragment.postMessagePageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
+//    }
 
     ///
 
@@ -610,9 +642,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 //        return false;
 //    }
 
-    override fun onNavigateUp(): Boolean {
-        return super.onNavigateUp()
-        Log.d("navi", "navi")
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_SELECTED_TAB, binding.mainBottomNavigation.selectedItemId)
     }
 
 
