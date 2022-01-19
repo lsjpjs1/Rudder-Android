@@ -29,8 +29,7 @@ class PostMessageAdapter : BaseAdapter<PostMessageRoom, PostMessageItemBinding>(
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.viewBinding.postMessageItemSenderNickNameTV.text = getItem(position).userId
         holder.viewBinding.postMessageItemDateTV.text = getItem(position).messageSendTime.toString()
-
-        Log.d("asd","${getItem(position)}")
+        holder.viewBinding.postMessageItemMessageBodyTV.text = getItem(position).postMessageBody
 
     }
 
