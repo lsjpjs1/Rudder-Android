@@ -38,7 +38,6 @@ class PostMessageAdapter : BaseAdapter<PostMessageRoom, PostMessageItemBinding>(
         val superHolder = super.onCreateViewHolder(parent, viewType)
         val lp = superHolder.viewBinding.root.layoutParams
         lp.height = (3000*0.15).toInt()
-        lp.width = (3000*0.2).toInt()
         superHolder.viewBinding.root.layoutParams = lp
         return superHolder
     }
