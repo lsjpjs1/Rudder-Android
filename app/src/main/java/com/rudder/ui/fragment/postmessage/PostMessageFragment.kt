@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentPostMessageBinding
 import com.rudder.ui.adapter.PostMessageAdapter
+import com.rudder.ui.fragment.community.CommunityDisplayFragment
+import com.rudder.ui.fragment.community.CommunityHeaderFragment
+import com.rudder.ui.fragment.community.CommunitySelectorFragment
 import com.rudder.viewModel.PostMessageViewModel
 
 class PostMessageFragment : Fragment() {
@@ -31,10 +35,13 @@ class PostMessageFragment : Fragment() {
 
         fragmentBinding.lifecycleOwner = this
 
+        childFragmentManager.beginTransaction()
+                .add(R.id.postMessageHeader, PostMessageHeaderFragment())
+                .commit()
+
         val adapter = PostMessageAdapter()
-        adapter.submitList(
-            viewModel.getPostMessages()
-        )
+
+        viewModel.getPostMessages()
 
         fragmentBinding.postMessageDisplayRV.also {
             it.layoutManager =
@@ -42,6 +49,13 @@ class PostMessageFragment : Fragment() {
             it.setHasFixedSize(false)
             it.adapter = adapter
         }
+
+        viewModel.myMessageRooms.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+
+        })
 
 
 

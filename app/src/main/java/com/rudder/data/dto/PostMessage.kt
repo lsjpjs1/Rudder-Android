@@ -13,3 +13,11 @@ data class PostMessage(
     val receiveUserNickname : String // 210115,,,,,,,,,,,,,,,,
 
 )
+
+
+data class PostMessageRoom(
+        val postMessageRoomId : Int,
+        val messageSendTime : Timestamp,
+        val postMessageBody : String,
+        val userId : String
+)

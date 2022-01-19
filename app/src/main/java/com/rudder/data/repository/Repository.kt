@@ -7,6 +7,7 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.rudder.BuildConfig
 import com.rudder.data.*
+import com.rudder.data.dto.PostMessageRoom
 import com.rudder.data.dto.ProfileImage
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.data.remote.LoginApi
@@ -340,5 +341,19 @@ class Repository {
             SendPostMessageResponse(false,ResponseEnum.UNKNOWN)
         }
 
+    }
+
+    suspend fun getMyMessages(getMyMessageRoomsRequest: GetMyMessageRoomsRequest): ArrayList<PostMessageRoom> {
+        return try {
+            val getMyMessagesResponse = PostMessageApi.instance.getMyMessageRooms(getMyMessageRoomsRequest).await().results
+            if (getMyMessagesResponse.isSuccess) {
+                getMyMessagesResponse.rooms
+            } else{
+                arrayListOf()
+            }
+        }catch (e: Exception){
+            e.printStackTrace()
+            arrayListOf()
+        }
     }
 }
