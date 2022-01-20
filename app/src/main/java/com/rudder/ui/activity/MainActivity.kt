@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
+import android.security.identity.AccessControlProfileId
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MotionEvent
@@ -562,8 +563,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         showFragment(postMessageFragment, R.id.mainDisplay, "postMessage")
     }
 
-    override fun showPostMessageRoomFragment() {
-        postMessageRoomFragment = PostMessageRoomFragment()
+    override fun showPostMessageRoomFragment(postMessageRoomId: Int) {
+        postMessageRoomFragment = PostMessageRoomFragment(postMessageRoomId)
 
         showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
     }

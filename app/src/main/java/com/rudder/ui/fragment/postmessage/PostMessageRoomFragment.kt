@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
-import com.rudder.databinding.FragmentPostMessageBinding
 import com.rudder.databinding.FragmentPostMessageRoomBinding
-import com.rudder.ui.activity.MainActivityInterface
-import com.rudder.ui.adapter.PostMessageAdapter
+import com.rudder.ui.adapter.RoomPostMessagesAdapter
 import com.rudder.viewModel.PostMessageRoomViewModel
-import com.rudder.viewModel.PostMessageViewModel
 
-class PostMessageRoomFragment : Fragment(){
+class PostMessageRoomFragment(
+        val postMessageRoomId: Int
+) : Fragment(){
     private val viewModel: PostMessageRoomViewModel by viewModels()
     private val lazyContext by lazy {
         context
@@ -33,6 +33,22 @@ class PostMessageRoomFragment : Fragment(){
 
         fragmentBinding.lifecycleOwner = this
 
+        val adapter = RoomPostMessagesAdapter(lazyContext)
+
+        fragmentBinding.roomPostMessageRV.also {
+            it.layoutManager =
+                    LinearLayoutManager(lazyContext, LinearLayoutManager.VERTICAL, false)
+            it.setHasFixedSize(false)
+            it.adapter = adapter
+        }
+
+        viewModel.getMessagesByRoom(postMessageRoomId)
+
+        viewModel.messages.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
 
 
 

@@ -13,10 +13,6 @@ import com.rudder.R
 import com.rudder.databinding.FragmentPostMessageBinding
 import com.rudder.ui.activity.MainActivityInterface
 import com.rudder.ui.adapter.PostMessageAdapter
-import com.rudder.ui.fragment.community.CommunityDisplayFragment
-import com.rudder.ui.fragment.community.CommunityHeaderFragment
-import com.rudder.ui.fragment.community.CommunitySelectorFragment
-import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.PostMessageViewModel
 
 class PostMessageFragment : Fragment() {

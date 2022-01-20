@@ -5,13 +5,11 @@ import java.sql.Timestamp
 data class PostMessage(
     val receiveUserInfoId : Int,
     val sendUserInfoId : Int,
-    val messageBody : String,
+    val postMessageBody: String,
     val isRead : Boolean,
     val messageSendTime : Timestamp,
     val postMessageId : Int,
-    val sendUserNickname : String,
-    val receiveUserNickname : String // 210115,,,,,,,,,,,,,,,,
-
+    val isSender : Boolean
 )
 
 

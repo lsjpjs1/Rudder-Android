@@ -19,4 +19,10 @@ class MessageApi {
             messageService.sendPostMessage(sendPostMessageRequest)
         }
     }
+
+    fun getMessagesByRoom(getMessagesByRoomRequest: GetMessagesByRoomRequest) : Deferred<Response<GetMessagesByRoomResponse>> {
+        return GlobalScope.async(Dispatchers.IO){
+            messageService.getMessagesByRoom(getMessagesByRoomRequest)
+        }
+    }
 }

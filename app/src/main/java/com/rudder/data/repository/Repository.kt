@@ -7,6 +7,7 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.rudder.BuildConfig
 import com.rudder.data.*
+import com.rudder.data.dto.PostMessage
 import com.rudder.data.dto.PostMessageRoom
 import com.rudder.data.dto.ProfileImage
 import com.rudder.data.local.App.Companion.prefs
@@ -339,6 +340,16 @@ class Repository {
         }catch (e: Exception){
             e.printStackTrace()
             SendPostMessageResponse(false,ResponseEnum.UNKNOWN)
+        }
+
+    }
+
+    suspend fun getMessagesByRoom(getMessagesByRoomRequest: GetMessagesByRoomRequest): ArrayList<PostMessage>{
+        return try{
+            MessageApi.instance.getMessagesByRoom(getMessagesByRoomRequest).await().results.messages
+        }catch (e: Exception){
+            e.printStackTrace()
+            arrayListOf()
         }
 
     }
