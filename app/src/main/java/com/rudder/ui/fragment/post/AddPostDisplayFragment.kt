@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.data.FileInfo
@@ -64,8 +65,6 @@ class AddPostDisplayFragment(val viewModel: MainViewModel,val isEdit: Boolean) :
             it.setHasFixedSize(false)
             it.adapter = addPostShowImagesAdapter
         }
-
-
 
 
         viewModel.categoryNames.observe(viewLifecycleOwner, Observer {

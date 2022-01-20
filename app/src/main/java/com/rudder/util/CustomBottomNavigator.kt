@@ -3,6 +3,7 @@ package com.rudder.util
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Log
 import androidx.annotation.IdRes
 import androidx.core.content.res.use
 import androidx.core.os.bundleOf
@@ -16,6 +17,7 @@ import androidx.navigation.Navigator
 import com.rudder.R
 import com.rudder.data.MainBottomTab
 import com.rudder.data.otherTab
+import com.rudder.ui.fragment.search.SearchPostFragment
 
 import java.util.*
 
@@ -46,16 +48,28 @@ class CustomBottomNavigator(
         }
 
         val current = fragmentManager.findFragmentByTag(tag)
+        Log.d("hello3","${current}")
         fragmentManager.commit {
             if (current == null) {
                 val fragment = fragmentManager.fragmentFactory.instantiate(
                     ClassLoader.getSystemClassLoader(),
                     className
                 )
+                Log.d("hello2","${current}")
                 add(fragmentContainerId, fragment, tag)
             } else {
                 show(current)
             }
+
+            if (current == SearchPostFragment()) {
+                Log.d("hello","hello")
+                val fragment = fragmentManager.fragmentFactory.instantiate(
+                    ClassLoader.getSystemClassLoader(),
+                    className
+                )
+                replace(fragmentContainerId, fragment)
+            }
+
 
             hideOthers(tag)
         }
@@ -75,6 +89,17 @@ class CustomBottomNavigator(
         }
         return true
     }
+
+//    private fun FragmentTransaction.replaceMy(tag: String) {
+//        val others = MainBottomTab.otherTab(exceptTag = tag)
+//            .mapNotNull {
+//                fragmentManager.findFragmentByTag(it.tag)
+//            }
+//        others.forEach {
+//            replace()
+//        }
+//    }
+
 
     private fun FragmentTransaction.hideOthers(tag: String) {
         val others = MainBottomTab.otherTab(exceptTag = tag)

@@ -14,9 +14,7 @@
         tools:layout="@layout/fragment_community" >
         <action
             android:id="@+id/action_navigation_community_to_main_fragment_navigation_graph"
-            app:destination="@id/main_fragment_navigation_graph"
-            app:popUpTo="@id/navigation_community"
-/>
+            app:destination="@id/main_fragment_navigation_graph" />
     </bottom>
 
     <bottom
@@ -36,7 +34,7 @@
 
     <navigation android:id="@+id/main_fragment_navigation_graph"
         app:startDestination="@id/navigation_search">
-        <fragment
+        <bottom
             android:id="@+id/navigation_search"
             android:name="com.rudder.ui.fragment.search.SearchPostFragment"
             android:label="SearchPostFragment"
