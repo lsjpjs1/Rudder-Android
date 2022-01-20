@@ -48,7 +48,7 @@ class CustomBottomNavigator(
         }
 
         val current = fragmentManager.findFragmentByTag(tag)
-        Log.d("hello3","${current}")
+
         fragmentManager.commit {
             if (current == null) {
                 val fragment = fragmentManager.fragmentFactory.instantiate(
@@ -57,19 +57,19 @@ class CustomBottomNavigator(
                 )
                 Log.d("hello2","${current}")
                 add(fragmentContainerId, fragment, tag)
+
+            } else if (current!!.tag == "SearchPostFragment"){
+                    Log.d("hello","hello")
+                    val fragment = fragmentManager.fragmentFactory.instantiate(
+                        ClassLoader.getSystemClassLoader(),
+                        className
+                    )
+                    replace(fragmentContainerId, fragment)
+
             } else {
                 show(current)
-            }
 
-            if (current == SearchPostFragment()) {
-                Log.d("hello","hello")
-                val fragment = fragmentManager.fragmentFactory.instantiate(
-                    ClassLoader.getSystemClassLoader(),
-                    className
-                )
-                replace(fragmentContainerId, fragment)
             }
-
 
             hideOthers(tag)
         }
