@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityBinding
+import com.rudder.databinding.FragmentCommunityHeaderBinding
+import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 
 class CommunityFragment: Fragment() {
@@ -20,7 +23,6 @@ class CommunityFragment: Fragment() {
 
 
     companion object{
-        var tmpView : View? = null
         const val TAG = "CommunityFragment"
     }
 
@@ -31,23 +33,33 @@ class CommunityFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        if ( tmpView == null) {
-            val community = DataBindingUtil.inflate<FragmentCommunityBinding>(inflater,R.layout.fragment_community,container,false)
+        val community = DataBindingUtil.inflate<FragmentCommunityBinding>(inflater,R.layout.fragment_community,container,false)
 
-            childFragmentManager.beginTransaction()
-                .add(R.id.communityDisplay, CommunityDisplayFragment(viewModel))
-                .add(R.id.communityHeader, CommunityHeaderFragment())
-                .add(R.id.communitySelector, CommunitySelectorFragment())
-                .commit()
+        childFragmentManager.beginTransaction()
+            .add(R.id.communityDisplay, CommunityDisplayFragment(viewModel))
+            //.add(R.id.communityHeader, CommunityHeaderFragment())
+            .add(R.id.communitySelector, CommunitySelectorFragment())
+            .commit()
 
-            community.mainVM = viewModel
-            community.lifecycleOwner = this
+        community.mainVM = viewModel
+        community.lifecycleOwner = this
 
-            return community.root
-        } else {
-            return tmpView
-        }
 
+        val communityTmp = DataBindingUtil.inflate<FragmentCommunityHeaderBinding>(inflater,R.layout.fragment_community_header,container,false)
+
+
+        //communityTmp.
+
+//        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
+//            it?.let {
+//                if ((activity as MainActivity).validateBack("community")){
+//                    (activity as MainActivity).onBackPressed()
+//                }
+//            }
+//        })
+
+
+        return community.root
 
 //        val community = DataBindingUtil.inflate<FragmentCommunityBinding>(inflater,R.layout.fragment_community,container,false)
 //

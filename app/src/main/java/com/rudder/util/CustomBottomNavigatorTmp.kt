@@ -14,16 +14,16 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import com.rudder.R
-import com.rudder.data.MainBottomTab
+import com.rudder.data.MainHeaderTab
 import com.rudder.data.otherTab
 
 import java.util.*
 
 @Navigator.Name("bottom")
-class CustomBottomNavigator(
+class CustomBottomNavigatorTmp(
     @IdRes private val fragmentContainerId: Int,
     private val fragmentManager: FragmentManager
-) : Navigator<CustomBottomNavigator.Destination>() {
+) : Navigator<CustomBottomNavigatorTmp.Destination>() {
     private val backStack: Deque<String> = ArrayDeque()
 
     override fun createDestination(): Destination = Destination(this)
@@ -77,7 +77,7 @@ class CustomBottomNavigator(
     }
 
     private fun FragmentTransaction.hideOthers(tag: String) {
-        val others = MainBottomTab.otherTab(exceptTag = tag)
+        val others = MainHeaderTab.otherTab(exceptTag = tag)
             .mapNotNull {
                 fragmentManager.findFragmentByTag(it.tag)
             }
@@ -99,7 +99,7 @@ class CustomBottomNavigator(
     }
 
     @NavDestination.ClassType(Fragment::class)
-    class Destination(navigatorCustom: CustomBottomNavigator) : NavDestination(navigatorCustom) {
+    class Destination(navigatorCustom: CustomBottomNavigatorTmp) : NavDestination(navigatorCustom) {
         internal var className: String? = null
             private set
 

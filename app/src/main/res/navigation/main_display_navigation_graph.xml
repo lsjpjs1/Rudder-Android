@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_display_navigation_graph"
+    app:startDestination="@id/navigation_community"
+    >
+
+    <bottom
+        android:id="@+id/navigation_community"
+        android:name="com.rudder.ui.fragment.community.CommunityFragment"
+        android:label="@string/community_title"
+        tools:layout="@layout/fragment_community" >
+        <action
+            android:id="@+id/action_navigation_community_to_main_fragment_navigation_graph"
+            app:destination="@id/main_fragment_navigation_graph"
+            app:popUpTo="@id/navigation_community"
+/>
+    </bottom>
+
+    <bottom
+        android:id="@+id/navigation_postmessage"
+        android:name="com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment"
+        android:label="@string/post_message"
+        tools:layout="@layout/fragment_post_message_display" />
+
+    <bottom
+        android:id="@+id/navigation_mypage"
+        android:name="com.rudder.ui.fragment.mypage.MyPageDisplayFragment"
+        android:label="@string/my_page_title"
+        tools:layout="@layout/fragment_my_page_display" />
+
+
+
+
+    <navigation android:id="@+id/main_fragment_navigation_graph"
+        app:startDestination="@id/navigation_search">
+        <fragment
+            android:id="@+id/navigation_search"
+            android:name="com.rudder.ui.fragment.search.SearchPostFragment"
+            android:label="SearchPostFragment"
+            tools:layout="@layout/fragment_search_post"
+            />
+
+    </navigation>
+
+
+</navigation>

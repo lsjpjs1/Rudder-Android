@@ -3,28 +3,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_navigation_graph"
+    android:id="@+id/main_header_navigation_graph"
     app:startDestination="@id/navigation_community"
     >
 
     <bottom
         android:id="@+id/navigation_community"
-        android:name="com.rudder.ui.fragment.community.CommunityFragment"
+        android:name="com.rudder.ui.fragment.community.CommunityHeaderFragment"
         android:label="@string/community_title"
-        tools:layout="@layout/fragment_community" >
+        tools:layout="@layout/fragment_community_header" >
     </bottom>
 
     <bottom
         android:id="@+id/navigation_postmessage"
-        android:name="com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment"
+        android:name="com.rudder.ui.fragment.postmessage.PostMessageHeaderFragment"
         android:label="@string/post_message"
-        tools:layout="@layout/fragment_post_message_display" />
+        tools:layout="@layout/fragment_post_message_header" />
 
     <bottom
         android:id="@+id/navigation_mypage"
-        android:name="com.rudder.ui.fragment.mypage.MyPageDisplayFragment"
+        android:name="com.rudder.ui.fragment.mypage.MyPageHeaderFragment"
         android:label="@string/my_page_title"
-        tools:layout="@layout/fragment_my_page_display" />
+        tools:layout="@layout/fragment_my_page_header" />
 
 
 </navigation>

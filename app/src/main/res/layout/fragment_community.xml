@@ -24,6 +24,14 @@
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/community_header_height">
 
+            <fragment
+                android:id="@+id/communityHeaderFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="com.rudder.ui.fragment.community.CommunityHeaderFragment"
+                >
+            </fragment>
+
         </FrameLayout>
 
         <FrameLayout

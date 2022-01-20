@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -39,9 +40,6 @@ import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.post.*
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment
 import com.rudder.ui.fragment.search.SearchPostFragment
-import com.rudder.util.FragmentShowHide
-import com.rudder.util.ProgressBarUtil
-import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_comment.*
@@ -51,8 +49,9 @@ import kotlinx.android.synthetic.main.fragment_show_post.*
 import kotlinx.android.synthetic.main.post_comments.*
 import java.lang.Exception
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.plusAssign
 import com.rudder.data.MainBottomTab
-import com.rudder.util.CustomBottomNavigator
+import com.rudder.util.*
 
 
 class MainActivity : AppCompatActivity(), MainActivityInterface {
@@ -143,9 +142,55 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 )
             )
             // set a graph at code not XML, because add a custom navigator
-            setGraph(R.navigation.main_navigation_graph)
+            setGraph(R.navigation.main_display_navigation_graph)
+
             mainBottomNavigation.setupWithNavController(this)
         }
+
+
+        navDisplayController.navigatorProvider.addNavigator(FragmentNavigator(this,supportFragmentManager,R.id.mainDisplayContainerView))
+
+//
+//        navHeaderController.apply {
+//            navigatorProvider.addNavigator(
+//                CustomBottomNavigatorTmp(
+//                    R.id.mainHeader,
+//                    supportFragmentManager
+//                )
+//            )
+//            // set a graph at code not XML, because add a custom navigator
+//            setGraph(R.navigation.main_header_navigation_graph)
+//
+//            mainBottomNavigation.setupWithNavController(this)
+//        }
+
+
+
+        navDisplayController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.navigation_community -> {
+                    Log.d("addonDes","community")
+                    //supportActionBar?.hide()
+                    //Timber.i("Navigation dest. changed: EditAddFragment. $supportActionBar")
+                }
+                R.id.navigation_postmessage -> {
+                    Log.d("addonDes","postmessage")
+                    //supportActionBar?.hide()
+                    //Timber.i("Navigation dest. changed: EditAddFragment. $supportActionBar")
+                }
+                R.id.navigation_mypage -> {
+                    Log.d("addonDes","mypage")
+                    //supportActionBar?.hide()
+                    //Timber.i("Navigation dest. changed: EditAddFragment. $supportActionBar")
+                }
+
+                else -> {
+                    //supportActionBar?.show()
+                    //Timber.i("Navigation dest. changed: else fragment. $supportActionBar")
+                }
+            }
+        }
+
 
 
         savedInstanceState?.getInt(KEY_SELECTED_TAB)
@@ -159,7 +204,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         mainBottomNavigation.setOnNavigationItemSelectedListener {
             if (it.itemId != mainBottomNavigation.selectedItemId)
-                NavigationUI.onNavDestinationSelected(it, navController)
+                NavigationUI.onNavDestinationSelected(it, navDisplayController)
             true
         }
 
@@ -275,9 +320,16 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 fragmentShowHide.addToBackStack()
 
                 fragmentShowHide.hideFragment(mainBottomBarFragment)
+                fragmentShowHide.hideFragment(communityFragment)
 
-                fragmentShowHide.addFragment(addPostFragment, R.id.mainDisplay, "addPost")
-                fragmentShowHide.showFragment(addPostFragment, R.id.mainDisplay)
+
+                fragmentShowHide.addFragment(addPostFragment, R.id.mainDisplayContainerView, "addPost")
+                fragmentShowHide.showFragment(addPostFragment, R.id.mainDisplayContainerView)
+
+
+
+
+
                 viewModel.clearAddPost()
             }
         })
@@ -286,18 +338,15 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             if (it.getContentIfNotHandled()!!) {
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
-                fragmentShowHide.hideFragment(mainBottomBarFragment)
+                fragmentShowHide.hideFragment(communityFragment)
+                //fragmentShowHide.hideFragment(mainDisplayContainerView)
 
-                fragmentShowHide.addFragment(searchPostFragment, R.id.mainDisplay, "searchPost")
-                fragmentShowHide.showFragment(searchPostFragment, R.id.mainDisplay)
+//                fragmentShowHide.addFragment(searchPostFragment, R.id.mainDisplay, "searchPost")
+//                fragmentShowHide.showFragment(searchPostFragment, R.id.mainDisplay)
 
+                //navDisplayController.navigate(R.id.action_navigation_community_to_main_fragment_navigation_graph)
             }
         })
-
-
-
-
-
 
 
         viewModel.startLoginActivity.observe(this, Observer {
@@ -316,13 +365,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
 
-
-
-
-
-
-
-
         viewModel.isContactUsSuccess.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
@@ -330,9 +372,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 }
             }
         })
-
-
-
 
 
         viewModel.isCancelClick.observe(this, Observer {
@@ -440,39 +479,40 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         return super.dispatchTouchEvent(ev)
     }
 
-    override fun onBackPressed() {
-        Log.d("onBackPressed", "onBackPressed")
-        try {
-            val isBackButtonAvailable =
-                (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) && (!supportFragmentManager.findFragmentByTag(
-                    "community"
-                )!!.isVisible)
-            if (isBackButtonAvailable) { // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
-                Log.d("call",addCommentFragment.isVisible.toString())
-
-                super.onBackPressed()
-                if (addCommentFragment.isVisible) {
-                    //swapMainBottomBar()
-                }
-            } else {
-                moveTaskToBack(true)
-            }
-
-            if (viewModel.selectedTab.value == R.id.myPageButton) {
-                //changeColorMyPage()
-            }
-
-            if (showPostFragment.isVisible) {
-                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                //fragmentShowHide.hideFragment(mainBottomBarFragment)
-                //fragmentShowHide.showFragment(addCommentFragment, R.id.mainBottomBar)
-            }
-        }catch (e: Exception){
-            e.printStackTrace()
-        }
-
-
-    }
+//    override fun onBackPressed() {
+//        Log.d("onBackPressed", "onBackPressed")
+//        try {
+//            val isBackButtonAvailable =
+//                (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) && (!supportFragmentManager.findFragmentByTag(
+//                    "community"
+//                )!!.isVisible)
+//            if (isBackButtonAvailable) { // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
+//                Log.d("call",addCommentFragment.isVisible.toString())
+//
+//                super.onBackPressed()
+//                if (addCommentFragment.isVisible) {
+//                    //swapMainBottomBar()
+//                }
+//            } else {
+//                moveTaskToBack(true)
+//            }
+//
+//            if (viewModel.selectedTab.value == R.id.myPageButton) {
+//                //changeColorMyPage()
+//            }
+//
+//            if (showPostFragment.isVisible) {
+//                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+//                //fragmentShowHide.hideFragment(mainBottomBarFragment)
+//                //fragmentShowHide.showFragment(addCommentFragment, R.id.mainBottomBar)
+//
+//            }
+//        }catch (e: Exception){
+//            e.printStackTrace()
+//        }
+//
+//
+//    }
 
 
     fun getDisplaySize(): ArrayList<Int> {
