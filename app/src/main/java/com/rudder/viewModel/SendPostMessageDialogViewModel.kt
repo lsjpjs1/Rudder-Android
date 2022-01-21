@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class SendPostMessageDialogViewModel : ViewModel() {
     val _postMessageBody = MutableLiveData<String>()
 
-    private val _messageReceiveUserInfoId = MutableLiveData<Int>()
+    private val _messageReceiveUserInfoId = MutableLiveData<Int?>()
     private val _toastMessage = MutableLiveData<String?>()
     private val _closeFlag = MutableLiveData<Event<Boolean>>()
 
@@ -27,28 +27,32 @@ class SendPostMessageDialogViewModel : ViewModel() {
     fun sendPostMessage() {
         GlobalScope.launch {
             val token = App.prefs.getValue(BuildConfig.TOKEN_KEY)
-            val result = Repository().sendPostMessage(SendPostMessageRequest(token!!,_messageReceiveUserInfoId.value!!,_postMessageBody.value!!))
+            _messageReceiveUserInfoId.value?.let {
+                val result = Repository().sendPostMessage(SendPostMessageRequest(token!!,_messageReceiveUserInfoId.value!!,_postMessageBody.value!!))
+                viewModelScope.launch {
+                    when(result.error){
 
-            viewModelScope.launch {
-                when(result.error){
+                        ResponseEnum.SUCCESS -> {
+                            _toastMessage.value = "Sending message complete!"
+                            _closeFlag.value = Event(true)
+                        }
+                        ResponseEnum.UNKNOWN -> {
+                            _toastMessage.value = "Sending message failed"
+                        }
+                        ResponseEnum.DATABASE -> {
+                            _toastMessage.value = "Database failure"
+                        }
 
-                    ResponseEnum.SUCCESS -> {
-                        _toastMessage.value = "Sending message complete!"
-                        _closeFlag.value = Event(true)
                     }
-                    ResponseEnum.UNKNOWN -> {
-                        _toastMessage.value = "Sending message failed"
-                    }
-                    ResponseEnum.DATABASE -> {
-                        _toastMessage.value = "Database failure"
-                    }
-
                 }
+
             }
+
+
         }
     }
 
-    fun setMessageReceiveUserInfoId(receiveUserINfoId : Int) {
+    fun setMessageReceiveUserInfoId(receiveUserINfoId : Int?) {
         _messageReceiveUserInfoId.value = receiveUserINfoId
     }
 }

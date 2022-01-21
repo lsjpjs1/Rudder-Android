@@ -15,7 +15,9 @@ import kotlinx.coroutines.launch
 class PostMessageRoomViewModel : ViewModel() {
 
     private val _messages = MutableLiveData<ArrayList<PostMessage>>()
+    private val _targetUserInfoId = MutableLiveData<Int?>()
 
+    val targetUserInfoId : LiveData<Int?> = _targetUserInfoId
     val messages : LiveData<ArrayList<PostMessage>> = _messages
 
     fun getMessagesByRoom(postMessageRoomId : Int){
@@ -23,6 +25,11 @@ class PostMessageRoomViewModel : ViewModel() {
             val messagesByRoom = Repository().getMessagesByRoom(GetMessagesByRoomRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY!!)!!, postMessageRoomId))
             viewModelScope.launch {
                 _messages.value = messagesByRoom
+                if (messagesByRoom[0].isSender){
+                    _targetUserInfoId.value = messagesByRoom[0].receiveUserInfoId
+                } else {
+                    _targetUserInfoId.value = messagesByRoom[0].sendUserInfoId
+                }
             }
         }
     }

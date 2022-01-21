@@ -17,7 +17,7 @@ import com.rudder.databinding.FragmentSendPostMessageDialogBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.SendPostMessageDialogViewModel
 
-class SendPostMessageDialogFragment(val receiveUserInfoId: Int) : DialogFragment() {
+class SendPostMessageDialogFragment(val receiveUserInfoId: Int?) : DialogFragment() {
 
     private val viewModel: SendPostMessageDialogViewModel by viewModels()
 

@@ -21,6 +21,7 @@ class PostMessageRoomFragment(
     private val lazyContext by lazy {
         context
     }
+    private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -32,6 +33,7 @@ class PostMessageRoomFragment(
                 R.layout.fragment_post_message_room, container, false)
 
         fragmentBinding.lifecycleOwner = this
+        fragmentBinding.postMessageRoomFragment = this
 
         val adapter = RoomPostMessagesAdapter(lazyContext)
 
@@ -52,9 +54,15 @@ class PostMessageRoomFragment(
 
 
 
+
         return fragmentBinding.root
     }
 
+    fun showSendPostMessageDialog() {
+        val receiveUserInfoId = viewModel.targetUserInfoId
+        sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId.value)
+        sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
+    }
 
 
 }

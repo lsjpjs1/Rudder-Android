@@ -17,5 +17,6 @@ data class PostMessageRoom(
         val postMessageRoomId : Int,
         val messageSendTime : Timestamp,
         val postMessageBody : String,
-        val userId : String
+        val userId : String,
+
 )
