@@ -32,7 +32,7 @@ import com.rudder.ui.fragment.comment.AddCommentFragment
 import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
 import com.rudder.ui.fragment.comment.CommunityCommentEditFragment
 import com.rudder.ui.fragment.comment.CommunityCommentReportFragment
-import com.rudder.ui.fragment.community.CommunityFragment
+import com.rudder.ui.fragment.community.CommunityDisplayFragment
 import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.ClubJoinRequestDialogFragment
 import com.rudder.ui.fragment.mypage.ContactUsFragment
@@ -47,9 +47,7 @@ import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
 import kotlinx.android.synthetic.main.post_comments.*
-import java.lang.Exception
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.plusAssign
 import com.rudder.data.MainBottomTab
 import com.rudder.util.*
 
@@ -58,7 +56,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     lateinit var mainBottomBarFragment: MainBottomBarFragment
     lateinit var addCommentFragment: AddCommentFragment
-    private lateinit var communityFragment: CommunityFragment
+    private lateinit var communityDisplayFragment: CommunityDisplayFragment
     private lateinit var myPageDisplayFragment: MyPageDisplayFragment
     private lateinit var addPostFragment: AddPostFragment
     private lateinit var searchPostFragment: SearchPostFragment
@@ -196,7 +194,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal)
         progressBar.bringToFront()
         mainBottomBarFragment = MainBottomBarFragment(this)
-        communityFragment = CommunityFragment()
+        communityDisplayFragment = CommunityDisplayFragment()
         myPageDisplayFragment = MyPageDisplayFragment()
         addPostFragment = AddPostFragment()
 
@@ -238,7 +236,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 //            .add(R.id.mainBottomBar, mainBottomBarFragment,"mainBottomBar")
 //            .add(R.id.mainDisplay, myPageDisplayFragment, "myPage")
 //            .hide(myPageDisplayFragment)
-//            .add(R.id.mainDisplay, communityFragment, "community")
+//            .add(R.id.mainDisplay, communityDisplayFragment, "community")
 //            .commit()
 
         viewModel.isContactUs.observe(this, Observer {
@@ -277,7 +275,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 //            when (it) {
 //                R.id.communityButton -> {
 //                    FragmentShowHide(supportFragmentManager).showFragment(
-//                        communityFragment,
+//                        communityDisplayFragment,
 //                        R.id.mainDisplay
 //                    )
 //                    //changeColorCommunity()
@@ -299,7 +297,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 fragmentShowHide.addToBackStack()
 
                 fragmentShowHide.hideFragment(mainBottomBarFragment)
-                fragmentShowHide.hideFragment(communityFragment)
+                fragmentShowHide.hideFragment(communityDisplayFragment)
 
 
                 fragmentShowHide.addFragment(addPostFragment, R.id.mainDisplayContainerView, "addPost")
@@ -317,7 +315,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             if (it.getContentIfNotHandled()!!) {
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                 fragmentShowHide.addToBackStack()
-                fragmentShowHide.hideFragment(communityFragment)
+                fragmentShowHide.hideFragment(communityDisplayFragment)
                 //fragmentShowHide.hideFragment(mainDisplayContainerView)
 
 //                fragmentShowHide.addFragment(searchPostFragment, R.id.mainDisplay, "searchPost")

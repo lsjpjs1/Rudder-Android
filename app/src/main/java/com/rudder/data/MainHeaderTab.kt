@@ -1,17 +1,13 @@
 package com.rudder.data
 
-import android.util.Log
 import com.rudder.R
-import com.rudder.ui.fragment.community.CommunityFragment
-import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
-import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment
 
 
 enum class MainHeaderTab(
     val itemId: Int,
     val tag: String
 ) {
-//    COMMUNITY(R.id.navigation_community, CommunityFragment.TAG),
+//    COMMUNITY(R.id.navigation_community, CommunityDisplayFragment.TAG),
 //    POSTMESSAGE(R.id.navigation_postmessage, PostMessageDisplayFragment.TAG),
 //    MYPAGE(R.id.navigation_mypage, MyPageDisplayFragment.TAG),
 

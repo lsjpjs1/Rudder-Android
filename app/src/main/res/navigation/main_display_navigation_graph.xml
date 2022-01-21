@@ -9,9 +9,9 @@
 
     <bottom
         android:id="@+id/navigation_community"
-        android:name="com.rudder.ui.fragment.community.CommunityFragment"
+        android:name="com.rudder.ui.fragment.community.CommunityDisplayFragment"
         android:label="@string/community_title"
-        tools:layout="@layout/fragment_community" >
+        tools:layout="@layout/fragment_community_display" >
         <action
             android:id="@+id/action_navigation_community_to_main_fragment_navigation_graph"
             app:destination="@id/main_fragment_navigation_graph"
