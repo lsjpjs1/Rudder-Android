@@ -29,7 +29,7 @@ class SearchPostHeaderFragment(val viewModel: MainViewModel)  : Fragment() {
         header.searchPostSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let{
-                    viewModel.searchPost(false)
+                    //viewModel.searchPost(false)
                 }
                 return true
             }
@@ -42,14 +42,14 @@ class SearchPostHeaderFragment(val viewModel: MainViewModel)  : Fragment() {
             }
         })
 
-        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                if ((activity as MainActivity).validateBack("searchPost")){
-                    viewModel.clearSearchPost()
-                    (activity as MainActivity).onBackPressed()
-                }
-            }
-        })
+//        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
+//            it?.let{
+//                if ((activity as MainActivity).validateBack("searchPost")){
+//                    viewModel.clearSearchPost()
+//                    (activity as MainActivity).onBackPressed()
+//                }
+//            }
+//        })
 
         return header.root
     }

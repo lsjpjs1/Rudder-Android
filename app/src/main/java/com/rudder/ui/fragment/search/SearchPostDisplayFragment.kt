@@ -79,7 +79,7 @@ class SearchPostDisplayFragment(val viewModel: MainViewModel)  : Fragment(),Cust
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
-                    viewModel.searchPost(false)
+                    //viewModel.searchPost(false)
                     if (parentActivity.showPostFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
@@ -97,7 +97,7 @@ class SearchPostDisplayFragment(val viewModel: MainViewModel)  : Fragment(),Cust
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
-                    viewModel.searchPost(false)
+                    //viewModel.searchPost(false)
                     if (parentActivity.showPostFragment.isVisible){
                         parentActivity.onBackPressed()
                     }

@@ -288,6 +288,7 @@ open class MainViewModel : ViewModel() {
     }
 
     fun clearSearchPost(){
+        Log.d("claersearch_hello","clearsearch")
         _posts.value = arrayListOf()
         _searchWord.value = MutableLiveData<String>().value
     }
@@ -295,6 +296,7 @@ open class MainViewModel : ViewModel() {
     fun searchPost(isScroll: Boolean){
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
+        Log.d("search_hello", "searchPost")
         GlobalScope.launch {
             val resPosts = if (isScroll){
                 Repository().getPosts(

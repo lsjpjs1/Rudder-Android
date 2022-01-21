@@ -32,7 +32,7 @@ class SearchPostFragment : Fragment() {
             .add(R.id.searchPostDisplay, SearchPostDisplayFragment(viewModel))
             .commit()
 
-
+        Log.d("oncreateview_search","oncreateview_search")
         return fragmentBinding.root
     }
 
@@ -40,7 +40,6 @@ class SearchPostFragment : Fragment() {
         super.onDestroy()
         Log.d("destroy","dest")
     }
-
 
 
 }

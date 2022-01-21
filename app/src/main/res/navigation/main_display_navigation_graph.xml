@@ -14,7 +14,8 @@
         tools:layout="@layout/fragment_community" >
         <action
             android:id="@+id/action_navigation_community_to_main_fragment_navigation_graph"
-            app:destination="@id/main_fragment_navigation_graph" />
+            app:destination="@id/main_fragment_navigation_graph"
+            app:popUpTo="@id/navigation_community" />
     </bottom>
 
     <bottom
