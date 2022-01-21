@@ -15,7 +15,7 @@ enum class MainBottomTab(
     POSTMESSAGE(R.id.navigation_postmessage, PostMessageDisplayFragment.TAG),
     MYPAGE(R.id.navigation_mypage, MyPageDisplayFragment.TAG),
 
-    SEARCH(R.id.navigation_search, "SearchPostFragment");
+    SEARCH(R.id.navigation_search, "SearchPostDisplayFragment");
 
 
 //    COMMUNITYHEADER(R.id.navigation_community, "CommunityHeaderFragment"),
@@ -31,13 +31,10 @@ enum class MainBottomTab(
 fun MainBottomTab.Companion.otherTab(exceptTag: String): Sequence<MainBottomTab> =
     MainBottomTab.values()
         .asSequence()
-        .filter {
-
-
-            val tmp = it.tag
-//
+        .filter {//
+//            val tmp = it.tag
 //            val tmp2 = exceptTag.split("Header","Display","Fragment")[0]
-            Log.d("tmp","${tmp}, ${exceptTag}")
+//            Log.d("tmp","${tmp}, ${exceptTag}")
 //            tmp != tmp2
 
             it.tag != exceptTag

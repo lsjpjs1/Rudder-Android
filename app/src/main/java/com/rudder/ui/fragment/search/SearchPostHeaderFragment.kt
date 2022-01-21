@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentSearchPostHeaderBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.SearchViewModel
 
-class SearchPostHeaderFragment(val viewModel: MainViewModel)  : Fragment() {
+class SearchPostHeaderFragment : Fragment() {
+
+    private val viewModel: SearchViewModel by activityViewModels()
 
 
     override fun onCreateView(

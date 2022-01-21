@@ -37,9 +37,9 @@
         app:startDestination="@id/navigation_search">
         <bottom
             android:id="@+id/navigation_search"
-            android:name="com.rudder.ui.fragment.search.SearchPostFragment"
-            android:label="SearchPostFragment"
-            tools:layout="@layout/fragment_search_post"
+            android:name="com.rudder.ui.fragment.search.SearchPostDisplayFragment"
+            android:label="SearchPostDisplayFragment"
+            tools:layout="@layout/fragment_search_post_display"
             />
 
     </navigation>

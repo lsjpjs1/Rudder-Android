@@ -30,19 +30,8 @@ class CommunityDisplayFragment: Fragment() {
 
         val community = DataBindingUtil.inflate<FragmentCommunityDisplayBinding>(inflater,R.layout.fragment_community_display,container,false)
 
-        childFragmentManager.beginTransaction()
-            //.add(R.id.communityDisplay, CommunityContentsFragment(viewModel))
-            //.add(R.id.communityContentsFrameLayout, CommunityContentsFragment())
-            .commit()
-
         community.mainVM = viewModel
         community.lifecycleOwner = this
-
-
-        val communityTmp = DataBindingUtil.inflate<FragmentCommunityHeaderBinding>(inflater,R.layout.fragment_community_header,container,false)
-
-
-        //communityTmp.
 
 //        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
 //            it?.let {

@@ -17,7 +17,6 @@ import androidx.navigation.Navigator
 import com.rudder.R
 import com.rudder.data.MainBottomTab
 import com.rudder.data.otherTab
-import com.rudder.ui.fragment.search.SearchPostFragment
 
 import java.util.*
 
@@ -58,7 +57,7 @@ class CustomBottomNavigator(
                 current == null -> { // 처음 fragment 생성될 때
                     add(fragmentContainerId, fragment, tag)
                 }
-                current.tag == "SearchPostFragment" -> {
+                current.tag == "SearchPostDisplayFragment" -> {
                     Log.d("hello_search","hello")
 
                     //replace(fragmentContainerId, fragment)

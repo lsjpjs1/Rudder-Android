@@ -39,7 +39,7 @@ import com.rudder.ui.fragment.mypage.ContactUsFragment
 import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.post.*
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment
-import com.rudder.ui.fragment.search.SearchPostFragment
+import com.rudder.ui.fragment.search.SearchPostDisplayFragment
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_comment.*
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private lateinit var communityDisplayFragment: CommunityDisplayFragment
     private lateinit var myPageDisplayFragment: MyPageDisplayFragment
     private lateinit var addPostFragment: AddPostFragment
-    private lateinit var searchPostFragment: SearchPostFragment
+    private lateinit var searchPostDisplayFragment: SearchPostDisplayFragment
     lateinit var showPostFragment: ShowPostFragment
     lateinit var communityPostBottomSheetFragment: CommunityPostBottomSheetFragment
     lateinit var communityCommentBottomSheetFragment: CommunityCommentBottomSheetFragment
@@ -209,7 +209,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         contactUsFragment = ContactUsFragment()
         editPostFragment = EditPostFragment(viewModel)
         categorySelectMyPageFragment = CategorySelectMyPageFragment()
-        searchPostFragment = SearchPostFragment()
+        searchPostDisplayFragment = SearchPostDisplayFragment()
 
 
 
@@ -318,8 +318,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 fragmentShowHide.hideFragment(communityDisplayFragment)
                 //fragmentShowHide.hideFragment(mainDisplayContainerView)
 
-//                fragmentShowHide.addFragment(searchPostFragment, R.id.mainDisplay, "searchPost")
-//                fragmentShowHide.showFragment(searchPostFragment, R.id.mainDisplay)
+//                fragmentShowHide.addFragment(searchPostDisplayFragment, R.id.mainDisplay, "searchPost")
+//                fragmentShowHide.showFragment(searchPostDisplayFragment, R.id.mainDisplay)
 
                 //navDisplayController.navigate(R.id.action_navigation_community_to_main_fragment_navigation_graph)
             }
@@ -511,7 +511,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 //    fun swapMainBottomBar() {
 //        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-//        if(searchPostFragment.isVisible){
+//        if(searchPostDisplayFragment.isVisible){
 //            fragmentShowHide.hideAllFragment(R.id.mainBottomBar)
 //        }else{
 //            fragmentShowHide.showFragment(mainBottomBarFragment, R.id.mainBottomBar)

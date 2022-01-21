@@ -74,9 +74,9 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         val percentDivide : PercentDivide = PercentDivideImpl(divideChildTarget,displaySize,0.4f)
         percentDivide.divideChildSameRatio()
 
-        childFragmentManager.beginTransaction()
-            .add(R.id.myPageHeader, MyPageHeaderFragment())
-            .commit()
+//        childFragmentManager.beginTransaction()
+//            .add(R.id.myPageHeader, MyPageHeaderFragment())
+//            .commit()
 
         viewModel.myProfileImageUrl.value?.let {
             viewModel.getMyProfileImageUrl()
