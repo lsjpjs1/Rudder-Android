@@ -17,10 +17,7 @@ import com.rudder.viewModel.MainViewModel
 class CommunityFragment: Fragment() {
 
     private val viewModel : MainViewModel by activityViewModels()
-
     private lateinit var community : FragmentCommunityBinding
-
-
 
     companion object{
         const val TAG = "CommunityFragment"
@@ -36,9 +33,8 @@ class CommunityFragment: Fragment() {
         val community = DataBindingUtil.inflate<FragmentCommunityBinding>(inflater,R.layout.fragment_community,container,false)
 
         childFragmentManager.beginTransaction()
-            .add(R.id.communityDisplay, CommunityDisplayFragment(viewModel))
-            //.add(R.id.communityHeader, CommunityHeaderFragment())
-            .add(R.id.communitySelector, CommunitySelectorFragment())
+            //.add(R.id.communityDisplay, CommunityDisplayFragment(viewModel))
+            //.add(R.id.communityContentsFrameLayout, CommunityDisplayFragment())
             .commit()
 
         community.mainVM = viewModel

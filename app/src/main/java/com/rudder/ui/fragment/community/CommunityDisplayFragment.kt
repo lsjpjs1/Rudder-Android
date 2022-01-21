@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +21,7 @@ import com.rudder.ui.fragment.comment.AddCommentFragment
 import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
 
-class CommunityDisplayFragment(val viewModel: MainViewModel): Fragment(),CustomOnclickListener {
+class CommunityDisplayFragment(): Fragment(),CustomOnclickListener {
 
 
     private val lazyContext by lazy {
@@ -29,6 +30,8 @@ class CommunityDisplayFragment(val viewModel: MainViewModel): Fragment(),CustomO
     private val parentActivity by lazy {
         activity as MainActivity
     }
+    private val viewModel : MainViewModel by activityViewModels()
+
 
 
     override fun onCreateView(
@@ -37,6 +40,8 @@ class CommunityDisplayFragment(val viewModel: MainViewModel): Fragment(),CustomO
         savedInstanceState: Bundle?
     ): View? {
         val communityDisplay = DataBindingUtil.inflate<FragmentCommunityDisplayBinding>(inflater,R.layout.fragment_community_display,container,false)
+        communityDisplay.mainVM = viewModel
+
         val adapter = MainPostPreviewAdapter(this,lazyContext, viewModel)
         adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
         communityDisplay.lifecycleOwner = this

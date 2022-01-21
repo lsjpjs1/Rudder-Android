@@ -27,19 +27,6 @@
         </FrameLayout>
 
 
-        <androidx.fragment.app.FragmentContainerView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/mainHeader"
-            android:background="@color/teal_700"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            app:defaultNavHost="true"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="@dimen/main_header_height"
-            >
-
-        </androidx.fragment.app.FragmentContainerView>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mainDisplayContainerView"
@@ -48,7 +35,7 @@
             app:defaultNavHost="true"
             android:background="@color/teal_200"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            app:layout_constraintTop_toBottomOf="@+id/mainHeader"
+            app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/main_middle_height"
             />

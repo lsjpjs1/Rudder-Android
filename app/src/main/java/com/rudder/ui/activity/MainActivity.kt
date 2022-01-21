@@ -96,13 +96,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         navHostFragment.findNavController()
     }
 
-    private val navHeaderController: NavController by lazy {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainHeader)
-            ?: throw IllegalStateException("the container MUST contain a fragment at least one")
-        navHostFragment.findNavController()
-    }
-
-
 
     companion object {
         private const val KEY_SELECTED_TAB = "selectedTab"
@@ -149,20 +142,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
         navDisplayController.navigatorProvider.addNavigator(FragmentNavigator(this,supportFragmentManager,R.id.mainDisplayContainerView))
-
-//
-//        navHeaderController.apply {
-//            navigatorProvider.addNavigator(
-//                CustomBottomNavigatorTmp(
-//                    R.id.mainHeader,
-//                    supportFragmentManager
-//                )
-//            )
-//            // set a graph at code not XML, because add a custom navigator
-//            setGraph(R.navigation.main_header_navigation_graph)
-//
-//            mainBottomNavigation.setupWithNavController(this)
-//        }
 
 
 

@@ -61,8 +61,8 @@
     <item name="add_comment_tail_width" type="dimen" format="float">0.25</item>
 
 
-    <item name="main_header_height" type="dimen" format="float">0.07</item>
-    <item name="main_middle_height" type="dimen" format="float">0.86</item>
+<!--    <item name="main_header_height" type="dimen" format="float">0.07</item>  deprecated-->
+    <item name="main_middle_height" type="dimen" format="float">0.93</item>
     <item name="main_bottom_height" type="dimen" format="float">0.07</item>
 
 

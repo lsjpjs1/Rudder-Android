@@ -56,7 +56,6 @@ class CustomBottomNavigator(
             )
             when {
                 current == null -> { // 처음 fragment 생성될 때
-                    Log.d("hello_null","${current}")
                     add(fragmentContainerId, fragment, tag)
                 }
                 current.tag == "SearchPostFragment" -> {
