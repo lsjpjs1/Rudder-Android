@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     lateinit var addCommentFragment: AddCommentFragment
     private lateinit var communityDisplayFragment: CommunityDisplayFragment
     private lateinit var myPageDisplayFragment: MyPageDisplayFragment
-    private lateinit var addPostFragment: AddPostFragment
+    private lateinit var addPostDisplayFragment: AddPostDisplayFragment
     private lateinit var searchPostDisplayFragment: SearchPostDisplayFragment
     lateinit var showPostFragment: ShowPostFragment
     lateinit var communityPostBottomSheetFragment: CommunityPostBottomSheetFragment
@@ -196,7 +196,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         mainBottomBarFragment = MainBottomBarFragment(this)
         communityDisplayFragment = CommunityDisplayFragment()
         myPageDisplayFragment = MyPageDisplayFragment()
-        addPostFragment = AddPostFragment()
+        addPostDisplayFragment = AddPostDisplayFragment()
 
         showPostFragment = ShowPostFragment(viewModel)
         addCommentFragment = AddCommentFragment(viewModel)
@@ -250,14 +250,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         })
 
 
-
-
-
-
-
-
-
-
         viewModel.isClubJoinRequest.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
                 if (!clubJoinRequestDialogFragment.isAdded)
@@ -267,7 +259,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                     )
             }
         })
-
 
 
 //
@@ -290,26 +281,20 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 //            }
 //        })
 
-        viewModel.isAddPostClick.observe(this, Observer {
-            if (it.getContentIfNotHandled()!!) {
 
-                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                fragmentShowHide.addToBackStack()
-
-                fragmentShowHide.hideFragment(mainBottomBarFragment)
-                fragmentShowHide.hideFragment(communityDisplayFragment)
-
-
-                fragmentShowHide.addFragment(addPostFragment, R.id.mainDisplayContainerView, "addPost")
-                fragmentShowHide.showFragment(addPostFragment, R.id.mainDisplayContainerView)
-
-
-
-
-
-                viewModel.clearAddPost()
-            }
-        })
+//        viewModel.isAddPostClick.observe(this, Observer {
+//            if (it.getContentIfNotHandled()!!) {
+//
+//                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+//                fragmentShowHide.addToBackStack()
+//                fragmentShowHide.hideFragment(mainBottomBarFragment)
+//                fragmentShowHide.hideFragment(communityDisplayFragment)
+//                fragmentShowHide.addFragment(addPostDisplayFragment, R.id.mainDisplayContainerView, "addPost")
+//                fragmentShowHide.showFragment(addPostDisplayFragment, R.id.mainDisplayContainerView)
+//
+//                viewModel.clearAddPost()
+//            }
+//        })
 
         viewModel.isSearchPostClick.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {

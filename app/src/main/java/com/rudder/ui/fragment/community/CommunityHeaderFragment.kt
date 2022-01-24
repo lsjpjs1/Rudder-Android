@@ -38,10 +38,16 @@ class CommunityHeaderFragment : Fragment() {
 //            }
 //        })
 
-        header.imageView5.setOnClickListener { view ->
-            Log.d("test","test")
+        header.constraintLayout13.setOnClickListener { view -> // search button click
             view.findNavController().navigate(R.id.action_navigation_community_to_main_fragment_navigation_graph)
         }
+
+
+        header.constraintLayout12.setOnClickListener { view -> // search button click
+            view.findNavController().navigate(R.id.action_navigation_community_to_navigation_add_post)
+        }
+
+
 
         return header.root
     }

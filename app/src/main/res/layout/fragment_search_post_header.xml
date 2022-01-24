@@ -19,35 +19,44 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="@dimen/width_default">
+
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/search_post_header_x"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:layout_constraintStart_toEndOf="@id/searchPostSearchView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent="@dimen/add_post_header_x_width"
             tools:layout_editor_absoluteY="0dp"
-            android:onClick="@{()->mainVM.clickBack()}">
+
+            >
 
             <ImageView
                 android:id="@+id/imageView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
 
                 app:srcCompat="@drawable/ic_baseline_close_24"
                 app:tint="@color/black" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <SearchView
             android:id="@+id/searchPostSearchView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintWidth_percent="0.85"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:iconifiedByDefault="false"
             android:queryHint="Search"
+            android:queryBackground=""
             />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

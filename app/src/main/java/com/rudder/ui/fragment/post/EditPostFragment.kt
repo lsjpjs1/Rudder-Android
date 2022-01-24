@@ -8,27 +8,26 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.rudder.R
-import com.rudder.databinding.FragmentAddPostBinding
+import com.rudder.databinding.FragmentAddPostDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.fragment_add_post_display.*
-import kotlinx.android.synthetic.main.fragment_add_post_display.view.*
 
 class EditPostFragment(val viewModel: MainViewModel) : Fragment() {
     private val parentActivity : MainActivity by lazy { activity as MainActivity }
-    lateinit var addPostDisplayFragment: AddPostDisplayFragment
+    lateinit var addPostContentsFragment: AddPostContentsFragment
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
 
-        val fragmentBinding= DataBindingUtil.inflate<FragmentAddPostBinding>(inflater,R.layout.fragment_add_post,container,false)
-        addPostDisplayFragment = AddPostDisplayFragment(viewModel,true)
+        val fragmentBinding = DataBindingUtil.inflate<FragmentAddPostDisplayBinding>(inflater,R.layout.fragment_add_post_display,container,false)
+        addPostContentsFragment = AddPostContentsFragment(viewModel,true)
 
         childFragmentManager.beginTransaction()
-            .add(R.id.addPostHeader, EditPostHeaderFragment(viewModel))
-            .add(R.id.addPostDisplay, addPostDisplayFragment)
+            //.add(R.id.addPostHeader, EditPostHeaderFragment(viewModel))
+            //.add(R.id.addPostDisplay, addPostContentsFragment)
             .commit()
 
         fragmentBinding.mainVM=viewModel

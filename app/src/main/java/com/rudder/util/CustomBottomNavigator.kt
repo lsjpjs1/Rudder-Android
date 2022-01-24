@@ -15,7 +15,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import com.rudder.R
-import com.rudder.data.MainAddTab
+import com.rudder.data.MainAddTabObject
 import com.rudder.data.MainDisplayTab
 import com.rudder.data.otherTab
 
@@ -58,7 +58,7 @@ class CustomBottomNavigator(
                 current == null -> { // 처음 fragment 생성될 때
                     add(fragmentContainerId, fragment, tag)
                 }
-                current.tag in MainAddTab.addTabFragmentTagList -> {
+                current.tag in MainAddTabObject.addTabFragmentTagList -> {
                     add(fragmentContainerId, fragment, tag)
                 }
                 else -> {
