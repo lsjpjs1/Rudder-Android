@@ -2,7 +2,6 @@ package com.rudder.ui.activity
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -16,10 +15,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
-import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -50,10 +46,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_comment.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
-import kotlinx.android.synthetic.main.fragment_show_post.*
 import kotlinx.android.synthetic.main.post_comments.*
 import androidx.navigation.fragment.findNavController
-import com.rudder.data.DisplaySize
 import com.rudder.data.MainDisplayTab
 import com.rudder.util.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
@@ -67,7 +61,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private lateinit var myPageDisplayFragment: MyPageDisplayFragment
     private lateinit var addPostDisplayFragment: AddPostDisplayFragment
     private lateinit var searchPostDisplayFragment: SearchPostDisplayFragment
-    lateinit var showPostFragment: ShowPostFragment
+    lateinit var showPostContentsFragment: ShowPostContentsFragment
     lateinit var communityPostBottomSheetFragment: CommunityPostBottomSheetFragment
     lateinit var communityCommentBottomSheetFragment: CommunityCommentBottomSheetFragment
     lateinit var communityPostReportFragment: CommunityPostReportFragment
@@ -205,7 +199,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         myPageDisplayFragment = MyPageDisplayFragment()
         addPostDisplayFragment = AddPostDisplayFragment()
 
-        showPostFragment = ShowPostFragment(viewModel)
+        showPostContentsFragment = ShowPostContentsFragment()
         addCommentFragment = AddCommentFragment(viewModel)
         communityPostBottomSheetFragment = CommunityPostBottomSheetFragment(viewModel)
         communityCommentBottomSheetFragment = CommunityCommentBottomSheetFragment(viewModel)
@@ -470,7 +464,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 //                //changeColorMyPage()
 //            }
 //
-//            if (showPostFragment.isVisible) {
+//            if (showPostContentsFragment.isVisible) {
 //                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
 //                //fragmentShowHide.hideFragment(mainBottomBarFragment)
 //                //fragmentShowHide.showFragment(addCommentFragment, R.id.mainBottomBar)
@@ -536,19 +530,19 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         viewModel.setSelectedPostPosition(position)
     }
 
-    fun showPost(viewModel: MainViewModel,showPostFragment: ShowPostFragment) {
+    fun showPost(viewModel: MainViewModel, showPostContentsFragment: ShowPostContentsFragment) {
         viewModel.isLikePost()
-        this.showPostFragment = showPostFragment
+        this.showPostContentsFragment = showPostContentsFragment
 
         parentCommentInfoClose.setOnClickListener {
-            this.showPostFragment.closeParentCommentInfo()
+            this.showPostContentsFragment.closeParentCommentInfo()
         }
         Log.d("has",parentCommentInfoClose.hasOnClickListeners().toString())
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
 
         fragmentShowHide.addToBackStack()
-        fragmentShowHide.addFragment(this.showPostFragment, R.id.mainDisplay, "showPost")
-        fragmentShowHide.showFragment(this.showPostFragment, R.id.mainDisplay)
+        fragmentShowHide.addFragment(this.showPostContentsFragment, R.id.mainDisplay, "showPost")
+        fragmentShowHide.showFragment(this.showPostContentsFragment, R.id.mainDisplay)
     }
 
 

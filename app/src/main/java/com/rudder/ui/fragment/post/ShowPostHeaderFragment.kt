@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.rudder.R
 import com.rudder.databinding.FragmentShowPostHeaderBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 
-class ShowPostHeaderFragment(val viewModel: MainViewModel) : Fragment() {
+class ShowPostHeaderFragment() : Fragment() {
 
 
     override fun onCreateView(
@@ -21,16 +22,22 @@ class ShowPostHeaderFragment(val viewModel: MainViewModel) : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val header = DataBindingUtil.inflate<FragmentShowPostHeaderBinding>(inflater,R.layout.fragment_show_post_header,container,false)
-        header.mainVM = viewModel
+        //header.mainVM = viewModel
         header.lifecycleOwner = this
-        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                if ((activity as MainActivity).validateBack("showPost")){
-                    (activity as MainActivity).onBackPressed()
-                }
-            }
 
-        })
+//        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
+//            it?.let {
+//                if ((activity as MainActivity).validateBack("showPost")){
+//                    (activity as MainActivity).onBackPressed()
+//                }
+//            }
+//
+//        })
+        header.constraintLayout13.setOnClickListener { view ->
+            view.findNavController().popBackStack()
+        }
+
+
         return header.root
     }
 }

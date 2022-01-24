@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.community
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +41,7 @@ class CommunityDisplayFragment: Fragment() {
 //                }
 //            }
 //        })
-
+        Log.d("oncreateview_community","oncreateview_community_display")
 
         return community.root
 

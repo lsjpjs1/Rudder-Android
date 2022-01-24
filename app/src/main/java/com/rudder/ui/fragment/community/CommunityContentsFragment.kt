@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.community
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
@@ -88,7 +90,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
                     viewModel.getPosts()
-                    if (parentActivity.showPostFragment.isVisible){
+                    if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
                 }
@@ -106,7 +108,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
                     viewModel.getPosts()
-                    if (parentActivity.showPostFragment.isVisible){
+                    if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
                 }
@@ -145,8 +147,12 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
     }
 
     override fun onClick(view: View, position: Int) {
+        Log.d("communiContent_onclick","communityContent_onclick")
         (activity as MainActivity).changeSelectedPostPosition(position)
-        //(activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
+        //(activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
+
+        view.findNavController().navigate(R.id.action_navigation_community_to_navigation_show_post)
+
         //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
 //        if(!viewModel.isAlreadyReadPost()){
 //            viewModel.addPostViewCount()

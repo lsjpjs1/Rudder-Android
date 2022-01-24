@@ -7,27 +7,26 @@ import android.util.TypedValue
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
-import com.rudder.databinding.FragmentShowPostBinding
+import com.rudder.databinding.FragmentShowPostContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.DisplayImagesAdapter
 import com.rudder.ui.adapter.PostCommentsAdapter
 import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
-
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_show_post.*
+import kotlinx.android.synthetic.main.fragment_show_post_contents.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
 
-class ShowPostFragment(val viewModel: MainViewModel): Fragment() {
+class ShowPostContentsFragment(): Fragment() {
     private val lazyContext by lazy {
         requireContext()
     }
@@ -35,12 +34,16 @@ class ShowPostFragment(val viewModel: MainViewModel): Fragment() {
         activity as MainActivity
     }
 
+
+    private val viewModel : MainViewModel by activityViewModels()
+
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val fragmentBinding= DataBindingUtil.inflate<FragmentShowPostBinding>(inflater,R.layout.fragment_show_post,container,false)
+        val fragmentBinding= DataBindingUtil.inflate<FragmentShowPostContentsBinding>(inflater,R.layout.fragment_show_post_contents,container,false)
         val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel)
         fragmentBinding.commentDisplayRV.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
@@ -123,7 +126,7 @@ class ShowPostFragment(val viewModel: MainViewModel): Fragment() {
 
 
         childFragmentManager.beginTransaction()
-                .add(R.id.showPostHeader, ShowPostHeaderFragment(viewModel))
+                //.add(R.id.showPostHeader, ShowPostHeaderFragment(viewModel))
                 .commit()
 
 

@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.rudder.R
 import com.rudder.databinding.FragmentAddPostHeaderBinding
 import com.rudder.ui.activity.MainActivity
@@ -31,6 +32,12 @@ class AddPostHeaderFragment : Fragment() {
                 }
             }
         })
+
+
+        header.addPostHeaderX.setOnClickListener { view ->
+            view.findNavController().popBackStack()
+        }
+
         return header.root
     }
 }

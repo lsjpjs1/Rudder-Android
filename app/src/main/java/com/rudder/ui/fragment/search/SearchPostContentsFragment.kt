@@ -17,7 +17,6 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.MainPostPreviewAdapter
 import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
 import com.rudder.util.CustomOnclickListener
-import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.SearchViewModel
 
 class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
@@ -84,7 +83,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
                     //viewModel.searchPost(false)
-                    if (parentActivity.showPostFragment.isVisible){
+                    if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
                 }
@@ -102,7 +101,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
                     //viewModel.searchPost(false)
-                    if (parentActivity.showPostFragment.isVisible){
+                    if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
                 }
@@ -126,9 +125,9 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
 
     override fun onClick(view: View, position: Int) {
         viewModel.setSelectedPostPosition(position)
-//        (activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
+//        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
 
-//        (activity as MainActivity).showPost(viewModel, ShowPostFragment(viewModel))
+//        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
         //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
 //        if(!viewModel.isAlreadyReadPost()){
 //            viewModel.addPostViewCount()
