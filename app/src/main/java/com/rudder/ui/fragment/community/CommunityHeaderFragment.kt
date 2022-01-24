@@ -40,7 +40,9 @@ class CommunityHeaderFragment : Fragment() {
 
         header.constraintLayout13.setOnClickListener { view -> // search button click
             view.findNavController().navigate(R.id.action_navigation_community_to_main_fragment_navigation_graph)
+            (activity as MainActivity).mainBottomNavigationDisappear()
         }
+
 
 
         header.constraintLayout12.setOnClickListener { view -> // search button click

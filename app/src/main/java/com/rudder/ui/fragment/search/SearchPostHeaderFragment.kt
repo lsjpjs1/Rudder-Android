@@ -34,7 +34,7 @@ class SearchPostHeaderFragment : Fragment() {
         header.searchPostSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let{
-                    //viewModel.searchPost(false)
+                    viewModel.searchPost(false)
                 }
                 return true
             }
@@ -59,6 +59,7 @@ class SearchPostHeaderFragment : Fragment() {
 
         header.searchPostHeaderX.setOnClickListener { view ->
             view.findNavController().popBackStack()
+            (activity as MainActivity).mainBottomNavigationAppear()
         }
 
 

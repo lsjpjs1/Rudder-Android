@@ -32,7 +32,7 @@
                 android:id="@+id/searchPostDisplayFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/white"
+                android:background="@color/light_grey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="@dimen/add_post_display_height">

@@ -41,10 +41,21 @@
             />
 
 
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/shadow"
+            app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height" />
+
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/main_bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHeight_default="percent"
@@ -131,16 +142,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@drawable/shadow"
-            app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height" />
-
-
 <!--        <FrameLayout-->
 <!--            android:id="@+id/mainBottomBar"-->
 <!--            android:layout_width="match_parent"-->
@@ -152,9 +153,6 @@
 <!--            tools:layout_editor_absoluteX="0dp">-->
 
 <!--        </FrameLayout>-->
-
-
-
 
         <ProgressBar
             android:id="@+id/progressBar"
