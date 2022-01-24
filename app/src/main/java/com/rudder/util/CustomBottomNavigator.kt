@@ -15,7 +15,8 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import com.rudder.R
-import com.rudder.data.MainBottomTab
+import com.rudder.data.MainAddTab
+import com.rudder.data.MainDisplayTab
 import com.rudder.data.otherTab
 
 import java.util.*
@@ -57,10 +58,7 @@ class CustomBottomNavigator(
                 current == null -> { // 처음 fragment 생성될 때
                     add(fragmentContainerId, fragment, tag)
                 }
-                current.tag == "SearchPostDisplayFragment" -> {
-                    Log.d("hello_search","hello")
-
-                    //replace(fragmentContainerId, fragment)
+                current.tag in MainAddTab.addTabFragmentTagList -> {
                     add(fragmentContainerId, fragment, tag)
                 }
                 else -> {
@@ -88,7 +86,7 @@ class CustomBottomNavigator(
     }
 
 //    private fun FragmentTransaction.replaceMy(tag: String) {
-//        val others = MainBottomTab.otherTab(exceptTag = tag)
+//        val others = MainDisplayTab.otherTab(exceptTag = tag)
 //            .mapNotNull {
 //                fragmentManager.findFragmentByTag(it.tag)
 //            }
@@ -99,7 +97,7 @@ class CustomBottomNavigator(
 
 
     private fun FragmentTransaction.hideOthers(tag: String) {
-        val others = MainBottomTab.otherTab(exceptTag = tag)
+        val others = MainDisplayTab.otherTab(exceptTag = tag)
             .mapNotNull {
                 fragmentManager.findFragmentByTag(it.tag)
             }

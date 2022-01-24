@@ -48,7 +48,7 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.fragment_show_post.*
 import kotlinx.android.synthetic.main.post_comments.*
 import androidx.navigation.fragment.findNavController
-import com.rudder.data.MainBottomTab
+import com.rudder.data.MainDisplayTab
 import com.rudder.util.*
 
 
@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         savedInstanceState?.getInt(KEY_SELECTED_TAB)
             ?.let {
-                MainBottomTab.from(it)
+                MainDisplayTab.from(it)
             }
             ?.itemId
             ?.let {

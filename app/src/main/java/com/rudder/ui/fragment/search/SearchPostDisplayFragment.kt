@@ -16,6 +16,9 @@ import com.rudder.viewModel.SearchViewModel
 class SearchPostDisplayFragment : Fragment() {
     private lateinit var callback: OnBackPressedCallback
     private val viewModel: SearchViewModel by activityViewModels()
+    companion object{
+        const val TAG = "SearchPostDisplayFragment"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,10 +30,6 @@ class SearchPostDisplayFragment : Fragment() {
             R.layout.fragment_search_post_display,container,false)
 
         fragmentBinding.lifecycleOwner = this
-//        childFragmentManager.beginTransaction()
-//            .add(R.id.searchPostHeader, SearchPostHeaderFragment(viewModel))
-//            .add(R.id.searchPostDisplay, SearchPostContentsFragment(viewModel))
-//            .commit()
 
         Log.d("oncreateview_search","oncreateview_search")
         return fragmentBinding.root
