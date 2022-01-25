@@ -254,8 +254,9 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:layout_marginTop="15dp"
                                 android:background="@drawable/my_page_button_style"
-                                android:onClick="@{()->mainVM.clickCategorySelection()}"
                                 app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage4">
+<!--                                android:onClick="@{()->mainVM.clickCategorySelection()}"-->
+
 
                                 <TextView
                                     android:id="@+id/textView6"

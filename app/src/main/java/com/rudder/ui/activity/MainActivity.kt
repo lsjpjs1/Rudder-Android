@@ -15,7 +15,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -634,7 +637,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun mainBottomNavigationDisappear() {
 
-        binding.mainBottomNavigation.visibility = View.GONE
+        binding.mainBottomNavigation.visibility = View.INVISIBLE
         val lp = binding.mainDisplayContainerView.layoutParams
         lp.height = ViewGroup.LayoutParams.MATCH_PARENT
         binding.mainDisplayContainerView.layoutParams = lp
@@ -651,12 +654,12 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 //        binding.mainDisplayContainerView.layoutParams = lp
 
 
-//        binding.mainBottomNavigation.updateLayoutParams<ConstraintLayout.LayoutParams> {
-//            matchConstraintPercentHeight = 0.07f
+//        binding.mainDisplayContainerView.updateLayoutParams<ConstraintLayout.LayoutParams> {
+//            matchConstraintPercentHeight = 0.1f
 //        }
 
-//        val set = ConstraintSet()
-//        set.constrainPercentHeight(R.id.mainDisplayContainerView, 0.5f)
+        val set = ConstraintSet()
+        set.constrainPercentHeight(R.id.mainDisplayContainerView, 0.5f)
 
 
 

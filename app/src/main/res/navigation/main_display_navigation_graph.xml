@@ -41,7 +41,12 @@
         android:id="@+id/navigation_mypage"
         android:name="com.rudder.ui.fragment.mypage.MyPageDisplayFragment"
         android:label="@string/my_page_title"
-        tools:layout="@layout/fragment_my_page_display" />
+        tools:layout="@layout/fragment_my_page_display" >
+        <action
+            android:id="@+id/action_navigation_mypage_to_navigation_category_select_my_page"
+            app:destination="@id/navigation_category_select_my_page"
+            app:popUpTo="@id/navigation_mypage" />
+    </bottom>
 
 
     <navigation
@@ -70,6 +75,14 @@
         android:name="com.rudder.ui.fragment.post.ShowPostDisplayFragment"
         android:label="ShowPostDisplayFragment"
         tools:layout="@layout/fragment_show_post_display"
+        />
+
+
+    <bottom
+        android:id="@+id/navigation_category_select_my_page"
+        android:name="com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment"
+        android:label="ShowPostDisplayFragment"
+        tools:layout="@layout/fragment_my_page_category_select"
         />
 
 

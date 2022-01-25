@@ -3,6 +3,7 @@ package com.rudder.data
 import android.util.Log
 import com.rudder.R
 import com.rudder.ui.fragment.community.CommunityDisplayFragment
+import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.post.AddPostDisplayFragment
 import com.rudder.ui.fragment.post.ShowPostDisplayFragment
@@ -19,7 +20,9 @@ enum class MainDisplayTab( // Just, show, hide
     MYPAGE(R.id.navigation_mypage, MyPageDisplayFragment.TAG),
     SEARCH(R.id.navigation_search, SearchPostDisplayFragment.TAG),
     ADDPOST(R.id.navigation_add_post, AddPostDisplayFragment.TAG),
-    SHOWPOST(R.id.navigation_show_post, ShowPostDisplayFragment.TAG);
+    SHOWPOST(R.id.navigation_show_post, ShowPostDisplayFragment.TAG),
+    CATEGORYSELECTMYPAGE(R.id.navigation_category_select_my_page, CategorySelectMyPageFragment.TAG);
+
 
 
     companion object {

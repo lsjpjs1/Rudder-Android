@@ -52,16 +52,16 @@ abstract class PostPreviewAdapter<out VM>(
     ): PostPreviewAdapter<out VM>.CustomViewHolder {
         val bind = DataBindingUtil.inflate<PostPreviewBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.post_preview,
+            R.layout.post_preview_test,
             parent,
             false
         )
-        val params = bind.root.layoutParams
-        val typedValue = TypedValue()
-        context.resources.getValue(R.dimen.post_preview_height, typedValue, true)
-        val heightRatio = typedValue.float
-        params.height = (parent.height * heightRatio).toInt() // 아이템뷰 높이 고정값으로 되어있는 것 상대값으로 수정해야함
-        bind.root.layoutParams = params
+//        val params = bind.root.layoutParams
+//        val typedValue = TypedValue()
+//        context.resources.getValue(R.dimen.post_preview_height, typedValue, true)
+//        val heightRatio = typedValue.float
+//        params.height = (parent.height * heightRatio).toInt() // 아이템뷰 높이 고정값으로 되어있는 것 상대값으로 수정해야함
+//        bind.root.layoutParams = params
         return CustomViewHolder(bind)
     }
 

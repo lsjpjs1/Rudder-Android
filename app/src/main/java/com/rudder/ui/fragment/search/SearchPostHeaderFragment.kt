@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.search
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,10 @@ class SearchPostHeaderFragment : Fragment() {
             R.layout.fragment_search_post_header,container,false)
         header.mainVM = viewModel
         header.lifecycleOwner = this
+
+        header.searchPostSearchView.gravity = Gravity.RIGHT
+
+
         header.searchPostSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let{

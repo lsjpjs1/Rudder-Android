@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
@@ -115,13 +116,15 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
             val alertDialog: AlertDialog = builder.create()
             alertDialog.show()
         }
+
+
+        myPageBinding.constraintLayoutMyPage6.setOnClickListener { view -> // search button click
+            view.findNavController().navigate(R.id.action_navigation_mypage_to_navigation_category_select_my_page)
+            //(activity as MainActivity).mainBottomNavigationDisappear()
+        }
+
+
         return myPageBinding!!.root
-
-
-
-
-
-
     }
 
     fun showEditNicknameDialog(){
