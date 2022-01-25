@@ -381,7 +381,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                     alertDialog.show()
                     App.prefs.setValue("isNoticeAlreadyPopUp", "true")
                 }
-
             }
         })
 
@@ -658,8 +657,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 //            matchConstraintPercentHeight = 0.1f
 //        }
 
-        val set = ConstraintSet()
-        set.constrainPercentHeight(R.id.mainDisplayContainerView, 0.5f)
+//        val set = ConstraintSet()
+//        set.constrainPercentHeight(R.id.mainDisplayContainerView, 0.5f)
 
 
 

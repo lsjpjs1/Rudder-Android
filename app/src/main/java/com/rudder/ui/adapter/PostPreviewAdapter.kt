@@ -52,7 +52,7 @@ abstract class PostPreviewAdapter<out VM>(
     ): PostPreviewAdapter<out VM>.CustomViewHolder {
         val bind = DataBindingUtil.inflate<PostPreviewBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.post_preview_test,
+            R.layout.post_preview,
             parent,
             false
         )
