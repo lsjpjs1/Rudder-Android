@@ -486,6 +486,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 //    }
 
 
+
     fun getDisplaySize(): ArrayList<Int> {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val windowMetrics = this@MainActivity.windowManager.currentWindowMetrics
@@ -656,10 +657,10 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         Log.d("funTmp2","funTmp2")
         binding.mainBottomNavigation.visibility = View.VISIBLE
 
-//        val displaySizeHeight = getDisplaySize()[1]
-//        val lp = binding.mainDisplayContainerView.layoutParams
-//        lp.height = (displaySizeHeight * 0.93).toInt()
-//        binding.mainDisplayContainerView.layoutParams = lp
+        val displaySizeHeight = getDisplaySize()[1]
+        val lp = binding.mainDisplayContainerView.layoutParams
+        lp.height = (displaySizeHeight * 0.93).toInt()
+        binding.mainDisplayContainerView.layoutParams = lp
 
 
 //        binding.mainDisplayContainerView.updateLayoutParams<ConstraintLayout.LayoutParams> {
