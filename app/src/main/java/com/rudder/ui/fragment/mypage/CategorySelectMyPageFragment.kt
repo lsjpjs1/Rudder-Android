@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.rudder.R
@@ -29,6 +30,12 @@ class CategorySelectMyPageFragment : Fragment() {
     private val lazyContext by lazy {
         requireContext()
     }
+
+    companion object{
+        const val TAG = "CategorySelectMyPageFragment"
+    }
+
+
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentMyPageCategorySelectBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_my_page_category_select,container,false)
@@ -65,6 +72,11 @@ class CategorySelectMyPageFragment : Fragment() {
                 }
             }
         })
+
+        fragmentMyPageCategorySelectBinding.categoryBackBtn.setOnClickListener { view ->
+            view.findNavController().popBackStack()
+        }
+
 
         return fragmentMyPageCategorySelectBinding.root
     }

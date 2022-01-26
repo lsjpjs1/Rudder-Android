@@ -28,24 +28,14 @@
             layout="@layout/progressbar"/>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/showPostHeader"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="@dimen/show_post_header_height"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/showPostBody"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
 
             app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="@dimen/show_post_body_height"
-            app:layout_constraintTop_toBottomOf="@+id/showPostHeader">
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <androidx.core.widget.NestedScrollView
@@ -78,23 +68,21 @@
 
 
                             <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/showPostHeadImageCL"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:id="@+id/showPostHeadImageCL"
-                                app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                >
+                                app:layout_constraintTop_toTopOf="parent">
 
                                 <ImageView
                                     android:id="@+id/showPostImageView"
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
-                                    app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    >
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
 
                                 </ImageView>
 
@@ -103,31 +91,31 @@
 
 
                             <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/showPostHeadImageCL1"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
-                                app:layout_constraintWidth_default="percent"
-                                app:layout_constraintWidth_percent="0.02"
                                 app:layout_constraintHeight_default="percent"
                                 app:layout_constraintHeight_percent="0.8"
-
-                                android:id="@+id/showPostHeadImageCL1"
+                                app:layout_constraintStart_toEndOf="@+id/showPostHeadImageCL"
 
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/showPostHeadImageCL">
+
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="0.02">
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                             <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/showPostHeadCategoryCL"
                                 android:layout_width="wrap_content"
                                 android:layout_height="0dp"
                                 app:layout_constraintHeight_default="percent"
+
                                 app:layout_constraintHeight_percent="0.4"
 
-                                android:id="@+id/showPostHeadCategoryCL"
-
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/showPostHeadImageCL1">
+                                app:layout_constraintStart_toEndOf="@+id/showPostHeadImageCL1"
+                                app:layout_constraintTop_toTopOf="parent">
 
                                 <TextView
                                     android:id="@+id/showPostHeadCategoryTV"
@@ -150,54 +138,54 @@
                                 app:layout_constraintHeight_default="percent"
                                 app:layout_constraintHeight_percent="0.4"
 
-                                app:layout_constraintTop_toBottomOf="@+id/showPostHeadCategoryCL"
-                                app:layout_constraintStart_toEndOf="@+id/showPostHeadImageCL1">
+                                app:layout_constraintStart_toEndOf="@+id/showPostHeadImageCL1"
+                                app:layout_constraintTop_toBottomOf="@+id/showPostHeadCategoryCL">
 
                                 <TextView
                                     android:id="@+id/textView6"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/sf_pro_text_bold"
                                     android:text="@{post.userId}"
                                     android:textColor="@color/black"
-                                    android:fontFamily="@font/sf_pro_text_bold"
                                     android:textSize="14sp"
-                                    app:layout_constraintVertical_bias="0.1"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="0.1" />
 
-                                    <TextView
-                                        android:id="@+id/postPreviewHeadPostTimeTV"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@{timeago}"
-                                        android:textSize="12sp"
-                                        android:layout_marginLeft="7dp"
-                                        app:layout_constraintVertical_bias="0.1"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintLeft_toRightOf="@id/textView6"
-                                        app:layout_constraintTop_toTopOf="parent" />
+                                <TextView
+                                    android:id="@+id/postPreviewHeadPostTimeTV"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="7dp"
+                                    android:text="@{timeago}"
+                                    android:textSize="12sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toRightOf="@id/textView6"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintVertical_bias="0.1" />
 
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
+
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                app:layout_constraintWidth_default="percent"
-                                app:layout_constraintWidth_percent="0.1"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                >
+                                app:layout_constraintWidth_default="percent"
+                                app:layout_constraintWidth_percent="0.1">
 
                                 <ImageView
                                     android:id="@+id/postMoreImageView"
                                     android:layout_width="24dp"
                                     android:layout_height="24dp"
-                                    app:srcCompat="@drawable/ic_baseline_more_horiz_24"
                                     android:onClick="@{()->mainVM.clickPostMore(position)}"
+                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintBottom_toBottomOf="parent"/>
+                                    app:srcCompat="@drawable/ic_baseline_more_horiz_24" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </androidx.constraintlayout.widget.ConstraintLayout>

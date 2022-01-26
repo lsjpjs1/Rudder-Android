@@ -10,26 +10,30 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
-import com.rudder.databinding.FragmentPostMessageBinding
+import com.rudder.databinding.FragmentPostMessageDisplayBinding
 import com.rudder.ui.activity.MainActivityInterface
 import com.rudder.ui.adapter.PostMessageAdapter
 import com.rudder.viewModel.PostMessageViewModel
 
-class PostMessageFragment : Fragment() {
+class PostMessageDisplayFragment : Fragment() {
 
-    private val viewModel: PostMessageViewModel by viewModels()
+    private val viewModel : PostMessageViewModel by viewModels()
     private val lazyContext by lazy {
         context
     }
 
+    companion object{
+        const val TAG = "PostMessageDisplayFragment"
+    }
+
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
-        val fragmentBinding = DataBindingUtil.inflate<FragmentPostMessageBinding>(inflater,
-                R.layout.fragment_post_message, container, false)
+        val fragmentBinding= DataBindingUtil.inflate<FragmentPostMessageDisplayBinding>(inflater,
+            R.layout.fragment_post_message_display,container,false)
 
         fragmentBinding.lifecycleOwner = this
 

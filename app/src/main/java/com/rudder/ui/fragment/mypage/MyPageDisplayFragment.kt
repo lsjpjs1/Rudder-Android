@@ -12,10 +12,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
-import com.rudder.databinding.FragmentMyPageBinding
+import com.rudder.databinding.FragmentCommunityDisplayBinding
+import com.rudder.databinding.FragmentMyPageDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.MyPageFragmentInterface
 import com.rudder.util.uiUtils.PercentDivide
@@ -23,7 +25,6 @@ import com.rudder.util.uiUtils.PercentDivideImpl
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_webview_modal.view.*
 import kotlinx.android.synthetic.main.fragment_main_bottom_bar.view.*
-import kotlinx.android.synthetic.main.fragment_my_page.*
 import kotlinx.android.synthetic.main.fragment_terms_of_service.view.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
@@ -34,7 +35,14 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var editNicknameDialogFragment: EditNicknameDialogFragment
     private lateinit var editProfileImageDialogFragment: EditProfileImageDialogFragment
-    private lateinit var myPageBinding : FragmentMyPageBinding
+    private lateinit var myPageBinding : FragmentMyPageDisplayBinding
+
+    companion object{
+        const val TAG = "MyPageDisplayFragment"
+    }
+
+
+
     private val lazyContext by lazy {
         requireContext()
     }
@@ -43,18 +51,21 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         activity as MainActivity
     }
 
+    //var myPageBinding: FragmentMyPageDisplayBinding? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         myPageBinding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_my_page,
+            R.layout.fragment_my_page_display,
             container,
             false
         )
+
         myPageBinding.mainVM = viewModel
         myPageBinding.myPageDisplayFragment = this
         myPageBinding.lifecycleOwner = viewLifecycleOwner
@@ -64,11 +75,12 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         val percentDivide : PercentDivide = PercentDivideImpl(divideChildTarget,displaySize,0.4f)
         percentDivide.divideChildSameRatio()
 
-        childFragmentManager.beginTransaction()
-            .add(R.id.myPageHeader, MyPageHeaderFragment())
-            .commit()
+//        childFragmentManager.beginTransaction()
+//            .add(R.id.myPageHeader, MyPageHeaderFragment())
+//            .commit()
         viewModel.getMyProfileImageUrl()
         viewModel.myProfileImageUrl.value?.let {
+
             Log.d("myImage", it)
             Glide.with(myPageBinding.myProfileImageImageView.context)
                 .load(it)
@@ -106,7 +118,13 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         }
 
 
-        return myPageBinding.root
+        myPageBinding.constraintLayoutMyPage6.setOnClickListener { view -> // search button click
+            view.findNavController().navigate(R.id.action_navigation_mypage_to_navigation_category_select_my_page)
+            //(activity as MainActivity).mainBottomNavigationDisappear()
+        }
+
+
+        return myPageBinding!!.root
     }
 
     fun showEditNicknameDialog(){

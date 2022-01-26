@@ -131,5 +131,4 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
         sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
     }
 
-
 }
