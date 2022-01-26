@@ -646,7 +646,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun mainBottomNavigationDisappear() {
 
-        binding.mainBottomNavigation.visibility = View.INVISIBLE
+        binding.mainBottomNavigation.visibility = View.GONE
         val lp = binding.mainDisplayContainerView.layoutParams
         lp.height = ViewGroup.LayoutParams.MATCH_PARENT
         binding.mainDisplayContainerView.layoutParams = lp
@@ -659,18 +659,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         val displaySizeHeight = getDisplaySize()[1]
         val lp = binding.mainDisplayContainerView.layoutParams
-        lp.height = (displaySizeHeight * 0.93).toInt()
+        lp.height = 0
         binding.mainDisplayContainerView.layoutParams = lp
-
-
-//        binding.mainDisplayContainerView.updateLayoutParams<ConstraintLayout.LayoutParams> {
-//            matchConstraintPercentHeight = 0.1f
-//        }
-
-//        val set = ConstraintSet()
-//        set.constrainPercentHeight(R.id.mainDisplayContainerView, 0.5f)
-
-
 
     }
 
