@@ -48,19 +48,9 @@
             android:id="@+id/main_bottom_layout"
             app:layout_constraintHeight_percent="@dimen/main_bottom_height"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:elevation="2dp"
-            >
+            app:layout_constraintStart_toStartOf="parent">
 
-<!--            <View-->
-<!--                android:id="@+id/view"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="10dp"-->
-<!--                android:background="@drawable/shadow"-->
-<!--                app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"-->
-<!--                app:layout_constraintHeight_default="percent"-->
-<!--                app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height"-->
-<!--            />-->
+
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/main_bottom_navigation"
@@ -68,7 +58,7 @@
                 android:layout_height="54dp"
                 android:visibility="visible"
                 android:background="@color/white"
-                android:elevation="20dp"
+                android:elevation="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:theme="@style/ToolbarTheme"
                 app:menu="@menu/bottom_nav_menu" />

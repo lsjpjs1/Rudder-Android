@@ -16,49 +16,70 @@
         android:background="@color/white"
         >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/addCommentBody"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="@dimen/add_comment_body_width">
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/shadow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height"
+        />
 
-            <EditText
-                android:id="@+id/addCommentBodyEditText"
-                android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/addCommentBody"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:ems="10"
-                android:hint="@string/comment_title"
-                android:theme="@style/MyEditTextTheme"
-                android:inputType="textMultiLine"
-                android:text="@={mainVM._commentBody}"
-                android:afterTextChanged="@{() -> mainVM.onTextChangeComment()}"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/addCommentTail"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toEndOf="@+id/addCommentBody"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="@dimen/add_comment_tail_width">
-
-            <Button
-                android:id="@+id/replyButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/comment_send_text"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/button_enabled"
-                android:onClick='@{()->mainVM.addComment()}'
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="@dimen/add_comment_body_width">
+
+                <EditText
+                    android:id="@+id/addCommentBodyEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:hint="@string/comment_title"
+                    android:theme="@style/MyEditTextTheme"
+                    android:inputType="textMultiLine"
+                    android:text="@={mainVM._commentBody}"
+                    android:afterTextChanged="@{() -> mainVM.onTextChangeComment()}"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/addCommentTail"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toEndOf="@+id/addCommentBody"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="@dimen/add_comment_tail_width">
+
+                <Button
+                    android:id="@+id/replyButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/comment_send_text"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_enabled"
+                    android:onClick='@{()->mainVM.addComment()}'
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
