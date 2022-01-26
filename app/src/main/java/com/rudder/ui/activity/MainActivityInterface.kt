@@ -7,8 +7,9 @@ interface MainActivityInterface: ActivityInterface {
 
     fun showPostMessageFragment()
 
-
     fun showPostMessageRoomFragment(postMessageRoomId: Int)
 
-    }
+
+
+}
 

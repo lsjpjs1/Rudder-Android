@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:id="@+id/main_container"
         tools:context=".ui.activity.MainActivity">
 
@@ -19,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintBottom_toTopOf="@+id/main_bottom_layout"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/without_main_bottom_height"
             tools:layout_editor_absoluteX="0dp">
@@ -33,37 +34,47 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            android:background="@color/teal_200"
+            android:background="@color/white"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"
+            app:layout_constraintBottom_toTopOf="@+id/main_bottom_layout"
             app:layout_constraintTop_toTopOf="parent"
             />
 <!--        app:layout_constraintHeight_percent="@dimen/main_middle_height"-->
 
 
-        <View
-            android:id="@+id/view"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@drawable/shadow"
-            app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height" />
-
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/main_bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:visibility="visible"
+            android:layout_height="56dp"
+            android:id="@+id/main_bottom_layout"
+            app:layout_constraintHeight_percent="@dimen/main_bottom_height"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="@dimen/main_bottom_height"
-            android:background="@color/white"
-            android:theme="@style/ToolbarTheme"
-            android:elevation="8dp"
-            app:menu="@menu/bottom_nav_menu" />
+            android:elevation="2dp"
+            >
+
+<!--            <View-->
+<!--                android:id="@+id/view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="10dp"-->
+<!--                android:background="@drawable/shadow"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"-->
+<!--                app:layout_constraintHeight_default="percent"-->
+<!--                app:layout_constraintHeight_percent="@dimen/main_bottom_bar_shadow_height"-->
+<!--            />-->
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/main_bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:visibility="visible"
+                android:background="@color/white"
+                android:elevation="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:theme="@style/ToolbarTheme"
+                app:menu="@menu/bottom_nav_menu" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 
@@ -73,7 +84,7 @@
             android:background="@color/purple_100"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintBottom_toTopOf="@+id/main_bottom_layout"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.03">
 

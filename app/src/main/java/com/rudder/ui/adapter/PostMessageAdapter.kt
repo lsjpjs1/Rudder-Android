@@ -33,6 +33,7 @@ class PostMessageAdapter(
         holder.viewBinding.postMessageItemSenderNickNameTV.text = getItem(position).userId
         holder.viewBinding.postMessageItemDateTV.text = getItem(position).messageSendTime.toString()
         holder.viewBinding.postMessageItemMessageBodyTV.text = getItem(position).postMessageBody
+
         holder.viewBinding.postMessageItemCL.setOnClickListener {
             mainActivityInterface.showPostMessageRoomFragment(getItem(position).postMessageRoomId,)
         }

@@ -17,6 +17,7 @@ import com.rudder.R
 import com.rudder.databinding.FragmentCommunityContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.MainPostPreviewAdapter
+import com.rudder.ui.fragment.comment.AddCommentFragment
 import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
 import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
@@ -152,6 +153,15 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         //(activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
 
         view.findNavController().navigate(R.id.action_navigation_community_to_navigation_show_post)
+        (activity as MainActivity).tmp()
+
+//        childFragmentManager.beginTransaction()
+//            .add(R.id.main_bottom_layout, AddCommentFragment(viewModel))
+//            .commit()
+
+
+
+
 
         //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
 //        if(!viewModel.isAlreadyReadPost()){

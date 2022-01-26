@@ -36,6 +36,7 @@ class AddPostHeaderFragment : Fragment() {
 
         header.addPostHeaderX.setOnClickListener { view ->
             view.findNavController().popBackStack()
+            (activity as MainActivity).mainBottomNavigationAppear()
         }
 
         return header.root

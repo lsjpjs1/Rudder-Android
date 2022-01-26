@@ -144,38 +144,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             )
             // set a graph at code not XML, because add a custom navigator
             setGraph(R.navigation.main_display_navigation_graph)
-
             mainBottomNavigation.setupWithNavController(this)
-        }
-
-
-        navDisplayController.navigatorProvider.addNavigator(FragmentNavigator(this,supportFragmentManager,R.id.mainDisplayContainerView))
-
-
-
-        navDisplayController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.navigation_community -> {
-                    Log.d("addonDes","community")
-                    //supportActionBar?.hide()
-                    //Timber.i("Navigation dest. changed: EditAddFragment. $supportActionBar")
-                }
-                R.id.navigation_postmessage -> {
-                    Log.d("addonDes","postmessage")
-                    //supportActionBar?.hide()
-                    //Timber.i("Navigation dest. changed: EditAddFragment. $supportActionBar")
-                }
-                R.id.navigation_mypage -> {
-                    Log.d("addonDes","mypage")
-                    //supportActionBar?.hide()
-                    //Timber.i("Navigation dest. changed: EditAddFragment. $supportActionBar")
-                }
-
-                else -> {
-                    //supportActionBar?.show()
-                    //Timber.i("Navigation dest. changed: else fragment. $supportActionBar")
-                }
-            }
         }
 
 
@@ -242,12 +211,10 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         )
 
 
-//        supportFragmentManager.beginTransaction()
-//            .add(R.id.mainBottomBar, mainBottomBarFragment,"mainBottomBar")
-//            .add(R.id.mainDisplay, myPageDisplayFragment, "myPage")
-//            .hide(myPageDisplayFragment)
-//            .add(R.id.mainDisplay, communityDisplayFragment, "community")
-//            .commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_bottom_layout, addCommentFragment)
+            .hide(myPageDisplayFragment)
+            .commit()
 
         viewModel.isContactUs.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
@@ -645,8 +612,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
     fun mainBottomNavigationDisappear() {
-
-        binding.mainBottomNavigation.visibility = View.GONE
+        binding.mainBottomLayout.visibility = View.GONE
         val lp = binding.mainDisplayContainerView.layoutParams
         lp.height = ViewGroup.LayoutParams.MATCH_PARENT
         binding.mainDisplayContainerView.layoutParams = lp
@@ -654,25 +620,75 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
     fun mainBottomNavigationAppear() {
-        Log.d("funTmp2","funTmp2")
-        binding.mainBottomNavigation.visibility = View.VISIBLE
-
-        val displaySizeHeight = getDisplaySize()[1]
+        binding.mainBottomLayout.visibility = View.VISIBLE
         val lp = binding.mainDisplayContainerView.layoutParams
         lp.height = 0
         binding.mainDisplayContainerView.layoutParams = lp
 
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        Log.d("onBackMain","onBackMain")
+
+    fun tmp() {
+        binding.mainBottomNavigation.visibility = View.GONE
+        val lp = binding.mainDisplayContainerView.layoutParams
+        lp.height = ViewGroup.LayoutParams.MATCH_PARENT
+        binding.mainDisplayContainerView.layoutParams = lp
+
+        supportFragmentManager.beginTransaction()
+            .show(addCommentFragment)
+            .commit()
+
     }
+
+    fun tmpBack() {
+        supportFragmentManager.beginTransaction()
+            .hide(addCommentFragment)
+            .commit()
+
+        binding.mainBottomNavigation.visibility = View.VISIBLE
+
+    }
+
+
+
     override fun showPostMessageRoomFragment(postMessageRoomId: Int) {
         postMessageRoomFragment = PostMessageRoomFragment(postMessageRoomId)
 
         showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
     }
 
+
+
+
+    override fun onBackPressed() {
+        navDisplayController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.navigation_community -> {
+
+                    if (addCommentFragment.isVisible) {
+                        tmpBack()
+                    } else {
+                        mainBottomNavigationAppear()
+                    }
+
+                    //mainBottomNavigationAppear()
+                }
+                R.id.navigation_postmessage -> {
+                    mainBottomNavigationAppear()
+                }
+                R.id.navigation_mypage -> {
+                    mainBottomNavigationAppear()
+                }
+
+                else -> {
+                    //supportActionBar?.show()
+                }
+            }
+        }
+
+
+
+        super.onBackPressed()
+    }
 
 }
