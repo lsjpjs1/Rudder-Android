@@ -213,7 +213,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-
+                android:id="@+id/postMoreEditPostTextView"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintWidth_default="percent"
@@ -226,9 +226,10 @@
                 android:gravity="fill_vertical"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:text="@string/Edit"
-                android:onClick="@{()->mainVM.clickPostEdit()}"
                 android:textSize="16dp">
             </TextView>
+<!--            android:onClick="@{()->mainVM.clickPostEdit()}"-->
+
 
             <ImageView
                 android:layout_width="0dp"

@@ -160,13 +160,15 @@
             style="?android:attr/progressBarStyle"
             android:scaleX="0.5"
             android:scaleY="0.5"
-            android:indeterminateTint="@color/grey"
+            android:indeterminateTint="@color/purple_rudder"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="gone"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/community_display_progress_bar_height"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="100dp"
+            />
 
 
 

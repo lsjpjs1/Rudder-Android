@@ -153,7 +153,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         //(activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
 
         view.findNavController().navigate(R.id.action_navigation_community_to_navigation_show_post)
-        (activity as MainActivity).tmp()
+        (activity as MainActivity).addCommentFragmentAppear()
 
 //        childFragmentManager.beginTransaction()
 //            .add(R.id.main_bottom_layout, AddCommentFragment(viewModel))
@@ -170,6 +170,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         viewModel.addPostViewCount()
         viewModel.getComments()
     }
+
 
 
 

@@ -35,7 +35,7 @@ class ShowPostHeaderFragment() : Fragment() {
 //        })
         header.constraintLayout13.setOnClickListener { view ->
             view.findNavController().popBackStack()
-            (activity as MainActivity).tmpBack()
+            (activity as MainActivity).addCommentFragmentDisappear()
         }
 
 

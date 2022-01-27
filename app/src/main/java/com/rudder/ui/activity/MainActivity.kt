@@ -186,7 +186,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         clubJoinRequestDialogFragment = ClubJoinRequestDialogFragment()
         communityCommentEditFragment = CommunityCommentEditFragment(viewModel)
         contactUsFragment = ContactUsFragment()
-        editPostFragment = EditPostFragment(viewModel)
+        editPostFragment = EditPostFragment()
         categorySelectMyPageFragment = CategorySelectMyPageFragment()
         searchPostDisplayFragment = SearchPostDisplayFragment()
 
@@ -624,29 +624,21 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         val lp = binding.mainDisplayContainerView.layoutParams
         lp.height = 0
         binding.mainDisplayContainerView.layoutParams = lp
-
     }
 
 
-    fun tmp() {
+    fun addCommentFragmentAppear() {
         binding.mainBottomNavigation.visibility = View.GONE
-        val lp = binding.mainDisplayContainerView.layoutParams
-        lp.height = ViewGroup.LayoutParams.MATCH_PARENT
-        binding.mainDisplayContainerView.layoutParams = lp
-
         supportFragmentManager.beginTransaction()
             .show(addCommentFragment)
             .commit()
-
     }
 
-    fun tmpBack() {
+    fun addCommentFragmentDisappear() {
         supportFragmentManager.beginTransaction()
             .hide(addCommentFragment)
             .commit()
-
         binding.mainBottomNavigation.visibility = View.VISIBLE
-
     }
 
 
@@ -664,14 +656,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         navDisplayController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_community -> {
-
                     if (addCommentFragment.isVisible) {
-                        tmpBack()
+                        addCommentFragmentDisappear()
                     } else {
                         mainBottomNavigationAppear()
                     }
-
-                    //mainBottomNavigationAppear()
                 }
                 R.id.navigation_postmessage -> {
                     mainBottomNavigationAppear()
