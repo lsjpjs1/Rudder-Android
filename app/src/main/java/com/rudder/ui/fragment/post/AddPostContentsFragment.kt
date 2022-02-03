@@ -177,8 +177,5 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
 
         //writePost.maxHeight = (addPostDisplayEntireHeight * 0.3).toInt()
         editTextTextPersonName.maxHeight = (addPostDisplayEntireHeight * 0.3).toInt()
-
-
-
     }
 }

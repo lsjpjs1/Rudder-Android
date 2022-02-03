@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.rudder.R
 import com.rudder.databinding.FragmentEditPostHeaderBinding
 import com.rudder.ui.activity.MainActivity
@@ -28,6 +29,14 @@ class EditPostHeaderFragment(val viewModel: MainViewModel) : Fragment() {
                 }
             }
         })
+
+
+        header.addPostHeaderX.setOnClickListener { view ->
+            view.findNavController().popBackStack()
+            (activity as MainActivity).mainBottomNavigationAppear()
+        }
+
+
         return header.root
     }
 }

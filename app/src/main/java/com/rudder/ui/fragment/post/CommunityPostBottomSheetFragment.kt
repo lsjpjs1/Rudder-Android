@@ -134,6 +134,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 
 
             parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_community_to_navigation_edit_post)
+            (activity as MainActivity).mainBottomNavigationDisappear()
 
         }
 
