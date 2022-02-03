@@ -6,15 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentAddPostDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 
-class EditPostFragment(val viewModel: MainViewModel) : Fragment() {
+class EditPostFragment() : Fragment() {
     private val parentActivity : MainActivity by lazy { activity as MainActivity }
     lateinit var addPostContentsFragment: AddPostContentsFragment
+
+    companion object{
+        const val TAG = "EditPostFragment"
+    }
+
+    private val viewModel : MainViewModel by activityViewModels()
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -26,15 +34,12 @@ class EditPostFragment(val viewModel: MainViewModel) : Fragment() {
         addPostContentsFragment = AddPostContentsFragment(viewModel,true)
 
         childFragmentManager.beginTransaction()
-            //.add(R.id.addPostHeader, EditPostHeaderFragment(viewModel))
-            //.add(R.id.addPostDisplay, addPostContentsFragment)
+            .replace(R.id.addPostHeaderFrameLayout, EditPostHeaderFragment(viewModel))
+            .add(R.id.addPostContentsFrameLayout, addPostContentsFragment)
             .commit()
 
         fragmentBinding.mainVM=viewModel
         fragmentBinding.lifecycleOwner = this
-
-
-
 
 
         viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {

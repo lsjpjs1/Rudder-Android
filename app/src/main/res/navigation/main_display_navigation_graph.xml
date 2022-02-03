@@ -29,6 +29,14 @@
             app:popUpTo="@id/navigation_community"
             />
 
+        <action
+            android:id="@+id/action_navigation_community_to_navigation_edit_post"
+            app:destination="@id/navigation_edit_post"
+            app:popUpTo="@id/navigation_community"
+            />
+
+
+
     </bottom>
 
     <bottom
@@ -83,6 +91,14 @@
         android:name="com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment"
         android:label="ShowPostDisplayFragment"
         tools:layout="@layout/fragment_my_page_category_select"
+        />
+
+
+    <bottom
+        android:id="@+id/navigation_edit_post"
+        android:name="com.rudder.ui.fragment.post.EditPostFragment"
+        android:label="EditPostFragment"
+        tools:layout="@layout/fragment_add_post_display"
         />
 
 

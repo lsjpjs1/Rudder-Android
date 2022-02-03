@@ -37,13 +37,21 @@ class ShowPostContentsFragment(): Fragment() {
 
     private val viewModel : MainViewModel by activityViewModels()
 
+    private var _fragmentBinding : FragmentShowPostContentsBinding? = null
+    private val fragmentBinding get() = _fragmentBinding!!
+
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val fragmentBinding= DataBindingUtil.inflate<FragmentShowPostContentsBinding>(inflater,R.layout.fragment_show_post_contents,container,false)
+        //_fragmentBinding= DataBindingUtil.inflate<FragmentShowPostContentsBinding>(inflater,R.layout.fragment_show_post_contents,container,false)
+
+        _fragmentBinding= FragmentShowPostContentsBinding.inflate(inflater, container, false)
+
+
         val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel)
         fragmentBinding.commentDisplayRV.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
@@ -168,6 +176,8 @@ class ShowPostContentsFragment(): Fragment() {
         viewModel.selectedParentCommentBody.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (activity as MainActivity).setParentCommentInfoText(it)
+                //fragmentBinding.parentCommentInfoTextTextView.text = it
+
             }
         })
 
@@ -188,6 +198,12 @@ class ShowPostContentsFragment(): Fragment() {
             }
         })
 
+
+
+//        fragmentBinding.parentCommentInfoClose.setOnClickListener {
+//            viewModel.clearNestedCommentInfo()
+//            tmpBack()
+//        }
 
 
         return fragmentBinding.root
@@ -257,5 +273,19 @@ class ShowPostContentsFragment(): Fragment() {
     fun closeParentCommentInfo(){
         viewModel.clearNestedCommentInfo()
     }
+
+
+//    fun tmp(){
+//        fragmentBinding.parentCommentInfo.visibility = View.VISIBLE
+//    }
+//
+//
+//    fun tmpBack() {
+//        fragmentBinding.parentCommentInfo.visibility = View.GONE
+//    }
+//
+//    fun tmp3() {
+//        viewModel.clearNestedCommentInfo()
+//    }
 
 }

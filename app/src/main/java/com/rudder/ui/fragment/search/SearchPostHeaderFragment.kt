@@ -65,6 +65,7 @@ class SearchPostHeaderFragment : Fragment() {
         header.searchPostHeaderX.setOnClickListener { view ->
             view.findNavController().popBackStack()
             (activity as MainActivity).mainBottomNavigationAppear()
+
         }
 
 

@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.post
 
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityPostBottomSheetBinding
@@ -101,20 +104,38 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 
         viewModel.isPostEdit.observe(viewLifecycleOwner, Observer {
             it?.let {
-                parentActivity.communityPostBottomSheetFragment.dismiss()
-                val fragmentShowHide = FragmentShowHide(parentActivity.supportFragmentManager)
-                fragmentShowHide.addToBackStack()
-                fragmentShowHide.hideFragment(parentActivity.mainBottomBarFragment)
-
-                if (parentActivity.addCommentFragment.isAdded) {
-                    fragmentShowHide.hideFragment(parentActivity.addCommentFragment)
-                }
-                parentActivity.editPostFragment = EditPostFragment(viewModel)
-                fragmentShowHide.addFragment(parentActivity.editPostFragment, R.id.mainDisplay, "editPost")
-                fragmentShowHide.showFragment(parentActivity.editPostFragment, R.id.mainDisplay)
+//                parentActivity.communityPostBottomSheetFragment.dismiss()
+//
+//                val fragmentShowHide = FragmentShowHide(parentActivity.supportFragmentManager)
+//                fragmentShowHide.addToBackStack()
+//                fragmentShowHide.hideFragment(parentActivity.mainBottomBarFragment)
+//
+//                if (parentActivity.addCommentFragment.isAdded) {
+//                    fragmentShowHide.hideFragment(parentActivity.addCommentFragment)
+//                }
+//                parentActivity.editPostFragment = EditPostFragment(viewModel)
+//                fragmentShowHide.addFragment(parentActivity.editPostFragment, R.id.mainDisplay, "editPost")
+//                fragmentShowHide.showFragment(parentActivity.editPostFragment, R.id.mainDisplay)
             }
 
         })
+
+
+        communityPostBottomSheetBinding.postMoreEditPostTextView.setOnClickListener { view ->
+            parentActivity.communityPostBottomSheetFragment.dismiss()
+//            Navigation.findNavController(view).navigate(R.id.action_navigation_community_to_navigation_edit_post)
+
+//            val navHostFragment =
+//                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+//            val navController = navHostFragment.navController
+
+//            Navigation.findNavController(parentActivity, R.id.mainDisplayContainerView )
+//                .navigate(R.id.action_navigation_community_to_navigation_edit_post)
+
+
+            parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_community_to_navigation_edit_post)
+
+        }
 
 
         layoutConfig(displayDpValue)
