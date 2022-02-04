@@ -38,7 +38,9 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_baseline_close_24"
                     app:tint="@color/black"
-                    android:onClick="@{()->mainVM.clickBack()}"/>
+                    />
+<!--                android:onClick="@{()->mainVM.clickBack()}"-->
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

@@ -659,6 +659,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                     if (addCommentFragment.isVisible) {
                         addCommentFragmentDisappear()
                     } else {
+                        Log.d("qwe","qwe")
                         mainBottomNavigationAppear()
                     }
                 }
