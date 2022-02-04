@@ -300,24 +300,27 @@ open class MainViewModel : ViewModel() {
         GlobalScope.launch {
             val resPosts = if (isScroll){
                 Repository().getPosts(
-                    pagingIndex,
-                    endPostId,
-                    -1,
-                    App.prefs.getValue(tokenKey)!!,
-                    _searchWord.value!!
+                    GetPostInfo(
+                        pagingIndex,
+                        endPostId,
+                        -1,
+                        token!!,
+                        _searchWord.value!!
+                    )
                 )
             }else{
                 Repository().getPosts(
-                    -1,
-                    -1,
-                    -1,
-                    token!!,
-                    _searchWord.value!!
+                    GetPostInfo(
+                        -1,
+                        -1,
+                        -1,
+                        token!!,
+                        _searchWord.value!!
+                    )
                 )
             }
 
             viewModelScope.launch {
-
                 if (isScroll){
                     val oldPosts = _posts.value
                     oldPosts!!.addAll(resPosts)
@@ -592,12 +595,15 @@ open class MainViewModel : ViewModel() {
             }
 
             val resPosts = Repository().getPosts(
-                pagingIndex,
-                endPostId,
-                categoryId,
-                App.prefs.getValue(tokenKey)!!
+                GetPostInfo(
+                    pagingIndex,
+                    endPostId,
+                    categoryId,
+                    token!!
+                )
             )
             viewModelScope.launch {
+
                 if (_posts.value!!.size == 0) {
                     _posts.value = resPosts
                 } else {
@@ -608,6 +614,9 @@ open class MainViewModel : ViewModel() {
 
                 }
                 _isScrollBottomTouch.value = Event(false)
+
+
+
             }
         }
     }

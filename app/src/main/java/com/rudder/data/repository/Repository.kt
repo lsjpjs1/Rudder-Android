@@ -16,6 +16,7 @@ import com.rudder.data.remote.PostApi
 import com.rudder.data.remote.SignUpApi
 import com.rudder.data.remote.TokenApi
 import com.rudder.data.remote.*
+import com.rudder.util.ExceptionUtil
 import okhttp3.RequestBody
 import kotlin.Exception
 
@@ -52,24 +53,23 @@ class Repository {
 
 
     suspend fun signUpSendVerifyCode(emailInfoSignUp : EmailInfoSignUp) : String{
-
-        val verifyAPIResult = SignUpApi.instance.emailSignUp(emailInfoSignUp).await()
+        val verifyAPIResult = ExceptionUtil.retryWhenException(SignUpApi::emailSignUp,emailInfoSignUp,SignUpApi())
         return verifyAPIResult.results.get("fail").asString
     }
 
     suspend fun signUpIdDuplicated(idDuplicatedInfo: IdDuplicatedInfo) : Boolean{
-        val idDuplicatedAPIResultJson = SignUpApi.instance.idDuplicatedSignUp(idDuplicatedInfo).await()
+        val idDuplicatedAPIResultJson =ExceptionUtil.retryWhenException(SignUpApi::idDuplicatedSignUp,idDuplicatedInfo,SignUpApi())
         return idDuplicatedAPIResultJson.results.get("isDuplicated").asBoolean
     }
 
     suspend fun signUpCheckVerifyCode(checkVeriCodeInfo: CheckVerifyCodeInfo) : Boolean {
-        val checkVerifyAPIResult = SignUpApi.instance.checkVerifySignUp(checkVeriCodeInfo).await()
+        val checkVerifyAPIResult = ExceptionUtil.retryWhenException(SignUpApi::checkVerifySignUp,checkVeriCodeInfo,SignUpApi())
         return checkVerifyAPIResult.results.get("isSuccess").asBoolean
     }
 
     private suspend fun checkToken(tokenInfo: TokenInfo): Boolean {
         try{
-            val tokenAPIResultJson = TokenApi.instance.tokenValidation(tokenInfo).await()
+            val tokenAPIResultJson = ExceptionUtil.retryWhenException(TokenApi::tokenValidation,tokenInfo,TokenApi())
             return tokenAPIResultJson.results.get("isTokenValid").asBoolean
         }catch (e: Exception){
             Log.d("Exception",e.message!!)
@@ -81,290 +81,207 @@ class Repository {
 
 
     suspend fun signUpSchoolList(): JsonArray {
-        val schoolListFlagAPIResultJson = SignUpApi.instance.schoolListSignUp().await()
+        val schoolListFlagAPIResultJson = ExceptionUtil.retryWhenException(SignUpApi::schoolListSignUp,null,SignUpApi())
         return schoolListFlagAPIResultJson.results
     }
 
 
     suspend fun signUpNickNameDuplicated(nickNameDuplicatedInfo: NickNameDuplicatedInfo) : Boolean{
-        val nickNameDuplicatedAPIResultJson = SignUpApi.instance.nickNameDuplicatedSignUpApi(nickNameDuplicatedInfo).await()
+        val nickNameDuplicatedAPIResultJson = ExceptionUtil.retryWhenException(SignUpApi::nickNameDuplicatedSignUpApi,nickNameDuplicatedInfo,SignUpApi())
         return nickNameDuplicatedAPIResultJson.results.get("isDuplicated").asBoolean
     }
 
 
-    suspend fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String,searchWord:String = ""): ArrayList<PreviewPost>{
-        try{
-            return PostApi.instance.getPosts(pagingIndex, endPostId,categoryId,token,searchWord).await()
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return arrayListOf()
-        }
-
+    suspend fun getPosts(getPostInfo: GetPostInfo): ArrayList<PreviewPost>{
+        return ExceptionUtil.retryWhenException(PostApi::getPosts,getPostInfo,PostApi())
     }
 
     suspend fun getComments(getCommentInfo: GetCommentInfo): ArrayList<Comment> {
-        try {
-            val resJson :Response<ArrayList<Comment>> = CommentApi.instance.getComments(getCommentInfo).await()
+
+            val resJson = ExceptionUtil.retryWhenException(CommentApi::getComments,getCommentInfo,CommentApi())
             return resJson.results
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return arrayListOf()
-        }
+
 
     }
 
     suspend fun addComment(addCommentInfo: AddCommentInfo) : Boolean{
-        try{
-            val resJson = CommentApi.instance.addComment(addCommentInfo).await()
+
+            val resJson = ExceptionUtil.retryWhenException(CommentApi::addComment,addCommentInfo,CommentApi())
             return resJson.results.get("isSuccess").asBoolean
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return false
-        }
 
     }
 
     suspend fun addPost(addPostInfo: AddPostInfo): AddPostResponse{
-        try{
-            val response = PostApi.instance.addPostApi(addPostInfo).await()
+            val response =ExceptionUtil.retryWhenException(PostApi::addPostApi,addPostInfo,PostApi())
             return response.results
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return AddPostResponse(false,-1)
-        }
-
     }
 
     suspend fun signUpCreateAccount(signUpInsertInfo: SignUpInsertInfo) : Boolean { // Sign up, Complete!
-        val createAccountAPIResult = SignUpApi.instance.createAccountSignUp(signUpInsertInfo).await()
+        val createAccountAPIResult = ExceptionUtil.retryWhenException(SignUpApi::createAccountSignUp,signUpInsertInfo,SignUpApi())
         return createAccountAPIResult.results.get("signUpComplete").asBoolean
     }
 
     suspend fun findAccountID(emailInfo: EmailInfo) : Boolean {
-        val forgotIDAPIResult = ForgotApi.instance.findForgotID(emailInfo).await()
+        val forgotIDAPIResult = ExceptionUtil.retryWhenException(ForgotApi::findForgotID,emailInfo,ForgotApi())
         return forgotIDAPIResult.results.get("sendIdToEmail").asBoolean
     }
 
     suspend fun findAccountPassword(emailInfo: EmailInfo) : Boolean {
-        val forgotPasswordAPIResult = ForgotApi.instance.findForgotPassword(emailInfo).await()
+        val forgotPasswordAPIResult = ExceptionUtil.retryWhenException(ForgotApi::findForgotPassword,emailInfo,ForgotApi())
         return forgotPasswordAPIResult.results.get("sendPwVerificationCode").asBoolean
     }
 
 
     suspend fun sendAccountPassword(verifyInfo : CheckVerifyCodeInfo) : Boolean {
-        val sendAccountPasswordAPIResult = ForgotApi.instance.sendPassword(verifyInfo).await()
+        val sendAccountPasswordAPIResult = ExceptionUtil.retryWhenException(ForgotApi::sendPassword,verifyInfo,ForgotApi())
         return sendAccountPasswordAPIResult.results.get("isSuccessForgot").asBoolean
     }
 
     suspend fun getCategories(getCategoriesRequest: GetCategoriesRequest): ArrayList<Category>{
-        return BoardInfoApi.instance.getCategoryList(getCategoriesRequest).await().results
+        return ExceptionUtil.retryWhenException(BoardInfoApi::getCategoryList,getCategoriesRequest,BoardInfoApi()).results
     }
 
     suspend fun getClubCategories(getCategoriesRequest: GetCategoriesRequest): ArrayList<Category>{
-        return BoardInfoApi.instance.getClubCategoryList(getCategoriesRequest).await().results
+        return ExceptionUtil.retryWhenException(BoardInfoApi::getClubCategoryList,getCategoriesRequest,BoardInfoApi()).results
     }
 
     suspend fun isLikePost(isLikePostInfo: IsLikePostInfo): Boolean{
-        try{
-            return PostApi.instance.isLikePost(isLikePostInfo).await().results.get("isSuccess").asBoolean
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return false
-        }
+        return ExceptionUtil.retryWhenException(PostApi::isLikePost,isLikePostInfo,PostApi()).results.get("isSuccess").asBoolean
     }
 
     suspend fun addLikePost(addLikePostInfo: AddLikePostInfo): JsonObject{
-        return PostApi.instance.addLikePost(addLikePostInfo).await().results
+        return ExceptionUtil.retryWhenException(PostApi::addLikePost,addLikePostInfo,PostApi()).results
     }
 
     suspend fun addLikeComment(addLikeCommentInfo: AddLikeCommentInfo): JsonObject{
-        return CommentApi.instance.addLikeComment(addLikeCommentInfo).await().results
+        return ExceptionUtil.retryWhenException(CommentApi::addLikeComment,addLikeCommentInfo,CommentApi()).results
     }
 
     suspend fun addPostViewCount(addPostViewCountInfo: AddPostViewCountInfo): Boolean{
-        try{
-            return PostApi.instance.addPostViewCount(addPostViewCountInfo).await().results.get("isSuccess").asBoolean
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return false
-        }
+            return ExceptionUtil.retryWhenException(PostApi::addPostViewCount,addPostViewCountInfo,PostApi()).results.get("isSuccess").asBoolean
 
     }
 
     suspend fun deletePostRepository(deletePostInfo: DeletePostInfo) : Boolean{
-        return DeleteApi.instance.deletePostApi(deletePostInfo).await().results.get("isSuccess").asBoolean
+        return ExceptionUtil.retryWhenException(DeleteApi::deletePostApi,deletePostInfo,DeleteApi()).results.get("isSuccess").asBoolean
     }
 
     suspend fun deleteCommentRepository(deleteCommentInfo: DeleteCommentInfo) : Boolean{
-        return DeleteApi.instance.deletecommentApi(deleteCommentInfo).await().results.get("isSuccess").asBoolean
+        return ExceptionUtil.retryWhenException(DeleteApi::deletecommentApi,deleteCommentInfo,DeleteApi()).results.get("isSuccess").asBoolean
     }
 
     suspend fun editPostRepository(editPostInfo: EditPostInfo) : Boolean{
-        return EditApi.instance.editPostApi(editPostInfo).await().results.get("isSuccess").asBoolean
+        return ExceptionUtil.retryWhenException(EditApi::editPostApi,editPostInfo,EditApi()).results.get("isSuccess").asBoolean
     }
 
     suspend fun editCommentRepository(editCommentInfo: EditCommentInfo) : Boolean{
-        return EditApi.instance.editCommentApi(editCommentInfo).await().results.get("isSuccess").asBoolean
+        return ExceptionUtil.retryWhenException(EditApi::editCommentApi,editCommentInfo,EditApi()).results.get("isSuccess").asBoolean
     }
 
     suspend fun reportRepository(reportInfo: ReportInfo) : Boolean{
-        return ReportApi.instance.reportApi(reportInfo).await().results.get("isSuccess").asBoolean
+        return ExceptionUtil.retryWhenException(ReportApi::reportApi,reportInfo,ReportApi()).results.get("isSuccess").asBoolean
     }
 
     suspend fun getUploadUrls(getUploadUrlsInfo: GetUploadUrlsInfo): ArrayList<String>{
-        try{
             val arrayListType = object : TypeToken<ArrayList<String>>(){}.type
-            return Gson().fromJson<ArrayList<String>>(FileApi.instance.getUploadUrls(getUploadUrlsInfo).await().results.get("urls"),arrayListType)
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return arrayListOf()
-        }
+            return Gson().fromJson<ArrayList<String>>(ExceptionUtil.retryWhenException(FileApi::getUploadUrls,getUploadUrlsInfo,FileApi()).results.get("urls"),arrayListType)
 
     }
 
+    //예외처리 예정
     suspend fun uploadImage(file:RequestBody,url:String){
-        try{
+
             FileApi.instance.uploadImage(file,url).await()
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return
-        }
+
 
     }
 
     suspend fun profileImageListRepository() : JsonArray {
-        return SignUpApi.instance.profileImageListSignUpApi().await().results.get("profileImageList").asJsonArray
+        return ExceptionUtil.retryWhenException(SignUpApi::profileImageListSignUpApi,null,SignUpApi()).results.get("profileImageList").asJsonArray
     }
 
     suspend fun categorySelectSignUpRepository(categorySelectSignUpInfo: CategorySelectSignUpInfo) : Boolean{
-        return CategorySelectApi.instance.categorySelectSignUpApi(categorySelectSignUpInfo).await().results.get("isSuccess").asBoolean
+        return ExceptionUtil.retryWhenException(CategorySelectApi::categorySelectSignUpApi,categorySelectSignUpInfo,CategorySelectApi()).results.get("isSuccess").asBoolean
     }
 
     suspend fun categorySelectMyPageRepository(categorySelectMyPageInfo: CategorySelectMyPageInfo) : Boolean{
-        return CategorySelectApi.instance.categorySelectMyPageApi(categorySelectMyPageInfo).await().results.get("isSuccess").asBoolean
+        return ExceptionUtil.retryWhenException(CategorySelectApi::categorySelectMyPageApi,categorySelectMyPageInfo,CategorySelectApi()).results.get("isSuccess").asBoolean
     }
 
 
     suspend fun getSelectedCategoriesRepository(token : Token): ArrayList<Category> {
-        return BoardInfoApi.instance.getSelectedCategoryListApi(token).await().results
+        return ExceptionUtil.retryWhenException(BoardInfoApi::getSelectedCategoryListApi,token,BoardInfoApi()).results
     }
 
 
     suspend fun getNotice(noticeRequest: NoticeRequest): NoticeResponse{
-        try{
-            return NoticeApi.instance.getNotice(noticeRequest).await().results
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return NoticeResponse(false,"")
-        }
+
+            return ExceptionUtil.retryWhenException(NoticeApi::getNotice,noticeRequest,NoticeApi()).results
+
 
     }
 
     suspend fun getMyProfileImageUrl(myProfileImageRequest:MyProfileImageRequest): MyProfileImageResponse{
 
-        return MyPageApi.instance.getMyProfileImageUrl(myProfileImageRequest).await().results
+        return ExceptionUtil.retryWhenException(MyPageApi::getMyProfileImageUrl,myProfileImageRequest,MyPageApi()).results
     }
 
     suspend fun addUserRequest(addUserRequestRequest: AddUserRequestRequest): Boolean{
-        try{
-            return MyPageApi.instance.addUserRequest(addUserRequestRequest).await().results.get("isSuccess").asBoolean
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return false
-        }
+
+            return ExceptionUtil.retryWhenException(MyPageApi::addUserRequest,addUserRequestRequest,MyPageApi()).results.get("isSuccess").asBoolean
+
 
     }
 
     suspend fun requestJoinClub(requestJoinClubRequest: RequestJoinClubRequest): Boolean{
-        try{
-            return MyPageApi.instance.requestJoinClub(requestJoinClubRequest).await().results.isSuccess
-        }catch (e: Exception){
-            Log.d("Exception",e.message!!)
-            e.printStackTrace()
-            return false
-        }
+
+            return ExceptionUtil.retryWhenException(MyPageApi::requestJoinClub,requestJoinClubRequest,MyPageApi()).results.isSuccess
+
 
     }
 
     suspend fun blockUser(blockUserRequest: BlockUserRequest): Boolean{
-        return try {
-            BlockUserApi.instance.blockUser(blockUserRequest).await().results.isSuccess
-        }catch (e: Exception){
-            e.printStackTrace()
-            false
-        }
+        return ExceptionUtil.retryWhenException(BlockUserApi::blockUser,blockUserRequest,BlockUserApi()).results.isSuccess
+
     }
 
     suspend fun updateNickname(updateNicknameRequest: UpdateNicknameRequest): UpdateResponse{
-        return try{
-            EditUserApi.instance.updateNickname(updateNicknameRequest).await().results
-        }catch (e: Exception){
-            e.printStackTrace()
-            UpdateResponse(false,ResponseEnum.UNKNOWN)
-        }
+        return ExceptionUtil.retryWhenException(EditUserApi::updateNickname,updateNicknameRequest,EditUserApi()).results
+
     }
 
     suspend fun getProfileImages() : ArrayList<ProfileImage> {
-        return try {
-            MyPageApi.instance.getProfileImages().await().results.profileImageList
-        }catch (e: Exception){
-            e.printStackTrace()
-            arrayListOf<ProfileImage>()
-        }
+        return ExceptionUtil.retryWhenException(MyPageApi::getProfileImages,null,MyPageApi()).results.profileImageList
+
 
     }
 
     suspend fun updateProfileImage(updateProfileImageRequest: UpdateProfileImageRequest): UpdateResponse{
-        return try{
-            EditUserApi.instance.updateProfileImage(updateProfileImageRequest).await().results
-        }catch (e: Exception){
-            e.printStackTrace()
-            UpdateResponse(false,ResponseEnum.UNKNOWN)
-        }
+        return ExceptionUtil.retryWhenException(EditUserApi::updateProfileImage,updateProfileImageRequest,EditUserApi()).results
+
 
     }
 
     suspend fun sendPostMessage(sendPostMessageRequest: SendPostMessageRequest): SendPostMessageResponse{
-        return try{
-            MessageApi.instance.sendPostMessage(sendPostMessageRequest).await().results
-        }catch (e: Exception){
-            e.printStackTrace()
-            SendPostMessageResponse(false,ResponseEnum.UNKNOWN)
-        }
+        return ExceptionUtil.retryWhenException(MessageApi::sendPostMessage,sendPostMessageRequest,MessageApi()).results
+
 
     }
 
     suspend fun getMessagesByRoom(getMessagesByRoomRequest: GetMessagesByRoomRequest): ArrayList<PostMessage>{
-        return try{
-            MessageApi.instance.getMessagesByRoom(getMessagesByRoomRequest).await().results.messages
-        }catch (e: Exception){
-            e.printStackTrace()
-            arrayListOf()
-        }
+        return ExceptionUtil.retryWhenException(MessageApi::getMessagesByRoom,getMessagesByRoomRequest,MessageApi()).results.messages
+
 
     }
 
     suspend fun getMyMessages(getMyMessageRoomsRequest: GetMyMessageRoomsRequest): ArrayList<PostMessageRoom> {
-        return try {
-            val getMyMessagesResponse = PostMessageApi.instance.getMyMessageRooms(getMyMessageRoomsRequest).await().results
-            if (getMyMessagesResponse.isSuccess) {
+
+            val getMyMessagesResponse = ExceptionUtil.retryWhenException(PostMessageApi::getMyMessageRooms,getMyMessageRoomsRequest,PostMessageApi()).results
+            return if (getMyMessagesResponse.isSuccess) {
                 getMyMessagesResponse.rooms
             } else{
                 arrayListOf()
             }
-        }catch (e: Exception){
-            e.printStackTrace()
-            arrayListOf()
-        }
+
     }
 }
