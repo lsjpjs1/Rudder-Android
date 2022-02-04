@@ -10,6 +10,7 @@ class ExceptionUtil {
     companion object{
 
         //retrofit 통신에서만 사용할 것
+        // 22 02 04 merge(main-tkl)
         suspend fun <FunctionParam,FunctionReturn,Api> retryWhenException(function: KFunction<Deferred<FunctionReturn>>, param:FunctionParam, instance: Api): FunctionReturn {
 
             return try {
