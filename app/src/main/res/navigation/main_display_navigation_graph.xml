@@ -82,9 +82,13 @@
         android:id="@+id/navigation_show_post"
         android:name="com.rudder.ui.fragment.post.ShowPostDisplayFragment"
         android:label="ShowPostDisplayFragment"
-        tools:layout="@layout/fragment_show_post_display"
-        />
+        tools:layout="@layout/fragment_show_post_display">
+        <action
+            android:id="@+id/action_navigation_community_to_navigation_edit_post"
+            app:destination="@id/navigation_edit_post"
+            app:popUpTo="@id/navigation_show_post" />
 
+    </bottom>
 
     <bottom
         android:id="@+id/navigation_category_select_my_page"
