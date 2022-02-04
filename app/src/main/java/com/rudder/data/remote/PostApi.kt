@@ -9,6 +9,7 @@ import com.rudder.data.PreviewPost
 import com.rudder.data.Response
 import kotlinx.coroutines.*
 import kotlin.Exception
+import kotlin.reflect.KFunction
 
 class PostApi {
 
@@ -19,14 +20,12 @@ class PostApi {
     private val postService : PostService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(PostService::class.java)
 
 
-    fun getPosts(pagingIndex:Int, endPostId:Int,categoryId:Int,token:String,searchWord:String) : Deferred<ArrayList<PreviewPost>> {
-        return GlobalScope.async(Dispatchers.IO){
-            try {
 
-                postService.renderPost(GetPostInfo("bulletin",pagingIndex,endPostId,categoryId,token,searchWord))
-            }catch (e: Exception){
-                CompletableDeferred<ArrayList<PreviewPost>>(arrayListOf()).await()
-            }
+
+    fun getPosts(getPostInfo: GetPostInfo) : Deferred<ArrayList<PreviewPost>> {
+        return GlobalScope.async(Dispatchers.IO){
+                postService.renderPost(getPostInfo)
+
         }
     }
 

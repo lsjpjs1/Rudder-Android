@@ -41,6 +41,7 @@ interface PostService {
 
 }
 
+
 data class AddPostViewCountInfo(
     @SerializedName("post_id")
     val postId: Int

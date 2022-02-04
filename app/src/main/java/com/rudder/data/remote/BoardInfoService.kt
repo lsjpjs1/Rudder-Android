@@ -64,7 +64,12 @@ data class GetCategoriesRequest(
     val token: String?,
     @SerializedName(value = "school_id")
     val schoolId : Int?
-)
+
+){
+    override fun toString(): String {
+        return schoolId.toString()+ token.toString()
+    }
+}
 
 data class GetCategoriesRequestWithToken(
     val token: String?
