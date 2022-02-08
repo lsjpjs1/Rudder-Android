@@ -6,6 +6,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,8 @@ import kotlin.collections.ArrayList
 abstract class PostPreviewAdapter<out VM>(
     val listener: CustomOnclickListener,
     val context: Context,
-    val viewModel: VM
+    val viewModel: VM,
+    val lifecycleOwner: LifecycleOwner
 ) : ListAdapter<PreviewPost,PostPreviewAdapter<out VM>.CustomViewHolder>(diffUtil) {
     val MAX_POST_BODY_LENGTH = 50
 

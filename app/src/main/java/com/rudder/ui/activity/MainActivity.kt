@@ -58,6 +58,7 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.post_comments.*
 import androidx.navigation.fragment.findNavController
 import com.rudder.data.MainDisplayTab
+import com.rudder.databinding.PostPreviewBinding
 import com.rudder.util.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
@@ -105,6 +106,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
 
+
+
+
     companion object {
         private const val KEY_SELECTED_TAB = "selectedTab"
     }
@@ -120,6 +124,10 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         //val binding = ActivityMainBinding.inflate(layoutInflater)
         //setContentView(binding.root)
+//        val tmp = DataBindingUtil.setContentView<PostPreviewBinding>(
+//            this,
+//            R.layout.post_preview
+//        )
 
         binding.mainVM = viewModel
         binding.lifecycleOwner = this
@@ -298,7 +306,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
         viewModel.isAddPostSuccess.observe(this, Observer {
-            super.onBackPressed()
+            onBackPressed()
+            mainBottomNavigationAppear()
         })
 
 
@@ -556,11 +565,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun showPostMore(communityPostBottomSheetFragment: CommunityPostBottomSheetFragment){
         this.communityPostBottomSheetFragment = communityPostBottomSheetFragment
-        if (!communityPostBottomSheetFragment.isAdded)
-            communityPostBottomSheetFragment.show(
-                supportFragmentManager,
-                communityPostBottomSheetFragment.tag
-            )
+//        Log.d("test_showpostMore", "${!communityPostBottomSheetFragment.isVisible}")
+
+        if (!communityPostBottomSheetFragment.isVisible && !communityPostBottomSheetFragment.isAdded) {
+            communityPostBottomSheetFragment.show(supportFragmentManager,communityPostBottomSheetFragment.tag)
+        }
     }
 
     fun setParentCommentInfoText(string: String){

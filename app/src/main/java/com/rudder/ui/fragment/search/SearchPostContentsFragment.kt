@@ -41,7 +41,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
             R.layout.fragment_search_post_contents,container,false)
         searchDisplayBinding.lifecycleOwner = this
 
-        val adapter = MainPostPreviewAdapter(this,lazyContext, viewModel)
+        val adapter = MainPostPreviewAdapter(this,lazyContext, viewModel,viewLifecycleOwner)
         adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
         searchDisplayBinding.searchPostPreviewRV.also{
             it.layoutManager= LinearLayoutManager(lazyContext)
@@ -65,6 +65,10 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                 if(bool)
                     (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
+//            it?.let {
+//                if(it)
+//                (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
+//            }
         })
 
         viewModel.posts.observe(viewLifecycleOwner, Observer { items ->

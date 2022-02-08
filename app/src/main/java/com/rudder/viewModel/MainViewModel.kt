@@ -70,6 +70,7 @@ open class MainViewModel : ViewModel() {
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
+    private val _isPostMoreTmp = MutableLiveData<Boolean?>()
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
     private val _isPostMine = MutableLiveData<Event<Boolean>>()
     private val _isCommentMine = MutableLiveData<Event<Boolean>>()
@@ -163,6 +164,7 @@ open class MainViewModel : ViewModel() {
     val commentBodyCheck: LiveData<Event<Boolean>> = _commentBodyCheck
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
+    val isPostMoreTmp: LiveData<Boolean?> = _isPostMoreTmp
     val isCommentMore: LiveData<Event<Boolean>> = _isCommentMore
     val isPostMine: LiveData<Event<Boolean>> = _isPostMine
     val isCommentMine: LiveData<Event<Boolean>> = _isCommentMine
@@ -785,15 +787,22 @@ open class MainViewModel : ViewModel() {
 
     fun clickPostMore(position: Int) {
         _isPostMore.value = Event(true)
+        //_isPostMoreTmp.value = Event(true)
+
         _selectedPostMorePosition.value = position
         _postId.value = _posts.value!![_selectedPostMorePosition.value!!].postId
-
 
         if (_posts.value!![selectedPostMorePosition.value!!].isMine)
             _isPostMine.value = Event(true)
         else
             _isPostMine.value = Event(false)
+    }
 
+    fun dismissPostMore() {
+        //_isPostMoreTmp.value = switch()
+        switch(_isPostMoreTmp)
+
+        //_isPostMoreTmp.value = true
     }
 
     fun clickCommentMore(position: Int) {

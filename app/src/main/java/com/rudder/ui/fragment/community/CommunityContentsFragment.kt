@@ -20,6 +20,7 @@ import com.rudder.ui.adapter.MainPostPreviewAdapter
 import com.rudder.ui.fragment.comment.AddCommentFragment
 import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
 import com.rudder.util.CustomOnclickListener
+import com.rudder.util.Event
 import com.rudder.viewModel.MainViewModel
 
 class CommunityContentsFragment: Fragment(),CustomOnclickListener {
@@ -34,6 +35,9 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
     private val viewModel : MainViewModel by activityViewModels()
 
 
+    lateinit var adapter : MainPostPreviewAdapter
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +47,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         val communityDisplay = DataBindingUtil.inflate<FragmentCommunityContentsBinding>(inflater,R.layout.fragment_community_contents,container,false)
         communityDisplay.mainVM = viewModel
 
-        val adapter = MainPostPreviewAdapter(this,lazyContext, viewModel)
+        adapter = MainPostPreviewAdapter(this,lazyContext, viewModel,viewLifecycleOwner)
         adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
         communityDisplay.lifecycleOwner = this
         communityDisplay.postPreviewRV.also{
@@ -73,11 +77,25 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         })
 
         viewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
+
+
+            //Log.d("test_contents", "${it.getContentIfNotHandled()}")
+
+
             it.getContentIfNotHandled()?.let {
                     bool ->
                 if(bool)
                     (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
+
+            //Log.d("test_contents2", "${it.getContentIfNotHandled()}")
+
+//            it?.let {
+//                if(it)
+//                (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
+//            }
+
+
         })
 
         viewModel.isPostDelete.observe(viewLifecycleOwner, Observer {

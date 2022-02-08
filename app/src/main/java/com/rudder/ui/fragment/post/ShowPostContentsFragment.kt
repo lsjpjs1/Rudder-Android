@@ -171,6 +171,12 @@ class ShowPostContentsFragment(): Fragment() {
                 if(bool)
                 (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
+
+//            it?.let {
+//                if(it)
+//                (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
+//            }
+
         })
 
         viewModel.selectedParentCommentBody.observe(viewLifecycleOwner, Observer {

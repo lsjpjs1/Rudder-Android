@@ -1,14 +1,21 @@
 package com.rudder.ui.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.data.PreviewPost
+import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
+import com.rudder.util.ChangeUIState
 import com.rudder.util.CustomOnclickListener
 import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.android.synthetic.main.post_preview.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
@@ -16,8 +23,12 @@ import kotlin.collections.ArrayList
 
 class MainPostPreviewAdapter(listener:CustomOnclickListener,
                              context:Context,
-                             viewModel:MainViewModel
-) : PostPreviewAdapter<MainViewModel>(listener,context,viewModel) {
+                             viewModel:MainViewModel,
+                             lifecycleOwner: LifecycleOwner
+) : PostPreviewAdapter<MainViewModel>(listener,context,viewModel,lifecycleOwner) {
+
+
+
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val timeago =
             PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(getItem(position).postTime.time))
@@ -50,7 +61,43 @@ class MainPostPreviewAdapter(listener:CustomOnclickListener,
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.VISIBLE
         }
 
+//        holder.postPreviewBinding.postPreviewMoreImageView.setOnClickListener {
+//            it.isClickable = false
+//        }
 
+
+//        viewModel.isPostMore.observe(lifecycleOwner, Observer { it ->
+//            it.getContentIfNotHandled()?.let {
+//                    bool ->
+//                if(bool)
+//                    (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
+//            }
+//        })
+
+        viewModel.isPostMoreTmp.observe(lifecycleOwner, androidx.lifecycle.Observer { it ->
+            it?.let {
+                holder.postPreviewBinding.postPreviewMoreImageView.isClickable = true
+            }
+
+        })
+
+        //var tmp = 0
+        holder.postPreviewBinding.postPreviewMoreImageView.setOnClickListener {
+            viewModel.clickPostMore(position)
+            it.isClickable = false
+
+
+//            Log.d("test_tmp", "${tmp}")
+
+//
+//            if (tmp % 10 == 0) {
+//                it.isClickable = true
+//            } else {
+//                it.isClickable = false
+//            }
+//            tmp += 1
+
+        }
 
         Glide.with(holder.postPreviewBinding.root.previewPostProfileImageView.context)
             .load(getItem(position).userProfileImageUrl)
