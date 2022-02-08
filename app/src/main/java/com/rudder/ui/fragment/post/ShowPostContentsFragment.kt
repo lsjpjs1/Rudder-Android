@@ -65,6 +65,7 @@ class ShowPostContentsFragment(): Fragment() {
 
         Log.d("showpost","${viewModel.posts.value!!}")
 
+        viewModel.isLikePost()
         val displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
 
         fragmentBinding.showPostImageDisplayRecyclerView.also {

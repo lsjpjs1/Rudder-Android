@@ -33,7 +33,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
     }
     private val viewModel : MainViewModel by activityViewModels()
 
-
+    lateinit var adapter: MainPostPreviewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +43,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         val communityDisplay = DataBindingUtil.inflate<FragmentCommunityContentsBinding>(inflater,R.layout.fragment_community_contents,container,false)
         communityDisplay.mainVM = viewModel
 
-        val adapter = MainPostPreviewAdapter(this,lazyContext, viewModel)
+        adapter = MainPostPreviewAdapter(this,lazyContext, viewModel)
         adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
         communityDisplay.lifecycleOwner = this
         communityDisplay.postPreviewRV.also{

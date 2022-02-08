@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 class MainPostPreviewAdapter(listener:CustomOnclickListener,
                              context:Context,
                              viewModel:MainViewModel
-) : PostPreviewAdapter<MainViewModel>(listener,context,viewModel) {
+) : PostPreviewAdapter<MainViewModel>(listener,context,viewModel),CustomOnclickListener {
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val timeago =
             PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(getItem(position).postTime.time))
@@ -52,10 +52,16 @@ class MainPostPreviewAdapter(listener:CustomOnclickListener,
 
 
 
+
+
         Glide.with(holder.postPreviewBinding.root.previewPostProfileImageView.context)
             .load(getItem(position).userProfileImageUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.postPreviewBinding.root.previewPostProfileImageView)
+    }
+
+    override fun onClick(view: View, position: Int) {
+
     }
 
 }
