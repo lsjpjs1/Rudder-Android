@@ -915,7 +915,7 @@ open class MainViewModel : ViewModel() {
             var categoryList = Repository().getCategories(GetCategoriesRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY),null))
             viewModelScope.launch {
 
-                Log.d("categories",categoryList.toString())
+                Log.d("categories123",categoryList.toString())
                 _allCategories.value?.addAll(categoryList)
                 _categoryNames.value = splitCategoryNames(categoryList)
                 //_selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
