@@ -75,27 +75,16 @@ class MainPostPreviewAdapter(listener:CustomOnclickListener,
 //        })
 
         viewModel.isPostMoreTmp.observe(lifecycleOwner, androidx.lifecycle.Observer { it ->
+            Log.d("test_tmp_1", "${it}")
             it?.let {
                 holder.postPreviewBinding.postPreviewMoreImageView.isClickable = true
             }
 
         })
 
-        //var tmp = 0
         holder.postPreviewBinding.postPreviewMoreImageView.setOnClickListener {
             viewModel.clickPostMore(position)
             it.isClickable = false
-
-
-//            Log.d("test_tmp", "${tmp}")
-
-//
-//            if (tmp % 10 == 0) {
-//                it.isClickable = true
-//            } else {
-//                it.isClickable = false
-//            }
-//            tmp += 1
 
         }
 

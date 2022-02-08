@@ -204,6 +204,17 @@ class ShowPostContentsFragment(): Fragment() {
             }
         })
 
+        fragmentBinding.postMoreImageView.setOnClickListener {
+            viewModel.clickPostMore(viewModel.selectedPostPosition.value!!)
+            it.isClickable = false
+        }
+
+        viewModel.isPostMoreTmp.observe(viewLifecycleOwner, Observer { it ->
+            it?.let {
+                fragmentBinding.postMoreImageView.isClickable = true
+            }
+
+        })
 
 
 //        fragmentBinding.parentCommentInfoClose.setOnClickListener {
