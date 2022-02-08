@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.comment
 
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -63,9 +64,8 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
                     communityCommentBottomSheetBinding.commentBottomSheetCL2.visibility = View.GONE
                     communityCommentBottomSheetBinding.commentBottomSheetCL3.visibility = View.GONE
 
-
                 }else{
-                    communityCommentBottomSheetBinding.commentBottomSheetCL4.visibility = View.GONE
+                    //communityCommentBottomSheetBinding.commentBottomSheetCL4.visibility = View.GONE
                     communityCommentBottomSheetBinding.commentBottomSheetCL1.visibility = View.GONE
                     communityCommentBottomSheetBinding.sendPostMessageCommentCL.visibility = View.GONE
                 }
@@ -129,6 +129,11 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
         val receiveUserInfoId = viewModel.comments.value!![viewModel.selectedCommentMorePosition.value!!].user_info_id
         sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId)
         sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        viewModel.dismissCommentMore()
+        super.onDismiss(dialog)
     }
 
 }

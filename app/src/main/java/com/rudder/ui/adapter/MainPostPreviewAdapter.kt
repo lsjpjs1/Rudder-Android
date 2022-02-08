@@ -61,21 +61,8 @@ class MainPostPreviewAdapter(listener:CustomOnclickListener,
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.VISIBLE
         }
 
-//        holder.postPreviewBinding.postPreviewMoreImageView.setOnClickListener {
-//            it.isClickable = false
-//        }
 
-
-//        viewModel.isPostMore.observe(lifecycleOwner, Observer { it ->
-//            it.getContentIfNotHandled()?.let {
-//                    bool ->
-//                if(bool)
-//                    (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
-//            }
-//        })
-
-        viewModel.isPostMoreTmp.observe(lifecycleOwner, androidx.lifecycle.Observer { it ->
-            Log.d("test_tmp_1", "${it}")
+        viewModel.isPostMorePreventDouble.observe(lifecycleOwner, androidx.lifecycle.Observer { it ->
             it?.let {
                 holder.postPreviewBinding.postPreviewMoreImageView.isClickable = true
             }

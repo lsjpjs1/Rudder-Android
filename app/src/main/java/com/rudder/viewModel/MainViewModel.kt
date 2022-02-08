@@ -70,7 +70,8 @@ open class MainViewModel : ViewModel() {
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
-    private val _isPostMoreTmp = MutableLiveData<Boolean?>()
+    private val _isPostMorePreventDouble = MutableLiveData<Boolean?>()
+    private val _isCommentMorePreventDouble = MutableLiveData<Boolean?>()
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
     private val _isPostMine = MutableLiveData<Event<Boolean>>()
     private val _isCommentMine = MutableLiveData<Event<Boolean>>()
@@ -164,7 +165,8 @@ open class MainViewModel : ViewModel() {
     val commentBodyCheck: LiveData<Event<Boolean>> = _commentBodyCheck
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
-    val isPostMoreTmp: LiveData<Boolean?> = _isPostMoreTmp
+    val isPostMorePreventDouble: LiveData<Boolean?> = _isPostMorePreventDouble
+    val isCommentMorePreventDouble: LiveData<Boolean?> = _isCommentMorePreventDouble
     val isCommentMore: LiveData<Event<Boolean>> = _isCommentMore
     val isPostMine: LiveData<Event<Boolean>> = _isPostMine
     val isCommentMine: LiveData<Event<Boolean>> = _isCommentMine
@@ -787,8 +789,6 @@ open class MainViewModel : ViewModel() {
 
     fun clickPostMore(position: Int) {
         _isPostMore.value = Event(true)
-        //_isPostMoreTmp.value = Event(true)
-
         _selectedPostMorePosition.value = position
         _postId.value = _posts.value!![_selectedPostMorePosition.value!!].postId
 
@@ -799,10 +799,7 @@ open class MainViewModel : ViewModel() {
     }
 
     fun dismissPostMore() {
-        //_isPostMoreTmp.value = switch()
-        switch(_isPostMoreTmp)
-
-        //_isPostMoreTmp.value = true
+        switch(_isPostMorePreventDouble)
     }
 
     fun clickCommentMore(position: Int) {
@@ -813,6 +810,10 @@ open class MainViewModel : ViewModel() {
             _isCommentMine.value = Event(true)
         else
             _isCommentMine.value = Event(false)
+    }
+
+    fun dismissCommentMore() {
+        switch(_isCommentMorePreventDouble)
     }
 
 

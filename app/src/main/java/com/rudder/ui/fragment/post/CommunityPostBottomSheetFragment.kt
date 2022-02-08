@@ -146,15 +146,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 
 
     override fun onDismiss(dialog: DialogInterface) {
-        //viewModel.setIsPostEdit(null)
-        Log.d("ondismiss", "ondismiss")
         viewModel.dismissPostMore()
-
-        //parentActivity.communityContentsFragment.MainPostPreviewAdapter
-
-
-
-
         super.onDismiss(dialog)
     }
 
