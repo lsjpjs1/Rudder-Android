@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.postmessage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,27 +9,32 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentPostMessageRoomBinding
 import com.rudder.ui.adapter.RoomPostMessagesAdapter
 import com.rudder.viewModel.PostMessageRoomViewModel
 
-class PostMessageRoomFragment(
-        val postMessageRoomId: Int
-) : Fragment(){
+class PostMessageRoomFragment : Fragment() {
     private val viewModel: PostMessageRoomViewModel by viewModels()
     private val lazyContext by lazy {
         context
     }
+
+
+    companion object{
+        const val TAG = "PostMessageRoomFragment"
+    }
+
     private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         val fragmentBinding = DataBindingUtil.inflate<FragmentPostMessageRoomBinding>(inflater,
                 R.layout.fragment_post_message_room, container, false)
 
@@ -36,7 +42,6 @@ class PostMessageRoomFragment(
         fragmentBinding.postMessageRoomFragment = this
 
         val adapter = RoomPostMessagesAdapter(lazyContext)
-
         fragmentBinding.roomPostMessageRV.also {
             it.layoutManager =
                     LinearLayoutManager(lazyContext, LinearLayoutManager.VERTICAL, false)
@@ -44,16 +49,24 @@ class PostMessageRoomFragment(
             it.adapter = adapter
         }
 
-        viewModel.getMessagesByRoom(postMessageRoomId)
+
+
+       // val args = PostMessageRoomFragmentArgs by navArgs<>()
+
+        val args = PostMessageRoomFragment
+
+        Log.d("postMessageRoomIdValueA", "${arguments}")
+        val bundle = arguments?.getInt("postMessageRoomId")
+        //val postMessageRoomIdValue = bundle?.getInt("postMessageRoomId")
+        Log.d("postMessageRoomIdValue","${bundle}")
+
+        //viewModel.getMessagesByRoom(postMessageRoomIdValue!!)
 
         viewModel.messages.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }
         })
-
-
-
 
         return fragmentBinding.root
     }
@@ -63,6 +76,5 @@ class PostMessageRoomFragment(
         sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId.value)
         sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
     }
-
 
 }

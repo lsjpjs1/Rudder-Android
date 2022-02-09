@@ -49,6 +49,9 @@ class CustomBottomNavigator(
 
         val current = fragmentManager.findFragmentByTag(tag)
 
+        Log.d("hello", "${current}")
+
+
         fragmentManager.commit {
             val fragment = fragmentManager.fragmentFactory.instantiate(
                 ClassLoader.getSystemClassLoader(),
@@ -81,7 +84,6 @@ class CustomBottomNavigator(
                 hideOthers(newCurrentTag)
             }
         }
-        Log.d("hello_pop", "${newCurrentTag}")
         return true
     }
 

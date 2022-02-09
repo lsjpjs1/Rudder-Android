@@ -1,5 +1,6 @@
 package com.rudder.ui.activity
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.graphics.PorterDuff
@@ -26,6 +27,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -58,6 +61,8 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.post_comments.*
 import androidx.navigation.fragment.findNavController
 import com.rudder.data.MainDisplayTab
+import com.rudder.databinding.PostPreviewBinding
+import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
@@ -82,7 +87,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private lateinit var contactUsFragment: ContactUsFragment
 
     private lateinit var categorySelectMyPageFragment: CategorySelectMyPageFragment
-    private lateinit var postMessageRoomFragment: PostMessageRoomFragment
+    //private lateinit var postMessageRoomFragment: PostMessageRoomFragment
 
     lateinit var editPostFragment: EditPostFragment
 
@@ -105,6 +110,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
 
+
+
+
     companion object {
         private const val KEY_SELECTED_TAB = "selectedTab"
     }
@@ -120,6 +128,10 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         //val binding = ActivityMainBinding.inflate(layoutInflater)
         //setContentView(binding.root)
+//        val tmp = DataBindingUtil.setContentView<PostPreviewBinding>(
+//            this,
+//            R.layout.post_preview
+//        )
 
         binding.mainVM = viewModel
         binding.lifecycleOwner = this
@@ -298,7 +310,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
         viewModel.isAddPostSuccess.observe(this, Observer {
-            super.onBackPressed()
+            onBackPressed()
+            mainBottomNavigationAppear()
         })
 
 
@@ -556,11 +569,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun showPostMore(communityPostBottomSheetFragment: CommunityPostBottomSheetFragment){
         this.communityPostBottomSheetFragment = communityPostBottomSheetFragment
-        if (!communityPostBottomSheetFragment.isAdded)
-            communityPostBottomSheetFragment.show(
-                supportFragmentManager,
-                communityPostBottomSheetFragment.tag
-            )
+//        Log.d("test_showpostMore", "${!communityPostBottomSheetFragment.isVisible}")
+
+        if (!communityPostBottomSheetFragment.isVisible && !communityPostBottomSheetFragment.isAdded) {
+            communityPostBottomSheetFragment.show(supportFragmentManager,communityPostBottomSheetFragment.tag)
+        }
     }
 
     fun setParentCommentInfoText(string: String){
@@ -644,9 +657,21 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
     override fun showPostMessageRoomFragment(postMessageRoomId: Int) {
-        postMessageRoomFragment = PostMessageRoomFragment(postMessageRoomId)
+        //postMessageRoomFragment = PostMessageRoomFragment()
 
-        showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
+
+        //showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
+        val bundle = Bundle()
+        bundle.putInt("postMessageRoomId", postMessageRoomId)
+
+        Log.d("postMessageRoomIdValue2","${postMessageRoomId}")
+
+
+        val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
+
+
+        //navDisplayController.navigate(R.id.action_navigation_postmessage_to_navigation_postmessage_room, bundle)
+        navDisplayController.navigate(action)
     }
 
 
@@ -674,8 +699,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 }
             }
         }
-
-
 
         super.onBackPressed()
     }

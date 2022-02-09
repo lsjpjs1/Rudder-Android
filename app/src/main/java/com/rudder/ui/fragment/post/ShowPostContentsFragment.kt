@@ -52,7 +52,7 @@ class ShowPostContentsFragment(): Fragment() {
         _fragmentBinding= FragmentShowPostContentsBinding.inflate(inflater, container, false)
 
 
-        val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel)
+        val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel, viewLifecycleOwner )
         fragmentBinding.commentDisplayRV.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
                 override fun canScrollVertically(): Boolean {
@@ -172,6 +172,12 @@ class ShowPostContentsFragment(): Fragment() {
                 if(bool)
                 (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
+
+//            it?.let {
+//                if(it)
+//                (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
+//            }
+
         })
 
         viewModel.selectedParentCommentBody.observe(viewLifecycleOwner, Observer {
@@ -199,6 +205,17 @@ class ShowPostContentsFragment(): Fragment() {
             }
         })
 
+        fragmentBinding.postMoreImageView.setOnClickListener {
+            viewModel.clickPostMore(viewModel.selectedPostPosition.value!!)
+            it.isClickable = false
+        }
+
+        viewModel.isPostMorePreventDouble.observe(viewLifecycleOwner, Observer { it ->
+            it?.let {
+                fragmentBinding.postMoreImageView.isClickable = true
+            }
+
+        })
 
 
 //        fragmentBinding.parentCommentInfoClose.setOnClickListener {

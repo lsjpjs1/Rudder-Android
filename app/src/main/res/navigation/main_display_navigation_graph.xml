@@ -43,7 +43,21 @@
         android:id="@+id/navigation_postmessage"
         android:name="com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment"
         android:label="@string/post_message"
-        tools:layout="@layout/fragment_post_message_display" />
+        tools:layout="@layout/fragment_post_message_display">
+
+        <action
+            android:id="@+id/action_navigation_postmessage_to_navigation_postmessage_room"
+            app:destination="@id/navigation_postmessage_room"
+            app:popUpTo="@id/navigation_postmessage">
+            <argument
+                android:name="postMessageRoomId"
+                app:argType="integer" />
+
+        </action>
+
+
+    </bottom>
+
 
     <bottom
         android:id="@+id/navigation_mypage"
@@ -82,9 +96,13 @@
         android:id="@+id/navigation_show_post"
         android:name="com.rudder.ui.fragment.post.ShowPostDisplayFragment"
         android:label="ShowPostDisplayFragment"
-        tools:layout="@layout/fragment_show_post_display"
-        />
+        tools:layout="@layout/fragment_show_post_display">
+        <action
+            android:id="@+id/action_navigation_community_to_navigation_edit_post"
+            app:destination="@id/navigation_edit_post"
+            app:popUpTo="@id/navigation_show_post" />
 
+    </bottom>
 
     <bottom
         android:id="@+id/navigation_category_select_my_page"
@@ -99,6 +117,14 @@
         android:name="com.rudder.ui.fragment.post.EditPostFragment"
         android:label="EditPostFragment"
         tools:layout="@layout/fragment_add_post_display"
+        />
+
+
+    <bottom
+        android:id="@+id/navigation_postmessage_room"
+        android:name="com.rudder.ui.fragment.postmessage.PostMessageRoomFragment"
+        android:label="PostMessageRoomFragment"
+        tools:layout="@layout/fragment_post_message_room"
         />
 
 

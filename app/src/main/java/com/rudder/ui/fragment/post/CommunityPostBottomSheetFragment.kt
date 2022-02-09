@@ -18,6 +18,7 @@ import com.rudder.R
 import com.rudder.databinding.FragmentCommunityPostBottomSheetBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.community.CommunityContentsFragment
+import com.rudder.ui.adapter.MainPostPreviewAdapter
 import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
 import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_community_post_bottom_sheet.*
 
 class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomSheetDialogFragment() {
 
-    private lateinit var communityPostBottomSheetBinding : FragmentCommunityPostBottomSheetBinding
+    lateinit var communityPostBottomSheetBinding : FragmentCommunityPostBottomSheetBinding
 
     private val lazyContext by lazy {
         requireContext()
@@ -53,6 +54,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         communityPostBottomSheetBinding.lifecycleOwner = this
         communityPostBottomSheetBinding.communityPostBottomSheetFragment = this
         val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
+        layoutConfig(displayDpValue)
 
         viewModel.selectedPostMorePosition.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -64,9 +66,6 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         viewModel.isPostMine.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if(!it) { // ismine == false, 내께 아니면
-                    postBottomSheetCL2.visibility = View.GONE
-                    postBottomSheetCL3.visibility = View.GONE
-
                     var lp4 = communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams
                     lp4.height = (displayDpValue[1] * 0.05).toInt()
                     communityPostBottomSheetBinding.postBottomSheetCL4.layoutParams = lp4
@@ -82,6 +81,9 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                     var lp6 = communityPostBottomSheetBinding.sendPostMessageCL.layoutParams
                     lp6.height = (displayDpValue[1] * 0.08).toInt()
                     communityPostBottomSheetBinding.sendPostMessageCL.layoutParams = lp6
+
+                    communityPostBottomSheetBinding.postBottomSheetCL2.visibility = View.GONE
+                    communityPostBottomSheetBinding.postBottomSheetCL3.visibility = View.GONE
 
                 }else{
                     communityPostBottomSheetBinding.postBottomSheetCL1.visibility = View.GONE
@@ -142,15 +144,12 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         }
 
 
-        layoutConfig(displayDpValue)
-
-
         return communityPostBottomSheetBinding.root
     }
 
 
     override fun onDismiss(dialog: DialogInterface) {
-        viewModel.setIsPostEdit(null)
+        viewModel.dismissPostMore()
         super.onDismiss(dialog)
     }
 
@@ -185,4 +184,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId)
         sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
     }
+
+
+
 }

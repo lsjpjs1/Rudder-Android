@@ -70,6 +70,8 @@ open class MainViewModel : ViewModel() {
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
+    private val _isPostMorePreventDouble = MutableLiveData<Boolean?>()
+    private val _isCommentMorePreventDouble = MutableLiveData<Boolean?>()
     private val _isCommentMore = MutableLiveData<Event<Boolean>>()
     private val _isPostMine = MutableLiveData<Event<Boolean>>()
     private val _isCommentMine = MutableLiveData<Event<Boolean>>()
@@ -126,11 +128,10 @@ open class MainViewModel : ViewModel() {
 
     val _isStringBlank = MutableLiveData<Event<Boolean>>()
 
-    private val _searchWord = MutableLiveData<String>()
+
     private val _searchPosts = MutableLiveData<ArrayList<PreviewPost>>()
 
 
-    val searchWord: LiveData<String> = _searchWord
     val searchPosts: LiveData<ArrayList<PreviewPost>> = _searchPosts
     val selectedRequestJoinClubCategoryId:LiveData<Int> = _selectedRequestJoinClubCategoryId
     val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
@@ -163,6 +164,8 @@ open class MainViewModel : ViewModel() {
     val commentBodyCheck: LiveData<Event<Boolean>> = _commentBodyCheck
 
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
+    val isPostMorePreventDouble: LiveData<Boolean?> = _isPostMorePreventDouble
+    val isCommentMorePreventDouble: LiveData<Boolean?> = _isCommentMorePreventDouble
     val isCommentMore: LiveData<Event<Boolean>> = _isCommentMore
     val isPostMine: LiveData<Event<Boolean>> = _isPostMine
     val isCommentMine: LiveData<Event<Boolean>> = _isCommentMine
@@ -260,7 +263,7 @@ open class MainViewModel : ViewModel() {
         )
         _postBody.value = ""
 
-        clearSearchPost()
+        //clearSearchPost()
         clearNestedCommentInfo()
 
 
@@ -286,54 +289,7 @@ open class MainViewModel : ViewModel() {
         _myProfileImageUrl.value = url
     }
 
-    fun clearSearchPost(){
-        Log.d("claersearch_hello","clearsearch")
-        _posts.value = arrayListOf()
-        _searchWord.value = MutableLiveData<String>().value
-    }
 
-    fun searchPost(isScroll: Boolean){
-        val key = BuildConfig.TOKEN_KEY
-        val token = App.prefs.getValue(key)
-        Log.d("search_hello", "searchPost")
-        GlobalScope.launch {
-            val resPosts = if (isScroll){
-                Repository().getPosts(
-                    GetPostInfo(
-                        pagingIndex,
-                        endPostId,
-                        -1,
-                        token!!,
-                        _searchWord.value!!
-                    )
-                )
-            }else{
-                Repository().getPosts(
-                    GetPostInfo(
-                        -1,
-                        -1,
-                        -1,
-                        token!!,
-                        _searchWord.value!!
-                    )
-                )
-            }
-
-            viewModelScope.launch {
-                if (isScroll){
-                    val oldPosts = _posts.value
-                    oldPosts!!.addAll(resPosts)
-                    Log.d("oldPost", oldPosts.toString())
-                    _posts.value = oldPosts!!
-                }else{
-                    _posts.value = resPosts
-                }
-            }
-        }
-    }
-    fun setSearchWord(string: String){
-        _searchWord.value = string
-    }
 
     fun clickSearchPost() {
         _isSearchPostClick.value = Event(true)
@@ -787,12 +743,14 @@ open class MainViewModel : ViewModel() {
         _selectedPostMorePosition.value = position
         _postId.value = _posts.value!![_selectedPostMorePosition.value!!].postId
 
-
         if (_posts.value!![selectedPostMorePosition.value!!].isMine)
             _isPostMine.value = Event(true)
         else
             _isPostMine.value = Event(false)
+    }
 
+    fun dismissPostMore() {
+        switch(_isPostMorePreventDouble)
     }
 
     fun clickCommentMore(position: Int) {
@@ -803,6 +761,10 @@ open class MainViewModel : ViewModel() {
             _isCommentMine.value = Event(true)
         else
             _isCommentMine.value = Event(false)
+    }
+
+    fun dismissCommentMore() {
+        switch(_isCommentMorePreventDouble)
     }
 
 

@@ -13,6 +13,7 @@ import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -29,7 +30,8 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Context, val viewModel: MainViewModel): RecyclerView.Adapter<PostCommentsAdapter.CustomViewHolder>() {
+class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Context, val viewModel: MainViewModel, val lifecycleOwner: LifecycleOwner
+): RecyclerView.Adapter<PostCommentsAdapter.CustomViewHolder>() {
     inner class CustomViewHolder(val postCommentsBinding: PostCommentsBinding) : RecyclerView.ViewHolder(postCommentsBinding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostCommentsAdapter.CustomViewHolder {
         val bind = DataBindingUtil.inflate<PostCommentsBinding>(
@@ -98,6 +100,19 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
         holder.postCommentsBinding.comment = commentList[position]
         holder.postCommentsBinding.timeago = timeago
         holder.postCommentsBinding.position = position
+
+
+        holder.postCommentsBinding.commentMoreImageView.setOnClickListener {
+            viewModel.clickCommentMore(position)
+            it.isClickable = false
+        }
+
+        viewModel.isCommentMorePreventDouble.observe(lifecycleOwner, androidx.lifecycle.Observer { it ->
+            it?.let {
+                holder.postCommentsBinding.commentMoreImageView.isClickable = true
+            }
+
+        })
 
 
 

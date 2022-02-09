@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.rudder.R
 import com.rudder.databinding.FragmentAddPostDisplayBinding
 import com.rudder.ui.activity.MainActivity
@@ -43,7 +44,12 @@ class EditPostFragment() : Fragment() {
 
 
         viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
-            parentActivity.onBackPressed()
+//            fragmentBinding.findNavController().popBackStack()
+//            (activity as MainActivity).mainBottomNavigationAppear()
+
+            parentActivity.findNavController(R.id.mainDisplayContainerView).popBackStack()
+            (activity as MainActivity).mainBottomNavigationAppear()
+
         })
 
         return fragmentBinding.root

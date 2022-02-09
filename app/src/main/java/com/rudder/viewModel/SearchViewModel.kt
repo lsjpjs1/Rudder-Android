@@ -1,8 +1,12 @@
 package com.rudder.viewModel
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.rudder.BuildConfig
 import com.rudder.data.EditPostInfo
+import com.rudder.data.GetPostInfo
 import com.rudder.data.local.App
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
@@ -13,8 +17,20 @@ import kotlinx.coroutines.launch
 
 class SearchViewModel : MainViewModel() {
     override var qwe = false
+
+    private val _searchWord = MutableLiveData<String>()
+
+
+
+
+
+    val searchWord: LiveData<String> = _searchWord
+
+
+
     init {
         postMode = PostMode.SEARCH
+        clearSearchPost()
     }
 
     override fun editPost(){
@@ -51,4 +67,59 @@ class SearchViewModel : MainViewModel() {
         clearPosts()
         searchPost(false)
     }
+
+    fun searchPost(isScroll: Boolean){
+        val key = BuildConfig.TOKEN_KEY
+        val token = App.prefs.getValue(key)
+        Log.d("search_hello", "searchPost")
+        GlobalScope.launch {
+            val resPosts = if (isScroll){
+                Repository().getPosts(
+                    GetPostInfo(
+                        pagingIndex,
+                        endPostId,
+                        -1,
+                        token!!,
+                        _searchWord.value!!
+                    )
+                )
+            }else{
+                Repository().getPosts(
+                    GetPostInfo(
+                        -1,
+                        -1,
+                        -1,
+                        token!!,
+                        _searchWord.value!!
+                    )
+                )
+            }
+
+            viewModelScope.launch {
+                if (isScroll){
+                    val oldPosts = _posts.value
+                    oldPosts!!.addAll(resPosts)
+                    Log.d("oldPost", oldPosts.toString())
+                    _posts.value = oldPosts!!
+                }else{
+                    _posts.value = resPosts
+                }
+            }
+        }
+    }
+
+
+
+    fun clearSearchPost(){
+        Log.d("claersearch_hello","clearsearch")
+        _posts.value = arrayListOf()
+        _searchWord.value = MutableLiveData<String>().value
+    }
+
+
+    fun setSearchWord(string: String){
+        _searchWord.value = string
+    }
+
+
 }
