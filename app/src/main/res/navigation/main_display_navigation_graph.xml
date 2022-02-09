@@ -49,13 +49,14 @@
             android:id="@+id/action_navigation_postmessage_to_navigation_postmessage_room"
             app:destination="@id/navigation_postmessage_room"
             app:popUpTo="@id/navigation_postmessage">
+            <argument
+                android:name="postMessageRoomId"
+                app:argType="integer" />
 
         </action>
 
 
     </bottom>
-
-
 
 
     <bottom

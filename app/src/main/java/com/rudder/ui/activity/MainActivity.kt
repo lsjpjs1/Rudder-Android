@@ -62,6 +62,7 @@ import kotlinx.android.synthetic.main.post_comments.*
 import androidx.navigation.fragment.findNavController
 import com.rudder.data.MainDisplayTab
 import com.rudder.databinding.PostPreviewBinding
+import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private lateinit var contactUsFragment: ContactUsFragment
 
     private lateinit var categorySelectMyPageFragment: CategorySelectMyPageFragment
-    private lateinit var postMessageRoomFragment: PostMessageRoomFragment
+    //private lateinit var postMessageRoomFragment: PostMessageRoomFragment
 
     lateinit var editPostFragment: EditPostFragment
 
@@ -666,7 +667,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         Log.d("postMessageRoomIdValue2","${postMessageRoomId}")
 
 
-        navDisplayController.navigate(R.id.action_navigation_postmessage_to_navigation_postmessage_room, bundle)
+        val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
+
+
+        //navDisplayController.navigate(R.id.action_navigation_postmessage_to_navigation_postmessage_room, bundle)
+        navDisplayController.navigate(action)
     }
 
 
