@@ -779,12 +779,9 @@ open class MainViewModel : ViewModel() {
 
     fun clickPostEdit() {
 
-        switch(_isPostEdit)
-        _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
-        Log.d("postcatint",findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId ).toString())
-        _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
 
-        _photoPickerClickSwitch.value = null
+        _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
+        _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
     }
 
     fun clickBlockUser() {

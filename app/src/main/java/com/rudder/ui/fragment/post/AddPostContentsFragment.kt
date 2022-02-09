@@ -51,6 +51,7 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
         if (isEdit){
             display.root.categorySpinner.isEnabled=false
             display.root.showPhoto.visibility=View.GONE
+            viewModel.clickPostEdit()
         }else{
             display.root.categorySpinner.isEnabled = true
             display.root.showPhoto.visibility=View.VISIBLE
