@@ -1,5 +1,6 @@
 package com.rudder.ui.activity
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.graphics.PorterDuff
@@ -26,6 +27,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -653,9 +656,17 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
     override fun showPostMessageRoomFragment(postMessageRoomId: Int) {
-        postMessageRoomFragment = PostMessageRoomFragment(postMessageRoomId)
+        //postMessageRoomFragment = PostMessageRoomFragment()
 
-        showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
+
+        //showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
+        val bundle = Bundle()
+        bundle.putInt("postMessageRoomId", postMessageRoomId)
+
+        Log.d("postMessageRoomIdValue2","${postMessageRoomId}")
+
+
+        navDisplayController.navigate(R.id.action_navigation_postmessage_to_navigation_postmessage_room, bundle)
     }
 
 

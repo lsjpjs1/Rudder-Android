@@ -128,11 +128,10 @@ open class MainViewModel : ViewModel() {
 
     val _isStringBlank = MutableLiveData<Event<Boolean>>()
 
-    private val _searchWord = MutableLiveData<String>()
+
     private val _searchPosts = MutableLiveData<ArrayList<PreviewPost>>()
 
 
-    val searchWord: LiveData<String> = _searchWord
     val searchPosts: LiveData<ArrayList<PreviewPost>> = _searchPosts
     val selectedRequestJoinClubCategoryId:LiveData<Int> = _selectedRequestJoinClubCategoryId
     val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
@@ -264,7 +263,7 @@ open class MainViewModel : ViewModel() {
         )
         _postBody.value = ""
 
-        clearSearchPost()
+        //clearSearchPost()
         clearNestedCommentInfo()
         if(qwe)
         getPosts()
@@ -291,54 +290,7 @@ open class MainViewModel : ViewModel() {
         _myProfileImageUrl.value = url
     }
 
-    fun clearSearchPost(){
-        Log.d("claersearch_hello","clearsearch")
-        _posts.value = arrayListOf()
-        _searchWord.value = MutableLiveData<String>().value
-    }
 
-    fun searchPost(isScroll: Boolean){
-        val key = BuildConfig.TOKEN_KEY
-        val token = App.prefs.getValue(key)
-        Log.d("search_hello", "searchPost")
-        GlobalScope.launch {
-            val resPosts = if (isScroll){
-                Repository().getPosts(
-                    GetPostInfo(
-                        pagingIndex,
-                        endPostId,
-                        -1,
-                        token!!,
-                        _searchWord.value!!
-                    )
-                )
-            }else{
-                Repository().getPosts(
-                    GetPostInfo(
-                        -1,
-                        -1,
-                        -1,
-                        token!!,
-                        _searchWord.value!!
-                    )
-                )
-            }
-
-            viewModelScope.launch {
-                if (isScroll){
-                    val oldPosts = _posts.value
-                    oldPosts!!.addAll(resPosts)
-                    Log.d("oldPost", oldPosts.toString())
-                    _posts.value = oldPosts!!
-                }else{
-                    _posts.value = resPosts
-                }
-            }
-        }
-    }
-    fun setSearchWord(string: String){
-        _searchWord.value = string
-    }
 
     fun clickSearchPost() {
         _isSearchPostClick.value = Event(true)

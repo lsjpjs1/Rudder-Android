@@ -43,7 +43,20 @@
         android:id="@+id/navigation_postmessage"
         android:name="com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment"
         android:label="@string/post_message"
-        tools:layout="@layout/fragment_post_message_display" />
+        tools:layout="@layout/fragment_post_message_display">
+
+        <action
+            android:id="@+id/action_navigation_postmessage_to_navigation_postmessage_room"
+            app:destination="@id/navigation_postmessage_room"
+            app:popUpTo="@id/navigation_postmessage">
+
+        </action>
+
+
+    </bottom>
+
+
+
 
     <bottom
         android:id="@+id/navigation_mypage"
@@ -103,6 +116,14 @@
         android:name="com.rudder.ui.fragment.post.EditPostFragment"
         android:label="EditPostFragment"
         tools:layout="@layout/fragment_add_post_display"
+        />
+
+
+    <bottom
+        android:id="@+id/navigation_postmessage_room"
+        android:name="com.rudder.ui.fragment.postmessage.PostMessageRoomFragment"
+        android:label="PostMessageRoomFragment"
+        tools:layout="@layout/fragment_post_message_room"
         />
 
 

@@ -59,6 +59,7 @@
                 android:visibility="visible"
                 android:background="@color/white"
                 android:elevation="30dp"
+                app:labelVisibilityMode="unlabeled"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:theme="@style/ToolbarTheme"
                 app:menu="@menu/bottom_nav_menu" />

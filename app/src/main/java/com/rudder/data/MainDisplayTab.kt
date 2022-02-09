@@ -9,6 +9,7 @@ import com.rudder.ui.fragment.post.AddPostDisplayFragment
 import com.rudder.ui.fragment.post.EditPostFragment
 import com.rudder.ui.fragment.post.ShowPostDisplayFragment
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment
+import com.rudder.ui.fragment.postmessage.PostMessageRoomFragment
 import com.rudder.ui.fragment.search.SearchPostDisplayFragment
 
 
@@ -23,8 +24,8 @@ enum class MainDisplayTab( // Just, show, hide
     ADDPOST(R.id.navigation_add_post, AddPostDisplayFragment.TAG),
     SHOWPOST(R.id.navigation_show_post, ShowPostDisplayFragment.TAG),
     CATEGORYSELECTMYPAGE(R.id.navigation_category_select_my_page, CategorySelectMyPageFragment.TAG),
-    EDITPOST(R.id.navigation_edit_post, EditPostFragment.TAG);
-
+    EDITPOST(R.id.navigation_edit_post, EditPostFragment.TAG),
+    POSTMESSAGEROOM(R.id.navigation_postmessage_room, PostMessageRoomFragment.TAG);
 
 
     companion object {
