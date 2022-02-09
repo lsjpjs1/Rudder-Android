@@ -68,9 +68,12 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         })
 
         viewModel.isAddPostSuccess.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled().let {
-                viewModel.clearPosts()
-                viewModel.getPosts()
+            it.getContentIfNotHandled()?.let {
+                if(it){
+                    viewModel.clearPosts()
+                    viewModel.getPosts()
+                }
+
             }
         })
 

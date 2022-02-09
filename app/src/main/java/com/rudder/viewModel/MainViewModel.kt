@@ -262,8 +262,7 @@ open class MainViewModel : ViewModel() {
 
         clearSearchPost()
         clearNestedCommentInfo()
-        if(qwe)
-        getPosts()
+
 
         viewModelScope.async {
             getCategories().await()
