@@ -49,7 +49,6 @@ class CustomBottomNavigator(
 
         val current = fragmentManager.findFragmentByTag(tag)
 
-        Log.d("hello", "${current}")
 
 
         fragmentManager.commit {
@@ -57,6 +56,7 @@ class CustomBottomNavigator(
                 ClassLoader.getSystemClassLoader(),
                 className
             )
+            fragment.arguments = args
             when {
                 current == null -> { // 처음 fragment 생성될 때
                     add(fragmentContainerId, fragment, tag)

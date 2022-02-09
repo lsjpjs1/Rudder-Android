@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -49,7 +50,6 @@ import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.post.*
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment
 import com.rudder.ui.fragment.search.SearchPostDisplayFragment
-import com.rudder.ui.fragment.postmessage.PostMessageRoomFragment
 import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
@@ -61,7 +61,6 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.post_comments.*
 import androidx.navigation.fragment.findNavController
 import com.rudder.data.MainDisplayTab
-import com.rudder.databinding.PostPreviewBinding
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
@@ -520,7 +519,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
     fun showPost(viewModel: MainViewModel, showPostContentsFragment: ShowPostContentsFragment) {
-        viewModel.isLikePost()
         this.showPostContentsFragment = showPostContentsFragment
 
         parentCommentInfoClose.setOnClickListener {
@@ -621,6 +619,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_SELECTED_TAB, binding.mainBottomNavigation.selectedItemId)
+
     }
 
 
@@ -661,13 +660,19 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
         //showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
-        val bundle = Bundle()
-        bundle.putInt("postMessageRoomId", postMessageRoomId)
+        //val bundle = Bundle()
+        //bundle.putInt("postMessageRoomId", postMessageRoomId)
 
-        Log.d("postMessageRoomIdValue2","${postMessageRoomId}")
+        //Log.d("postMessageRoomIdValue2","${postMessageRoomId}")
+
+        //val bundle = bundleOf("postMessageRoomId" to postMessageRoomId)
+        //view.findNavController().navigate(R.id.confirmationAction, bundle)
 
 
         val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
+
+        //val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(22)
+
 
 
         //navDisplayController.navigate(R.id.action_navigation_postmessage_to_navigation_postmessage_room, bundle)

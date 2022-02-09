@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
@@ -137,6 +138,17 @@ private val viewModel by lazy {
 //        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
 
 //        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
+        //(activity as MainActivity).changeSelectedPostPosition(position)
+
+        //viewModel.
+
+
+        view.findNavController().navigate(R.id.action_navigation_search_to_navigation_show_post)
+        (activity as MainActivity).addCommentFragmentAppear()
+
+
+
+
         //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
 //        if(!viewModel.isAlreadyReadPost()){
 //            viewModel.addPostViewCount()

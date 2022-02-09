@@ -37,9 +37,6 @@ class PostMessageAdapter(
         holder.viewBinding.postMessageItemCL.setOnClickListener {
             mainActivityInterface.showPostMessageRoomFragment(getItem(position).postMessageRoomId)
         }
-
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {

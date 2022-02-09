@@ -28,7 +28,7 @@ class PostMessageRoomFragment : Fragment() {
     }
 
     private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
-
+    val args : PostMessageRoomFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,18 +49,8 @@ class PostMessageRoomFragment : Fragment() {
             it.adapter = adapter
         }
 
-
-
-       // val args = PostMessageRoomFragmentArgs by navArgs<>()
-
-        val args = PostMessageRoomFragment
-
-        Log.d("postMessageRoomIdValueA", "${arguments}")
-        val bundle = arguments?.getInt("postMessageRoomId")
-        //val postMessageRoomIdValue = bundle?.getInt("postMessageRoomId")
-        Log.d("postMessageRoomIdValue","${bundle}")
-
-        //viewModel.getMessagesByRoom(postMessageRoomIdValue!!)
+        val postMessageRoomIdValue = args.postMessageRoomId
+        viewModel.getMessagesByRoom(postMessageRoomIdValue!!)
 
         viewModel.messages.observe(viewLifecycleOwner, Observer {
             it?.let {

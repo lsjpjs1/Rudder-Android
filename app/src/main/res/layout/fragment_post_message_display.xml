@@ -16,6 +16,14 @@
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="@dimen/community_header_height">
 
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/postMessageHeaderFragment"
+                android:name="com.rudder.ui.fragment.postmessage.PostMessageHeaderFragment"
+                >
+            </fragment>
+
         </FrameLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

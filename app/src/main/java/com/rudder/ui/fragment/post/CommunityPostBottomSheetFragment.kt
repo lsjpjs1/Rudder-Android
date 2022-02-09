@@ -20,10 +20,12 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.community.CommunityContentsFragment
 import com.rudder.ui.adapter.MainPostPreviewAdapter
 import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
+import com.rudder.ui.fragment.search.SearchPostDisplayFragment
 import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.fragment_community_post_bottom_sheet.*
+import kotlinx.android.synthetic.main.fragment_search_post_display.*
 
 
 class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomSheetDialogFragment() {
@@ -138,7 +140,12 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 //                .navigate(R.id.action_navigation_community_to_navigation_edit_post)
 
 
-            parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_community_to_navigation_edit_post)
+
+//            if (SearchPostDisplayFragment())
+//                parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_search_to_navigation_edit_post)
+//            else
+//                parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_community_to_navigation_edit_post)
+
             (activity as MainActivity).mainBottomNavigationDisappear()
 
         }

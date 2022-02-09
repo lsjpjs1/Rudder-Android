@@ -49,9 +49,14 @@
             android:id="@+id/action_navigation_postmessage_to_navigation_postmessage_room"
             app:destination="@id/navigation_postmessage_room"
             app:popUpTo="@id/navigation_postmessage">
+
             <argument
                 android:name="postMessageRoomId"
-                app:argType="integer" />
+                app:argType="integer"
+                android:defaultValue="1"
+
+                />
+
 
         </action>
 
@@ -79,8 +84,24 @@
             android:id="@+id/navigation_search"
             android:name="com.rudder.ui.fragment.search.SearchPostDisplayFragment"
             android:label="SearchPostDisplayFragment"
-            tools:layout="@layout/fragment_search_post_display"
-            />
+            tools:layout="@layout/fragment_search_post_display">
+
+            <action
+                android:id="@+id/action_navigation_search_to_navigation_edit_post"
+                app:destination="@id/navigation_edit_post"
+                app:popUpTo="@id/navigation_search" />
+
+            <action
+                android:id="@+id/action_navigation_search_to_navigation_show_post"
+                app:destination="@id/navigation_show_post"
+                app:popUpTo="@id/navigation_search"
+                />
+
+
+        </bottom>
+
+
+
 
     </navigation>
 
@@ -124,8 +145,13 @@
         android:id="@+id/navigation_postmessage_room"
         android:name="com.rudder.ui.fragment.postmessage.PostMessageRoomFragment"
         android:label="PostMessageRoomFragment"
-        tools:layout="@layout/fragment_post_message_room"
-        />
+        tools:layout="@layout/fragment_post_message_room">
 
+        <argument
+            android:name="postMessageRoomId"
+            app:argType="integer"
+            android:defaultValue="1"
+            />
+    </bottom>
 
 </navigation>
