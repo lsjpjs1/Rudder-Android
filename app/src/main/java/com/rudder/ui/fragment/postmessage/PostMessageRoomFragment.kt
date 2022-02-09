@@ -28,6 +28,19 @@ class PostMessageRoomFragment : Fragment() {
     }
 
     private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
+//    val args : PostMessageRoomFragmentArgs by navArgs()
+//
+//    private val asd by lazy {
+//        args.postMessageRoomId
+//    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //val postMessageRoomIdValue = args.postMessageRoomId
+        //Log.d("postMessageRoomIdValueA", "${asd}")
+        super.onViewCreated(view, savedInstanceState)
+
+    }
 
 
     override fun onCreateView(
@@ -51,14 +64,13 @@ class PostMessageRoomFragment : Fragment() {
 
 
 
-       // val args = PostMessageRoomFragmentArgs by navArgs<>()
+       //val postMessageRoomIdValue = args.postMessageRoomId
 
-        val args = PostMessageRoomFragment
 
-        Log.d("postMessageRoomIdValueA", "${arguments}")
-        val bundle = arguments?.getInt("postMessageRoomId")
-        //val postMessageRoomIdValue = bundle?.getInt("postMessageRoomId")
-        Log.d("postMessageRoomIdValue","${bundle}")
+        //Log.d("postMessageRoomIdValueA", "${postMessageRoomIdValue}")
+        val result = arguments?.getInt("postMessageRoomId")
+        //val postMessageRoomIdValue =
+        Log.d("postMessageRoomIdValue","${result}")
 
         //viewModel.getMessagesByRoom(postMessageRoomIdValue!!)
 

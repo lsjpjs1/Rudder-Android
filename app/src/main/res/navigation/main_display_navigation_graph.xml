@@ -124,8 +124,12 @@
         android:id="@+id/navigation_postmessage_room"
         android:name="com.rudder.ui.fragment.postmessage.PostMessageRoomFragment"
         android:label="PostMessageRoomFragment"
-        tools:layout="@layout/fragment_post_message_room"
-        />
+        tools:layout="@layout/fragment_post_message_room">
+        <argument
+            android:name="postMessageRoomId"
+            app:argType="integer"
+            />
 
+    </bottom>
 
 </navigation>

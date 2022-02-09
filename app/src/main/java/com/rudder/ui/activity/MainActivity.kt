@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -661,13 +662,18 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
         //showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
-        val bundle = Bundle()
-        bundle.putInt("postMessageRoomId", postMessageRoomId)
+        //val bundle = Bundle()
+        //bundle.putInt("postMessageRoomId", postMessageRoomId)
 
-        Log.d("postMessageRoomIdValue2","${postMessageRoomId}")
+        //Log.d("postMessageRoomIdValue2","${postMessageRoomId}")
+
+        //val bundle = bundleOf("postMessageRoomId" to postMessageRoomId)
+        //view.findNavController().navigate(R.id.confirmationAction, bundle)
 
 
-        val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
+        //val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
+
+        val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(22)
 
 
         //navDisplayController.navigate(R.id.action_navigation_postmessage_to_navigation_postmessage_room, bundle)
