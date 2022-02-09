@@ -49,9 +49,14 @@
             android:id="@+id/action_navigation_postmessage_to_navigation_postmessage_room"
             app:destination="@id/navigation_postmessage_room"
             app:popUpTo="@id/navigation_postmessage">
+
             <argument
                 android:name="postMessageRoomId"
-                app:argType="integer" />
+                app:argType="integer"
+                android:defaultValue="1"
+
+                />
+
 
         </action>
 
@@ -125,11 +130,12 @@
         android:name="com.rudder.ui.fragment.postmessage.PostMessageRoomFragment"
         android:label="PostMessageRoomFragment"
         tools:layout="@layout/fragment_post_message_room">
+
         <argument
             android:name="postMessageRoomId"
             app:argType="integer"
+            android:defaultValue="1"
             />
-
     </bottom>
 
 </navigation>

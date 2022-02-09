@@ -41,9 +41,9 @@ class PostMessageDisplayFragment : Fragment() {
 
         fragmentBinding.lifecycleOwner = this
 
-        childFragmentManager.beginTransaction()
-            .add(R.id.postMessageHeader, PostMessageHeaderFragment())
-            .commit()
+//        childFragmentManager.beginTransaction()
+//            .add(R.id.postMessageHeader, PostMessageHeaderFragment())
+//            .commit()
 
         val adapter = PostMessageAdapter(activity as MainActivityInterface)
 
@@ -61,8 +61,6 @@ class PostMessageDisplayFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
-
-
 
         return fragmentBinding.root
     }
