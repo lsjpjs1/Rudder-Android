@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import com.rudder.R
 import com.rudder.databinding.FragmentSearchPostHeaderBinding
@@ -19,8 +22,10 @@ import com.rudder.viewModel.SearchViewModel
 
 class SearchPostHeaderFragment : Fragment() {
 
-    private val viewModel: SearchViewModel by activityViewModels()
-
+//    private val viewModel: SearchViewModel by activityViewModels()
+    private val viewModel by lazy {
+        ViewModelProvider(parentFragment as ViewModelStoreOwner).get(SearchViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
