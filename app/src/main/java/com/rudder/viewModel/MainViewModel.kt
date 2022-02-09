@@ -778,6 +778,9 @@ open class MainViewModel : ViewModel() {
     }
 
     fun clickPostEdit() {
+        Log.d("test1234", "${_selectedPostMorePosition.value!!}")
+
+        Log.d("test1234", "${_posts.value!!}")
 
 
         _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody

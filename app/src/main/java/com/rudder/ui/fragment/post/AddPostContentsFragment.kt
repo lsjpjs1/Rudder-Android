@@ -48,7 +48,7 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
 
         viewModel.clearAddPost()
 
-        if (isEdit){
+        if (isEdit){ // Add가 아닌, Edit인 경우
             display.root.categorySpinner.isEnabled=false
             display.root.showPhoto.visibility=View.GONE
             viewModel.clickPostEdit()

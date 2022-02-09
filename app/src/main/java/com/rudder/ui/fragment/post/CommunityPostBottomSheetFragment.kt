@@ -1,7 +1,6 @@
 package com.rudder.ui.fragment.post
 
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -10,22 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityPostBottomSheetBinding
 import com.rudder.ui.activity.MainActivity
-import com.rudder.ui.fragment.community.CommunityContentsFragment
-import com.rudder.ui.adapter.MainPostPreviewAdapter
 import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
-import com.rudder.ui.fragment.search.SearchPostDisplayFragment
-import com.rudder.util.FragmentShowHide
 import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.fragment_community_display.*
-import kotlinx.android.synthetic.main.fragment_community_post_bottom_sheet.*
-import kotlinx.android.synthetic.main.fragment_search_post_display.*
 
 
 class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomSheetDialogFragment() {
@@ -48,7 +38,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
 
         communityPostBottomSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_community_post_bottom_sheet, container,false)
@@ -140,11 +130,20 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 //                .navigate(R.id.action_navigation_community_to_navigation_edit_post)
 
 
+            //parentActivity.findNavController().
 
-//            if (SearchPostDisplayFragment())
-//                parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_search_to_navigation_edit_post)
-//            else
-//                parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_community_to_navigation_edit_post)
+            val currentFragment = parentFragmentManager.findFragmentById(R.id.mainDisplayContainerView)
+            //Log.d("test123","${currentFragment!!.tag}")
+
+
+            if (currentFragment!!.tag == "SearchPostDisplayFragment") {
+                parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_search_to_navigation_edit_post)
+            } else {
+                parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_community_to_navigation_edit_post)
+            }
+
+
+
 
             (activity as MainActivity).mainBottomNavigationDisappear()
 

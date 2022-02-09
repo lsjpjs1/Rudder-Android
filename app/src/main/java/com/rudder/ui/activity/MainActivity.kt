@@ -370,23 +370,23 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         })
 
 
-        viewModel.clickCategorySelect.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                    fragmentShowHide.addToBackStack()
-                    fragmentShowHide.removeFragment(mainBottomBarFragment)
-
-                    fragmentShowHide.addFragment(
-                        categorySelectMyPageFragment,
-                        R.id.mainDisplay,
-                        "categorySelectMyPageFragment"
-                    )
-                    fragmentShowHide.showFragment(categorySelectMyPageFragment, R.id.mainDisplay)
-
-                }
-            }
-        })
+//        viewModel.clickCategorySelect.observe(this, Observer {
+//            it.getContentIfNotHandled()?.let { it ->
+//                if (it) {
+//                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+//                    fragmentShowHide.addToBackStack()
+//                    fragmentShowHide.removeFragment(mainBottomBarFragment)
+//
+//                    fragmentShowHide.addFragment(
+//                        categorySelectMyPageFragment,
+//                        R.id.mainDisplay,
+//                        "categorySelectMyPageFragment"
+//                    )
+//                    fragmentShowHide.showFragment(categorySelectMyPageFragment, R.id.mainDisplay)
+//
+//                }
+//            }
+//        })
 
         viewModel.categorySelectApply.observe(this, Observer { // Apply 버튼
             it.getContentIfNotHandled()?.let { it ->
@@ -528,8 +528,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
 
         fragmentShowHide.addToBackStack()
-        fragmentShowHide.addFragment(this.showPostContentsFragment, R.id.mainDisplay, "showPost")
-        fragmentShowHide.showFragment(this.showPostContentsFragment, R.id.mainDisplay)
+        //fragmentShowHide.addFragment(this.showPostContentsFragment, R.id.mainDisplay, "showPost")
+       // fragmentShowHide.showFragment(this.showPostContentsFragment, R.id.mainDisplay)
     }
 
 
@@ -608,12 +608,12 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     override fun showNotificationFragment() {
         notificationFragment = NotificationFragment(this)
-        showFragment(notificationFragment, R.id.mainDisplay,"notification")
+        //showFragment(notificationFragment, R.id.mainDisplay,"notification")
     }
 
     override fun showPostMessageFragment() {
         postMessageFragment = PostMessageDisplayFragment()
-        showFragment(postMessageFragment, R.id.mainDisplay, "postMessage")
+        //showFragment(postMessageFragment, R.id.mainDisplay, "postMessage")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
