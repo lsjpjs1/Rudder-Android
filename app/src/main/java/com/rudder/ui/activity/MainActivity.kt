@@ -519,7 +519,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
     fun showPost(viewModel: MainViewModel, showPostContentsFragment: ShowPostContentsFragment) {
-        viewModel.isLikePost()
         this.showPostContentsFragment = showPostContentsFragment
 
         parentCommentInfoClose.setOnClickListener {
