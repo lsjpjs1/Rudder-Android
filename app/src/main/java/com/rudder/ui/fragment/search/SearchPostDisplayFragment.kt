@@ -36,4 +36,11 @@ class SearchPostDisplayFragment : Fragment() {
         return fragmentBinding.root
     }
 
+
+    override fun onResume() {
+        viewModel.clearSearchPost() // searchviewmodel의 posts를 clear
+        super.onResume()
+    }
 }
+
+

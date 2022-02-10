@@ -113,7 +113,7 @@ class SearchViewModel : MainViewModel() {
     fun clearSearchPost(){
         Log.d("claersearch_hello","clearsearch")
         _posts.value = arrayListOf()
-        _searchWord.value = MutableLiveData<String>().value
+        //_searchWord.value = MutableLiveData<String>().value
     }
 
 

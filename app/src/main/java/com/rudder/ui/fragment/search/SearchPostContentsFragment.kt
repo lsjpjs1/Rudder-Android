@@ -159,5 +159,4 @@ private val viewModel : SearchViewModel by activityViewModels()
 
 
 
-
 }
