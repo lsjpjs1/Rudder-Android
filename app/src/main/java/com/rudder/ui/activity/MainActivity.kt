@@ -1,12 +1,9 @@
 package com.rudder.ui.activity
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
-import android.security.identity.AccessControlProfileId
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MotionEvent
@@ -18,19 +15,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
-import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -657,7 +647,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
 
-    fun tmp() {
+    fun addCommentMainBottomNavigationDisappear() {
         supportFragmentManager.beginTransaction()
             .hide(addCommentFragment)
             .commit()
@@ -666,7 +656,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     }
 
-    fun tmp_2() {
+    fun addCommentMainBottomLayoutAppear() {
         binding.mainBottomLayout.visibility = View.VISIBLE
         binding.mainBottomNavigation.visibility = View.GONE
 
@@ -674,16 +664,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             .show(addCommentFragment)
             .commit()
     }
-
-    fun mainBottomNavigationAppear_3() {
-        binding.mainBottomLayout.visibility = View.VISIBLE
-        binding.mainBottomNavigation.visibility = View.VISIBLE
-
-        val lp = binding.mainDisplayContainerView.layoutParams
-        lp.height = 0
-        binding.mainDisplayContainerView.layoutParams = lp
-    }
-
 
 
     override fun showPostMessageRoomFragment(postMessageRoomId: Int) {
@@ -696,7 +676,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     override fun onBackPressed() {
         navDisplayController.addOnDestinationChangedListener { _, destination, _ ->
-            Log.d("testde", "${destination.label}")
+            Log.d("navigation_onBack", "${destination.label}")
             when (destination.id) {
                 R.id.navigation_community -> {
                     if (addCommentFragment.isVisible) {
@@ -712,13 +692,12 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                     mainBottomNavigationAppear()
                 }
                 R.id.navigation_search -> {
-                    Log.d("testsearch","testsearch")
-                    tmp()
+                    addCommentMainBottomNavigationDisappear()
                     mainBottomNavigationDisappear()
                 }
 
                 else -> {
-                    Log.d("testelse","testelse")
+                    //Log.d("testelse","testelse")
                 }
             }
         }

@@ -1,25 +1,17 @@
 package com.rudder.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
-import com.rudder.data.PreviewPost
-import com.rudder.ui.activity.MainActivity
-import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
-import com.rudder.util.ChangeUIState
 import com.rudder.util.CustomOnclickListener
 import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.android.synthetic.main.post_preview.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainPostPreviewAdapter(listener:CustomOnclickListener,
                              context:Context,
@@ -45,7 +37,7 @@ class MainPostPreviewAdapter(listener:CustomOnclickListener,
             it.maxpostbodylength = this.MAX_POST_BODY_LENGTH
         }
         holder.postPreviewBinding.postPreview.setOnClickListener {
-            listener.onClick(holder.postPreviewBinding.postPreview, position)
+            listener.onClickView(holder.postPreviewBinding.postPreview, position)
         }
 
         if (getItem(position).isLiked) {
@@ -53,6 +45,7 @@ class MainPostPreviewAdapter(listener:CustomOnclickListener,
         } else {
             holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_outline_thumb_up_24)
         }
+
 
 
         if (imageCount == 0) {
@@ -74,8 +67,6 @@ class MainPostPreviewAdapter(listener:CustomOnclickListener,
             it.isClickable = false
 
         }
-
-
 
         Glide.with(holder.postPreviewBinding.root.previewPostProfileImageView.context)
             .load(getItem(position).userProfileImageUrl)

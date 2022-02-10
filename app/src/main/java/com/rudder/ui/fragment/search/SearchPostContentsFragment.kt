@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -134,7 +133,7 @@ private val viewModel by lazy {
         return searchDisplayBinding.root
     }
 
-    override fun onClick(view: View, position: Int) {
+    override fun onClickView(view: View, position: Int) {
         viewModel.setSelectedPostPosition(position)
 //        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
 
@@ -148,7 +147,7 @@ private val viewModel by lazy {
         Log.d("test","test")
         //(activity as MainActivity).mainBottomNavigationAppear()
         //(activity as MainActivity).addCommentFragmentAppear()
-        (activity as MainActivity).tmp_2()
+        (activity as MainActivity).addCommentMainBottomLayoutAppear()
 
 
         //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
