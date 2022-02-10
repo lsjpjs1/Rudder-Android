@@ -503,30 +503,30 @@ open class MainViewModel : ViewModel() {
 
     fun clickPostLike_tmp(position: Int) {
 
-//        GlobalScope.launch {
-//            isLikePost_tmp(position)
-//        }
-        runBlocking {
-            val job = launch {
-                isLikePost_tmp(position)
-            }
-            job.join()
+
+
+        viewModelScope.async {
+            _selectedPostPosition.postValue(position)
+            isLikePost_tmp().await()
+
+            val plusValue =
+                if (_isLikePost.value!!) -1
+                else 1
+            var tmpPosts = _posts.value
+            tmpPosts!![_selectedPostPosition.value!!].likeCount =
+                _posts.value!![_selectedPostPosition.value!!].likeCount + plusValue
+            tmpPosts!![_selectedPostPosition.value!!].isLiked =
+                !_posts.value!![_selectedPostPosition.value!!].isLiked
+            _posts.postValue(tmpPosts!!)
+            _isLikePost.value = !(_isLikePost.value)!!//like button 체크 혹은 해제
+            _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
+            addLikePost(plusValue)
         }
 
-        val plusValue =
-            if (_isLikePost.value!!) -1
-            else 1
-        var tmpPosts = _posts.value
-
-        tmpPosts!![position].likeCount = _posts.value!![position].likeCount + plusValue
-        tmpPosts!![position].isLiked = !_posts.value!![position].isLiked
-        _posts.postValue(tmpPosts!!)
-        _isLikePost.value = !(_isLikePost.value)!!//like button 체크 혹은 해제
-        _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
-        addLikePost_tmp(plusValue,position)
 
 
-        isLikePost_tmp(position)
+
+
     }
 
 
@@ -971,16 +971,17 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    fun isLikePost_tmp(position: Int) { // 내가 좋아요를 눌렀는지 서버에 확인하는 함수
-        GlobalScope.launch {
+    suspend fun isLikePost_tmp() : Deferred<Unit> { // 내가 좋아요를 눌렀는지 서버에 확인하는 함수
+        return GlobalScope.async {
             val isLikePostInfo = IsLikePostInfo(
-                _posts.value!![position].postId,
+                _posts.value!![_selectedPostPosition.value!!].postId,
                 App.prefs.getValue(tokenKey)!!
             )
             val res = Repository().isLikePost(isLikePostInfo)
             viewModelScope.launch {
                 _isLikePost.value = res
             }
+            return@async
         }
     }
 
