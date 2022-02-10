@@ -132,11 +132,8 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 //                .navigate(R.id.action_navigation_community_to_navigation_edit_post)
 
 
-            //parentActivity.findNavController().
 
             val currentFragment = parentFragmentManager.findFragmentById(R.id.mainDisplayContainerView)
-            //Log.d("test123","${currentFragment!!.tag}")
-
 
             if (currentFragment!!.tag == "SearchPostDisplayFragment") {
                 val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)

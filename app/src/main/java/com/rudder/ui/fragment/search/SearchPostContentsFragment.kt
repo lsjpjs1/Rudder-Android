@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -131,7 +132,7 @@ private val viewModel : SearchViewModel by activityViewModels()
         return searchDisplayBinding.root
     }
 
-    override fun onClick(view: View, position: Int) {
+    override fun onClickView(view: View, position: Int) {
         viewModel.setSelectedPostPosition(position)
 //        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
 
@@ -142,9 +143,10 @@ private val viewModel : SearchViewModel by activityViewModels()
 
 
         view.findNavController().navigate(R.id.action_navigation_search_to_navigation_show_post)
-        (activity as MainActivity).addCommentFragmentAppear()
-
-
+        Log.d("test","test")
+        //(activity as MainActivity).mainBottomNavigationAppear()
+        //(activity as MainActivity).addCommentFragmentAppear()
+        (activity as MainActivity).addCommentMainBottomLayoutAppear()
 
 
         //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))

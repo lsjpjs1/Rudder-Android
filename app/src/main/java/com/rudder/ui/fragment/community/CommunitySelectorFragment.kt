@@ -54,7 +54,7 @@ class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
         return fragmentBinding.root
     }
 
-    override fun onClick(view: View, position: Int) {
+    override fun onClickView(view: View, position: Int) {
         viewModel.selectedCategoryView.value?.also {
             it.categoryUnderBarView.visibility = View.GONE
             it.categoryTextView.setTextColor(ContextCompat.getColor(lazyContext,R.color.grey))

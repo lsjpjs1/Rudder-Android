@@ -1,12 +1,9 @@
 package com.rudder.ui.activity
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
-import android.security.identity.AccessControlProfileId
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MotionEvent
@@ -18,19 +15,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
-import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -633,6 +623,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun mainBottomNavigationAppear() {
         binding.mainBottomLayout.visibility = View.VISIBLE
+        if (binding.mainBottomNavigation.visibility == View.GONE) {
+            binding.mainBottomNavigation.visibility = View.VISIBLE
+        }
         val lp = binding.mainDisplayContainerView.layoutParams
         lp.height = 0
         binding.mainDisplayContainerView.layoutParams = lp
@@ -654,28 +647,27 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
 
+    fun addCommentMainBottomNavigationDisappear() {
+        supportFragmentManager.beginTransaction()
+            .hide(addCommentFragment)
+            .commit()
+
+        binding.mainBottomNavigation.visibility = View.GONE
+
+    }
+
+    fun addCommentMainBottomLayoutAppear() {
+        binding.mainBottomLayout.visibility = View.VISIBLE
+        binding.mainBottomNavigation.visibility = View.GONE
+
+        supportFragmentManager.beginTransaction()
+            .show(addCommentFragment)
+            .commit()
+    }
+
 
     override fun showPostMessageRoomFragment(postMessageRoomId: Int) {
-        //postMessageRoomFragment = PostMessageRoomFragment()
-
-
-        //showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
-        //val bundle = Bundle()
-        //bundle.putInt("postMessageRoomId", postMessageRoomId)
-
-        //Log.d("postMessageRoomIdValue2","${postMessageRoomId}")
-
-        //val bundle = bundleOf("postMessageRoomId" to postMessageRoomId)
-        //view.findNavController().navigate(R.id.confirmationAction, bundle)
-
-
         val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
-
-        //val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(22)
-
-
-
-        //navDisplayController.navigate(R.id.action_navigation_postmessage_to_navigation_postmessage_room, bundle)
         navDisplayController.navigate(action)
     }
 
@@ -684,6 +676,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     override fun onBackPressed() {
         navDisplayController.addOnDestinationChangedListener { _, destination, _ ->
+            Log.d("navigation_onBack", "${destination.label}")
             when (destination.id) {
                 R.id.navigation_community -> {
                     if (addCommentFragment.isVisible) {
@@ -698,9 +691,13 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 R.id.navigation_mypage -> {
                     mainBottomNavigationAppear()
                 }
+                R.id.navigation_search -> {
+                    addCommentMainBottomNavigationDisappear()
+                    mainBottomNavigationDisappear()
+                }
 
                 else -> {
-                    //supportActionBar?.show()
+                    //Log.d("testelse","testelse")
                 }
             }
         }

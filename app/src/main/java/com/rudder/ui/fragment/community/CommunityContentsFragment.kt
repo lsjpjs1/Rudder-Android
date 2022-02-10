@@ -170,7 +170,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         return communityDisplay.root
     }
 
-    override fun onClick(view: View, position: Int) {
+    override fun onClickView(view: View, position: Int) {
         Log.d("communiContent_onclick","communityContent_onclick")
         (activity as MainActivity).changeSelectedPostPosition(position)
         //(activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))

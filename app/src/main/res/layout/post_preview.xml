@@ -262,10 +262,13 @@
                             android:id="@+id/imageView6"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:onClick="@{()->mainVM.clickPostLike_tmp(position)}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_outline_thumb_up_24" />
+                            app:srcCompat="@drawable/ic_outline_thumb_up_24"
+
+                            />
 
                         <View
                             android:id="@+id/blankView2"
@@ -273,7 +276,7 @@
                             android:layout_height="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView6"
-                            app:layout_constraintTop_toTopOf="parent" >
+                            app:layout_constraintTop_toTopOf="parent">
 
                         </View>
 
@@ -281,12 +284,12 @@
                             android:id="@+id/postPreviewTailLikeCountTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="13sp"
-                            app:layout_constraintVertical_bias="0.58"
                             android:text="@{` `+Integer.toString(post.likeCount)}"
+                            android:textSize="13sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/blankView2"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.58" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

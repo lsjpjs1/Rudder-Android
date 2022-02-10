@@ -16,10 +16,7 @@ import com.rudder.data.repository.Repository
 import com.rudder.util.Event
 import com.rudder.util.FileUtil
 import com.rudder.util.ProgressBarUtil
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.sql.Timestamp
@@ -216,6 +213,7 @@ open class MainViewModel : ViewModel() {
 
     open var qwe = true
     init {
+        _selectedPostPosition.value = 0
         _selectedTab.value = R.id.communityButton
         _selectedCategoryPosition.value = 0
         _postInnerValueChangeSwitch.value=true
@@ -501,6 +499,57 @@ open class MainViewModel : ViewModel() {
         _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
         addLikePost(plusValue)
     }
+
+
+    fun clickPostLike_tmp(position: Int) {
+
+//        GlobalScope.launch {
+//            isLikePost_tmp(position)
+//        }
+        runBlocking {
+            val job = launch {
+                isLikePost_tmp(position)
+            }
+            job.join()
+        }
+
+        val plusValue =
+            if (_isLikePost.value!!) -1
+            else 1
+        var tmpPosts = _posts.value
+
+        tmpPosts!![position].likeCount = _posts.value!![position].likeCount + plusValue
+        tmpPosts!![position].isLiked = !_posts.value!![position].isLiked
+        _posts.postValue(tmpPosts!!)
+        _isLikePost.value = !(_isLikePost.value)!!//like button 체크 혹은 해제
+        _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
+        addLikePost_tmp(plusValue,position)
+
+
+        isLikePost_tmp(position)
+    }
+
+
+    fun addLikePost_tmp(plusValue: Int, position: Int) {
+        GlobalScope.launch {
+            val addLikePostInfo = AddLikePostInfo(
+                _posts.value!![position].postId,
+                App.prefs.getValue(tokenKey)!!,
+                plusValue
+            )
+            val resJson = Repository().addLikePost(addLikePostInfo)
+            viewModelScope.launch {
+                if (resJson.get("isSuccess").asBoolean){
+                    var tmpPosts = _posts.value
+                    tmpPosts!![position].likeCount =
+                        resJson.get("like_count").asInt
+                    _posts.postValue(tmpPosts!!)
+                    _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
+                }
+            }
+        }
+    }
+
 
     fun addLikePost(plusValue: Int) {
         GlobalScope.launch {
@@ -908,7 +957,7 @@ open class MainViewModel : ViewModel() {
         return categoryNames
     }
 
-    fun isLikePost() {
+    fun isLikePost() { // 내가 좋아요를 눌렀는지 서버에 확인하는 함수
         GlobalScope.launch {
             val isLikePostInfo = IsLikePostInfo(
                 _posts.value!![_selectedPostPosition.value!!].postId,
@@ -920,6 +969,21 @@ open class MainViewModel : ViewModel() {
             }
         }
     }
+
+
+    fun isLikePost_tmp(position: Int) { // 내가 좋아요를 눌렀는지 서버에 확인하는 함수
+        GlobalScope.launch {
+            val isLikePostInfo = IsLikePostInfo(
+                _posts.value!![position].postId,
+                App.prefs.getValue(tokenKey)!!
+            )
+            val res = Repository().isLikePost(isLikePostInfo)
+            viewModelScope.launch {
+                _isLikePost.value = res
+            }
+        }
+    }
+
 
     fun addPostViewCount() {
         GlobalScope.launch {

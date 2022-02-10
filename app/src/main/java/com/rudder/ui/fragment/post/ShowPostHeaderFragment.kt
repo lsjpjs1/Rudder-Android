@@ -1,21 +1,22 @@
 package com.rudder.ui.fragment.post
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.rudder.R
 import com.rudder.databinding.FragmentShowPostHeaderBinding
 import com.rudder.ui.activity.MainActivity
-import com.rudder.viewModel.MainViewModel
 
 class ShowPostHeaderFragment() : Fragment() {
 
 
+
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -34,7 +35,15 @@ class ShowPostHeaderFragment() : Fragment() {
 //
 //        })
         header.constraintLayout13.setOnClickListener { view ->
-            view.findNavController().popBackStack()
+            val navController = view.findNavController()
+            navController.popBackStack()
+
+            if (navController.currentDestination!!.label == "SearchPostDisplayFragment") {
+                (activity as MainActivity).addCommentMainBottomNavigationDisappear()
+                (activity as MainActivity).mainBottomNavigationDisappear()
+            } else {
+                (activity as MainActivity).addCommentFragmentDisappear()
+            }
             (activity as MainActivity).addCommentFragmentDisappear()
         }
 
