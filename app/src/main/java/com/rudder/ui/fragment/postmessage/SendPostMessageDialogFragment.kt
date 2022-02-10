@@ -15,9 +15,12 @@ import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentSendPostMessageDialogBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.util.CustomOnclickListener
+import com.rudder.util.SendPostMessageCallback
 import com.rudder.viewModel.SendPostMessageDialogViewModel
 
-class SendPostMessageDialogFragment(val receiveUserInfoId: Int?) : DialogFragment() {
+class SendPostMessageDialogFragment(val receiveUserInfoId: Int?,
+                                    val sendPostMessageCallback: SendPostMessageCallback?=null) : DialogFragment() {
 
     private val viewModel: SendPostMessageDialogViewModel by viewModels()
 
@@ -57,9 +60,12 @@ class SendPostMessageDialogFragment(val receiveUserInfoId: Int?) : DialogFragmen
             }
         })
 
-        viewModel.toastMessage.observe(viewLifecycleOwner, Observer {
+        viewModel.toastMessage.observe(requireParentFragment().viewLifecycleOwner, Observer {
             it?.let {
                 Toast.makeText(lazyContext, it, Toast.LENGTH_SHORT).show()
+                sendPostMessageCallback?.let {
+                    it.onPostMessageSend()
+                }
             }
         })
 

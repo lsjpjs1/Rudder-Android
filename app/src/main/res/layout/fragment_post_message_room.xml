@@ -5,28 +5,51 @@
             name="postMessageRoomFragment"
             type="com.rudder.ui.fragment.postmessage.PostMessageRoomFragment" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/roomPostMessageSwipeRefreshLayout"
+        <FrameLayout
+            android:id="@+id/postMessageRoomHeader"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/roomPostMessageRV"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.08">
+            <fragment
+                android:id="@+id/postMessageRoomHeaderFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:name="com.rudder.ui.fragment.postmessage.PostMessageRoomHeaderFragment">
+            </fragment>
+        </FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.92"
+            app:layout_constraintTop_toBottomOf="@id/postMessageRoomHeader">
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/roomPostMessageSwipeRefreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/roomPostMessageRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reply"
-            android:onClick="@{()->postMessageRoomFragment.showSendPostMessageDialog()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reply"
+                android:onClick="@{()->postMessageRoomFragment.showSendPostMessageDialog()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

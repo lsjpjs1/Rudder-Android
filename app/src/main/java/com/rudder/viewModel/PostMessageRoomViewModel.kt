@@ -16,13 +16,15 @@ class PostMessageRoomViewModel : ViewModel() {
 
     private val _messages = MutableLiveData<ArrayList<PostMessage>>()
     private val _targetUserInfoId = MutableLiveData<Int?>()
+    private val _postMessageRoomId = MutableLiveData<Int>()
 
+    val postMessageRoomId = _postMessageRoomId
     val targetUserInfoId : LiveData<Int?> = _targetUserInfoId
     val messages : LiveData<ArrayList<PostMessage>> = _messages
 
-    fun getMessagesByRoom(postMessageRoomId : Int){
+    fun getMessagesByRoom(){
         GlobalScope.launch {
-            val messagesByRoom = Repository().getMessagesByRoom(GetMessagesByRoomRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY!!)!!, postMessageRoomId))
+            val messagesByRoom = Repository().getMessagesByRoom(GetMessagesByRoomRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY!!)!!, _postMessageRoomId.value!!))
             viewModelScope.launch {
                 _messages.value = messagesByRoom
                 if (messagesByRoom[0].isSender){
@@ -32,5 +34,9 @@ class PostMessageRoomViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    fun setPostMessageRoomId(roomId : Int) {
+        _postMessageRoomId.value = roomId
     }
 }

@@ -10,9 +10,10 @@ import com.rudder.data.dto.PostMessageRoom
 import com.rudder.data.dto.ProfileImage
 import com.rudder.databinding.PostMessageItemBinding
 import com.rudder.ui.activity.MainActivityInterface
+import com.rudder.util.PostMessageAdapterCallback
 
 class PostMessageAdapter(
-        val mainActivityInterface: MainActivityInterface
+        val postMessageAdapterCallback: PostMessageAdapterCallback
 ) : BaseAdapter<PostMessageRoom, PostMessageItemBinding>(diffUtil, R.layout.post_message_item)  {
 
 
@@ -35,7 +36,7 @@ class PostMessageAdapter(
         holder.viewBinding.postMessageItemMessageBodyTV.text = getItem(position).postMessageBody
 
         holder.viewBinding.postMessageItemCL.setOnClickListener {
-            mainActivityInterface.showPostMessageRoomFragment(getItem(position).postMessageRoomId)
+            postMessageAdapterCallback.onClickPostMessageRoom(getItem(position).postMessageRoomId)
         }
     }
 
