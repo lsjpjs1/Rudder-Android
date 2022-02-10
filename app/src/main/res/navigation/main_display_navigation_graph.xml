@@ -13,8 +13,8 @@
         android:label="@string/community_title"
         tools:layout="@layout/fragment_community_display" >
         <action
-            android:id="@+id/action_navigation_community_to_main_fragment_navigation_graph"
-            app:destination="@id/main_fragment_navigation_graph"
+            android:id="@+id/action_navigation_community_to_navigation_search"
+            app:destination="@id/navigation_search"
             app:popUpTo="@id/navigation_community" />
 
         <action
@@ -75,35 +75,32 @@
             app:popUpTo="@id/navigation_mypage" />
     </bottom>
 
+    <bottom
+        android:id="@+id/navigation_search"
+        android:name="com.rudder.ui.fragment.search.SearchPostDisplayFragment"
+        android:label="SearchPostDisplayFragment"
+        tools:layout="@layout/fragment_search_post_display">
 
-    <navigation
-        android:id="@+id/main_fragment_navigation_graph"
-        app:startDestination="@id/navigation_search"
-        >
-        <bottom
-            android:id="@+id/navigation_search"
-            android:name="com.rudder.ui.fragment.search.SearchPostDisplayFragment"
-            android:label="SearchPostDisplayFragment"
-            tools:layout="@layout/fragment_search_post_display">
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_edit_post"
+            app:destination="@id/navigation_edit_post"
+            app:popUpTo="@id/navigation_search" />
 
-            <action
-                android:id="@+id/action_navigation_search_to_navigation_edit_post"
-                app:destination="@id/navigation_edit_post"
-                app:popUpTo="@id/navigation_search" />
-
-            <action
-                android:id="@+id/action_navigation_search_to_navigation_show_post"
-                app:destination="@id/navigation_show_post"
-                app:popUpTo="@id/navigation_search"
-                />
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_show_post"
+            app:destination="@id/navigation_show_post"
+            app:popUpTo="@id/navigation_search"
+            />
 
 
-        </bottom>
+    </bottom>
 
 
-
-
-    </navigation>
+<!--    <navigation-->
+<!--        android:id="@+id/main_fragment_navigation_graph"-->
+<!--        app:startDestination="@id/navigation_search"-->
+<!--        >-->
+<!--    </navigation>-->
 
     <bottom
         android:id="@+id/navigation_add_post"

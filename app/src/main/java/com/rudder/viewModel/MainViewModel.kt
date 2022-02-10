@@ -216,6 +216,7 @@ open class MainViewModel : ViewModel() {
 
     open var qwe = true
     init {
+        _selectedPostPosition.value = 0
         _selectedTab.value = R.id.communityButton
         _selectedCategoryPosition.value = 0
         _postInnerValueChangeSwitch.value=true

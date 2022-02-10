@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -144,9 +145,10 @@ private val viewModel by lazy {
 
 
         view.findNavController().navigate(R.id.action_navigation_search_to_navigation_show_post)
-        (activity as MainActivity).addCommentFragmentAppear()
-
-
+        Log.d("test","test")
+        //(activity as MainActivity).mainBottomNavigationAppear()
+        //(activity as MainActivity).addCommentFragmentAppear()
+        (activity as MainActivity).tmp_2()
 
 
         //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))

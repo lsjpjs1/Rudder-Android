@@ -633,6 +633,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun mainBottomNavigationAppear() {
         binding.mainBottomLayout.visibility = View.VISIBLE
+        if (binding.mainBottomNavigation.visibility == View.GONE) {
+            binding.mainBottomNavigation.visibility = View.VISIBLE
+        }
         val lp = binding.mainDisplayContainerView.layoutParams
         lp.height = 0
         binding.mainDisplayContainerView.layoutParams = lp
@@ -654,28 +657,37 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
 
+    fun tmp() {
+        supportFragmentManager.beginTransaction()
+            .hide(addCommentFragment)
+            .commit()
+
+        binding.mainBottomNavigation.visibility = View.GONE
+
+    }
+
+    fun tmp_2() {
+        binding.mainBottomLayout.visibility = View.VISIBLE
+        binding.mainBottomNavigation.visibility = View.GONE
+
+        supportFragmentManager.beginTransaction()
+            .show(addCommentFragment)
+            .commit()
+    }
+
+    fun mainBottomNavigationAppear_3() {
+        binding.mainBottomLayout.visibility = View.VISIBLE
+        binding.mainBottomNavigation.visibility = View.VISIBLE
+
+        val lp = binding.mainDisplayContainerView.layoutParams
+        lp.height = 0
+        binding.mainDisplayContainerView.layoutParams = lp
+    }
+
+
 
     override fun showPostMessageRoomFragment(postMessageRoomId: Int) {
-        //postMessageRoomFragment = PostMessageRoomFragment()
-
-
-        //showFragment(postMessageRoomFragment, R.id.mainDisplay, "postMessageRoom",true)
-        //val bundle = Bundle()
-        //bundle.putInt("postMessageRoomId", postMessageRoomId)
-
-        //Log.d("postMessageRoomIdValue2","${postMessageRoomId}")
-
-        //val bundle = bundleOf("postMessageRoomId" to postMessageRoomId)
-        //view.findNavController().navigate(R.id.confirmationAction, bundle)
-
-
         val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
-
-        //val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(22)
-
-
-
-        //navDisplayController.navigate(R.id.action_navigation_postmessage_to_navigation_postmessage_room, bundle)
         navDisplayController.navigate(action)
     }
 
@@ -684,6 +696,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     override fun onBackPressed() {
         navDisplayController.addOnDestinationChangedListener { _, destination, _ ->
+            Log.d("testde", "${destination.label}")
             when (destination.id) {
                 R.id.navigation_community -> {
                     if (addCommentFragment.isVisible) {
@@ -698,9 +711,14 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 R.id.navigation_mypage -> {
                     mainBottomNavigationAppear()
                 }
+                R.id.navigation_search -> {
+                    Log.d("testsearch","testsearch")
+                    tmp()
+                    mainBottomNavigationDisappear()
+                }
 
                 else -> {
-                    //supportActionBar?.show()
+                    Log.d("testelse","testelse")
                 }
             }
         }
