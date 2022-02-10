@@ -16,7 +16,7 @@ import com.rudder.viewModel.SearchViewModel
 
 class SearchPostDisplayFragment : Fragment() {
     private lateinit var callback: OnBackPressedCallback
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: SearchViewModel by activityViewModels()
     companion object{
         const val TAG = "SearchPostDisplayFragment"
     }

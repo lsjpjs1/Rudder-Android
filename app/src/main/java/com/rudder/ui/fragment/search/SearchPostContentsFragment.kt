@@ -32,9 +32,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
     }
 
 //    private val viewModel: SearchViewModel by activityViewModels()
-private val viewModel by lazy {
-    ViewModelProvider(parentFragment as ViewModelStoreOwner).get(SearchViewModel::class.java)
-}
+private val viewModel : SearchViewModel by activityViewModels()
 
 
     override fun onCreateView(

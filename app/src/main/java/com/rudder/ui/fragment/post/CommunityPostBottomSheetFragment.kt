@@ -14,7 +14,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityPostBottomSheetBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
+import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
 import com.rudder.viewModel.MainViewModel
 
 
@@ -137,7 +139,8 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 
 
             if (currentFragment!!.tag == "SearchPostDisplayFragment") {
-                parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_search_to_navigation_edit_post)
+                val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
+                parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(action)
             } else {
                 parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_community_to_navigation_edit_post)
             }
