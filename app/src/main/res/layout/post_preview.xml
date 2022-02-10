@@ -262,7 +262,7 @@
                             android:id="@+id/imageView6"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:onClick="@{()->mainVM.clickPostLike_tmp(position)}"
+                            android:onClick="@{()->mainVM.clickPostLikeInCommunityContents(position)}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
