@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.rudder.R
 import com.rudder.databinding.FragmentPostMessageRoomBinding
 import com.rudder.ui.adapter.RoomPostMessagesAdapter
@@ -56,6 +57,13 @@ class PostMessageRoomFragment : Fragment() {
             it?.let {
                 adapter.submitList(it)
             }
+            fragmentBinding.roomPostMessageSwipeRefreshLayout.isRefreshing=false
+        })
+        fragmentBinding.roomPostMessageSwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                viewModel.getMessagesByRoom(args.postMessageRoomId)
+            }
+
         })
 
         return fragmentBinding.root

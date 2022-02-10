@@ -11,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.rudder.R
 import com.rudder.databinding.FragmentPostMessageDisplayBinding
 import com.rudder.ui.activity.MainActivity
@@ -49,6 +51,7 @@ class PostMessageDisplayFragment : Fragment() {
 
         viewModel.getPostMessages()
 
+
         fragmentBinding.postMessageDisplayRV.also {
             it.layoutManager =
                 LinearLayoutManager(lazyContext, LinearLayoutManager.VERTICAL, false)
@@ -56,10 +59,18 @@ class PostMessageDisplayFragment : Fragment() {
             it.adapter = adapter
         }
 
+        fragmentBinding.postMessageDisplaySwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                viewModel.getPostMessages()
+            }
+
+        })
+
         viewModel.myMessageRooms.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }
+            fragmentBinding.postMessageDisplaySwipeRefreshLayout.isRefreshing=false
         })
 
         return fragmentBinding.root

@@ -32,15 +32,21 @@
             app:layout_constraintHeight_percent="0.92"
             app:layout_constraintTop_toBottomOf="@id/postMessageHeader">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/postMessageDisplaySwipeRefreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:id="@+id/postMessageDisplayRV"
-                android:background="@color/grey">
+                app:layout_constraintStart_toStartOf="parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/postMessageDisplayRV"
+                    android:background="@color/grey">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -19,7 +19,7 @@ class PostMessageAdapter(
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<PostMessageRoom>() {
             override fun areContentsTheSame(oldItem: PostMessageRoom, newItem: PostMessageRoom): Boolean {
-                return oldItem.postMessageRoomId == newItem.postMessageRoomId
+                return (oldItem.postMessageRoomId == newItem.postMessageRoomId && oldItem.messageSendTime == newItem.messageSendTime)
             }
 
             override fun areItemsTheSame(oldItem: PostMessageRoom, newItem: PostMessageRoom): Boolean {
