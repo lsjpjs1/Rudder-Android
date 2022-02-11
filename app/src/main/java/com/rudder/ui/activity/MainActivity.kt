@@ -59,7 +59,7 @@ import kotlinx.android.synthetic.main.show_post_display_image.view.*
 class MainActivity : AppCompatActivity(), MainActivityInterface {
     private val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     lateinit var mainBottomBarFragment: MainBottomBarFragment
-    lateinit var addCommentFragment: AddCommentFragment
+//    lateinit var addCommentFragment: AddCommentFragment
     lateinit var communityDisplayFragment: CommunityDisplayFragment
     private lateinit var myPageDisplayFragment: MyPageDisplayFragment
     private lateinit var addPostDisplayFragment: AddPostDisplayFragment
@@ -179,7 +179,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         addPostDisplayFragment = AddPostDisplayFragment()
 
         showPostContentsFragment = ShowPostContentsFragment()
-        addCommentFragment = AddCommentFragment(viewModel)
         communityPostBottomSheetFragment = CommunityPostBottomSheetFragment(viewModel)
         communityCommentBottomSheetFragment = CommunityCommentBottomSheetFragment(viewModel)
         communityPostReportFragment = CommunityPostReportFragment(viewModel)
@@ -212,10 +211,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         )
 
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.main_bottom_layout, addCommentFragment)
-            .hide(myPageDisplayFragment)
-            .commit()
 
         viewModel.isContactUs.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
@@ -631,36 +626,22 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
     fun addCommentFragmentAppear() {
-        binding.mainBottomNavigation.visibility = View.GONE
-        supportFragmentManager.beginTransaction()
-            .show(addCommentFragment)
-            .commit()
+        binding.mainBottomLayout.visibility = View.GONE
+
     }
 
     fun addCommentFragmentDisappear() {
-        supportFragmentManager.beginTransaction()
-            .hide(addCommentFragment)
-            .commit()
-        binding.mainBottomNavigation.visibility = View.VISIBLE
+        binding.mainBottomLayout.visibility = View.VISIBLE
     }
 
 
     fun addCommentMainBottomNavigationDisappear() {
-        supportFragmentManager.beginTransaction()
-            .hide(addCommentFragment)
-            .commit()
-
         binding.mainBottomNavigation.visibility = View.GONE
 
     }
 
     fun addCommentMainBottomLayoutAppear() {
-        binding.mainBottomLayout.visibility = View.VISIBLE
         binding.mainBottomNavigation.visibility = View.GONE
-
-        supportFragmentManager.beginTransaction()
-            .show(addCommentFragment)
-            .commit()
     }
 
 
@@ -677,11 +658,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             Log.d("navigation_onBack", "${destination.label}")
             when (destination.id) {
                 R.id.navigation_community -> {
-                    if (addCommentFragment.isVisible) {
-                        addCommentFragmentDisappear()
-                    } else {
-                        mainBottomNavigationAppear()
-                    }
+//                    if (addCommentFragment.isVisible) {
+//                        addCommentFragmentDisappear()
+//                    } else {
+//                        mainBottomNavigationAppear()
+//                    }
                 }
                 R.id.navigation_postmessage -> {
                     mainBottomNavigationAppear()
