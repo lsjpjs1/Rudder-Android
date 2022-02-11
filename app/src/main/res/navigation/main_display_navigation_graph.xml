@@ -51,8 +51,6 @@
             app:argType="integer"
             android:defaultValue="1"
             />
-
-
     </bottom>
 
     <bottom
@@ -182,5 +180,17 @@
             android:defaultValue="1"
             />
     </bottom>
+
+
+    <bottom
+        android:id="@+id/navigation_notification"
+        android:name="com.rudder.ui.fragment.notification.NotificationDisplayFragment"
+        android:label="@string/notification"
+        tools:layout="@layout/fragment_notification_display" >
+    </bottom>
+
+
+
+
 
 </navigation>

@@ -5,6 +5,7 @@ import com.rudder.R
 import com.rudder.ui.fragment.community.CommunityDisplayFragment
 import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
+import com.rudder.ui.fragment.notification.NotificationDisplayFragment
 import com.rudder.ui.fragment.post.AddPostDisplayFragment
 import com.rudder.ui.fragment.post.EditPostFragment
 import com.rudder.ui.fragment.post.ShowPostDisplayFragment
@@ -19,6 +20,7 @@ enum class MainDisplayTab( // Just, show, hide
 ) {
     COMMUNITY(R.id.navigation_community, CommunityDisplayFragment.TAG),
     POSTMESSAGE(R.id.navigation_postmessage, PostMessageDisplayFragment.TAG),
+    NOTIFICATION(R.id.navigation_notification, NotificationDisplayFragment.TAG),
     MYPAGE(R.id.navigation_mypage, MyPageDisplayFragment.TAG),
     SEARCH(R.id.navigation_search, SearchPostDisplayFragment.TAG),
     ADDPOST(R.id.navigation_add_post, AddPostDisplayFragment.TAG),

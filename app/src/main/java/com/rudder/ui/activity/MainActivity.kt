@@ -51,6 +51,7 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.post_comments.*
 import androidx.navigation.fragment.findNavController
 import com.rudder.data.MainDisplayTab
+import com.rudder.ui.fragment.notification.NotificationDisplayFragment
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     lateinit var editPostFragment: EditPostFragment
 
-    private lateinit var notificationFragment: NotificationFragment
+    private lateinit var notificationDisplayFragment: NotificationDisplayFragment
 
     private val purpleRudder by lazy { ContextCompat.getColor(this, R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this, R.color.grey) }
@@ -190,6 +191,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         editPostFragment = EditPostFragment()
         categorySelectMyPageFragment = CategorySelectMyPageFragment()
         searchPostDisplayFragment = SearchPostDisplayFragment()
+        notificationDisplayFragment = NotificationDisplayFragment()
 
 
 
@@ -590,8 +592,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
     override fun showNotificationFragment() {
-        notificationFragment = NotificationFragment(this)
-        //showFragment(notificationFragment, R.id.mainDisplay,"notification")
+        //notificationDisplayFragment = NotificationDisplayFragment(this)
+        //showFragment(notificationDisplayFragment, R.id.mainDisplay,"notification")
     }
 
     override fun showPostMessageFragment() {
@@ -691,7 +693,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                     addCommentMainBottomNavigationDisappear()
                     mainBottomNavigationDisappear()
                 }
+                R.id.navigation_notification -> {
 
+                }
                 else -> {
                     //Log.d("testelse","testelse")
                 }

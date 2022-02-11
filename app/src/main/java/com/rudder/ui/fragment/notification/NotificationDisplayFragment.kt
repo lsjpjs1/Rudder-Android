@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment
+package com.rudder.ui.fragment.notification
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,21 +8,27 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.rudder.R
-import com.rudder.databinding.FragmentNotificationBinding
+import com.rudder.databinding.FragmentNotificationDisplayBinding
 import com.rudder.ui.activity.ActivityInterface
 import com.rudder.viewModel.NotificationViewModel
 
-class NotificationFragment( val activityInterface: ActivityInterface) : Fragment() {
+class NotificationDisplayFragment() : Fragment() {
 
     private val viewModel: NotificationViewModel by viewModels()
+
+    companion object{
+        const val TAG = "NotificationDisplayFragment"
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val fragmentBinding= DataBindingUtil.inflate<FragmentNotificationBinding>(inflater,
-            R.layout.fragment_notification,container,false)
+        val fragmentBinding= DataBindingUtil.inflate<FragmentNotificationDisplayBinding>(inflater,
+            R.layout.fragment_notification_display,container,false)
 
         fragmentBinding.lifecycleOwner = this
 
