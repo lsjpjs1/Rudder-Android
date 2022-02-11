@@ -40,7 +40,7 @@ class EditPostFragment() : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
-        if (args.viewModelIndex== SEARCH_VIEW_MODEL){
+        if (args.viewModelIndex == SEARCH_VIEW_MODEL){
             viewModel = ViewModelProvider(parentActivity).get(SearchViewModel::class.java)
         }else{
             viewModel = ViewModelProvider(parentActivity).get(MainViewModel::class.java)
