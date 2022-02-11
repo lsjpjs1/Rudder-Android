@@ -25,9 +25,12 @@
             </fragment>
         </FrameLayout>
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintWidth_percent="@dimen/width_default"
             app:layout_constraintHeight_percent="0.92"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/postMessageRoomHeader">
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/roomPostMessageSwipeRefreshLayout"
@@ -41,13 +44,6 @@
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reply"
-                android:onClick="@{()->postMessageRoomFragment.showSendPostMessageDialog()}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -39,7 +39,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/postMessageRoomHeaderLeftEmptySpaceCL"
+                android:id="@+id/postMessageRoomHeaderTitleCL"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 app:layout_constraintStart_toEndOf="@+id/postMessageRoomHeaderLeftEmptySpace"
@@ -47,7 +47,7 @@
                 app:layout_constraintWidth_percent="0.7">
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/postMessageRoomHeaderTitleTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/post_message"
@@ -62,6 +62,27 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/postMessageRoomHeaderReplyButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toEndOf="@+id/postMessageRoomHeaderTitleCL"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="@dimen/add_post_header_post_button_width">
+
+                <TextView
+                    android:id="@+id/postMessageRoomHeaderReplyTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reply"
+                    android:textSize="18sp"
+                    android:textColor="@color/purple_rudder"
+                    android:onClick="@{()->postMessageRoomHeaderFragment.showSendPostMessageDialog()}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -34,7 +34,7 @@ class PostMessageRoomFragment : Fragment(),SendPostMessageCallback {
         const val TAG = "PostMessageRoomFragment"
     }
 
-    private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
+
     val args : PostMessageRoomFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -76,11 +76,7 @@ class PostMessageRoomFragment : Fragment(),SendPostMessageCallback {
         return fragmentBinding.root
     }
 
-    fun showSendPostMessageDialog() {
-        val receiveUserInfoId = viewModel.targetUserInfoId
-        sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId.value,this)
-        sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
-    }
+
 
     override fun onPostMessageSend() {
         viewModel.getMessagesByRoom()

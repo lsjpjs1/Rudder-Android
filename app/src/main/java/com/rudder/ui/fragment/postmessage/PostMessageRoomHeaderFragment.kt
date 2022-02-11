@@ -7,13 +7,21 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import com.rudder.R
 import com.rudder.databinding.FragmentPostMessageHeaderBinding
 import com.rudder.databinding.FragmentPostMessageRoomHeaderBinding
+import com.rudder.util.SendPostMessageCallback
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.PostMessageRoomViewModel
 
 class PostMessageRoomHeaderFragment:Fragment() {
 
+    private val viewModel : PostMessageRoomViewModel by lazy {
+        ViewModelProvider(parentFragment as ViewModelStoreOwner).get(PostMessageRoomViewModel::class.java)
+    }
+    private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,5 +36,11 @@ class PostMessageRoomHeaderFragment:Fragment() {
 
     fun goBack(){
         activity?.onBackPressed()
+    }
+
+    fun showSendPostMessageDialog() {
+        val receiveUserInfoId = viewModel.targetUserInfoId
+        sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId.value,parentFragment as SendPostMessageCallback)
+        sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
     }
 }
