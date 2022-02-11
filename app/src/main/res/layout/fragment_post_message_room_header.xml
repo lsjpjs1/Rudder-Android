@@ -16,7 +16,6 @@
             android:id="@+id/postMessageRoomHeaderLeftEmptySpace"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:onClick="@{()->postMessageRoomHeaderFragment.goBack()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.25">
@@ -31,6 +30,9 @@
                 app:srcCompat="@drawable/ic_baseline_close_24"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--            android:onClick="@{()->postMessageRoomHeaderFragment.goBack()}"-->
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/postMessageRoomHeaderLeftEmptySpaceCL"

@@ -142,7 +142,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
         //viewModel.
 
 
-        //viewModel.setPostTmp(position)
+        viewModel.setPostTmp(position)
 
 
 

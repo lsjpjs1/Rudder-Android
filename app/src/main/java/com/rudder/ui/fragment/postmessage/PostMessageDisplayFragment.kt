@@ -92,6 +92,9 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
         val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
         findNavController().navigate(action)
 
+        (activity as MainActivity).mainBottomNavigationDisappear()
+
+
     }
 
 
