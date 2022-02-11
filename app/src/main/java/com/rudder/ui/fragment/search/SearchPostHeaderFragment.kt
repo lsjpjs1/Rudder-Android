@@ -28,7 +28,7 @@ class SearchPostHeaderFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         val header = DataBindingUtil.inflate<FragmentSearchPostHeaderBinding>(inflater,
@@ -37,6 +37,7 @@ class SearchPostHeaderFragment : Fragment() {
         header.lifecycleOwner = this
 
         header.searchPostSearchView.gravity = Gravity.RIGHT
+
 
 
         header.searchPostSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
