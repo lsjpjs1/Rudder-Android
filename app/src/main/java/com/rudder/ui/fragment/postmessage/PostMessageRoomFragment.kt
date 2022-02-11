@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,6 +25,9 @@ class PostMessageRoomFragment : Fragment(),SendPostMessageCallback {
     private val lazyContext by lazy {
         context
     }
+
+    private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
+
 
     private val adapter by lazy {
         RoomPostMessagesAdapter(lazyContext)
@@ -66,6 +70,8 @@ class PostMessageRoomFragment : Fragment(),SendPostMessageCallback {
             }
             fragmentBinding.roomPostMessageSwipeRefreshLayout.isRefreshing=false
         })
+
+        fragmentBinding.roomPostMessageSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
         fragmentBinding.roomPostMessageSwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
                 viewModel.getMessagesByRoom()

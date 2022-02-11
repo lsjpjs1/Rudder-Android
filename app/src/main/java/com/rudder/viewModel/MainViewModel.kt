@@ -589,9 +589,6 @@ open class MainViewModel : ViewModel() {
 
                 }
                 _isScrollBottomTouch.value = Event(false)
-
-
-
             }
         }
     }

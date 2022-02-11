@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.findNavController
 import com.rudder.R
 import com.rudder.databinding.FragmentPostMessageHeaderBinding
 import com.rudder.databinding.FragmentPostMessageRoomHeaderBinding
+import com.rudder.ui.activity.MainActivity
 import com.rudder.util.SendPostMessageCallback
 import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.PostMessageRoomViewModel
@@ -31,6 +33,12 @@ class PostMessageRoomHeaderFragment:Fragment() {
         val header = DataBindingUtil.inflate<FragmentPostMessageRoomHeaderBinding>(inflater,
             R.layout.fragment_post_message_room_header,container,false)
         header.postMessageRoomHeaderFragment = this
+
+        header.postMessageRoomHeaderLeftEmptySpace.setOnClickListener { view ->
+            view.findNavController().popBackStack()
+            (activity as MainActivity).mainBottomNavigationAppear()
+        }
+
         return header.root
     }
 

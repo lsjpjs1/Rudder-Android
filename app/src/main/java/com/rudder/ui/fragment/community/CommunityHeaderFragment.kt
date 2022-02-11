@@ -38,6 +38,21 @@ class CommunityHeaderFragment : Fragment() {
 //            }
 //        })
 
+
+        viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled().let {
+                it?.let{
+                    if (it){
+                        header.progressBarCommunityHeader.visibility = View.VISIBLE
+                    } else {
+                        header.progressBarCommunityHeader.visibility = View.INVISIBLE
+                    }
+                }
+            }
+        })
+
+
+
         header.constraintLayout13.setOnClickListener { view -> // search button click
             view.findNavController().navigate(R.id.action_navigation_community_to_navigation_search)
             (activity as MainActivity).mainBottomNavigationDisappear()

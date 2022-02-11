@@ -1,5 +1,6 @@
 package com.rudder.ui.fragment.postmessage
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -56,7 +57,7 @@ class SendPostMessageDialogFragment(val receiveUserInfoId: Int?,
 
         viewModel.closeFlag.observe(viewLifecycleOwner, Observer {
             it?.let {
-                close()
+                dismiss()
             }
         })
 
@@ -73,8 +74,4 @@ class SendPostMessageDialogFragment(val receiveUserInfoId: Int?,
         return binding.root
     }
 
-
-    fun close(){
-        dismiss()
-    }
 }

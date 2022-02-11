@@ -28,7 +28,7 @@ class SearchPostHeaderFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         val header = DataBindingUtil.inflate<FragmentSearchPostHeaderBinding>(inflater,
@@ -37,6 +37,7 @@ class SearchPostHeaderFragment : Fragment() {
         header.lifecycleOwner = this
 
         header.searchPostSearchView.gravity = Gravity.RIGHT
+
 
 
         header.searchPostSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -54,6 +55,21 @@ class SearchPostHeaderFragment : Fragment() {
                 return true
             }
         })
+
+
+        viewModel.isScrollTouch.observe(viewLifecycleOwner, Observer {
+            Log.d("isscrollbo","isscrollbo")
+            it.getContentIfNotHandled().let {
+                it?.let{
+                    if (it){
+                        header.progressBarSearchPostHeader.visibility = View.VISIBLE
+                    } else {
+                        header.progressBarSearchPostHeader.visibility = View.INVISIBLE
+                    }
+                }
+            }
+        })
+
 
 //        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
 //            it?.let{
