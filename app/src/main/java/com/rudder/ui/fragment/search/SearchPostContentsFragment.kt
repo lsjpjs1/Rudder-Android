@@ -20,6 +20,7 @@ import com.rudder.databinding.FragmentSearchPostContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.MainPostPreviewAdapter
 import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
+import com.rudder.ui.fragment.post.ShowPostDisplayFragment
 import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.SearchViewModel
 
@@ -137,7 +138,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
 //        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
 
 //        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
-        (activity as MainActivity).changeSelectedPostPosition(position)
+        viewModel.setSelectedPostPosition(position)
 
         //viewModel.
 
@@ -147,7 +148,8 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
 
 
 
-        view.findNavController().navigate(R.id.action_navigation_search_to_navigation_show_post)
+        val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationShowPost(ShowPostDisplayFragment.SEARCH_VIEW_MODEL)
+        view.findNavController().navigate(action)
         Log.d("test","test")
         //(activity as MainActivity).mainBottomNavigationAppear()
         //(activity as MainActivity).addCommentFragmentAppear()

@@ -8,7 +8,9 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -21,6 +23,7 @@ import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_show_post_contents.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
@@ -35,7 +38,9 @@ class ShowPostContentsFragment(): Fragment() {
     }
 
 
-    private val viewModel : MainViewModel by activityViewModels()
+    private val viewModel : MainViewModel by lazy {
+        (parentFragment as ShowPostDisplayFragment).viewModel
+    }
 
     private var _fragmentBinding : FragmentShowPostContentsBinding? = null
     private val fragmentBinding get() = _fragmentBinding!!
@@ -48,6 +53,7 @@ class ShowPostContentsFragment(): Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         //_fragmentBinding= DataBindingUtil.inflate<FragmentShowPostContentsBinding>(inflater,R.layout.fragment_show_post_contents,container,false)
+
 
         _fragmentBinding= FragmentShowPostContentsBinding.inflate(inflater, container, false)
 

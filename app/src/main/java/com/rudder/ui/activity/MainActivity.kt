@@ -504,9 +504,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     }
 
-    fun changeSelectedPostPosition(position: Int) {
-        viewModel.setSelectedPostPosition(position)
-    }
+
 
     fun showPost(viewModel: MainViewModel, showPostContentsFragment: ShowPostContentsFragment) {
         this.showPostContentsFragment = showPostContentsFragment

@@ -27,7 +27,13 @@
             android:id="@+id/action_navigation_community_to_navigation_show_post"
             app:destination="@id/navigation_show_post"
             app:popUpTo="@id/navigation_community"
-            />
+            >
+            <argument
+                android:name="viewModelIndex"
+                app:argType="integer"
+                android:defaultValue="1"
+                />
+        </action>
 
         <action
             android:id="@+id/action_navigation_community_to_navigation_edit_post"
@@ -110,7 +116,13 @@
                 android:id="@+id/action_navigation_search_to_navigation_show_post"
                 app:destination="@id/navigation_show_post"
                 app:popUpTo="@id/navigation_search"
-                />
+                >
+                <argument
+                    android:name="viewModelIndex"
+                    app:argType="integer"
+                    android:defaultValue="1"
+                    />
+            </action>
 
 
     </bottom>

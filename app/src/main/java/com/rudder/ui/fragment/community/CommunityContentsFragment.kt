@@ -19,6 +19,8 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.MainPostPreviewAdapter
 import com.rudder.ui.fragment.comment.AddCommentFragment
 import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
+import com.rudder.ui.fragment.post.ShowPostDisplayFragment
+import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
 import com.rudder.util.CustomOnclickListener
 import com.rudder.util.Event
 import com.rudder.viewModel.MainViewModel
@@ -171,11 +173,13 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
     }
 
     override fun onClickView(view: View, position: Int) {
-        Log.d("communiContent_onclick","communityContent_onclick")
-        (activity as MainActivity).changeSelectedPostPosition(position)
+        Log.d("activity-main-vm",viewModel.toString())
+        viewModel.setSelectedPostPosition(position)
         //(activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
 
-        view.findNavController().navigate(R.id.action_navigation_community_to_navigation_show_post)
+        val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationShowPost(
+            ShowPostDisplayFragment.MAIN_VIEW_MODEL)
+        view.findNavController().navigate(action)
         (activity as MainActivity).addCommentFragmentAppear()
 
 //        childFragmentManager.beginTransaction()
