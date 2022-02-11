@@ -435,8 +435,6 @@ open class MainViewModel : ViewModel() {
 
 
     fun clearNestedCommentInfo() {
-//        _selectedParentCommentBody.value = ""
-//        _selectedCommentGroupNum.value = -1
         _selectedParentCommentBody.postValue( "" )
         _selectedCommentGroupNum.postValue( -1 )
     }

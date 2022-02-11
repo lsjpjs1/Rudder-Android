@@ -397,6 +397,14 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         })
 
 
+        parentCommentInfoClose.setOnClickListener {
+            //this.showPostContentsFragment.closeParentCommentInfo()
+            Log.d("click123","click132")
+            viewModel.clearNestedCommentInfo()
+
+        }
+
+
     }
 
     // id가 명시되어있지 않은 다른 부분을 터치했을 때 키보드가 보여져있는 상태면 키보드를 내림.
@@ -492,26 +500,13 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         parentCommentInfo.visibility = View.GONE
     }
 
-//    fun showProgressBar() {
-//        progressBar.visibility = View.VISIBLE
-//    }
-//
-//    fun hideProgressBar() {
-//        progressBar.visibility = View.GONE
-//    }
-
-    fun expandProgressBarAnimation() {
-
-    }
-
-
 
     fun showPost(viewModel: MainViewModel, showPostContentsFragment: ShowPostContentsFragment) {
         this.showPostContentsFragment = showPostContentsFragment
 
-        parentCommentInfoClose.setOnClickListener {
-            this.showPostContentsFragment.closeParentCommentInfo()
-        }
+//        parentCommentInfoClose.setOnClickListener {
+//            this.showPostContentsFragment.closeParentCommentInfo()
+//        }
         Log.d("has",parentCommentInfoClose.hasOnClickListeners().toString())
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
 
@@ -642,6 +637,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             .hide(addCommentFragment)
             .commit()
         binding.mainBottomNavigation.visibility = View.VISIBLE
+        viewModel.clearNestedCommentInfo()
     }
 
 
@@ -652,6 +648,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         binding.mainBottomNavigation.visibility = View.GONE
 
+        viewModel.clearNestedCommentInfo()
+        //hideParentCommentInfo()
     }
 
     fun addCommentMainBottomLayoutAppear() {
