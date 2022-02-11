@@ -16,16 +16,11 @@ import kotlinx.coroutines.launch
 
 
 class SearchViewModel : MainViewModel() {
-    override var qwe = false
-
     private val _searchWord = MutableLiveData<String>()
-
-
-
-
-
     val searchWord: LiveData<String> = _searchWord
+    private val _selectedSearchPostPosition = MutableLiveData<Int>()
 
+    val selectedSearchPostPosition: LiveData<Int> = _selectedSearchPostPosition
 
 
     init {
@@ -113,13 +108,23 @@ class SearchViewModel : MainViewModel() {
     fun clearSearchPost(){
         Log.d("claersearch_hello","clearsearch")
         _posts.value = arrayListOf()
-        _searchWord.value = MutableLiveData<String>().value
+        //_searchWord.value = MutableLiveData<String>().value
     }
 
 
     fun setSearchWord(string: String){
         _searchWord.value = string
     }
+
+    fun setPostTmp(position: Int) {
+        _selectedSearchPostPosition.value = position
+        Log.d("setselectpos",_selectedSearchPostPosition.value!!.toString())
+    }
+
+//    fun setSelectedPostPosition(position: Int) {
+//        _selectedPostPosition.value = position
+//        Log.d("setselectpos",_selectedPostPosition.value!!.toString())
+//    }
 
 
 }

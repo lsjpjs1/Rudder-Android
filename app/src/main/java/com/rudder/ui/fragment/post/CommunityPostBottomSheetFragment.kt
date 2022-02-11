@@ -122,24 +122,13 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 
         communityPostBottomSheetBinding.postMoreEditPostTextView.setOnClickListener { view ->
             parentActivity.communityPostBottomSheetFragment.dismiss()
-//            Navigation.findNavController(view).navigate(R.id.action_navigation_community_to_navigation_edit_post)
+            val navController = parentActivity.findNavController(R.id.mainDisplayContainerView)
 
-//            val navHostFragment =
-//                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//            val navController = navHostFragment.navController
-
-//            Navigation.findNavController(parentActivity, R.id.mainDisplayContainerView )
-//                .navigate(R.id.action_navigation_community_to_navigation_edit_post)
-
-
-
-            val currentFragment = parentFragmentManager.findFragmentById(R.id.mainDisplayContainerView)
-
-            if (currentFragment!!.tag == "SearchPostDisplayFragment") {
+            if (navController.currentDestination!!.label == "SearchPostDisplayFragment") {
                 val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
-                parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(action)
+                navController.navigate(action)
             } else {
-                parentActivity.findNavController(R.id.mainDisplayContainerView).navigate(R.id.action_navigation_community_to_navigation_edit_post)
+                navController.navigate(R.id.action_navigation_community_to_navigation_edit_post)
             }
 
 

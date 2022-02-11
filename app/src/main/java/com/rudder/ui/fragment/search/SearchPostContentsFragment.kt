@@ -33,7 +33,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
     }
 
 //    private val viewModel: SearchViewModel by activityViewModels()
-private val viewModel : SearchViewModel by activityViewModels()
+    private val viewModel : SearchViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -133,13 +133,18 @@ private val viewModel : SearchViewModel by activityViewModels()
     }
 
     override fun onClickView(view: View, position: Int) {
-        viewModel.setSelectedPostPosition(position)
+        //viewModel.setSelectedPostPosition(position)
 //        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
 
 //        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
-        //(activity as MainActivity).changeSelectedPostPosition(position)
+        (activity as MainActivity).changeSelectedPostPosition(position)
 
         //viewModel.
+
+
+        //viewModel.setPostTmp(position)
+
+
 
 
         view.findNavController().navigate(R.id.action_navigation_search_to_navigation_show_post)
@@ -156,7 +161,6 @@ private val viewModel : SearchViewModel by activityViewModels()
         viewModel.addPostViewCount()
         viewModel.getComments()
     }
-
 
 
 
