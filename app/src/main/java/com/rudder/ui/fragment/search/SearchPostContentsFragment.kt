@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.rudder.R
 import com.rudder.databinding.FragmentSearchPostContentsBinding
 import com.rudder.ui.activity.MainActivity
@@ -32,7 +34,10 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
         activity as MainActivity
     }
 
-//    private val viewModel: SearchViewModel by activityViewModels()
+    private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
+
+
+    //    private val viewModel: SearchViewModel by activityViewModels()
     private val viewModel : SearchViewModel by activityViewModels()
 
 
@@ -58,11 +63,19 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                     if(!it.canScrollVertically(1)){
                         viewModel.scrollTouchBottom()
                     } else if (!it.canScrollVertically(-1) && dy < 0) {
-                        viewModel.scrollTouchTop()
+                        //viewModel.scrollTouchTop()
                     }
                 }
             })
         }
+
+        searchDisplayBinding.searchPostContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
+        searchDisplayBinding.searchPostContentsSwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                viewModel.scrollTouchTop()
+            }
+
+        })
 
         viewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
             it.getContentIfNotHandled()?.let {
@@ -78,6 +91,8 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
 
         viewModel.posts.observe(viewLifecycleOwner, Observer { items ->
             adapter.submitList(items.toMutableList().map { it.copy() })
+            searchDisplayBinding.searchPostContentsSwipeRefreshLayout.isRefreshing = false
+
         })
 
 
@@ -116,18 +131,6 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                 }
             }
         })
-
-//        viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
-//            it.getContentIfNotHandled().let {
-//                it?.let{
-//                    if (it){
-//                        parentActivity.showProgressBar()
-//                    } else {
-//                        parentActivity.hideProgressBar()
-//                    }
-//                }
-//            }
-//        })
 
         return searchDisplayBinding.root
     }

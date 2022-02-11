@@ -43,6 +43,31 @@
                 app:tint="@color/black" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/progressBarSearchPostCL"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toEndOf="@+id/search_post_header_x"
+            app:layout_constraintWidth_percent="0.1"
+            tools:layout_editor_absoluteY="0dp"
+
+            >
+
+            <ProgressBar
+                android:id="@+id/progressBarSearchPostHeader"
+                style="?android:attr/progressBarStyle"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:indeterminateTint="@color/purple_rudder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <SearchView
             android:id="@+id/searchPostSearchView"
@@ -53,7 +78,7 @@
             android:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             android:queryHint="Search"
-            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintWidth_percent="0.78"
             android:searchIcon="@drawable/ic_baseline_search_24"
             android:background="@drawable/edge"
             android:theme="@style/MySearchView"

@@ -43,11 +43,9 @@ class CommunityHeaderFragment : Fragment() {
             it.getContentIfNotHandled().let {
                 it?.let{
                     if (it){
-                        //parentActivity.showProgressBar()
                         header.progressBarCommunityHeader.visibility = View.VISIBLE
                     } else {
-                        //parentActivity.hideProgressBar()
-                        header.progressBarCommunityHeader.visibility = View.GONE
+                        header.progressBarCommunityHeader.visibility = View.INVISIBLE
                     }
                 }
             }

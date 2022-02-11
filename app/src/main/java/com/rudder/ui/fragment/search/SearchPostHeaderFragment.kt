@@ -56,6 +56,21 @@ class SearchPostHeaderFragment : Fragment() {
             }
         })
 
+
+        viewModel.isScrollTouch.observe(viewLifecycleOwner, Observer {
+            Log.d("isscrollbo","isscrollbo")
+            it.getContentIfNotHandled().let {
+                it?.let{
+                    if (it){
+                        header.progressBarSearchPostHeader.visibility = View.VISIBLE
+                    } else {
+                        header.progressBarSearchPostHeader.visibility = View.INVISIBLE
+                    }
+                }
+            }
+        })
+
+
 //        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
 //            it?.let{
 //                if ((activity as MainActivity).validateBack("searchPost")){

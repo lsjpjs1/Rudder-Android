@@ -20,7 +20,13 @@ class SearchViewModel : MainViewModel() {
     val searchWord: LiveData<String> = _searchWord
     private val _selectedSearchPostPosition = MutableLiveData<Int>()
 
+    private val _isScrollTouch = MutableLiveData<Event<Boolean>>()
+
+
+
     val selectedSearchPostPosition: LiveData<Int> = _selectedSearchPostPosition
+    val isScrollTouch: LiveData<Event<Boolean>> = _isScrollTouch
+
 
 
     init {
@@ -64,6 +70,8 @@ class SearchViewModel : MainViewModel() {
     }
 
     fun searchPost(isScroll: Boolean){
+        _isScrollTouch.value = Event(true)
+
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
         Log.d("search_hello", "searchPost")
@@ -99,6 +107,8 @@ class SearchViewModel : MainViewModel() {
                 }else{
                     _posts.value = resPosts
                 }
+                _isScrollTouch.value = Event(false)
+
             }
         }
     }
