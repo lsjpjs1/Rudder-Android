@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityContentsBinding
 import com.rudder.ui.activity.MainActivity
@@ -37,7 +39,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
 
     lateinit var adapter : MainPostPreviewAdapter
 
-
+    private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,21 +56,36 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
             it.layoutManager=LinearLayoutManager(lazyContext)
             it.setHasFixedSize(false)
             it.adapter = adapter
+
             it.addOnScrollListener(object : RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if(!it.canScrollVertically(1)){
                         viewModel.scrollTouchBottom()
                     } else if (!it.canScrollVertically(-1) && dy < 0) {
-                        viewModel.scrollTouchTop()
+                        //viewModel.scrollTouchTop()
                     }
                 }
             })
         }
 
 
+        communityDisplay.communityContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
+        communityDisplay.communityContentsSwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                viewModel.scrollTouchTop()
+            }
+
+        })
+
+
+        communityDisplay.communityContentsSwipeRefreshLayout
+
+
         viewModel.posts.observe(viewLifecycleOwner, Observer {
             adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
+            communityDisplay.communityContentsSwipeRefreshLayout.isRefreshing = false
+
         })
 
         viewModel.isAddPostSuccess.observe(viewLifecycleOwner, Observer {
@@ -139,17 +156,17 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
             }
         })
 
-        viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled().let {
-                it?.let{
-                    if (it){
-                        parentActivity.showProgressBar()
-                    } else {
-                        parentActivity.hideProgressBar()
-                    }
-                }
-            }
-        })
+//        viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
+//            it.getContentIfNotHandled().let {
+//                it?.let{
+//                    if (it){
+//                        parentActivity.showProgressBar()
+//                    } else {
+//                        parentActivity.hideProgressBar()
+//                    }
+//                }
+//            }
+//        })
 
 //        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
 //            viewModel.clearPosts()

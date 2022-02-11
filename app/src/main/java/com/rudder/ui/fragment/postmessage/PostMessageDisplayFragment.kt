@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -35,6 +36,9 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
         const val TAG = "PostMessageDisplayFragment"
     }
 
+    private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,6 +66,7 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
             it.adapter = adapter
         }
 
+        fragmentBinding.postMessageDisplaySwipeRefreshLayout.setColorSchemeColors(purpleRudder)
         fragmentBinding.postMessageDisplaySwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
                 viewModel.getPostMessages()

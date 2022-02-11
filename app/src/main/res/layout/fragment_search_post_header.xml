@@ -57,6 +57,7 @@
             android:searchIcon="@drawable/ic_baseline_search_24"
             android:background="@drawable/edge"
             android:theme="@style/MySearchView"
+            android:closeIcon="@drawable/ic_baseline_close_24"
             />
 
 

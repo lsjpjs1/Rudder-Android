@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         progressDialog.setMessage("Please wait ...")
         progressDialog.setCancelable(false)
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal)
-        progressBar.bringToFront()
+        //progressBar.bringToFront()
         mainBottomBarFragment = MainBottomBarFragment(this)
         communityDisplayFragment = CommunityDisplayFragment()
         myPageDisplayFragment = MyPageDisplayFragment()
@@ -492,13 +492,13 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         parentCommentInfo.visibility = View.GONE
     }
 
-    fun showProgressBar() {
-        progressBar.visibility = View.VISIBLE
-    }
-
-    fun hideProgressBar() {
-        progressBar.visibility = View.GONE
-    }
+//    fun showProgressBar() {
+//        progressBar.visibility = View.VISIBLE
+//    }
+//
+//    fun hideProgressBar() {
+//        progressBar.visibility = View.GONE
+//    }
 
     fun expandProgressBarAnimation() {
 

@@ -117,17 +117,17 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
             }
         })
 
-        viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled().let {
-                it?.let{
-                    if (it){
-                        parentActivity.showProgressBar()
-                    } else {
-                        parentActivity.hideProgressBar()
-                    }
-                }
-            }
-        })
+//        viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
+//            it.getContentIfNotHandled().let {
+//                it?.let{
+//                    if (it){
+//                        parentActivity.showProgressBar()
+//                    } else {
+//                        parentActivity.hideProgressBar()
+//                    }
+//                }
+//            }
+//        })
 
         return searchDisplayBinding.root
     }

@@ -42,6 +42,7 @@
 
     <style name="MySearchView" parent="Widget.AppCompat.Light.SearchView">
         <item name="android:textSize">14sp</item>
+        <item name="android:tint">@color/black</item>
     </style>
 
 
