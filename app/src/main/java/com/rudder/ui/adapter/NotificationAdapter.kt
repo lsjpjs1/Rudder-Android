@@ -11,7 +11,7 @@ class NotificationAdapter() : BaseAdapter<NotificationItem,NotificationContentsI
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<NotificationItem>() {
             override fun areContentsTheSame(oldItem: NotificationItem, newItem: NotificationItem): Boolean {
-                //return (oldItem.postMessageRoomId == newItem.postMessageRoomId && oldItem.messageSendTime == newItem.messageSendTime)
+                return (oldItem.notificationId == newItem.notificationId && oldItem.notificationTime == newItem.notificationTime)
             }
 
             override fun areItemsTheSame(oldItem: NotificationItem, newItem: NotificationItem): Boolean {
@@ -24,13 +24,15 @@ class NotificationAdapter() : BaseAdapter<NotificationItem,NotificationContentsI
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        holder.viewBinding.postMessageItemSenderNickNameTV.text = getItem(position).userId
-        holder.viewBinding.postMessageItemDateTV.text = getItem(position).messageSendTime.toString()
-        holder.viewBinding.postMessageItemMessageBodyTV.text = getItem(position).postMessageBody
+        holder.viewBinding.notificationType.text = getItem(position).notificationType.toString()
+        holder.viewBinding.notificationId.text = getItem(position).notificationId.toString()
+        holder.viewBinding.notificationBody.text = getItem(position).notificationBody
+        holder.viewBinding.notificationTime.text = getItem(position).notificationTime.toString()
 
-        holder.viewBinding.postMessageItemCL.setOnClickListener {
-            postMessageAdapterCallback.onClickPostMessageRoom(getItem(position).postMessageRoomId)
-        }
+
+//        holder.viewBinding.postMessageItemCL.setOnClickListener {
+//            postMessageAdapterCallback.onClickPostMessageRoom(getItem(position).postMessageRoomId)
+//        }
     }
 
 
