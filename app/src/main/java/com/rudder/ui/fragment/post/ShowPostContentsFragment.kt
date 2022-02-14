@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -12,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
@@ -44,6 +46,8 @@ class ShowPostContentsFragment(): Fragment() {
 
     private var _fragmentBinding : FragmentShowPostContentsBinding? = null
     private val fragmentBinding get() = _fragmentBinding!!
+
+    private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
 
 
 
@@ -99,6 +103,10 @@ class ShowPostContentsFragment(): Fragment() {
                 deleteCommentflag = it
             }
             adapter.updateComments(viewModel.comments.value!!, !deleteCommentflag)
+
+            fragmentBinding.showPostContentsSwipeRefreshLayout.isRefreshing = false
+
+
         })
 
         viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
@@ -230,6 +238,11 @@ class ShowPostContentsFragment(): Fragment() {
 //        }
 
         viewModel.clearNestedCommentInfo()
+
+        fragmentBinding.showPostContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
+        fragmentBinding.showPostContentsSwipeRefreshLayout.setOnRefreshListener {
+            viewModel.scrollTopShowPost()
+        }
 
 
         return fragmentBinding.root

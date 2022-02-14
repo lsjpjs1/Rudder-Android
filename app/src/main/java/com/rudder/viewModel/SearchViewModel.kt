@@ -56,7 +56,7 @@ class SearchViewModel : MainViewModel() {
         }
     }
 
-    override fun scrollTouchBottom() {
+    override fun scrollTouchBottomCommunityPost() {
         if (_posts.value!!.size > 0) {
             pagingIndex += 1
             endPostId = _posts.value!![_posts.value!!.size - 1].postId
@@ -64,7 +64,7 @@ class SearchViewModel : MainViewModel() {
         }
     }
 
-    override fun scrollTouchTop() {
+    override fun scrollTouchTopCommunityPost() {
         clearPosts()
         searchPost(false)
     }
