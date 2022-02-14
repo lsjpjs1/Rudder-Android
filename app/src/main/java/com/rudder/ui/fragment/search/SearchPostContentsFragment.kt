@@ -24,6 +24,7 @@ import com.rudder.ui.adapter.MainPostPreviewAdapter
 import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
 import com.rudder.ui.fragment.post.ShowPostDisplayFragment
 import com.rudder.util.CustomOnclickListener
+import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.SearchViewModel
 
 class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
@@ -40,6 +41,11 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
 
     //    private val viewModel: SearchViewModel by activityViewModels()
     private val viewModel : SearchViewModel by activityViewModels()
+
+    private val mainViewModel : MainViewModel by activityViewModels()
+
+
+
 
 
     override fun onCreateView(
@@ -132,6 +138,16 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                 }
             }
         })
+
+        mainViewModel.selectedCommentGroupNum.observe(viewLifecycleOwner, Observer {
+            if (it != -1) {
+                (activity as MainActivity).showParentCommentInfo()
+            } else {
+                (activity as MainActivity).hideParentCommentInfo()
+            }
+        })
+
+
 
         return searchDisplayBinding.root
     }

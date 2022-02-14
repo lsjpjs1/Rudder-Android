@@ -51,6 +51,7 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.post_comments.*
 import androidx.navigation.fragment.findNavController
 import com.rudder.data.MainDisplayTab
+import com.rudder.ui.fragment.notification.NotificationDisplayFragment
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     lateinit var editPostFragment: EditPostFragment
 
-    private lateinit var notificationFragment: NotificationFragment
+    private lateinit var notificationDisplayFragment: NotificationDisplayFragment
 
     private val purpleRudder by lazy { ContextCompat.getColor(this, R.color.purple_rudder) }
     private val grey by lazy { ContextCompat.getColor(this, R.color.grey) }
@@ -189,6 +190,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         editPostFragment = EditPostFragment()
         categorySelectMyPageFragment = CategorySelectMyPageFragment()
         searchPostDisplayFragment = SearchPostDisplayFragment()
+        notificationDisplayFragment = NotificationDisplayFragment()
 
 
 
@@ -392,6 +394,14 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         })
 
 
+        parentCommentInfoClose.setOnClickListener {
+            //this.showPostContentsFragment.closeParentCommentInfo()
+            Log.d("click123","click132")
+            viewModel.clearNestedCommentInfo()
+
+        }
+
+
     }
 
     // id가 명시되어있지 않은 다른 부분을 터치했을 때 키보드가 보여져있는 상태면 키보드를 내림.
@@ -487,26 +497,13 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         parentCommentInfo.visibility = View.GONE
     }
 
-//    fun showProgressBar() {
-//        progressBar.visibility = View.VISIBLE
-//    }
-//
-//    fun hideProgressBar() {
-//        progressBar.visibility = View.GONE
-//    }
-
-    fun expandProgressBarAnimation() {
-
-    }
-
-
 
     fun showPost(viewModel: MainViewModel, showPostContentsFragment: ShowPostContentsFragment) {
         this.showPostContentsFragment = showPostContentsFragment
 
-        parentCommentInfoClose.setOnClickListener {
-            this.showPostContentsFragment.closeParentCommentInfo()
-        }
+//        parentCommentInfoClose.setOnClickListener {
+//            this.showPostContentsFragment.closeParentCommentInfo()
+//        }
         Log.d("has",parentCommentInfoClose.hasOnClickListeners().toString())
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
 
@@ -590,8 +587,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
     override fun showNotificationFragment() {
-        notificationFragment = NotificationFragment(this)
-        //showFragment(notificationFragment, R.id.mainDisplay,"notification")
+        //notificationDisplayFragment = NotificationDisplayFragment(this)
+        //showFragment(notificationDisplayFragment, R.id.mainDisplay,"notification")
     }
 
     override fun showPostMessageFragment() {
@@ -632,12 +629,15 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun addCommentFragmentDisappear() {
         binding.mainBottomLayout.visibility = View.VISIBLE
+        viewModel.clearNestedCommentInfo()
     }
 
 
     fun addCommentMainBottomNavigationDisappear() {
         binding.mainBottomNavigation.visibility = View.GONE
 
+        viewModel.clearNestedCommentInfo()
+        //hideParentCommentInfo()
     }
 
     fun addCommentMainBottomLayoutAppear() {
@@ -674,7 +674,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                     addCommentMainBottomNavigationDisappear()
                     mainBottomNavigationDisappear()
                 }
+                R.id.navigation_notification -> {
 
+                }
                 else -> {
                     //Log.d("testelse","testelse")
                 }

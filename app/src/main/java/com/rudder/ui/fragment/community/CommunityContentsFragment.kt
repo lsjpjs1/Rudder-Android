@@ -192,7 +192,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
     override fun onClickView(view: View, position: Int) {
         Log.d("activity-main-vm",viewModel.toString())
         viewModel.setSelectedPostPosition(position)
-        //(activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
+        //(activity as MainActivity). showPost(viewModel, ShowPostContentsFragment(viewModel))
 
         val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationShowPost(
             ShowPostDisplayFragment.MAIN_VIEW_MODEL)

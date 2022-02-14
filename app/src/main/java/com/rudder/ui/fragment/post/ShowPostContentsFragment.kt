@@ -229,6 +229,8 @@ class ShowPostContentsFragment(): Fragment() {
 //            tmpBack()
 //        }
 
+        viewModel.clearNestedCommentInfo()
+
 
         return fragmentBinding.root
     }
@@ -294,9 +296,9 @@ class ShowPostContentsFragment(): Fragment() {
 
     }
 
-    fun closeParentCommentInfo(){
-        viewModel.clearNestedCommentInfo()
-    }
+//    fun closeParentCommentInfo(){
+//        viewModel.clearNestedCommentInfo()
+//    }
 
 
 //    fun tmp(){
