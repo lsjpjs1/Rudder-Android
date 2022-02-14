@@ -153,32 +153,12 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
     }
 
     override fun onClickView(view: View, position: Int) {
-        //viewModel.setSelectedPostPosition(position)
-//        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
-
-//        (activity as MainActivity).showPost(viewModel, ShowPostContentsFragment(viewModel))
         viewModel.setSelectedPostPosition(position)
-
-        //viewModel.
-
-
-        viewModel.setPostTmp(position)
-
-
 
 
         val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationShowPost(ShowPostDisplayFragment.SEARCH_VIEW_MODEL)
         view.findNavController().navigate(action)
-        Log.d("test","test")
-        //(activity as MainActivity).mainBottomNavigationAppear()
-        //(activity as MainActivity).addCommentFragmentAppear()
-        (activity as MainActivity).addCommentMainBottomLayoutAppear()
 
-
-        //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
-//        if(!viewModel.isAlreadyReadPost()){
-//            viewModel.addPostViewCount()
-//        }
         viewModel.addPostViewCount()
         viewModel.getComments()
     }

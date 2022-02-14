@@ -396,7 +396,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         parentCommentInfoClose.setOnClickListener {
             //this.showPostContentsFragment.closeParentCommentInfo()
-            Log.d("click123","click132")
             viewModel.clearNestedCommentInfo()
 
         }
@@ -622,24 +621,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
 
-    fun addCommentFragmentAppear() {
-        binding.mainBottomLayout.visibility = View.GONE
 
-    }
-
-    fun addCommentFragmentDisappear() {
-        binding.mainBottomLayout.visibility = View.VISIBLE
+    fun nestedCommentDisappear(){
         viewModel.clearNestedCommentInfo()
-    }
-
-
-    fun addCommentMainBottomNavigationDisappear() {
-        binding.mainBottomNavigation.visibility = View.GONE
-        viewModel.clearNestedCommentInfo()
-    }
-
-    fun addCommentMainBottomLayoutAppear() {
-        binding.mainBottomNavigation.visibility = View.GONE
     }
 
 
@@ -657,11 +641,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             when (destination.id) {
                 R.id.navigation_community -> {
                     mainBottomNavigationAppear()
-//                    if (addCommentFragment.isVisible) {
-//                        addCommentFragmentDisappear()
-//                    } else {
-//                        mainBottomNavigationAppear()
-//                    }
+                    nestedCommentDisappear()
                 }
                 R.id.navigation_postmessage -> {
                     mainBottomNavigationAppear()
@@ -670,11 +650,12 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                     mainBottomNavigationAppear()
                 }
                 R.id.navigation_search -> {
-                    addCommentMainBottomNavigationDisappear()
                     mainBottomNavigationDisappear()
+                    nestedCommentDisappear()
+
                 }
                 R.id.navigation_notification -> {
-
+                    mainBottomNavigationAppear()
                 }
                 else -> {
                     //Log.d("testelse","testelse")
