@@ -396,7 +396,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         parentCommentInfoClose.setOnClickListener {
             //this.showPostContentsFragment.closeParentCommentInfo()
-            Log.d("click123","click132")
             viewModel.clearNestedCommentInfo()
 
         }
@@ -622,26 +621,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
 
-    fun addCommentFragmentAppear() {
-        binding.mainBottomLayout.visibility = View.GONE
 
-    }
-
-    fun addCommentFragmentDisappear() {
-        binding.mainBottomLayout.visibility = View.VISIBLE
+    fun nestedCommentDisappear(){
         viewModel.clearNestedCommentInfo()
-    }
-
-
-    fun addCommentMainBottomNavigationDisappear() {
-        binding.mainBottomNavigation.visibility = View.GONE
-
-        viewModel.clearNestedCommentInfo()
-        //hideParentCommentInfo()
-    }
-
-    fun addCommentMainBottomLayoutAppear() {
-        binding.mainBottomNavigation.visibility = View.GONE
     }
 
 
@@ -658,11 +640,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             Log.d("navigation_onBack", "${destination.label}")
             when (destination.id) {
                 R.id.navigation_community -> {
-//                    if (addCommentFragment.isVisible) {
-//                        addCommentFragmentDisappear()
-//                    } else {
-//                        mainBottomNavigationAppear()
-//                    }
+                    mainBottomNavigationAppear()
+                    nestedCommentDisappear()
                 }
                 R.id.navigation_postmessage -> {
                     mainBottomNavigationAppear()
@@ -671,11 +650,12 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                     mainBottomNavigationAppear()
                 }
                 R.id.navigation_search -> {
-                    addCommentMainBottomNavigationDisappear()
                     mainBottomNavigationDisappear()
+                    nestedCommentDisappear()
+
                 }
                 R.id.navigation_notification -> {
-
+                    mainBottomNavigationAppear()
                 }
                 else -> {
                     //Log.d("testelse","testelse")

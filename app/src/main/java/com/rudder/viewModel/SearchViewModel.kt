@@ -126,10 +126,10 @@ class SearchViewModel : MainViewModel() {
         _searchWord.value = string
     }
 
-    fun setPostTmp(position: Int) {
-        _selectedSearchPostPosition.value = position
-        Log.d("setselectpos",_selectedSearchPostPosition.value!!.toString())
-    }
+//    fun setPostTmp(position: Int) {
+//        _selectedSearchPostPosition.value = position
+//        Log.d("setselectpos",_selectedSearchPostPosition.value!!.toString())
+//    }
 
 //    fun setSelectedPostPosition(position: Int) {
 //        _selectedPostPosition.value = position

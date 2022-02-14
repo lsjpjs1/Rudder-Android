@@ -39,12 +39,11 @@ class ShowPostHeaderFragment() : Fragment() {
             navController.popBackStack()
 
             if (navController.currentDestination!!.label == "SearchPostDisplayFragment") {
-                (activity as MainActivity).addCommentMainBottomNavigationDisappear()
-                (activity as MainActivity).mainBottomNavigationDisappear()
+                (activity as MainActivity).nestedCommentDisappear()
             } else {
-                (activity as MainActivity).addCommentFragmentDisappear()
+                (activity as MainActivity).mainBottomNavigationAppear()
+                (activity as MainActivity).nestedCommentDisappear()
             }
-            (activity as MainActivity).addCommentFragmentDisappear()
         }
 
 

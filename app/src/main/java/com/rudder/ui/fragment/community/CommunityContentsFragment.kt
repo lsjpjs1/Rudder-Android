@@ -197,7 +197,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationShowPost(
             ShowPostDisplayFragment.MAIN_VIEW_MODEL)
         view.findNavController().navigate(action)
-        (activity as MainActivity).addCommentFragmentAppear()
+        (activity as MainActivity).mainBottomNavigationDisappear()
 
 //        childFragmentManager.beginTransaction()
 //            .add(R.id.main_bottom_layout, AddCommentFragment(viewModel))
