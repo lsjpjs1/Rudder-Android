@@ -79,7 +79,12 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
         searchDisplayBinding.searchPostContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
         searchDisplayBinding.searchPostContentsSwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                viewModel.scrollTouchTop()
+                viewModel.searchWord.value?.let {
+                    viewModel.scrollTouchTop()
+                } ?: kotlin.run {
+                    searchDisplayBinding.searchPostContentsSwipeRefreshLayout.isRefreshing = false
+                }
+
             }
 
         })
