@@ -93,6 +93,11 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
         return fragmentBinding.root
     }
 
+    override fun onResume() {
+        viewModel.getPostMessages()
+        super.onResume()
+    }
+
     override fun onClickPostMessageRoom(postMessageRoomId: Int) {
         val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
         findNavController().navigate(action)
