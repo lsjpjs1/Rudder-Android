@@ -635,9 +635,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun addCommentMainBottomNavigationDisappear() {
         binding.mainBottomNavigation.visibility = View.GONE
-
         viewModel.clearNestedCommentInfo()
-        //hideParentCommentInfo()
     }
 
     fun addCommentMainBottomLayoutAppear() {
@@ -658,6 +656,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             Log.d("navigation_onBack", "${destination.label}")
             when (destination.id) {
                 R.id.navigation_community -> {
+                    mainBottomNavigationAppear()
 //                    if (addCommentFragment.isVisible) {
 //                        addCommentFragmentDisappear()
 //                    } else {

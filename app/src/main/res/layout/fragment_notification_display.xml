@@ -22,7 +22,8 @@
             <androidx.fragment.app.FragmentContainerView
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="0dp"
+                android:layout_height="60dp"
+
                 android:id="@+id/notificationHeaderFragmentContainerView"
                 app:layout_constraintHeight_percent="@dimen/add_post_header_height"
                 android:name="com.rudder.ui.fragment.notification.NotificationHeaderFragment">
@@ -31,9 +32,9 @@
             <androidx.fragment.app.FragmentContainerView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/notificationHeaderFragmentContainerView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/notificationContentsFragmentContainerView"
-                app:layout_constraintHeight_percent="@dimen/add_post_display_height"
                 android:name="com.rudder.ui.fragment.notification.NotificationContentsFragment">
             </androidx.fragment.app.FragmentContainerView>
 
