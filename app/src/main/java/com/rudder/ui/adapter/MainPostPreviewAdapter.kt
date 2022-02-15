@@ -68,6 +68,12 @@ class MainPostPreviewAdapter(listener:CustomOnclickListener,
 
         }
 
+        holder.postPreviewBinding.imageView6.setOnClickListener {
+            //android:onClick="@{()->mainVM.clickPostLikeInCommunityContents(position)}"
+
+            viewModel.clickPostLikeInCommunityContents(position)
+        }
+
         Glide.with(holder.postPreviewBinding.root.previewPostProfileImageView.context)
             .load(getItem(position).userProfileImageUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)

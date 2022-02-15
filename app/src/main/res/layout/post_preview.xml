@@ -262,13 +262,14 @@
                             android:id="@+id/imageView6"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:onClick="@{()->mainVM.clickPostLikeInCommunityContents(position)}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ic_outline_thumb_up_24"
 
                             />
+<!--                        android:onClick="@{()->mainVM.clickPostLikeInCommunityContents(position)}"-->
+
 
                         <View
                             android:id="@+id/blankView2"

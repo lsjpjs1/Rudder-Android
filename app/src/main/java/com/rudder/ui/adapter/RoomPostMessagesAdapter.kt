@@ -8,6 +8,8 @@ import com.rudder.R
 import com.rudder.data.dto.PostMessage
 import com.rudder.data.dto.PostMessageRoom
 import com.rudder.databinding.RoomPostMessageItemBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RoomPostMessagesAdapter(
        val context: Context?
@@ -26,10 +28,20 @@ class RoomPostMessagesAdapter(
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.viewBinding.roomPostMessageBodyTV.text = getItem(position).postMessageBody
-        holder.viewBinding.roomPostMessageTimeTV.text = getItem(position).messageSendTime.toString()
+
         if(!getItem(position).isSender){
-            holder.viewBinding.roomPostMessageCL.background = ResourcesCompat.getDrawable(context!!.resources,R.color.light_grey_2,null)
+            holder.viewBinding.roomPostMessageTypeTV.text = "Received Message"
+        } else {
+            holder.viewBinding.roomPostMessageTypeTV.text = "Sent Message"
         }
+
+
+        val messageTime = SimpleDateFormat("yy/MM/dd HH:mm").format(getItem(position).messageSendTime)
+
+
+        holder.viewBinding.roomPostMessageTimeTV.text = messageTime
+
+
     }
 
 //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {

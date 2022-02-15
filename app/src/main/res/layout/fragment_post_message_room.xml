@@ -24,13 +24,15 @@
                 android:name="com.rudder.ui.fragment.postmessage.PostMessageRoomHeaderFragment">
             </fragment>
         </FrameLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@color/light_grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/postMessageRoomHeader"
             app:layout_constraintBottom_toBottomOf="parent"
+
             >
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/roomPostMessageSwipeRefreshLayout"
