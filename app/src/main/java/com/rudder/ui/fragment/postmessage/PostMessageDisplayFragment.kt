@@ -92,10 +92,12 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
 
         return fragmentBinding.root
     }
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (!hidden) {
+            viewModel.getPostMessages()
+        }
 
-    override fun onResume() {
-        viewModel.getPostMessages()
-        super.onResume()
+        super.onHiddenChanged(hidden)
     }
 
     override fun onClickPostMessageRoom(postMessageRoomId: Int) {
