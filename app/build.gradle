@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId "com.rudder.coursereview"
-        minSdkVersion 17
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 14
         versionName "2.1"

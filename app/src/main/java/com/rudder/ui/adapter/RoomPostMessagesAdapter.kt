@@ -2,6 +2,7 @@ package com.rudder.ui.adapter
 
 import android.content.Context
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import com.rudder.R
@@ -14,6 +15,8 @@ import java.util.*
 class RoomPostMessagesAdapter(
        val context: Context?
 ) : BaseAdapter<PostMessage, RoomPostMessageItemBinding>(diffUtil ,R.layout.room_post_message_item) {
+
+
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<PostMessage>() {
             override fun areContentsTheSame(oldItem: PostMessage, newItem: PostMessage): Boolean {
@@ -24,6 +27,10 @@ class RoomPostMessagesAdapter(
                 return oldItem.postMessageId == newItem.postMessageId //수정 해야됨
             }
         }
+        //private val purpleRudder by lazy { ContextCompat.getColor(context!!, R.color.purple_rudder) }
+
+        //private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
+
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -31,6 +38,9 @@ class RoomPostMessagesAdapter(
 
         if(!getItem(position).isSender){
             holder.viewBinding.roomPostMessageTypeTV.text = "Received Message"
+            //val tmp = context!!.getDrawable(R.color.purple_rudder)
+            //holder.viewBinding.roomPostMessageTypeTV.textColors = tmp
+
         } else {
             holder.viewBinding.roomPostMessageTypeTV.text = "Sent Message"
         }
