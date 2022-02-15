@@ -32,7 +32,7 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
 
 
         holder.viewBinding.notificationTopLevelCL.setOnClickListener {
-            notificationAdapterCallback.onClickPostNotification(0)
+            notificationAdapterCallback.onClickPostNotification(1206)
         }
     }
 

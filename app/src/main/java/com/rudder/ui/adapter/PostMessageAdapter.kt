@@ -22,7 +22,6 @@ class PostMessageAdapter(
 
     ) : BaseAdapter<PostMessageRoom, PostMessageItemBinding>(diffUtil, R.layout.post_message_item)  {
 
-    val MAX_POST_MESSAGE_BODY_LENGTH = 80
 
 
     companion object {
@@ -35,6 +34,8 @@ class PostMessageAdapter(
                 return oldItem.postMessageRoomId == newItem.postMessageRoomId //수정 해야됨
             }
         }
+        const val MAX_POST_MESSAGE_BODY_LENGTH = 80
+
     }
 
 

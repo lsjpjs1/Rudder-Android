@@ -20,6 +20,9 @@ import com.rudder.databinding.FragmentNotificationDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.EditProfileImagesAdapter
 import com.rudder.ui.adapter.NotificationAdapter
+import com.rudder.ui.fragment.post.ShowPostDisplayFragment.Companion.MAIN_VIEW_MODEL
+import com.rudder.ui.fragment.post.ShowPostDisplayFragment.Companion.SEARCH_VIEW_MODEL
+import com.rudder.ui.fragment.post.ShowPostDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.NotificationAdapterCallback
 import com.rudder.viewModel.NotificationViewModel
@@ -81,12 +84,13 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
     }
 
 
-    override fun onClickPostNotification(postId: Int) {
+    override fun onClickPostNotification(notificationPostId: Int) {
 
-        //val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
-        findNavController().navigate(R.id.action_navigation_notification_to_navigation_show_post)
 
-        //(activity as MainActivity).mainBottomNavigationDisappear()
+        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = notificationPostId, viewModelIndex = MAIN_VIEW_MODEL)
+        findNavController().navigate(action)
+
+        (activity as MainActivity).mainBottomNavigationDisappear()
 
     }
 

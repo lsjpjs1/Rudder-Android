@@ -16,35 +16,43 @@ class NotificationViewModel: ViewModel() {
 
 
 
-//    init {
-//        _notificationList.value = arrayListOf(
-//            NotificationItem(
-//                "hello_1",
-//                0,
-//                0,
-//                0
-//            ),
-//            NotificationItem(
-//                "hello_2",
-//                1,
-//                1,
-//                11
-//            ),
-//            NotificationItem(
-//                "hello_3",
-//                0,
-//                2,
-//                22
-//            ),
-//            NotificationItem(
-//                "hello_4",
-//                1,
-//                3,
-//                33
-//            )
-//
-//        )
-//    }
+    init {
+        _notificationList.value = arrayListOf(
+            NotificationItem(
+                "hello_1",
+                0,
+                0,
+                0,
+                0,
+                0
+            ),
+            NotificationItem(
+                "hello_2",
+                1,
+                1,
+                11,
+                1,
+                1
+            ),
+            NotificationItem(
+                "hello_3",
+                0,
+                2,
+                22,
+                2,
+                2
+            ),
+            NotificationItem(
+                "hello_4",
+                1,
+                3,
+                33,
+                3,
+                3
+            )
+
+        )
+    }
 
 
 }

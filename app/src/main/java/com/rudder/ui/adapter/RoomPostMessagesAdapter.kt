@@ -16,6 +16,9 @@ class RoomPostMessagesAdapter(
        val context: Context?
 ) : BaseAdapter<PostMessage, RoomPostMessageItemBinding>(diffUtil ,R.layout.room_post_message_item) {
 
+    private val purpleRudder by lazy { ContextCompat.getColor(context!!,R.color.purple_rudder) }
+    private val lightPurpleRudder by lazy { ContextCompat.getColor(context!!,R.color.light_purple_rudder) }
+
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<PostMessage>() {
@@ -27,7 +30,6 @@ class RoomPostMessagesAdapter(
                 return oldItem.postMessageId == newItem.postMessageId //수정 해야됨
             }
         }
-        //private val purpleRudder by lazy { ContextCompat.getColor(context!!, R.color.purple_rudder) }
 
         //private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
 
@@ -37,12 +39,13 @@ class RoomPostMessagesAdapter(
         holder.viewBinding.roomPostMessageBodyTV.text = getItem(position).postMessageBody
 
         if(!getItem(position).isSender){
-            holder.viewBinding.roomPostMessageTypeTV.text = "Received Message"
-            //val tmp = context!!.getDrawable(R.color.purple_rudder)
-            //holder.viewBinding.roomPostMessageTypeTV.textColors = tmp
+            holder.viewBinding.roomPostMessageTypeTV.text = "Received Mail"
+            holder.viewBinding.roomPostMessageTypeTV.setTextColor(lightPurpleRudder)
 
         } else {
-            holder.viewBinding.roomPostMessageTypeTV.text = "Sent Message"
+            holder.viewBinding.roomPostMessageTypeTV.text = "Sent Mail"
+            holder.viewBinding.roomPostMessageTypeTV.setTextColor(purpleRudder)
+
         }
 
 

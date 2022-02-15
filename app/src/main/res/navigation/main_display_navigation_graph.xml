@@ -68,7 +68,6 @@
                 android:name="postMessageRoomId"
                 app:argType="integer"
                 android:defaultValue="1"
-
                 />
 
 
@@ -125,12 +124,6 @@
 
     </bottom>
 
-
-<!--    <navigation-->
-<!--        android:id="@+id/main_fragment_navigation_graph"-->
-<!--        app:startDestination="@id/navigation_search"-->
-<!--        >-->
-<!--    </navigation>-->
 
     <bottom
         android:id="@+id/navigation_add_post"
@@ -191,7 +184,21 @@
         <action
             android:id="@+id/action_navigation_notification_to_navigation_show_post"
             app:destination="@id/navigation_show_post"
-            app:popUpTo="@id/navigation_notification" />
+            app:popUpTo="@id/navigation_notification">
+
+            <argument
+                android:name="viewModelIndex"
+                app:argType="integer"
+                android:defaultValue="1"
+                />
+
+            <argument
+                android:name="notificationPostId"
+                app:argType="integer"
+                android:defaultValue="0"
+                />
+
+        </action>
 
 
         <action

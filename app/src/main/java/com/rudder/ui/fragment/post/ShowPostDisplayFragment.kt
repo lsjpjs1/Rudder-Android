@@ -23,8 +23,8 @@ class ShowPostDisplayFragment : Fragment() {
 
     companion object{
         const val TAG = "ShowPostDisplayFragment"
-        const val SEARCH_VIEW_MODEL = 2
         const val MAIN_VIEW_MODEL = 1
+        const val SEARCH_VIEW_MODEL = 2
     }
 
     private val lazyContext by lazy {

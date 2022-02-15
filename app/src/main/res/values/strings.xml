@@ -48,8 +48,10 @@
     <string name="club">Club</string>
     <string name="nickname_hint">New Nickname</string>
     <string name="edit_profile_image">Change Profile Image</string>
-    <string name="send_post_message">Send Message</string>
-    <string name="post_message">Message</string>
+<!--    <string name="send_post_message">Send Message</string>-->
+<!--    <string name="post_message">Message</string>-->
+    <string name="send_post_message">Send Quick Mail</string>
+    <string name="post_message">Quick Mail</string>
     <string name="title_activity_test">TestActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
