@@ -11,13 +11,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.rudder.R
 import com.rudder.databinding.FragmentNotificationContentsBinding
 import com.rudder.databinding.FragmentNotificationDisplayBinding
+import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.EditProfileImagesAdapter
 import com.rudder.ui.adapter.NotificationAdapter
+import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.NotificationAdapterCallback
 import com.rudder.viewModel.NotificationViewModel
 import com.rudder.viewModel.PostMessageRoomViewModel
@@ -55,7 +58,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
         fragmentBinding.lifecycleOwner = this
 
-        val notificationAdapter = NotificationAdapter()
+        val notificationAdapter = NotificationAdapter(this)
 
 
         fragmentBinding.notificationDisplayRV.also {
@@ -79,7 +82,12 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
 
     override fun onClickPostNotification(postId: Int) {
-        TODO("Not yet implemented")
+
+        //val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
+        findNavController().navigate(R.id.action_navigation_notification_to_navigation_show_post)
+
+        //(activity as MainActivity).mainBottomNavigationDisappear()
+
     }
 
     override fun onClickPostMessageRoomNotification(postMessageRoomId: Int) {

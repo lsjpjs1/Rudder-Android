@@ -6,5 +6,9 @@ data class NotificationItem(
     val notificationBody : String,
     val notificationType : Int,
     val notificationId: Int,
-    val notificationTime: Int
+    val notificationTime: Int,
+
+    val notificationPostId : Int,
+    val notificationPostMessageId : Int
+
 )

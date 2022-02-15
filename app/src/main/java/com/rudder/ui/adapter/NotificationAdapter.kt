@@ -31,9 +31,9 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
         holder.viewBinding.notificationTime.text = getItem(position).notificationTime.toString()
 
 
-//        holder.viewBinding.postMessageItemCL.setOnClickListener {
-//            postMessageAdapterCallback.onClickPostMessageRoom(getItem(position).postMessageRoomId)
-//        }
+        holder.viewBinding.notificationTopLevelCL.setOnClickListener {
+            notificationAdapterCallback.onClickPostNotification(0)
+        }
     }
 
 
