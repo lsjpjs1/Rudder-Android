@@ -32,11 +32,11 @@ class RoomPostMessagesAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        val superHolder = super.onCreateViewHolder(parent, viewType)
-        val lp = superHolder.viewBinding.root.layoutParams
-        lp.height = (3000*0.15).toInt()
-        superHolder.viewBinding.root.layoutParams = lp
-        return superHolder
-    }
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+//        val superHolder = super.onCreateViewHolder(parent, viewType)
+//        val lp = superHolder.viewBinding.root.layoutParams
+//        lp.height = (3000*0.15).toInt()
+//        superHolder.viewBinding.root.layoutParams = lp
+//        return superHolder
+//    }
 }
