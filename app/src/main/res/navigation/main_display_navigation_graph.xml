@@ -187,6 +187,18 @@
         android:name="com.rudder.ui.fragment.notification.NotificationDisplayFragment"
         android:label="@string/notification"
         tools:layout="@layout/fragment_notification_display" >
+
+        <action
+            android:id="@+id/action_navigation_notification_to_navigation_show_post"
+            app:destination="@id/navigation_show_post"
+            app:popUpTo="@id/navigation_notification" />
+
+
+        <action
+            android:id="@+id/action_navigation_notification_to_navigation_postmessage_room"
+            app:destination="@id/navigation_postmessage_room"
+            app:popUpTo="@id/navigation_notification" />
+
     </bottom>
 
 

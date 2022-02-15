@@ -5,8 +5,9 @@ import com.rudder.R
 import com.rudder.data.dto.NotificationItem
 import com.rudder.data.dto.PostMessageRoom
 import com.rudder.databinding.NotificationContentsItemBinding
+import com.rudder.util.NotificationAdapterCallback
 
-class NotificationAdapter() : BaseAdapter<NotificationItem,NotificationContentsItemBinding>(diffUtil, R.layout.notification_contents_item) {
+class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCallback) : BaseAdapter<NotificationItem,NotificationContentsItemBinding>(diffUtil, R.layout.notification_contents_item) {
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<NotificationItem>() {

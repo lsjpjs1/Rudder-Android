@@ -18,11 +18,12 @@ import com.rudder.databinding.FragmentNotificationContentsBinding
 import com.rudder.databinding.FragmentNotificationDisplayBinding
 import com.rudder.ui.adapter.EditProfileImagesAdapter
 import com.rudder.ui.adapter.NotificationAdapter
+import com.rudder.util.NotificationAdapterCallback
 import com.rudder.viewModel.NotificationViewModel
 import com.rudder.viewModel.PostMessageRoomViewModel
 
 
-class NotificationContentsFragment : Fragment() {
+class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 //    // TODO: Rename and change types of parameters
 //    private var param1: String? = null
 //    private var param2: String? = null
@@ -34,10 +35,6 @@ class NotificationContentsFragment : Fragment() {
 //            param2 = it.getString(ARG_PARAM2)
 //        }
 //    }
-
-    private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
-
-
 
     private val notificationViewModel : NotificationViewModel by lazy {
         ViewModelProvider(parentFragment as ViewModelStoreOwner).get(NotificationViewModel::class.java)
@@ -79,6 +76,16 @@ class NotificationContentsFragment : Fragment() {
 
         return fragmentBinding.root
     }
+
+
+    override fun onClickPostNotification(postId: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onClickPostMessageRoomNotification(postMessageRoomId: Int) {
+        TODO("Not yet implemented")
+    }
+
 
 
 
