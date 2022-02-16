@@ -82,7 +82,10 @@ class Repository {
 
 
     suspend fun signUpSchoolList(): JsonArray {
-        val schoolListFlagAPIResultJson = ExceptionUtil.retryWhenException(SignUpApi::schoolListSignUp,null,SignUpApi())
+        val jsonArray = JsonArray()
+        val schoolListFlagAPIResultJson = ExceptionUtil.retryWhenException(SignUpApi::schoolListSignUp,null,SignUpApi(),
+            Response(jsonArray)
+        )
         return schoolListFlagAPIResultJson.results
     }
 
@@ -167,33 +170,57 @@ class Repository {
     }
 
     suspend fun addPostViewCount(addPostViewCountInfo: AddPostViewCountInfo): Boolean{
-            return ExceptionUtil.retryWhenException(PostApi::addPostViewCount,addPostViewCountInfo,PostApi()).results.get("isSuccess").asBoolean
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccess",false)
+            return ExceptionUtil.retryWhenException(PostApi::addPostViewCount,addPostViewCountInfo,PostApi(),Response(serverFailJsonObject)).results.get("isSuccess").asBoolean
 
     }
 
     suspend fun deletePostRepository(deletePostInfo: DeletePostInfo) : Boolean{
-        return ExceptionUtil.retryWhenException(DeleteApi::deletePostApi,deletePostInfo,DeleteApi()).results.get("isSuccess").asBoolean
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccess",false)
+        return ExceptionUtil.retryWhenException(DeleteApi::deletePostApi,deletePostInfo,DeleteApi(),
+            Response(serverFailJsonObject)
+        ).results.get("isSuccess").asBoolean
     }
 
     suspend fun deleteCommentRepository(deleteCommentInfo: DeleteCommentInfo) : Boolean{
-        return ExceptionUtil.retryWhenException(DeleteApi::deletecommentApi,deleteCommentInfo,DeleteApi()).results.get("isSuccess").asBoolean
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccess",false)
+        return ExceptionUtil.retryWhenException(DeleteApi::deletecommentApi,deleteCommentInfo,DeleteApi(),
+            Response(serverFailJsonObject)
+        ).results.get("isSuccess").asBoolean
     }
 
     suspend fun editPostRepository(editPostInfo: EditPostInfo) : Boolean{
-        return ExceptionUtil.retryWhenException(EditApi::editPostApi,editPostInfo,EditApi()).results.get("isSuccess").asBoolean
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccess",false)
+        return ExceptionUtil.retryWhenException(EditApi::editPostApi,editPostInfo,EditApi(),
+            Response(serverFailJsonObject)
+        ).results.get("isSuccess").asBoolean
     }
 
     suspend fun editCommentRepository(editCommentInfo: EditCommentInfo) : Boolean{
-        return ExceptionUtil.retryWhenException(EditApi::editCommentApi,editCommentInfo,EditApi()).results.get("isSuccess").asBoolean
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccess",false)
+        return ExceptionUtil.retryWhenException(EditApi::editCommentApi,editCommentInfo,EditApi(),
+            Response(serverFailJsonObject)
+        ).results.get("isSuccess").asBoolean
     }
 
     suspend fun reportRepository(reportInfo: ReportInfo) : Boolean{
-        return ExceptionUtil.retryWhenException(ReportApi::reportApi,reportInfo,ReportApi()).results.get("isSuccess").asBoolean
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccess",false)
+        return ExceptionUtil.retryWhenException(ReportApi::reportApi,reportInfo,ReportApi(),
+            Response(serverFailJsonObject)
+        ).results.get("isSuccess").asBoolean
     }
 
     suspend fun getUploadUrls(getUploadUrlsInfo: GetUploadUrlsInfo): ArrayList<String>{
-            val arrayListType = object : TypeToken<ArrayList<String>>(){}.type
-            return Gson().fromJson<ArrayList<String>>(ExceptionUtil.retryWhenException(FileApi::getUploadUrls,getUploadUrlsInfo,FileApi()).results.get("urls"),arrayListType)
+        val serverErrorJsonObject = JsonObject()
+        serverErrorJsonObject.addProperty("urls","")
+        val arrayListType = object : TypeToken<ArrayList<String>>(){}.type
+            return Gson().fromJson<ArrayList<String>>(ExceptionUtil.retryWhenException(FileApi::getUploadUrls,getUploadUrlsInfo,FileApi(),Response(serverErrorJsonObject)).results.get("urls"),arrayListType)
 
     }
 
@@ -206,15 +233,27 @@ class Repository {
     }
 
     suspend fun profileImageListRepository() : JsonArray {
-        return ExceptionUtil.retryWhenException(SignUpApi::profileImageListSignUpApi,null,SignUpApi()).results.get("profileImageList").asJsonArray
+        val serverErrorJsonObject = JsonObject()
+        serverErrorJsonObject.add("profileImageList",JsonArray())
+        return ExceptionUtil.retryWhenException(SignUpApi::profileImageListSignUpApi,null,SignUpApi(),
+            Response(serverErrorJsonObject)
+        ).results.get("profileImageList").asJsonArray
     }
 
     suspend fun categorySelectSignUpRepository(categorySelectSignUpInfo: CategorySelectSignUpInfo) : Boolean{
-        return ExceptionUtil.retryWhenException(CategorySelectApi::categorySelectSignUpApi,categorySelectSignUpInfo,CategorySelectApi()).results.get("isSuccess").asBoolean
+        val serverErrorJsonObject = JsonObject()
+        serverErrorJsonObject.addProperty("isSuccess",false)
+        return ExceptionUtil.retryWhenException(CategorySelectApi::categorySelectSignUpApi,categorySelectSignUpInfo,CategorySelectApi(),
+            Response(serverErrorJsonObject)
+        ).results.get("isSuccess").asBoolean
     }
 
     suspend fun categorySelectMyPageRepository(categorySelectMyPageInfo: CategorySelectMyPageInfo) : Boolean{
-        return ExceptionUtil.retryWhenException(CategorySelectApi::categorySelectMyPageApi,categorySelectMyPageInfo,CategorySelectApi()).results.get("isSuccess").asBoolean
+        val serverErrorJsonObject = JsonObject()
+        serverErrorJsonObject.addProperty("isSuccess",false)
+        return ExceptionUtil.retryWhenException(CategorySelectApi::categorySelectMyPageApi,categorySelectMyPageInfo,CategorySelectApi(),
+            Response(serverErrorJsonObject)
+        ).results.get("isSuccess").asBoolean
     }
 
 
@@ -242,8 +281,11 @@ class Repository {
     }
 
     suspend fun addUserRequest(addUserRequestRequest: AddUserRequestRequest): Boolean{
-
-            return ExceptionUtil.retryWhenException(MyPageApi::addUserRequest,addUserRequestRequest,MyPageApi()).results.get("isSuccess").asBoolean
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccess",false)
+        return ExceptionUtil.retryWhenException(MyPageApi::addUserRequest,addUserRequestRequest,MyPageApi(),
+            Response(serverFailJsonObject)
+        ).results.get("isSuccess").asBoolean
 
 
     }
