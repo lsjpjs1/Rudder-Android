@@ -151,7 +151,7 @@
                                     android:fontFamily="@font/sf_pro_text_bold"
                                     android:layout_marginStart="16dp"
                                     app:layout_constraintStart_toEndOf="@+id/logOutImageView"
-                                    android:textSize="16dp"
+                                    android:textSize="16sp"
                                     app:layout_constraintWidth_default="percent"
                                     app:layout_constraintWidth_percent="0.8" />
 
@@ -173,12 +173,12 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    android:src="@drawable/ic_baseline_search_24"
+                                    android:src="@drawable/ic_baseline_speaker_notes_24"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/userAgreementImageView"
                                     android:layout_marginStart="10dp"
-                                    >
+                                    app:tint="@color/black">
                                 </ImageView>
 
 

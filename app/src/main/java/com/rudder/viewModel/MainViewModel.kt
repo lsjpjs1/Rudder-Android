@@ -1188,4 +1188,10 @@ open class MainViewModel : ViewModel() {
     }
 
 
+    fun getPostContent() {
+
+
+
+    }
+
 }
