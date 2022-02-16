@@ -10,6 +10,7 @@ import com.rudder.data.*
 import com.rudder.data.dto.PostMessage
 import com.rudder.data.dto.PostMessageRoom
 import com.rudder.data.dto.ProfileImage
+import com.rudder.data.dto.ProfileImageResponse
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.data.remote.LoginApi
 import com.rudder.data.remote.PostApi
@@ -93,12 +94,14 @@ class Repository {
 
 
     suspend fun getPosts(getPostInfo: GetPostInfo): ArrayList<PreviewPost>{
-        return ExceptionUtil.retryWhenException(PostApi::getPosts,getPostInfo,PostApi())
+        return ExceptionUtil.retryWhenException(PostApi::getPosts,getPostInfo,PostApi(), arrayListOf())
     }
 
     suspend fun getComments(getCommentInfo: GetCommentInfo): ArrayList<Comment> {
 
-            val resJson = ExceptionUtil.retryWhenException(CommentApi::getComments,getCommentInfo,CommentApi())
+            val resJson = ExceptionUtil.retryWhenException(CommentApi::getComments,getCommentInfo,CommentApi(),
+                Response(arrayListOf())
+            )
             return resJson.results
 
 
@@ -112,7 +115,9 @@ class Repository {
     }
 
     suspend fun addPost(addPostInfo: AddPostInfo): AddPostResponse{
-            val response =ExceptionUtil.retryWhenException(PostApi::addPostApi,addPostInfo,PostApi())
+            val response =ExceptionUtil.retryWhenException(PostApi::addPostApi,addPostInfo,PostApi(),
+                Response(AddPostResponse(false,-1))
+            )
             return response.results
     }
 
@@ -138,11 +143,15 @@ class Repository {
     }
 
     suspend fun getCategories(getCategoriesRequest: GetCategoriesRequest): ArrayList<Category>{
-        return ExceptionUtil.retryWhenException(BoardInfoApi::getCategoryList,getCategoriesRequest,BoardInfoApi()).results
+        return ExceptionUtil.retryWhenException(BoardInfoApi::getCategoryList,getCategoriesRequest,BoardInfoApi(),
+            Response(arrayListOf())
+        ).results
     }
 
     suspend fun getClubCategories(getCategoriesRequest: GetCategoriesRequest): ArrayList<Category>{
-        return ExceptionUtil.retryWhenException(BoardInfoApi::getClubCategoryList,getCategoriesRequest,BoardInfoApi()).results
+        return ExceptionUtil.retryWhenException(BoardInfoApi::getClubCategoryList,getCategoriesRequest,BoardInfoApi(),
+            Response(arrayListOf())
+        ).results
     }
 
     suspend fun isLikePost(isLikePostInfo: IsLikePostInfo): Boolean{
@@ -210,20 +219,26 @@ class Repository {
 
 
     suspend fun getSelectedCategoriesRepository(token : Token): ArrayList<Category> {
-        return ExceptionUtil.retryWhenException(BoardInfoApi::getSelectedCategoryListApi,token,BoardInfoApi()).results
+        return ExceptionUtil.retryWhenException(BoardInfoApi::getSelectedCategoryListApi,token,BoardInfoApi(),
+            Response(arrayListOf())
+        ).results
     }
 
 
     suspend fun getNotice(noticeRequest: NoticeRequest): NoticeResponse{
 
-            return ExceptionUtil.retryWhenException(NoticeApi::getNotice,noticeRequest,NoticeApi()).results
+            return ExceptionUtil.retryWhenException(NoticeApi::getNotice,noticeRequest,NoticeApi(),
+                Response(NoticeResponse(false,""))
+            ).results
 
 
     }
 
     suspend fun getMyProfileImageUrl(myProfileImageRequest:MyProfileImageRequest): MyProfileImageResponse{
 
-        return ExceptionUtil.retryWhenException(MyPageApi::getMyProfileImageUrl,myProfileImageRequest,MyPageApi()).results
+        return ExceptionUtil.retryWhenException(MyPageApi::getMyProfileImageUrl,myProfileImageRequest,MyPageApi(),
+            Response(MyProfileImageResponse(""))
+        ).results
     }
 
     suspend fun addUserRequest(addUserRequestRequest: AddUserRequestRequest): Boolean{
@@ -235,48 +250,64 @@ class Repository {
 
     suspend fun requestJoinClub(requestJoinClubRequest: RequestJoinClubRequest): Boolean{
 
-            return ExceptionUtil.retryWhenException(MyPageApi::requestJoinClub,requestJoinClubRequest,MyPageApi()).results.isSuccess
+            return ExceptionUtil.retryWhenException(MyPageApi::requestJoinClub,requestJoinClubRequest,MyPageApi(),
+                Response(RequestJoinClubResponse(false))
+            ).results.isSuccess
 
 
     }
 
     suspend fun blockUser(blockUserRequest: BlockUserRequest): Boolean{
-        return ExceptionUtil.retryWhenException(BlockUserApi::blockUser,blockUserRequest,BlockUserApi()).results.isSuccess
+        return ExceptionUtil.retryWhenException(BlockUserApi::blockUser,blockUserRequest,BlockUserApi(),
+            Response(BlockUserResponse(false))
+        ).results.isSuccess
 
     }
 
     suspend fun updateNickname(updateNicknameRequest: UpdateNicknameRequest): UpdateResponse{
-        return ExceptionUtil.retryWhenException(EditUserApi::updateNickname,updateNicknameRequest,EditUserApi()).results
+        return ExceptionUtil.retryWhenException(EditUserApi::updateNickname,updateNicknameRequest,EditUserApi(),
+            Response(UpdateResponse(false,ResponseEnum.UNKNOWN))
+        ).results
 
     }
 
     suspend fun getProfileImages() : ArrayList<ProfileImage> {
-        return ExceptionUtil.retryWhenException(MyPageApi::getProfileImages,null,MyPageApi()).results.profileImageList
+        return ExceptionUtil.retryWhenException(MyPageApi::getProfileImages,null,MyPageApi(),
+            Response(ProfileImageResponse(arrayListOf()))
+        ).results.profileImageList
 
 
     }
 
     suspend fun updateProfileImage(updateProfileImageRequest: UpdateProfileImageRequest): UpdateResponse{
-        return ExceptionUtil.retryWhenException(EditUserApi::updateProfileImage,updateProfileImageRequest,EditUserApi()).results
+        return ExceptionUtil.retryWhenException(EditUserApi::updateProfileImage,updateProfileImageRequest,EditUserApi(),
+            Response(UpdateResponse(false,ResponseEnum.UNKNOWN))
+        ).results
 
 
     }
 
     suspend fun sendPostMessage(sendPostMessageRequest: SendPostMessageRequest): SendPostMessageResponse{
-        return ExceptionUtil.retryWhenException(MessageApi::sendPostMessage,sendPostMessageRequest,MessageApi()).results
+        return ExceptionUtil.retryWhenException(MessageApi::sendPostMessage,sendPostMessageRequest,MessageApi(),
+            Response(SendPostMessageResponse(false,ResponseEnum.UNKNOWN))
+        ).results
 
 
     }
 
     suspend fun getMessagesByRoom(getMessagesByRoomRequest: GetMessagesByRoomRequest): ArrayList<PostMessage>{
-        return ExceptionUtil.retryWhenException(MessageApi::getMessagesByRoom,getMessagesByRoomRequest,MessageApi()).results.messages
+        return ExceptionUtil.retryWhenException(MessageApi::getMessagesByRoom,getMessagesByRoomRequest,MessageApi(),
+            Response(GetMessagesByRoomResponse(false,"Server error", arrayListOf()))
+        ).results.messages
 
 
     }
 
     suspend fun getMyMessages(getMyMessageRoomsRequest: GetMyMessageRoomsRequest): ArrayList<PostMessageRoom> {
 
-            val getMyMessagesResponse = ExceptionUtil.retryWhenException(PostMessageApi::getMyMessageRooms,getMyMessageRoomsRequest,PostMessageApi()).results
+            val getMyMessagesResponse = ExceptionUtil.retryWhenException(PostMessageApi::getMyMessageRooms,getMyMessageRoomsRequest,PostMessageApi(),
+                Response(GetMyMessageRoomsResponse(false,"Server error", arrayListOf()))
+            ).results
             return if (getMyMessagesResponse.isSuccess) {
                 getMyMessagesResponse.rooms
             } else{
