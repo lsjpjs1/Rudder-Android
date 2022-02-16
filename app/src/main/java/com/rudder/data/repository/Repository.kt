@@ -54,23 +54,31 @@ class Repository {
 
 
     suspend fun signUpSendVerifyCode(emailInfoSignUp : EmailInfoSignUp) : String{
-        val verifyAPIResult = ExceptionUtil.retryWhenException(SignUpApi::emailSignUp,emailInfoSignUp,SignUpApi())
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("fail","Server error")
+        val verifyAPIResult = ExceptionUtil.retryWhenException(SignUpApi::emailSignUp,emailInfoSignUp,SignUpApi(),Response(serverFailJsonObject))
         return verifyAPIResult.results.get("fail").asString
     }
 
     suspend fun signUpIdDuplicated(idDuplicatedInfo: IdDuplicatedInfo) : Boolean{
-        val idDuplicatedAPIResultJson =ExceptionUtil.retryWhenException(SignUpApi::idDuplicatedSignUp,idDuplicatedInfo,SignUpApi())
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isDuplicated", true)
+        val idDuplicatedAPIResultJson =ExceptionUtil.retryWhenException(SignUpApi::idDuplicatedSignUp,idDuplicatedInfo,SignUpApi(),Response(serverFailJsonObject))
         return idDuplicatedAPIResultJson.results.get("isDuplicated").asBoolean
     }
 
     suspend fun signUpCheckVerifyCode(checkVeriCodeInfo: CheckVerifyCodeInfo) : Boolean {
-        val checkVerifyAPIResult = ExceptionUtil.retryWhenException(SignUpApi::checkVerifySignUp,checkVeriCodeInfo,SignUpApi())
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccess", false)
+        val checkVerifyAPIResult = ExceptionUtil.retryWhenException(SignUpApi::checkVerifySignUp,checkVeriCodeInfo,SignUpApi(),Response(serverFailJsonObject))
         return checkVerifyAPIResult.results.get("isSuccess").asBoolean
     }
 
     private suspend fun checkToken(tokenInfo: TokenInfo): Boolean {
         try{
-            val tokenAPIResultJson = ExceptionUtil.retryWhenException(TokenApi::tokenValidation,tokenInfo,TokenApi())
+            val serverFailJsonObject = JsonObject()
+            serverFailJsonObject.addProperty("isTokenValid", false)
+            val tokenAPIResultJson = ExceptionUtil.retryWhenException(TokenApi::tokenValidation,tokenInfo,TokenApi(),Response(serverFailJsonObject))
             return tokenAPIResultJson.results.get("isTokenValid").asBoolean
         }catch (e: Exception){
             Log.d("Exception",e.message!!)
@@ -88,7 +96,9 @@ class Repository {
 
 
     suspend fun signUpNickNameDuplicated(nickNameDuplicatedInfo: NickNameDuplicatedInfo) : Boolean{
-        val nickNameDuplicatedAPIResultJson = ExceptionUtil.retryWhenException(SignUpApi::nickNameDuplicatedSignUpApi,nickNameDuplicatedInfo,SignUpApi())
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isDuplicated", true)
+        val nickNameDuplicatedAPIResultJson = ExceptionUtil.retryWhenException(SignUpApi::nickNameDuplicatedSignUpApi,nickNameDuplicatedInfo,SignUpApi(),Response(serverFailJsonObject))
         return nickNameDuplicatedAPIResultJson.results.get("isDuplicated").asBoolean
     }
 
@@ -108,9 +118,10 @@ class Repository {
     }
 
     suspend fun addComment(addCommentInfo: AddCommentInfo) : Boolean{
-
-            val resJson = ExceptionUtil.retryWhenException(CommentApi::addComment,addCommentInfo,CommentApi())
-            return resJson.results.get("isSuccess").asBoolean
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccess", false)
+        val resJson = ExceptionUtil.retryWhenException(CommentApi::addComment,addCommentInfo,CommentApi(),Response(serverFailJsonObject))
+        return resJson.results.get("isSuccess").asBoolean
 
     }
 
@@ -122,23 +133,31 @@ class Repository {
     }
 
     suspend fun signUpCreateAccount(signUpInsertInfo: SignUpInsertInfo) : Boolean { // Sign up, Complete!
-        val createAccountAPIResult = ExceptionUtil.retryWhenException(SignUpApi::createAccountSignUp,signUpInsertInfo,SignUpApi())
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("signUpComplete", false)
+        val createAccountAPIResult = ExceptionUtil.retryWhenException(SignUpApi::createAccountSignUp,signUpInsertInfo,SignUpApi(),Response(serverFailJsonObject))
         return createAccountAPIResult.results.get("signUpComplete").asBoolean
     }
 
     suspend fun findAccountID(emailInfo: EmailInfo) : Boolean {
-        val forgotIDAPIResult = ExceptionUtil.retryWhenException(ForgotApi::findForgotID,emailInfo,ForgotApi())
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("sendIdToEmail", false)
+        val forgotIDAPIResult = ExceptionUtil.retryWhenException(ForgotApi::findForgotID,emailInfo,ForgotApi(),Response(serverFailJsonObject))
         return forgotIDAPIResult.results.get("sendIdToEmail").asBoolean
     }
 
     suspend fun findAccountPassword(emailInfo: EmailInfo) : Boolean {
-        val forgotPasswordAPIResult = ExceptionUtil.retryWhenException(ForgotApi::findForgotPassword,emailInfo,ForgotApi())
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("sendPwVerificationCode", false)
+        val forgotPasswordAPIResult = ExceptionUtil.retryWhenException(ForgotApi::findForgotPassword,emailInfo,ForgotApi(),Response(serverFailJsonObject))
         return forgotPasswordAPIResult.results.get("sendPwVerificationCode").asBoolean
     }
 
 
     suspend fun sendAccountPassword(verifyInfo : CheckVerifyCodeInfo) : Boolean {
-        val sendAccountPasswordAPIResult = ExceptionUtil.retryWhenException(ForgotApi::sendPassword,verifyInfo,ForgotApi())
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccessForgot", false)
+        val sendAccountPasswordAPIResult = ExceptionUtil.retryWhenException(ForgotApi::sendPassword,verifyInfo,ForgotApi(),Response(serverFailJsonObject))
         return sendAccountPasswordAPIResult.results.get("isSuccessForgot").asBoolean
     }
 
@@ -155,7 +174,9 @@ class Repository {
     }
 
     suspend fun isLikePost(isLikePostInfo: IsLikePostInfo): Boolean{
-        return ExceptionUtil.retryWhenException(PostApi::isLikePost,isLikePostInfo,PostApi()).results.get("isSuccess").asBoolean
+        val serverFailJsonObject = JsonObject()
+        serverFailJsonObject.addProperty("isSuccess", false)
+        return ExceptionUtil.retryWhenException(PostApi::isLikePost,isLikePostInfo,PostApi(),Response(serverFailJsonObject)).results.get("isSuccess").asBoolean
     }
 
     suspend fun addLikePost(addLikePostInfo: AddLikePostInfo): JsonObject{
@@ -167,7 +188,7 @@ class Repository {
     }
 
     suspend fun addPostViewCount(addPostViewCountInfo: AddPostViewCountInfo): Boolean{
-            return ExceptionUtil.retryWhenException(PostApi::addPostViewCount,addPostViewCountInfo,PostApi()).results.get("isSuccess").asBoolean
+        return ExceptionUtil.retryWhenException(PostApi::addPostViewCount,addPostViewCountInfo,PostApi()).results.get("isSuccess").asBoolean
 
     }
 
