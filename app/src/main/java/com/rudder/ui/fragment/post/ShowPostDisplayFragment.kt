@@ -51,15 +51,13 @@ class ShowPostDisplayFragment : Fragment() {
             viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MainViewModel::class.java)
         }
 
+
+
+
         val showPostDisplayBinding= DataBindingUtil.inflate<FragmentShowPostDisplayBinding>(inflater,
             R.layout.fragment_show_post_display,container,false)
 
         showPostDisplayBinding.lifecycleOwner = this
-
-
-
-
-
 
 
         return showPostDisplayBinding.root

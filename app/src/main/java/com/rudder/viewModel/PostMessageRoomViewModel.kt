@@ -1,5 +1,6 @@
 package com.rudder.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,7 @@ class PostMessageRoomViewModel : ViewModel() {
 
     fun getMessagesByRoom(){
         GlobalScope.launch {
+            Log.d("get123", "${_postMessageRoomId.value!!}")
             val messagesByRoom = Repository().getMessagesByRoom(GetMessagesByRoomRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY!!)!!, _postMessageRoomId.value!!))
             viewModelScope.launch {
                 _messages.value = messagesByRoom

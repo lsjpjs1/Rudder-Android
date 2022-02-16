@@ -25,14 +25,22 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        holder.viewBinding.notificationType.text = getItem(position).notificationType.toString()
+
+        val notificationType = getItem(position).notificationType
+
+        holder.viewBinding.notificationType.text = notificationType.toString()
         holder.viewBinding.notificationId.text = getItem(position).notificationId.toString()
         holder.viewBinding.notificationBody.text = getItem(position).notificationBody
         holder.viewBinding.notificationTime.text = getItem(position).notificationTime.toString()
 
 
         holder.viewBinding.notificationTopLevelCL.setOnClickListener {
-            notificationAdapterCallback.onClickPostNotification(1206)
+            if (notificationType == 0) { //post에 대한 알림이면
+                notificationAdapterCallback.onClickPostNotification(1206)
+            } else { // post message room에 대한 알림이면
+                notificationAdapterCallback.onClickPostMessageRoomNotification(34)
+            }
+
         }
     }
 

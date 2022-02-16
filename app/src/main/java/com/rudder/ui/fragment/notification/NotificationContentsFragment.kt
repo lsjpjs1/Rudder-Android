@@ -84,18 +84,16 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
     }
 
 
-    override fun onClickPostNotification(notificationPostId: Int) {
-
-
-        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = notificationPostId, viewModelIndex = MAIN_VIEW_MODEL)
+    override fun onClickPostNotification(postId: Int) {
+        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = MAIN_VIEW_MODEL)
         findNavController().navigate(action)
-
         (activity as MainActivity).mainBottomNavigationDisappear()
-
     }
 
     override fun onClickPostMessageRoomNotification(postMessageRoomId: Int) {
-        TODO("Not yet implemented")
+        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationPostmessageRoom(notificationPostMessageRoomId = postMessageRoomId)
+        findNavController().navigate(action)
+        (activity as MainActivity).mainBottomNavigationDisappear()
     }
 
 
