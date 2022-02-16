@@ -54,7 +54,7 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
 //            .add(R.id.postMessageHeader, PostMessageHeaderFragment())
 //            .commit()
 
-        val adapter = PostMessageAdapter(this)
+        val adapter = PostMessageAdapter(this, lazyContext!!)
 
         viewModel.getPostMessages()
 

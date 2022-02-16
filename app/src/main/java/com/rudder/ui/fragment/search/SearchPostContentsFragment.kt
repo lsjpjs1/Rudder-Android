@@ -1,7 +1,6 @@
 package com.rudder.ui.fragment.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -68,7 +65,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if(!it.canScrollVertically(1)){
-                        viewModel.scrollTouchBottom()
+                        viewModel.scrollTouchBottomCommunityPost()
                     } else if (!it.canScrollVertically(-1) && dy < 0) {
                         //viewModel.scrollTouchTop()
                     }
@@ -80,7 +77,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
         searchDisplayBinding.searchPostContentsSwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
                 viewModel.searchWord.value?.let {
-                    viewModel.scrollTouchTop()
+                    viewModel.scrollTouchTopCommunityPost()
                 } ?: kotlin.run {
                     searchDisplayBinding.searchPostContentsSwipeRefreshLayout.isRefreshing = false
                 }
@@ -159,7 +156,6 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
 
     override fun onClickView(view: View, position: Int) {
         viewModel.setSelectedPostPosition(position)
-
 
         val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationShowPost(ShowPostDisplayFragment.SEARCH_VIEW_MODEL)
         view.findNavController().navigate(action)

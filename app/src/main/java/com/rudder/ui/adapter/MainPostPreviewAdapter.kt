@@ -1,6 +1,8 @@
 package com.rudder.ui.adapter
 
 import android.content.Context
+import android.os.SystemClock
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import com.bumptech.glide.Glide
@@ -13,12 +15,12 @@ import kotlinx.android.synthetic.main.post_preview.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class MainPostPreviewAdapter(listener:CustomOnclickListener,
-                             context:Context,
-                             viewModel:MainViewModel,
-                             lifecycleOwner: LifecycleOwner
+class MainPostPreviewAdapter(
+    listener: CustomOnclickListener,
+    context: Context,
+    viewModel: MainViewModel,
+    lifecycleOwner: LifecycleOwner,
 ) : PostPreviewAdapter<MainViewModel>(listener,context,viewModel,lifecycleOwner) {
-
 
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -26,6 +28,8 @@ class MainPostPreviewAdapter(listener:CustomOnclickListener,
             PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(getItem(position).postTime.time))
 
         val imageCount = getItem(position).imageUrls.size
+        var mLastClickTime: Long = 0
+
 
         holder.postPreviewBinding.post = getItem(position)
         holder.postPreviewBinding.timeago = timeago
@@ -66,6 +70,18 @@ class MainPostPreviewAdapter(listener:CustomOnclickListener,
             viewModel.clickPostMore(position)
             it.isClickable = false
 
+        }
+
+        holder.postPreviewBinding.imageView6.setOnClickListener {
+            Log.d("mLastClickTime", "$mLastClickTime, ${SystemClock.elapsedRealtime()}")
+            if (mLastClickTime.toInt() == 0) {
+                it.isActivated = false
+                viewModel.clickPostLikeInCommunityContents(position)
+            } else {
+                it.isActivated = true
+            }
+
+            mLastClickTime = SystemClock.elapsedRealtime()
         }
 
         Glide.with(holder.postPreviewBinding.root.previewPostProfileImageView.context)

@@ -12,11 +12,11 @@
         <FrameLayout
             android:id="@+id/postMessageRoomHeader"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="60dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.08">
+            >
             <fragment
                 android:id="@+id/postMessageRoomHeaderFragment"
                 android:layout_width="match_parent"
@@ -24,14 +24,16 @@
                 android:name="com.rudder.ui.fragment.postmessage.PostMessageRoomHeaderFragment">
             </fragment>
         </FrameLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_percent="@dimen/width_default"
-            app:layout_constraintHeight_percent="0.92"
+            android:background="@color/light_grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/postMessageRoomHeader">
+            app:layout_constraintTop_toBottomOf="@id/postMessageRoomHeader"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            >
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/roomPostMessageSwipeRefreshLayout"
                 android:layout_width="match_parent"

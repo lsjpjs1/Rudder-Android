@@ -1,22 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/roomPostMessageCL">
-        <TextView
-            android:id="@+id/roomPostMessageBodyTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/roomPostMessageCL"
+        android:layout_marginBottom="2dp"
+        android:background="@color/white"
+        >
 
-        <TextView
-            android:id="@+id/roomPostMessageTimeTV"
-            android:layout_width="wrap_content"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintWidth_default="percent"
+            android:id="@+id/post_message_room_item_container"
+            android:paddingBottom="20dp"
+            >
+
+            <TextView
+                android:id="@+id/roomPostMessageBodyTV"
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/roomPostMessageTypeTV"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/roomPostMessageTimeTV"
+                android:layout_width="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/roomPostMessageTypeTV"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
+
+
+

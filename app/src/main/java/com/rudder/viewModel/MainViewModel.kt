@@ -452,7 +452,7 @@ open class MainViewModel : ViewModel() {
         _commentBody.value = ""
     }
 
-    open fun scrollTouchBottom() {
+    open fun scrollTouchBottomCommunityPost() {
         if (_posts.value!!.size > 0) {
             pagingIndex += 1
             endPostId = _posts.value!![_posts.value!!.size - 1].postId
@@ -460,9 +460,13 @@ open class MainViewModel : ViewModel() {
         }
     }
 
-    open fun scrollTouchTop() {
+    open fun scrollTouchTopCommunityPost() {
         clearPosts()
         getPosts()
+    }
+
+    fun scrollTopShowPost() {
+        getComments()
     }
 
 

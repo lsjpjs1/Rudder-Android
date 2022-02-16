@@ -14,7 +14,7 @@ import com.rudder.viewModel.NotificationViewModel
 
 class NotificationDisplayFragment() : Fragment() {
 
-    private val viewModel: NotificationViewModel by viewModels()
+    private val notificationViewModel: NotificationViewModel by viewModels()
 
     companion object{
         const val TAG = "NotificationDisplayFragment"

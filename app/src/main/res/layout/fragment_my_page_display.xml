@@ -114,8 +114,6 @@
                                 android:background="@drawable/my_page_button_style">
 
 
-
-
                                 <TextView
                                     android:id="@+id/textView2"
                                     android:layout_width="wrap_content"
@@ -278,8 +276,41 @@
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--                            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                                android:id="@+id/myPageMyPostConstraintLayout"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="0dp"-->
+<!--                                android:background="@drawable/my_page_button_style"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                app:layout_constraintHeight_default="percent"-->
+<!--                                app:layout_constraintHeight_percent="0.2"-->
+<!--                                app:layout_constraintHorizontal_bias="0.0"-->
+<!--                                android:backgroundTint="@color/teal_700"-->
+<!--                                app:layout_constraintStart_toStartOf="parent"-->
+<!--                                app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPage3">-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/myPageMyPostTextView"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:gravity="center_vertical"-->
+<!--                                    android:text="@string/edit_nickname"-->
+<!--                                    android:textColor="@color/white"-->
+<!--                                    android:textSize="20dp"-->
+<!--                                    android:fontFamily="@font/sf_pro_text_bold"-->
+<!--                                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                                    app:layout_constraintWidth_default="percent"-->
+<!--                                    app:layout_constraintWidth_percent="0.8" />-->
+
+<!--                            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

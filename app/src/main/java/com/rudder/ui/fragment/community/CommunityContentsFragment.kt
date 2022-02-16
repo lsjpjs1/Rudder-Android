@@ -19,12 +19,9 @@ import com.rudder.R
 import com.rudder.databinding.FragmentCommunityContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.MainPostPreviewAdapter
-import com.rudder.ui.fragment.comment.AddCommentFragment
 import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
 import com.rudder.ui.fragment.post.ShowPostDisplayFragment
-import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
 import com.rudder.util.CustomOnclickListener
-import com.rudder.util.Event
 import com.rudder.viewModel.MainViewModel
 
 class CommunityContentsFragment: Fragment(),CustomOnclickListener {
@@ -63,7 +60,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if(!it.canScrollVertically(1)){
-                        viewModel.scrollTouchBottom()
+                        viewModel.scrollTouchBottomCommunityPost()
                     } else if (!it.canScrollVertically(-1) && dy < 0) {
                         //viewModel.scrollTouchTop()
                     }
@@ -75,7 +72,7 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         communityDisplay.communityContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
         communityDisplay.communityContentsSwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                viewModel.scrollTouchTop()
+                viewModel.scrollTouchTopCommunityPost()
             }
 
         })
@@ -202,10 +199,6 @@ class CommunityContentsFragment: Fragment(),CustomOnclickListener {
 //        childFragmentManager.beginTransaction()
 //            .add(R.id.main_bottom_layout, AddCommentFragment(viewModel))
 //            .commit()
-
-
-
-
 
         //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
 //        if(!viewModel.isAlreadyReadPost()){
