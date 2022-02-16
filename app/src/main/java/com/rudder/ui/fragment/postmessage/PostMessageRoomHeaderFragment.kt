@@ -42,9 +42,9 @@ class PostMessageRoomHeaderFragment:Fragment() {
         return header.root
     }
 
-    fun goBack(){
-        activity?.onBackPressed()
-    }
+//    fun goBack(){
+//        activity?.onBackPressed()
+//    }
 
     fun showSendPostMessageDialog() {
         val receiveUserInfoId = viewModel.targetUserInfoId
