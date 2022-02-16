@@ -59,6 +59,12 @@
         android:label="@string/post_message"
         tools:layout="@layout/fragment_post_message_display">
 
+        <argument
+            android:name="notificationPostMessageRoomId"
+            app:argType="integer"
+            android:defaultValue="-1"
+            />
+
         <action
             android:id="@+id/action_navigation_postmessage_to_navigation_postmessage_room"
             app:destination="@id/navigation_postmessage_room"
@@ -69,9 +75,8 @@
                 app:argType="integer"
                 android:defaultValue="1"
                 />
-
-
         </action>
+
 
 
     </bottom>
@@ -173,11 +178,13 @@
             android:defaultValue="1"
             />
 
-        <argument
-            android:name="notificationPostMessageRoomId"
-            app:argType="integer"
-            android:defaultValue="-1"
-            />
+
+        <action
+            android:id="@+id/action_navigation_postmessage_room_to_navigation_postmessage"
+            app:destination="@id/navigation_postmessage"
+
+            >
+        </action>
 
 
     </bottom>
@@ -212,16 +219,31 @@
         <action
             android:id="@+id/action_navigation_notification_to_navigation_postmessage_room"
             app:destination="@id/navigation_postmessage_room"
-            app:popUpTo="@id/navigation_notification" >
-
+            app:popUpTo="@id/navigation_postmessage"
+            app:popUpToInclusive="true"
+            >
 
             <argument
                 android:name="notificationPostMessageRoomId"
-                app:argType="integer"
                 android:defaultValue="-1"
-                />
+                app:argType="integer" />
 
         </action>
+
+
+        <action
+            android:id="@+id/action_navigation_notification_to_navigation_postmessage"
+            app:destination="@id/navigation_postmessage"
+            app:popUpTo="@id/navigation_notification"
+            >
+
+            <argument
+                android:name="notificationPostMessageRoomId"
+                android:defaultValue="-1"
+                app:argType="integer" />
+
+        </action>
+
 
     </bottom>
 

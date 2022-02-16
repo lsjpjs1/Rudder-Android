@@ -1,5 +1,6 @@
 package com.rudder.ui.activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.os.Build
@@ -635,6 +636,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
 
+    @SuppressLint("RestrictedApi")
     override fun onBackPressed() {
         navDisplayController.addOnDestinationChangedListener { _, destination, _ ->
             Log.d("navigation_onBack", "${destination.label}")

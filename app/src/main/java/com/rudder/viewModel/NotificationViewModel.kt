@@ -32,7 +32,7 @@ class NotificationViewModel: ViewModel() {
                 1,
                 11,
                 1,
-                1
+                39
             ),
             NotificationItem(
                 "hello_3",
@@ -47,8 +47,8 @@ class NotificationViewModel: ViewModel() {
                 1,
                 3,
                 33,
-                3,
-                3
+                34,
+                40
             )
 
         )
