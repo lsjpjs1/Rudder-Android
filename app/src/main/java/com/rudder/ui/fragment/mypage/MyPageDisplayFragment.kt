@@ -70,14 +70,11 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         myPageBinding.myPageDisplayFragment = this
         myPageBinding.lifecycleOwner = viewLifecycleOwner
 
-        val divideChildTarget = myPageBinding.constraintLayoutMyPage1
-        val displaySize = parentActivity.getDisplaySize()
-        val percentDivide : PercentDivide = PercentDivideImpl(divideChildTarget,displaySize,0.4f)
-        percentDivide.divideChildSameRatio()
+//        val divideChildTarget = myPageBinding.constraintLayoutMyPage1
+//        val displaySize = parentActivity.getDisplaySize()
+//        val percentDivide : PercentDivide = PercentDivideImpl(divideChildTarget,displaySize,0.4f)
+//        percentDivide.divideChildSameRatio()
 
-//        childFragmentManager.beginTransaction()
-//            .add(R.id.myPageHeader, MyPageHeaderFragment())
-//            .commit()
         viewModel.getMyProfileImageUrl()
         viewModel.myProfileImageUrl.value?.let {
 

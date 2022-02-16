@@ -23,10 +23,10 @@ class EditNicknameDialogViewModel : ViewModel() {
     init {
         _newNickname.value=""
     }
-    private fun clearNewNickname(){
+    fun clearNewNickname(){
         _newNickname.value = null
     }
-    private fun clearToastMessage(){
+    fun clearToastMessage(){
         _toastMessage.value = null
     }
 

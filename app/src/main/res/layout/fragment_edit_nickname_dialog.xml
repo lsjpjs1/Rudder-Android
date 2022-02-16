@@ -8,7 +8,8 @@
             name="editNicknameDialogVM"
             type="com.rudder.viewModel.EditNicknameDialogViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/editNicknameDialogConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -98,7 +99,7 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.4"
                 android:clickable="true"
-                android:onClick="@{()->editNicknameDialogFragment.close()}"
+                android:onClick="@{()->editNicknameDialogFragment.dismiss()}"
                 android:backgroundTint="#9329D1"
                 android:textStyle="bold"
                 android:gravity="center"

@@ -41,8 +41,11 @@ class EditNicknameDialogFragment() : DialogFragment() {
         val displayDpValue = parentActivity.getDisplaySize() // [0] == width, [1] == height
 
         var lp = binding.editNicknameDialogDisplayConstraintLayout.layoutParams
-        lp.height = (displayDpValue[1] * 0.35).toInt()
+        lp.height = (displayDpValue[1] * 0.22).toInt()
         lp.width = (displayDpValue[0] * 0.9).toInt()
+
+
+
         binding.editNicknameDialogConstraintLayout.layoutParams = lp
 
 
@@ -55,7 +58,7 @@ class EditNicknameDialogFragment() : DialogFragment() {
         viewModel.closeFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{
                 if(it){
-                    close()
+                    dismiss()
                 }
             }
         })
@@ -64,11 +67,10 @@ class EditNicknameDialogFragment() : DialogFragment() {
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        viewModel.clear()
+        viewModel.clearNewNickname()
+        viewModel.clearToastMessage()
 
         super.onDismiss(dialog)
     }
-    fun close(){
-        dismiss()
-    }
+
 }
