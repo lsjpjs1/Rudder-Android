@@ -7,27 +7,20 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.IdRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentNotificationContentsBinding
-import com.rudder.ui.activity.LoginActivity
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.NotificationAdapter
 import com.rudder.ui.fragment.post.ShowPostDisplayFragment.Companion.MAIN_VIEW_MODEL
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.NotificationAdapterCallback
-import com.rudder.util.PostMessageAdapterCallback
-import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.NotificationViewModel
 
 
@@ -89,6 +82,10 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
     override fun onClickPostNotification(postId: Int) {
         val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = MAIN_VIEW_MODEL)
         findNavController().navigate(action)
+
+
+        notificationViewModel.getPostContentFromPostId()
+
         (activity as MainActivity).mainBottomNavigationDisappear()
     }
 

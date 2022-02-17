@@ -10,5 +10,10 @@ enum class ResponseEnum() {
     @SerializedName("database")
     DATABASE(),
     @SerializedName("unknown")
-    UNKNOWN()
+    UNKNOWN(),
+    @SerializedName("delete")
+    DELETE(),
+    @SerializedName("not exist")
+    NOTEXIST()
+
 }

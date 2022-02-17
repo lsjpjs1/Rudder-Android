@@ -8,8 +8,6 @@ import com.rudder.data.GetPostInfo
 import com.rudder.data.PreviewPost
 import com.rudder.data.Response
 import kotlinx.coroutines.*
-import kotlin.Exception
-import kotlin.reflect.KFunction
 
 class PostApi {
 
@@ -52,5 +50,14 @@ class PostApi {
             postService.addPostViewCount(addPostViewCountInfo)
         }
     }
+
+
+    fun postFromIdApi(postFromIdRequest: PostFromIdRequest) : Deferred<Response<PostFromIdResponse>> {
+        return GlobalScope.async(Dispatchers.IO){
+            postService.postFromIdService(postFromIdRequest)
+        }
+    }
+
+
 
 }

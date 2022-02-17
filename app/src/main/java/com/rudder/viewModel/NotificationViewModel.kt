@@ -7,7 +7,7 @@ import com.rudder.data.PreviewPost
 import com.rudder.data.dto.NotificationItem
 import java.sql.Timestamp
 
-class NotificationViewModel: ViewModel() {
+class NotificationViewModel: MainViewModel()  {
 
 
     private val _notificationList = MutableLiveData<ArrayList<NotificationItem>>()

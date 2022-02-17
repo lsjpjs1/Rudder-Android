@@ -38,6 +38,13 @@ interface PostService {
     ): Response<JsonObject>
 
 
+    @POST("/board/postFromPostId")
+    suspend fun postFromIdService(
+        @Body postFromIdRequest: PostFromIdRequest
+    ): Response<PostFromIdResponse>
+
+
+
 
 }
 
@@ -92,4 +99,17 @@ data class AddPostResponse(
         val isSuccess:Boolean,
         @SerializedName("post_id")
         val postId:Int
+)
+
+
+data class PostFromIdResponse(
+    val post : PreviewPost?,
+    val isSuccess : Boolean,
+    val error : ResponseEnum,
+)
+
+
+data class PostFromIdRequest(
+    val postId:Int,
+    val token:String
 )

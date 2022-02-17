@@ -1188,9 +1188,32 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    fun getPostContent() {
+    fun getPostContentFromPostId() { // notification
+
+        ProgressBarUtil._progressBarDialogFlag.value = Event(true)
 
 
+        val postRequest = PostFromIdRequest(
+            1206,
+            App.prefs.getValue(tokenKey)!!
+        )
+
+        viewModelScope.launch {
+
+
+            val result = Repository().postFromIdRepository( postRequest )
+
+            Log.d("result123","${result}")
+
+
+
+            viewModelScope.launch {
+
+
+            }
+
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+        }
 
     }
 
