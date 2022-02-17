@@ -25,15 +25,6 @@ class AddPostHeaderFragment : Fragment() {
             R.layout.fragment_add_post_header,container,false)
         header.mainVM = viewModel
 
-        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                if ((activity as MainActivity).validateBack("addPost")){
-                    (activity as MainActivity).onBackPressed()
-                }
-            }
-        })
-
-
         header.addPostHeaderX.setOnClickListener { view ->
             view.findNavController().popBackStack()
             (activity as MainActivity).mainBottomNavigationAppear()

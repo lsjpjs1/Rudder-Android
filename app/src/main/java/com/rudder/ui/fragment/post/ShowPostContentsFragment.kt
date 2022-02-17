@@ -131,12 +131,29 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.posts.observe(viewLifecycleOwner, Observer {
             it?.let {
+                Log.d("test123123","${viewModel.posts.value}")
                 if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
                     fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
                 }
 
             }
         })
+
+
+        viewModel.isPostFromId.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Log.d("test123123","test456456")
+
+                fragmentBinding.post = viewModel.postFromId.value!!
+
+//                if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
+//                    fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+//                }
+
+            }
+        })
+
+
 
         viewModel.commentInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
             it?.let{
@@ -147,10 +164,6 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
 
-
-        childFragmentManager.beginTransaction()
-                //.add(R.id.showPostHeader, ShowPostHeaderFragment(viewModel))
-                .commit()
 
 
         fragmentBinding.showPostBody.viewTreeObserver.addOnGlobalLayoutListener(

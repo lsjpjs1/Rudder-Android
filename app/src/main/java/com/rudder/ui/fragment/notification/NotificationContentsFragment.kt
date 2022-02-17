@@ -80,11 +80,11 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
 
     override fun onClickPostNotification(postId: Int) {
-        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = MAIN_VIEW_MODEL)
+        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = NotificationViewModel)
         findNavController().navigate(action)
 
 
-        notificationViewModel.getPostContentFromPostId()
+        notificationViewModel.getPostContentFromPostId(postId)
 
         (activity as MainActivity).mainBottomNavigationDisappear()
     }
@@ -94,18 +94,6 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
         //val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationPostmessageRoom(notificationPostMessageRoomId = postMessageRoomId)
         val navController = findNavController()
 
-//        navController.backStack.add(R.id.navigation_postmessage)
-//        val destination : NavDestination = R.id.navigation_postmessage as NavDestination
-//        val destId: Int = destination.id
-
-//        val tmp : NavBackStackEntry = navController.getBackStackEntry(R.id.navigation_postmessage)
-//
-//        val tmp2 = navController.graph.get(R.id.navigation_postmessage)
-////
-////
-////        //navBackStackEntry
-//        navController.backStack.add(tmp2)
-        //navController.navigate(action)
 
         val actionNotificationToPostMessage = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationPostmessage(notificationPostMessageRoomId = postMessageRoomId)
         val actionPostMessageToPostMessageRoom = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId = postMessageRoomId)

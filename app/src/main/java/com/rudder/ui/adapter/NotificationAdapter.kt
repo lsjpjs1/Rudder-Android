@@ -36,7 +36,7 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
 
         holder.viewBinding.notificationTopLevelCL.setOnClickListener {
             if (notificationType == 0) { //post에 대한 알림이면
-                notificationAdapterCallback.onClickPostNotification(1206)
+                notificationAdapterCallback.onClickPostNotification(getItem(position).notificationPostId)
             } else { // post message room에 대한 알림이면
                 notificationAdapterCallback.onClickPostMessageRoomNotification(getItem(position).notificationPostMessageId)
             }

@@ -65,13 +65,13 @@ class CategorySelectMyPageFragment : Fragment() {
             }
         })
 
-        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                if ((activity as MainActivity).validateBack("categorySelectMyPageFragment")){
-                    (activity as MainActivity).onBackPressed()
-                }
-            }
-        })
+//        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
+//            it?.let {
+//                if ((activity as MainActivity).validateBack("categorySelectMyPageFragment")){
+//                    (activity as MainActivity).onBackPressed()
+//                }
+//            }
+//        })
 
         fragmentMyPageCategorySelectBinding.categoryBackBtn.setOnClickListener { view ->
             view.findNavController().popBackStack()

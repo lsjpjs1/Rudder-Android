@@ -32,6 +32,8 @@ open class MainViewModel : ViewModel() {
     var pagingIndex = 0
     var endPostId = -1
 
+    val _isPostFromId = MutableLiveData<Event<Boolean>>()
+    val _postFromId = MutableLiveData<PreviewPost>()
     val _postEditBody = MutableLiveData<String>()
     val _commentEditBody = MutableLiveData<String>()
     val _postId = MutableLiveData<Int>()
@@ -128,6 +130,8 @@ open class MainViewModel : ViewModel() {
 
     private val _searchPosts = MutableLiveData<ArrayList<PreviewPost>>()
 
+    val isPostFromId: LiveData<Event<Boolean>> = _isPostFromId
+    val postFromId: LiveData<PreviewPost> = _postFromId
 
     val searchPosts: LiveData<ArrayList<PreviewPost>> = _searchPosts
     val selectedRequestJoinClubCategoryId:LiveData<Int> = _selectedRequestJoinClubCategoryId
@@ -626,8 +630,13 @@ open class MainViewModel : ViewModel() {
     fun getComments() {
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
-        val getCommentInfo =
-                GetCommentInfo(_posts.value!![_selectedPostPosition.value!!].postId, token!!)
+        val getCommentInfo : GetCommentInfo
+
+        if (_selectedPostPosition.value!! == -1 ) {
+            getCommentInfo = GetCommentInfo(_postId.value!!, token!!)
+        } else {
+            getCommentInfo = GetCommentInfo(_posts.value!![_selectedPostPosition.value!!].postId, token!!)
+        }
 
         GlobalScope.launch {
 
@@ -797,11 +806,6 @@ open class MainViewModel : ViewModel() {
     }
 
     fun clickPostEdit() {
-        Log.d("test1234", "${_selectedPostMorePosition.value!!}")
-
-        Log.d("test1234", "${_posts.value!!}")
-
-
         _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
         _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
     }
@@ -1188,33 +1192,37 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    fun getPostContentFromPostId() { // notification
-
-        ProgressBarUtil._progressBarDialogFlag.value = Event(true)
-
-
+    fun getPostContentFromPostId(notificationPostId : Int) { // notification
         val postRequest = PostFromIdRequest(
-            1206,
+            notificationPostId,
             App.prefs.getValue(tokenKey)!!
         )
 
-        viewModelScope.launch {
+        _postId.value = notificationPostId
+        Log.d("result1234", "${_postId.value}")
 
+        GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+//            val result = Repository().postFromIdRepository(postRequest)
+//
+//            val errorMessage = result.error
+//            val postContent = result.post
+//            if (errorMessage != ResponseEnum.SUCCESS) {
+//
+//            }
 
-            val result = Repository().postFromIdRepository( postRequest )
+            _postFromId.postValue(Repository().postFromIdRepository(postRequest).post!! )
+            _isPostFromId.postValue(Event(true))
 
-            Log.d("result123","${result}")
-
-
-
+            //Log.d("result123", "${postContent}")
             viewModelScope.launch {
-
+                //_postFromId.value = postContent!!
+                setSelectedPostPosition(-1) // selectedPosition -> -1
+                getComments()
 
             }
-
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
-
     }
 
 }
