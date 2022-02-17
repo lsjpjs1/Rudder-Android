@@ -51,7 +51,7 @@ class ShowPostDisplayFragment : Fragment() {
             SEARCH_VIEW_MODEL -> {
                 viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SearchViewModel::class.java)
             }
-            SEARCH_VIEW_MODEL -> {
+            MAIN_VIEW_MODEL -> {
                 viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MainViewModel::class.java)
             }
             NOTIFICATION_VIEW_MODEL -> {

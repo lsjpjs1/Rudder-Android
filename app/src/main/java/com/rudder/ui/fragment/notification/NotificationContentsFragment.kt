@@ -18,7 +18,7 @@ import com.rudder.R
 import com.rudder.databinding.FragmentNotificationContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.NotificationAdapter
-import com.rudder.ui.fragment.post.ShowPostDisplayFragment.Companion.MAIN_VIEW_MODEL
+import com.rudder.ui.fragment.post.ShowPostDisplayFragment.Companion.NOTIFICATION_VIEW_MODEL
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.NotificationAdapterCallback
 import com.rudder.viewModel.NotificationViewModel
@@ -38,7 +38,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 //    }
 
     private val notificationViewModel : NotificationViewModel by lazy {
-        ViewModelProvider(parentFragment as ViewModelStoreOwner).get(NotificationViewModel::class.java)
+        ViewModelProvider(activity as ViewModelStoreOwner).get(NotificationViewModel::class.java)
     }
 
 
@@ -80,7 +80,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
 
     override fun onClickPostNotification(postId: Int) {
-        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = NotificationViewModel)
+        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = NOTIFICATION_VIEW_MODEL)
         findNavController().navigate(action)
 
 
@@ -93,6 +93,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
     override fun onClickPostMessageRoomNotification(postMessageRoomId: Int) {
         //val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationPostmessageRoom(notificationPostMessageRoomId = postMessageRoomId)
         val navController = findNavController()
+
 
 
         val actionNotificationToPostMessage = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationPostmessage(notificationPostMessageRoomId = postMessageRoomId)

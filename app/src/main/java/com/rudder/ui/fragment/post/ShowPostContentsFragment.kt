@@ -61,6 +61,8 @@ class ShowPostContentsFragment(): Fragment() {
 
         _fragmentBinding= FragmentShowPostContentsBinding.inflate(inflater, container, false)
 
+        Log.d("test123123","${viewModel}")
+
 
         val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel, viewLifecycleOwner )
         fragmentBinding.commentDisplayRV.also {
@@ -135,6 +137,7 @@ class ShowPostContentsFragment(): Fragment() {
                 if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
                     fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
                 }
+                //fragmentBinding.post = viewModel.postFromId.value!!
 
             }
         })

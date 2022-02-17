@@ -1199,7 +1199,7 @@ open class MainViewModel : ViewModel() {
         )
 
         _postId.value = notificationPostId
-        Log.d("result1234", "${_postId.value}")
+        Log.d("test123result", "${_postId.value}")
 
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
@@ -1212,17 +1212,22 @@ open class MainViewModel : ViewModel() {
 //            }
 
             _postFromId.postValue(Repository().postFromIdRepository(postRequest).post!! )
-            _isPostFromId.postValue(Event(true))
+            //_isPostFromId.postValue(Event(true))
 
             //Log.d("result123", "${postContent}")
             viewModelScope.launch {
                 //_postFromId.value = postContent!!
-                setSelectedPostPosition(-1) // selectedPosition -> -1
+                //setSelectedPostPosition(-1) // selectedPosition -> -1
                 getComments()
+                _isPostFromId.postValue(Event(true))
+
 
             }
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
+
+        //_isPostFromId.value = Event(true)
+
     }
 
 }
