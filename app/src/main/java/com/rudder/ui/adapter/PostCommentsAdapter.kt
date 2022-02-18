@@ -92,6 +92,7 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
             holder.postCommentsBinding.commentHeadPostTimeTV.visibility = View.GONE
             holder.postCommentsBinding.postPreviewTailLikeCount.visibility = View.GONE
             holder.postCommentsBinding.postPreviewTailCommentCount.visibility = View.GONE
+            holder.postCommentsBinding.CommentMoreCL.visibility = View.GONE
         }
 
 

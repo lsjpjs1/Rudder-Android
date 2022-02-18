@@ -708,23 +708,20 @@ open class MainViewModel : ViewModel() {
             val isSuccess = Repository().addComment(addCommentInfo)
 
             if (isSuccess) {
-                getComments()
                 _commentBody.postValue("")
                 clearNestedCommentInfo()
                 viewModelScope.launch {
 
                     if (_selectedPostPosition.value!! == -1 ) {
                         _postFromId.value!!.commentCount = _postFromId.value!!.commentCount + 1
-
-
                     } else {
                         var tmpPosts = _posts.value
                         tmpPosts!![_selectedPostPosition.value!!].commentCount =
                             _posts.value!![_selectedPostPosition.value!!].commentCount + 1
                         _posts.postValue(tmpPosts!!)
                     }
-
                     _commentCountChange.value = Event(true)
+                    getComments()
                 }
             }
         }
@@ -868,7 +865,13 @@ open class MainViewModel : ViewModel() {
 
     fun clickCommentDelete() {
         val commentInt = _comments.value!![_selectedCommentMorePosition.value!!].commentId
-        val postInt = _posts.value!![_selectedPostPosition.value!!].postId
+        val postInt : Int
+
+        if (_selectedPostPosition.value!! == -1 ) {
+            postInt = _postId.value!!
+        } else {
+            postInt = _posts.value!![_selectedPostPosition.value!!].postId
+        }
 
         GlobalScope.launch {
             var result = Repository().deleteCommentRepository(DeleteCommentInfo(commentInt, postInt))
@@ -876,10 +879,15 @@ open class MainViewModel : ViewModel() {
             _isDeleteCommentSuccess.postValue(Event(result))
 
             if (result) {
-                var tmpPosts = _posts.value
-                tmpPosts!![_selectedPostPosition.value!!].commentCount =
-                    _posts.value!![_selectedPostPosition.value!!].commentCount - 1
-                _posts.postValue(tmpPosts!!)
+                if (_selectedPostPosition.value!! == -1 ) {
+                    _postFromId.value!!.commentCount = _postFromId.value!!.commentCount - 1
+                } else {
+                    var tmpPosts = _posts.value
+                    tmpPosts!![_selectedPostPosition.value!!].commentCount =
+                        _posts.value!![_selectedPostPosition.value!!].commentCount - 1
+                    _posts.postValue(tmpPosts!!)
+                }
+
                 _commentCountChange.postValue(Event(result))
                 getComments()
 
