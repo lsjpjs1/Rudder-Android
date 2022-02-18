@@ -560,11 +560,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun showCommentMore(communityCommentBottomSheetFragment: CommunityCommentBottomSheetFragment){
         this.communityCommentBottomSheetFragment = communityCommentBottomSheetFragment
-        if (!this.communityCommentBottomSheetFragment.isAdded)
-            this.communityCommentBottomSheetFragment.show(
-                supportFragmentManager,
-                this.communityCommentBottomSheetFragment.tag
-            )
+        if (!this.communityCommentBottomSheetFragment.isAdded) {
+            this.communityCommentBottomSheetFragment.show(supportFragmentManager, this.communityCommentBottomSheetFragment.tag)
+        }
     }
 
     fun closeCommunityBottomSheetFragment(){

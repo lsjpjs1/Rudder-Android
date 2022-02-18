@@ -91,13 +91,12 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
         })
 
         viewModel.isCommentEdit.observe(this, Observer {
-            it.getContentIfNotHandled().let{
-                if (!parentActivity.communityCommentEditFragment.isAdded)
+            it.getContentIfNotHandled()?.let{
+                if (!parentActivity.communityCommentEditFragment.isAdded) {
                     parentActivity.communityCommentEditFragment = CommunityCommentEditFragment(viewModel)
-                    parentActivity.communityCommentEditFragment.show(
-                        parentActivity.supportFragmentManager,
-                        parentActivity.communityCommentEditFragment.tag
+                    parentActivity.communityCommentEditFragment.show(parentActivity.supportFragmentManager, parentActivity.communityCommentEditFragment.tag
                     )
+                }
             }
         })
 
