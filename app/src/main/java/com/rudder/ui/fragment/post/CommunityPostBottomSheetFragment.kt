@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.post
 
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
@@ -19,6 +22,8 @@ import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
 import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.NotificationViewModel
+import com.rudder.viewModel.SearchViewModel
 
 
 class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomSheetDialogFragment() {
@@ -38,6 +43,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 
     override fun getTheme(): Int = R.style.CustomBottomSheetDialog
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -123,16 +129,20 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 
         communityPostBottomSheetBinding.postMoreEditPostTextView.setOnClickListener { view ->
             parentActivity.communityPostBottomSheetFragment.dismiss()
+
             val navController = parentActivity.findNavController(R.id.mainDisplayContainerView)
+            Log.d("test888", "${navController.backStack.last.destination.label}")
+            Log.d("test888", "${navController.backStack.last()}")
+
 
             if (navController.currentDestination!!.label == "SearchPostDisplayFragment") {
                 val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
                 navController.navigate(action)
             } else {
                 val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
+                //val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.NOTIFICATION_VIEW_MODEL)
                 navController.navigate(action)
             }
-
 
 
 

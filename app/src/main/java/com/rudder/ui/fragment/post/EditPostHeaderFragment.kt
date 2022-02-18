@@ -23,20 +23,13 @@ class EditPostHeaderFragment(val viewModel: MainViewModel) : Fragment() {
         val header = DataBindingUtil.inflate<FragmentEditPostHeaderBinding>(inflater, R.layout.fragment_edit_post_header,container,false)
         header.mainVM = viewModel
 
-
-//        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                if ((activity as MainActivity).validateBack("editPost")){
-//                    (activity as MainActivity).onBackPressed()
-//                }
-//            }
-//        })
-
-
         header.addPostHeaderX.setOnClickListener { view ->
-            view.findNavController().popBackStack()
-            (activity as MainActivity).mainBottomNavigationAppear()
+            val navController = view.findNavController()
+            navController.popBackStack()
 
+            if (navController.currentDestination!!.label != "ShowPostDisplayFragment") {
+                (activity as MainActivity).mainBottomNavigationAppear()
+            }
         }
 
 
