@@ -495,12 +495,19 @@ open class MainViewModel : ViewModel() {
         val plusValue =
             if (_isLikePost.value!!) -1
             else 1
-        var tmpPosts = _posts.value
-        tmpPosts!![_selectedPostPosition.value!!].likeCount =
-            _posts.value!![_selectedPostPosition.value!!].likeCount + plusValue
-        tmpPosts!![_selectedPostPosition.value!!].isLiked =
-            !_posts.value!![_selectedPostPosition.value!!].isLiked
-        _posts.postValue(tmpPosts!!)
+
+        if (_selectedPostPosition.value!! == -1 ) {
+            _postFromId.value!!.likeCount = _postFromId.value!!.likeCount + plusValue
+            _postFromId.value!!.isLiked = !( _postFromId.value!!.isLiked )
+        } else {
+            var tmpPosts = _posts.value
+            tmpPosts!![_selectedPostPosition.value!!].likeCount =
+                _posts.value!![_selectedPostPosition.value!!].likeCount + plusValue
+            tmpPosts!![_selectedPostPosition.value!!].isLiked =
+                !_posts.value!![_selectedPostPosition.value!!].isLiked
+            _posts.postValue(tmpPosts!!)
+        }
+
         _isLikePost.value = !(_isLikePost.value)!!//like button 체크 혹은 해제
         _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
         addLikePost(plusValue)
@@ -529,19 +536,34 @@ open class MainViewModel : ViewModel() {
     }
 
     fun addLikePost(plusValue: Int) {
+
+        val postIdForAddLikePost : Int
+
+        if (_selectedPostPosition.value!! == -1 ) {
+            postIdForAddLikePost = _postId.value!!
+        } else {
+            postIdForAddLikePost = _posts.value!![_selectedPostPosition.value!!].postId
+        }
+
         GlobalScope.launch {
             val addLikePostInfo = AddLikePostInfo(
-                _posts.value!![_selectedPostPosition.value!!].postId,
+                postIdForAddLikePost,
                 App.prefs.getValue(tokenKey)!!,
                 plusValue
             )
             val resJson = Repository().addLikePost(addLikePostInfo)
             viewModelScope.launch {
                 if (resJson.get("isSuccess").asBoolean){
-                    var tmpPosts = _posts.value
-                    tmpPosts!![_selectedPostPosition.value!!].likeCount =
-                        resJson.get("like_count").asInt
-                    _posts.postValue(tmpPosts!!)
+
+                    if (_selectedPostPosition.value!! == -1 ) {
+                        _postFromId.value!!.likeCount = resJson.get("like_count").asInt
+                    } else {
+                        var tmpPosts = _posts.value
+                        tmpPosts!![_selectedPostPosition.value!!].likeCount =
+                            resJson.get("like_count").asInt
+                        _posts.postValue(tmpPosts!!)
+                    }
+
                     _postInnerValueChangeSwitch.value = !_postInnerValueChangeSwitch.value!!
                 }
             }

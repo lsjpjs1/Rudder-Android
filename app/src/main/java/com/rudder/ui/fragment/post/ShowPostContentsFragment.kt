@@ -40,7 +40,6 @@ class ShowPostContentsFragment(): Fragment() {
         activity as MainActivity
     }
 
-
     private val viewModel : MainViewModel by lazy {
         (parentFragment as ShowPostDisplayFragment).viewModel
     }
@@ -82,13 +81,13 @@ class ShowPostContentsFragment(): Fragment() {
         viewModel.isLikePost()
         if (viewModelType == "NotificationViewModel") {
             //displayImagesAdapter = DisplayImagesAdapter(viewModel.postFromId.value!!.imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
-                if (viewModel.selectedPostPosition.value!! != -1 ) {
-                    displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
-                } else {
-                    displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
-                }
-            Log.d("test123123", "notiViemodel")
-            //displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+//                if (viewModel.selectedPostPosition.value!! == -1 ) {
+//                    displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+//                } else {
+//                    displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+//                }
+//            Log.d("test123123", "notiViemodel")
+            displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
 
         } else {
             displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
