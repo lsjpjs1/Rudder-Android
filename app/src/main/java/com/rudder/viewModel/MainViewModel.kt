@@ -639,9 +639,7 @@ open class MainViewModel : ViewModel() {
         }
 
         GlobalScope.launch {
-
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
-
             val resComments = Repository().getComments(getCommentInfo)
             viewModelScope.launch {
                 var tmpCommentList = ArrayList<Comment>()
@@ -665,12 +663,10 @@ open class MainViewModel : ViewModel() {
                         }
                         else
                             tmpCommentList.add(resComments[idx])
-
                     }
                 }
                 _comments.value = tmpCommentList
                 Log.d("comment", _comments.value.toString())
-
             }
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
@@ -777,13 +773,25 @@ open class MainViewModel : ViewModel() {
 
     fun clickPostMore(position: Int) {
         _isPostMore.value = Event(true)
-        _selectedPostMorePosition.value = position
-        _postId.value = _posts.value!![_selectedPostMorePosition.value!!].postId
 
-        if (_posts.value!![selectedPostMorePosition.value!!].isMine)
-            _isPostMine.value = Event(true)
-        else
-            _isPostMine.value = Event(false)
+        if (position == -1) {
+            if (_postFromId.value!!.isMine)
+                _isPostMine.value = Event(true)
+            else
+                _isPostMine.value = Event(false)
+        } else {
+            _selectedPostMorePosition.value = position
+            _postId.value = _posts.value!![_selectedPostMorePosition.value!!].postId
+            if (_posts.value!![selectedPostMorePosition.value!!].isMine)
+                _isPostMine.value = Event(true)
+            else
+                _isPostMine.value = Event(false)
+        }
+
+//        _selectedPostMorePosition.value = position
+//        Log.d("test555", "${position}")
+
+
     }
 
     fun dismissPostMore() {
