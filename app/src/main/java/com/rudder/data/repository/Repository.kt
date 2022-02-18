@@ -392,4 +392,11 @@ class Repository {
 
 
     }
+    suspend fun getPostsWithMyComment(postsWithMyCommentRequest: PostsWithMyCommentRequest): PostsWithMyCommentResponse{
+        return ExceptionUtil.retryWhenException(MyPageApi::getPostsWithMyComment,postsWithMyCommentRequest,MyPageApi(),
+            Response(PostsWithMyCommentResponse(false, arrayListOf(),ResponseEnum.UNKNOWN))
+        ).results
+
+
+    }
 }

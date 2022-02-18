@@ -27,6 +27,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"></Button>
 
+        <Button
+            android:id="@+id/tmpMyComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="myComment"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tmpMyPost"
+            app:layout_constraintStart_toStartOf="parent"></Button>
+
         <FrameLayout
             android:id="@+id/myPageHeaderFrameLayout"
             android:layout_width="match_parent"

@@ -15,6 +15,21 @@
         android:layout_height="match_parent"
         >
 
+        <FrameLayout
+            android:id="@+id/myPostHeaderFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/myPostHeaderFragment"
+                android:name="com.rudder.ui.fragment.mypage.MyPostHeaderFragment">
+
+            </fragment>
+
+        </FrameLayout>
 
 
         <FrameLayout
@@ -22,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/light_grey"
+            app:layout_constraintTop_toBottomOf="@id/myPostHeaderFrameLayout"
             app:layout_constraintBottom_toBottomOf="parent"
             >
             <!--            app:layout_constraintHeight_percent="@dimen/community_display_height"-->

@@ -55,4 +55,10 @@ class MyPageApi {
             myPageService.getMyPosts(myPostsRequest)
         }
     }
+
+    fun getPostsWithMyComment(postsWithMyCommentRequest: PostsWithMyCommentRequest) : Deferred<Response<PostsWithMyCommentResponse>> {
+        return GlobalScope.async(Dispatchers.IO) {
+            myPageService.getPostsWithMyComment(postsWithMyCommentRequest)
+        }
+    }
 }

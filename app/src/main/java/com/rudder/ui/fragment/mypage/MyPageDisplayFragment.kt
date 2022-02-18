@@ -20,6 +20,9 @@ import com.rudder.databinding.FragmentCommunityDisplayBinding
 import com.rudder.databinding.FragmentMyPageDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.MyPageFragmentInterface
+import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
+import com.rudder.ui.fragment.post.EditPostFragment
+import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
 import com.rudder.util.uiUtils.PercentDivide
 import com.rudder.util.uiUtils.PercentDivideImpl
 import com.rudder.viewModel.MainViewModel
@@ -118,7 +121,17 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         }
 
         myPageBinding.tmpMyPost.setOnClickListener{ view ->
-            view.findNavController().navigate(R.id.action_navigation_mypage_to_navigation_my_post)
+            val navController = view.findNavController()
+            val action = MyPageDisplayFragmentDirections.actionNavigationMypageToNavigationMyPost(MyPostDisplayFragment.MY_POST)
+            navController.navigate(action)
+            (activity as MainActivity).mainBottomNavigationDisappear()
+        }
+
+        myPageBinding.tmpMyComment.setOnClickListener{ view ->
+            val navController = view.findNavController()
+            val action = MyPageDisplayFragmentDirections.actionNavigationMypageToNavigationMyPost(MyPostDisplayFragment.MY_COMMENT)
+            navController.navigate(action)
+            (activity as MainActivity).mainBottomNavigationDisappear()
         }
 
         myPageBinding.constraintLayoutMyPage6.setOnClickListener { view -> // search button click

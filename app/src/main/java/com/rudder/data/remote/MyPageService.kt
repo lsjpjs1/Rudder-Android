@@ -30,6 +30,9 @@ interface MyPageService {
 
     @POST("/board/myPosts")
     suspend fun getMyPosts(@Body myPostsRequest: MyPostsRequest) : Response<MyPostsResponse>
+
+    @POST("/board/postsWithMyComment")
+    suspend fun getPostsWithMyComment(@Body postsWithMyCommentRequest: PostsWithMyCommentRequest) : Response<PostsWithMyCommentResponse>
 }
 
 data class RequestJoinClubRequest(
@@ -53,6 +56,16 @@ data class  MyPostsRequest(
     val offset : Int
 )
 data class  MyPostsResponse(
+    val isSuccess: Boolean,
+    val posts: ArrayList<PreviewPost>,
+    val error : ResponseEnum
+)
+
+data class  PostsWithMyCommentRequest(
+    val token : String,
+    val offset : Int
+)
+data class  PostsWithMyCommentResponse(
     val isSuccess: Boolean,
     val posts: ArrayList<PreviewPost>,
     val error : ResponseEnum

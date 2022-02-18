@@ -15,6 +15,7 @@ import com.rudder.R
 import com.rudder.databinding.FragmentShowPostDisplayBinding
 import com.rudder.ui.fragment.search.SearchPostDisplayFragmentArgs
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.MyCommentViewModel
 import com.rudder.viewModel.MyPostViewModel
 import com.rudder.viewModel.SearchViewModel
 
@@ -27,6 +28,7 @@ class ShowPostDisplayFragment : Fragment() {
         const val MAIN_VIEW_MODEL = 1
         const val SEARCH_VIEW_MODEL = 2
         const val MY_POST_VIEW_MODEL = 3
+        const val MY_COMMENT_VIEW_MODEL = 4
     }
 
     private val lazyContext by lazy {
@@ -53,6 +55,8 @@ class ShowPostDisplayFragment : Fragment() {
             viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MainViewModel::class.java)
         } else if (args.viewModelIndex == MY_POST_VIEW_MODEL) {
             viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyPostViewModel::class.java)
+        }else if (args.viewModelIndex == MY_COMMENT_VIEW_MODEL) {
+            viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyCommentViewModel::class.java)
         }
 
 

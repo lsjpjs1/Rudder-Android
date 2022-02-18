@@ -20,6 +20,7 @@ import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
 import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.MyCommentViewModel
 import com.rudder.viewModel.MyPostViewModel
 import com.rudder.viewModel.SearchViewModel
 
@@ -135,11 +136,19 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                 val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
                 navController.navigate(action)
             } else if(navController.currentDestination!!.label == "myPostDisplayFragment") {
-                val action = MyPostDisplayFragmentDirections.actionNavigationMyPostToNavigationEditPost(EditPostFragment.MY_POST_VIEW_MODEL)
-                navController.navigate(action)
+                if (viewModel is MyCommentViewModel) {
+                    val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MY_COMMENT_VIEW_MODEL)
+                    navController.navigate(action)
+                } else if (viewModel is MyPostViewModel) {
+                    val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MY_POST_VIEW_MODEL)
+                    navController.navigate(action)
+                }
             } else {
 
-                if (viewModel is MyPostViewModel) {
+                if (viewModel is MyCommentViewModel) {
+                    val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MY_COMMENT_VIEW_MODEL)
+                    navController.navigate(action)
+                } else if (viewModel is MyPostViewModel) {
                     val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MY_POST_VIEW_MODEL)
                     navController.navigate(action)
                 } else if(viewModel is SearchViewModel) {
