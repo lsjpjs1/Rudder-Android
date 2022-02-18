@@ -120,9 +120,7 @@ class MyPostContentsFragment : Fragment(), CustomOnclickListener {
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
                     viewModel.getMyPosts(false)
-                    if (parentActivity.showPostContentsFragment.isVisible){
-                        parentActivity.onBackPressed()
-                    }
+                    parentActivity.onBackPressed()
                 }
             }
         })
@@ -151,12 +149,14 @@ class MyPostContentsFragment : Fragment(), CustomOnclickListener {
     }
 
 
+
+
     override fun onClickView(view: View, position: Int) {
         Log.d("activity-main-vm",viewModel.toString())
         viewModel.setSelectedPostPosition(position)
 
-        val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationShowPost(
-            ShowPostDisplayFragment.MAIN_VIEW_MODEL)
+        val action = MyPostDisplayFragmentDirections.actionNavigationMyPostToNavigationShowPost(
+            ShowPostDisplayFragment.MY_POST_VIEW_MODEL)
         view.findNavController().navigate(action)
         (activity as MainActivity).mainBottomNavigationDisappear()
 

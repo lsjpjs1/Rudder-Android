@@ -18,6 +18,7 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.postmessage.PostMessageRoomFragmentArgs
 import com.rudder.ui.fragment.search.SearchPostDisplayFragmentArgs
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.MyPostViewModel
 import com.rudder.viewModel.SearchViewModel
 
 class EditPostFragment() : Fragment() {
@@ -28,6 +29,7 @@ class EditPostFragment() : Fragment() {
         const val TAG = "EditPostFragment"
         const val SEARCH_VIEW_MODEL = 2
         const val MAIN_VIEW_MODEL = 1
+        const val MY_POST_VIEW_MODEL = 3
     }
 
     lateinit var viewModel : MainViewModel
@@ -42,8 +44,10 @@ class EditPostFragment() : Fragment() {
 
         if (args.viewModelIndex == SEARCH_VIEW_MODEL){
             viewModel = ViewModelProvider(parentActivity).get(SearchViewModel::class.java)
-        }else{
+        }else if (args.viewModelIndex == MAIN_VIEW_MODEL){
             viewModel = ViewModelProvider(parentActivity).get(MainViewModel::class.java)
+        }else if (args.viewModelIndex == MY_POST_VIEW_MODEL){
+            viewModel = ViewModelProvider(parentActivity).get(MyPostViewModel::class.java)
         }
         val fragmentBinding = DataBindingUtil.inflate<FragmentAddPostDisplayBinding>(inflater,R.layout.fragment_add_post_display,container,false)
         addPostContentsFragment = AddPostContentsFragment(viewModel,true)

@@ -15,10 +15,13 @@ import com.rudder.R
 import com.rudder.databinding.FragmentCommunityPostBottomSheetBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
+import com.rudder.ui.fragment.mypage.MyPostDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
 import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.MyPostViewModel
+import com.rudder.viewModel.SearchViewModel
 
 
 class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomSheetDialogFragment() {
@@ -128,10 +131,27 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
             if (navController.currentDestination!!.label == "SearchPostDisplayFragment") {
                 val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
                 navController.navigate(action)
-            } else {
+            } else if(navController.currentDestination!!.label == "Community") {
                 val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
                 navController.navigate(action)
+            } else if(navController.currentDestination!!.label == "myPostDisplayFragment") {
+                val action = MyPostDisplayFragmentDirections.actionNavigationMyPostToNavigationEditPost(EditPostFragment.MY_POST_VIEW_MODEL)
+                navController.navigate(action)
+            } else {
+
+                if (viewModel is MyPostViewModel) {
+                    val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MY_POST_VIEW_MODEL)
+                    navController.navigate(action)
+                } else if(viewModel is SearchViewModel) {
+                    val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
+                    navController.navigate(action)
+                } else if(viewModel is MainViewModel) {
+                    val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
+                    navController.navigate(action)
+                }
+
             }
+
 
 
 

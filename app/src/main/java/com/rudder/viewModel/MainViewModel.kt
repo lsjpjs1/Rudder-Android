@@ -1027,8 +1027,7 @@ open class MainViewModel : ViewModel() {
 
                 viewModelScope.launch {
                     _isEditPostSuccess.value = Event(result)
-                    clearPosts()
-                    getPosts()
+                    scrollTouchTopCommunityPost()
                 }
 
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
