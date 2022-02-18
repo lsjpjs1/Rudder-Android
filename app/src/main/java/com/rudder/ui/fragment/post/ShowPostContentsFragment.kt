@@ -86,7 +86,6 @@ class ShowPostContentsFragment(): Fragment() {
                     displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
                 } else {
                     displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
-
                 }
             Log.d("test123123", "notiViemodel")
             //displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
@@ -105,7 +104,15 @@ class ShowPostContentsFragment(): Fragment() {
             it.setHasFixedSize(false)
             it.adapter = displayImagesAdapter
         }
-        val currentPost = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        val currentPost : PreviewPost
+
+        if (viewModel.selectedPostPosition.value!! == -1 ) {
+            currentPost = viewModel.postFromId.value!!
+        } else {
+            currentPost = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        }
+
+
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(currentPost.postTime.time))
         fragmentBinding.post = currentPost
         fragmentBinding.mainVM = viewModel
@@ -170,7 +177,14 @@ class ShowPostContentsFragment(): Fragment() {
         })
         viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
             it?.let {
+                    //fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+
+                if (viewModel.selectedPostPosition.value!! == -1 ) {
+                    fragmentBinding.post = viewModel.postFromId.value!!
+                } else {
                     fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+                }
+
             }
 
         })
@@ -179,7 +193,14 @@ class ShowPostContentsFragment(): Fragment() {
             it?.let {
                 Log.d("test123123","${viewModel.posts.value}")
                 if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
-                    fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+                    //fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+
+                    if (viewModel.selectedPostPosition.value!! == -1 ) {
+                        fragmentBinding.post = viewModel.postFromId.value!!
+                    } else {
+                        fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+                    }
+
                 }
                 //fragmentBinding.post = viewModel.postFromId.value!!
 

@@ -823,8 +823,19 @@ open class MainViewModel : ViewModel() {
     }
 
     fun clickPostEdit() {
-        _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
-        _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
+        if (_selectedPostMorePosition.value == null ) {
+            Log.d("test555","${_postFromId.value}")
+
+            _postBody.value = _postFromId.value!!.postBody
+            _postCategoryInt.value = findCategoryIndexById(_postFromId.value!!.categoryId )
+        } else {
+            _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
+            _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
+        }
+
+
+//        _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
+//        _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
     }
 
     fun clickBlockUser() {
@@ -960,9 +971,17 @@ open class MainViewModel : ViewModel() {
     }
 
     fun isLikePost() { // 내가 좋아요를 눌렀는지 서버에 확인하는 함수
+
+        val postIdForisLikePost : Int
+        if (_selectedPostPosition.value!! == -1 ) {
+            postIdForisLikePost = _postId.value!!
+        } else {
+            postIdForisLikePost = _posts.value!![_selectedPostPosition.value!!].postId
+        }
+
         GlobalScope.launch {
             val isLikePostInfo = IsLikePostInfo(
-                _posts.value!![_selectedPostPosition.value!!].postId,
+                postIdForisLikePost,
                 App.prefs.getValue(tokenKey)!!
             )
             val res = Repository().isLikePost(isLikePostInfo)
@@ -1225,9 +1244,7 @@ open class MainViewModel : ViewModel() {
             notificationPostId,
             App.prefs.getValue(tokenKey)!!
         )
-
         _postId.value = notificationPostId
-        Log.d("test123result", "${_postId.value}")
 
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
@@ -1246,11 +1263,11 @@ open class MainViewModel : ViewModel() {
 
             }
 
-            //_isPostFromId.postValue(Event(true))
+
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
 
-        //_isPostFromId.value = Event(true)
+        Log.d("test555666","${_postFromId.value}")
 
     }
 
