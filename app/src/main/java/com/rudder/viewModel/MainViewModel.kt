@@ -618,7 +618,7 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    fun clearPosts() {
+    open fun clearPosts() {
         _posts.value = ArrayList<PreviewPost>()
         pagingIndex = 0
         endPostId = -1

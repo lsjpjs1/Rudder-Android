@@ -117,6 +117,9 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
             alertDialog.show()
         }
 
+        myPageBinding.tmpMyPost.setOnClickListener{ view ->
+            view.findNavController().navigate(R.id.action_navigation_mypage_to_navigation_my_post)
+        }
 
         myPageBinding.constraintLayoutMyPage6.setOnClickListener { view -> // search button click
             view.findNavController().navigate(R.id.action_navigation_mypage_to_navigation_category_select_my_page)

@@ -384,4 +384,12 @@ class Repository {
             }
 
     }
+
+    suspend fun getMyPosts(myPostsRequest: MyPostsRequest): MyPostsResponse{
+        return ExceptionUtil.retryWhenException(MyPageApi::getMyPosts,myPostsRequest,MyPageApi(),
+            Response(MyPostsResponse(false, arrayListOf(),ResponseEnum.UNKNOWN))
+        ).results
+
+
+    }
 }

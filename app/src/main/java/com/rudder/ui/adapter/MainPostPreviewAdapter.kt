@@ -73,7 +73,6 @@ class MainPostPreviewAdapter(
         }
 
         holder.postPreviewBinding.imageView6.setOnClickListener {
-            Log.d("mLastClickTime", "$mLastClickTime, ${SystemClock.elapsedRealtime()}")
             if (mLastClickTime.toInt() == 0) {
                 it.isActivated = false
                 viewModel.clickPostLikeInCommunityContents(position)

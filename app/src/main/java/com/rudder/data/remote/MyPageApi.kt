@@ -49,4 +49,10 @@ class MyPageApi {
             myPageService.getProfileImages()
         }
     }
+
+    fun getMyPosts(myPostsRequest: MyPostsRequest) : Deferred<Response<MyPostsResponse>> {
+        return GlobalScope.async(Dispatchers.IO) {
+            myPageService.getMyPosts(myPostsRequest)
+        }
+    }
 }

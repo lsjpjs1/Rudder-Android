@@ -34,14 +34,12 @@ abstract class PostPreviewAdapter<out VM>(
     companion object {
         val diffUtil = object: DiffUtil.ItemCallback<PreviewPost>() {
             override fun areContentsTheSame(oldItem: PreviewPost, newItem: PreviewPost): Boolean {
-                Log.d("items","$oldItem , $newItem")
                 return (oldItem.commentCount == newItem.commentCount
                         && oldItem.likeCount == newItem.likeCount)
             }
 
 
             override fun areItemsTheSame(oldItem: PreviewPost, newItem: PreviewPost): Boolean {
-                Log.d("items","$oldItem , $newItem")
                 return oldItem.postId == newItem.postId
             }
 

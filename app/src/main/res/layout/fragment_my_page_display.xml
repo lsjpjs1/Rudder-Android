@@ -18,6 +18,15 @@
 
             전체 큰 레이아웃-->
 
+        <Button
+            android:id="@+id/tmpMyPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="myPost"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></Button>
+
         <FrameLayout
             android:id="@+id/myPageHeaderFrameLayout"
             android:layout_width="match_parent"

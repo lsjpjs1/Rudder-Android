@@ -3,6 +3,7 @@ package com.rudder.data.remote
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import com.rudder.data.LoginInfo
+import com.rudder.data.PreviewPost
 import com.rudder.data.Response
 import com.rudder.data.dto.ProfileImageResponse
 import retrofit2.http.Body
@@ -26,6 +27,9 @@ interface MyPageService {
 
     @POST("/signupin/profileImageList")
     suspend fun getProfileImages() : Response<ProfileImageResponse>
+
+    @POST("/board/myPosts")
+    suspend fun getMyPosts(@Body myPostsRequest: MyPostsRequest) : Response<MyPostsResponse>
 }
 
 data class RequestJoinClubRequest(
@@ -42,6 +46,16 @@ data class RequestJoinClubResponse(
 
 data class  MyProfileImageRequest(
     val token : String
+)
+
+data class  MyPostsRequest(
+    val token : String,
+    val offset : Int
+)
+data class  MyPostsResponse(
+    val isSuccess: Boolean,
+    val posts: ArrayList<PreviewPost>,
+    val error : ResponseEnum
 )
 data class MyProfileImageResponse(
     val url : String

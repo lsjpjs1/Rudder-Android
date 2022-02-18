@@ -1,4 +1,4 @@
-package com.rudder.ui.fragment.community
+package com.rudder.ui.fragment.mypage
 
 import android.os.Bundle
 import android.util.Log
@@ -19,13 +19,15 @@ import com.rudder.R
 import com.rudder.databinding.FragmentCommunityContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.MainPostPreviewAdapter
+import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
 import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
 import com.rudder.ui.fragment.post.ShowPostDisplayFragment
 import com.rudder.util.CustomOnclickListener
-import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.MyPostViewModel
 
-open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
+class MyPostContentsFragment : Fragment(), CustomOnclickListener {
 
+    val viewModel: MyPostViewModel by activityViewModels()
 
     private val lazyContext by lazy {
         requireContext()
@@ -33,8 +35,6 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
     private val parentActivity by lazy {
         activity as MainActivity
     }
-    private val viewModel : MainViewModel by activityViewModels()
-
 
     lateinit var adapter : MainPostPreviewAdapter
 
@@ -52,7 +52,7 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
         communityDisplay.lifecycleOwner = this
         communityDisplay.postPreviewRV.also{
-            it.layoutManager=LinearLayoutManager(lazyContext)
+            it.layoutManager= LinearLayoutManager(lazyContext)
             it.setHasFixedSize(false)
             it.adapter = adapter
 
@@ -91,7 +91,7 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
             it.getContentIfNotHandled()?.let {
                 if(it){
                     viewModel.clearPosts()
-                    viewModel.getPosts()
+                    viewModel.getMyPosts(false)
                 }
 
             }
@@ -100,21 +100,11 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         viewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
 
 
-            //Log.d("test_contents", "${it.getContentIfNotHandled()}")
-
-
             it.getContentIfNotHandled()?.let {
                     bool ->
                 if(bool)
                     (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
-
-            //Log.d("test_contents2", "${it.getContentIfNotHandled()}")
-
-//            it?.let {
-//                if(it)
-//                (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
-//            }
 
 
         })
@@ -129,7 +119,7 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
-                    viewModel.getPosts()
+                    viewModel.getMyPosts(false)
                     if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
@@ -147,7 +137,7 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
-                    viewModel.getPosts()
+                    viewModel.getMyPosts(false)
                     if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
@@ -155,60 +145,24 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
             }
         })
 
-//        viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
-//            it.getContentIfNotHandled().let {
-//                it?.let{
-//                    if (it){
-//                        parentActivity.showProgressBar()
-//                    } else {
-//                        parentActivity.hideProgressBar()
-//                    }
-//                }
-//            }
-//        })
-
-//        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
-//            viewModel.clearPosts()
-//            viewModel.getPosts()
-//
-//            GlobalScope.launch {
-//                viewModel.getPosts()
-//                (activity as MainActivity).showPost()
-//            }
-//
-//            //(activity as MainActivity).showPost()
-//        })
-
-
-
-
+        viewModel.getMyPosts(false)
 
         return communityDisplay.root
     }
 
+
     override fun onClickView(view: View, position: Int) {
         Log.d("activity-main-vm",viewModel.toString())
         viewModel.setSelectedPostPosition(position)
-        //(activity as MainActivity). showPost(viewModel, ShowPostContentsFragment(viewModel))
 
         val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationShowPost(
             ShowPostDisplayFragment.MAIN_VIEW_MODEL)
         view.findNavController().navigate(action)
         (activity as MainActivity).mainBottomNavigationDisappear()
 
-//        childFragmentManager.beginTransaction()
-//            .add(R.id.main_bottom_layout, AddCommentFragment(viewModel))
-//            .commit()
-
-        //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
-//        if(!viewModel.isAlreadyReadPost()){
-//            viewModel.addPostViewCount()
-//        }
         viewModel.addPostViewCount()
         viewModel.getComments()
     }
-
-
 
 
 }
