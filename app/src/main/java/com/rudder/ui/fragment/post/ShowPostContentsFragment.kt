@@ -17,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
+import com.rudder.data.PreviewPost
 import com.rudder.databinding.FragmentShowPostContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.DisplayImagesAdapter
@@ -50,21 +51,22 @@ class ShowPostContentsFragment(): Fragment() {
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
 
 
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        //_fragmentBinding= DataBindingUtil.inflate<FragmentShowPostContentsBinding>(inflater,R.layout.fragment_show_post_contents,container,false)
-
-
         _fragmentBinding= FragmentShowPostContentsBinding.inflate(inflater, container, false)
 
-        Log.d("test123123","${viewModel}")
+        val viewModelType = viewModel.javaClass.name.split('.').last()
 
 
         val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel, viewLifecycleOwner )
+        val displayImagesAdapter: DisplayImagesAdapter
+
+
+
+
         fragmentBinding.commentDisplayRV.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
                 override fun canScrollVertically(): Boolean {
@@ -78,7 +80,21 @@ class ShowPostContentsFragment(): Fragment() {
         Log.d("showpost","${viewModel.posts.value!!}")
 
         viewModel.isLikePost()
-        val displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+        if (viewModelType == "NotificationViewModel") {
+            //displayImagesAdapter = DisplayImagesAdapter(viewModel.postFromId.value!!.imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+                if (viewModel.selectedPostPosition.value!! != -1 ) {
+                    displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+                } else {
+                    displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+
+                }
+            Log.d("test123123", "notiViemodel")
+            //displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+
+        } else {
+            displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+            Log.d("test123123", "NOT_notiViemodel")
+        }
 
         fragmentBinding.showPostImageDisplayRecyclerView.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
@@ -112,17 +128,45 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
         viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
-            fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+            if (viewModel.selectedPostPosition.value == -1) {
+                fragmentBinding.post = viewModel.postFromId.value!!
+            } else {
+                fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+            }
+
         })
 
         viewModel.selectedPostPosition.observe(viewLifecycleOwner, Observer {
-            fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-            displayImagesAdapter.imageUrlList = viewModel.posts.value!![it].imageUrls
-            displayImagesAdapter.notifyDataSetChanged()
-            Glide.with(fragmentBinding.showPostImageView.context)
-                .load(currentPost.userProfileImageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(fragmentBinding.showPostImageView)
+
+            if (it == -1) {
+                fragmentBinding.post = viewModel.postFromId.value!!
+                displayImagesAdapter.imageUrlList = viewModel.postFromId.value!!.imageUrls
+                displayImagesAdapter.notifyDataSetChanged()
+                Glide.with(fragmentBinding.showPostImageView.context)
+                    .load(viewModel.postFromId.value!!.userProfileImageUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(fragmentBinding.showPostImageView)
+
+            } else {
+                fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+                displayImagesAdapter.imageUrlList = viewModel.posts.value!![it].imageUrls
+                displayImagesAdapter.notifyDataSetChanged()
+                Glide.with(fragmentBinding.showPostImageView.context)
+                    .load(currentPost.userProfileImageUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(fragmentBinding.showPostImageView)
+            }
+
+            //fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+
+
+
+            //displayImagesAdapter.imageUrlList = viewModel.posts.value!![it].imageUrls
+//            displayImagesAdapter.notifyDataSetChanged()
+//            Glide.with(fragmentBinding.showPostImageView.context)
+//                .load(currentPost.userProfileImageUrl)
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(fragmentBinding.showPostImageView)
         })
         viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -148,6 +192,18 @@ class ShowPostContentsFragment(): Fragment() {
                 Log.d("test123123","test456456")
 
                 fragmentBinding.post = viewModel.postFromId.value!!
+
+
+//                fragmentBinding.showPostImageDisplayRecyclerView.also {
+//                    it.layoutManager = object : LinearLayoutManager(lazyContext){
+//                        override fun canScrollVertically(): Boolean {
+//                            return false
+//                        }
+//                    }
+//                    it.setHasFixedSize(false)
+//                    it.adapter = displayImagesAdapter
+//                }
+
 
 //                if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
 //                    fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]

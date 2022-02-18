@@ -679,14 +679,18 @@ open class MainViewModel : ViewModel() {
 
     fun addComment() {
         lateinit var addCommentInfo: AddCommentInfo
-//        _posts.value!![_selectedPostPosition.value!!].commentCount =
-//            _posts.value!![_selectedPostPosition.value!!].commentCount + 1
+        val postIdForAddComment : Int
 
+        if (_selectedPostPosition.value!! == -1 ) {
+            postIdForAddComment = _postId.value!!
+        } else {
+            postIdForAddComment = _posts.value!![_selectedPostPosition.value!!].postId
+        }
 
         GlobalScope.launch {
             if (_selectedCommentGroupNum.value == -1) { // _selectedCommentGroupNum.value==-1 -> parent인 댓글
                 addCommentInfo = AddCommentInfo(
-                    _posts.value!![_selectedPostPosition.value!!].postId,
+                    postIdForAddComment,
                     _commentBody.value!!,
                     App.prefs.getValue(tokenKey)!!,
                     "parent",
@@ -694,7 +698,7 @@ open class MainViewModel : ViewModel() {
                 )
             } else {
                 addCommentInfo = AddCommentInfo(
-                    _posts.value!![_selectedPostPosition.value!!].postId,
+                    postIdForAddComment,
                     _commentBody.value!!,
                     App.prefs.getValue(tokenKey)!!,
                     "child",
@@ -702,15 +706,23 @@ open class MainViewModel : ViewModel() {
                 )
             }
             val isSuccess = Repository().addComment(addCommentInfo)
+
             if (isSuccess) {
                 getComments()
                 _commentBody.postValue("")
                 clearNestedCommentInfo()
                 viewModelScope.launch {
-                    var tmpPosts = _posts.value
-                    tmpPosts!![_selectedPostPosition.value!!].commentCount =
-                        _posts.value!![_selectedPostPosition.value!!].commentCount + 1
-                    _posts.postValue(tmpPosts!!)
+
+                    if (_selectedPostPosition.value!! == -1 ) {
+                        _postFromId.value!!.commentCount = _postFromId.value!!.commentCount + 1
+
+
+                    } else {
+                        var tmpPosts = _posts.value
+                        tmpPosts!![_selectedPostPosition.value!!].commentCount =
+                            _posts.value!![_selectedPostPosition.value!!].commentCount + 1
+                        _posts.postValue(tmpPosts!!)
+                    }
 
                     _commentCountChange.value = Event(true)
                 }
@@ -1203,26 +1215,22 @@ open class MainViewModel : ViewModel() {
 
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
-//            val result = Repository().postFromIdRepository(postRequest)
-//
-//            val errorMessage = result.error
-//            val postContent = result.post
-//            if (errorMessage != ResponseEnum.SUCCESS) {
-//
-//            }
+            val result = Repository().postFromIdRepository(postRequest)
+            val errorMessage = result.error
+            val postContent = result.post
+            if (errorMessage != ResponseEnum.SUCCESS) { // 에러가 났을 때,
 
-            _postFromId.postValue(Repository().postFromIdRepository(postRequest).post!! )
-            //_isPostFromId.postValue(Event(true))
-
-            //Log.d("result123", "${postContent}")
-            viewModelScope.launch {
-                //_postFromId.value = postContent!!
-                //setSelectedPostPosition(-1) // selectedPosition -> -1
-                getComments()
-                _isPostFromId.postValue(Event(true))
-
+            } else {
+                _postFromId.postValue ( postContent!! )
+                viewModelScope.launch {
+                    setSelectedPostPosition(-1) // selectedPosition -> -1
+                    getComments()
+                    _isPostFromId.postValue(Event(true))
+                }
 
             }
+
+            //_isPostFromId.postValue(Event(true))
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
 
