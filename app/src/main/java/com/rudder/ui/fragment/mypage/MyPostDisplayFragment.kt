@@ -25,6 +25,7 @@ class MyPostDisplayFragment : Fragment() {
 
 
     companion object{
+        const val TAG = "MyPostDisplayFragment"
         const val MY_COMMENT = 2
         const val MY_POST = 1
     }
