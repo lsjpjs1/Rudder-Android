@@ -48,7 +48,7 @@ class EditPostFragment() : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-
+        Log.d("edit123","onCreateview")
 
         when (args.viewModelIndex) {
             ShowPostDisplayFragment.SEARCH_VIEW_MODEL -> {
@@ -84,9 +84,26 @@ class EditPostFragment() : Fragment() {
         viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
 //            fragmentBinding.findNavController().popBackStack()
 //            (activity as MainActivity).mainBottomNavigationAppear()
+            Log.d("edit123","iseditpostsucess")
 
-            parentActivity.findNavController(R.id.mainDisplayContainerView).popBackStack()
-            (activity as MainActivity).mainBottomNavigationAppear()
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    val navController = parentActivity.findNavController(R.id.mainDisplayContainerView)
+                    navController.popBackStack()
+
+                    if (navController.currentDestination!!.label == "SearchPostDisplayFragment") {
+                        (activity as MainActivity).nestedCommentDisappear()
+                    } else if (navController.currentDestination!!.label == "MyPostDisplayFragment") {
+                        (activity as MainActivity).nestedCommentDisappear()
+                    } else if (navController.currentDestination!!.label == "ShowPostDisplayFragment") {
+                        (activity as MainActivity).nestedCommentDisappear()
+                    }
+                    else {
+                        (activity as MainActivity).mainBottomNavigationAppear()
+                        (activity as MainActivity).nestedCommentDisappear()
+                    }
+                }
+            }
 
         })
 

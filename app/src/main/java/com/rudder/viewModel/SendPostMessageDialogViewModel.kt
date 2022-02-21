@@ -24,6 +24,10 @@ class SendPostMessageDialogViewModel : ViewModel() {
     val closeFlag : LiveData<Event<Boolean>> = _closeFlag
     val toastMessage : LiveData<String?> = _toastMessage
 
+    init {
+        _postMessageBody.value = ""
+    }
+
     fun sendPostMessage() {
         GlobalScope.launch {
             val token = App.prefs.getValue(BuildConfig.TOKEN_KEY)

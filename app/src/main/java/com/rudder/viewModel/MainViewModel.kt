@@ -842,9 +842,10 @@ open class MainViewModel : ViewModel() {
     }
 
     fun clickPostEdit() {
-        if (_selectedPostMorePosition.value == null ) {
-            Log.d("test555","${_postFromId.value}")
+        Log.d("test555","${_selectedPostMorePosition.value}")
 
+
+        if (_selectedPostMorePosition.value == null ) {
             _postBody.value = _postFromId.value!!.postBody
             _postCategoryInt.value = findCategoryIndexById(_postFromId.value!!.categoryId )
         } else {
@@ -852,9 +853,6 @@ open class MainViewModel : ViewModel() {
             _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
         }
 
-
-//        _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
-//        _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
     }
 
     fun clickBlockUser() {

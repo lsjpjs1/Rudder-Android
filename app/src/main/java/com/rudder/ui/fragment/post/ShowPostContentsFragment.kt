@@ -191,13 +191,15 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.posts.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("test123123","${viewModel.posts.value}")
+                Log.d("test456456456777","${viewModel.posts.value}")
                 if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
                     //fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
 
                     if (viewModel.selectedPostPosition.value!! == -1 ) {
+                        Log.d("test456456456777_7","${viewModel.postFromId.value!!}")
                         fragmentBinding.post = viewModel.postFromId.value!!
                     } else {
+                        Log.d("test456456456777_8","${viewModel.posts.value}")
                         fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
                     }
 

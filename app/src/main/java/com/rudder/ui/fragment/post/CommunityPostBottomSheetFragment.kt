@@ -140,6 +140,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
             val previousDestination = navController.previousBackStackEntry?.destination?.label
             var action : NavDirections? = null
 
+
             if (currentDestination == "SearchPostDisplayFragment") {
                 action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
             }  else if (previousDestination == "SearchPostDisplayFragment") {
@@ -164,6 +165,8 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                     action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.NOTIFICATION_VIEW_MODEL)
             }
 
+
+            Log.d("edit123","${action}")
             navController.navigate(action!!)
             (activity as MainActivity).mainBottomNavigationDisappear()
 
