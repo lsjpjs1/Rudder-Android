@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.ViewGroup
 
 import androidx.recyclerview.widget.DiffUtil
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.data.dto.PostMessage
 import com.rudder.data.dto.PostMessageRoom
@@ -13,6 +15,8 @@ import com.rudder.databinding.PostMessageItemBinding
 import com.rudder.ui.activity.MainActivityInterface
 import com.rudder.util.LocaleUtil
 import com.rudder.util.PostMessageAdapterCallback
+import kotlinx.android.synthetic.main.post_message_item.view.*
+import kotlinx.android.synthetic.main.post_preview.view.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
@@ -57,11 +61,16 @@ class PostMessageAdapter(
 
         }
 
-        //holder.viewBinding.postMessageItemMessageBodyTV.text = getItem(position).postMessageBody
-
         holder.viewBinding.postMessageItemCL.setOnClickListener {
             postMessageAdapterCallback.onClickPostMessageRoom(getItem(position).postMessageRoomId)
         }
+
+        Glide.with(holder.viewBinding.root.postMessageItemSenderImageView.context)
+            .load(getItem(position).userProfileImageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(holder.viewBinding.root.postMessageItemSenderImageView)
+
+
     }
 
 //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {

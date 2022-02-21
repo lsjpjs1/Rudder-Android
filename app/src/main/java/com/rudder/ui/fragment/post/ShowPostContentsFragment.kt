@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -324,10 +325,19 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
 
-//        fragmentBinding.parentCommentInfoClose.setOnClickListener {
-//            viewModel.clearNestedCommentInfo()
-//            tmpBack()
-//        }
+        viewModel.isPostDeleteShowPost.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    Toast.makeText(context, "Delete Post Complete!", Toast.LENGTH_LONG).show()
+                    parentActivity.communityPostBottomSheetFragment.dismiss()
+                    parentActivity.onBackPressed()
+
+//                    if (parentActivity.showPostContentsFragment.isVisible){
+//                        parentActivity.onBackPressed()
+//                    }
+                }
+            }
+        })
 
         viewModel.clearNestedCommentInfo()
 

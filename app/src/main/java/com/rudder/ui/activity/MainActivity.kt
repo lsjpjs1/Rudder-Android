@@ -396,7 +396,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
         parentCommentInfoClose.setOnClickListener {
-            //this.showPostContentsFragment.closeParentCommentInfo()
+            Log.d("t123123","t123123")
             viewModel.clearNestedCommentInfo()
 
         }
@@ -657,6 +657,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 R.id.navigation_notification -> {
                     mainBottomNavigationAppear()
                 }
+                R.id.navigation_my_post -> {
+                    mainBottomNavigationDisappear()
+                    nestedCommentDisappear()
+                }
+
                 else -> {
                     //Log.d("testelse","testelse")
                 }

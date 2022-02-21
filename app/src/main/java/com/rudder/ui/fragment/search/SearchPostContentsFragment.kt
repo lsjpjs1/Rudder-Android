@@ -108,14 +108,10 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
         viewModel.isPostDelete.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
-                    Toast.makeText(
-                        context,
-                        "Delete Post Complete!",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(context, "Delete Post Complete!", Toast.LENGTH_LONG).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
-                    //viewModel.searchPost(false)
+                    viewModel.searchPost(false)
                     if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
@@ -133,7 +129,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.clearPosts()
-                    //viewModel.searchPost(false)
+                    viewModel.searchPost(false)
                     if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }

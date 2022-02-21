@@ -18,23 +18,23 @@
 
             전체 큰 레이아웃-->
 
-        <Button
-            android:id="@+id/tmpMyPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="myPost"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></Button>
+<!--        <Button-->
+<!--            android:id="@+id/tmpMyPost"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="myPost"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"></Button>-->
 
-        <Button
-            android:id="@+id/tmpMyComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="myComment"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tmpMyPost"
-            app:layout_constraintStart_toStartOf="parent"></Button>
+<!--        <Button-->
+<!--            android:id="@+id/tmpMyComment"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="myComment"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/tmpMyPost"-->
+<!--            app:layout_constraintStart_toStartOf="parent"></Button>-->
 
         <FrameLayout
             android:id="@+id/myPageHeaderFrameLayout"
@@ -72,7 +72,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:scrollbars="vertical"
+                android:scrollbars="none"
                 android:fillViewport="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -90,7 +90,7 @@
                             android:id="@+id/constraintLayout6"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_marginTop="40dp"
+                            android:layout_marginTop="20dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHeight_percent="0.3"
                             app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +107,7 @@
                             android:id="@+id/constraintLayoutMyPage1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="40dp"
+                            android:layout_marginTop="20dp"
 
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +126,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:layout_marginTop="10dp"
                                 android:onClick="@{()->mainVM.callLoginOut()}"
-                                app:layout_constraintTop_toBottomOf="@id/changeProfileImageConstraintLayout"
+                                app:layout_constraintTop_toBottomOf="@id/myCommentConstraintLayout"
                                 >
 
 
@@ -139,7 +139,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/logOutImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black">
+                                    app:tint="@color/purple_rudder">
                                 </ImageView>
 
 
@@ -196,7 +196,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/userAgreementImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black">
+                                    app:tint="@color/purple_rudder">
                                 </ImageView>
 
 
@@ -254,7 +254,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/changeNicknameImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black">
+                                    app:tint="@color/purple_rudder">
                                 </ImageView>
 
 
@@ -311,7 +311,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/contactusTextViewImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black"
+                                    app:tint="@color/purple_rudder"
                                     >
                                 </ImageView>
 
@@ -370,7 +370,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/categorySelectorImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black"
+                                    app:tint="@color/purple_rudder"
                                     >
                                 </ImageView>
 
@@ -431,7 +431,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/changeProfileImageImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black"
+                                    app:tint="@color/purple_rudder"
                                     >
                                 </ImageView>
 
@@ -458,6 +458,128 @@
                                     app:layout_constraintTop_toTopOf="parent"
                                     android:layout_marginStart="16dp"
                                     app:layout_constraintStart_toEndOf="@+id/changeProfileImageImageView"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    app:layout_constraintWidth_default="percent"
+
+                                    />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/myPostConstraintLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHeight_default="percent"
+                                app:layout_constraintHeight_percent="0.2"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginTop="10dp"
+                                app:layout_constraintTop_toBottomOf="@+id/changeProfileImageConstraintLayout"
+                                >
+                                <!--                                android:onClick="@{()->mainVM.clickCategorySelection()}"-->
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    android:src="@drawable/ic_baseline_edit_note_24"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:id="@+id/myPostImageView"
+                                    android:layout_marginStart="10dp"
+                                    app:tint="@color/purple_rudder"
+                                    >
+                                </ImageView>
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:src="@drawable/ic_baseline_chevron_right_24"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:layout_marginEnd="10dp"
+                                    >
+                                </ImageView>
+
+
+                                <TextView
+                                    android:id="@+id/myPostTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/my_post"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:layout_marginStart="16dp"
+                                    app:layout_constraintStart_toEndOf="@+id/myPostImageView"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    app:layout_constraintWidth_default="percent"
+
+                                    />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/myCommentConstraintLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHeight_default="percent"
+                                app:layout_constraintHeight_percent="0.2"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginTop="10dp"
+                                app:layout_constraintTop_toBottomOf="@+id/myPostConstraintLayout"
+                                >
+                                <!--                                android:onClick="@{()->mainVM.clickCategorySelection()}"-->
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    android:src="@drawable/ic_baseline_edit_note_24"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:id="@+id/myCommentImageView"
+                                    android:layout_marginStart="10dp"
+                                    app:tint="@color/purple_rudder"
+                                    >
+                                </ImageView>
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:src="@drawable/ic_baseline_chevron_right_24"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:layout_marginEnd="10dp"
+                                    >
+                                </ImageView>
+
+
+                                <TextView
+                                    android:id="@+id/myCommentTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/my_comment"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:layout_marginStart="16dp"
+                                    app:layout_constraintStart_toEndOf="@+id/myCommentImageView"
                                     android:textSize="16sp"
                                     android:textColor="@color/black"
                                     android:fontFamily="@font/sf_pro_text_bold"

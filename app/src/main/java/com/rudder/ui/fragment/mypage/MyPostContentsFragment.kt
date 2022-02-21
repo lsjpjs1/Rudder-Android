@@ -26,6 +26,7 @@ import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
 import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
 import com.rudder.ui.fragment.post.ShowPostDisplayFragment
 import com.rudder.util.CustomOnclickListener
+import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.MyCommentViewModel
 import com.rudder.viewModel.MyPostViewModel
 import kotlinx.android.synthetic.main.fragment_my_post_display.*
@@ -44,8 +45,10 @@ class MyPostContentsFragment : Fragment(), CustomOnclickListener {
         (parentFragment as MyPostDisplayFragment).args
     }
     lateinit var adapter : MainPostPreviewAdapter
-
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
+
+    private val mainViewModel : MainViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -130,7 +133,6 @@ class MyPostContentsFragment : Fragment(), CustomOnclickListener {
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.refreshPosts()
-                    parentActivity.onBackPressed()
                 }
             }
         })
@@ -151,6 +153,16 @@ class MyPostContentsFragment : Fragment(), CustomOnclickListener {
                 }
             }
         })
+
+
+        mainViewModel.selectedCommentGroupNum.observe(viewLifecycleOwner, Observer {
+            if (it != -1) {
+                (activity as MainActivity).showParentCommentInfo()
+            } else {
+                (activity as MainActivity).hideParentCommentInfo()
+            }
+        })
+
 
         viewModel.refreshPosts()
 
