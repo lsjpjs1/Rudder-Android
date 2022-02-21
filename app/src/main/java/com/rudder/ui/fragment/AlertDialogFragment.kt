@@ -1,9 +1,12 @@
 package com.rudder.ui.fragment
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.rudder.R
@@ -28,6 +31,8 @@ class AlertDialogFragment private constructor(val alertDialogListener: AlertDial
     ): View? {
         val binding = DataBindingUtil.inflate<FragmentAlertDialogBinding>(inflater, R.layout.fragment_alert_dialog, container,false)
         binding.lifecycleOwner = this
+
+
 
         binding.alertDialogTV.text = text
         binding.alertDialogOkButton.setOnClickListener {

@@ -12,43 +12,80 @@
         android:id="@+id/alertDialogConstraintLayout"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="300dp"
-    android:layout_height="300dp"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
-
-    <TextView
-        android:id="@+id/alertDialogTV"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-    <Button
-        android:id="@+id/alertDialogOkButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OK"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-    <Button
-        android:id="@+id/alertDialogCancelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CANCEL"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        android:background="@drawable/dialog_radius"
+        >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="340dp"
+            android:layout_height="120dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="10dp"
+            >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alert_title"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                >
 
+            </TextView>
 
+            <TextView
+                android:id="@+id/alertDialogTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:textSize="16sp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                 />
 
+            <TextView
+                android:id="@+id/alertDialogOkButton"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="OK"
+                android:background="@drawable/edge"
+                android:textColor="@color/black"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:padding="2dp"
+                android:gravity="center"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            <TextView
+                android:id="@+id/alertDialogCancelButton"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edge"
+                android:textColor="@color/black"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:padding="2dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.6"
+                android:text="CANCEL"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
