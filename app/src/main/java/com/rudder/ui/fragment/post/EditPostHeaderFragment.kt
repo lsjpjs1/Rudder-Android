@@ -27,9 +27,9 @@ class EditPostHeaderFragment(val viewModel: MainViewModel) : Fragment() {
             val navController = view.findNavController()
             navController.popBackStack()
 
-            if (navController.currentDestination!!.label != "ShowPostDisplayFragment") {
-                (activity as MainActivity).mainBottomNavigationAppear()
-            }
+//            if (navController.currentDestination!!.label == "ShowPostDisplayFragment") {
+//                (activity as MainActivity).mainBottomNavigationAppear()
+//            }
         }
 
 

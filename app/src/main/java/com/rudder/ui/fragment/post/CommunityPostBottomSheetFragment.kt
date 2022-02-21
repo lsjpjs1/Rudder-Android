@@ -132,7 +132,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
 
             val navController = parentActivity.findNavController(R.id.mainDisplayContainerView)
 
-            Log.d("test1111","${navController.previousBackStackEntry!!.destination.label}")
+            //Log.d("test1111","${navController.previousBackStackEntry!!.destination.label}")
 
             when {
                 navController.currentDestination!!.label == "SearchPostDisplayFragment" -> {
@@ -140,13 +140,13 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                     val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
                     navController.navigate(action)
                 }
-                navController.previousBackStackEntry!!.destination.label == "Notification" -> {
+                navController.previousBackStackEntry?.destination?.label == "Notification" -> {
                     Log.d("test999","test999")
                     val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.NOTIFICATION_VIEW_MODEL)
                     navController.navigate(action)
                 }
 
-                navController.previousBackStackEntry!!.destination.label == "SearchPostDisplayFragment" -> {
+                navController.previousBackStackEntry?.destination?.label == "SearchPostDisplayFragment" -> {
                     val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
                     navController.navigate(action)
                 }
