@@ -77,6 +77,7 @@ open class MainViewModel : ViewModel() {
     private val _isPostReport = MutableLiveData<Event<Boolean>>()
     private val _isPostEdit = MutableLiveData<Boolean?>()
     private val _isPostDelete = MutableLiveData<Event<Boolean>>()
+    private val _isPostDeleteShowPost = MutableLiveData<Event<Boolean>>()
     private val _isBlockUser = MutableLiveData<Event<Boolean>>()
     private val _isCommentReport = MutableLiveData<Event<Boolean>>()
     private val _isContactUs = MutableLiveData<Event<Boolean>>()
@@ -173,6 +174,7 @@ open class MainViewModel : ViewModel() {
     val isPostReport: LiveData<Event<Boolean>> = _isPostReport
     val isPostEdit: LiveData<Boolean?> = _isPostEdit
     val isPostDelete: LiveData<Event<Boolean>> = _isPostDelete
+    val isPostDeleteShowPost: LiveData<Event<Boolean>> = _isPostDeleteShowPost
     val isBlockUser: LiveData<Event<Boolean>> = _isBlockUser
     val isCommentReport: LiveData<Event<Boolean>> = _isCommentReport
     val isContactUs: LiveData<Event<Boolean>> = _isContactUs
@@ -868,10 +870,18 @@ open class MainViewModel : ViewModel() {
     }
 
     fun clickPostDelete() {
+        val postId : Int
+        if (_selectedPostPosition.value!! == -1 ) {
+            postId = _postId.value!!
+        } else {
+            postId = _posts.value!![_selectedPostMorePosition.value!!].postId
+        }
+
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            var result = Repository().deletePostRepository(DeletePostInfo( _posts.value!![selectedPostMorePosition.value!!].postId ))
+            var result = Repository().deletePostRepository(DeletePostInfo( postId ))
             _isPostDelete.postValue(Event(result))
+            _isPostDeleteShowPost.postValue(Event(result))
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
 
@@ -901,16 +911,16 @@ open class MainViewModel : ViewModel() {
 
     fun clickCommentDelete() {
         val commentInt = _comments.value!![_selectedCommentMorePosition.value!!].commentId
-        val postInt : Int
+        val postId : Int
 
         if (_selectedPostPosition.value!! == -1 ) {
-            postInt = _postId.value!!
+            postId = _postId.value!!
         } else {
-            postInt = _posts.value!![_selectedPostPosition.value!!].postId
+            postId = _posts.value!![_selectedPostPosition.value!!].postId
         }
 
         GlobalScope.launch {
-            var result = Repository().deleteCommentRepository(DeleteCommentInfo(commentInt, postInt))
+            var result = Repository().deleteCommentRepository(DeleteCommentInfo(commentInt, postId))
             _isCommentDelete.postValue(Event(result))
             _isDeleteCommentSuccess.postValue(Event(result))
 

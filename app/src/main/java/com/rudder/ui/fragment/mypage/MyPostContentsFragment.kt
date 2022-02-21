@@ -133,7 +133,6 @@ class MyPostContentsFragment : Fragment(), CustomOnclickListener {
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     viewModel.refreshPosts()
-                    parentActivity.onBackPressed()
                 }
             }
         })

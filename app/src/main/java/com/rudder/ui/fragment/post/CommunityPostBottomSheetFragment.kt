@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
@@ -133,69 +134,35 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         communityPostBottomSheetBinding.postMoreEditPostTextView.setOnClickListener { view ->
             parentActivity.communityPostBottomSheetFragment.dismiss()
             val navController = parentActivity.findNavController(R.id.mainDisplayContainerView)
+            val currentDestination = navController.currentDestination?.label
+            val previousDestination = navController.previousBackStackEntry?.destination?.label
+            var action : NavDirections? = null
 
-            //Log.d("test1111","${navController.previousBackStackEntry!!.destination.label}")
-
-//            when {
-//                navController.currentDestination!!.label == "SearchPostDisplayFragment" -> {
-//                    Log.d("test888","test888")
-//                    val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
-//                    navController.navigate(action)
-//                }
-//                navController.previousBackStackEntry?.destination?.label == "Notification" -> {
-//                    Log.d("test999","test999")
-//                    val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.NOTIFICATION_VIEW_MODEL)
-//                    navController.navigate(action)
-//                }
-//
-//                navController.previousBackStackEntry?.destination?.label == "SearchPostDisplayFragment" -> {
-//                    val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
-//                    navController.navigate(action)
-//                }
-//
-//
-//                else -> {
-//                    Log.d("test101010","test999")
-//                    val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
-//                    navController.navigate(action)
-//                }
-//            }
-            if (navController.currentDestination!!.label == "SearchPostDisplayFragment") {
-                val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
-                navController.navigate(action)
-            } else if(navController.currentDestination!!.label == "Community") {
-                val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
-                navController.navigate(action)
-            } else if(navController.currentDestination!!.label == "MyPostDisplayFragment") {
+            if (currentDestination == "SearchPostDisplayFragment") {
+                action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
+            }  else if (previousDestination == "SearchPostDisplayFragment") {
+                action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
+            }  else if(currentDestination == "Community") {
+                action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
+            }  else if(previousDestination == "Community") {
+                action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
+            }  else if(previousDestination == "MyPostDisplayFragment") {
                 if (viewModel is MyCommentViewModel) {
-                    val action = MyPostDisplayFragmentDirections.actionNavigationMyPostToNavigationEditPost(EditPostFragment.MY_COMMENT_VIEW_MODEL)
-                    navController.navigate(action)
+                    action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MY_COMMENT_VIEW_MODEL)
                 } else if (viewModel is MyPostViewModel) {
-                    val action = MyPostDisplayFragmentDirections.actionNavigationMyPostToNavigationEditPost(EditPostFragment.MY_POST_VIEW_MODEL)
-                    navController.navigate(action)
+                    action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MY_POST_VIEW_MODEL)
                 }
-            } else {
-
+            }  else if(currentDestination == "MyPostDisplayFragment") {
                 if (viewModel is MyCommentViewModel) {
-                    val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MY_COMMENT_VIEW_MODEL)
-                    navController.navigate(action)
+                    action = MyPostDisplayFragmentDirections.actionNavigationMyPostToNavigationEditPost(EditPostFragment.MY_COMMENT_VIEW_MODEL)
                 } else if (viewModel is MyPostViewModel) {
-                    val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MY_POST_VIEW_MODEL)
-                    navController.navigate(action)
-                } else if(viewModel is SearchViewModel) {
-                    val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
-                    navController.navigate(action)
-                } else if(viewModel is MainViewModel) {
-                    val action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
-                    navController.navigate(action)
+                    action = MyPostDisplayFragmentDirections.actionNavigationMyPostToNavigationEditPost(EditPostFragment.MY_POST_VIEW_MODEL)
                 }
-
+            }  else if (previousDestination == "Notification") {
+                    action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.NOTIFICATION_VIEW_MODEL)
             }
 
-
-
-
-
+            navController.navigate(action!!)
             (activity as MainActivity).mainBottomNavigationDisappear()
 
         }

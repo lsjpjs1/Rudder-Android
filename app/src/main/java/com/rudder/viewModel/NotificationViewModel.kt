@@ -39,7 +39,7 @@ class NotificationViewModel: MainViewModel()  {
                 0,
                 2,
                 22,
-                1199,
+                1210,
                 2
             ),
             NotificationItem(
