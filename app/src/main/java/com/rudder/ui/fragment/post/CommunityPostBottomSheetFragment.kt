@@ -131,17 +131,32 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
             parentActivity.communityPostBottomSheetFragment.dismiss()
 
             val navController = parentActivity.findNavController(R.id.mainDisplayContainerView)
-            Log.d("test888", "${navController.backStack.last.destination.label}")
-            Log.d("test888", "${navController.backStack.last()}")
+
+            Log.d("test1111","${navController.previousBackStackEntry!!.destination.label}")
+
+            when {
+                navController.currentDestination!!.label == "SearchPostDisplayFragment" -> {
+                    Log.d("test888","test888")
+                    val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
+                    navController.navigate(action)
+                }
+                navController.previousBackStackEntry!!.destination.label == "Notification" -> {
+                    Log.d("test999","test999")
+                    val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.NOTIFICATION_VIEW_MODEL)
+                    navController.navigate(action)
+                }
+
+                navController.previousBackStackEntry!!.destination.label == "SearchPostDisplayFragment" -> {
+                    val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
+                    navController.navigate(action)
+                }
 
 
-            if (navController.currentDestination!!.label == "SearchPostDisplayFragment") {
-                val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
-                navController.navigate(action)
-            } else {
-                val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
-                //val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.NOTIFICATION_VIEW_MODEL)
-                navController.navigate(action)
+                else -> {
+                    Log.d("test101010","test999")
+                    val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
+                    navController.navigate(action)
+                }
             }
 
 

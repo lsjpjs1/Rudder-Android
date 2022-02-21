@@ -809,11 +809,6 @@ open class MainViewModel : ViewModel() {
             else
                 _isPostMine.value = Event(false)
         }
-
-//        _selectedPostMorePosition.value = position
-//        Log.d("test555", "${position}")
-
-
     }
 
     fun dismissPostMore() {
