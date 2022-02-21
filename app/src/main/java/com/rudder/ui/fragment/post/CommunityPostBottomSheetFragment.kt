@@ -17,11 +17,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityPostBottomSheetBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.AlertDialogFragment
 import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
 import com.rudder.ui.fragment.mypage.MyPostDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
 import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
+import com.rudder.util.AlertDialogListener
 import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.MyCommentViewModel
 import com.rudder.viewModel.MyPostViewModel
@@ -240,6 +242,42 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         val receiveUserInfoId = viewModel.posts.value!![viewModel.selectedPostMorePosition.value!!].userInfoId
         sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId)
         sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
+    }
+
+    fun showDeleteAlert(){
+        val alertDialogFragment = AlertDialogFragment.instance(
+            object : AlertDialogListener {
+                override fun onOkClick() {
+                    viewModel.clickPostDelete()
+                }
+
+                override fun onCancelClick() {
+
+                }
+
+            },
+            "Do you really delete this post?"
+        )
+
+        alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
+    }
+
+    fun showUserBlockAlert(){
+            val alertDialogFragment = AlertDialogFragment.instance(
+                object : AlertDialogListener {
+                    override fun onOkClick() {
+                        viewModel.clickBlockUser()
+                    }
+
+                    override fun onCancelClick() {
+
+                    }
+
+                },
+                "Do you really block this user?"
+            )
+
+            alertDialogFragment.show(childFragmentManager,AlertDialogFragment.TAG)
     }
 
 

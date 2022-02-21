@@ -163,7 +163,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/deleteImageView"
-                android:onClick="@{()->mainVM.clickPostDelete()}"
+                android:onClick="@{()->communityPostBottomSheetFragment.showDeleteAlert()}"
 
                 android:gravity="fill_vertical"
                 android:text="@string/Delete"
@@ -285,7 +285,7 @@
                 android:gravity="fill_vertical"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:text="@string/block_user"
-                android:onClick="@{()->mainVM.clickBlockUser()}"
+                android:onClick="@{()->communityPostBottomSheetFragment.showUserBlockAlert()}"
                 android:textSize="16dp">
             </TextView>
 

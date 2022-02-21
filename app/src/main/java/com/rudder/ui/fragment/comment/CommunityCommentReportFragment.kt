@@ -14,6 +14,8 @@ import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityCommentReportSheetBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.AlertDialogFragment
+import com.rudder.util.AlertDialogListener
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_community_comment_bottom_sheet.*
@@ -40,6 +42,7 @@ class CommunityCommentReportFragment(val viewModel: MainViewModel) : DialogFragm
     ): View {
         communityCommentReportFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_community_comment_report_sheet, container,false)
         communityCommentReportFragmentBinding.mainVM = viewModel
+        communityCommentReportFragmentBinding.communityCommentReportFragment = this
         communityCommentReportFragmentBinding.lifecycleOwner = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -74,7 +77,23 @@ class CommunityCommentReportFragment(val viewModel: MainViewModel) : DialogFragm
 
         return communityCommentReportFragmentBinding.root
     }
+    fun showCommentReportAlert() {
+        val alertDialogFragment = AlertDialogFragment.instance(
+            object : AlertDialogListener {
+                override fun onOkClick() {
+                    viewModel.reportComment()
+                }
 
+                override fun onCancelClick() {
+
+                }
+
+            },
+            "Do you really report this comment?"
+        )
+
+        alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
+    }
 
 
 }

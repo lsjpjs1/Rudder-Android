@@ -13,7 +13,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityCommentBottomSheetBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.AlertDialogFragment
 import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
+import com.rudder.util.AlertDialogListener
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_community_comment_bottom_sheet.*
@@ -133,6 +135,24 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
     override fun onDismiss(dialog: DialogInterface) {
         viewModel.dismissCommentMore()
         super.onDismiss(dialog)
+    }
+
+    fun showDeleteCommentAlert(){
+        val alertDialogFragment = AlertDialogFragment.instance(
+            object : AlertDialogListener {
+                override fun onOkClick() {
+                    viewModel.clickCommentDelete()
+                }
+
+                override fun onCancelClick() {
+
+                }
+
+            },
+            "Do you really delete this comment?"
+        )
+
+        alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
     }
 
 }

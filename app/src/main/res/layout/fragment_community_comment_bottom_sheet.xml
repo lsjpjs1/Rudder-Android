@@ -165,7 +165,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/deleteImageView"
 
-                android:onClick="@{()->mainVM.clickCommentDelete()}"
+                android:onClick="@{()->communityCommentBottomSheetFragment.showDeleteCommentAlert()}"
                 android:gravity="fill_vertical"
                 android:text="@string/Delete"
                 android:textSize="16dp">

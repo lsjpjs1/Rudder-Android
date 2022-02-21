@@ -7,6 +7,9 @@
         <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
+        <variable
+            name="communityCommentReportFragment"
+            type="com.rudder.ui.fragment.comment.CommunityCommentReportFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,7 +86,7 @@
                 android:backgroundTint="#9329D1"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:onClick="@{()->mainVM.reportComment()}"
+                android:onClick="@{()->communityCommentReportFragment.showCommentReportAlert()}"
                 android:text="@string/sumbit"
 
 

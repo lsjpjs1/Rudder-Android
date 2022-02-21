@@ -14,6 +14,8 @@ import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityPostReportSheetBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.AlertDialogFragment
+import com.rudder.util.AlertDialogListener
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_school_select.*
@@ -24,6 +26,7 @@ class CommunityPostReportFragment(val viewModel: MainViewModel) : DialogFragment
 
 
     private lateinit var communityPostReportFragmentBinding : FragmentCommunityPostReportSheetBinding
+
 
     private val lazyContext by lazy {
         requireContext()
@@ -41,8 +44,10 @@ class CommunityPostReportFragment(val viewModel: MainViewModel) : DialogFragment
         communityPostReportFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_community_post_report_sheet, container,false)
         communityPostReportFragmentBinding.mainVM = viewModel
         communityPostReportFragmentBinding.lifecycleOwner = this
+        communityPostReportFragmentBinding.communityPostReportFragment = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+
 
 
         viewModel.isReportPostSuccess.observe(this, Observer {
@@ -75,6 +80,24 @@ class CommunityPostReportFragment(val viewModel: MainViewModel) : DialogFragment
         communityPostReportFragmentBinding.constraintLayout1.layoutParams = lp1
 
         return communityPostReportFragmentBinding.root
+    }
+
+    fun showAlert(){
+        val alertDialogFragment = AlertDialogFragment.instance(
+            object : AlertDialogListener {
+                override fun onOkClick() {
+                    viewModel.reportPost()
+                }
+
+                override fun onCancelClick() {
+
+                }
+
+            },
+            "Do you really report this post?"
+        )
+
+        alertDialogFragment.show(childFragmentManager,AlertDialogFragment.TAG)
     }
 
 
