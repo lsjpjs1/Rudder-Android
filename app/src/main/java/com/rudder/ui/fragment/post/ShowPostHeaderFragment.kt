@@ -2,6 +2,7 @@ package com.rudder.ui.fragment.post
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,9 +39,18 @@ class ShowPostHeaderFragment() : Fragment() {
             val navController = view.findNavController()
             navController.popBackStack()
 
+            Log.d("1231234","${navController.currentDestination!!.label}")
+
             if (navController.currentDestination!!.label == "SearchPostDisplayFragment") {
                 (activity as MainActivity).nestedCommentDisappear()
-            } else {
+            } else if (navController.currentDestination!!.label == "MyPostDisplayFragment") {
+                Log.d("123123","456456")
+
+                (activity as MainActivity).mainBottomNavigationDisappear()
+                (activity as MainActivity).nestedCommentDisappear()
+            }
+            else {
+                    Log.d("123123","123123")
                 (activity as MainActivity).mainBottomNavigationAppear()
                 (activity as MainActivity).nestedCommentDisappear()
             }

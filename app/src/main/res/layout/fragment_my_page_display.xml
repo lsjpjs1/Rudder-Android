@@ -139,7 +139,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/logOutImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black">
+                                    app:tint="@color/purple_rudder">
                                 </ImageView>
 
 
@@ -196,7 +196,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/userAgreementImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black">
+                                    app:tint="@color/purple_rudder">
                                 </ImageView>
 
 
@@ -254,7 +254,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/changeNicknameImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black">
+                                    app:tint="@color/purple_rudder">
                                 </ImageView>
 
 
@@ -311,7 +311,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/contactusTextViewImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black"
+                                    app:tint="@color/purple_rudder"
                                     >
                                 </ImageView>
 
@@ -370,7 +370,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/categorySelectorImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black"
+                                    app:tint="@color/purple_rudder"
                                     >
                                 </ImageView>
 
@@ -431,7 +431,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/changeProfileImageImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black"
+                                    app:tint="@color/purple_rudder"
                                     >
                                 </ImageView>
 
@@ -492,7 +492,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/myPostImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black"
+                                    app:tint="@color/purple_rudder"
                                     >
                                 </ImageView>
 
@@ -553,7 +553,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     android:id="@+id/myCommentImageView"
                                     android:layout_marginStart="10dp"
-                                    app:tint="@color/black"
+                                    app:tint="@color/purple_rudder"
                                     >
                                 </ImageView>
 

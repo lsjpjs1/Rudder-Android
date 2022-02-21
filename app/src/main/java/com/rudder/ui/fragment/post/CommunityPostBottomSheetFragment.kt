@@ -166,7 +166,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
             } else if(navController.currentDestination!!.label == "Community") {
                 val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
                 navController.navigate(action)
-            } else if(navController.currentDestination!!.label == "myPostDisplayFragment") {
+            } else if(navController.currentDestination!!.label == "MyPostDisplayFragment") {
                 if (viewModel is MyCommentViewModel) {
                     val action = MyPostDisplayFragmentDirections.actionNavigationMyPostToNavigationEditPost(EditPostFragment.MY_COMMENT_VIEW_MODEL)
                     navController.navigate(action)
