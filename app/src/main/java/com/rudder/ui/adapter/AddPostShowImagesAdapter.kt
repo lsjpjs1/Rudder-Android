@@ -34,15 +34,15 @@ class AddPostShowImagesAdapter(var imageUriList: ArrayList<FileInfo>,val display
         )
 
         //이미지 표시되는 전체 영역 크기 조절
-        var lp = bind.root.layoutParams
-        lp.width = (displaySize[0]*0.3).toInt()
-        lp.height = lp.width
-        bind.root.layoutParams = lp
+//        var lp = bind.root.layoutParams
+//        lp.width = (displaySize[0]*0.3).toInt()
+//        lp.height = lp.width
+//        bind.root.layoutParams = lp
 
         //이미지 제거 버튼 크기 조절
-        lp = bind.addPostDeleteButtonImageView.layoutParams
-        lp.width = (displaySize[0]*0.2*0.2).toInt()
-        lp.height = lp.width
+//        lp = bind.addPostDeleteButtonImageView.layoutParams
+//        lp.width = (displaySize[0]*0.2*0.2).toInt()
+//        lp.height = lp.width
         return CustomViewHolder(bind)
     }
 
@@ -52,7 +52,9 @@ class AddPostShowImagesAdapter(var imageUriList: ArrayList<FileInfo>,val display
     ) {
         if (position == itemCount-1){
             holder.addPostImagesBinding.addPostImageView.also {
-                it.setImageResource(R.drawable.ic_baseline_add_image)
+                it.layoutParams.height = 120
+                it.layoutParams.width = 120
+                it.setImageResource(R.drawable.ic_baseline_image_24)
                 it.setOnClickListener{
                     addPostImagesOnclickListener.onClickAddImage(holder.addPostImagesBinding.root,position)
                 }
@@ -66,6 +68,8 @@ class AddPostShowImagesAdapter(var imageUriList: ArrayList<FileInfo>,val display
                 }
             }
             holder.addPostImagesBinding.addPostImageView.also {
+                it.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                it.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
                 it.setImageURI(imageUriList[position].uri)
                 it.setOnClickListener {  }
             }

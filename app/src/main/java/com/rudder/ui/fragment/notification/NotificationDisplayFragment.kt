@@ -6,15 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.rudder.R
 import com.rudder.databinding.FragmentNotificationDisplayBinding
 import com.rudder.ui.activity.ActivityInterface
 import com.rudder.viewModel.NotificationViewModel
 
-class NotificationDisplayFragment() : Fragment() {
+class NotificationDisplayFragment : Fragment() {
 
-    private val notificationViewModel: NotificationViewModel by viewModels()
+    private val notificationViewModel: NotificationViewModel by activityViewModels()
 
     companion object{
         const val TAG = "NotificationDisplayFragment"

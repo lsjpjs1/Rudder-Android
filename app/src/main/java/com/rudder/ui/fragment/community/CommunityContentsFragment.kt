@@ -196,9 +196,6 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         view.findNavController().navigate(action)
         (activity as MainActivity).mainBottomNavigationDisappear()
 
-//        childFragmentManager.beginTransaction()
-//            .add(R.id.main_bottom_layout, AddCommentFragment(viewModel))
-//            .commit()
 
         //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
 //        if(!viewModel.isAlreadyReadPost()){

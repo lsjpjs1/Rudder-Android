@@ -48,20 +48,8 @@ class PostMessageRoomFragment : Fragment(),SendPostMessageCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        //viewModel.setPostMessageRoomId(args.postMessageRoomId)
 
-        //val tmp = args.notificationPostMessageRoomId
-        //viewModel.setPostMessageRoomId(tmp)
-
-        Log.d("postmessage123", "${args.notificationPostMessageRoomId}, ${args.postMessageRoomId}")
-
-        if (args.notificationPostMessageRoomId == -1) {
-            viewModel.setPostMessageRoomId(args.postMessageRoomId)
-        } else {
-            viewModel.setPostMessageRoomId(args.notificationPostMessageRoomId)
-
-        }
-
+        viewModel.setPostMessageRoomId(args.postMessageRoomId)
 
         fragmentBinding = DataBindingUtil.inflate<FragmentPostMessageRoomBinding>(inflater,
                 R.layout.fragment_post_message_room, container, false)

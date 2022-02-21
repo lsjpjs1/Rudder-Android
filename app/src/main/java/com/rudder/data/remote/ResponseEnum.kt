@@ -2,13 +2,18 @@ package com.rudder.data.remote
 
 import com.google.gson.annotations.SerializedName
 
-enum class ResponseEnum() {
+enum class ResponseEnum {
     @SerializedName("")
-    SUCCESS(),
+    SUCCESS,
     @SerializedName("duplicate")
-    DUPLICATE(),
+    DUPLICATE,
     @SerializedName("database")
-    DATABASE(),
+    DATABASE,
     @SerializedName("unknown")
-    UNKNOWN()
+    UNKNOWN,
+    @SerializedName("delete")
+    DELETE,
+    @SerializedName("not exist")
+    NOTEXIST
+
 }

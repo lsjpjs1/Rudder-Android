@@ -19,6 +19,7 @@ import com.rudder.data.remote.TokenApi
 import com.rudder.data.remote.*
 import com.rudder.util.ExceptionUtil
 import okhttp3.RequestBody
+import java.sql.Timestamp
 import kotlin.Exception
 
 
@@ -399,4 +400,12 @@ class Repository {
 
 
     }
+
+
+    suspend fun postFromIdRepository(postFromIdRequest : PostFromIdRequest): PostFromIdResponse {
+        return ExceptionUtil.retryWhenException(PostApi::postFromIdApi, postFromIdRequest, PostApi(), Response(PostFromIdResponse(null, false, ResponseEnum.UNKNOWN))
+        ).results
+    }
+
+
 }

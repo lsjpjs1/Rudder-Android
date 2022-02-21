@@ -17,6 +17,7 @@ import com.rudder.ui.fragment.search.SearchPostDisplayFragmentArgs
 import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.MyCommentViewModel
 import com.rudder.viewModel.MyPostViewModel
+import com.rudder.viewModel.NotificationViewModel
 import com.rudder.viewModel.SearchViewModel
 
 
@@ -27,8 +28,9 @@ class ShowPostDisplayFragment : Fragment() {
         const val TAG = "ShowPostDisplayFragment"
         const val MAIN_VIEW_MODEL = 1
         const val SEARCH_VIEW_MODEL = 2
-        const val MY_POST_VIEW_MODEL = 3
-        const val MY_COMMENT_VIEW_MODEL = 4
+        const val NOTIFICATION_VIEW_MODEL = 3
+        const val MY_POST_VIEW_MODEL = 4
+        const val MY_COMMENT_VIEW_MODEL = 5
     }
 
     private val lazyContext by lazy {
@@ -49,14 +51,22 @@ class ShowPostDisplayFragment : Fragment() {
     ): View? {
 
 
-        if (args.viewModelIndex == SEARCH_VIEW_MODEL) {
-            viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SearchViewModel::class.java)
-        } else if (args.viewModelIndex == MAIN_VIEW_MODEL) {
-            viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MainViewModel::class.java)
-        } else if (args.viewModelIndex == MY_POST_VIEW_MODEL) {
-            viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyPostViewModel::class.java)
-        }else if (args.viewModelIndex == MY_COMMENT_VIEW_MODEL) {
-            viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyCommentViewModel::class.java)
+        when (args.viewModelIndex) {
+            SEARCH_VIEW_MODEL -> {
+                viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SearchViewModel::class.java)
+            }
+            MAIN_VIEW_MODEL -> {
+                viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MainViewModel::class.java)
+            }
+            NOTIFICATION_VIEW_MODEL -> {
+                viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(NotificationViewModel::class.java)
+            }
+            MY_POST_VIEW_MODEL -> {
+                viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyPostViewModel::class.java)
+            }
+            MY_COMMENT_VIEW_MODEL -> {
+                viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyCommentViewModel::class.java)
+            }
         }
 
 

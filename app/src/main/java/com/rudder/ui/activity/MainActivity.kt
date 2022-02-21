@@ -1,5 +1,6 @@
 package com.rudder.ui.activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.os.Build
@@ -559,11 +560,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun showCommentMore(communityCommentBottomSheetFragment: CommunityCommentBottomSheetFragment){
         this.communityCommentBottomSheetFragment = communityCommentBottomSheetFragment
-        if (!this.communityCommentBottomSheetFragment.isAdded)
-            this.communityCommentBottomSheetFragment.show(
-                supportFragmentManager,
-                this.communityCommentBottomSheetFragment.tag
-            )
+        if (!this.communityCommentBottomSheetFragment.isAdded) {
+            this.communityCommentBottomSheetFragment.show(supportFragmentManager, this.communityCommentBottomSheetFragment.tag)
+        }
     }
 
     fun closeCommunityBottomSheetFragment(){
@@ -635,6 +634,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
 
+    @SuppressLint("RestrictedApi")
     override fun onBackPressed() {
         navDisplayController.addOnDestinationChangedListener { _, destination, _ ->
             Log.d("navigation_onBack", "${destination.label}")

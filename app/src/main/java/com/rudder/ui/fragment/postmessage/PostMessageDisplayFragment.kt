@@ -1,5 +1,6 @@
 package com.rudder.ui.fragment.postmessage
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -37,6 +39,9 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
     }
 
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
+
+    val args : PostMessageDisplayFragmentArgs by navArgs()
+
 
 
     override fun onCreateView(
@@ -89,9 +94,39 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
             }
         }
 
+        Log.d("asdasd123", "${args.notificationPostMessageRoomId}")
+
+//        val argsNotificationPostMessageId = args.notificationPostMessageRoomId
+//        if (argsNotificationPostMessageId != -1){
+//            onClickPostMessageRoom(argsNotificationPostMessageId)
+//        }
+
 
         return fragmentBinding.root
     }
+
+
+    override fun onAttach(context: Context) {
+        Log.d("asdasd123","onAttach")
+
+        super.onAttach(context)
+    }
+
+    override fun onResume() {
+        Log.d("asdasd123","resume")
+        super.onResume()
+    }
+
+    override fun onStart() {
+        Log.d("asdasd123","start")
+
+        super.onStart()
+    }
+
+
+
+
+
     override fun onHiddenChanged(hidden: Boolean) {
         if (!hidden) {
             viewModel.getPostMessages()

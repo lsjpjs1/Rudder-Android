@@ -1,5 +1,6 @@
 package com.rudder.ui.fragment.postmessage
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ class PostMessageRoomHeaderFragment:Fragment() {
         ViewModelProvider(parentFragment as ViewModelStoreOwner).get(PostMessageRoomViewModel::class.java)
     }
     private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,13 +44,12 @@ class PostMessageRoomHeaderFragment:Fragment() {
         return header.root
     }
 
-    fun goBack(){
-        activity?.onBackPressed()
-    }
 
     fun showSendPostMessageDialog() {
         val receiveUserInfoId = viewModel.targetUserInfoId
         sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId.value,parentFragment as SendPostMessageCallback)
         sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
     }
+
+
 }

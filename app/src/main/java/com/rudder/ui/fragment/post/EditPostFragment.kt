@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.rudder.R
@@ -20,6 +21,7 @@ import com.rudder.ui.fragment.search.SearchPostDisplayFragmentArgs
 import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.MyCommentViewModel
 import com.rudder.viewModel.MyPostViewModel
+import com.rudder.viewModel.NotificationViewModel
 import com.rudder.viewModel.SearchViewModel
 
 class EditPostFragment() : Fragment() {
@@ -28,10 +30,13 @@ class EditPostFragment() : Fragment() {
 
     companion object{
         const val TAG = "EditPostFragment"
-        const val SEARCH_VIEW_MODEL = 2
         const val MAIN_VIEW_MODEL = 1
-        const val MY_POST_VIEW_MODEL = 3
-        const val MY_COMMENT_VIEW_MODEL = 4
+        const val SEARCH_VIEW_MODEL = 2
+        const val NOTIFICATION_VIEW_MODEL = 3
+        const val MY_POST_VIEW_MODEL = 4
+        const val MY_COMMENT_VIEW_MODEL = 5
+
+
     }
 
     lateinit var viewModel : MainViewModel
@@ -44,15 +49,26 @@ class EditPostFragment() : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
-        if (args.viewModelIndex == SEARCH_VIEW_MODEL){
-            viewModel = ViewModelProvider(parentActivity).get(SearchViewModel::class.java)
-        }else if (args.viewModelIndex == MAIN_VIEW_MODEL){
-            viewModel = ViewModelProvider(parentActivity).get(MainViewModel::class.java)
-        }else if (args.viewModelIndex == MY_POST_VIEW_MODEL){
-            viewModel = ViewModelProvider(parentActivity).get(MyPostViewModel::class.java)
-        }else if (args.viewModelIndex == MY_COMMENT_VIEW_MODEL){
-            viewModel = ViewModelProvider(parentActivity).get(MyCommentViewModel::class.java)
+
+        when (args.viewModelIndex) {
+            ShowPostDisplayFragment.SEARCH_VIEW_MODEL -> {
+                viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(SearchViewModel::class.java)
+            }
+            ShowPostDisplayFragment.MAIN_VIEW_MODEL -> {
+                viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MainViewModel::class.java)
+            }
+            ShowPostDisplayFragment.NOTIFICATION_VIEW_MODEL -> {
+                viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(NotificationViewModel::class.java)
+            }
+            ShowPostDisplayFragment.MY_POST_VIEW_MODEL -> {
+                viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyPostViewModel::class.java)
+            }
+            ShowPostDisplayFragment.MY_COMMENT_VIEW_MODEL -> {
+                viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyCommentViewModel::class.java)
+            }
         }
+
+
         val fragmentBinding = DataBindingUtil.inflate<FragmentAddPostDisplayBinding>(inflater,R.layout.fragment_add_post_display,container,false)
         addPostContentsFragment = AddPostContentsFragment(viewModel,true)
 
