@@ -117,14 +117,14 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
             alertDialog.show()
         }
 
-        myPageBinding.tmpMyPost.setOnClickListener{ view ->
+        myPageBinding.myPostConstraintLayout.setOnClickListener{ view ->
             val navController = view.findNavController()
             val action = MyPageDisplayFragmentDirections.actionNavigationMypageToNavigationMyPost(MyPostDisplayFragment.MY_POST)
             navController.navigate(action)
             (activity as MainActivity).mainBottomNavigationDisappear()
         }
 
-        myPageBinding.tmpMyComment.setOnClickListener{ view ->
+        myPageBinding.myCommentConstraintLayout.setOnClickListener{ view ->
             val navController = view.findNavController()
             val action = MyPageDisplayFragmentDirections.actionNavigationMypageToNavigationMyPost(MyPostDisplayFragment.MY_COMMENT)
             navController.navigate(action)

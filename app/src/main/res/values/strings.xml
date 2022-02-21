@@ -65,5 +65,7 @@
     <string name="reply">Reply</string>
     <string name="notification">Notification</string>
     <string name="change_profile_image">Change Profile Image</string>
+    <string name="my_post">My Post</string>
+    <string name="my_comment">My Comment</string>
 
 </resources>
