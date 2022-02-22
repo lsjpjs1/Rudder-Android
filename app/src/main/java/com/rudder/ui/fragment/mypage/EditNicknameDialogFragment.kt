@@ -16,6 +16,8 @@ import androidx.lifecycle.Observer
 import com.rudder.R
 import com.rudder.databinding.FragmentEditNicknameDialogBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.AlertDialogFragment
+import com.rudder.util.AlertDialogListener
 import com.rudder.viewModel.EditNicknameDialogViewModel
 
 class EditNicknameDialogFragment() : DialogFragment() {
@@ -63,6 +65,13 @@ class EditNicknameDialogFragment() : DialogFragment() {
             }
         })
 
+
+
+        binding.editNicknameEditButton.setOnClickListener{
+            showEditNickNameAlert()
+        }
+
+
         return binding.root
     }
 
@@ -72,5 +81,26 @@ class EditNicknameDialogFragment() : DialogFragment() {
 
         super.onDismiss(dialog)
     }
+
+
+    fun showEditNickNameAlert(){
+        val alertDialogFragment = AlertDialogFragment.instance(
+            object : AlertDialogListener {
+                override fun onOkClick() {
+                    viewModel.updateNickname()
+                }
+
+                override fun onCancelClick() {
+
+                }
+
+            },
+            "Do you really change your nickname?"
+        )
+
+        alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
+    }
+
+
 
 }

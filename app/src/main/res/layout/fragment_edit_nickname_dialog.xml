@@ -81,14 +81,13 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="@string/Edit"
-                android:onClick="@{()->editNicknameDialogVM.updateNickname()}"
-
-
                 app:layout_constraintTop_toBottomOf="@+id/editNicknameEditText"
                 app:layout_constraintStart_toEndOf="@+id/editNicknameCancelButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 />
+<!--            android:onClick="@{()->editNicknameDialogVM.updateNickname()}"-->
+
 
             <Button
                 android:id="@+id/editNicknameCancelButton"

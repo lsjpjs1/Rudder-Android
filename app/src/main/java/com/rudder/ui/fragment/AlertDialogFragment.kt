@@ -32,8 +32,6 @@ class AlertDialogFragment private constructor(val alertDialogListener: AlertDial
         val binding = DataBindingUtil.inflate<FragmentAlertDialogBinding>(inflater, R.layout.fragment_alert_dialog, container,false)
         binding.lifecycleOwner = this
 
-
-
         binding.alertDialogTV.text = text
         binding.alertDialogOkButton.setOnClickListener {
             alertDialogListener.onOkClick()
