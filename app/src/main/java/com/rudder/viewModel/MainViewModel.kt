@@ -92,6 +92,9 @@ open class MainViewModel : ViewModel() {
     private val _isContactUsSuccess = MutableLiveData<Event<Boolean>>()
     private val _isSearchPostClick = MutableLiveData<Event<Boolean>>()
 
+    val _isEditPostSuccessTmp = MutableLiveData<Event<Boolean>>()
+
+
 
     val _reportPostBody = MutableLiveData<String>()
     val _userRequestBody = MutableLiveData<String>()
@@ -190,6 +193,8 @@ open class MainViewModel : ViewModel() {
     val isReportPostSuccess : LiveData<Event<Boolean>> = _isReportPostSuccess
 
     val isContactUsSuccess : LiveData<Event<Boolean>> = _isContactUsSuccess
+    val isEditPostSuccessTmp : LiveData<Event<Boolean>> = _isEditPostSuccessTmp
+
 
 
     val reportPostBody: LiveData<String> = _reportPostBody
@@ -1102,7 +1107,7 @@ open class MainViewModel : ViewModel() {
         if ( _postBody.value!!.isBlank() ) {
             _isStringBlank.value = Event(true)
         } else {
-
+            Log.d("test9999","test9999")
 
 
             GlobalScope.launch {
@@ -1114,6 +1119,8 @@ open class MainViewModel : ViewModel() {
 
                 viewModelScope.launch {
                     _isEditPostSuccess.value = Event(result)
+                    _isEditPostSuccessTmp.value = Event(result)
+
                     scrollTouchTopCommunityPost()
                 }
 

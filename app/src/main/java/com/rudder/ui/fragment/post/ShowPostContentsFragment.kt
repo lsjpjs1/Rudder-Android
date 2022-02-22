@@ -216,24 +216,17 @@ class ShowPostContentsFragment(): Fragment() {
 
                 fragmentBinding.post = viewModel.postFromId.value!!
 
-
-//                fragmentBinding.showPostImageDisplayRecyclerView.also {
-//                    it.layoutManager = object : LinearLayoutManager(lazyContext){
-//                        override fun canScrollVertically(): Boolean {
-//                            return false
-//                        }
-//                    }
-//                    it.setHasFixedSize(false)
-//                    it.adapter = displayImagesAdapter
-//                }
-
-
-//                if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
-//                    fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-//                }
-
             }
         })
+
+        viewModel.isEditPostSuccessTmp.observe(viewLifecycleOwner, Observer {
+//            fragmentBinding.findNavController().popBackStack()
+//            (activity as MainActivity).mainBottomNavigationAppear()
+            Log.d("edit123","ShowEditiseditpostsucess")
+            fragmentBinding.post = viewModel.postFromId.value!!
+
+        })
+
 
 
 
