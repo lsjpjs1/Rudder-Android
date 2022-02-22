@@ -126,7 +126,7 @@
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:gravity="fill_vertical"
                 android:text="@string/Report"
-                android:textSize="16dp"
+                android:textSize="15sp"
                 >
 
             </TextView>
@@ -170,7 +170,7 @@
                 android:onClick="@{()->communityCommentBottomSheetFragment.showDeleteCommentAlert()}"
                 android:gravity="fill_vertical"
                 android:text="@string/Delete"
-                android:textSize="16dp">
+                android:textSize="15sp">
             </TextView>
 
             <ImageView
@@ -230,7 +230,7 @@
                 android:gravity="fill_vertical"
                 android:text="@string/Edit"
                 android:onClick="@{()->mainVM.clickCommentEdit()}"
-                android:textSize="16dp">
+                android:textSize="15sp">
             </TextView>
 
             <ImageView
@@ -290,7 +290,7 @@
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:text="@string/send_post_message"
                 android:onClick="@{()->communityCommentBottomSheetFragment.showPostMessageDialog()}"
-                android:textSize="16dp">
+                android:textSize="15sp">
             </TextView>
 
             <ImageView
