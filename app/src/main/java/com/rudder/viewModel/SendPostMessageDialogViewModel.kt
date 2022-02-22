@@ -29,31 +29,36 @@ class SendPostMessageDialogViewModel : ViewModel() {
     }
 
     fun sendPostMessage() {
-        GlobalScope.launch {
-            val token = App.prefs.getValue(BuildConfig.TOKEN_KEY)
-            _messageReceiveUserInfoId.value?.let {
-                val result = Repository().sendPostMessage(SendPostMessageRequest(token!!,_messageReceiveUserInfoId.value!!,_postMessageBody.value!!))
-                viewModelScope.launch {
-                    when(result.error){
 
-                        ResponseEnum.SUCCESS -> {
-                            _toastMessage.value = "Sending message complete!"
-                            _closeFlag.value = Event(true)
-                        }
-                        ResponseEnum.UNKNOWN -> {
-                            _toastMessage.value = "Sending message failed"
-                        }
-                        ResponseEnum.DATABASE -> {
-                            _toastMessage.value = "Database failure"
-                        }
+        if ( _postMessageBody.value!!.isBlank() ) {
+            _toastMessage.value = "One or more fields is blank!"
+        } else {
+            GlobalScope.launch {
+                val token = App.prefs.getValue(BuildConfig.TOKEN_KEY)
+                _messageReceiveUserInfoId.value?.let {
+                    val result = Repository().sendPostMessage(SendPostMessageRequest(token!!,_messageReceiveUserInfoId.value!!,_postMessageBody.value!!))
+                    viewModelScope.launch {
+                        when(result.error){
 
+                            ResponseEnum.SUCCESS -> {
+                                _toastMessage.value = "Sending message complete!"
+                                _closeFlag.value = Event(true)
+                            }
+                            ResponseEnum.UNKNOWN -> {
+                                _toastMessage.value = "Sending message failed"
+                            }
+                            ResponseEnum.DATABASE -> {
+                                _toastMessage.value = "Database failure"
+                            }
+                        }
                     }
                 }
-
             }
-
-
         }
+
+
+
+
     }
 
     fun setMessageReceiveUserInfoId(receiveUserINfoId : Int?) {
