@@ -131,6 +131,8 @@ open class MainViewModel : ViewModel() {
 
     private val _searchPosts = MutableLiveData<ArrayList<PreviewPost>>()
 
+    val commentBody : LiveData<String> = _commentBody
+
     val isPostFromId: LiveData<Event<Boolean>> = _isPostFromId
     val postFromId: LiveData<PreviewPost> = _postFromId
 

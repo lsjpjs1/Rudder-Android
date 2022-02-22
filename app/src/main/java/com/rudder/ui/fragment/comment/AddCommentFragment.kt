@@ -33,10 +33,7 @@ class AddCommentFragment() : Fragment() {
         addComment.lifecycleOwner = this
 
 
-
-
-
-        viewModel._commentBody.observe(viewLifecycleOwner, Observer {
+        viewModel.commentBody.observe(viewLifecycleOwner, Observer {
 
             it?.let {
                 addComment.root.replyButton.isEnabled = !it.isEmpty()
