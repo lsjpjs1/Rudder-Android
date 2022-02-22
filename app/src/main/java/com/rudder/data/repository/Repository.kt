@@ -407,5 +407,12 @@ class Repository {
         ).results
     }
 
+    suspend fun getNotifications(getNotificationsRequest: GetNotificationsRequest): GetNotificationsResponse {
+        return ExceptionUtil.retryWhenException(NotificationApi::getNotifications, getNotificationsRequest, NotificationApi(), Response(
+            GetNotificationsResponse(false,ResponseEnum.UNKNOWN, arrayListOf())
+        )
+        ).results
+    }
+
 
 }

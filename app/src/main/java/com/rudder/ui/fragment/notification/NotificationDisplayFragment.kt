@@ -38,7 +38,13 @@ class NotificationDisplayFragment : Fragment() {
         return fragmentBinding.root
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (!hidden) {
+            notificationViewModel.getNotifications()
+        }
 
+        super.onHiddenChanged(hidden)
+    }
 
 
 

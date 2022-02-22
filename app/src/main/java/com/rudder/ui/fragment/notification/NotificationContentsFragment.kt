@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,17 +26,7 @@ import com.rudder.viewModel.NotificationViewModel
 
 
 class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
-//    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
-//    }
+
 
     private val notificationViewModel : NotificationViewModel by lazy {
         ViewModelProvider(activity as ViewModelStoreOwner).get(NotificationViewModel::class.java)
@@ -58,6 +49,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
         val notificationAdapter = NotificationAdapter(this)
 
+        notificationViewModel.getNotifications()
 
         fragmentBinding.notificationDisplayRV.also {
             it.layoutManager =
@@ -79,12 +71,15 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
     }
 
 
+
+
     override fun onClickPostNotification(postId: Int) {
+        Log.d("viewModel1",notificationViewModel.toString())
+        notificationViewModel.getPostContentFromPostId(postId)
+
         val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = NOTIFICATION_VIEW_MODEL)
         findNavController().navigate(action)
 
-
-        notificationViewModel.getPostContentFromPostId(postId)
 
         (activity as MainActivity).mainBottomNavigationDisappear()
     }
@@ -110,23 +105,4 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
     }
 
 
-//    companion object {
-//        /**
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment NotificationContentsFragment.
-//         */
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            NotificationContentsFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
 }

@@ -49,19 +49,6 @@
 
 
             <TextView
-                android:id="@+id/notification_id"
-                android:textSize="14sp"
-                android:text="Notification Id"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
-            </TextView>
-
-
-            <TextView
                 android:id="@+id/notification_time"
                 android:textSize="14sp"
                 android:text="Notification Time"

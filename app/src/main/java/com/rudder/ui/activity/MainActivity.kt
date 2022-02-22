@@ -55,11 +55,13 @@ import com.rudder.data.MainDisplayTab
 import com.rudder.ui.fragment.notification.NotificationDisplayFragment
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
+import com.rudder.viewModel.NotificationViewModel
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
 
 class MainActivity : AppCompatActivity(), MainActivityInterface {
     private val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+    private val notificationViewModel : NotificationViewModel by lazy { ViewModelProvider(this).get(NotificationViewModel::class.java) }
     lateinit var mainBottomBarFragment: MainBottomBarFragment
 //    lateinit var addCommentFragment: AddCommentFragment
     lateinit var communityDisplayFragment: CommunityDisplayFragment
@@ -237,41 +239,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         })
 
 
-//
-//        viewModel.selectedTab.observe(this, Observer {
-//            when (it) {
-//                R.id.communityButton -> {
-//                    FragmentShowHide(supportFragmentManager).showFragment(
-//                        communityDisplayFragment,
-//                        R.id.mainDisplay
-//                    )
-//                    //changeColorCommunity()
-//                }
-//                R.id.myPageButton -> {
-//                    FragmentShowHide(supportFragmentManager).showFragment(
-//                        myPageDisplayFragment,
-//                        R.id.mainDisplay
-//                    )
-//                    //changeColorMyPage()
-//                }
-//            }
-//        })
-
-
-//        viewModel.isAddPostClick.observe(this, Observer {
-//            if (it.getContentIfNotHandled()!!) {
-//
-//                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-//                fragmentShowHide.addToBackStack()
-//                fragmentShowHide.hideFragment(mainBottomBarFragment)
-//                fragmentShowHide.hideFragment(communityDisplayFragment)
-//                fragmentShowHide.addFragment(addPostDisplayFragment, R.id.mainDisplayContainerView, "addPost")
-//                fragmentShowHide.showFragment(addPostDisplayFragment, R.id.mainDisplayContainerView)
-//
-//                viewModel.clearAddPost()
-//            }
-//        })
-
         viewModel.isSearchPostClick.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
                 val fragmentShowHide = FragmentShowHide(supportFragmentManager)
@@ -358,24 +325,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         })
 
 
-//        viewModel.clickCategorySelect.observe(this, Observer {
-//            it.getContentIfNotHandled()?.let { it ->
-//                if (it) {
-//                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-//                    fragmentShowHide.addToBackStack()
-//                    fragmentShowHide.removeFragment(mainBottomBarFragment)
-//
-//                    fragmentShowHide.addFragment(
-//                        categorySelectMyPageFragment,
-//                        R.id.mainDisplay,
-//                        "categorySelectMyPageFragment"
-//                    )
-//                    fragmentShowHide.showFragment(categorySelectMyPageFragment, R.id.mainDisplay)
-//
-//                }
-//            }
-//        })
-
         viewModel.categorySelectApply.observe(this, Observer { // Apply 버튼
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
@@ -393,6 +342,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 }
             }
         })
+
 
 
         parentCommentInfoClose.setOnClickListener {
@@ -424,40 +374,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         return super.dispatchTouchEvent(ev)
     }
 
-//    override fun onBackPressed() {
-//        Log.d("onBackPressed", "onBackPressed")
-//        try {
-//            val isBackButtonAvailable =
-//                (!supportFragmentManager.findFragmentByTag("myPage")!!.isVisible) && (!supportFragmentManager.findFragmentByTag(
-//                    "community"
-//                )!!.isVisible)
-//            if (isBackButtonAvailable) { // 마이페이지 or 커뮤니티화면 아닐 때만 back버튼 활성화
-//                Log.d("call",addCommentFragment.isVisible.toString())
-//
-//                super.onBackPressed()
-//                if (addCommentFragment.isVisible) {
-//                    //swapMainBottomBar()
-//                }
-//            } else {
-//                moveTaskToBack(true)
-//            }
-//
-//            if (viewModel.selectedTab.value == R.id.myPageButton) {
-//                //changeColorMyPage()
-//            }
-//
-//            if (showPostContentsFragment.isVisible) {
-//                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-//                //fragmentShowHide.hideFragment(mainBottomBarFragment)
-//                //fragmentShowHide.showFragment(addCommentFragment, R.id.mainBottomBar)
-//
-//            }
-//        }catch (e: Exception){
-//            e.printStackTrace()
-//        }
-//
-//
-//    }
 
 
 
@@ -478,15 +394,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         }
     }
 
-//    fun swapMainBottomBar() {
-//        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-//        if(searchPostDisplayFragment.isVisible){
-//            fragmentShowHide.hideAllFragment(R.id.mainBottomBar)
-//        }else{
-//            fragmentShowHide.showFragment(mainBottomBarFragment, R.id.mainBottomBar)
-//        }
-//
-//    }
 
 
     fun showParentCommentInfo() {

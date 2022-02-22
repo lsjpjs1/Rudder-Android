@@ -1,8 +1,10 @@
 package com.rudder.ui.adapter
 
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.rudder.R
 import com.rudder.data.dto.NotificationItem
+import com.rudder.data.dto.NotificationType
 import com.rudder.data.dto.PostMessageRoom
 import com.rudder.databinding.NotificationContentsItemBinding
 import com.rudder.util.NotificationAdapterCallback
@@ -12,7 +14,7 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<NotificationItem>() {
             override fun areContentsTheSame(oldItem: NotificationItem, newItem: NotificationItem): Boolean {
-                return (oldItem.notificationId == newItem.notificationId && oldItem.notificationTime == newItem.notificationTime)
+                return (oldItem.notificationId == newItem.notificationId && oldItem.itemTime == newItem.itemTime)
             }
 
             override fun areItemsTheSame(oldItem: NotificationItem, newItem: NotificationItem): Boolean {
@@ -28,17 +30,17 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
 
         val notificationType = getItem(position).notificationType
 
-        holder.viewBinding.notificationType.text = notificationType.toString()
-        holder.viewBinding.notificationId.text = getItem(position).notificationId.toString()
-        holder.viewBinding.notificationBody.text = getItem(position).notificationBody
-        holder.viewBinding.notificationTime.text = getItem(position).notificationTime.toString()
+        holder.viewBinding.notificationType.text = notificationType.alertMessage
+        holder.viewBinding.notificationBody.text = getItem(position).itemBody
+        holder.viewBinding.notificationTime.text = getItem(position).itemTime.toString()
 
 
         holder.viewBinding.notificationTopLevelCL.setOnClickListener {
-            if (notificationType == 0) { //post에 대한 알림이면
-                notificationAdapterCallback.onClickPostNotification(getItem(position).notificationPostId)
+
+            if (notificationType == NotificationType.COMMENT) { //post에 대한 알림이면
+                notificationAdapterCallback.onClickPostNotification(getItem(position).itemId)
             } else { // post message room에 대한 알림이면
-                notificationAdapterCallback.onClickPostMessageRoomNotification(getItem(position).notificationPostMessageId)
+                notificationAdapterCallback.onClickPostMessageRoomNotification(getItem(position).itemId)
             }
 
         }
