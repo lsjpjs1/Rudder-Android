@@ -32,7 +32,6 @@ class SearchPostDisplayFragment : Fragment() {
 
         fragmentBinding.lifecycleOwner = this
 
-        Log.d("oncreateview_search","oncreateview_search")
         return fragmentBinding.root
     }
 

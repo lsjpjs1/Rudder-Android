@@ -77,7 +77,6 @@ class ShowPostContentsFragment(): Fragment() {
             it.adapter = adapter
         }
 
-        Log.d("showpost","${viewModel.posts.value!!}")
 
         viewModel.isLikePost()
         if (viewModelType == "NotificationViewModel") {
@@ -87,12 +86,10 @@ class ShowPostContentsFragment(): Fragment() {
 //                } else {
 //                    displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
 //                }
-//            Log.d("test123123", "notiViemodel")
             displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
 
         } else {
             displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
-            Log.d("test123123", "NOT_notiViemodel")
         }
 
         fragmentBinding.showPostImageDisplayRecyclerView.also {
@@ -191,7 +188,6 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.posts.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("test123123","${viewModel.posts.value}")
                 if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
                     //fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
 
@@ -210,7 +206,6 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.isPostFromId.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("test123123","test456456")
 
                 fragmentBinding.post = viewModel.postFromId.value!!
 
@@ -304,7 +299,6 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
         viewModel.selectedCommentGroupNum.observe(viewLifecycleOwner, Observer {
-            Log.d("selectedgroupnum",it.toString())
             if (it != -1) {
                 (activity as MainActivity).showParentCommentInfo()
             } else {

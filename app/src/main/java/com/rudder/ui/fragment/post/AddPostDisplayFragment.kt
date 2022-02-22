@@ -31,7 +31,6 @@ class AddPostDisplayFragment : Fragment() {
             .commit()
 
 
-        Log.d("oncreateview_add","oncreateview_add")
 
         fragmentBinding.mainVM = viewModel
         fragmentBinding.lifecycleOwner = this

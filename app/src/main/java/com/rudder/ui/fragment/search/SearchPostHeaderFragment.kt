@@ -58,7 +58,6 @@ class SearchPostHeaderFragment : Fragment() {
 
 
         viewModel.isScrollTouch.observe(viewLifecycleOwner, Observer {
-            Log.d("isscrollbo","isscrollbo")
             it.getContentIfNotHandled().let {
                 it?.let{
                     if (it){

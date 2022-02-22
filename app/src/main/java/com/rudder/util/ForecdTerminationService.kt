@@ -24,7 +24,6 @@ class ForecdTerminationService : Service() {
             //prefs.setValue(key, "")
             prefs.removeValue(key)
 
-            Log.d("autoLoginPref4", "${prefs.getValue(key)}")
         }
 
         stopSelf() //서비스 종료

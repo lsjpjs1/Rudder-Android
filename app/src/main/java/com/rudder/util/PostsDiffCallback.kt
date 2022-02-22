@@ -23,7 +23,6 @@ class PostsDiffCallback() : DiffUtil.Callback() {
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val res = (oldList[oldItemPosition].commentCount == newList[newItemPosition].commentCount
                 && oldList[oldItemPosition].likeCount == newList[newItemPosition].likeCount)
-        Log.d("diffcallback", "$oldItemPosition $newItemPosition "+oldList[oldItemPosition].commentCount.toString()+newList[newItemPosition].commentCount.toString())
         return res
     }
 }

@@ -25,7 +25,6 @@ class ExceptionUtil {
 
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.d("here!",param.toString())
                 retryWhenException(function,param,instance,defaultReturn,tryCount+1)
             }
         }

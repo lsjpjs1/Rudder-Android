@@ -131,7 +131,6 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
 
     fun updateComments(newComments: ArrayList<Comment>, deleteFlag : Boolean){
         if(newComments.size>=0) {
-            Log.d("updateComments","updateComments")
             val diffCallback: CommentsDiffCallback = CommentsDiffCallback(commentList, newComments, deleteFlag)
             val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
 

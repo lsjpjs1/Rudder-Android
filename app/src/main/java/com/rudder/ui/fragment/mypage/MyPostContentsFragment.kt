@@ -173,7 +173,6 @@ class MyPostContentsFragment : Fragment(), CustomOnclickListener {
 
 
     override fun onClickView(view: View, position: Int) {
-        Log.d("activity-main-vm",viewModel.toString())
         viewModel.setSelectedPostPosition(position)
         var action = MyPostDisplayFragmentDirections.actionNavigationMyPostToNavigationShowPost(
             ShowPostDisplayFragment.MY_POST_VIEW_MODEL)

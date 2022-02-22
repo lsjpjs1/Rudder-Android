@@ -46,7 +46,6 @@ class Repository {
             }
             return result
         }catch (e: Exception){
-            Log.d("Exception",e.message!!)
             e.printStackTrace()
             return false
         }
@@ -82,7 +81,6 @@ class Repository {
             val tokenAPIResultJson = ExceptionUtil.retryWhenException(TokenApi::tokenValidation,tokenInfo,TokenApi(),Response(serverFailJsonObject))
             return tokenAPIResultJson.results.get("isTokenValid").asBoolean
         }catch (e: Exception){
-            Log.d("Exception",e.message!!)
             e.printStackTrace()
             return false
         }

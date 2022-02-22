@@ -81,7 +81,6 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         viewModel.getMyProfileImageUrl()
         viewModel.myProfileImageUrl.value?.let {
 
-            Log.d("myImage", it)
             Glide.with(myPageBinding.myProfileImageImageView.context)
                 .load(it)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -90,7 +89,6 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         }
         viewModel.myProfileImageUrl.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("myImage", it)
 
                 Glide.with(myPageBinding.myProfileImageImageView.context)
                     .load(it)

@@ -74,7 +74,6 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
 
     override fun onClickPostNotification(postId: Int) {
-        Log.d("viewModel1",notificationViewModel.toString())
         notificationViewModel.getPostContentFromPostId(postId)
 
         val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = NOTIFICATION_VIEW_MODEL)

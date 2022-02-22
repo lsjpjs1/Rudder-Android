@@ -94,7 +94,6 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
             }
         }
 
-        Log.d("asdasd123", "${args.notificationPostMessageRoomId}")
 
 //        val argsNotificationPostMessageId = args.notificationPostMessageRoomId
 //        if (argsNotificationPostMessageId != -1){
@@ -107,18 +106,15 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
 
 
     override fun onAttach(context: Context) {
-        Log.d("asdasd123","onAttach")
 
         super.onAttach(context)
     }
 
     override fun onResume() {
-        Log.d("asdasd123","resume")
         super.onResume()
     }
 
     override fun onStart() {
-        Log.d("asdasd123","start")
 
         super.onStart()
     }

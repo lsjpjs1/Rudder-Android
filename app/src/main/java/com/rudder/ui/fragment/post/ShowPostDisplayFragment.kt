@@ -70,7 +70,6 @@ class ShowPostDisplayFragment : Fragment() {
             }
         }
 
-        Log.d("viewModel2",viewModel.toString())
 
 
 

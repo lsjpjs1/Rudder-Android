@@ -66,7 +66,6 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         viewModel.selectedPostMorePosition.observe(viewLifecycleOwner, Observer {
             it?.let {
                 communityPostBottomSheetBinding.position = it
-                Log.d("selectedPostMorePo","${communityPostBottomSheetBinding.position}")
             }
         })
 

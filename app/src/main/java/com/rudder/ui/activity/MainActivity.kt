@@ -300,10 +300,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     progressDialog.show()
-                    Log.d("progressBarDialogFlag", "progressDialog.show()")
                 } else {
                     progressDialog.dismiss()
-                    Log.d("progressBarDialogFlag", "progressDialog.dismiss()")
                 }
             }
         })
@@ -346,7 +344,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
         parentCommentInfoClose.setOnClickListener {
-            Log.d("t123123","t123123")
             viewModel.clearNestedCommentInfo()
 
         }
@@ -411,7 +408,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 //        parentCommentInfoClose.setOnClickListener {
 //            this.showPostContentsFragment.closeParentCommentInfo()
 //        }
-        Log.d("has",parentCommentInfoClose.hasOnClickListeners().toString())
         val fragmentShowHide = FragmentShowHide(supportFragmentManager)
 
         fragmentShowHide.addToBackStack()
@@ -454,7 +450,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     fun showPostMore(communityPostBottomSheetFragment: CommunityPostBottomSheetFragment){
         this.communityPostBottomSheetFragment = communityPostBottomSheetFragment
-//        Log.d("test_showpostMore", "${!communityPostBottomSheetFragment.isVisible}")
 
         if (!communityPostBottomSheetFragment.isVisible && !communityPostBottomSheetFragment.isAdded) {
             communityPostBottomSheetFragment.show(supportFragmentManager,communityPostBottomSheetFragment.tag)
@@ -544,7 +539,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     @SuppressLint("RestrictedApi")
     override fun onBackPressed() {
         navDisplayController.addOnDestinationChangedListener { _, destination, _ ->
-            Log.d("navigation_onBack", "${destination.label}")
             when (destination.id) {
                 R.id.navigation_community -> {
                     mainBottomNavigationAppear()
@@ -570,7 +564,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 }
 
                 else -> {
-                    //Log.d("testelse","testelse")
                 }
             }
         }

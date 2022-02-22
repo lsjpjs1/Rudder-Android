@@ -56,7 +56,6 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
         viewModel.selectedCommentMorePosition.observe(viewLifecycleOwner, Observer {
             it?.let {
                 communityCommentBottomSheetBinding.position = it
-                Log.d("comttomSheetBinding","${communityCommentBottomSheetBinding.position}")
             }
         })
 

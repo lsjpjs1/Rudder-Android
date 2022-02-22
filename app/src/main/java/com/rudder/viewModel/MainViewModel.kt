@@ -357,7 +357,6 @@ open class MainViewModel : ViewModel() {
                         }
                     }
                 }
-                Log.d("categoryNames2",_categoryNames.value.toString())
             }
 
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
@@ -401,7 +400,6 @@ open class MainViewModel : ViewModel() {
     }
     fun deletePhotoUriPosition(position: Int){
         val tmpList = _selectedPhotoUriList.value!!
-        Log.d("list",tmpList.toString())
         tmpList.removeAt(position)
         _selectedPhotoUriList.value = tmpList
     }
@@ -614,7 +612,6 @@ open class MainViewModel : ViewModel() {
                 } else {
                     val oldPosts = _posts.value
                     oldPosts!!.addAll(resPosts)
-                    Log.d("oldPost", oldPosts.toString())
                     _posts.value = oldPosts!!
 
                 }
@@ -668,7 +665,6 @@ open class MainViewModel : ViewModel() {
             viewModelScope.launch {
                 var tmpCommentList = ArrayList<Comment>()
                 for(idx in resComments.indices) {
-                    Log.d("for_comment", "${resComments[idx]}")
                     if (idx == 0){
                         if(resComments[idx].status == "child" ) { // 그 패턴이면
                             tmpCommentList.add(
@@ -690,7 +686,6 @@ open class MainViewModel : ViewModel() {
                     }
                 }
                 _comments.value = tmpCommentList
-                Log.d("comment", _comments.value.toString())
             }
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
@@ -753,7 +748,6 @@ open class MainViewModel : ViewModel() {
             _isStringBlank.value = Event(true)
         } else {
             GlobalScope.launch {
-                Log.d("categoryInt",_postCategoryInt.value!!.toString()+"    "+_allCategories.value!!.toString())
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
                 var tmpCategoryId: Int
                 if(_postCategoryInt.value!!>=_allCategories.value!!.size){
@@ -782,7 +776,6 @@ open class MainViewModel : ViewModel() {
 
     fun setSelectedPostPosition(position: Int) {
         _selectedPostPosition.value = position
-        Log.d("setselectpos",_selectedPostPosition.value!!.toString())
     }
 
     fun setSelectedCategoryPosition(position: Int) {
@@ -843,7 +836,6 @@ open class MainViewModel : ViewModel() {
 
     fun clickPostEdit() {
         if (_selectedPostMorePosition.value == null ) {
-            Log.d("test555","${_postFromId.value}")
 
             _postBody.value = _postFromId.value!!.postBody
             _postCategoryInt.value = findCategoryIndexById(_postFromId.value!!.categoryId )
@@ -861,7 +853,6 @@ open class MainViewModel : ViewModel() {
 
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            Log.d("userID",_posts.value!![selectedPostMorePosition.value!!].userId)
             var result = Repository().blockUser(BlockUserRequest(App.prefs.getValue(tokenKey)!!,_posts.value!![selectedPostMorePosition.value!!].userInfoId))
             _isBlockUser.postValue(Event(result))
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
@@ -965,7 +956,6 @@ open class MainViewModel : ViewModel() {
             var categoryList = Repository().getCategories(GetCategoriesRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY),null))
             viewModelScope.launch {
 
-                Log.d("categories123",categoryList.toString())
                 _allCategories.value?.addAll(categoryList)
                 _categoryNames.value = splitCategoryNames(categoryList)
                 //_selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
@@ -1046,7 +1036,6 @@ open class MainViewModel : ViewModel() {
         //parent.getAdapter().getItem(pos)    get item by pos
         //parent.getCount()                   get item count
         //parent.getSelectedItem()            get selected item
-        Log.d("onSelectItem","$pos, $id, ${parent.selectedItem}")
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
         _postCategoryInt.value = pos - 1
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
@@ -1167,7 +1156,6 @@ open class MainViewModel : ViewModel() {
         } else {
             GlobalScope.launch {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-                Log.d("rep",_reportPostBody.value.toString())
                 val reportInfo = ReportInfo( App.prefs.getValue(tokenKey)!!, _postId.value!!, _reportPostBody.value!! ,"post")
                 val result = Repository().reportRepository(reportInfo)
                 _isReportPostSuccess.postValue(Event(result))
@@ -1239,7 +1227,6 @@ open class MainViewModel : ViewModel() {
             categoryIdSelectList.value!!.remove(id)
         }
 
-        Log.d("categoryIdSelectList","${categoryIdSelectList.value!!}")
     }
 
 
@@ -1293,7 +1280,6 @@ open class MainViewModel : ViewModel() {
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
 
-        Log.d("test555666","${_postFromId.value}")
 
     }
 

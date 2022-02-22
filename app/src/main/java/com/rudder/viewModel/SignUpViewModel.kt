@@ -240,7 +240,6 @@ class SignUpViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        Log.d("onClearedSignUpVM","onClearedSignUpVM")
     }
 
 
@@ -323,7 +322,6 @@ class SignUpViewModel : ViewModel() {
 
             val idInput = _userId.value!!
             val result = repository.signUpIdDuplicated(IdDuplicatedInfo(idInput))
-            Log.d(ContentValues.TAG, "callIdCheck 결과 : ${result}")
             _idCheckFlag.postValue(Event(!result && _userId.value!!.isNotBlank()))
 
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
@@ -371,7 +369,6 @@ class SignUpViewModel : ViewModel() {
 
             val result = repository.signUpCreateAccount(inputInfo)
 
-            Log.d(ContentValues.TAG, "callCreateAccount 결과 : ${result}")
             _profileSettingNext.postValue(Event(result))
 
 
@@ -395,7 +392,6 @@ class SignUpViewModel : ViewModel() {
         GlobalScope.launch {
             var categoryList = repository.getCategories(GetCategoriesRequest(null,_userSchoolInt.value))
             categoryList.removeAt(0)
-            Log.d("categoryList","${categoryList}")
             viewModelScope.launch {
                 _categoryNames.value = splitCategoryNames(categoryList)
                 _categories.value = categoryList
@@ -424,7 +420,6 @@ class SignUpViewModel : ViewModel() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
             val profileImageJsonArray = repository.profileImageListRepository()
-            Log.d("_profileImageList.value", "${profileImageJsonArray}")
 
             for (idx in 0 until profileImageJsonArray.size() ) {
                 val idxObject = profileImageJsonArray[idx].asJsonObject
@@ -453,7 +448,6 @@ class SignUpViewModel : ViewModel() {
             categoryIdSelectList.value!!.remove(id)
         }
 
-        Log.d("categoryIdSelectList","${categoryIdSelectList.value!!}")
     }
 
 

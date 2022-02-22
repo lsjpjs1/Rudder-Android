@@ -71,7 +71,6 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
 
 //        viewModel.categoryNames.observe(viewLifecycleOwner, Observer {
 //                it?.let {
-//                    Log.d("categoryNames2",it.toString())
 //                }
 //        })
 
@@ -85,12 +84,10 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
         })
 
 
-        //Log.d("oncreateview_content_add","oncreateview_content_add")
 
 
         viewModel.photoPickerClickSwitch.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("photopicker",it.toString())
                 openPhotoPicker()
             }
         })

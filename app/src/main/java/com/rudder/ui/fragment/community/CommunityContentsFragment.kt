@@ -100,7 +100,6 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         viewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
 
 
-            //Log.d("test_contents", "${it.getContentIfNotHandled()}")
 
 
             it.getContentIfNotHandled()?.let {
@@ -109,7 +108,6 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
                     (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
 
-            //Log.d("test_contents2", "${it.getContentIfNotHandled()}")
 
 //            it?.let {
 //                if(it)
@@ -187,7 +185,6 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
     }
 
     override fun onClickView(view: View, position: Int) {
-        Log.d("activity-main-vm",viewModel.toString())
         viewModel.setSelectedPostPosition(position)
         //(activity as MainActivity). showPost(viewModel, ShowPostContentsFragment(viewModel))
 

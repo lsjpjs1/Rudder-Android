@@ -59,7 +59,6 @@ class SchoolSelectFragment : Fragment() {
 
         viewModel.schoolList.observe(viewLifecycleOwner, Observer {
             it?.let { schoolList ->
-                Log.d("schoollist",viewModel.toString())
                 val schoolNameList: List<String> = schoolList.map{it.schoolName}
                 var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,schoolNameList)
                 schoolSelectBinding.schoolSelectSpinner.adapter = adapter

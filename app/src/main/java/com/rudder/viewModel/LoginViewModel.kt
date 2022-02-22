@@ -65,7 +65,6 @@ class LoginViewModel() : ViewModel() {
                 }
             }
         }catch (e: Exception){
-            Log.d("exception",e.message!!)
             _noticeResponse.value = NoticeResponse(true,"Error Exist")
         }
 
@@ -103,7 +102,6 @@ class LoginViewModel() : ViewModel() {
 //            ProgressBarUtil._progressBarFlag.postValue(Event(false))
             }
         }catch (e: Exception){
-            Log.d("Exception",e.message!!)
             _showLoginErrorToast.value = Event(true)
         }
 

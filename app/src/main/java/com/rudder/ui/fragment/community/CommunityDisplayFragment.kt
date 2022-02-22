@@ -41,7 +41,6 @@ class CommunityDisplayFragment: Fragment() {
 //                }
 //            }
 //        })
-        Log.d("oncreateview_community","oncreateview_community_display")
 
         return community.root
 

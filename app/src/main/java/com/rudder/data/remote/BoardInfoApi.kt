@@ -20,7 +20,6 @@ class BoardInfoApi {
 
     fun getCategoryList(getCategoriesRequest: GetCategoriesRequest) : Deferred<Response<ArrayList<Category>>> {
         return GlobalScope.async(Dispatchers.IO){
-            Log.d("getcategoriesrequest",getCategoriesRequest.toString())
             if(getCategoriesRequest.schoolId==null) {
                 boardInfoService.getCategories(GetCategoriesRequestWithToken(getCategoriesRequest.token))
             }else{

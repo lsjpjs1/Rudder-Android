@@ -48,7 +48,6 @@ class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
         })
 
         viewModel.userSelectCategories.observe(viewLifecycleOwner, Observer {
-            Log.d("error4",it.toString())
             adapter.updateCategories(it)
         })
         return fragmentBinding.root

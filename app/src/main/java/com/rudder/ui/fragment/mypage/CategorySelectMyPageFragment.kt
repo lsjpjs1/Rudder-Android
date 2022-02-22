@@ -53,7 +53,6 @@ class CategorySelectMyPageFragment : Fragment() {
 
         viewModel.allClubCategories.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("cate123",it.toString())
                 fragmentMyPageCategorySelectBinding.root.chipsProgramsClub.removeAllViews()
                 setCategoryChips(
                     it,
