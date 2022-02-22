@@ -92,6 +92,9 @@ open class MainViewModel : ViewModel() {
     private val _isContactUsSuccess = MutableLiveData<Event<Boolean>>()
     private val _isSearchPostClick = MutableLiveData<Event<Boolean>>()
 
+    val _isEditPostSuccessTmp = MutableLiveData<Event<Boolean>>()
+
+
 
     val _reportPostBody = MutableLiveData<String>()
     val _userRequestBody = MutableLiveData<String>()
@@ -130,6 +133,8 @@ open class MainViewModel : ViewModel() {
 
 
     private val _searchPosts = MutableLiveData<ArrayList<PreviewPost>>()
+
+    val commentBody : LiveData<String> = _commentBody
 
     val isPostFromId: LiveData<Event<Boolean>> = _isPostFromId
     val postFromId: LiveData<PreviewPost> = _postFromId
@@ -188,6 +193,8 @@ open class MainViewModel : ViewModel() {
     val isReportPostSuccess : LiveData<Event<Boolean>> = _isReportPostSuccess
 
     val isContactUsSuccess : LiveData<Event<Boolean>> = _isContactUsSuccess
+    val isEditPostSuccessTmp : LiveData<Event<Boolean>> = _isEditPostSuccessTmp
+
 
 
     val reportPostBody: LiveData<String> = _reportPostBody
@@ -693,52 +700,58 @@ open class MainViewModel : ViewModel() {
 
 
     fun addComment() {
-        lateinit var addCommentInfo: AddCommentInfo
-        val postIdForAddComment : Int
-
-        if (_selectedPostPosition.value!! == -1 ) {
-            postIdForAddComment = _postId.value!!
+        if ( _commentBody.value!!.isBlank() ) {
+            _isStringBlank.value = Event(true)
         } else {
-            postIdForAddComment = _posts.value!![_selectedPostPosition.value!!].postId
+            lateinit var addCommentInfo: AddCommentInfo
+            val postIdForAddComment : Int
+
+            if (_selectedPostPosition.value!! == -1 ) {
+                postIdForAddComment = _postId.value!!
+            } else {
+                postIdForAddComment = _posts.value!![_selectedPostPosition.value!!].postId
+            }
+
+            GlobalScope.launch {
+                if (_selectedCommentGroupNum.value == -1) { // _selectedCommentGroupNum.value==-1 -> parent인 댓글
+                    addCommentInfo = AddCommentInfo(
+                        postIdForAddComment,
+                        _commentBody.value!!,
+                        App.prefs.getValue(tokenKey)!!,
+                        "parent",
+                        -1
+                    )
+                } else {
+                    addCommentInfo = AddCommentInfo(
+                        postIdForAddComment,
+                        _commentBody.value!!,
+                        App.prefs.getValue(tokenKey)!!,
+                        "child",
+                        _selectedCommentGroupNum.value!!
+                    )
+                }
+                val isSuccess = Repository().addComment(addCommentInfo)
+
+                if (isSuccess) {
+                    _commentBody.postValue("")
+                    clearNestedCommentInfo()
+                    viewModelScope.launch {
+
+                        if (_selectedPostPosition.value!! == -1 ) {
+                            _postFromId.value!!.commentCount = _postFromId.value!!.commentCount + 1
+                        } else {
+                            var tmpPosts = _posts.value
+                            tmpPosts!![_selectedPostPosition.value!!].commentCount =
+                                _posts.value!![_selectedPostPosition.value!!].commentCount + 1
+                            _posts.postValue(tmpPosts!!)
+                        }
+                        _commentCountChange.value = Event(true)
+                        getComments()
+                    }
+                }
         }
 
-        GlobalScope.launch {
-            if (_selectedCommentGroupNum.value == -1) { // _selectedCommentGroupNum.value==-1 -> parent인 댓글
-                addCommentInfo = AddCommentInfo(
-                    postIdForAddComment,
-                    _commentBody.value!!,
-                    App.prefs.getValue(tokenKey)!!,
-                    "parent",
-                    -1
-                )
-            } else {
-                addCommentInfo = AddCommentInfo(
-                    postIdForAddComment,
-                    _commentBody.value!!,
-                    App.prefs.getValue(tokenKey)!!,
-                    "child",
-                    _selectedCommentGroupNum.value!!
-                )
-            }
-            val isSuccess = Repository().addComment(addCommentInfo)
 
-            if (isSuccess) {
-                _commentBody.postValue("")
-                clearNestedCommentInfo()
-                viewModelScope.launch {
-
-                    if (_selectedPostPosition.value!! == -1 ) {
-                        _postFromId.value!!.commentCount = _postFromId.value!!.commentCount + 1
-                    } else {
-                        var tmpPosts = _posts.value
-                        tmpPosts!![_selectedPostPosition.value!!].commentCount =
-                            _posts.value!![_selectedPostPosition.value!!].commentCount + 1
-                        _posts.postValue(tmpPosts!!)
-                    }
-                    _commentCountChange.value = Event(true)
-                    getComments()
-                }
-            }
         }
     }
 
@@ -844,9 +857,6 @@ open class MainViewModel : ViewModel() {
             _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
         }
 
-
-//        _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
-//        _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
     }
 
     fun clickBlockUser() {
@@ -1094,6 +1104,8 @@ open class MainViewModel : ViewModel() {
 
                 viewModelScope.launch {
                     _isEditPostSuccess.value = Event(result)
+                    _isEditPostSuccessTmp.value = Event(result)
+
                     scrollTouchTopCommunityPost()
                 }
 

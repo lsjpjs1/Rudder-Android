@@ -40,15 +40,23 @@
                 android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="@dimen/add_comment_body_width">
+                android:layout_marginStart="4dp"
+                app:layout_constraintWidth_percent="0.75">
 
                 <EditText
                     android:id="@+id/addCommentBodyEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="46dp"
                     android:ems="10"
                     android:hint="@string/comment_title"
                     android:theme="@style/MyEditTextTheme"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/edge"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:inputType="textMultiLine"
                     android:text="@={mainVM._commentBody}"
                     android:afterTextChanged="@{() -> mainVM.onTextChangeComment()}"
@@ -64,13 +72,18 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="@dimen/add_comment_tail_width">
 
+
+
                 <Button
                     android:id="@+id/replyButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="84dp"
+                    android:layout_height="46dp"
                     android:text="@string/comment_send_text"
-                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:textSize="12sp"
                     android:textColor="@color/white"
+                    android:layout_marginEnd="4dp"
                     android:background="@drawable/button_enabled"
                     android:onClick='@{()->mainVM.addComment()}'
                     app:layout_constraintBottom_toBottomOf="parent"

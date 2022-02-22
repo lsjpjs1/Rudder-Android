@@ -67,5 +67,6 @@
     <string name="change_profile_image">Change Profile Image</string>
     <string name="my_post">My Post</string>
     <string name="my_comment">My Comment</string>
+    <string name="alert_title">Alert</string>
 
 </resources>

@@ -188,12 +188,15 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.posts.observe(viewLifecycleOwner, Observer {
             it?.let {
+                Log.d("test456456456777","${viewModel.posts.value}")
                 if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
                     //fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
 
                     if (viewModel.selectedPostPosition.value!! == -1 ) {
+                        Log.d("test456456456777_7","${viewModel.postFromId.value!!}")
                         fragmentBinding.post = viewModel.postFromId.value!!
                     } else {
+                        Log.d("test456456456777_8","${viewModel.posts.value}")
                         fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
                     }
 
@@ -209,24 +212,17 @@ class ShowPostContentsFragment(): Fragment() {
 
                 fragmentBinding.post = viewModel.postFromId.value!!
 
-
-//                fragmentBinding.showPostImageDisplayRecyclerView.also {
-//                    it.layoutManager = object : LinearLayoutManager(lazyContext){
-//                        override fun canScrollVertically(): Boolean {
-//                            return false
-//                        }
-//                    }
-//                    it.setHasFixedSize(false)
-//                    it.adapter = displayImagesAdapter
-//                }
-
-
-//                if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
-//                    fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-//                }
-
             }
         })
+
+        viewModel.isEditPostSuccessTmp.observe(viewLifecycleOwner, Observer {
+//            fragmentBinding.findNavController().popBackStack()
+//            (activity as MainActivity).mainBottomNavigationAppear()
+            Log.d("edit123","ShowEditiseditpostsucess")
+            fragmentBinding.post = viewModel.postFromId.value!!
+
+        })
+
 
 
 

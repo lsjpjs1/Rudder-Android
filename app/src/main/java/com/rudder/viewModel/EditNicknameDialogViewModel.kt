@@ -36,29 +36,36 @@ class EditNicknameDialogViewModel : ViewModel() {
     }
 
     fun updateNickname(){
-        GlobalScope.launch {
-            val result=Repository().updateNickname(UpdateNicknameRequest(App.prefs.getValue("token")!!,_newNickname.value!!))
-            viewModelScope.launch {
-                when(result.error){
 
-                    ResponseEnum.SUCCESS -> {
-                        _toastMessage.value = "Successfully changed!"
-                        _closeFlag.value = Event(true)
-                    }
-                    ResponseEnum.UNKNOWN -> {
-                        _toastMessage.value = "Editing failed"
-                    }
-                    ResponseEnum.DATABASE -> {
-                        _toastMessage.value = "Database failure"
-                    }
-                    ResponseEnum.DUPLICATE -> {
-                        _toastMessage.value = "Nickname duplicated.\nPlease try with a different nickname"
-                    }
+        if ( _newNickname.value!!.isBlank() ) {
+            _toastMessage.value = "One or more fields is blank!"
+        } else {
+            GlobalScope.launch {
+                val result=Repository().updateNickname(UpdateNicknameRequest(App.prefs.getValue("token")!!,_newNickname.value!!))
+                viewModelScope.launch {
+                    when(result.error){
 
+                        ResponseEnum.SUCCESS -> {
+                            _toastMessage.value = "Successfully changed!"
+                            _closeFlag.value = Event(true)
+                        }
+                        ResponseEnum.UNKNOWN -> {
+                            _toastMessage.value = "Editing failed"
+                        }
+                        ResponseEnum.DATABASE -> {
+                            _toastMessage.value = "Database failure"
+                        }
+                        ResponseEnum.DUPLICATE -> {
+                            _toastMessage.value = "Nickname duplicated.\nPlease try with a different nickname"
+                        }
+
+                    }
                 }
+
+
             }
 
-
         }
+
     }
 }

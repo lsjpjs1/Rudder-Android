@@ -211,7 +211,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         )
         val toastStringBlank = Toast.makeText(
             this,
-            "Content can not be blank.",
+            "One or more fields is blank!",
             Toast.LENGTH_LONG
         )
 

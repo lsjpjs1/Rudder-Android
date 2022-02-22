@@ -45,7 +45,7 @@ class CategorySelectMyPageFragment : Fragment() {
 
         val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
         val chipWidth = (displayDpValue[0] * 0.42).toInt()
-        val chipHeight = (displayDpValue[1] * 0.1).toInt()
+        val chipHeight = (displayDpValue[1] * 0.09).toInt()
 
         viewModel.allCategories.observe(viewLifecycleOwner, Observer {
             setCategoryChips(viewModel.allCategories.value!!,chipWidth, chipHeight,R.layout.item_chip_category,fragmentMyPageCategorySelectBinding.root.chipsPrograms)
