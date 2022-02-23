@@ -46,7 +46,7 @@ class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selecte
                     holder.categorySelectorBinding.categoryUnderBarView.layoutParams=lp
                     if(holder.categorySelectorBinding.categoryTextView.width>0){
                         var lp2 = holder.categorySelectorBinding.root.layoutParams
-                        lp2.width = holder.categorySelectorBinding.categoryTextView.width + 50
+                        lp2.width = holder.categorySelectorBinding.categoryTextView.width + 56
                         holder.categorySelectorBinding.root.layoutParams = lp2
                     }
                 }

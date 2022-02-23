@@ -26,10 +26,9 @@ class EditPostHeaderFragment(val viewModel: MainViewModel) : Fragment() {
         header.addPostHeaderX.setOnClickListener { view ->
             val navController = view.findNavController()
             navController.popBackStack()
-
-//            if (navController.currentDestination!!.label == "ShowPostDisplayFragment") {
-//                (activity as MainActivity).mainBottomNavigationAppear()
-//            }
+            if (navController.currentDestination!!.label == "Community") {
+                (activity as MainActivity).mainBottomNavigationAppear()
+            }
         }
 
 

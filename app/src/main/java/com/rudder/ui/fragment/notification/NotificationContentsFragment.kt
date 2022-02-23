@@ -64,6 +64,18 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
             }
         })
 
+        notificationViewModel.toastMessage.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                if (it != "Success") {
+                    Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                    findNavController().popBackStack()
+                    (activity as MainActivity).mainBottomNavigationAppear()
+
+                }
+            }
+        })
+
 
         return fragmentBinding.root
     }
@@ -73,23 +85,9 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
     override fun onClickPostNotification(postId: Int) {
         notificationViewModel.getPostContentFromPostId(postId)
-        notificationViewModel.toastMessage.observe(viewLifecycleOwner, Observer {
-            if (it == "Success") {
-                val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = NOTIFICATION_VIEW_MODEL)
-                findNavController().navigate(action)
-                (activity as MainActivity).mainBottomNavigationDisappear()
-            } else {
-                Toast.makeText(lazyContext,it, Toast.LENGTH_LONG).show()
-
-            }
-
-        })
-
-
-
-//        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = NOTIFICATION_VIEW_MODEL)
-//        findNavController().navigate(action)
-//        (activity as MainActivity).mainBottomNavigationDisappear()
+        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = NOTIFICATION_VIEW_MODEL)
+        findNavController().navigate(action)
+        (activity as MainActivity).mainBottomNavigationDisappear()
     }
 
     @SuppressLint("RestrictedApi")

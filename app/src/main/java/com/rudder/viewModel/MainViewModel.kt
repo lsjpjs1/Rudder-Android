@@ -35,7 +35,6 @@ open class MainViewModel : ViewModel() {
 
 
     val _toastMessage = MutableLiveData<String?>()
-
     val _isPostFromId = MutableLiveData<Event<Boolean>>()
     val _postFromId = MutableLiveData<PreviewPost>()
     val _postEditBody = MutableLiveData<String>()
@@ -114,6 +113,7 @@ open class MainViewModel : ViewModel() {
 
 //    private val _noticeResponse = MutableLiveData<NoticeResponse>()
 //    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
+
 
     var isCommentReportDialogCancel: LiveData<Event<Boolean>> = _isCommentReportDialogCancel
     var isReportDialogCancel: LiveData<Event<Boolean>> = _isReportDialogCancel

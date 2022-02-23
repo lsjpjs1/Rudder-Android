@@ -306,6 +306,14 @@
         </action>
 
 
+        <action
+            android:id="@+id/action_navigation_notification_to_navigation_community"
+            app:destination="@id/navigation_community"
+            app:popUpTo="@id/navigation_notification"
+            >
+        </action>
+
+
     </bottom>
 
 
