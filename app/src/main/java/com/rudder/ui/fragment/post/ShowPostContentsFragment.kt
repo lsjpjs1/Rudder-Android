@@ -209,20 +209,10 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.isPostFromId.observe(viewLifecycleOwner, Observer {
             it?.let {
-
                 fragmentBinding.post = viewModel.postFromId.value!!
 
             }
         })
-
-        viewModel.isEditPostSuccessTmp.observe(viewLifecycleOwner, Observer {
-//            fragmentBinding.findNavController().popBackStack()
-//            (activity as MainActivity).mainBottomNavigationAppear()
-            Log.d("edit123","ShowEditiseditpostsucess")
-            fragmentBinding.post = viewModel.postFromId.value!!
-
-        })
-
 
 
 
@@ -310,6 +300,14 @@ class ShowPostContentsFragment(): Fragment() {
         viewModel.isPostMorePreventDouble.observe(viewLifecycleOwner, Observer { it ->
             it?.let {
                 fragmentBinding.postMoreImageView.isClickable = true
+            }
+
+        })
+
+
+        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer { it ->
+            it?.let {
+                fragmentBinding.post = viewModel.postFromId.value!!
             }
 
         })

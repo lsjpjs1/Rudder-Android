@@ -92,10 +92,6 @@ open class MainViewModel : ViewModel() {
     private val _isContactUsSuccess = MutableLiveData<Event<Boolean>>()
     private val _isSearchPostClick = MutableLiveData<Event<Boolean>>()
 
-    val _isEditPostSuccessTmp = MutableLiveData<Event<Boolean>>()
-
-
-
     val _reportPostBody = MutableLiveData<String>()
     val _userRequestBody = MutableLiveData<String>()
     val _reportCommentBody = MutableLiveData<String>()
@@ -193,9 +189,6 @@ open class MainViewModel : ViewModel() {
     val isReportPostSuccess : LiveData<Event<Boolean>> = _isReportPostSuccess
 
     val isContactUsSuccess : LiveData<Event<Boolean>> = _isContactUsSuccess
-    val isEditPostSuccessTmp : LiveData<Event<Boolean>> = _isEditPostSuccessTmp
-
-
 
     val reportPostBody: LiveData<String> = _reportPostBody
     val reportCommentBody: LiveData<String> = _reportCommentBody
@@ -655,6 +648,8 @@ open class MainViewModel : ViewModel() {
         pagingIndex = 0
         endPostId = -1
     }
+
+
     fun getComments() {
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
@@ -1104,8 +1099,6 @@ open class MainViewModel : ViewModel() {
 
                 viewModelScope.launch {
                     _isEditPostSuccess.value = Event(result)
-                    _isEditPostSuccessTmp.value = Event(result)
-
                     scrollTouchTopCommunityPost()
                 }
 
@@ -1287,12 +1280,8 @@ open class MainViewModel : ViewModel() {
                 }
 
             }
-
-
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
-
-
     }
 
 }

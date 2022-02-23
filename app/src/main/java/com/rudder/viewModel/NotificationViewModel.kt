@@ -5,11 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rudder.BuildConfig
+import com.rudder.data.EditPostInfo
 import com.rudder.data.PreviewPost
 import com.rudder.data.dto.NotificationItem
 import com.rudder.data.local.App
 import com.rudder.data.remote.GetNotificationsRequest
+import com.rudder.data.remote.PostFromIdRequest
+import com.rudder.data.remote.ResponseEnum
 import com.rudder.data.repository.Repository
+import com.rudder.util.Event
+import com.rudder.util.ProgressBarUtil
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.sql.Timestamp
 
@@ -20,6 +26,8 @@ class NotificationViewModel: MainViewModel()  {
 
     val notificationList : LiveData<ArrayList<NotificationItem>> = _notificationList
 
+    private val tokenKey = BuildConfig.TOKEN_KEY
+
 
 
     fun getNotifications(){
@@ -29,6 +37,54 @@ class NotificationViewModel: MainViewModel()  {
             if (getNotificationsResponse.isSuccess) {
                 _notificationList.value = getNotificationsResponse.notifications
             }
+        }
+    }
+
+
+    override fun editPost(){
+        if ( _postBody.value!!.isBlank() ) {
+            _isStringBlank.value = Event(true)
+        } else {
+            GlobalScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+                val key = BuildConfig.TOKEN_KEY
+                val editPostInfo = EditPostInfo(_postBody.value!!, _postId.value!!, App.prefs.getValue(key)!!)
+                val result = Repository().editPostRepository(editPostInfo)
+
+                viewModelScope.launch {
+                    _isEditPostSuccess.value = Event(result)
+                    getPostContentFromPostIdNotification(_postId.value!!)
+                }
+
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+            }
+        }
+    }
+
+
+    fun getPostContentFromPostIdNotification(notificationPostId : Int) { // notification -> edit post 시, getComment는 안 함.
+        val postRequest = PostFromIdRequest(
+            notificationPostId,
+            App.prefs.getValue(tokenKey)!!
+        )
+        _postId.value = notificationPostId
+
+        GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+            val result = Repository().postFromIdRepository(postRequest)
+            val errorMessage = result.error
+            val postContent = result.post
+            if (errorMessage != ResponseEnum.SUCCESS) { // 에러가 났을 때,
+
+            } else {
+                _postFromId.postValue ( postContent!! )
+                viewModelScope.launch {
+                    setSelectedPostPosition(-1) // selectedPosition -> -1
+                    _isPostFromId.postValue(Event(true))
+                }
+
+            }
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
 
