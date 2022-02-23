@@ -31,7 +31,7 @@
                 android:text="@string/send_post_message"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -53,6 +53,7 @@
                 android:maxLength="180"
                 android:gravity="top|left"
                 android:background="@drawable/edge"
+                android:textSize="14sp"
 
 
                 app:layout_constraintHeight_default="percent"
@@ -72,8 +73,10 @@
 
             <Button
                 android:id="@+id/sendMessageDialogButton"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:textSize="12sp"
+                android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.12"
                 app:layout_constraintWidth_default="percent"

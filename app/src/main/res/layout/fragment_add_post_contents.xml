@@ -154,6 +154,7 @@
                                 android:textCursorDrawable="@drawable/curser_color"
                                 android:ems="10"
                                 android:hint="@string/text_hint"
+                                android:textSize="14sp"
                                 android:inputType="textMultiLine"
                                 android:text="@={mainVM._postBody}" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
