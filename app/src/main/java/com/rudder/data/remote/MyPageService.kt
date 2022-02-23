@@ -33,7 +33,19 @@ interface MyPageService {
 
     @POST("/board/postsWithMyComment")
     suspend fun getPostsWithMyComment(@Body postsWithMyCommentRequest: PostsWithMyCommentRequest) : Response<PostsWithMyCommentResponse>
+
+    @POST("/signupin/logout")
+    suspend fun logout(
+        @Body logoutRequest: LogoutRequest
+    ) : Response<LogoutResponse>
 }
+
+data class LogoutRequest(
+    val token: String
+)
+data class LogoutResponse(
+    val isSuccess: Boolean
+)
 
 data class RequestJoinClubRequest(
     val token: String,

@@ -61,4 +61,10 @@ class MyPageApi {
             myPageService.getPostsWithMyComment(postsWithMyCommentRequest)
         }
     }
+
+    fun logout(logoutRequest: LogoutRequest) : Deferred<Response<LogoutResponse>> {
+        return GlobalScope.async(Dispatchers.IO) {
+            myPageService.logout(logoutRequest)
+        }
+    }
 }

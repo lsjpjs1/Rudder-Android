@@ -13,6 +13,8 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.rudder.R
 import com.rudder.data.local.App
+import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.activity.SignUpActivity
 import com.rudder.ui.activity.SplashActivity
 
 class MyFireBaseMessagingService: FirebaseMessagingService() {
@@ -30,17 +32,21 @@ class MyFireBaseMessagingService: FirebaseMessagingService() {
 
 
         remoteMessage.notification?.let {
-            sendNotification(it.body, it.title)
+            sendNotification(remoteMessage)
         }
     }
 
     // FCM 메시지를 보내는 메시지
-    private fun sendNotification(body: String?, title: String?) {
-        val intent = Intent(this, SplashActivity::class.java).apply {
+    private fun sendNotification(remoteMessage: RemoteMessage) {
+        val body = remoteMessage.notification!!.body
+        val title = remoteMessage.notification!!.title
+        val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("Notification", body)
             putExtra("Notification",title)
+
         }
+
 
         var pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

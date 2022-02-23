@@ -437,10 +437,15 @@ open class MainViewModel : ViewModel() {
     }
 
     fun callLoginOut() {
-        _startLoginActivity.value = Event(true)
+        viewModelScope.launch {
+            val logoutResponse = Repository().logout(LogoutRequest(App.prefs.getValue("token")!!))
+            if(logoutResponse.isSuccess) {
+                val key = BuildConfig.TOKEN_KEY
+                App.prefs.removeValue(key)
+                _startLoginActivity.value = Event(true)
+            }
+        }
 
-        val key = BuildConfig.TOKEN_KEY
-        App.prefs.removeValue(key)
     }
 
 
