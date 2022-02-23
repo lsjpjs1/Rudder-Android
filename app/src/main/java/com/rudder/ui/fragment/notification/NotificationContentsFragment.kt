@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -27,11 +28,9 @@ import com.rudder.viewModel.NotificationViewModel
 
 class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
-
     private val notificationViewModel : NotificationViewModel by lazy {
         ViewModelProvider(activity as ViewModelStoreOwner).get(NotificationViewModel::class.java)
     }
-
 
     private val lazyContext by lazy {
         requireContext()
@@ -47,7 +46,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
         fragmentBinding.lifecycleOwner = this
 
-        val notificationAdapter = NotificationAdapter(this)
+        val notificationAdapter = NotificationAdapter(this, lazyContext)
 
         notificationViewModel.getNotifications()
 
@@ -65,6 +64,17 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
             }
         })
 
+        notificationViewModel.toastMessage.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                if (it != "Success") {
+                    Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                    findNavController().popBackStack()
+                    (activity as MainActivity).mainBottomNavigationAppear()
+
+                }
+            }
+        })
 
 
         return fragmentBinding.root
@@ -75,21 +85,14 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
     override fun onClickPostNotification(postId: Int) {
         notificationViewModel.getPostContentFromPostId(postId)
-
         val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = NOTIFICATION_VIEW_MODEL)
         findNavController().navigate(action)
-
-
         (activity as MainActivity).mainBottomNavigationDisappear()
     }
 
     @SuppressLint("RestrictedApi")
     override fun onClickPostMessageRoomNotification(postMessageRoomId: Int) {
-        //val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationPostmessageRoom(notificationPostMessageRoomId = postMessageRoomId)
         val navController = findNavController()
-
-
-
         val actionNotificationToPostMessage = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationPostmessage(notificationPostMessageRoomId = postMessageRoomId)
         val actionPostMessageToPostMessageRoom = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId = postMessageRoomId)
         navController.navigate(actionNotificationToPostMessage)
@@ -97,7 +100,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
         val mHandler = Handler(Looper.getMainLooper())
         mHandler.postDelayed({
             navController.navigate(actionPostMessageToPostMessageRoom)
-        }, 100) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
+        }, 300) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
 
 
         (activity as MainActivity).mainBottomNavigationDisappear()

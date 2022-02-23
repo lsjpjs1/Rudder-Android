@@ -1,5 +1,6 @@
 package com.rudder.ui.adapter
 
+import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.rudder.R
@@ -7,9 +8,12 @@ import com.rudder.data.dto.NotificationItem
 import com.rudder.data.dto.NotificationType
 import com.rudder.data.dto.PostMessageRoom
 import com.rudder.databinding.NotificationContentsItemBinding
+import com.rudder.util.LocaleUtil
 import com.rudder.util.NotificationAdapterCallback
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
-class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCallback) : BaseAdapter<NotificationItem,NotificationContentsItemBinding>(diffUtil, R.layout.notification_contents_item) {
+class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCallback, val context: Context) : BaseAdapter<NotificationItem,NotificationContentsItemBinding>(diffUtil, R.layout.notification_contents_item) {
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<NotificationItem>() {
@@ -21,6 +25,8 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
                 return oldItem.notificationId == newItem.notificationId
             }
         }
+        const val MAX_NOTIFICATION_BODY_LENGTH = 50
+
 
 
 
@@ -30,9 +36,22 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
 
         val notificationType = getItem(position).notificationType
 
+        val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(getItem(position).itemTime.time))
+
+        val notificationBody = getItem(position).itemBody
+
+        if (notificationBody.length > 50 ) {
+            val subBody = notificationBody.substring(0,
+                MAX_NOTIFICATION_BODY_LENGTH) + "  ..."
+            holder.viewBinding.notificationBody.text = subBody
+        } else {
+            holder.viewBinding.notificationBody.text = notificationBody
+        }
+
+
         holder.viewBinding.notificationType.text = notificationType.alertMessage
-        holder.viewBinding.notificationBody.text = getItem(position).itemBody
-        holder.viewBinding.notificationTime.text = getItem(position).itemTime.toString()
+        //holder.viewBinding.notificationBody.text = getItem(position).itemBody
+        holder.viewBinding.notificationTime.text = timeago
 
 
         holder.viewBinding.notificationTopLevelCL.setOnClickListener {

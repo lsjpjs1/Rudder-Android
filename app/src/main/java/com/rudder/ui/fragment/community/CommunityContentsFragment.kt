@@ -98,23 +98,11 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         })
 
         viewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
-
-
-
-
             it.getContentIfNotHandled()?.let {
                     bool ->
                 if(bool)
                     (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
-
-
-//            it?.let {
-//                if(it)
-//                (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
-//            }
-
-
         })
 
         viewModel.isPostDelete.observe(viewLifecycleOwner, Observer {

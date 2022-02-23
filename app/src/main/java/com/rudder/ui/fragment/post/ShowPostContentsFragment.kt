@@ -2,19 +2,13 @@ package com.rudder.ui.fragment.post
 
 
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
@@ -27,7 +21,6 @@ import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
-import com.rudder.viewModel.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_show_post_contents.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
@@ -59,12 +52,8 @@ class ShowPostContentsFragment(): Fragment() {
         _fragmentBinding= FragmentShowPostContentsBinding.inflate(inflater, container, false)
 
         val viewModelType = viewModel.javaClass.name.split('.').last()
-
-
         val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel, viewLifecycleOwner )
         val displayImagesAdapter: DisplayImagesAdapter
-
-
 
 
         fragmentBinding.commentDisplayRV.also {
@@ -80,14 +69,7 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.isLikePost()
         if (viewModelType == "NotificationViewModel") {
-            //displayImagesAdapter = DisplayImagesAdapter(viewModel.postFromId.value!!.imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
-//                if (viewModel.selectedPostPosition.value!! == -1 ) {
-//                    displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
-//                } else {
-//                    displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
-//                }
             displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
-
         } else {
             displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
         }
@@ -101,23 +83,15 @@ class ShowPostContentsFragment(): Fragment() {
             it.setHasFixedSize(false)
             it.adapter = displayImagesAdapter
         }
-        val currentPost : PreviewPost
 
-        if (viewModel.selectedPostPosition.value!! == -1 ) {
-            currentPost = viewModel.postFromId.value!!
-        } else {
-            currentPost = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-        }
+        setFragmentBindingPost()
 
-
-        val timeago = PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(currentPost.postTime.time))
-        fragmentBinding.post = currentPost
+        val timeago = PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(fragmentBinding.post!!.postTime.time))
+        //fragmentBinding.post = currentPost
         fragmentBinding.mainVM = viewModel
         fragmentBinding.position = viewModel.selectedPostPosition.value!!
         fragmentBinding.lifecycleOwner = this
         fragmentBinding.timeago = timeago
-
-
 
         viewModel.comments.observe(viewLifecycleOwner, Observer {
             var deleteCommentflag = false
@@ -132,97 +106,40 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
         viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
-            if (viewModel.selectedPostPosition.value == -1) {
-                fragmentBinding.post = viewModel.postFromId.value!!
-            } else {
-                fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-            }
-
+            setFragmentBindingPost()
         })
 
         viewModel.selectedPostPosition.observe(viewLifecycleOwner, Observer {
+            setFragmentBindingPost()
 
-            if (it == -1) {
-                fragmentBinding.post = viewModel.postFromId.value!!
-                displayImagesAdapter.imageUrlList = viewModel.postFromId.value!!.imageUrls
-                displayImagesAdapter.notifyDataSetChanged()
-                Glide.with(fragmentBinding.showPostImageView.context)
-                    .load(viewModel.postFromId.value!!.userProfileImageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(fragmentBinding.showPostImageView)
-
-            } else {
-                fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-                displayImagesAdapter.imageUrlList = viewModel.posts.value!![it].imageUrls
-                displayImagesAdapter.notifyDataSetChanged()
-                Glide.with(fragmentBinding.showPostImageView.context)
-                    .load(currentPost.userProfileImageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(fragmentBinding.showPostImageView)
-            }
-
-            //fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-
-
-
-            //displayImagesAdapter.imageUrlList = viewModel.posts.value!![it].imageUrls
-//            displayImagesAdapter.notifyDataSetChanged()
-//            Glide.with(fragmentBinding.showPostImageView.context)
-//                .load(currentPost.userProfileImageUrl)
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .into(fragmentBinding.showPostImageView)
+            displayImagesAdapter.imageUrlList = fragmentBinding.post!!.imageUrls
+            displayImagesAdapter.notifyDataSetChanged()
+            Glide.with(fragmentBinding.showPostImageView.context)
+                .load(fragmentBinding.post!!.userProfileImageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(fragmentBinding.showPostImageView)
         })
         viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
             it?.let {
-                    //fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-
-                if (viewModel.selectedPostPosition.value!! == -1 ) {
-                    fragmentBinding.post = viewModel.postFromId.value!!
-                } else {
-                    fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-                }
-
+                setFragmentBindingPost()
             }
 
         })
 
         viewModel.posts.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.d("test456456456777","${viewModel.posts.value}")
                 if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
-                    //fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-
-                    if (viewModel.selectedPostPosition.value!! == -1 ) {
-                        Log.d("test456456456777_7","${viewModel.postFromId.value!!}")
-                        fragmentBinding.post = viewModel.postFromId.value!!
-                    } else {
-                        Log.d("test456456456777_8","${viewModel.posts.value}")
-                        fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
-                    }
-
+                    setFragmentBindingPost()
                 }
-                //fragmentBinding.post = viewModel.postFromId.value!!
-
             }
         })
 
 
         viewModel.isPostFromId.observe(viewLifecycleOwner, Observer {
             it?.let {
-
                 fragmentBinding.post = viewModel.postFromId.value!!
-
             }
         })
-
-        viewModel.isEditPostSuccessTmp.observe(viewLifecycleOwner, Observer {
-//            fragmentBinding.findNavController().popBackStack()
-//            (activity as MainActivity).mainBottomNavigationAppear()
-            Log.d("edit123","ShowEditiseditpostsucess")
-            fragmentBinding.post = viewModel.postFromId.value!!
-
-        })
-
 
 
 
@@ -271,18 +188,12 @@ class ShowPostContentsFragment(): Fragment() {
                 (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
 
-//            it?.let {
-//                if(it)
-//                (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
-//            }
-
         })
 
         viewModel.selectedParentCommentBody.observe(viewLifecycleOwner, Observer {
             it?.let {
                 (activity as MainActivity).setParentCommentInfoText(it)
                 //fragmentBinding.parentCommentInfoTextTextView.text = it
-
             }
         })
 
@@ -310,6 +221,14 @@ class ShowPostContentsFragment(): Fragment() {
         viewModel.isPostMorePreventDouble.observe(viewLifecycleOwner, Observer { it ->
             it?.let {
                 fragmentBinding.postMoreImageView.isClickable = true
+            }
+
+        })
+
+
+        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer { it ->
+            it?.let {
+                setFragmentBindingPost()
             }
 
         })
@@ -396,27 +315,15 @@ class ShowPostContentsFragment(): Fragment() {
         lp=constraintLayout10.layoutParams
         lp.height=(showPostBodyHeight*postInfoHeightRatio).toInt()
         constraintLayout10.layoutParams=lp
-
-
-
     }
 
-//    fun closeParentCommentInfo(){
-//        viewModel.clearNestedCommentInfo()
-//    }
+    fun setFragmentBindingPost() {
+        if (viewModel.selectedPostPosition.value!! == -1 ) {
+            fragmentBinding.post = viewModel.postFromId.value!!
+        } else {
+            fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
+        }
+    }
 
-
-//    fun tmp(){
-//        fragmentBinding.parentCommentInfo.visibility = View.VISIBLE
-//    }
-//
-//
-//    fun tmpBack() {
-//        fragmentBinding.parentCommentInfo.visibility = View.GONE
-//    }
-//
-//    fun tmp3() {
-//        viewModel.clearNestedCommentInfo()
-//    }
 
 }

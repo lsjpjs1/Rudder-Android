@@ -9,7 +9,7 @@ enum class NotificationType(val typeNumber: Int,val alertMessage : String){
     @SerializedName("1")
     COMMENT(1,"New comment at your post!"),
     @SerializedName("2")
-    POST_MESSAGE(2,"New message!"),
+    POST_MESSAGE(2,"New quick mail!"),
     @SerializedName("3")
     NESTED_COMMENT(3,"New comment at your comment!");
 
