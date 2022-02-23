@@ -983,7 +983,6 @@ open class MainViewModel : ViewModel() {
             categoryNames.add(category.categoryName)
         }
 
-        //categoryList.removeAt(0) // 22 01 25
         for (category in categoryList) {
             _categoryIdAllList.value!!.add(category.categoryId)
             _categoryNamesForSelection.value!!.add(category.categoryName)
