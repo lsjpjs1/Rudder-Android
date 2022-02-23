@@ -27,11 +27,9 @@ import com.rudder.viewModel.NotificationViewModel
 
 class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
-
     private val notificationViewModel : NotificationViewModel by lazy {
         ViewModelProvider(activity as ViewModelStoreOwner).get(NotificationViewModel::class.java)
     }
-
 
     private val lazyContext by lazy {
         requireContext()
@@ -47,7 +45,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
         fragmentBinding.lifecycleOwner = this
 
-        val notificationAdapter = NotificationAdapter(this)
+        val notificationAdapter = NotificationAdapter(this, lazyContext)
 
         notificationViewModel.getNotifications()
 
