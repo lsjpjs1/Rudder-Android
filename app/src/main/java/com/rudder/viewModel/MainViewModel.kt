@@ -1263,6 +1263,8 @@ open class MainViewModel : ViewModel() {
             val result = Repository().postFromIdRepository(postRequest)
             val errorMessage = result.error
             val postContent = result.post
+            Log.d("mainerrorMessage","${errorMessage}")
+
             when {
                 errorMessage == ResponseEnum.NOTEXIST -> { // 에러가 났을 때,
                     _toastMessage.postValue("Content is not exist.")
@@ -1281,6 +1283,7 @@ open class MainViewModel : ViewModel() {
                 }
 
                 else -> { // 성공했을때,
+                    _toastMessage.postValue("Success")
                     _postFromId.postValue ( postContent!! )
                     viewModelScope.launch {
                         setSelectedPostPosition(-1) // selectedPosition -> -1

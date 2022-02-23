@@ -72,7 +72,6 @@ class NotificationViewModel: MainViewModel()  {
             val result = Repository().postFromIdRepository(postRequest)
             val errorMessage = result.error
             val postContent = result.post
-            Log.d("notifca123","${errorMessage}")
             when {
                 errorMessage == ResponseEnum.NOTEXIST -> { // 에러가 났을 때,
                     _toastMessage.postValue("Content is not exist.")
@@ -90,7 +89,8 @@ class NotificationViewModel: MainViewModel()  {
                     _toastMessage.postValue("Content is duplicated")
                 }
                 else -> { // 성공했을때
-                _postFromId.postValue ( postContent!! )
+                    _toastMessage.postValue("Success")
+                    _postFromId.postValue ( postContent!! )
                 viewModelScope.launch {
                     setSelectedPostPosition(-1) // selectedPosition -> -1
                     _isPostFromId.postValue(Event(true))
