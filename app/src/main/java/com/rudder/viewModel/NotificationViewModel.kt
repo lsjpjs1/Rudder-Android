@@ -1,5 +1,6 @@
 package com.rudder.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,11 +24,8 @@ class NotificationViewModel: MainViewModel()  {
 
 
     private val _notificationList = MutableLiveData<ArrayList<NotificationItem>>()
-
     val notificationList : LiveData<ArrayList<NotificationItem>> = _notificationList
-
     private val tokenKey = BuildConfig.TOKEN_KEY
-
 
 
     fun getNotifications(){
@@ -74,13 +72,29 @@ class NotificationViewModel: MainViewModel()  {
             val result = Repository().postFromIdRepository(postRequest)
             val errorMessage = result.error
             val postContent = result.post
-            if (errorMessage != ResponseEnum.SUCCESS) { // 에러가 났을 때,
-
-            } else {
+            Log.d("notifca123","${errorMessage}")
+            when {
+                errorMessage == ResponseEnum.NOTEXIST -> { // 에러가 났을 때,
+                    _toastMessage.postValue("Content is not exist.")
+                }
+                errorMessage == ResponseEnum.DATABASE -> {
+                    _toastMessage.postValue("Content is not exist.")
+                }
+                errorMessage == ResponseEnum.DELETE -> {
+                    _toastMessage.postValue("Content is deleted.")
+                }
+                errorMessage == ResponseEnum.UNKNOWN -> {
+                    _toastMessage.postValue("Content is not exist.")
+                }
+                errorMessage == ResponseEnum.DUPLICATE -> {
+                    _toastMessage.postValue("Content is duplicated")
+                }
+                else -> { // 성공했을때
                 _postFromId.postValue ( postContent!! )
                 viewModelScope.launch {
                     setSelectedPostPosition(-1) // selectedPosition -> -1
                     _isPostFromId.postValue(Event(true))
+                    }
                 }
 
             }

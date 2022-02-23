@@ -32,6 +32,10 @@ open class MainViewModel : ViewModel() {
     var pagingIndex = 0
     var endPostId = -1
 
+
+
+    val _toastMessage = MutableLiveData<String?>()
+
     val _isPostFromId = MutableLiveData<Event<Boolean>>()
     val _postFromId = MutableLiveData<PreviewPost>()
     val _postEditBody = MutableLiveData<String>()
@@ -65,7 +69,6 @@ open class MainViewModel : ViewModel() {
     private val _selectedCommentMorePosition = MutableLiveData<Int>()
 
     val _postCategoryInt = MutableLiveData<Int>()
-
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
@@ -104,15 +107,12 @@ open class MainViewModel : ViewModel() {
     private val _postInnerValueChangeSwitch = MutableLiveData<Boolean>()
     private val _commentInnerValueChangeSwitch = MutableLiveData<Boolean>()
     private val _photoPickerClickSwitch = MutableLiveData<Boolean?>()
-
     private val _imageCount = MutableLiveData<Int>()
     private val _myProfileImageUrl = MutableLiveData<String>()
     var noticeAlreadyShow = false
     private val _noticeResponse = MutableLiveData<NoticeResponse>()
 
-
 //    private val _noticeResponse = MutableLiveData<NoticeResponse>()
-//
 //    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
 
     var isCommentReportDialogCancel: LiveData<Event<Boolean>> = _isCommentReportDialogCancel
@@ -122,24 +122,19 @@ open class MainViewModel : ViewModel() {
     var _categoryIdAllList = MutableLiveData<ArrayList<Int>>()
     val _categorySelectApply = MutableLiveData<Event<Boolean>>()
     val _clickCategorySelect = MutableLiveData<Event<Boolean>>()
-
     val _categoryNamesForSelection = MutableLiveData<ArrayList<String>>()
-
     val _isStringBlank = MutableLiveData<Event<Boolean>>()
-
-
     private val _searchPosts = MutableLiveData<ArrayList<PreviewPost>>()
 
-    val commentBody : LiveData<String> = _commentBody
 
+    val toastMessage : LiveData<String?> = _toastMessage
+    val commentBody : LiveData<String> = _commentBody
     val isPostFromId: LiveData<Event<Boolean>> = _isPostFromId
     val postFromId: LiveData<PreviewPost> = _postFromId
-
     val searchPosts: LiveData<ArrayList<PreviewPost>> = _searchPosts
     val selectedRequestJoinClubCategoryId:LiveData<Int> = _selectedRequestJoinClubCategoryId
     val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
     val myProfileImageUrl:LiveData<String> = _myProfileImageUrl
-
     val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
     val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
     val postInnerValueChangeSwitch:LiveData<Boolean> = _postInnerValueChangeSwitch
@@ -1268,16 +1263,32 @@ open class MainViewModel : ViewModel() {
             val result = Repository().postFromIdRepository(postRequest)
             val errorMessage = result.error
             val postContent = result.post
-            if (errorMessage != ResponseEnum.SUCCESS) { // 에러가 났을 때,
-
-            } else {
-                _postFromId.postValue ( postContent!! )
-                viewModelScope.launch {
-                    setSelectedPostPosition(-1) // selectedPosition -> -1
-                    getComments()
-                    _isPostFromId.postValue(Event(true))
+            when {
+                errorMessage == ResponseEnum.NOTEXIST -> { // 에러가 났을 때,
+                    _toastMessage.postValue("Content is not exist.")
+                }
+                errorMessage == ResponseEnum.DATABASE -> {
+                    _toastMessage.postValue("Content is not exist.")
+                }
+                errorMessage == ResponseEnum.DELETE -> {
+                    _toastMessage.postValue("Content is deleted.")
+                }
+                errorMessage == ResponseEnum.UNKNOWN -> {
+                    _toastMessage.postValue("Content is not exist.")
+                }
+                errorMessage == ResponseEnum.DUPLICATE -> {
+                    _toastMessage.postValue("Content is duplicated")
                 }
 
+                else -> { // 성공했을때,
+                    _postFromId.postValue ( postContent!! )
+                    viewModelScope.launch {
+                        setSelectedPostPosition(-1) // selectedPosition -> -1
+                        getComments()
+                        _isPostFromId.postValue(Event(true))
+                    }
+
+                }
             }
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }

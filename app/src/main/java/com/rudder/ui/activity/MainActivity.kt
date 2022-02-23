@@ -216,6 +216,13 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         )
 
 
+        viewModel.toastMessage.observe(this, Observer {
+            it?.let{
+                Toast.makeText(this,it,Toast.LENGTH_LONG).show()
+            }
+        })
+
+
 
         viewModel.isContactUs.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
