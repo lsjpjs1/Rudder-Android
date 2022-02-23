@@ -12,6 +12,8 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.rudder.R
+import com.rudder.data.dto.NotificationItem
+import com.rudder.data.dto.NotificationType
 import com.rudder.data.local.App
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.activity.SignUpActivity
@@ -38,13 +40,16 @@ class MyFireBaseMessagingService: FirebaseMessagingService() {
 
     // FCM 메시지를 보내는 메시지
     private fun sendNotification(remoteMessage: RemoteMessage) {
+        val notificationType = remoteMessage.data.getValue("notificationType").toIntOrNull()
         val body = remoteMessage.notification!!.body
         val title = remoteMessage.notification!!.title
-        val intent = Intent(this, MainActivity::class.java).apply {
+        val intent = Intent(this, SplashActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("Notification", body)
             putExtra("Notification",title)
-
+            notificationType?.let {
+                putExtra("notificationType",it)
+            }
         }
 
 
