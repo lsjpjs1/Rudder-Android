@@ -68,12 +68,21 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
             it?.let{
                 if (it != "Success") {
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
-                    findNavController().popBackStack()
-                    (activity as MainActivity).mainBottomNavigationAppear()
+//                    findNavController().popBackStack()
+//                    findNavController().popBackStack()
+//                    (activity as MainActivity).mainBottomNavigationAppear()
 
                 }
             }
+        })
+
+        notificationViewModel.postFromId.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = notificationViewModel._postId.value!!, viewModelIndex = NOTIFICATION_VIEW_MODEL)
+                findNavController().navigate(action)
+                (activity as MainActivity).mainBottomNavigationDisappear()
+            }
+
         })
 
 
@@ -85,9 +94,8 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
     override fun onClickPostNotification(postId: Int) {
         notificationViewModel.getPostContentFromPostId(postId)
-        val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = postId, viewModelIndex = NOTIFICATION_VIEW_MODEL)
-        findNavController().navigate(action)
-        (activity as MainActivity).mainBottomNavigationDisappear()
+
+
     }
 
     @SuppressLint("RestrictedApi")
