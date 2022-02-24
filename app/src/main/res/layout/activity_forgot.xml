@@ -20,6 +20,8 @@
             android:visibility="gone"
             layout="@layout/progressbar"/>
 
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutForgot1"
             android:layout_width="0dp"
@@ -63,6 +65,39 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:id="@+id/forgot_tab_layout"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutForgot1"
+            android:theme="@style/ToolbarTheme"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/MyCustomTabTextAppearance"
+
+            >
+
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Find ID"
+                />
+
+<!--            android:onClick="@{()->forgotVM.clickID()}"-->
+
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Find Password"
+                />
+
+<!--            android:onClick="@{()->forgotVM.clickPassword()}"-->
+
+
+        </com.google.android.material.tabs.TabLayout>
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutForgot2"
             android:layout_width="0dp"
@@ -76,43 +111,43 @@
             app:layout_constraintWidth_percent="1">
 
 
-            <Button
-                android:id="@+id/forgotIdSelect"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.25"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.45"
-                android:textColor="@color/white"
-                android:background="@drawable/button_enabled"
-                android:text="Find ID"
-                android:textStyle="bold"
-                android:onClick="@{()->forgotVM.clickID()}"
-                app:layout_constraintTop_toTopOf="@+id/constraintLayoutForgot2"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutForgot2"
-                app:layout_constraintEnd_toStartOf="@+id/forgotPasswordSelect"
-                app:layout_constraintVertical_bias="0.2"
-                app:layout_constraintStart_toStartOf="parent" />
+<!--            <Button-->
+<!--                android:id="@+id/forgotIdSelect"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                app:layout_constraintHeight_default="percent"-->
+<!--                app:layout_constraintHeight_percent="0.25"-->
+<!--                app:layout_constraintWidth_default="percent"-->
+<!--                app:layout_constraintWidth_percent="0.45"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:background="@drawable/button_enabled"-->
+<!--                android:text="Find ID"-->
+<!--                android:textStyle="bold"-->
+<!--                android:onClick="@{()->forgotVM.clickID()}"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/constraintLayoutForgot2"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutForgot2"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/forgotPasswordSelect"-->
+<!--                app:layout_constraintVertical_bias="0.2"-->
+<!--                app:layout_constraintStart_toStartOf="parent" />-->
 
-            <Button
-                android:id="@+id/forgotPasswordSelect"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.25"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.45"
-                android:textColor="@color/white"
-                android:background="@drawable/button_enabled"
-                android:text="Find Password"
-                android:textStyle="bold"
-                android:onClick="@{()->forgotVM.clickPassword()}"
-                app:layout_constraintVertical_bias="0.2"
-                app:layout_constraintTop_toTopOf="@+id/constraintLayoutForgot2"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutForgot2"
-                app:layout_constraintStart_toEndOf="@+id/forgotIdSelect"
-                app:layout_constraintEnd_toEndOf="parent"
+<!--            <Button-->
+<!--                android:id="@+id/forgotPasswordSelect"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                app:layout_constraintHeight_default="percent"-->
+<!--                app:layout_constraintHeight_percent="0.25"-->
+<!--                app:layout_constraintWidth_default="percent"-->
+<!--                app:layout_constraintWidth_percent="0.45"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:background="@drawable/button_enabled"-->
+<!--                android:text="Find Password"-->
+<!--                android:textStyle="bold"-->
+<!--                android:onClick="@{()->forgotVM.clickPassword()}"-->
+<!--                app:layout_constraintVertical_bias="0.2"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/constraintLayoutForgot2"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutForgot2"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/forgotIdSelect"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
  />
 
             <EditText
@@ -123,14 +158,15 @@
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.28"
                 app:layout_constraintWidth_default="percent"
+                android:textSize="16sp"
                 app:layout_constraintWidth_percent="0.9"
                 android:hint="@string/email_address"
                 android:inputType="text"
                 android:text="@={forgotVM._forgotEmail}"
-                app:layout_constraintVertical_bias="0.8"
+                app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/forgotPasswordSelect"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutForgot2"
                 />
 
@@ -160,15 +196,12 @@
                 android:theme="@style/MyEditTextTheme"
                 android:background="@drawable/edge"
                 app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.14"
+                app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.9"
 
-
-                android:paddingTop="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="5dp"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
 
                 android:textSize="16sp"
                 android:hint="@string/verify_code"
@@ -191,7 +224,7 @@
                 app:layout_constraintHeight_percent="0.12"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.9"
-
+                android:fontFamily="@font/sf_pro_text_bold"
                 android:textColor="@color/white"
                 android:background="@drawable/button_enabled"
                 android:text="Send Account Password"
@@ -211,11 +244,12 @@
                 android:textStyle="bold"
                 android:onClick="@{()->forgotVM.callSendVeriCode()}"
                 android:text="@string/verify_capital"
+                android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.12"
+                app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintVertical_bias="0.01"
+                app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayoutForgot3"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -229,6 +263,7 @@
             android:id="@+id/constraintLayoutForgot4"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.6"
@@ -253,6 +288,7 @@
                 app:layout_constraintVertical_bias="0.9"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textStyle="bold"
+                android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutForgot4" />
 

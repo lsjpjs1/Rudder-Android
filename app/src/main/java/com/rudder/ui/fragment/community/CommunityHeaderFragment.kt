@@ -60,7 +60,6 @@ class CommunityHeaderFragment : Fragment() {
 
 
         header.constraintLayout12.setOnClickListener { view -> // add post button click
-            view.findNavController().navigate(R.id.action_navigation_community_to_navigation_add_post)
             (activity as MainActivity).mainBottomNavigationDisappear()
         }
 
