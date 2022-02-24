@@ -36,7 +36,7 @@ open class MainViewModel : ViewModel() {
 
     val _toastMessage = MutableLiveData<String?>()
     val _isPostFromId = MutableLiveData<Event<Boolean>>()
-    val _postFromId = MutableLiveData<PreviewPost>()
+    val _postFromId = MutableLiveData<PreviewPost?>()
     val _postEditBody = MutableLiveData<String>()
     val _commentEditBody = MutableLiveData<String>()
     val _postId = MutableLiveData<Int>()
@@ -130,7 +130,7 @@ open class MainViewModel : ViewModel() {
     val toastMessage : LiveData<String?> = _toastMessage
     val commentBody : LiveData<String> = _commentBody
     val isPostFromId: LiveData<Event<Boolean>> = _isPostFromId
-    val postFromId: LiveData<PreviewPost> = _postFromId
+    val postFromId: LiveData<PreviewPost?> = _postFromId
     val searchPosts: LiveData<ArrayList<PreviewPost>> = _searchPosts
     val selectedRequestJoinClubCategoryId:LiveData<Int> = _selectedRequestJoinClubCategoryId
     val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
@@ -1255,51 +1255,12 @@ open class MainViewModel : ViewModel() {
         _clickCategorySelect.value = Event(true)
     }
 
-
-    fun getPostContentFromPostId(notificationPostId : Int) { // notification
-        val postRequest = PostFromIdRequest(
-            notificationPostId,
-            App.prefs.getValue(tokenKey)!!
-        )
-        _postId.value = notificationPostId
-
-        GlobalScope.launch {
-            ProgressBarUtil._progressBarFlag.postValue(Event(true))
-            val result = Repository().postFromIdRepository(postRequest)
-            val errorMessage = result.error
-            val postContent = result.post
-            Log.d("mainerrorMessage","${errorMessage}")
-
-            when {
-                errorMessage == ResponseEnum.NOTEXIST -> { // 에러가 났을 때,
-                    _toastMessage.postValue("Content is not exist.")
-                }
-                errorMessage == ResponseEnum.DATABASE -> {
-                    _toastMessage.postValue("Content is not exist.")
-                }
-                errorMessage == ResponseEnum.DELETE -> {
-                    _toastMessage.postValue("Content is deleted.")
-                }
-                errorMessage == ResponseEnum.UNKNOWN -> {
-                    _toastMessage.postValue("Content is not exist.")
-                }
-                errorMessage == ResponseEnum.DUPLICATE -> {
-                    _toastMessage.postValue("Content is duplicated")
-                }
-
-                else -> { // 성공했을때,
-                    _toastMessage.postValue("Success")
-                    _postFromId.postValue ( postContent!! )
-                    viewModelScope.launch {
-                        setSelectedPostPosition(-1) // selectedPosition -> -1
-                        getComments()
-                        _isPostFromId.postValue(Event(true))
-                    }
-
-                }
-            }
-            ProgressBarUtil._progressBarFlag.postValue(Event(false))
-        }
+    fun clearPostFromId() {
+        _postFromId.value = null
     }
+
+
+
+
 
 }

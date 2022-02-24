@@ -9,12 +9,14 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.databinding.ActivitySplashBinding
+import com.rudder.util.ActivityContainer
 import com.rudder.util.ForecdTerminationService
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.LoginViewModel
@@ -27,8 +29,12 @@ class SplashActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java)  }
 
+    private var notificationType:Int = -1
+    private var itemId:Int = -1
+
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
+        ActivityContainer.currentActivity = this
         super.onCreate(savedInstanceState)
 
         startService(Intent(this, ForecdTerminationService::class.java))
@@ -55,11 +61,18 @@ class SplashActivity : AppCompatActivity() {
         })
         viewModel.startMainActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
-                StartActivityUtil.callActivity(this, MainActivity())
+                val intent = Intent(this, MainActivity()::class.java)
+                if(notificationType!=-1 && itemId != -1){
+                    intent.putExtra("itemId",itemId)
+                    intent.putExtra("notificationType",notificationType)
+                }
+                ContextCompat.startActivity(this, intent, null)
                 finish()
             }
         })
 
+        notificationType=intent.getIntExtra("notificationType",-1)
+        itemId=intent.getIntExtra("itemId",-1)
         autoLogin()
     }
 
@@ -78,6 +91,10 @@ class SplashActivity : AppCompatActivity() {
             }
         }
 
+    }
+    override fun onDestroy() {
+        ActivityContainer.clearCurrentActivity(this)
+        super.onDestroy()
     }
 
 

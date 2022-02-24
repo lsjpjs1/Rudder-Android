@@ -1,5 +1,6 @@
 package com.rudder.util
 
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
@@ -33,25 +34,39 @@ class MyFireBaseMessagingService: FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
 
-        remoteMessage.notification?.let {
-            sendNotification(remoteMessage)
-        }
+        sendNotification(remoteMessage)
+
     }
 
     // FCM 메시지를 보내는 메시지
     private fun sendNotification(remoteMessage: RemoteMessage) {
         val notificationType = remoteMessage.data.getValue("notificationType").toIntOrNull()
-        val body = remoteMessage.notification!!.body
-        val title = remoteMessage.notification!!.title
-        val intent = Intent(this, SplashActivity::class.java).apply {
+        val itemId = remoteMessage.data.getValue("itemId").toIntOrNull()
+        val body = remoteMessage.data.getValue("body")?:""
+        val title = remoteMessage.data.getValue("title")?:""
+        var intent : Intent? = null
+
+
+        ActivityContainer.currentActivity?.let {
+            if(it is MainActivity){
+                intent = Intent(this, MainActivity::class.java)
+            }else {
+                intent = Intent(this, SplashActivity::class.java)
+            }
+            Log.d("currentAct",it::class.simpleName.toString())
+        } ?: run{
+            intent = Intent(this, SplashActivity::class.java)
+        }
+
+        intent?.apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            putExtra("Notification", body)
-            putExtra("Notification",title)
             notificationType?.let {
                 putExtra("notificationType",it)
             }
+            itemId?.let{
+                putExtra("itemId",it)
+            }
         }
-
 
         var pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

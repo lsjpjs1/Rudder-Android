@@ -18,6 +18,11 @@
             app:popUpTo="@id/navigation_community" />
 
         <action
+            android:id="@+id/action_navigation_community_to_navigation_notification"
+            app:destination="@id/navigation_notification"
+            app:popUpTo="@id/navigation_community" />
+
+        <action
             android:id="@+id/action_navigation_community_to_navigation_add_post"
             app:destination="@id/navigation_add_post"
             app:popUpTo="@id/navigation_community"
@@ -33,6 +38,11 @@
                 app:argType="integer"
                 android:defaultValue="1"
                 />
+            <argument
+                android:name="notificationPostId"
+                app:argType="integer"
+                android:defaultValue="-1"
+                />
         </action>
 
         <action
@@ -46,10 +56,34 @@
                 android:defaultValue="1"
                 />
         </action>
+
+        <action
+            android:id="@+id/action_navigation_community_to_navigation_postmessage"
+            app:destination="@id/navigation_postmessage"
+            app:popUpTo="@id/navigation_community"
+            >
+
+            <argument
+                android:name="notificationPostMessageRoomId"
+                android:defaultValue="-1"
+                app:argType="integer" />
+
+        </action>
+
         <argument
             android:name="viewModelIndex"
             app:argType="integer"
             android:defaultValue="1"
+            />
+
+        <argument
+            android:name="notificationPostMessageRoomId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <argument
+            android:name="notificationPostId"
+            app:argType="integer"
+            android:defaultValue="-1"
             />
     </bottom>
 
@@ -313,7 +347,21 @@
             >
         </action>
 
+        <argument
+            android:name="viewModelIndex"
+            app:argType="integer"
+            android:defaultValue="1"
+            />
 
+        <argument
+            android:name="notificationPostMessageRoomId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <argument
+            android:name="notificationPostId"
+            app:argType="integer"
+            android:defaultValue="-1"
+            />
     </bottom>
 
 

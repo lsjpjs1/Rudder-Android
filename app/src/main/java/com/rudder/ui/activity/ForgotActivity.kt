@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
 import com.rudder.databinding.ActivityForgotBinding
+import com.rudder.util.ActivityContainer
 import com.rudder.util.ProgressBarUtil
 import com.rudder.viewModel.ForgotViewModel
 import kotlinx.android.synthetic.main.activity_forgot.*
@@ -21,7 +22,7 @@ class ForgotActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        ActivityContainer.currentActivity = this
         val binding = DataBindingUtil.setContentView<ActivityForgotBinding>(this, R.layout.activity_forgot)
         binding.forgotVM = viewModel
         binding.lifecycleOwner = this
@@ -102,5 +103,9 @@ class ForgotActivity : AppCompatActivity() {
 
     }
 
+    override fun onDestroy() {
+        ActivityContainer.clearCurrentActivity(this)
+        super.onDestroy()
+    }
 
 }

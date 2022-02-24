@@ -16,6 +16,7 @@ import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.databinding.ActivityLoginBinding
+import com.rudder.util.ActivityContainer
 import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
@@ -35,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ActivityContainer.currentActivity = this
         App.prefs.removeValue(BuildConfig.TOKEN_KEY)
         val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
         binding.loginVM = viewModel
@@ -107,7 +109,10 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
-
+    override fun onDestroy() {
+        ActivityContainer.clearCurrentActivity(this)
+        super.onDestroy()
+    }
 
     fun autoLoginCheckbox(){
         val autoLoginPref = prefs.getValue("autoLogin")

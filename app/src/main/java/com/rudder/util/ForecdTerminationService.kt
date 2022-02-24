@@ -7,6 +7,10 @@ import android.util.Log
 import com.rudder.BuildConfig
 import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
+import com.rudder.data.remote.LogoutRequest
+import com.rudder.data.repository.Repository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class ForecdTerminationService : Service() {
@@ -22,6 +26,9 @@ class ForecdTerminationService : Service() {
 
         if (autoLoginPref == "false") { // 자동로그인을 안하고, 앱을 종료하면, 토큰 사라짐(로그아웃)
             //prefs.setValue(key, "")
+            GlobalScope.launch {
+                Repository().logout(LogoutRequest(App.prefs.getValue(key)!!))
+            }
             prefs.removeValue(key)
 
         }

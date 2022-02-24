@@ -28,11 +28,14 @@ class PostMessageRoomViewModel : ViewModel() {
             val messagesByRoom = Repository().getMessagesByRoom(GetMessagesByRoomRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY!!)!!, _postMessageRoomId.value!!))
             viewModelScope.launch {
                 _messages.value = messagesByRoom
-                if (messagesByRoom[0].isSender){
-                    _targetUserInfoId.value = messagesByRoom[0].receiveUserInfoId
-                } else {
-                    _targetUserInfoId.value = messagesByRoom[0].sendUserInfoId
+                if (messagesByRoom.size>0){
+                    if (messagesByRoom[0].isSender){
+                        _targetUserInfoId.value = messagesByRoom[0].receiveUserInfoId
+                    } else {
+                        _targetUserInfoId.value = messagesByRoom[0].sendUserInfoId
+                    }
                 }
+
             }
         }
     }

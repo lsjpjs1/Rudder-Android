@@ -76,25 +76,26 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
             }
         })
 
+        notificationViewModel.clearPostFromId()
         notificationViewModel.postFromId.observe(viewLifecycleOwner, Observer {
-            it?.let {
+            it?.let{
+
                 val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = notificationViewModel._postId.value!!, viewModelIndex = NOTIFICATION_VIEW_MODEL)
                 findNavController().navigate(action)
                 (activity as MainActivity).mainBottomNavigationDisappear()
-            }
 
+            }
         })
+
+
+
 
 
         return fragmentBinding.root
     }
 
-
-
-
     override fun onClickPostNotification(postId: Int) {
-        notificationViewModel.getPostContentFromPostId(postId)
-
+        notificationViewModel.getPostContentFromPostIdNotification(postId)
 
     }
 

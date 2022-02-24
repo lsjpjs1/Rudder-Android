@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -21,6 +22,7 @@ import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.NotificationViewModel
 import kotlinx.android.synthetic.main.fragment_show_post_contents.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
@@ -52,7 +54,7 @@ class ShowPostContentsFragment(): Fragment() {
         _fragmentBinding= FragmentShowPostContentsBinding.inflate(inflater, container, false)
 
         val viewModelType = viewModel.javaClass.name.split('.').last()
-        val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel, viewLifecycleOwner )
+        val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel, parentFragment as LifecycleOwner )
         val displayImagesAdapter: DisplayImagesAdapter
 
 
@@ -74,6 +76,7 @@ class ShowPostContentsFragment(): Fragment() {
             displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
         }
 
+
         fragmentBinding.showPostImageDisplayRecyclerView.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
                 override fun canScrollVertically(): Boolean {
@@ -93,7 +96,7 @@ class ShowPostContentsFragment(): Fragment() {
         fragmentBinding.lifecycleOwner = this
         fragmentBinding.timeago = timeago
 
-        viewModel.comments.observe(viewLifecycleOwner, Observer {
+        viewModel.comments.observe(parentFragment as LifecycleOwner, Observer {
             var deleteCommentflag = false
             viewModel.isDeleteCommentSuccess.value!!.getContentIfNotHandled()?.let{
                 deleteCommentflag = it
@@ -101,15 +104,13 @@ class ShowPostContentsFragment(): Fragment() {
             adapter.updateComments(viewModel.comments.value!!, !deleteCommentflag)
 
             fragmentBinding.showPostContentsSwipeRefreshLayout.isRefreshing = false
-
-
         })
 
-        viewModel.commentCountChange.observe(viewLifecycleOwner, Observer {
+        viewModel.commentCountChange.observe(parentFragment as LifecycleOwner, Observer {
             setFragmentBindingPost()
         })
 
-        viewModel.selectedPostPosition.observe(viewLifecycleOwner, Observer {
+        viewModel.selectedPostPosition.observe(parentFragment as LifecycleOwner, Observer {
             setFragmentBindingPost()
 
             displayImagesAdapter.imageUrlList = fragmentBinding.post!!.imageUrls
@@ -119,14 +120,14 @@ class ShowPostContentsFragment(): Fragment() {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(fragmentBinding.showPostImageView)
         })
-        viewModel.postInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
+        viewModel.postInnerValueChangeSwitch.observe(parentFragment as LifecycleOwner, Observer {
             it?.let {
                 setFragmentBindingPost()
             }
 
         })
 
-        viewModel.posts.observe(viewLifecycleOwner, Observer {
+        viewModel.posts.observe(parentFragment as LifecycleOwner, Observer {
             it?.let {
                 if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
                     setFragmentBindingPost()
@@ -135,15 +136,16 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
 
-        viewModel.isPostFromId.observe(viewLifecycleOwner, Observer {
+        viewModel.isPostFromId.observe(parentFragment as LifecycleOwner, Observer {
             it?.let {
                 fragmentBinding.post = viewModel.postFromId.value!!
+
             }
         })
 
 
 
-        viewModel.commentInnerValueChangeSwitch.observe(viewLifecycleOwner, Observer {
+        viewModel.commentInnerValueChangeSwitch.observe(parentFragment as LifecycleOwner, Observer {
             it?.let{
                 viewModel.commentLikeCountChange.value?.let {
                     position-> adapter.notifyItemChanged(position)
@@ -164,7 +166,7 @@ class ShowPostContentsFragment(): Fragment() {
         )
 
 
-        ProgressBarUtil.progressBarFlag.observe(viewLifecycleOwner, Observer {
+        ProgressBarUtil.progressBarFlag.observe(parentFragment as LifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it)
                     ProgressBarUtil.progressBarVisibleFragment(progressBarShowPost, this)
@@ -173,7 +175,7 @@ class ShowPostContentsFragment(): Fragment() {
             }
         })
 
-        viewModel.isLikePost.observe(viewLifecycleOwner, Observer {
+        viewModel.isLikePost.observe(parentFragment as LifecycleOwner, Observer {
             if (it!!) {
                 showPostLikeImageView?.setImageResource(R.drawable.ic_baseline_thumb_up_24)
             } else {
@@ -181,7 +183,7 @@ class ShowPostContentsFragment(): Fragment() {
             }
         })
 
-        viewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
+        viewModel.isPostMore.observe(parentFragment as LifecycleOwner, Observer { it ->
             it.getContentIfNotHandled()?.let {
                 bool ->
                 if(bool)
@@ -190,14 +192,14 @@ class ShowPostContentsFragment(): Fragment() {
 
         })
 
-        viewModel.selectedParentCommentBody.observe(viewLifecycleOwner, Observer {
+        viewModel.selectedParentCommentBody.observe(parentFragment as LifecycleOwner, Observer {
             it?.let {
                 (activity as MainActivity).setParentCommentInfoText(it)
                 //fragmentBinding.parentCommentInfoTextTextView.text = it
             }
         })
 
-        viewModel.isCommentMore.observe(viewLifecycleOwner, Observer {
+        viewModel.isCommentMore.observe(parentFragment as LifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                     bool ->
                 if(bool)
@@ -205,7 +207,7 @@ class ShowPostContentsFragment(): Fragment() {
             }
         })
 
-        viewModel.selectedCommentGroupNum.observe(viewLifecycleOwner, Observer {
+        viewModel.selectedCommentGroupNum.observe(parentFragment as LifecycleOwner, Observer {
             if (it != -1) {
                 (activity as MainActivity).showParentCommentInfo()
             } else {
@@ -218,7 +220,7 @@ class ShowPostContentsFragment(): Fragment() {
             it.isClickable = false
         }
 
-        viewModel.isPostMorePreventDouble.observe(viewLifecycleOwner, Observer { it ->
+        viewModel.isPostMorePreventDouble.observe(parentFragment as LifecycleOwner, Observer { it ->
             it?.let {
                 fragmentBinding.postMoreImageView.isClickable = true
             }
@@ -226,7 +228,7 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
 
-        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer { it ->
+        viewModel.isEditPostSuccess.observe(parentFragment as LifecycleOwner, Observer { it ->
             it?.let {
                 setFragmentBindingPost()
             }
@@ -234,7 +236,7 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
 
-        viewModel.isPostDeleteShowPost.observe(viewLifecycleOwner, Observer {
+        viewModel.isPostDeleteShowPost.observe(parentFragment as LifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     Toast.makeText(context, "Delete Post Complete!", Toast.LENGTH_LONG).show()
@@ -255,6 +257,8 @@ class ShowPostContentsFragment(): Fragment() {
             viewModel.scrollTopShowPost()
         }
 
+        //지우지 마셈
+        viewModel.getComments()
 
         return fragmentBinding.root
     }
@@ -286,6 +290,8 @@ class ShowPostContentsFragment(): Fragment() {
         viewModel.clearNestedCommentInfo()
         super.onPause()
     }
+
+
 
 
 

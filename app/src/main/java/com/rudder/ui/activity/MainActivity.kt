@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MotionEvent
@@ -52,7 +54,10 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.post_comments.*
 import androidx.navigation.fragment.findNavController
 import com.rudder.data.MainDisplayTab
+import com.rudder.data.dto.NotificationType
+import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
 import com.rudder.ui.fragment.notification.NotificationDisplayFragment
+import com.rudder.ui.fragment.notification.NotificationDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
 import com.rudder.viewModel.NotificationViewModel
@@ -102,7 +107,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         navHostFragment.findNavController()
     }
 
-
+    private var notificationType:Int = -1
+    private var itemId:Int = -1
 
 
 
@@ -112,7 +118,10 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ActivityContainer.currentActivity = this
 
+        notificationType=intent.getIntExtra("notificationType",-1)
+        itemId=intent.getIntExtra("itemId",-1)
 ////
 //        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(
 //            this,
@@ -306,9 +315,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             }
         })
 
-        if (viewModel.noticeResponse.value == null) {
-            viewModel.getNotice()
-        }
+
 
         viewModel.noticeResponse.observe(this, Observer {
             it?.let {
@@ -348,7 +355,44 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         }
 
+        if (notificationType!=-1&&itemId!=-1){
+            moveByNotificationType(notificationType,itemId)
+        } else{
+             if (viewModel.noticeResponse.value == null) {
+            viewModel.getNotice()
+        }
+        }
 
+
+    }
+
+    private fun moveByNotificationType(notificationType : Int, itemId: Int){
+        when (notificationType) {
+            NotificationType.COMMENT.typeNumber,NotificationType.NESTED_COMMENT.typeNumber -> {
+                notificationViewModel.getPostContentFromPostIdNotification(itemId)
+                val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationShowPost(notificationPostId = itemId, viewModelIndex = ShowPostDisplayFragment.NOTIFICATION_VIEW_MODEL)
+                val mHandler = Handler(Looper.getMainLooper())
+                mHandler.postDelayed({
+                    navDisplayController.navigate(action)
+                }, 300) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
+
+                mainBottomNavigationDisappear()
+            }
+            NotificationType.POST_MESSAGE.typeNumber -> {
+                    val navController = navDisplayController
+                val actionNotificationToPostMessage = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationPostmessage(notificationPostMessageRoomId = itemId)
+                val actionPostMessageToPostMessageRoom = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId = itemId)
+                navController.navigate(actionNotificationToPostMessage)
+
+                val mHandler = Handler(Looper.getMainLooper())
+                mHandler.postDelayed({
+                    navController.navigate(actionPostMessageToPostMessageRoom)
+                }, 300) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
+
+
+                mainBottomNavigationDisappear()
+            }
+        }
     }
 
     // id가 명시되어있지 않은 다른 부분을 터치했을 때 키보드가 보여져있는 상태면 키보드를 내림.
@@ -531,6 +575,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     override fun showPostMessageRoomFragment(postMessageRoomId: Int) {
         val action = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId)
         navDisplayController.navigate(action)
+    }
+
+    override fun onDestroy() {
+        ActivityContainer.clearCurrentActivity(this)
+        super.onDestroy()
     }
 
 

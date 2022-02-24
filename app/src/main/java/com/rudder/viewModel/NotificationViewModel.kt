@@ -28,6 +28,7 @@ class NotificationViewModel: MainViewModel()  {
     private val tokenKey = BuildConfig.TOKEN_KEY
 
 
+
     fun getNotifications(){
         viewModelScope.launch {
             val getNotificationsResponse =
@@ -94,6 +95,7 @@ class NotificationViewModel: MainViewModel()  {
                 viewModelScope.launch {
                     setSelectedPostPosition(-1) // selectedPosition -> -1
                     _isPostFromId.postValue(Event(true))
+
                     }
                 }
 

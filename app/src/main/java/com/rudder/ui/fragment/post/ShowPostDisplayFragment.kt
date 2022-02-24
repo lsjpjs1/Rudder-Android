@@ -61,6 +61,7 @@ class ShowPostDisplayFragment : Fragment() {
             }
             NOTIFICATION_VIEW_MODEL -> {
                 viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(NotificationViewModel::class.java)
+
             }
             MY_POST_VIEW_MODEL -> {
                 viewModel = ViewModelProvider(activity as ViewModelStoreOwner).get(MyPostViewModel::class.java)

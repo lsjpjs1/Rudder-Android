@@ -15,10 +15,7 @@ import com.rudder.R
 import com.rudder.databinding.ActivitySignUpBinding
 import com.rudder.ui.fragment.*
 import com.rudder.ui.fragment.signup.*
-import com.rudder.util.ChangeUIState
-import com.rudder.util.FragmentShowHide
-import com.rudder.util.ProgressBarUtil
-import com.rudder.util.StartActivityUtil
+import com.rudder.util.*
 import com.rudder.viewModel.SignUpViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -64,7 +61,7 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        ActivityContainer.currentActivity = this
         termsOfServiceFragment = TermsOfServiceFragment()
         createAccountFragment = CreateAccountFragment()
         profileSettingFragment = ProfileSettingFragment()
@@ -202,7 +199,10 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 
-
+    override fun onDestroy() {
+        ActivityContainer.clearCurrentActivity(this)
+        super.onDestroy()
+    }
 
 
     override fun onBackPressed() {
@@ -218,8 +218,6 @@ class SignUpActivity : AppCompatActivity() {
         super.onResume()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
+
 
 }
