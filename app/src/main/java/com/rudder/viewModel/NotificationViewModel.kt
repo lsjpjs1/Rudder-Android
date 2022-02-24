@@ -25,6 +25,7 @@ class NotificationViewModel: MainViewModel()  {
 
     private val _notificationList = MutableLiveData<ArrayList<NotificationItem>>()
     val notificationList : LiveData<ArrayList<NotificationItem>> = _notificationList
+
     private val tokenKey = BuildConfig.TOKEN_KEY
 
 
@@ -52,7 +53,7 @@ class NotificationViewModel: MainViewModel()  {
 
                 viewModelScope.launch {
                     _isEditPostSuccess.value = Event(result)
-                    getPostContentFromPostIdNotification(_postId.value!!)
+                    getPostContentFromPostIdNotification(_postId.value!!, true)
                 }
 
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
@@ -61,7 +62,7 @@ class NotificationViewModel: MainViewModel()  {
     }
 
 
-    fun getPostContentFromPostIdNotification(notificationPostId : Int) { // notification -> edit post 시, getComment는 안 함.
+    fun getPostContentFromPostIdNotification(notificationPostId : Int, isTmp : Boolean = false) { // notification -> edit post 시, getComment는 안 함.
         val postRequest = PostFromIdRequest(
             notificationPostId,
             App.prefs.getValue(tokenKey)!!
@@ -94,7 +95,11 @@ class NotificationViewModel: MainViewModel()  {
                     _postFromId.postValue ( postContent!! )
                 viewModelScope.launch {
                     setSelectedPostPosition(-1) // selectedPosition -> -1
-                    _isPostFromId.postValue(Event(true))
+
+                    if (!isTmp) {
+                        _isPostFromId.postValue(Event(true))
+
+                        }
 
                     }
                 }

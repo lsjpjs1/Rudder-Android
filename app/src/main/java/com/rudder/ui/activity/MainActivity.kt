@@ -367,6 +367,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
     private fun moveByNotificationType(notificationType : Int, itemId: Int){
+
         when (notificationType) {
             NotificationType.COMMENT.typeNumber,NotificationType.NESTED_COMMENT.typeNumber -> {
                 notificationViewModel.getPostContentFromPostIdNotification(itemId)

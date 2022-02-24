@@ -844,7 +844,6 @@ open class MainViewModel : ViewModel() {
 
     fun clickPostEdit() {
         if (_selectedPostMorePosition.value == null ) {
-
             _postBody.value = _postFromId.value!!.postBody
             _postCategoryInt.value = findCategoryIndexById(_postFromId.value!!.categoryId )
         } else {
