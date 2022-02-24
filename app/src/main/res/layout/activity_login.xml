@@ -72,6 +72,7 @@
                 app:layout_constraintWidth_percent="0.9"
 
                 android:theme="@style/MyEditTextTheme"
+                android:padding="10dp"
 
                 android:hint="@string/id_placeholder"
                 android:inputType="text"
@@ -97,6 +98,8 @@
                 android:hint="@string/password_placeholder"
                 android:inputType="textPassword"
                 android:text="@={loginVM._userPassword}"
+                android:padding="10dp"
+
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

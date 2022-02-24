@@ -90,11 +90,13 @@ class ShowPostContentsFragment(): Fragment() {
         setFragmentBindingPost()
 
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(fragmentBinding.post!!.postTime.time))
-        //fragmentBinding.post = currentPost
         fragmentBinding.mainVM = viewModel
         fragmentBinding.position = viewModel.selectedPostPosition.value!!
         fragmentBinding.lifecycleOwner = this
         fragmentBinding.timeago = timeago
+
+        //지우지 마셈
+        viewModel.getComments()
 
         viewModel.comments.observe(parentFragment as LifecycleOwner, Observer {
             var deleteCommentflag = false
@@ -257,8 +259,7 @@ class ShowPostContentsFragment(): Fragment() {
             viewModel.scrollTopShowPost()
         }
 
-        //지우지 마셈
-        viewModel.getComments()
+
 
         return fragmentBinding.root
     }

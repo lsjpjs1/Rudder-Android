@@ -115,6 +115,8 @@
                     android:gravity="center"
                     android:text="CHECK"
                     android:onClick="@{()->signUpVM.callNickNameCheck()}"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:textSize="13sp"
 
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -290,7 +292,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="90dp"
             android:id="@+id/constraintLayout5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -304,13 +306,15 @@
             <Button
                 android:id="@+id/profileSettingNextBtn"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="52dp"
                 android:textColor="@color/white"
                 android:background="@drawable/button_enabled"
                 android:gravity="center"
                 android:onClick="@{()->signUpVM.callCreateAccount()}"
                 android:text="@string/sign_up"
                 android:textStyle="bold"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textSize="13sp"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.6"
                 app:layout_constraintStart_toStartOf="parent"
