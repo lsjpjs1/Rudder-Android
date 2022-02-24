@@ -1,13 +1,10 @@
 package com.rudder.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rudder.BuildConfig
 import com.rudder.data.EditPostInfo
-import com.rudder.data.PreviewPost
 import com.rudder.data.dto.NotificationItem
 import com.rudder.data.local.App
 import com.rudder.data.remote.GetNotificationsRequest
@@ -18,7 +15,6 @@ import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.sql.Timestamp
 
 class NotificationViewModel: MainViewModel()  {
 
@@ -62,7 +58,7 @@ class NotificationViewModel: MainViewModel()  {
     }
 
 
-    fun getPostContentFromPostIdNotification(notificationPostId : Int, isTmp : Boolean = false) { // notification -> edit post 시, getComment는 안 함.
+    fun getPostContentFromPostIdNotification(notificationPostId : Int, isNotificationEdit : Boolean = false) { // notification -> edit post 시, getComment는 안 함.
         val postRequest = PostFromIdRequest(
             notificationPostId,
             App.prefs.getValue(tokenKey)!!
@@ -96,11 +92,9 @@ class NotificationViewModel: MainViewModel()  {
                 viewModelScope.launch {
                     setSelectedPostPosition(-1) // selectedPosition -> -1
 
-                    if (!isTmp) {
+                    if (!isNotificationEdit) {
                         _isPostFromId.postValue(Event(true))
-
                         }
-
                     }
                 }
 
