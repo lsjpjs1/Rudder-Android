@@ -82,12 +82,15 @@
                 app:labelVisibilityMode="unlabeled"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:theme="@style/ToolbarTheme"
-                app:menu="@menu/bottom_nav_menu" >
+                app:menu="@menu/bottom_nav_menu"
+                >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/main_bottom_blank_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"></androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_height="56dp">
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.bottomnavigation.BottomNavigationView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -98,8 +101,10 @@
             android:visibility="gone"
             android:background="@color/purple_100"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/main_bottom_blank_layout"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="@+id/main_bottom_layout"
+            android:layout_marginBottom="55dp"
+
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.03">
 
