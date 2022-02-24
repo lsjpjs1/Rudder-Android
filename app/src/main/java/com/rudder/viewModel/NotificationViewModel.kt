@@ -91,7 +91,6 @@ class NotificationViewModel: MainViewModel()  {
                     _postFromId.postValue ( postContent!! )
                 viewModelScope.launch {
                     setSelectedPostPosition(-1) // selectedPosition -> -1
-
                     if (!isNotificationEdit) {
                         _isPostFromId.postValue(Event(true))
                         }

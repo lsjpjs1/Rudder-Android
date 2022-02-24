@@ -371,7 +371,10 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         when (notificationType) {
             NotificationType.COMMENT.typeNumber,NotificationType.NESTED_COMMENT.typeNumber -> {
                 notificationViewModel.getPostContentFromPostIdNotification(itemId)
-                val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationShowPost(notificationPostId = itemId, viewModelIndex = ShowPostDisplayFragment.NOTIFICATION_VIEW_MODEL)
+                val bundleFlag = Bundle()
+                bundleFlag.putBoolean("moveByNotification",true)
+
+                val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationShowPost(notificationPostId = itemId, viewModelIndex = ShowPostDisplayFragment.NOTIFICATION_VIEW_MODEL, moveByNotificationFlag = 1)
                 val mHandler = Handler(Looper.getMainLooper())
                 mHandler.postDelayed({
                     navDisplayController.navigate(action)
@@ -380,7 +383,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 mainBottomNavigationDisappear()
             }
             NotificationType.POST_MESSAGE.typeNumber -> {
-                    val navController = navDisplayController
+                val navController = navDisplayController
                 val actionNotificationToPostMessage = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationPostmessage(notificationPostMessageRoomId = itemId)
                 val actionPostMessageToPostMessageRoom = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId = itemId)
                 navController.navigate(actionNotificationToPostMessage)

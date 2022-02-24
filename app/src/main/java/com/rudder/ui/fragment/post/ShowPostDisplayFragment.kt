@@ -8,11 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.findFragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.rudder.R
+import com.rudder.databinding.FragmentShowPostContentsBinding
 import com.rudder.databinding.FragmentShowPostDisplayBinding
 import com.rudder.ui.fragment.search.SearchPostDisplayFragmentArgs
 import com.rudder.viewModel.MainViewModel
@@ -39,11 +43,9 @@ class ShowPostDisplayFragment : Fragment() {
     }
 
 
-    private val args : SearchPostDisplayFragmentArgs by navArgs()
+    private val args : ShowPostDisplayFragmentArgs by navArgs()
 
     lateinit var viewModel : MainViewModel
-
-
 
 
     override fun onCreateView(
@@ -73,12 +75,9 @@ class ShowPostDisplayFragment : Fragment() {
 
 
 
-
         val showPostDisplayBinding= DataBindingUtil.inflate<FragmentShowPostDisplayBinding>(inflater,
             R.layout.fragment_show_post_display,container,false)
-
         showPostDisplayBinding.lifecycleOwner = this
-
 
         return showPostDisplayBinding.root
 

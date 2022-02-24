@@ -1260,6 +1260,50 @@ open class MainViewModel : ViewModel() {
 
 
 
+    fun getPostContentFromPostIdNotification_2(notificationPostId : Int, isNotificationEdit : Boolean = false) { // notification -> edit post 시, getComment는 안 함.
+        val postRequest = PostFromIdRequest(
+            notificationPostId,
+            App.prefs.getValue(tokenKey)!!
+        )
+        _postId.value = notificationPostId
+
+        GlobalScope.launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+            val result = Repository().postFromIdRepository(postRequest)
+            val errorMessage = result.error
+            val postContent = result.post
+            when {
+                errorMessage == ResponseEnum.NOTEXIST -> { // 에러가 났을 때,
+                    _toastMessage.postValue("Content is not exist.")
+                }
+                errorMessage == ResponseEnum.DATABASE -> {
+                    _toastMessage.postValue("Content is not exist.")
+                }
+                errorMessage == ResponseEnum.DELETE -> {
+                    _toastMessage.postValue("Content is deleted.")
+                }
+                errorMessage == ResponseEnum.UNKNOWN -> {
+                    _toastMessage.postValue("Content is not exist.")
+                }
+                errorMessage == ResponseEnum.DUPLICATE -> {
+                    _toastMessage.postValue("Content is duplicated")
+                }
+                else -> { // 성공했을때
+                    _toastMessage.postValue("Success")
+                    _postFromId.postValue ( postContent!! )
+                    viewModelScope.launch {
+                        setSelectedPostPosition(-1) // selectedPosition -> -1
+                        if (!isNotificationEdit) {
+                            _isPostFromId.postValue(Event(true))
+                        }
+                    }
+                }
+
+            }
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+        }
+    }
+
 
 
 }
