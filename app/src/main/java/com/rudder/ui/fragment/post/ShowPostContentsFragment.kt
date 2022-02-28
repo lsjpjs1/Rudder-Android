@@ -65,11 +65,6 @@ class ShowPostContentsFragment(): Fragment() {
 
 
 
-        if (viewModel is NotificationViewModel) {
-            fragmentBinding.postMoreImageView.visibility = View.GONE
-        }
-
-
         fragmentBinding.commentDisplayRV.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
                 override fun canScrollVertically(): Boolean {
