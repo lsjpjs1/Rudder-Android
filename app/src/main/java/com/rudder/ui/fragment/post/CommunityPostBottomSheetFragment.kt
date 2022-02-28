@@ -147,7 +147,12 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
             }  else if(currentDestination == "Community") {
                 action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
             }  else if(previousDestination == "Community") {
-                action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
+                if (viewModel is NotificationViewModel){
+                    action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.NOTIFICATION_VIEW_MODEL)
+                } else{
+                    action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MAIN_VIEW_MODEL)
+                }
+
             }  else if(previousDestination == "MyPostDisplayFragment") {
                 if (viewModel is MyCommentViewModel) {
                     action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.MY_COMMENT_VIEW_MODEL)

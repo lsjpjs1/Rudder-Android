@@ -91,8 +91,11 @@ class NotificationViewModel: MainViewModel()  {
                 }
                 else -> { // 성공했을때
                     _toastMessage.postValue("Success")
-                    _postFromId.postValue ( postContent!! )
+//                    _postFromId.postValue ( postContent!! )
+
                 viewModelScope.launch {
+                    _postFromId.value = postContent!!
+                    Log.d("postfromid",_postFromId.value.toString())
                     setSelectedPostPosition(-1) // selectedPosition -> -1
                     _isPostFromId.postValue(Event(true))
 
