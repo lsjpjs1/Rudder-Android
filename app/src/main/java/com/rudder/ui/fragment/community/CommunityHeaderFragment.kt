@@ -39,6 +39,7 @@ class CommunityHeaderFragment : Fragment() {
 //        })
 
 
+
         viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled().let {
                 it?.let{
