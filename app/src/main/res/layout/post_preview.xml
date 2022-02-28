@@ -285,7 +285,7 @@
                             android:id="@+id/postPreviewTailLikeCountTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{` `+Integer.toString(post.likeCount)}"
+                            android:text="@{post.likeCount&lt;0 ? ` `+ Integer.toString(0) : ` `+ Integer.toString(post.likeCount)}"
                             android:textSize="13sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/blankView2"

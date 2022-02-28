@@ -363,7 +363,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="13sp"
-                                    android:text="@{` `+Integer.toString(post.likeCount)}"
+                                    android:text="@{post.likeCount&lt;0 ? ` `+ Integer.toString(0) : ` `+ Integer.toString(post.likeCount)}"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintVertical_bias="0.55"
                                     app:layout_constraintStart_toEndOf="@+id/blankView2"
