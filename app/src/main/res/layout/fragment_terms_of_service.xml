@@ -109,6 +109,7 @@
                 android:textSize="18sp"
                 android:id="@+id/textview1"
                 android:textStyle="bold"
+                android:fontFamily="@font/sf_pro_text_bold"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintHorizontal_bias="0.45"
@@ -156,7 +157,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="90dp"
             android:id="@+id/constraintLayout5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -169,13 +170,13 @@
             <Button
                 android:id="@+id/termsOfServiceNextBtn"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="52dp"
                 android:background="@drawable/button_enabled"
                 android:gravity="center"
                 android:text="@string/next"
-                android:textStyle="bold"
-                android:textSize="14sp"
                 android:textColor="@color/white"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textSize="13sp"
                 app:layout_constraintHeight_default="percent"
                 android:onClick="@{()->signUpVM.clickNextTermsOfService()}"
                 app:layout_constraintHeight_percent="0.6"

@@ -30,6 +30,7 @@ class MyPostDisplayFragment : Fragment() {
         const val MY_COMMENT = 2
     }
     val args : MyPageDisplayFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

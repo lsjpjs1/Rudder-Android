@@ -30,23 +30,17 @@ class ForgotActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         ActivityContainer.currentActivity = this
 
-
         _binding = DataBindingUtil.setContentView<ActivityForgotBinding>(this, R.layout.activity_forgot)
         binding.forgotVM = viewModel
         binding.lifecycleOwner = this
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-
         val toastEmailTrue = Toast.makeText(this, "Complete to Send Your ID to Email Address", Toast.LENGTH_LONG)
         val toastEmailFalse = Toast.makeText(this, "Not Valid Email Address", Toast.LENGTH_LONG)
         val toastVerifyCodeTrue = Toast.makeText(this, "Complete to Send Your Password to Email Address", Toast.LENGTH_LONG)
         val toastVerifyCodeFalse = Toast.makeText(this, "Not Valid Verification Code", Toast.LENGTH_LONG)
-
         var findpasswordFlag = false
-
-
-
 
         binding.forgotTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -69,14 +63,11 @@ class ForgotActivity : AppCompatActivity() {
         })
 
 
-
         viewModel.findIDClick.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     constraintLayoutForgot3.visibility = View.GONE
                     constraintLayoutForgot4.visibility = View.VISIBLE
-                    //forgotIdSelect.isEnabled = false
-                    //forgotPasswordSelect.isEnabled = true
                     findpasswordFlag = false
                 } }
         })
@@ -86,8 +77,6 @@ class ForgotActivity : AppCompatActivity() {
                 if (it) {
                     constraintLayoutForgot4.visibility = View.GONE
                     constraintLayoutForgot3.visibility = View.VISIBLE
-                    //forgotPasswordSelect.isEnabled = false
-                    //forgotIdSelect.isEnabled = true
                     findpasswordFlag = true
                 } }
         })
@@ -130,9 +119,7 @@ class ForgotActivity : AppCompatActivity() {
             }
         })
 
-
         forgotSendPasswordBtn.isEnabled = false
-        //forgotIdSelect.isEnabled = false
 
     }
 

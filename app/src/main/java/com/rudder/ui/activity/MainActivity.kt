@@ -367,6 +367,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
     private fun moveByNotificationType(notificationType : Int, itemId: Int){
+
         when (notificationType) {
             NotificationType.COMMENT.typeNumber,NotificationType.NESTED_COMMENT.typeNumber -> {
                 notificationViewModel.getPostContentFromPostIdNotification(itemId)
@@ -379,7 +380,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 mainBottomNavigationDisappear()
             }
             NotificationType.POST_MESSAGE.typeNumber -> {
-                    val navController = navDisplayController
+                val navController = navDisplayController
                 val actionNotificationToPostMessage = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationPostmessage(notificationPostMessageRoomId = itemId)
                 val actionPostMessageToPostMessageRoom = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId = itemId)
                 navController.navigate(actionNotificationToPostMessage)

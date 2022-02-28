@@ -77,17 +77,13 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
         })
 
         notificationViewModel.clearPostFromId()
-        notificationViewModel.postFromId.observe(viewLifecycleOwner, Observer {
+        notificationViewModel.isPostFromId.observe(viewLifecycleOwner, Observer {
             it?.let{
-
                 val action = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationShowPost(notificationPostId = notificationViewModel._postId.value!!, viewModelIndex = NOTIFICATION_VIEW_MODEL)
                 findNavController().navigate(action)
                 (activity as MainActivity).mainBottomNavigationDisappear()
-
             }
         })
-
-
 
 
 

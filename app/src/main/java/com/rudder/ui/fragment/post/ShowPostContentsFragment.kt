@@ -2,6 +2,7 @@ package com.rudder.ui.fragment.post
 
 
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.Toast
@@ -40,10 +41,15 @@ class ShowPostContentsFragment(): Fragment() {
         (parentFragment as ShowPostDisplayFragment).viewModel
     }
 
-    private var _fragmentBinding : FragmentShowPostContentsBinding? = null
-    private val fragmentBinding get() = _fragmentBinding!!
+
+    var _fragmentBinding : FragmentShowPostContentsBinding? = null
+    val fragmentBinding get() = _fragmentBinding!!
 
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
+
+    companion object{
+        const val TAG = "ShowPostContentsFragment"
+    }
 
 
     override fun onCreateView(
@@ -56,6 +62,7 @@ class ShowPostContentsFragment(): Fragment() {
         val viewModelType = viewModel.javaClass.name.split('.').last()
         val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel, parentFragment as LifecycleOwner )
         val displayImagesAdapter: DisplayImagesAdapter
+
 
 
         fragmentBinding.commentDisplayRV.also {
@@ -90,11 +97,13 @@ class ShowPostContentsFragment(): Fragment() {
         setFragmentBindingPost()
 
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(fragmentBinding.post!!.postTime.time))
-        //fragmentBinding.post = currentPost
         fragmentBinding.mainVM = viewModel
         fragmentBinding.position = viewModel.selectedPostPosition.value!!
         fragmentBinding.lifecycleOwner = this
         fragmentBinding.timeago = timeago
+
+        //지우지 마셈
+        viewModel.getComments()
 
         viewModel.comments.observe(parentFragment as LifecycleOwner, Observer {
             var deleteCommentflag = false
@@ -257,8 +266,7 @@ class ShowPostContentsFragment(): Fragment() {
             viewModel.scrollTopShowPost()
         }
 
-        //지우지 마셈
-        viewModel.getComments()
+
 
         return fragmentBinding.root
     }

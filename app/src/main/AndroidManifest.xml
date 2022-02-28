@@ -31,7 +31,7 @@
         </activity>
         <activity
             android:name=".ui.activity.SignUpActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
