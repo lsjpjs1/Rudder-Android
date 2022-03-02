@@ -33,6 +33,7 @@ open class MainViewModel : ViewModel() {
     var endPostId = -1
 
 
+    val _isShowPostRefreshSuccess = MutableLiveData<Event<Boolean>>()
 
     val _toastMessage = MutableLiveData<String?>()
     val _isPostFromId = MutableLiveData<Event<Boolean>>()
@@ -113,6 +114,8 @@ open class MainViewModel : ViewModel() {
 
 //    private val _noticeResponse = MutableLiveData<NoticeResponse>()
 //    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
+
+    var isShowPostRefreshSuccess: LiveData<Event<Boolean>> = _isShowPostRefreshSuccess
 
 
     var isCommentReportDialogCancel: LiveData<Event<Boolean>> = _isCommentReportDialogCancel
@@ -470,14 +473,8 @@ open class MainViewModel : ViewModel() {
     }
 
     fun scrollTopShowPost() {
+        getPostContentFromPostId()
         getComments()
-        Log.d("test123","${_selectedPostPosition.value}")
-        if (_selectedPostPosition.value!! == -1 ) {
-            getPostContentFromPostIdNotification_tmp(_postId.value!!, true)
-        } else {
-
-        }
-
     }
 
 
@@ -1266,13 +1263,19 @@ open class MainViewModel : ViewModel() {
 
 
 
-    fun getPostContentFromPostIdNotification_tmp(notificationPostId : Int, isNotificationEdit : Boolean = false) { // notification -> edit post 시, getComment는 안 함.
+    fun getPostContentFromPostId() { // scroll top 때 사용, mainViewModel
+        val reFreshPostId : Int
+
+        if (_selectedPostPosition.value!! == -1 ) {
+            reFreshPostId = _postId.value!!
+        } else {
+            reFreshPostId = _posts.value!![_selectedPostPosition.value!!].postId
+        }
+
         val postRequest = PostFromIdRequest(
-            notificationPostId,
+            reFreshPostId,
             App.prefs.getValue(tokenKey)!!
         )
-        _postId.value = notificationPostId
-        Log.d("test12345","test12345")
 
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
@@ -1297,20 +1300,19 @@ open class MainViewModel : ViewModel() {
                 }
                 else -> { // 성공했을때
                     _toastMessage.postValue("Success")
-                    _postFromId.postValue ( postContent!! )
-                    viewModelScope.launch {
-                        setSelectedPostPosition(-1) // selectedPosition -> -1
-                        if (!isNotificationEdit) {
-                            _isPostFromId.postValue(Event(true))
+                    if (_selectedPostPosition.value!! == -1 ) {
+                        _postFromId.postValue ( postContent!! )
+                    } else {
+                        viewModelScope.launch {
+                            _posts.value!![_selectedPostPosition.value!!] = postContent!!
                         }
                     }
+                    _isShowPostRefreshSuccess.postValue(Event(true))
                 }
-
             }
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
-
 
 
 }

@@ -121,8 +121,6 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.selectedPostPosition.observe(parentFragment as LifecycleOwner, Observer {
             setFragmentBindingPost()
-            Log.d("test123555","test123555")
-
             displayImagesAdapter.imageUrlList = fragmentBinding.post!!.imageUrls
             displayImagesAdapter.notifyDataSetChanged()
             Glide.with(fragmentBinding.showPostImageView.context)
@@ -164,6 +162,11 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
 
+        viewModel.isShowPostRefreshSuccess.observe(parentFragment as LifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
+                setFragmentBindingPost()
+            }
+        })
 
 
         fragmentBinding.showPostBody.viewTreeObserver.addOnGlobalLayoutListener(
