@@ -121,6 +121,7 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.selectedPostPosition.observe(parentFragment as LifecycleOwner, Observer {
             setFragmentBindingPost()
+            Log.d("test123555","test123555")
 
             displayImagesAdapter.imageUrlList = fragmentBinding.post!!.imageUrls
             displayImagesAdapter.notifyDataSetChanged()

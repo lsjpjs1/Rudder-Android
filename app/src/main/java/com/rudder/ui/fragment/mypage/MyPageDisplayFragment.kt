@@ -2,7 +2,6 @@ package com.rudder.ui.fragment.mypage
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,22 +15,13 @@ import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
-import com.rudder.databinding.FragmentCommunityDisplayBinding
 import com.rudder.databinding.FragmentMyPageDisplayBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.AlertDialogFragment
 import com.rudder.ui.fragment.MyPageFragmentInterface
-import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
-import com.rudder.ui.fragment.post.EditPostFragment
-import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
 import com.rudder.util.AlertDialogListener
-import com.rudder.util.uiUtils.PercentDivide
-import com.rudder.util.uiUtils.PercentDivideImpl
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_webview_modal.view.*
-import kotlinx.android.synthetic.main.fragment_main_bottom_bar.view.*
-import kotlinx.android.synthetic.main.fragment_terms_of_service.view.*
-import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
 
 class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
@@ -78,7 +68,7 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
 
 
         myPageBinding.constraintLayoutMyPage3.setOnClickListener {
-            showTmp()
+            showLogoutAlert()
         }
 
 
@@ -159,7 +149,7 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
     }
 
 
-    fun showTmp(){
+    fun showLogoutAlert(){
         val alertDialogFragment = AlertDialogFragment.instance(
             object : AlertDialogListener {
                 override fun onOkClick() {

@@ -471,6 +471,13 @@ open class MainViewModel : ViewModel() {
 
     fun scrollTopShowPost() {
         getComments()
+        Log.d("test123","${_selectedPostPosition.value}")
+        if (_selectedPostPosition.value!! == -1 ) {
+            getPostContentFromPostIdNotification_tmp(_postId.value!!, true)
+        } else {
+
+        }
+
     }
 
 
@@ -590,7 +597,6 @@ open class MainViewModel : ViewModel() {
         val token = App.prefs.getValue(key)
 
         viewModelScope.launch {
-
             val categoryId = if(userSelectCategories.value!!.size-1>=selectedCategoryPosition.value!!){
                 userSelectCategories.value!![selectedCategoryPosition.value!!].categoryId
             }else{
@@ -1260,12 +1266,13 @@ open class MainViewModel : ViewModel() {
 
 
 
-    fun getPostContentFromPostIdNotification_2(notificationPostId : Int, isNotificationEdit : Boolean = false) { // notification -> edit post 시, getComment는 안 함.
+    fun getPostContentFromPostIdNotification_tmp(notificationPostId : Int, isNotificationEdit : Boolean = false) { // notification -> edit post 시, getComment는 안 함.
         val postRequest = PostFromIdRequest(
             notificationPostId,
             App.prefs.getValue(tokenKey)!!
         )
         _postId.value = notificationPostId
+        Log.d("test12345","test12345")
 
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))

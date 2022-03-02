@@ -157,7 +157,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
         view.findNavController().navigate(action)
 
         viewModel.addPostViewCount()
-        viewModel.getComments()
+        //viewModel.getComments()
     }
 
 

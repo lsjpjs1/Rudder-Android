@@ -185,7 +185,7 @@ class MyPostContentsFragment : Fragment(), CustomOnclickListener {
         (activity as MainActivity).mainBottomNavigationDisappear()
 
         viewModel.addPostViewCount()
-        viewModel.getComments()
+        //viewModel.getComments()
     }
 
 

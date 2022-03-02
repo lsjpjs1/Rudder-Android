@@ -187,7 +187,7 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
 //            viewModel.addPostViewCount()
 //        }
         viewModel.addPostViewCount()
-        viewModel.getComments()
+        //viewModel.getComments()
     }
 
 
