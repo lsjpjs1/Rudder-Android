@@ -30,15 +30,6 @@ class CommunityHeaderFragment : Fragment() {
         val header = DataBindingUtil.inflate<FragmentCommunityHeaderBinding>(inflater,R.layout.fragment_community_header,container,false)
         header.mainVM = viewModel
 
-//        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                if ((activity as MainActivity).validateBack("community")){
-//                    (activity as MainActivity).onBackPressed()
-//                }
-//            }
-//        })
-
-
 
         viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled().let {
@@ -51,7 +42,6 @@ class CommunityHeaderFragment : Fragment() {
                 }
             }
         })
-
 
 
         header.constraintLayout13.setOnClickListener { view -> // search button click

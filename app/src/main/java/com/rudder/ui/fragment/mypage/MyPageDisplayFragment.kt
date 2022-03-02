@@ -19,10 +19,12 @@ import com.rudder.R
 import com.rudder.databinding.FragmentCommunityDisplayBinding
 import com.rudder.databinding.FragmentMyPageDisplayBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.ui.fragment.AlertDialogFragment
 import com.rudder.ui.fragment.MyPageFragmentInterface
 import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
 import com.rudder.ui.fragment.post.EditPostFragment
 import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
+import com.rudder.util.AlertDialogListener
 import com.rudder.util.uiUtils.PercentDivide
 import com.rudder.util.uiUtils.PercentDivideImpl
 import com.rudder.viewModel.MainViewModel
@@ -73,10 +75,13 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         myPageBinding.myPageDisplayFragment = this
         myPageBinding.lifecycleOwner = viewLifecycleOwner
 
-//        val divideChildTarget = myPageBinding.constraintLayoutMyPage1
-//        val displaySize = parentActivity.getDisplaySize()
-//        val percentDivide : PercentDivide = PercentDivideImpl(divideChildTarget,displaySize,0.4f)
-//        percentDivide.divideChildSameRatio()
+
+
+        myPageBinding.constraintLayoutMyPage3.setOnClickListener {
+            showTmp()
+        }
+
+
 
         viewModel.getMyProfileImageUrl()
         viewModel.myProfileImageUrl.value?.let {
@@ -153,6 +158,24 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
 
     }
 
+
+    fun showTmp(){
+        val alertDialogFragment = AlertDialogFragment.instance(
+            object : AlertDialogListener {
+                override fun onOkClick() {
+                    viewModel.callLoginOut()
+                }
+
+                override fun onCancelClick() {
+
+                }
+
+            },
+            "Do you really logout?"
+        )
+
+        alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
+    }
 
 
 }

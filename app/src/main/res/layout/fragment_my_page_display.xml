@@ -125,9 +125,10 @@
                                 app:layout_constraintHeight_percent="0.2"
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:layout_marginTop="10dp"
-                                android:onClick="@{()->mainVM.callLoginOut()}"
                                 app:layout_constraintTop_toBottomOf="@id/myCommentConstraintLayout"
                                 >
+<!--                                android:onClick="@{()->mainVM.callLoginOut()}"-->
+
 
 
                                 <ImageView
