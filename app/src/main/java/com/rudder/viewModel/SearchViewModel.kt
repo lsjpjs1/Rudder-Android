@@ -21,11 +21,11 @@ class SearchViewModel : MainViewModel() {
     private val _selectedSearchPostPosition = MutableLiveData<Int>()
 
     private val _isScrollTouch = MutableLiveData<Event<Boolean>>()
-
-
+    val _isSearchWordValid = MutableLiveData<Event<Boolean>>()
 
     val selectedSearchPostPosition: LiveData<Int> = _selectedSearchPostPosition
     val isScrollTouch: LiveData<Event<Boolean>> = _isScrollTouch
+    val isSearchWordValid: LiveData<Event<Boolean>> = _isSearchWordValid
 
 
 
@@ -70,44 +70,48 @@ class SearchViewModel : MainViewModel() {
     }
 
     fun searchPost(isScroll: Boolean){
-        _isScrollTouch.value = Event(true)
-
-        val key = BuildConfig.TOKEN_KEY
-        val token = App.prefs.getValue(key)
-        GlobalScope.launch {
-            val resPosts = if (isScroll){
-                Repository().getPosts(
-                    GetPostInfo(
-                        pagingIndex,
-                        endPostId,
-                        -1,
-                        token!!,
-                        _searchWord.value!!
+        if ( _searchWord.value!!.isBlank() || _searchWord.value!!.length < 2) {
+            _isSearchWordValid.value = Event(true)
+        } else {
+            _isScrollTouch.value = Event(true)
+            val key = BuildConfig.TOKEN_KEY
+            val token = App.prefs.getValue(key)
+            GlobalScope.launch {
+                val resPosts = if (isScroll) {
+                    Repository().getPosts(
+                        GetPostInfo(
+                            pagingIndex,
+                            endPostId,
+                            -1,
+                            token!!,
+                            _searchWord.value!!
+                        )
                     )
-                )
-            }else{
-                Repository().getPosts(
-                    GetPostInfo(
-                        -1,
-                        -1,
-                        -1,
-                        token!!,
-                        _searchWord.value!!
+                } else {
+                    Repository().getPosts(
+                        GetPostInfo(
+                            -1,
+                            -1,
+                            -1,
+                            token!!,
+                            _searchWord.value!!
+                        )
                     )
-                )
-            }
-
-            viewModelScope.launch {
-                if (isScroll){
-                    val oldPosts = _posts.value
-                    oldPosts!!.addAll(resPosts)
-                    _posts.value = oldPosts!!
-                }else{
-                    _posts.value = resPosts
                 }
-                _isScrollTouch.value = Event(false)
 
+                viewModelScope.launch {
+                    if (isScroll) {
+                        val oldPosts = _posts.value
+                        oldPosts!!.addAll(resPosts)
+                        _posts.value = oldPosts!!
+                    } else {
+                        _posts.value = resPosts
+                    }
+                    _isScrollTouch.value = Event(false)
+
+                }
             }
+
         }
     }
 

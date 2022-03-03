@@ -92,10 +92,6 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                 if(bool)
                     (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
-//            it?.let {
-//                if(it)
-//                (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
-//            }
         })
 
         viewModel.posts.observe(viewLifecycleOwner, Observer { items ->
@@ -142,6 +138,17 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                 (activity as MainActivity).showParentCommentInfo()
             } else {
                 (activity as MainActivity).hideParentCommentInfo()
+            }
+        })
+
+
+
+
+        viewModel.isSearchWordValid.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    Toast.makeText(context, "Please enter at least two letters.", Toast.LENGTH_SHORT).show()
+                }
             }
         })
 

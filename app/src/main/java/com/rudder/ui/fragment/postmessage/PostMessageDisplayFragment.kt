@@ -54,15 +54,8 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
             R.layout.fragment_post_message_display, container, false)
 
         fragmentBinding.lifecycleOwner = this
-
-//        childFragmentManager.beginTransaction()
-//            .add(R.id.postMessageHeader, PostMessageHeaderFragment())
-//            .commit()
-
         val adapter = PostMessageAdapter(this, lazyContext!!)
-
         viewModel.getPostMessages()
-
 
         fragmentBinding.postMessageDisplayRV.also {
             it.layoutManager =

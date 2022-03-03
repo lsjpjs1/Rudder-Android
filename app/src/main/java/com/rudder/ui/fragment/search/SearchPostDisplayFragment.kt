@@ -32,6 +32,9 @@ class SearchPostDisplayFragment : Fragment() {
 
         fragmentBinding.lifecycleOwner = this
 
+
+
+
         return fragmentBinding.root
     }
 
