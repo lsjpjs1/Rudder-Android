@@ -66,12 +66,12 @@ class EditProfileImageDialogViewModel : ViewModel() {
                 )
                 val updateResponse = Repository().updateProfileImage(updateProfileImageRequest)
                 if (updateResponse.isSuccess) {
-                    toastMessage.postValue("Successfully changed!")
+                    toastMessage.postValue("Successfully changed nickname!")
                     closeFlag.postValue(Event(true))
                     getMyProfileImageUrl()
 
                 } else {
-                    toastMessage.postValue("Editing failed")
+                    toastMessage.postValue("Failed to change my nickname.")
                 }
 
             }

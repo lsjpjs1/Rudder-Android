@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -48,7 +49,7 @@ class EditPostFragment() : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        Log.d("edit123","onCreateview")
+        val toastEditSuccess = Toast.makeText(activity, "Successfully edit post!", Toast.LENGTH_LONG)
 
         when (args.viewModelIndex) {
             ShowPostDisplayFragment.SEARCH_VIEW_MODEL -> {
@@ -82,14 +83,11 @@ class EditPostFragment() : Fragment() {
 
 
         viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
-//            fragmentBinding.findNavController().popBackStack()
-//            (activity as MainActivity).mainBottomNavigationAppear()
-            Log.d("edit123","iseditpostsucess")
-
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     val navController = parentActivity.findNavController(R.id.mainDisplayContainerView)
                     navController.popBackStack()
+                    toastEditSuccess.show()
 
                     if (navController.currentDestination!!.label == "SearchPostDisplayFragment") {
                         (activity as MainActivity).nestedCommentDisappear()

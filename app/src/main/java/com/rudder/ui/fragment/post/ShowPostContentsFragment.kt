@@ -63,8 +63,6 @@ class ShowPostContentsFragment(): Fragment() {
         val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel, parentFragment as LifecycleOwner )
         val displayImagesAdapter: DisplayImagesAdapter
 
-
-
         fragmentBinding.commentDisplayRV.also {
             it.layoutManager = object : LinearLayoutManager(lazyContext){
                 override fun canScrollVertically(): Boolean {
@@ -245,7 +243,6 @@ class ShowPostContentsFragment(): Fragment() {
             it?.let {
                 setFragmentBindingPost()
             }
-
         })
 
 
@@ -256,9 +253,6 @@ class ShowPostContentsFragment(): Fragment() {
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     parentActivity.onBackPressed()
 
-//                    if (parentActivity.showPostContentsFragment.isVisible){
-//                        parentActivity.onBackPressed()
-//                    }
                 }
             }
         })
