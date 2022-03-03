@@ -26,6 +26,8 @@ class ForgotActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ActivityContainer.currentActivity = this
@@ -39,10 +41,14 @@ class ForgotActivity : AppCompatActivity() {
         val toastEmailTrue = Toast.makeText(this, "We have sent your ID to your university email", Toast.LENGTH_LONG)
         val toastEmailVerifySuccess = Toast.makeText(this, "We have sent the verification code to your university email", Toast.LENGTH_LONG)
         val toastEmailVerifyFail = Toast.makeText(this, "Please enter your valid university email ", Toast.LENGTH_LONG)
-        val toastEmailFalse = Toast.makeText(this, "Please enter valid university email.", Toast.LENGTH_LONG)
+        val toastEmailFalse = Toast.makeText(this, "Please enter valid your university email.", Toast.LENGTH_LONG)
         val toastVerifyCodeTrue = Toast.makeText(this, "Correct Code! We will send new password to your email.", Toast.LENGTH_LONG)
         val toastVerifyCodeFalse = Toast.makeText(this, "Wrong verification code", Toast.LENGTH_LONG)
+        val toastFindId = Toast.makeText(this, "Tell us your university email. Then we will send your id to your email.", Toast.LENGTH_SHORT)
         var findpasswordFlag = false
+
+        toastFindId.show()
+
 
         binding.forgotTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -140,6 +146,7 @@ class ForgotActivity : AppCompatActivity() {
 
         forgotSendPasswordBtn.isEnabled = false
 
+
     }
 
 
@@ -148,11 +155,16 @@ class ForgotActivity : AppCompatActivity() {
             0 -> {
                 binding.constraintLayoutForgot4.visibility = View.VISIBLE
                 binding.constraintLayoutForgot3.visibility = View.INVISIBLE
+                val toastFindId = Toast.makeText(this, "Tell us your university email. Then we will send your id to your email.", Toast.LENGTH_SHORT)
+                toastFindId.show()
                 viewModel.clickID()
+
             }
             1 -> {
                 binding.constraintLayoutForgot4.visibility = View.INVISIBLE
                 binding.constraintLayoutForgot3.visibility = View.VISIBLE
+                val toastFindPassword = Toast.makeText(this, "Tell us your university email. Then we will send verification code.", Toast.LENGTH_SHORT)
+                toastFindPassword.show()
                 viewModel.clickPassword()
             }
         }

@@ -37,7 +37,7 @@ class CreateAccountFragment : Fragment() {
         val toastId = Toast.makeText(activity, "ID (4-15 characters) can be numbers, upper or lower letters.", Toast.LENGTH_LONG) //
         val toastPassword = Toast.makeText(activity, "Password (8-15 characters) should be include two of numbers, letters, and special characters.", Toast.LENGTH_LONG) //
         val toastPasswordCheck = Toast.makeText(activity, "Please Check, 'Password' and 'Password Confirm'",Toast.LENGTH_LONG) //
-        val toastEmailDomain = Toast.makeText(activity, "Please enter valid university email.", Toast.LENGTH_LONG)
+        val toastEmailDomain = Toast.makeText(activity, "Please enter your valid university email.", Toast.LENGTH_LONG)
         val toastverifyCodeCheckFail = Toast.makeText(activity, "Wrong verification code", Toast.LENGTH_LONG)
         val toastverifyCodeCheckSuccess = Toast.makeText(activity, "Correct verification code! ", Toast.LENGTH_LONG)
 
