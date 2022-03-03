@@ -325,7 +325,7 @@ class ShowPostContentsFragment(): Fragment() {
         constraintLayout9.layoutParams=lp
 
         lp=constraintLayout10.layoutParams
-        lp.height=(showPostBodyHeight*postInfoHeightRatio).toInt()
+        lp.height=(showPostBodyHeight*0.06).toInt()
         constraintLayout10.layoutParams=lp
     }
 
