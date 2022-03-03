@@ -335,10 +335,10 @@ class SignUpViewModel : ViewModel() {
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpSendVerifyCode(EmailInfoSignUp(emailInput,_userSchoolInt.value!!))
             if (result == "") {
-                _emailToast.postValue("-")
+                _emailToast.postValue("This app is specifically restricted for the members of the university. We have sent the verification code to your university email so that you can enter our community ")
                 _emailCheckFlag.postValue(Event(true))
             } else {
-                _emailToast.postValue(result)
+                _emailToast.postValue("Please enter your valid university email ")
                 _emailCheckFlag.postValue(Event(false))
             }
             _userVerificationCode.postValue("")

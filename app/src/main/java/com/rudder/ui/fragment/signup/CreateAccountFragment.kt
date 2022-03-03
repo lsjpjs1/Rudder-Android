@@ -38,7 +38,8 @@ class CreateAccountFragment : Fragment() {
         val toastPassword = Toast.makeText(activity, "Password (8-15 characters) should be include two of numbers, letters, and special characters.", Toast.LENGTH_LONG)
         val toastPasswordCheck = Toast.makeText(activity, "Please Check, 'Password' and 'Password Confirm'",Toast.LENGTH_LONG)
         val toastEmailDomain = Toast.makeText(activity, "Please Check, Right Email Address", Toast.LENGTH_LONG)
-        val toastverifyCodeCheck = Toast.makeText(activity, "Wrong Verification Code", Toast.LENGTH_LONG)
+        val toastverifyCodeCheckFail = Toast.makeText(activity, "Wrong verification code", Toast.LENGTH_LONG)
+        val toastverifyCodeCheckSuccess = Toast.makeText(activity, "Correct verification code! ", Toast.LENGTH_LONG)
 
 
         viewModel.idChangeFlag.observe(viewLifecycleOwner, Observer {
@@ -70,7 +71,7 @@ class CreateAccountFragment : Fragment() {
                     idDuplicatedCheck.isEnabled = false
                 } else {
                     ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
-                    Toast.makeText(activity, "ID is duplicated", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "This ID already exists. Please try other ID.", Toast.LENGTH_SHORT).show()
                 }
             }
             ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
@@ -144,15 +145,16 @@ class CreateAccountFragment : Fragment() {
 
         viewModel.emailCheckFlag.observe(viewLifecycleOwner, Observer { // Send verify code
             it.getContentIfNotHandled()?.let { it ->
-                val toastEmailCheck = Toast.makeText(activity, viewModel.emailToast.value!!, Toast.LENGTH_SHORT)
 
                 if (it){
                     ChangeUIState.changeCheckBoxTrueState(emailCheckbox)
-                    toastEmailCheck.cancel()
+                    val toastEmailCheckSuccess = Toast.makeText(activity, viewModel.emailToast.value!!, Toast.LENGTH_SHORT)
+                    toastEmailCheckSuccess.show()
                 }
                 else {
+                    val toastEmailCheckFail = Toast.makeText(activity, viewModel.emailToast.value!!, Toast.LENGTH_SHORT)
                     ChangeUIState.changeCheckBoxFalseState(emailCheckbox)
-                    toastEmailCheck.show()
+                    toastEmailCheckFail.show()
                 }
             }
             ChangeUIState.changeCheckBoxFalseState(veifyCodeCheckbox)
@@ -167,12 +169,12 @@ class CreateAccountFragment : Fragment() {
                 if (it) {
                     ChangeUIState.changeCheckBoxTrueState(veifyCodeCheckbox)
                     createAccountNextBtn.isEnabled = true
-                    toastverifyCodeCheck.cancel()
+                    toastverifyCodeCheckSuccess.show()
                 }
                 else {
                     ChangeUIState.changeCheckBoxFalseState(veifyCodeCheckbox)
                     createAccountNextBtn.isEnabled = false
-                    toastverifyCodeCheck.show()
+                    toastverifyCodeCheckFail.show()
                 }
             }
             ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)

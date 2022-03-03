@@ -72,23 +72,22 @@ class NotificationViewModel: MainViewModel()  {
             val postContent = result.post
             when {
                 errorMessage == ResponseEnum.NOTEXIST -> { // 에러가 났을 때,
-                    _toastMessage.postValue("Content is not exist.")
+                    _toastMessage.postValue("No results found")
                 }
                 errorMessage == ResponseEnum.DATABASE -> {
-                    _toastMessage.postValue("Content is not exist.")
+                    _toastMessage.postValue("No results found")
                 }
                 errorMessage == ResponseEnum.DELETE -> {
-                    _toastMessage.postValue("Content is deleted.")
+                    _toastMessage.postValue("Post is deleted.")
                 }
                 errorMessage == ResponseEnum.UNKNOWN -> {
-                    _toastMessage.postValue("Content is not exist.")
+                    _toastMessage.postValue("No results found")
                 }
                 errorMessage == ResponseEnum.DUPLICATE -> {
-                    _toastMessage.postValue("Content is duplicated")
+                    _toastMessage.postValue("Post is duplicated")
                 }
                 else -> { // 성공했을때
                     _toastMessage.postValue("Success")
-//                    _postFromId.postValue ( postContent!! )
 
                 viewModelScope.launch {
                     _postFromId.value = postContent!!

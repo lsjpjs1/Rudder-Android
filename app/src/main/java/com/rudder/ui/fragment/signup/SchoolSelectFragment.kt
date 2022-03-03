@@ -41,7 +41,7 @@ class SchoolSelectFragment : Fragment() {
         schoolSelectBinding.signUpVM = viewModel
         schoolSelectBinding.lifecycleOwner = this
 
-        val toastSchoolSelect = Toast.makeText(activity, "Please Select Your University", Toast.LENGTH_LONG)
+        val toastSchoolSelect = Toast.makeText(activity, "Select your university.", Toast.LENGTH_LONG)
 
         viewModel.schoolSelectFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->
@@ -54,7 +54,6 @@ class SchoolSelectFragment : Fragment() {
                     toastSchoolSelect.show()
                 }
                 ChangeUIState.buttonEnable(schoolSelectNextBtn,schoolSelectCheckbox.isChecked)
-                //schoolSelectBinding.root.schoolSelectNextBtn.setBackgroundResource(R.color.teal_200)
         }})
 
         viewModel.schoolList.observe(viewLifecycleOwner, Observer {
