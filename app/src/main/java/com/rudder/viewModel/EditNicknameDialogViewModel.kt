@@ -56,7 +56,7 @@ class EditNicknameDialogViewModel : ViewModel() {
                             _toastMessage.value = "Database failure"
                         }
                         ResponseEnum.DUPLICATE -> {
-                            _toastMessage.value = "Nickname duplicated.\nPlease try with a different nickname"
+                            _toastMessage.value = "This nickname already exists. Please try other nickname."
                         }
 
                     }

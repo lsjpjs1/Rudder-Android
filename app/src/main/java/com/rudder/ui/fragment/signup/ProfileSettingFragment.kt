@@ -84,7 +84,7 @@ class ProfileSettingFragment : Fragment() {
                     nickNameDuplicatedCheck.isEnabled = false
                 } else {
                     ChangeUIState.changeCheckBoxFalseState(nickNameCheckbox)
-                    Toast.makeText(activity, "NickName is duplicated", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, "This nickname already exists. Please try other nickname.", Toast.LENGTH_LONG).show()
                 }
             }
             ChangeUIState.buttonEnable(profileSettingNextBtn, nickNameCheckbox.isChecked,imageSettingCheckbox.isChecked)

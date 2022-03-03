@@ -89,7 +89,7 @@ class SignUpActivity : AppCompatActivity() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        val toastSignUpComplete = Toast.makeText(this, "Sign Up Complete!", Toast.LENGTH_LONG)
+        val toastSignUpComplete = Toast.makeText(this, "Sign Up Completed!", Toast.LENGTH_LONG)
 
 
         ProgressBarUtil.progressBarFlag.observe(this, Observer {

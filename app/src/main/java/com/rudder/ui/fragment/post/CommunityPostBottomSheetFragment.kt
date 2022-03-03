@@ -230,7 +230,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                 }
 
             },
-            "Do you really delete this post?"
+            "Do you want to delete this Post?"
         )
 
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
@@ -248,7 +248,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                     }
 
                 },
-                "Do you really block this user?"
+                "This will permanently block the user."
             )
 
             alertDialogFragment.show(childFragmentManager,AlertDialogFragment.TAG)

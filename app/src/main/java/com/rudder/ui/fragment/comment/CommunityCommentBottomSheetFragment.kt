@@ -148,7 +148,7 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
                 }
 
             },
-            "Do you really delete this comment?"
+            "Do you want to delete this Comment?"
         )
 
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)

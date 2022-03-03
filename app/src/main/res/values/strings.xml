@@ -2,17 +2,17 @@
     <string name="app_name">Rudder</string>
     <string name="id_placeholder">ID</string>
     <string name="password_placeholder">PASSWORD</string>
-    <string name="password_confirm_placeholder">PASSWORD CONFIRM</string>
+    <string name="password_confirm_placeholder">PASSWORD Check</string>
     <string name="recommend_code">RECOMMENDATION CODE (Optional)</string>
     <string name="email_id">EMAIL ID</string>
-    <string name="email_domain">EMAIL DOMAIN</string>
+    <string name="email_domain">Ex) univsersity.ac.uk</string>
     <string name="sign_up">sign up</string>
     <string name="sign_in">sign in</string>
     <string name="sumbit">SUBMIT</string>
-    <string name="verify_code">VERIFICATION CODE</string>
+    <string name="verify_code">Verification Code</string>
     <string name="verify_capital">VERIFY</string>
     <string name="id_check">CHECK</string>
-    <string name="login_error">Fail to sign in</string>
+    <string name="login_error">Wrong Password! Please try again </string>
     <string name="community_title">Community</string>
     <string name="profile_setting">Profile Setting</string>
     <string name="nickname">NICKNAME</string>
@@ -22,13 +22,13 @@
     <string name="next">NEXT</string>
     <string name="create_account">Create Account</string>
     <string name="remeber_me">Remember me?</string>
-    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_password">Forgot ID/Password?</string>
     <string name="comment_title">Comment</string>
     <string name="add_post_title">Add Post</string>
     <string name="post_button">Post</string>
     <string name="text_title">Text</string>
     <string name="text_hint">Text</string>
-    <string name="email_address">EMAIL ADDRESS</string>
+    <string name="email_address">UNIVERSITY EMAIL</string>
     <string name="logout">Logout</string>
     <string name="Report">Report</string>
     <string name="Delete">Delete</string>
@@ -39,8 +39,8 @@
     <string name="category">Category</string>
     <string name="apply">Apply</string>
     <string name="edit_nickname">Change Nickname</string>
-    <string name="report_comment_content">Comment Report content</string>
-    <string name="report_post_content">Post Report Content</string>
+    <string name="report_comment_content">Please help us understand whats going on. (Offensive content, Privacy concerns, etc.,)</string>
+    <string name="report_post_content">Please help us understand whats going on. (Offensive content, Privacy concerns, etc.,)</string>
     <string name="choose_profile_image">Choose Profile Image</string>
     <string name="category_select">Category Selection</string>
     <string name="auto_login_error">Fail to auto sign in</string>
@@ -48,25 +48,24 @@
     <string name="club">Club</string>
     <string name="nickname_hint">New Nickname</string>
     <string name="edit_profile_image">Change Profile Image</string>
-<!--    <string name="send_post_message">Send Message</string>-->
-<!--    <string name="post_message">Message</string>-->
     <string name="send_post_message">Send Quick Mail</string>
     <string name="post_message">Quick Mail</string>
     <string name="title_activity_test">TestActivity</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reply">Reply</string>
     <string name="notification">Notification</string>
     <string name="change_profile_image">Change Profile Image</string>
     <string name="my_post">My Post</string>
     <string name="my_comment">My Comment</string>
     <string name="alert_title">Alert</string>
+    <string name="find_id">FIND ID</string>
+    <string name="find_password">FIND PASSWORD</string>
+    <string name="nickname_title">Nickname</string>
+    <string name="category_title">Category</string>
+    <string name="character_title">Character</string>
+
+
 
 </resources>

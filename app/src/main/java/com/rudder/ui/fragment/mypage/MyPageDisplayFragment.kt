@@ -161,7 +161,7 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
                 }
 
             },
-            "Do you really logout?"
+            "Are you sure you want to logout?"
         )
 
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)

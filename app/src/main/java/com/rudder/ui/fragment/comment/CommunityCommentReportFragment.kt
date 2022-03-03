@@ -89,7 +89,7 @@ class CommunityCommentReportFragment(val viewModel: MainViewModel) : DialogFragm
                 }
 
             },
-            "Do you really report this comment?"
+            "Do you want to Report this comment?"
         )
 
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)

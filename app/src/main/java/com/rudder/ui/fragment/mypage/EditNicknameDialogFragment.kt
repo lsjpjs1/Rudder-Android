@@ -95,7 +95,7 @@ class EditNicknameDialogFragment() : DialogFragment() {
                 }
 
             },
-            "Do you really change your nickname?"
+            "Do you want to change your nickname?"
         )
 
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)

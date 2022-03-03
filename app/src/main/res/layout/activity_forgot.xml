@@ -80,7 +80,7 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Find ID"
+                android:text="@string/find_id"
                 />
 
 <!--            android:onClick="@{()->forgotVM.clickID()}"-->
@@ -89,7 +89,7 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Find Password"
+                android:text="@string/find_password"
                 />
 
 <!--            android:onClick="@{()->forgotVM.clickPassword()}"-->
