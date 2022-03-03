@@ -36,10 +36,12 @@ class ForgotActivity : AppCompatActivity() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        val toastEmailTrue = Toast.makeText(this, "Complete to Send Your ID to Email Address", Toast.LENGTH_LONG)
-        val toastEmailFalse = Toast.makeText(this, "Not Valid Email Address", Toast.LENGTH_LONG)
-        val toastVerifyCodeTrue = Toast.makeText(this, "Complete to Send Your Password to Email Address", Toast.LENGTH_LONG)
-        val toastVerifyCodeFalse = Toast.makeText(this, "Not Valid Verification Code", Toast.LENGTH_LONG)
+        val toastEmailTrue = Toast.makeText(this, "We have sent your ID to your university email", Toast.LENGTH_LONG)
+        val toastEmailVerifySuccess = Toast.makeText(this, "We have sent the verification code to your university email", Toast.LENGTH_LONG)
+        val toastEmailVerifyFail = Toast.makeText(this, "Please enter your valid university email ", Toast.LENGTH_LONG)
+        val toastEmailFalse = Toast.makeText(this, "Please enter valid university email.", Toast.LENGTH_LONG)
+        val toastVerifyCodeTrue = Toast.makeText(this, "Correct Code! We will send new password to your email.", Toast.LENGTH_LONG)
+        val toastVerifyCodeFalse = Toast.makeText(this, "Wrong verification code", Toast.LENGTH_LONG)
         var findpasswordFlag = false
 
         binding.forgotTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -93,6 +95,23 @@ class ForgotActivity : AppCompatActivity() {
                 }
             }
         })
+
+
+        viewModel.emailVerifyFlag.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{ it ->
+                if (it) {
+                    toastEmailVerifySuccess.show()
+                    if (findpasswordFlag) forgotSendPasswordBtn.isEnabled = true
+                }
+                else {
+                    toastEmailVerifyFail.show()
+                    if (findpasswordFlag) forgotSendPasswordBtn.isEnabled = false
+                }
+            }
+        })
+
+
+
 
         viewModel.verifyCodeCheckFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
