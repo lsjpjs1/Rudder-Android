@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
@@ -18,10 +17,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.rudder.R
 import com.rudder.data.Comment
 import com.rudder.databinding.PostCommentsBinding
+import com.rudder.ui.activity.MainActivity
 import com.rudder.util.CommentsDiffCallback
 import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
@@ -30,8 +29,17 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Context, val viewModel: MainViewModel, val lifecycleOwner: LifecycleOwner
+class PostCommentsAdapter(
+    var commentList: ArrayList<Comment>,
+    val context: Context,
+    val viewModel: MainViewModel,
+    val lifecycleOwner: LifecycleOwner,
 ): RecyclerView.Adapter<PostCommentsAdapter.CustomViewHolder>() {
+
+    private var lastReplyClickPosition = -1
+    private var replyClickCount = 0
+
+
     inner class CustomViewHolder(val postCommentsBinding: PostCommentsBinding) : RecyclerView.ViewHolder(postCommentsBinding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostCommentsAdapter.CustomViewHolder {
         val bind = DataBindingUtil.inflate<PostCommentsBinding>(
@@ -93,6 +101,81 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
             holder.postCommentsBinding.postPreviewTailLikeCount.visibility = View.GONE
             holder.postCommentsBinding.postPreviewTailCommentCount.visibility = View.GONE
             holder.postCommentsBinding.CommentMoreCL.visibility = View.GONE
+        } else { // 보통의 comment
+
+
+
+//            if (lastReplyClickPosition != position) {
+//                holder.postCommentsBinding.postPreviewTailCommentCount.isClickable = false
+//            } else {
+//
+//            }
+
+
+            //holder.postCommentsBinding.postPreviewTailCommentCount.isClickable = position == lastReplyClickPosition
+
+
+
+            holder.postCommentsBinding.postPreviewTailCommentCount.setOnClickListener {
+
+
+                if (replyClickCount == 0) {
+                    viewModel.clickNestedCommentReply(commentList[position].groupNum, commentList[position].commentBody)
+                    holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.purple_100,null)
+                    holder.postCommentsBinding.replyCloseButton.visibility = View.VISIBLE
+                    replyClickCount += 1
+
+                    Log.d("test123","000")
+
+                } else {
+                    if (lastReplyClickPosition == position) {
+                        Log.d("test123","111")
+                        //holder.postCommentsBinding.postPreviewTailCommentCount.isClickable = false
+
+                        viewModel.clickNestedCommentReply(commentList[position].groupNum, commentList[position].commentBody)
+                        holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.purple_100,null)
+                        holder.postCommentsBinding.replyCloseButton.visibility = View.VISIBLE
+                        lastReplyClickPosition = position
+                        replyClickCount += 1
+
+                    } else {
+                        Log.d("test123","222")
+//                        viewModel.clickNestedCommentReply(commentList[position].groupNum, commentList[position].commentBody)
+//                        holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.purple_100,null)
+//                        holder.postCommentsBinding.replyCloseButton.visibility = View.VISIBLE
+//                        lastReplyClickPosition = position
+//                        replyClickCount += 1
+                    }
+                }
+
+//                viewModel.clickNestedCommentReply(commentList[position].groupNum, commentList[position].commentBody)
+//                holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.purple_100,null)
+//                holder.postCommentsBinding.replyCloseButton.visibility = View.VISIBLE
+//
+//                lastReplyClickPosition = position
+
+
+            }
+
+            holder.postCommentsBinding.replyCloseButton.setOnClickListener {
+                holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.white,null)
+                holder.postCommentsBinding.replyCloseButton.visibility = View.GONE
+                viewModel.clearNestedCommentInfo()
+                holder.postCommentsBinding.postPreviewTailCommentCount.isClickable = true
+                replyClickCount = 0
+            }
+
+            viewModel.selectedCommentGroupNum.observe(lifecycleOwner, androidx.lifecycle.Observer {
+                if (it != -1) {
+                    (context as MainActivity).showParentCommentInfo()
+                } else {
+                    (context as MainActivity).hideParentCommentInfo()
+                    holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.white,null)
+                    holder.postCommentsBinding.replyCloseButton.visibility = View.GONE
+                    replyClickCount = 0
+                }
+            })
+
         }
 
 
@@ -108,12 +191,6 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
             it.isClickable = false
         }
 
-
-        holder.postCommentsBinding.postPreviewTailCommentCount.setOnClickListener {
-            //viewModel.clickCommentMore(position)
-            viewModel.clickNestedCommentReply(commentList[position].groupNum, commentList[position].commentBody)
-
-        }
 
 
 

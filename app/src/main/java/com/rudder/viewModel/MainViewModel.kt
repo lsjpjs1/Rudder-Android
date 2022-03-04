@@ -732,7 +732,7 @@ open class MainViewModel : ViewModel() {
 
                 if (isSuccess) {
                     _commentBody.postValue("")
-                    clearNestedCommentInfo()
+//                    clearNestedCommentInfo()
                     viewModelScope.launch {
 
                         if (_selectedPostPosition.value!! == -1 ) {
@@ -746,6 +746,8 @@ open class MainViewModel : ViewModel() {
                         _commentCountChange.value = Event(true)
                         getComments()
                     }
+                    clearNestedCommentInfo()
+
                 }
         }
 

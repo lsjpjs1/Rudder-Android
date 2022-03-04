@@ -241,13 +241,13 @@
                     android:id="@+id/postPreviewTailCommentCount"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:onClick="@{()->mainVM.clickNestedCommentReply(comment.groupNum,comment.commentBody)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/postPreviewTailLikeCount"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintWidth_default="percent"
                     app:layout_constraintWidth_percent="@dimen/post_preview_tail_comment_count_width">
 
+<!--                    android:onClick="@{()->mainVM.clickNestedCommentReply(comment.groupNum,comment.commentBody)}"-->
 
 
                     <TextView
@@ -261,6 +261,23 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <ImageView
+                    android:id="@+id/replyCloseButton"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/postPreviewTailCommentCount"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    android:layout_marginStart="6dp"
+                    app:srcCompat="@drawable/ic_baseline_close_24"
+
+
+                    >
+
+                </ImageView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
