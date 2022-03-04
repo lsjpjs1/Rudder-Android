@@ -108,6 +108,15 @@ class PostCommentsAdapter(var commentList: ArrayList<Comment>, val context: Cont
             it.isClickable = false
         }
 
+
+        holder.postCommentsBinding.postPreviewTailCommentCount.setOnClickListener {
+            //viewModel.clickCommentMore(position)
+            viewModel.clickNestedCommentReply(commentList[position].groupNum, commentList[position].commentBody)
+
+        }
+
+
+
         viewModel.isCommentMorePreventDouble.observe(lifecycleOwner, androidx.lifecycle.Observer { it ->
             it?.let {
                 holder.postCommentsBinding.commentMoreImageView.isClickable = true

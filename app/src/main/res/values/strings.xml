@@ -24,7 +24,9 @@
     <string name="remeber_me">Remember me?</string>
     <string name="forgot_password">Forgot ID/Password?</string>
     <string name="comment_title">Comment</string>
+    <string name="add_comment_hint">Add a Comment</string>
     <string name="add_post_title">Add Post</string>
+    <string name="add_title">Add</string>
     <string name="post_button">Post</string>
     <string name="text_title">Text</string>
     <string name="text_hint">Text</string>
@@ -47,7 +49,7 @@
     <string name="my_page_title">My Page</string>
     <string name="club">Club</string>
     <string name="nickname_hint">New Nickname</string>
-    <string name="edit_profile_image">Change Profile Image</string>
+    <string name="edit_profile_image">Change Character</string>
     <string name="send_post_message">Send Quick Mail</string>
     <string name="post_message">Quick Mail</string>
     <string name="title_activity_test">TestActivity</string>

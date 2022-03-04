@@ -414,6 +414,7 @@
                                 android:id="@+id/postPreviewTailImageCountShowPost"
                                 android:layout_width="60dp"
                                 android:layout_height="match_parent"
+                                android:layout_marginStart="2dp"
                                 app:layout_constraintStart_toEndOf="@+id/postPreviewTailCommentCount"
                                 app:layout_constraintWidth_default="percent"
                                 app:layout_constraintWidth_percent="@dimen/post_preview_tail_comment_count_width">
@@ -435,7 +436,6 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/imageView8"
                                     app:layout_constraintTop_toTopOf="parent" >
-
                                 </View>
 
                                 <TextView

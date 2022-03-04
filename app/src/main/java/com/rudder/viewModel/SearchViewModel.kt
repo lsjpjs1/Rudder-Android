@@ -76,6 +76,10 @@ class SearchViewModel : MainViewModel() {
             _isScrollTouch.value = Event(true)
             val key = BuildConfig.TOKEN_KEY
             val token = App.prefs.getValue(key)
+            val searchWordSplit = _searchWord.value!!.trim().split(' ')
+            val validSearchWord = searchWordSplit.joinToString(" ")
+
+
             GlobalScope.launch {
                 val resPosts = if (isScroll) {
                     Repository().getPosts(
@@ -84,7 +88,7 @@ class SearchViewModel : MainViewModel() {
                             endPostId,
                             -1,
                             token!!,
-                            _searchWord.value!!
+                            validSearchWord
                         )
                     )
                 } else {
@@ -94,7 +98,7 @@ class SearchViewModel : MainViewModel() {
                             -1,
                             -1,
                             token!!,
-                            _searchWord.value!!
+                            validSearchWord
                         )
                     )
                 }

@@ -167,7 +167,7 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     android:textColor="@color/black"
-                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    android:fontFamily="@font/sf_pro_text_regular"
                                     android:layout_marginStart="16dp"
                                     app:layout_constraintStart_toEndOf="@+id/logOutImageView"
                                     android:textSize="16sp"
@@ -220,7 +220,7 @@
                                     android:gravity="center_vertical"
                                     android:text="User Agreement &amp; Terms"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    android:fontFamily="@font/sf_pro_text_regular"
                                     app:layout_constraintStart_toEndOf="@+id/userAgreementImageView"
                                     app:layout_constraintTop_toTopOf="parent"
                                     android:layout_marginStart="16dp"
@@ -280,8 +280,8 @@
                                     android:text="@string/nickname_title"
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
-                                    android:fontFamily="@font/sf_pro_text_bold"
                                     android:layout_marginStart="16dp"
+                                    android:fontFamily="@font/sf_pro_text_regular"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/changeNicknameImageView"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -333,7 +333,7 @@
                                     android:id="@+id/contactusTextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    android:fontFamily="@font/sf_pro_text_regular"
                                     android:gravity="center_vertical"
                                     android:text="Contact Us"
 
@@ -400,7 +400,7 @@
                                     app:layout_constraintStart_toEndOf="@+id/categorySelectorImageView"
                                     android:textSize="16sp"
                                     android:textColor="@color/black"
-                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    android:fontFamily="@font/sf_pro_text_regular"
                                     app:layout_constraintWidth_default="percent"
 
                                     />
@@ -461,7 +461,7 @@
                                     app:layout_constraintStart_toEndOf="@+id/changeProfileImageImageView"
                                     android:textSize="16sp"
                                     android:textColor="@color/black"
-                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    android:fontFamily="@font/sf_pro_text_regular"
                                     app:layout_constraintWidth_default="percent"
 
                                     />
@@ -522,7 +522,7 @@
                                     app:layout_constraintStart_toEndOf="@+id/myPostImageView"
                                     android:textSize="16sp"
                                     android:textColor="@color/black"
-                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    android:fontFamily="@font/sf_pro_text_regular"
                                     app:layout_constraintWidth_default="percent"
 
                                     />
@@ -583,7 +583,7 @@
                                     app:layout_constraintStart_toEndOf="@+id/myCommentImageView"
                                     android:textSize="16sp"
                                     android:textColor="@color/black"
-                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    android:fontFamily="@font/sf_pro_text_regular"
                                     app:layout_constraintWidth_default="percent"
 
                                     />
@@ -617,7 +617,7 @@
 <!--                                    android:text="@string/edit_nickname"-->
 <!--                                    android:textColor="@color/white"-->
 <!--                                    android:textSize="20dp"-->
-<!--                                    android:fontFamily="@font/sf_pro_text_bold"-->
+<!--                                    android:fontFamily="@font/sf_pro_text_regular"-->
 <!--                                    app:layout_constraintBottom_toBottomOf="parent"-->
 <!--                                    app:layout_constraintEnd_toEndOf="parent"-->
 <!--                                    app:layout_constraintStart_toStartOf="parent"-->
