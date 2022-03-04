@@ -3,7 +3,6 @@ package com.rudder.ui.adapter
 import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.data.Comment
 import com.rudder.databinding.PostCommentsBinding
-import com.rudder.ui.activity.MainActivity
 import com.rudder.util.CommentsDiffCallback
 import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
@@ -78,6 +76,13 @@ class PostCommentsAdapter(
 
 
     override fun onBindViewHolder(holder: PostCommentsAdapter.CustomViewHolder, position: Int) {
+        val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(commentList[position].postTime.time))
+        holder.postCommentsBinding.mainVM = viewModel
+        holder.postCommentsBinding.comment = commentList[position]
+        holder.postCommentsBinding.timeago = timeago
+        holder.postCommentsBinding.position = position
+
+
         if(commentList[position].status=="child"){
             holder.postCommentsBinding.nestedCommentImage.visibility=View.VISIBLE
             holder.postCommentsBinding.postPreviewTailCommentCount.visibility=View.GONE
@@ -101,60 +106,24 @@ class PostCommentsAdapter(
             holder.postCommentsBinding.postPreviewTailLikeCount.visibility = View.GONE
             holder.postCommentsBinding.postPreviewTailCommentCount.visibility = View.GONE
             holder.postCommentsBinding.CommentMoreCL.visibility = View.GONE
+            holder.postCommentsBinding.nestedCommentImage.visibility = View.GONE
         } else { // 보통의 comment
-
-
-
-//            if (lastReplyClickPosition != position) {
-//                holder.postCommentsBinding.postPreviewTailCommentCount.isClickable = false
-//            } else {
-//
-//            }
-
-
-            //holder.postCommentsBinding.postPreviewTailCommentCount.isClickable = position == lastReplyClickPosition
-
-
-
             holder.postCommentsBinding.postPreviewTailCommentCount.setOnClickListener {
-
-
+                val bindingPosition = holder.bindingAdapterPosition
                 if (replyClickCount == 0) {
-                    viewModel.clickNestedCommentReply(commentList[position].groupNum, commentList[position].commentBody)
+                    viewModel.clickNestedCommentReply(commentList[bindingPosition].groupNum, commentList[bindingPosition].commentBody)
                     holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.purple_100,null)
                     holder.postCommentsBinding.replyCloseButton.visibility = View.VISIBLE
                     replyClickCount += 1
-
-                    Log.d("test123","000")
-
                 } else {
-                    if (lastReplyClickPosition == position) {
-                        Log.d("test123","111")
-                        //holder.postCommentsBinding.postPreviewTailCommentCount.isClickable = false
-
-                        viewModel.clickNestedCommentReply(commentList[position].groupNum, commentList[position].commentBody)
+                    if (lastReplyClickPosition == bindingPosition) {
+                        viewModel.clickNestedCommentReply(commentList[bindingPosition].groupNum, commentList[bindingPosition].commentBody)
                         holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.purple_100,null)
                         holder.postCommentsBinding.replyCloseButton.visibility = View.VISIBLE
-                        lastReplyClickPosition = position
+                        lastReplyClickPosition = bindingPosition
                         replyClickCount += 1
-
-                    } else {
-                        Log.d("test123","222")
-//                        viewModel.clickNestedCommentReply(commentList[position].groupNum, commentList[position].commentBody)
-//                        holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.purple_100,null)
-//                        holder.postCommentsBinding.replyCloseButton.visibility = View.VISIBLE
-//                        lastReplyClickPosition = position
-//                        replyClickCount += 1
                     }
                 }
-
-//                viewModel.clickNestedCommentReply(commentList[position].groupNum, commentList[position].commentBody)
-//                holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.purple_100,null)
-//                holder.postCommentsBinding.replyCloseButton.visibility = View.VISIBLE
-//
-//                lastReplyClickPosition = position
-
-
             }
 
             holder.postCommentsBinding.replyCloseButton.setOnClickListener {
@@ -166,24 +135,14 @@ class PostCommentsAdapter(
             }
 
             viewModel.selectedCommentGroupNum.observe(lifecycleOwner, androidx.lifecycle.Observer {
-                if (it != -1) {
-                    (context as MainActivity).showParentCommentInfo()
-                } else {
-                    (context as MainActivity).hideParentCommentInfo()
+                if (it == -1) {
                     holder.postCommentsBinding.eachComment.background=ResourcesCompat.getDrawable(context.resources,R.color.white,null)
                     holder.postCommentsBinding.replyCloseButton.visibility = View.GONE
                     replyClickCount = 0
                 }
             })
-
         }
 
-
-        val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(commentList[position].postTime.time))
-        holder.postCommentsBinding.mainVM = viewModel
-        holder.postCommentsBinding.comment = commentList[position]
-        holder.postCommentsBinding.timeago = timeago
-        holder.postCommentsBinding.position = position
 
 
         holder.postCommentsBinding.commentMoreImageView.setOnClickListener {
