@@ -188,9 +188,9 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintVertical_bias="0.15"
+                        android:layout_marginStart="6dp"
                         app:chipSpacing="0dp"
                         app:singleSelection="false">
 
@@ -203,26 +203,21 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
-
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutSS4"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.06"
+            app:layout_constraintHeight_percent="0.15"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.9"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="6dp"
             >
 
-            <Button
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -230,10 +225,32 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="Request Category"
                 android:layout_marginStart="8dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:background="@drawable/button_enabled"
                 >
-            </Button>
+            </TextView>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/request"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/purple_100"
+                android:textAppearance="@style/AppTheme.GenderChip"
+                app:chipCornerRadius="10dp"
+                android:id="@+id/requestCategoryChip"
+                android:gravity="center"
+                android:layout_marginStart="6dp"
+                android:checkable="true"
+                android:clickable="true"
+                app:layout_constraintVertical_bias="0.15"
+                app:chipSpacing="0dp"
+                >
+            </com.google.android.material.chip.Chip>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

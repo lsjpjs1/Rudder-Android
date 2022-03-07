@@ -27,7 +27,7 @@
                 android:id="@+id/textViewReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Join"
+                android:text="@string/join_club"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -43,7 +43,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:hint="@string/report_comment_content"
+                android:hint="Request to join club message."
                 android:text="@={mainVM._clubJoinRequestBody}"
                 android:maxLength="180"
                 android:gravity="top|left"

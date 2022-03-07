@@ -1,11 +1,13 @@
 package com.rudder.ui.fragment.mypage
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -64,13 +66,15 @@ class CategorySelectMyPageFragment : Fragment() {
             }
         })
 
-//        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                if ((activity as MainActivity).validateBack("categorySelectMyPageFragment")){
-//                    (activity as MainActivity).onBackPressed()
-//                }
-//            }
-//        })
+        //val lp = binding.mainDisplayContainerView.layoutParams
+//        lp.height = ViewGroup.LayoutParams.MATCH_PARENT
+//        binding.mainDisplayContainerView.layoutParams = lp
+
+        val lp = fragmentMyPageCategorySelectBinding.requestCategoryChip.layoutParams
+        lp.height = chipHeight
+        lp.width = chipWidth
+        fragmentMyPageCategorySelectBinding.root.requestCategoryChip.layoutParams = lp
+
 
         fragmentMyPageCategorySelectBinding.categoryBackBtn.setOnClickListener { view ->
             view.findNavController().popBackStack()
@@ -105,6 +109,7 @@ class CategorySelectMyPageFragment : Fragment() {
                 mChip.isChipIconVisible = false
                 mChip.text = "Join " +  mChip.text.toString()
                 mChip.isCheckable = false
+                mChip.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(lazyContext, R.color.purple_100))
                 mChip.setOnClickListener {
                     viewModel.setSelectedRequestJoinClubCategoryId(categories[i].categoryId)
                     viewModel.clickClubJoinRequest()

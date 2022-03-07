@@ -68,7 +68,8 @@
     <string name="category_title">Category</string>
     <string name="character_title">Character</string>
     <string name="edit_comment">Edit Comment</string>
-
+    <string name="request">Request</string>
+    <string name="join_club">Join Club</string>
 
 
 </resources>
