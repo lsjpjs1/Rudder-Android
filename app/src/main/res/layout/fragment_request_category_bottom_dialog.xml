@@ -61,6 +61,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="80dp"
+                android:id="@+id/requestCategoryRequestBody"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintWidth_percent="0.9"
                 app:layout_constraintEnd_toEndOf="parent"

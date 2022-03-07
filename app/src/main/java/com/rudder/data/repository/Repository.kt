@@ -416,9 +416,14 @@ class Repository {
         return ExceptionUtil.retryWhenException(MyPageApi::logout,logoutRequest,MyPageApi(),
             Response(LogoutResponse(false)
         )).results
-
-
     }
+
+
+//    suspend fun logout(logoutRequest: LogoutRequest): LogoutResponse{
+//        return ExceptionUtil.retryWhenException(MyPageApi::logout,logoutRequest,MyPageApi(),
+//            Response(LogoutResponse(false)
+//            )).results
+//    }
 
 
 }

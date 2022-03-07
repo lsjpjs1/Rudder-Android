@@ -18,3 +18,11 @@ data class CategorySelectSignUpInfo(
     @SerializedName(value = "user_id")
     val user_id: String
 )
+
+
+data class RequestCategory(
+    @SerializedName(value = "token")
+    val token: String,
+    @SerializedName(value = "category_name")
+    val requestCategoryName: ArrayList<Int>
+)
