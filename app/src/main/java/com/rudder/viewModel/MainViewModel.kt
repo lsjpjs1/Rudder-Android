@@ -126,6 +126,7 @@ open class MainViewModel : ViewModel() {
     val _clickCategorySelect = MutableLiveData<Event<Boolean>>()
     val _categoryNamesForSelection = MutableLiveData<ArrayList<String>>()
     val _isStringBlank = MutableLiveData<Event<Boolean>>()
+    val _isUnvalidCategorySelect = MutableLiveData<Event<Boolean>>()
     private val _searchPosts = MutableLiveData<ArrayList<PreviewPost>>()
 
 
@@ -211,6 +212,7 @@ open class MainViewModel : ViewModel() {
     val selectedParentCommentBody: LiveData<String> = _selectedParentCommentBody
 
     val isStringBlank : LiveData<Event<Boolean>> = _isStringBlank
+    val isUnvalidCategorySelect : LiveData<Event<Boolean>> = _isUnvalidCategorySelect
     var postMode : PostMode = PostMode.NORMAL
 
     open var qwe = true
@@ -757,7 +759,7 @@ open class MainViewModel : ViewModel() {
         if ( _postBody.value!!.isBlank() ) {
             _isStringBlank.value = Event(true)
         } else if(_postCategoryInt.value == 0) {
-            _isStringBlank.value = Event(true)
+            _isUnvalidCategorySelect.value = Event(true)
         } else {
             GlobalScope.launch {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))

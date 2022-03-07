@@ -353,7 +353,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         })
 
 
-        viewModel.isStringBlank.observe(this, Observer {
+        viewModel.isUnvalidCategorySelect.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     toastChooseValidCategory.show()
