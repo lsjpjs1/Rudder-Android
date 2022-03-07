@@ -44,7 +44,7 @@ class CommunityCommentEditFragment(val viewModel: MainViewModel) : DialogFragmen
         val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
 
         var lp1 = commentEditSheetFragmentBinding.constraintLayout1.layoutParams
-        lp1.height = (displayDpValue[1] * 0.4).toInt()
+        lp1.height = (displayDpValue[1] * 0.25).toInt()
         lp1.width = (displayDpValue[0] * 0.9).toInt()
         commentEditSheetFragmentBinding.constraintLayout1.layoutParams = lp1
 

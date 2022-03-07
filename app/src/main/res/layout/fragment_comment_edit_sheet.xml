@@ -27,7 +27,7 @@
                 android:id="@+id/textViewReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Edit"
+                android:text="@string/edit_comment"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -38,7 +38,6 @@
                 app:layout_constraintVertical_bias="0.03" />
 
 
-
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -47,6 +46,8 @@
                 android:background="@drawable/edge"
                 android:text="@={mainVM._commentEditBody}"
                 android:theme="@style/MyEditTextTheme"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
 
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
@@ -55,14 +56,14 @@
                 android:textSize="14sp"
 
                 app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.6"
+                app:layout_constraintHeight_percent="0.4"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.9"
                 android:id="@+id/editTextReport"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/reportSubmit"
+                app:layout_constraintTop_toBottomOf="@+id/textViewReport"
                 app:layout_constraintVertical_bias="0.4"
                 >
             </EditText>
@@ -88,6 +89,8 @@
                 app:layout_constraintStart_toEndOf="@+id/reportCancel"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="10dp"
+
 
                 />
 
