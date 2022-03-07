@@ -217,9 +217,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             "Delete Post Complete!",
             Toast.LENGTH_LONG
         )
-        val toastDeleteCommentComplete = Toast.makeText(
+        val toastChooseValidCategory = Toast.makeText(
             this,
-            "Delete Comment Complete!",
+            "Choose a category please.",
             Toast.LENGTH_LONG
         )
         val toastStringBlank = Toast.makeText(
@@ -348,6 +348,15 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     toastStringBlank.show()
+                }
+            }
+        })
+
+
+        viewModel.isStringBlank.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    toastChooseValidCategory.show()
                 }
             }
         })

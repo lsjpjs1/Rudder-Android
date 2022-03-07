@@ -756,6 +756,8 @@ open class MainViewModel : ViewModel() {
     fun addPost() {
         if ( _postBody.value!!.isBlank() ) {
             _isStringBlank.value = Event(true)
+        } else if(_postCategoryInt.value == 0) {
+            _isStringBlank.value = Event(true)
         } else {
             GlobalScope.launch {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
@@ -847,10 +849,10 @@ open class MainViewModel : ViewModel() {
     fun clickPostEdit() {
         if (_selectedPostMorePosition.value == null ) {
             _postBody.value = _postFromId.value!!.postBody
-            _postCategoryInt.value = findCategoryIndexById(_postFromId.value!!.categoryId )
+            _postCategoryInt.value = findCategoryIndexById(_postFromId.value!!.categoryId + 1)
         } else {
             _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
-            _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
+            _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId + 1)
         }
 
     }
