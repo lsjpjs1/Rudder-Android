@@ -58,7 +58,6 @@ open class MainViewModel : ViewModel() {
     val _selectedCategoryNameInAddPost = MutableLiveData<String>()
     private val _selectedRequestJoinClubCategoryId = MutableLiveData<Int>()
     private val _selectedPhotoUriList = MutableLiveData<ArrayList<FileInfo>>()
-    private val _isAddPostClick = MutableLiveData<Event<Boolean>>()
     private val _isBackClick = MutableLiveData<Boolean?>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
     private val _isAddPostSuccess = MutableLiveData<Event<Boolean>>()
@@ -147,7 +146,6 @@ open class MainViewModel : ViewModel() {
     val isAddPostSuccess: LiveData<Event<Boolean>> = _isAddPostSuccess
     val isScrollBottomTouch: LiveData<Event<Boolean>> = _isScrollBottomTouch
     val isBackClick: LiveData<Boolean?> = _isBackClick
-    val isAddPostClick: LiveData<Event<Boolean>> = _isAddPostClick
     val selectedTab: LiveData<Int> = _selectedTab
     val categoryNames: LiveData<ArrayList<String>> = _categoryNames
     val selectedPostPosition: LiveData<Int> = _selectedPostPosition
@@ -487,8 +485,7 @@ open class MainViewModel : ViewModel() {
     }
 
     fun clickAddPost() {
-        _isAddPostClick.value = Event(true)
-        _postCategoryInt.value = 0
+        _postCategoryInt.value = 0 // Choose 한 category가 0 (항상 "Select") 이게 함.
     }
 
     fun clickBack() {
@@ -764,9 +761,9 @@ open class MainViewModel : ViewModel() {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
                 var tmpCategoryId: Int
                 if(_postCategoryInt.value!!>=_allCategories.value!!.size){
-                    tmpCategoryId = _allClubCategories.value!![_postCategoryInt.value!!-_allCategories.value!!.size].categoryId
+                    tmpCategoryId = _allClubCategories.value!![_postCategoryInt.value!! - _allCategories.value!!.size].categoryId
                 }else{
-                    tmpCategoryId = _allCategories.value!![_postCategoryInt.value!!].categoryId
+                    tmpCategoryId = _allCategories.value!![_postCategoryInt.value!!].categoryId - 1
                 }
                 val key = BuildConfig.TOKEN_KEY
                 val addPostInfo = AddPostInfo(
@@ -961,15 +958,12 @@ open class MainViewModel : ViewModel() {
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
 
         return GlobalScope.async {
-
             var categoryList = Repository().getCategories(GetCategoriesRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY),null))
             viewModelScope.launch {
-
                 _allCategories.value?.addAll(categoryList)
                 _categoryNames.value = splitCategoryNames(categoryList)
                 //_selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
             }
-
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             return@async
         }
@@ -982,10 +976,11 @@ open class MainViewModel : ViewModel() {
     fun splitCategoryNames(categoryList: ArrayList<Category>,removeZeroIndex:Boolean=true): ArrayList<String> {
         var categoryNames = ArrayList<String>()
 
-
         for (category in categoryList) {
             categoryNames.add(category.categoryName)
         }
+
+        //categoryNames.add(0,"Select")
 
         for (category in categoryList) {
             _categoryIdAllList.value!!.add(category.categoryId)

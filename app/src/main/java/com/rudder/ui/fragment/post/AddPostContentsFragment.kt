@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.ArrayAdapter
+import android.widget.SpinnerAdapter
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
@@ -31,6 +32,10 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
     private val lazyContext by lazy {
         requireContext()
     }
+
+    val categoryListForAddPost = viewModel.categoryNames.value!!
+
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -39,12 +44,28 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
 
         val display = DataBindingUtil.inflate<FragmentAddPostContentsBinding>(inflater,
                 R.layout.fragment_add_post_contents,container,false)
-        val spinnerAdapter = object : ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,viewModel.categoryNames.value!!){
+
+        display.mainVM = viewModel
+        display.lifecycleOwner = this
+
+        if (categoryListForAddPost[0] != "Select") {
+            val categoryListForAddPost = viewModel.categoryNames.value!!
+            categoryListForAddPost.add(0,"Select")
+        }
+
+        val spinnerAdapter = object : ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, categoryListForAddPost){
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getView(position, convertView, parent) as TextView
                 return view
             }
         }
+
+        display.categorySpinner.adapter = spinnerAdapter
+
+
+
+        val addPostShowImagesAdapter = AddPostShowImagesAdapter(viewModel.selectedPhotoUriList.value!!,(activity as MainActivity).getDisplaySize(),this)
+
 
         viewModel.clearAddPost()
 
@@ -52,16 +73,10 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
             display.root.categorySpinner.isEnabled=false
             display.root.showPhoto.visibility=View.GONE
             viewModel.clickPostEdit()
-            Log.d("isedit123","isedit123")
         }else{
             display.root.categorySpinner.isEnabled = true
             display.root.showPhoto.visibility=View.VISIBLE
         }
-        val addPostShowImagesAdapter = AddPostShowImagesAdapter(viewModel.selectedPhotoUriList.value!!,(activity as MainActivity).getDisplaySize(),this)
-        display.mainVM=viewModel
-        display.categorySpinner.adapter=spinnerAdapter
-        display.lifecycleOwner = this
-
 
         display.showPhotoRV.also {
             it.layoutManager=LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)

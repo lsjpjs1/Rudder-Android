@@ -31,6 +31,8 @@ class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
         savedInstanceState: Bundle?
     ): View? {
         val fragmentBinding= DataBindingUtil.inflate<FragmentCommuintySelectorBinding>(inflater,R.layout.fragment_commuinty_selector,container,false)
+
+
         adapter = CategorySelectorAdapter(viewModel.userSelectCategories.value!!,viewModel.selectedCategoryPosition.value!!,lazyContext,this)
         fragmentBinding.categoryRecyclerView.also {
             it.layoutManager = LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)

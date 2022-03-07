@@ -35,7 +35,7 @@ class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selecte
 
     override fun onBindViewHolder(holder: CategorySelectorAdapter.CustomViewHolder, position: Int) {
         holder.categorySelectorBinding.category = categoryList[position]
-        if(selectedCategoryNum==position){
+        if(selectedCategoryNum == position){
             listener.onClickView(holder.categorySelectorBinding.root,position)
         }
         holder.categorySelectorBinding.categoryTextView.viewTreeObserver.addOnGlobalLayoutListener(
