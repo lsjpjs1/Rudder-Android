@@ -12,6 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -20,6 +22,8 @@ import com.rudder.data.remote.Category
 import com.rudder.databinding.FragmentMyPageCategorySelectBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
+import com.rudder.viewModel.MyCommentViewModel
+import com.rudder.viewModel.MyPageViewModel
 import kotlinx.android.synthetic.main.fragment_my_page_category_select.view.*
 import java.util.*
 
@@ -27,6 +31,7 @@ import java.util.*
 class CategorySelectMyPageFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
+
     private lateinit var fragmentMyPageCategorySelectBinding : FragmentMyPageCategorySelectBinding
 
     private val lazyContext by lazy {
@@ -66,14 +71,22 @@ class CategorySelectMyPageFragment : Fragment() {
             }
         })
 
-        //val lp = binding.mainDisplayContainerView.layoutParams
-//        lp.height = ViewGroup.LayoutParams.MATCH_PARENT
-//        binding.mainDisplayContainerView.layoutParams = lp
+
+
+
 
         val lp = fragmentMyPageCategorySelectBinding.requestCategoryChip.layoutParams
         lp.height = chipHeight
         lp.width = chipWidth
         fragmentMyPageCategorySelectBinding.root.requestCategoryChip.layoutParams = lp
+
+
+        fragmentMyPageCategorySelectBinding.requestCategoryChip.setOnClickListener {
+            (activity as MainActivity).showRequestCategoryBottomDialog()
+
+
+        }
+
 
 
         fragmentMyPageCategorySelectBinding.categoryBackBtn.setOnClickListener { view ->

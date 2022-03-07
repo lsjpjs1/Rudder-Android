@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <variable
+            name="myPageVM"
+            type="com.rudder.viewModel.MyPageViewModel" />
+    </data>
+
+<!---->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/requestCategoryBottomSheetCL0"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/requestCategoryBottomSheetCL1"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/view_corner"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.1"
+                >
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/request_category"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.6"
+                android:id="@+id/requestCategoryTextView"
+                android:layout_marginTop="8dp"
+                >
+            </TextView>
+
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/requestCategoryTextView"
+                android:background="@drawable/edge"
+                android:padding="10dp"
+                android:textSize="14sp"
+                android:hint="You can request us for the category you want. ex) Sports..."
+                android:layout_marginTop="6dp"
+                android:maxLength="180"
+                android:gravity="top|left"
+                >
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/request"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/purple_rudder"
+                >
+            </TextView>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+
+

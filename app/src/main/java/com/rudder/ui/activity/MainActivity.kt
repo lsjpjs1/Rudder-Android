@@ -36,10 +36,6 @@ import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
 import com.rudder.ui.fragment.comment.CommunityCommentEditFragment
 import com.rudder.ui.fragment.comment.CommunityCommentReportFragment
 import com.rudder.ui.fragment.community.CommunityDisplayFragment
-import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
-import com.rudder.ui.fragment.mypage.ClubJoinRequestDialogFragment
-import com.rudder.ui.fragment.mypage.ContactUsFragment
-import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.post.*
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment
 import com.rudder.ui.fragment.search.SearchPostDisplayFragment
@@ -56,10 +52,12 @@ import androidx.navigation.fragment.findNavController
 import com.rudder.data.MainDisplayTab
 import com.rudder.data.dto.NotificationType
 import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
+import com.rudder.ui.fragment.mypage.*
 import com.rudder.ui.fragment.notification.NotificationDisplayFragment
 import com.rudder.ui.fragment.notification.NotificationDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
+import com.rudder.viewModel.MyPageViewModel
 import com.rudder.viewModel.NotificationViewModel
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
@@ -67,6 +65,10 @@ import kotlinx.android.synthetic.main.show_post_display_image.view.*
 class MainActivity : AppCompatActivity(), MainActivityInterface {
     private val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     private val notificationViewModel : NotificationViewModel by lazy { ViewModelProvider(this).get(NotificationViewModel::class.java) }
+    private val myPageViewModel : MyPageViewModel by lazy { ViewModelProvider(this).get(MyPageViewModel::class.java) }
+
+
+
     lateinit var mainBottomBarFragment: MainBottomBarFragment
 //    lateinit var addCommentFragment: AddCommentFragment
     lateinit var communityDisplayFragment: CommunityDisplayFragment
@@ -81,10 +83,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private lateinit var clubJoinRequestDialogFragment: ClubJoinRequestDialogFragment
     lateinit var communityCommentEditFragment: CommunityCommentEditFragment
     private lateinit var postMessageFragment: PostMessageDisplayFragment
-
     private lateinit var contactUsFragment: ContactUsFragment
-
     private lateinit var categorySelectMyPageFragment: CategorySelectMyPageFragment
+    private lateinit var requestCategoryBottomDialogFragment: RequestCategoryBottomDialogFragment
+
+
     //private lateinit var postMessageRoomFragment: PostMessageRoomFragment
 
     lateinit var editPostFragment: EditPostFragment
@@ -203,6 +206,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         categorySelectMyPageFragment = CategorySelectMyPageFragment()
         searchPostDisplayFragment = SearchPostDisplayFragment()
         notificationDisplayFragment = NotificationDisplayFragment()
+        requestCategoryBottomDialogFragment = RequestCategoryBottomDialogFragment(myPageViewModel)
 
 
 
@@ -512,8 +516,18 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         }
     }
 
-    fun closeCommunityBottomSheetFragment(){
 
+
+    fun showRequestCategoryBottomDialog(){
+        if (!this.requestCategoryBottomDialogFragment.isAdded) {
+            this.requestCategoryBottomDialogFragment.show(supportFragmentManager, this.requestCategoryBottomDialogFragment.tag)
+        }
+    }
+
+
+
+
+    fun closeCommunityBottomSheetFragment(){
         Toast.makeText(
             this,
             "Delete Comment Complete!",

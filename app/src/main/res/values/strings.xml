@@ -70,6 +70,7 @@
     <string name="edit_comment">Edit Comment</string>
     <string name="request">Request</string>
     <string name="join_club">Join Club</string>
+    <string name="request_category">Request Category</string>
 
 
 </resources>

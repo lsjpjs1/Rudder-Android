@@ -145,6 +145,9 @@
 
                 </com.google.android.material.chip.ChipGroup>
 
+
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clubTitleConstraintLayout"
@@ -152,9 +155,20 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/constraintLayoutSS2"
                         app:layout_constraintWidth_percent="0.9"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="10dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            app:layout_constraintHeight_default="percent"
+                            android:background="#9E9D9D"
+                            app:layout_constraintTop_toTopOf="parent">
+                        </View>
+
+
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -164,6 +178,7 @@
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:textSize="18sp"
+                            android:layout_marginTop="2dp"
                             android:fontFamily="@font/sf_pro_text_bold"
                             android:text="@string/club"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -217,6 +232,15 @@
             android:layout_marginBottom="6dp"
             >
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#9E9D9D"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+            </View>
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -229,6 +253,7 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:background="@drawable/button_enabled"
+                android:layout_marginTop="2dp"
                 >
             </TextView>
 
