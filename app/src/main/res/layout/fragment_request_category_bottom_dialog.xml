@@ -68,7 +68,7 @@
                 android:background="@drawable/edge"
                 android:padding="10dp"
                 android:textSize="14sp"
-                android:hint="You can request us for the category you want. ex) Sports..."
+                android:hint="Are there any topics you want to discuss with your university friends?"
                 android:layout_marginTop="6dp"
                 android:maxLength="180"
                 android:gravity="top|left"

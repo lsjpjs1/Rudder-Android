@@ -40,9 +40,9 @@ class MyPostHeaderFragment : Fragment() {
             (activity as MainActivity).mainBottomNavigationAppear()
         }
         if (args.viewModelIndex == MyPostDisplayFragment.MY_COMMENT){
-            header.myPostHeaderTitleTV.text = "My Comments"
+            header.myPostHeaderTitleTV.text = "My Comment"
         }else if (args.viewModelIndex == MyPostDisplayFragment.MY_POST){
-            header.myPostHeaderTitleTV.text = "My Posts"
+            header.myPostHeaderTitleTV.text = "My Post"
         }
 
 

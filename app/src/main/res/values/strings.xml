@@ -47,7 +47,7 @@
     <string name="category_select">Category Selection</string>
     <string name="auto_login_error">Please type your ID and Password.</string>
     <string name="my_page_title">My Page</string>
-    <string name="club">Club</string>
+    <string name="club">Society</string>
     <string name="nickname_hint">New Nickname</string>
     <string name="edit_profile_image">Change Character</string>
     <string name="send_post_message">Send Quick Mail</string>
@@ -69,7 +69,7 @@
     <string name="character_title">Character</string>
     <string name="edit_comment">Edit Comment</string>
     <string name="request">Request</string>
-    <string name="join_club">Join Club</string>
+    <string name="join_club">Join Society</string>
     <string name="request_category">Request Category</string>
 
 
