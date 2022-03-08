@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 class CirclePagerIndicatorDecoration : ItemDecoration() {
-    private val colorActive = Color.parseColor("#ffffff")
-    private val colorInactive = Color.parseColor("#9c9eb9")
+    private val colorActive = Color.parseColor("#9329D1")
+    private val colorInactive = Color.parseColor("#66BB86FC")
     private val mIndicatorHeight = (DP * 32).toInt()
     private val mIndicatorStrokeWidth = DP * 8
     private val mIndicatorItemLength = DP * 2
