@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -86,7 +87,6 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
         })
 
 
-
         return fragmentBinding.root
     }
 
@@ -97,6 +97,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
 
     @SuppressLint("RestrictedApi")
     override fun onClickPostMessageRoomNotification(postMessageRoomId: Int) {
+        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) // 화면 터치 불가능케 함. ( 더블 연타 터치 navigation destination 오류 방지 )
         val navController = findNavController()
         val actionNotificationToPostMessage = NotificationDisplayFragmentDirections.actionNavigationNotificationToNavigationPostmessage(notificationPostMessageRoomId = postMessageRoomId)
         val actionPostMessageToPostMessageRoom = PostMessageDisplayFragmentDirections.actionNavigationPostmessageToNavigationPostmessageRoom(postMessageRoomId = postMessageRoomId)
@@ -105,8 +106,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
         val mHandler = Handler(Looper.getMainLooper())
         mHandler.postDelayed({
             navController.navigate(actionPostMessageToPostMessageRoom)
-        }, 300) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
-
+        }, 100) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
 
         (activity as MainActivity).mainBottomNavigationDisappear()
     }

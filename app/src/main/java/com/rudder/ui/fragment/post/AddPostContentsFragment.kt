@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.data.FileInfo
+import com.rudder.data.remote.Category
 import com.rudder.databinding.FragmentAddPostContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.AddPostShowImagesAdapter
@@ -33,8 +34,7 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
         requireContext()
     }
 
-    val categoryListForAddPost = viewModel.categoryNames.value!!
-
+    var categoryListForAddPost = viewModel.userSelectCategories.value!!
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -48,12 +48,12 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
         display.mainVM = viewModel
         display.lifecycleOwner = this
 
-        if (categoryListForAddPost[0] != "Select") {
-            val categoryListForAddPost = viewModel.categoryNames.value!!
-            categoryListForAddPost.add(0,"Select")
+        if (categoryListForAddPost[0].categoryName != "Select") {
+            categoryListForAddPost.removeAt(0) /// "ALL" 삭제
+            categoryListForAddPost.add(0, Category(categoryName = "Select", isMember = null, categoryId = -1, categoryType = "dummy_select") )
         }
 
-        val spinnerAdapter = object : ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, categoryListForAddPost){
+        val spinnerAdapter = object : ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, categoryListForAddPost.map{it.categoryName}){
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getView(position, convertView, parent) as TextView
                 return view
@@ -62,10 +62,7 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
 
         display.categorySpinner.adapter = spinnerAdapter
 
-
-
         val addPostShowImagesAdapter = AddPostShowImagesAdapter(viewModel.selectedPhotoUriList.value!!,(activity as MainActivity).getDisplaySize(),this)
-
 
         viewModel.clearAddPost()
 
@@ -102,8 +99,6 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
         })
 
 
-
-
         viewModel.photoPickerClickSwitch.observe(viewLifecycleOwner, Observer {
             it?.let {
                 openPhotoPicker()
@@ -116,7 +111,6 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
                     fixOtherViewHeight()
                     display.addPostDisplayEntire.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
-
             }
         )
 

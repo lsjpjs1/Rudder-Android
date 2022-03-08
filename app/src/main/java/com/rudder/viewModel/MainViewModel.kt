@@ -322,7 +322,7 @@ open class MainViewModel : ViewModel() {
     fun findCategoryIndexById(id: Int) : Int {
         var index = 0
         val tmpList: ArrayList<Category> = arrayListOf()
-        tmpList.addAll(_allCategories.value!!)
+        tmpList.addAll(_userSelectCategories.value!!)
         tmpList.addAll(_allClubCategories.value!!)
         for(i in 0 until tmpList.size) {
             if (tmpList[i].categoryId == id){
@@ -767,7 +767,7 @@ open class MainViewModel : ViewModel() {
                 if(_postCategoryInt.value!!>=_allCategories.value!!.size){
                     tmpCategoryId = _allClubCategories.value!![_postCategoryInt.value!! - _allCategories.value!!.size].categoryId
                 }else{
-                    tmpCategoryId = _allCategories.value!![_postCategoryInt.value!!].categoryId - 1
+                    tmpCategoryId = _userSelectCategories.value!![_postCategoryInt.value!!].categoryId
                 }
                 val key = BuildConfig.TOKEN_KEY
                 val addPostInfo = AddPostInfo(
@@ -851,10 +851,10 @@ open class MainViewModel : ViewModel() {
     fun clickPostEdit() {
         if (_selectedPostMorePosition.value == null ) {
             _postBody.value = _postFromId.value!!.postBody
-            _postCategoryInt.value = findCategoryIndexById(_postFromId.value!!.categoryId + 1)
+            _postCategoryInt.value = findCategoryIndexById(_postFromId.value!!.categoryId )
         } else {
             _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
-            _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId + 1)
+            _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
         }
 
     }
@@ -980,10 +980,14 @@ open class MainViewModel : ViewModel() {
         var categoryNames = ArrayList<String>()
 
         for (category in categoryList) {
+
+            if (category.categoryType == "asd") {
+            } else if (category.categoryType == "tmp") {
+            }
+
             categoryNames.add(category.categoryName)
         }
 
-        //categoryNames.add(0,"Select")
 
         for (category in categoryList) {
             _categoryIdAllList.value!!.add(category.categoryId)
@@ -1036,12 +1040,7 @@ open class MainViewModel : ViewModel() {
         }
     }
 
-    fun onSelectItem(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-        //pos                                 get selected item position
-        //view.getText()                      get lable of selected item
-        //parent.getAdapter().getItem(pos)    get item by pos
-        //parent.getCount()                   get item count
-        //parent.getSelectedItem()            get selected item
+    fun onSelectItemAddPost(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
         _postCategoryInt.value = pos - 1
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
@@ -1312,6 +1311,24 @@ open class MainViewModel : ViewModel() {
             }
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
+    }
+
+    fun onSelectItemDepartmentSelect(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        //pos                                 get selected item position
+        //view.getText()                      get lable of selected item
+        //parent.getAdapter().getItem(pos)    get item by pos
+        //parent.getCount()                   get item count
+        //parent.getSelectedItem()            get selected item
+
+//        if (pos != 0) {
+//            _schoolSelectFlag.value = Event(true)
+//            _userSchoolInt.value = _schoolList.value!![pos].schoolId
+//        } else {
+//            _schoolSelectFlag.value = Event(false)
+//        }
+        (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
+
+
     }
 
 

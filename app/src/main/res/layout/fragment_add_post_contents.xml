@@ -81,7 +81,7 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 android:backgroundTint="@color/purple_rudder"
                                 android:selectedItemPosition="@={mainVM._postCategoryInt}"
-                                android:onItemSelected="@{(parent,view,pos,id)->mainVM.onSelectItem(parent,view,pos,id)}"
+                                android:onItemSelected="@{(parent,view,pos,id)->mainVM.onSelectItemAddPost(parent,view,pos,id)}"
                                 >
                             </Spinner>
 

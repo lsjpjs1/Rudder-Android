@@ -2,18 +2,16 @@ package com.rudder.ui.fragment.mypage
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -22,8 +20,6 @@ import com.rudder.data.remote.Category
 import com.rudder.databinding.FragmentMyPageCategorySelectBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
-import com.rudder.viewModel.MyCommentViewModel
-import com.rudder.viewModel.MyPageViewModel
 import kotlinx.android.synthetic.main.fragment_my_page_category_select.view.*
 import java.util.*
 
@@ -54,8 +50,36 @@ class CategorySelectMyPageFragment : Fragment() {
         val chipWidth = (displayDpValue[0] * 0.42).toInt()
         val chipHeight = (displayDpValue[1] * 0.09).toInt()
 
+        val commonCategoryList = arrayListOf<Category>()
+        val departmentACategoryList = arrayListOf<Category>()
+        val departmentBCategoryList = arrayListOf<Category>()
+
+
+
         viewModel.allCategories.observe(viewLifecycleOwner, Observer {
-            setCategoryChips(viewModel.allCategories.value!!,chipWidth, chipHeight,R.layout.item_chip_category,fragmentMyPageCategorySelectBinding.root.chipsPrograms)
+            for ( i in 0 until it.size ) {
+                if (it[i].categoryType == "department") {
+                    departmentACategoryList.add(it[i])
+                    departmentBCategoryList.add(it[i])
+                } else if (it[i].categoryType == "common") {
+                    commonCategoryList.add(it[i])
+                }
+            }
+            setCategoryChips(commonCategoryList,chipWidth, chipHeight,R.layout.item_chip_category,fragmentMyPageCategorySelectBinding.root.chipsPrograms)
+
+
+            if (departmentACategoryList.map{it.categoryName}[0] != "Choose university Department A") {
+                departmentACategoryList.add(0, Category(categoryName = "Choose university Department A", isMember = null, categoryId = -1, categoryType = "dummy_select") )
+            }
+
+            if (departmentBCategoryList.map{it.categoryName}[0] != "Choose university Department B") {
+                departmentBCategoryList.add(0, Category(categoryName = "Choose university Department B", isMember = null, categoryId = -1, categoryType = "dummy_select") )
+            }
+
+            val departmentASpinnerAdapter = ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, departmentACategoryList.map{it.categoryName})
+            val departmentBSpinnerAdapter = ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, departmentBCategoryList.map{it.categoryName})
+            fragmentMyPageCategorySelectBinding.departmentASpinner.adapter = departmentASpinnerAdapter
+            fragmentMyPageCategorySelectBinding.departmentBSpinner.adapter = departmentBSpinnerAdapter
         })
 
         viewModel.allClubCategories.observe(viewLifecycleOwner, Observer {
@@ -70,8 +94,6 @@ class CategorySelectMyPageFragment : Fragment() {
                 )
             }
         })
-
-
 
 
 
@@ -92,6 +114,19 @@ class CategorySelectMyPageFragment : Fragment() {
         }
 
 
+//        if (categoryListForAddPost[0] != "Select") {
+//            val categoryListForAddPost = viewModel.categoryNames.value!!
+//            categoryListForAddPost.add(0,"Select")
+//        }
+
+
+        //var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,schoolNameList)
+
+
+
+
+
+
         return fragmentMyPageCategorySelectBinding.root
     }
 
@@ -99,23 +134,21 @@ class CategorySelectMyPageFragment : Fragment() {
     fun setCategoryChips(categories : ArrayList<Category>,width : Int, height : Int, layoutResource : Int, chipGroup: ChipGroup ) {
         for ( i in 0 until categories.size ) {
             val mChip = this.layoutInflater.inflate(layoutResource, null, false) as Chip
-
             mChip.width = width
             mChip.height = height
             mChip.text = categories[i].categoryName
             mChip.tag = categories[i].categoryId
 
-            if(categories[i].isMember==null || categories[i].isMember=="t"){
+            if(categories[i].isMember==null || categories[i].isMember=="t"){ // 동아리원인 경우
                 mChip.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, boolean ->
                     viewModel.categoryIdSelect(compoundButton.tag.toString().toInt(), boolean)
                 })
-            }else if(categories[i].isMember=="r"){
+            } else if(categories[i].isMember=="r"){ // 가입 신청은 해서, 대기중
                 mChip.isCheckedIconVisible = false
                 mChip.isChipIconVisible = false
                 mChip.text = mChip.text.toString()+" (pending)"
                 mChip.isCheckable = false
-            }else{
-                // 동아리원이 아닌 경우
+            } else { // 동아리원이 아닌 경우
                 mChip.isCheckedIconVisible = false
                 mChip.isChipIconVisible = false
                 mChip.text = "Join " +  mChip.text.toString()
@@ -126,7 +159,6 @@ class CategorySelectMyPageFragment : Fragment() {
                     viewModel.clickClubJoinRequest()
                 }
             }
-
 
             chipGroup.addView(mChip)
         }

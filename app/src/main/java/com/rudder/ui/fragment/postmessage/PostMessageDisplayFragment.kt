@@ -69,7 +69,6 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
             override fun onRefresh() {
                 viewModel.getPostMessages()
             }
-
         })
 
         viewModel.myMessageRooms.observe(viewLifecycleOwner, Observer {
@@ -79,6 +78,8 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
             }
             fragmentBinding.postMessageDisplaySwipeRefreshLayout.isRefreshing=false
         })
+
+
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean?>("onMessageSend")?.observe(viewLifecycleOwner) {result ->
             result?.let {
                 if (result) {
@@ -96,23 +97,6 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
 
         return fragmentBinding.root
     }
-
-
-    override fun onAttach(context: Context) {
-
-        super.onAttach(context)
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onStart() {
-
-        super.onStart()
-    }
-
-
 
 
 
