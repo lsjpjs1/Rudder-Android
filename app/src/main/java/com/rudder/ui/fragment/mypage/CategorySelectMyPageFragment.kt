@@ -94,8 +94,6 @@ class CategorySelectMyPageFragment : Fragment() {
         }
 
 
-
-
 //        if (categoryListForAddPost[0] != "Select") {
 //            val categoryListForAddPost = viewModel.categoryNames.value!!
 //            categoryListForAddPost.add(0,"Select")

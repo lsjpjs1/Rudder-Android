@@ -767,7 +767,7 @@ open class MainViewModel : ViewModel() {
                 if(_postCategoryInt.value!!>=_allCategories.value!!.size){
                     tmpCategoryId = _allClubCategories.value!![_postCategoryInt.value!! - _allCategories.value!!.size].categoryId
                 }else{
-                    tmpCategoryId = _allCategories.value!![_postCategoryInt.value!!].categoryId - 1
+                    tmpCategoryId = _userSelectCategories.value!![_postCategoryInt.value!!].categoryId
                 }
                 val key = BuildConfig.TOKEN_KEY
                 val addPostInfo = AddPostInfo(
@@ -980,10 +980,16 @@ open class MainViewModel : ViewModel() {
         var categoryNames = ArrayList<String>()
 
         for (category in categoryList) {
+
+            if (category.categoryType == "asd") {
+
+            } else if (category.categoryType == "tmp") {
+
+            }
+
             categoryNames.add(category.categoryName)
         }
 
-        //categoryNames.add(0,"Select")
 
         for (category in categoryList) {
             _categoryIdAllList.value!!.add(category.categoryId)
