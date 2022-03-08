@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -50,6 +51,8 @@ class PostMessageRoomFragment : Fragment(),SendPostMessageCallback {
     ): View? {
 
         viewModel.setPostMessageRoomId(args.postMessageRoomId)
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) // 화면 터치 가능케 함.
+
 
         fragmentBinding = DataBindingUtil.inflate<FragmentPostMessageRoomBinding>(inflater,
                 R.layout.fragment_post_message_room, container, false)
