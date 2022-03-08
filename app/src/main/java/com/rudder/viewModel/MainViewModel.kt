@@ -966,7 +966,6 @@ open class MainViewModel : ViewModel() {
             viewModelScope.launch {
                 _allCategories.value?.addAll(categoryList)
                 _categoryNames.value = splitCategoryNames(categoryList)
-                //_selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
             }
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             return@async
