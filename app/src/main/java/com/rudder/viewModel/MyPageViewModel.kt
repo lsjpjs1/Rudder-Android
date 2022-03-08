@@ -26,7 +26,7 @@ class MyPageViewModel : ViewModel() {
     val isRequestCategorySuccess : LiveData<Event<Boolean>> = _isRequestCategorySuccess
 
     init {
-        _requestCategoryNameBody.value = ""
+        clearRequestCategoryNameBody()
     }
 
 
@@ -43,6 +43,12 @@ class MyPageViewModel : ViewModel() {
                 _isRequestCategorySuccess.postValue(Event(requestCategoryApiResult))
             }
         }
+    }
+
+
+    fun clearRequestCategoryNameBody(){
+        _requestCategoryNameBody.value = ""
+
     }
 
 }

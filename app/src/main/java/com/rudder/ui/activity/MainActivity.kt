@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private lateinit var postMessageFragment: PostMessageDisplayFragment
     private lateinit var contactUsFragment: ContactUsFragment
     private lateinit var categorySelectMyPageFragment: CategorySelectMyPageFragment
-    private lateinit var requestCategoryBottomDialogFragment: RequestCategoryBottomDialogFragment
+    lateinit var requestCategoryBottomDialogFragment: RequestCategoryBottomDialogFragment
 
 
     //private lateinit var postMessageRoomFragment: PostMessageRoomFragment
@@ -206,8 +206,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         searchPostDisplayFragment = SearchPostDisplayFragment()
         notificationDisplayFragment = NotificationDisplayFragment()
         requestCategoryBottomDialogFragment = RequestCategoryBottomDialogFragment(myPageViewModel)
-
-
 
 
 

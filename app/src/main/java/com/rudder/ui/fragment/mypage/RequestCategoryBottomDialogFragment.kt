@@ -32,13 +32,6 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
 
     override fun getTheme(): Int = R.style.DialogStyle
 
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle)
-//
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -86,8 +79,8 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     toastRequestCategorySuccess.show()
-                    //this.onDismiss(RequestCategoryBottomDialogFragment())
-                    //onCancel(dialog)
+                    parentActivity.requestCategoryBottomDialogFragment.dismiss()
+                    myPageViewModel.clearRequestCategoryNameBody()
                 }
                 else {
                     toastRequestCategoryFail.show()
