@@ -95,6 +95,8 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
 //                if (it.size>0){ // 이미지 추가했을때만 이미지 리스트 표시되게
 //                    display.showPhoto.visibility=View.VISIBLE
 //                }
+                Log.d("photos",it.toString())
+                addPostShowImagesAdapter.imageUriList = it
                 addPostShowImagesAdapter.notifyDataSetChanged()
             }
         })
