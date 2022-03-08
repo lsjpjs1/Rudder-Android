@@ -105,7 +105,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
         val mHandler = Handler(Looper.getMainLooper())
         mHandler.postDelayed({
             navController.navigate(actionPostMessageToPostMessageRoom)
-        }, 300) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
+        }, 100) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
 
 
         (activity as MainActivity).mainBottomNavigationDisappear()
