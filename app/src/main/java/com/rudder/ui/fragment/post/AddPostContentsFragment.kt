@@ -36,8 +36,6 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
 
     var categoryListForAddPost = viewModel.userSelectCategories.value!!
 
-    //viewModel.userSelectCategories.value!!
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -51,12 +49,8 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
         display.lifecycleOwner = this
 
         if (categoryListForAddPost[0].categoryName != "Select") {
-            val tmpCategoryListForAddPost = viewModel.userSelectCategories.value!!.map{it.categoryName}
-//            categoryListForAddPost = tmpCategoryListForAddPost.map{it.categoryName}
-
-            categoryListForAddPost.removeAt(0)
-            categoryListForAddPost.add(0, Category(categoryName = "Select", isMember = null, categoryId = -1, categoryType = "dummy"))
-
+            categoryListForAddPost.removeAt(0) /// "ALL" 삭제
+            categoryListForAddPost.add(0, Category(categoryName = "Select", isMember = null, categoryId = -1, categoryType = "dummy_select") )
         }
 
         val spinnerAdapter = object : ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, categoryListForAddPost.map{it.categoryName}){
@@ -68,10 +62,7 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
 
         display.categorySpinner.adapter = spinnerAdapter
 
-
-
         val addPostShowImagesAdapter = AddPostShowImagesAdapter(viewModel.selectedPhotoUriList.value!!,(activity as MainActivity).getDisplaySize(),this)
-
 
         viewModel.clearAddPost()
 
@@ -106,8 +97,6 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
         })
 
 
-
-
         viewModel.photoPickerClickSwitch.observe(viewLifecycleOwner, Observer {
             it?.let {
                 openPhotoPicker()
@@ -120,7 +109,6 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
                     fixOtherViewHeight()
                     display.addPostDisplayEntire.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
-
             }
         )
 

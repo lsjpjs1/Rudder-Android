@@ -982,9 +982,7 @@ open class MainViewModel : ViewModel() {
         for (category in categoryList) {
 
             if (category.categoryType == "asd") {
-
             } else if (category.categoryType == "tmp") {
-
             }
 
             categoryNames.add(category.categoryName)
