@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
@@ -29,10 +30,14 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
         activity as MainActivity
     }
 
-    override fun getTheme(): Int = R.style.CustomBottomSheetDialog
+    override fun getTheme(): Int = R.style.DialogStyle
 
 
-
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle)
+//
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,13 +56,13 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
 
         val toastRequestCategorySuccess: Toast = Toast.makeText(
             parentActivity,
-            "sucess",
+            "Successfully Submitted.",
             Toast.LENGTH_LONG
         )
 
         val toastRequestCategoryFail: Toast = Toast.makeText(
             parentActivity,
-            "fail",
+            "Failed.",
             Toast.LENGTH_LONG
         )
 
@@ -82,6 +87,7 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
                 if (it) {
                     toastRequestCategorySuccess.show()
                     //this.onDismiss(RequestCategoryBottomDialogFragment())
+                    //onCancel(dialog)
                 }
                 else {
                     toastRequestCategoryFail.show()
