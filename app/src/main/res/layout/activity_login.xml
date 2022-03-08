@@ -113,7 +113,8 @@
                 android:id="@+id/signUpBtn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/textview_edge"
+                android:background="@drawable/textview_edge_purple"
+                android:textColor="@color/purple_rudder"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintWidth_default="percent"
@@ -124,11 +125,13 @@
                 android:gravity="center"
                 android:onClick="@{()->loginVM.callSignUp()}"
                 android:text="@string/sign_up"
+
                 app:layout_constraintVertical_bias="0.9"
-                app:layout_constraintEnd_toStartOf="@id/signInBtn"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/signInBtn"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+
                 />
 
             <TextView
@@ -139,7 +142,8 @@
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.42"
-                android:background="@drawable/textview_edge"
+                android:textColor="@color/purple_rudder"
+                android:background="@drawable/textview_edge_purple"
                 android:clickable="true"
                 android:textSize="14sp"
                 android:gravity="center"
@@ -147,8 +151,8 @@
                 android:text="@string/sign_in"
                 app:layout_constraintVertical_bias="0.9"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/signUpBtn"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/signUpBtn"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
 

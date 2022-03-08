@@ -7,7 +7,7 @@
     <string name="email_id">EMAIL ID</string>
     <string name="email_domain">Ex) univsersity.ac.uk</string>
     <string name="sign_up">sign up</string>
-    <string name="sign_in">sign in</string>
+    <string name="sign_in">login</string>
     <string name="sumbit">SUBMIT</string>
     <string name="verify_code">Verification Code</string>
     <string name="verify_capital">VERIFY</string>
