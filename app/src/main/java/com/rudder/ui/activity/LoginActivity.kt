@@ -22,6 +22,7 @@ import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_add_comment.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -49,7 +50,6 @@ class LoginActivity : AppCompatActivity() {
         loginContainer.setOnClickListener {
             hideSoftKeyboard()
         }
-
 
 
         viewModel.showLoginErrorToast.observe(this, Observer {
@@ -112,6 +112,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onDestroy() {
         ActivityContainer.clearCurrentActivity(this)
         super.onDestroy()
+    }
+
+    override fun onResume() {
+        viewModel.clearIdAndPassword()
+        super.onResume()
     }
 
     fun autoLoginCheckbox(){

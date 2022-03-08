@@ -111,4 +111,11 @@ class LoginViewModel() : ViewModel() {
     fun callForgot(){
         _startForgotActivity.value = Event(true)
     }
+
+
+    fun clearIdAndPassword(){
+        _userId.value = ""
+        _userPassword.value = ""
+    }
+
 }
