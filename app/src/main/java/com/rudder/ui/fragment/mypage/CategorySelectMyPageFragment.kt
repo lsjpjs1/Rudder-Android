@@ -76,13 +76,10 @@ class CategorySelectMyPageFragment : Fragment() {
                 departmentBCategoryList.add(0, Category(categoryName = "Choose university Department B", isMember = null, categoryId = -1, categoryType = "dummy_select") )
             }
 
-
             val departmentASpinnerAdapter = ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, departmentACategoryList.map{it.categoryName})
             val departmentBSpinnerAdapter = ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, departmentBCategoryList.map{it.categoryName})
-
             fragmentMyPageCategorySelectBinding.departmentASpinner.adapter = departmentASpinnerAdapter
             fragmentMyPageCategorySelectBinding.departmentBSpinner.adapter = departmentBSpinnerAdapter
-
         })
 
         viewModel.allClubCategories.observe(viewLifecycleOwner, Observer {

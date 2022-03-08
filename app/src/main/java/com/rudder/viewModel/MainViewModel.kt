@@ -322,7 +322,7 @@ open class MainViewModel : ViewModel() {
     fun findCategoryIndexById(id: Int) : Int {
         var index = 0
         val tmpList: ArrayList<Category> = arrayListOf()
-        tmpList.addAll(_allCategories.value!!)
+        tmpList.addAll(_userSelectCategories.value!!)
         tmpList.addAll(_allClubCategories.value!!)
         for(i in 0 until tmpList.size) {
             if (tmpList[i].categoryId == id){
@@ -851,10 +851,10 @@ open class MainViewModel : ViewModel() {
     fun clickPostEdit() {
         if (_selectedPostMorePosition.value == null ) {
             _postBody.value = _postFromId.value!!.postBody
-            _postCategoryInt.value = findCategoryIndexById(_postFromId.value!!.categoryId + 1)
+            _postCategoryInt.value = findCategoryIndexById(_postFromId.value!!.categoryId )
         } else {
             _postBody.value = _posts.value!![selectedPostMorePosition.value!!].postBody
-            _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId + 1)
+            _postCategoryInt.value = findCategoryIndexById(_posts.value!![selectedPostMorePosition.value!!].categoryId )
         }
 
     }
