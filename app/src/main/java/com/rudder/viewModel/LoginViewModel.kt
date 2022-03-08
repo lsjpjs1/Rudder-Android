@@ -89,7 +89,6 @@ class LoginViewModel() : ViewModel() {
         try{
             GlobalScope.launch {
                 ProgressBarUtil._progressBarFlag.postValue(Event(true))
-
                 val result = repository.login(LoginInfo(_userId.value!!,_userPassword.value!!,App.prefs.getValue(NOTIFICATION_TOKEN_KEY)!!,"android"))
                 viewModelScope.launch{
                     if(result){
@@ -97,9 +96,7 @@ class LoginViewModel() : ViewModel() {
                     }else{
                         _showLoginErrorToast.value = Event(true)
                     }
-
                 }
-//            ProgressBarUtil._progressBarFlag.postValue(Event(false))
             }
         }catch (e: Exception){
             _showLoginErrorToast.value = Event(true)

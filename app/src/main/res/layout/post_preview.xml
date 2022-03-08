@@ -233,6 +233,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textSize="14sp"
+                            android:textIsSelectable="true"
                             android:text="@{post.postBody.length()>50?post.postBody.substring(0,MAX_POST_BODY_LENGTH)+`  ...`:post.postBody}"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
