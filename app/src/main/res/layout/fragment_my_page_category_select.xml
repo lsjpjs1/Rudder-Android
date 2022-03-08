@@ -115,7 +115,6 @@
                         android:text="Choose Category"/>
 
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutSS2"
                 android:layout_width="0dp"
@@ -135,7 +134,6 @@
                     android:id="@+id/chipsPrograms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -146,18 +144,20 @@
                 </com.google.android.material.chip.ChipGroup>
 
 
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clubTitleConstraintLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/constraintLayoutSS2"
+                        android:id="@+id/departmentCL"
                         app:layout_constraintWidth_percent="0.9"
                         android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutSS2"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:paddingBottom="10dp"
+                        >
 
                         <View
                             android:layout_width="match_parent"
@@ -168,117 +168,176 @@
                         </View>
 
 
-
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:textSize="18sp"
+                            android:id="@+id/departmentTextView"
                             android:layout_marginTop="2dp"
                             android:fontFamily="@font/sf_pro_text_bold"
-                            android:text="@string/club"/>
+                            android:text="@string/choose_department"/>
+
+
+                        <Spinner
+                            android:id="@+id/departmentASpinner"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/edge"
+                            android:spinnerMode="dialog"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginTop="10dp"
+                            app:layout_constraintTop_toBottomOf="@+id/departmentTextView"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintVertical_bias="0.28"
+                            app:layout_constraintWidth_default="percent"
+                            app:layout_constraintWidth_percent="0.9">
+                        </Spinner>
+
+                        <Spinner
+                            android:id="@+id/departmentBSpinner"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/edge"
+                            android:spinnerMode="dialog"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginTop="10dp"
+                            app:layout_constraintTop_toBottomOf="@+id/departmentA"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintWidth_default="percent"
+                            app:layout_constraintWidth_percent="0.9">
+                        </Spinner>
+
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayoutSS5"
+                android:id="@+id/clubTitleConstraintLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                app:layout_constraintHeight_default="percent"
-                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintTop_toBottomOf="@id/departmentCL"
+                app:layout_constraintWidth_percent="0.9"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clubTitleConstraintLayout"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.9">
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintHeight_default="percent"
+                    android:background="#9E9D9D"
+                    app:layout_constraintTop_toTopOf="parent">
+                </View>
 
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipsProgramsClub"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintVertical_bias="0.15"
-                        android:layout_marginStart="6dp"
-                        app:chipSpacing="0dp"
-                        app:singleSelection="false">
 
-                    </com.google.android.material.chip.ChipGroup>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:id="@+id/societyTextView"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:text="@string/club"/>
+
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipsProgramsClub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/societyTextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintVertical_bias="0.15"
+                    android:layout_marginStart="6dp"
+                    app:chipSpacing="0dp"
+                    app:singleSelection="false">
+
+                </com.google.android.material.chip.ChipGroup>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.core.widget.NestedScrollView>
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutSS4"
+                android:layout_width="0dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintTop_toBottomOf="@+id/clubTitleConstraintLayout"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.9"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginBottom="6dp"
+                >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#9E9D9D"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+                </View>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="Request Category"
+                    android:layout_marginStart="8dp"
+                    android:textSize="18sp"
+                    android:id="@+id/requestCategorySelectTextView"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:background="@drawable/button_enabled"
+                    android:layout_marginTop="2dp"
+                    >
+                </TextView>
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/requestCategorySelectTextView"
+                    android:text="@string/request"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/purple_rudder"
+                    android:textAppearance="@style/AppTheme.GenderChip"
+                    app:chipCornerRadius="10dp"
+                    android:id="@+id/requestCategoryChip"
+                    android:gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:checkable="true"
+                    android:clickable="true"
+                    app:layout_constraintVertical_bias="0.15"
+                    app:chipSpacing="0dp"
+                    >
+                </com.google.android.material.chip.Chip>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutSS4"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.9"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="6dp"
-            >
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#9E9D9D"
-                app:layout_constraintTop_toTopOf="parent"
-                >
-            </View>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="Request Category"
-                android:layout_marginStart="8dp"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/sf_pro_text_bold"
-                android:background="@drawable/button_enabled"
-                android:layout_marginTop="2dp"
-                >
-            </TextView>
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/request"
-                android:textColor="@color/black"
-                android:backgroundTint="@color/purple_100"
-                android:textAppearance="@style/AppTheme.GenderChip"
-                app:chipCornerRadius="10dp"
-                android:id="@+id/requestCategoryChip"
-                android:gravity="center"
-                android:layout_marginStart="6dp"
-                android:checkable="true"
-                android:clickable="true"
-                app:layout_constraintVertical_bias="0.15"
-                app:chipSpacing="0dp"
-                >
-            </com.google.android.material.chip.Chip>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -71,6 +71,7 @@
     <string name="request">Request</string>
     <string name="join_club">Join Society</string>
     <string name="request_category">Request Category</string>
+    <string name="choose_department">Choose Department</string>
 
 
 </resources>

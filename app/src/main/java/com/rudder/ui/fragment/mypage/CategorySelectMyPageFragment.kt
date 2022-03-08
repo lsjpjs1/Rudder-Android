@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.CompoundButton
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -90,6 +92,29 @@ class CategorySelectMyPageFragment : Fragment() {
         fragmentMyPageCategorySelectBinding.categoryBackBtn.setOnClickListener { view ->
             view.findNavController().popBackStack()
         }
+
+
+
+
+//        if (categoryListForAddPost[0] != "Select") {
+//            val categoryListForAddPost = viewModel.categoryNames.value!!
+//            categoryListForAddPost.add(0,"Select")
+//        }
+
+
+        //var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,schoolNameList)
+
+
+        val departmentASpinnerAdapter = ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, viewModel.allCategories.value!!.map)
+
+
+        fragmentMyPageCategorySelectBinding.departmentASpinner.adapter = departmentASpinnerAdapter
+        fragmentMyPageCategorySelectBinding.departmentBSpinner.adapter = departmentASpinnerAdapter
+
+
+
+
+
 
 
         return fragmentMyPageCategorySelectBinding.root
