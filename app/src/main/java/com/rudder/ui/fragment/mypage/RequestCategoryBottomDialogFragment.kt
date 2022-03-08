@@ -93,4 +93,10 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
     }
 
 
+    override fun onDismiss(dialog: DialogInterface) {
+        myPageViewModel.clearRequestCategoryNameBody()
+        super.onDismiss(dialog)
+    }
+
+
 }

@@ -1,6 +1,10 @@
 package com.rudder.viewModel
 
+import android.graphics.Color
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,7 +52,9 @@ class MyPageViewModel : ViewModel() {
 
     fun clearRequestCategoryNameBody(){
         _requestCategoryNameBody.value = ""
-
     }
+
+
+
 
 }

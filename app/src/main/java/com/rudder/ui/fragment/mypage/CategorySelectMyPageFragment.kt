@@ -105,7 +105,7 @@ class CategorySelectMyPageFragment : Fragment() {
         //var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,schoolNameList)
 
 
-        val departmentASpinnerAdapter = ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, viewModel.allCategories.value!!.map)
+        val departmentASpinnerAdapter = ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, viewModel.allCategories.value!!.map{it.categoryName})
 
 
         fragmentMyPageCategorySelectBinding.departmentASpinner.adapter = departmentASpinnerAdapter

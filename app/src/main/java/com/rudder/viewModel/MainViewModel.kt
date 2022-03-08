@@ -1036,12 +1036,7 @@ open class MainViewModel : ViewModel() {
         }
     }
 
-    fun onSelectItem(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-        //pos                                 get selected item position
-        //view.getText()                      get lable of selected item
-        //parent.getAdapter().getItem(pos)    get item by pos
-        //parent.getCount()                   get item count
-        //parent.getSelectedItem()            get selected item
+    fun onSelectItemAddPost(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
         _postCategoryInt.value = pos - 1
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
@@ -1312,6 +1307,24 @@ open class MainViewModel : ViewModel() {
             }
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
+    }
+
+    fun onSelectItemDepartmentSelect(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        //pos                                 get selected item position
+        //view.getText()                      get lable of selected item
+        //parent.getAdapter().getItem(pos)    get item by pos
+        //parent.getCount()                   get item count
+        //parent.getSelectedItem()            get selected item
+
+//        if (pos != 0) {
+//            _schoolSelectFlag.value = Event(true)
+//            _userSchoolInt.value = _schoolList.value!![pos].schoolId
+//        } else {
+//            _schoolSelectFlag.value = Event(false)
+//        }
+        (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
+
+
     }
 
 
