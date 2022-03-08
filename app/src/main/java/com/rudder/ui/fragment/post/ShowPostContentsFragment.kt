@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
@@ -20,8 +21,7 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.DisplayImagesAdapter
 import com.rudder.ui.adapter.PostCommentsAdapter
 import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
-import com.rudder.util.ProgressBarUtil
-import com.rudder.util.LocaleUtil
+import com.rudder.util.*
 import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.NotificationViewModel
 import kotlinx.android.synthetic.main.fragment_show_post_contents.*
@@ -29,7 +29,8 @@ import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
 
-class ShowPostContentsFragment(): Fragment() {
+class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
+
     private val lazyContext by lazy {
         requireContext()
     }
@@ -37,34 +38,44 @@ class ShowPostContentsFragment(): Fragment() {
         activity as MainActivity
     }
 
-    private val viewModel : MainViewModel by lazy {
+    private val viewModel: MainViewModel by lazy {
         (parentFragment as ShowPostDisplayFragment).viewModel
     }
 
 
-    var _fragmentBinding : FragmentShowPostContentsBinding? = null
+    var _fragmentBinding: FragmentShowPostContentsBinding? = null
     val fragmentBinding get() = _fragmentBinding!!
 
-    private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
+    private val purpleRudder by lazy {
+        ContextCompat.getColor(
+            lazyContext!!,
+            R.color.purple_rudder
+        )
+    }
 
-    companion object{
+    companion object {
         const val TAG = "ShowPostContentsFragment"
     }
 
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        _fragmentBinding= FragmentShowPostContentsBinding.inflate(inflater, container, false)
+        _fragmentBinding = FragmentShowPostContentsBinding.inflate(inflater, container, false)
 
         val viewModelType = viewModel.javaClass.name.split('.').last()
-        val adapter = PostCommentsAdapter(viewModel.comments.value!!,lazyContext,viewModel, parentFragment as LifecycleOwner )
+        val adapter = PostCommentsAdapter(
+            viewModel.comments.value!!,
+            lazyContext,
+            viewModel,
+            parentFragment as LifecycleOwner
+        )
         val displayImagesAdapter: DisplayImagesAdapter
 
         fragmentBinding.commentDisplayRV.also {
-            it.layoutManager = object : LinearLayoutManager(lazyContext){
+            it.layoutManager = object : LinearLayoutManager(lazyContext) {
                 override fun canScrollVertically(): Boolean {
                     return false
                 }
@@ -76,25 +87,42 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.isLikePost()
         if (viewModelType == "NotificationViewModel") {
-            displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![0].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+            displayImagesAdapter = DisplayImagesAdapter(
+                viewModel.posts.value!![0].imageUrls,
+                lazyContext,
+                (activity as MainActivity).getDisplaySize(),
+                this
+            )
         } else {
-            displayImagesAdapter = DisplayImagesAdapter(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,lazyContext,(activity as MainActivity).getDisplaySize())
+            displayImagesAdapter = DisplayImagesAdapter(
+                viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,
+                lazyContext,
+                (activity as MainActivity).getDisplaySize(),
+                this
+            )
         }
 
 
         fragmentBinding.showPostImageDisplayRecyclerView.also {
-            it.layoutManager = object : LinearLayoutManager(lazyContext){
-                override fun canScrollVertically(): Boolean {
-                    return false
-                }
-            }
+            it.layoutManager = LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)
             it.setHasFixedSize(false)
             it.adapter = displayImagesAdapter
         }
+        val snapHelper = PagerSnapHelper()
+        fragmentBinding.showPostImageDisplayRecyclerView.addItemDecoration(
+            CirclePagerIndicatorDecoration()
+        )
+        snapHelper.attachToRecyclerView(fragmentBinding.showPostImageDisplayRecyclerView)
+
+
+
+        //recyclerView.addItemDecoration(LinePagerIndicatorDecoration())
+
 
         setFragmentBindingPost()
 
-        val timeago = PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(fragmentBinding.post!!.postTime.time))
+        val timeago =
+            PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(fragmentBinding.post!!.postTime.time))
         fragmentBinding.mainVM = viewModel
         fragmentBinding.position = viewModel.selectedPostPosition.value!!
         fragmentBinding.lifecycleOwner = this
@@ -105,7 +133,7 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.comments.observe(parentFragment as LifecycleOwner, Observer {
             var deleteCommentflag = false
-            viewModel.isDeleteCommentSuccess.value!!.getContentIfNotHandled()?.let{
+            viewModel.isDeleteCommentSuccess.value!!.getContentIfNotHandled()?.let {
                 deleteCommentflag = it
             }
             adapter.updateComments(viewModel.comments.value!!, !deleteCommentflag)
@@ -135,7 +163,7 @@ class ShowPostContentsFragment(): Fragment() {
 
         viewModel.posts.observe(parentFragment as LifecycleOwner, Observer {
             it?.let {
-                if (viewModel.selectedPostPosition.value!!<viewModel.posts.value!!.size){
+                if (viewModel.selectedPostPosition.value!! < viewModel.posts.value!!.size) {
                     setFragmentBindingPost()
                 }
             }
@@ -152,9 +180,9 @@ class ShowPostContentsFragment(): Fragment() {
 
 
         viewModel.commentInnerValueChangeSwitch.observe(parentFragment as LifecycleOwner, Observer {
-            it?.let{
-                viewModel.commentLikeCountChange.value?.let {
-                    position-> adapter.notifyItemChanged(position)
+            it?.let {
+                viewModel.commentLikeCountChange.value?.let { position ->
+                    adapter.notifyItemChanged(position)
                 }
             }
         })
@@ -168,21 +196,22 @@ class ShowPostContentsFragment(): Fragment() {
 
 
         fragmentBinding.showPostBody.viewTreeObserver.addOnGlobalLayoutListener(
-                object : ViewTreeObserver.OnGlobalLayoutListener{
-                    override fun onGlobalLayout() {
-                        fixOtherViewHeight(fragmentBinding.showPostBody)
-                        fragmentBinding.showPostBody.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    }
+            object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    fixOtherViewHeight(fragmentBinding.showPostBody)
+                    fragmentBinding.showPostBody.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
+            }
         )
 
 
         ProgressBarUtil.progressBarFlag.observe(parentFragment as LifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
-                if (it)
+                if (it) {
                     ProgressBarUtil.progressBarVisibleFragment(progressBarShowPost, this)
-                else
-                    ProgressBarUtil.progressBarGoneFragment(progressBarShowPost, this)
+                } else {
+                }
+                ProgressBarUtil.progressBarGoneFragment(progressBarShowPost, this)
             }
         })
 
@@ -195,9 +224,9 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
         viewModel.isPostMore.observe(parentFragment as LifecycleOwner, Observer { it ->
-            it.getContentIfNotHandled()?.let {
-                bool ->
-                if(bool)
+            it.getContentIfNotHandled()?.let { bool ->
+                if (bool) {
+                }
                 (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
 
@@ -211,10 +240,14 @@ class ShowPostContentsFragment(): Fragment() {
         })
 
         viewModel.isCommentMore.observe(parentFragment as LifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let {
-                    bool ->
-                if(bool)
-                (activity as MainActivity).showCommentMore(CommunityCommentBottomSheetFragment(viewModel))
+            it.getContentIfNotHandled()?.let { bool ->
+                if (bool) {
+                }
+                (activity as MainActivity).showCommentMore(
+                    CommunityCommentBottomSheetFragment(
+                        viewModel
+                    )
+                )
             }
         })
 
@@ -298,43 +331,51 @@ class ShowPostContentsFragment(): Fragment() {
     }
 
 
-
-
-
     //스크롤 뷰 높이에 따라 바뀌는 view의 높이를 고정시켜주는 함수
-   fun fixOtherViewHeight(showPostBody: View){
+    fun fixOtherViewHeight(showPostBody: View) {
         val showPostBodyHeight = showPostBody.height
         val typedValue = TypedValue()
         val typedValue2 = TypedValue()
-        lazyContext.resources.getValue(R.dimen.post_info_height, typedValue,true)
-        lazyContext.resources.getValue(R.dimen.divide_default, typedValue2,true)
+        lazyContext.resources.getValue(R.dimen.post_info_height, typedValue, true)
+        lazyContext.resources.getValue(R.dimen.divide_default, typedValue2, true)
         val postInfoHeightRatio = typedValue.float
         val divideHeightRatio = typedValue2.float
 
         //리사이클러뷰를 제외한 나머지 뷰의 높이 고정
         var lp = constraintLayout16.layoutParams
-        lp.height=(showPostBodyHeight*divideHeightRatio).toInt()
-        constraintLayout16.layoutParams=lp
+        lp.height = (showPostBodyHeight * divideHeightRatio).toInt()
+        constraintLayout16.layoutParams = lp
 
-        lp=constraintLayout8.layoutParams
-        lp.height=(showPostBodyHeight*postInfoHeightRatio).toInt()
-        constraintLayout8.layoutParams=lp
+        lp = constraintLayout8.layoutParams
+        lp.height = (showPostBodyHeight * postInfoHeightRatio).toInt()
+        constraintLayout8.layoutParams = lp
 
-        lp=constraintLayout9.layoutParams
-        lp.height=(showPostBodyHeight*postInfoHeightRatio).toInt()
-        constraintLayout9.layoutParams=lp
+        lp = constraintLayout9.layoutParams
+        lp.height = (showPostBodyHeight * postInfoHeightRatio).toInt()
+        constraintLayout9.layoutParams = lp
 
-        lp=constraintLayout10.layoutParams
-        lp.height=(showPostBodyHeight*0.065).toInt()
-        constraintLayout10.layoutParams=lp
+        lp = constraintLayout10.layoutParams
+        lp.height = (showPostBodyHeight * 0.065).toInt()
+        constraintLayout10.layoutParams = lp
     }
 
     fun setFragmentBindingPost() {
-        if (viewModel.selectedPostPosition.value!! == -1 ) {
+        if (viewModel.selectedPostPosition.value!! == -1) {
             fragmentBinding.post = viewModel.postFromId.value!!
         } else {
             fragmentBinding.post = viewModel.posts.value!![viewModel.selectedPostPosition.value!!]
         }
+    }
+
+    override fun onClickView(view: View, position: Int) {
+        var imageSliderDialogFragment : ImageSliderDialogFragment
+        if (viewModel is NotificationViewModel) {
+            imageSliderDialogFragment = ImageSliderDialogFragment.instance(viewModel.posts.value!![0].imageUrls,position)
+        } else {
+            imageSliderDialogFragment = ImageSliderDialogFragment.instance(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,position)
+        }
+        imageSliderDialogFragment.show(childFragmentManager, ImageSliderDialogFragment.TAG)
+
     }
 
 

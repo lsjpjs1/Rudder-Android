@@ -10,13 +10,15 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.databinding.ShowPostDisplayImageBinding
+import com.rudder.util.CustomOnclickListener
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
 
 class DisplayImagesAdapter(
     var imageUrlList: ArrayList<String>,
     val context: Context,
-    val displaySize: ArrayList<Int>
+    val displaySize: ArrayList<Int>,
+    val customOnclickListener: CustomOnclickListener
 ): RecyclerView.Adapter<DisplayImagesAdapter.CustomViewHolder>() {
     inner class CustomViewHolder(val showPostDisplayImageBinding: ShowPostDisplayImageBinding) : RecyclerView.ViewHolder(
         showPostDisplayImageBinding.root
@@ -45,6 +47,10 @@ class DisplayImagesAdapter(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(R.raw.post_loading_raw)
             .into(holder.showPostDisplayImageBinding.root.showPostDisplayImageImageView)
+
+        holder.showPostDisplayImageBinding.showPostDisplayImageImageView.setOnClickListener {
+            customOnclickListener.onClickView(holder.showPostDisplayImageBinding.root, position)
+        }
 
     }
 
