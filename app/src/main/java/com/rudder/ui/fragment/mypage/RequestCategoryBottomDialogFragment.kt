@@ -80,7 +80,6 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
                 if (it) {
                     toastRequestCategorySuccess.show()
                     parentActivity.requestCategoryBottomDialogFragment.dismiss()
-                    myPageViewModel.clearRequestCategoryNameBody()
                 }
                 else {
                     toastRequestCategoryFail.show()
