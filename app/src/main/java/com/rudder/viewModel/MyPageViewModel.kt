@@ -39,26 +39,10 @@ class MyPageViewModel : ViewModel() {
             _isStringBlank.value = Event(true)
         } else {
             viewModelScope.launch {
-                ProgressBarUtil._progressBarFlag.postValue(Event(true))
-
                 val requestCategoryApiResult = Repository().requestCategoryRepository(requestCategoryInfo = RequestCategoryInfo(App.prefs.getValue(tokenKey)!!, _requestCategoryNameBody.value!!, "-" ) )
                 _isRequestCategorySuccess.postValue(Event(requestCategoryApiResult))
-
-//                if (requestCategoryApiResult) { // result가 == true 이면
-//                    _isRequestCategorySuccess.postValue(Event(requestCategoryApiResult))
-//
-//                } else { //result가 false 이면
-//
-//
-//                }
-
-                ProgressBarUtil._progressBarFlag.postValue(Event(false))
-
-
             }
         }
-
-
     }
 
 }
