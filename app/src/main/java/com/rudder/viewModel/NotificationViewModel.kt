@@ -25,7 +25,6 @@ class NotificationViewModel: MainViewModel()  {
     private val tokenKey = BuildConfig.TOKEN_KEY
 
 
-
     fun getNotifications(){
         viewModelScope.launch {
             val getNotificationsResponse =

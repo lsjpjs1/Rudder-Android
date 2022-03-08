@@ -83,8 +83,6 @@ class CategorySelectMyPageFragment : Fragment() {
 
         fragmentMyPageCategorySelectBinding.requestCategoryChip.setOnClickListener {
             (activity as MainActivity).showRequestCategoryBottomDialog()
-
-
         }
 
 

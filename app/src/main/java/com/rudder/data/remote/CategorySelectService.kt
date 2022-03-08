@@ -19,4 +19,10 @@ interface CategorySelectService {
     ) : Response<JsonObject>
 
 
+    @POST("/board/requestAddCategory")
+    suspend fun requestCategoryService(
+        @Body requestCategoryInfo: RequestCategoryInfo
+    ) : Response<JsonObject>
+
+
 }

@@ -419,11 +419,13 @@ class Repository {
     }
 
 
-//    suspend fun logout(logoutRequest: LogoutRequest): LogoutResponse{
-//        return ExceptionUtil.retryWhenException(MyPageApi::logout,logoutRequest,MyPageApi(),
-//            Response(LogoutResponse(false)
-//            )).results
-//    }
+    suspend fun requestCategoryRepository(requestCategoryInfo: RequestCategoryInfo) : Boolean{
+        val serverErrorJsonObject = JsonObject()
+        serverErrorJsonObject.addProperty("isSuccess",false)
+        return ExceptionUtil.retryWhenException(CategorySelectApi::requestCategoryApi,requestCategoryInfo,CategorySelectApi(), Response(serverErrorJsonObject)
+        ).results.get("isSuccess").asBoolean
+    }
+
 
 
 }

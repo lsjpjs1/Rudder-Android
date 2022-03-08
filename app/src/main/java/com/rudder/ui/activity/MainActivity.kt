@@ -68,7 +68,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private val myPageViewModel : MyPageViewModel by lazy { ViewModelProvider(this).get(MyPageViewModel::class.java) }
 
 
-
     lateinit var mainBottomBarFragment: MainBottomBarFragment
 //    lateinit var addCommentFragment: AddCommentFragment
     lateinit var communityDisplayFragment: CommunityDisplayFragment
