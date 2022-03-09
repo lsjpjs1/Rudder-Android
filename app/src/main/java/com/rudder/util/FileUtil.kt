@@ -67,7 +67,7 @@ object FileUtil {
 
         // 2. Instantiate the downsized image content as a byte[]
         val baos = ByteArrayOutputStream()
-        scaledBitmap.compress(CompressFormat.JPEG, 30, baos)
+        scaledBitmap.compress(CompressFormat.JPEG, 70, baos)
         return baos.toByteArray()
     }
 
