@@ -374,6 +374,7 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
         } else {
             imageSliderDialogFragment = ImageSliderDialogFragment.instance(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,position)
         }
+
         imageSliderDialogFragment.show(childFragmentManager, ImageSliderDialogFragment.TAG)
 
     }

@@ -16,6 +16,7 @@
     <color name="purple_100">#66BB86FC</color>
     <color name="orange">#FF9800</color>
     <color name="light_purple_rudder">#FFCFA7FF</color>
+    <color name="transparent_color">#80000000</color>
 
 
 </resources>

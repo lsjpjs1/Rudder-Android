@@ -52,7 +52,7 @@ class ImageSliderDialogFragment(val imageUrlList: ArrayList<String>,val selected
         snapHelper.attachToRecyclerView(binding.fullImageRV)
         binding.fullImageRV.scrollToPosition(selectedIndex)
         var lp = binding.imageSliderCL.layoutParams
-        lp.height = (displayDpValue[1] * 0.8).toInt()
+        lp.height = (displayDpValue[1] * 0.7).toInt()
         lp.width = (displayDpValue[0] * 0.9).toInt()
         binding.imageSliderCL.layoutParams = lp
         return binding.root
