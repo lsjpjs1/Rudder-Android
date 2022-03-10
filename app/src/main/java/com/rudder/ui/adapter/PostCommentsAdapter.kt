@@ -3,6 +3,7 @@ package com.rudder.ui.adapter
 import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
+import android.os.SystemClock
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -81,6 +82,7 @@ class PostCommentsAdapter(
         holder.postCommentsBinding.comment = commentList[position]
         holder.postCommentsBinding.timeago = timeago
         holder.postCommentsBinding.position = position
+        var mLastClickTime: Long = 0
 
 
         if(commentList[position].status=="child"){
@@ -152,7 +154,6 @@ class PostCommentsAdapter(
 
 
 
-
         viewModel.isCommentMorePreventDouble.observe(lifecycleOwner, androidx.lifecycle.Observer { it ->
             it?.let {
                 holder.postCommentsBinding.commentMoreImageView.isClickable = true
@@ -160,6 +161,20 @@ class PostCommentsAdapter(
 
         })
 
+
+        holder.postCommentsBinding.postPreviewTailLikeTV.setOnClickListener {
+            if (mLastClickTime.toInt() == 0) {
+                it.isActivated = false
+
+                //viewModel.clickPostLikeInCommunityContents(position)
+
+                viewModel.clickCommentLike(position)
+            } else {
+                it.isActivated = true
+            }
+
+            mLastClickTime = SystemClock.elapsedRealtime()
+        }
 
 
         Glide.with(holder.postCommentsBinding.commentProfileImageView.context)

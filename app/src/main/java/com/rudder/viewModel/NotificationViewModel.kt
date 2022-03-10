@@ -68,7 +68,7 @@ class NotificationViewModel: MainViewModel()  {
         _postId.value = notificationPostId
 
         GlobalScope.launch {
-            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             val result = Repository().postFromIdRepository(postRequest)
             val errorMessage = result.error
             val postContent = result.post
@@ -101,7 +101,7 @@ class NotificationViewModel: MainViewModel()  {
                 }
 
             }
-            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 

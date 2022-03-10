@@ -166,9 +166,7 @@ class SignUpViewModel : ViewModel() {
         _categoryIdSelectList.value = ArrayList<Int>()
         _categoryIdAllList.value = ArrayList<Int>()
 
-
         callSchoolList()
-//        getCategories()
         getProfileImageList()
     }
 

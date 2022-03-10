@@ -220,21 +220,24 @@
                         android:text="Like"
                         android:textColor="@color/purple_rudder"
                         android:textSize="12sp"
-                        android:onClick="@{()->mainVM.clickCommentLike(position)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+<!--                    android:onClick="@{()->mainVM.clickCommentLike(position)}"-->
+
 
                     <TextView
                         android:id="@+id/postPreviewTailLikeCountTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/purple_rudder"
+                        android:layout_marginStart="2dp"
                         android:textSize="12sp"
-                        android:text="@{` `+Integer.toString(comment.likeCount)}"
+                        android:text="@{comment.likeCount&lt;0 ? ` `+ Integer.toString(0) : ` `+ Integer.toString(comment.likeCount)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/postPreviewTailLikeTV"
                         app:layout_constraintTop_toTopOf="parent" />
+<!--                    android:text="@{` `+Integer.toString(comment.likeCount)}"-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
