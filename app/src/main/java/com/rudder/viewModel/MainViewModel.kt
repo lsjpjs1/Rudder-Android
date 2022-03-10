@@ -584,12 +584,14 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    fun getPosts() { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    fun getPosts() {
         _isScrollBottomTouch.value = Event(true)
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
 
         viewModelScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
             val categoryId = if(userSelectCategories.value!!.size-1>=selectedCategoryPosition.value!!){
                 userSelectCategories.value!![selectedCategoryPosition.value!!].categoryId
             }else{
@@ -616,6 +618,8 @@ open class MainViewModel : ViewModel() {
                 }
                 _isScrollBottomTouch.value = Event(false)
             }
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+
         }
     }
 
@@ -661,7 +665,7 @@ open class MainViewModel : ViewModel() {
         }
 
         GlobalScope.launch {
-            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             val resComments = Repository().getComments(getCommentInfo)
             viewModelScope.launch {
                 var tmpCommentList = ArrayList<Comment>()
@@ -688,7 +692,7 @@ open class MainViewModel : ViewModel() {
                 }
                 _comments.value = tmpCommentList
             }
-            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 
@@ -707,8 +711,6 @@ open class MainViewModel : ViewModel() {
             }
 
             GlobalScope.launch {
-                ProgressBarUtil._progressBarFlag.postValue(Event(true))
-
                 if (_selectedCommentGroupNum.value == -1) { // _selectedCommentGroupNum.value==-1 -> parent인 댓글
                     addCommentInfo = AddCommentInfo(
                         postIdForAddComment,
@@ -745,7 +747,6 @@ open class MainViewModel : ViewModel() {
                         getComments()
                     }
                     clearNestedCommentInfo()
-                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
                 }
             }
         }
@@ -1272,7 +1273,7 @@ open class MainViewModel : ViewModel() {
         )
 
         GlobalScope.launch {
-            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             val result = Repository().postFromIdRepository(postRequest)
             val errorMessage = result.error
             val postContent = result.post
@@ -1304,7 +1305,8 @@ open class MainViewModel : ViewModel() {
                     _isShowPostRefreshSuccess.postValue(Event(true))
                 }
             }
-            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+
         }
     }
 

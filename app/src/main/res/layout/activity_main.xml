@@ -16,6 +16,11 @@
         android:id="@+id/main_container"
         tools:context=".ui.activity.MainActivity">
 
+<!--        <include-->
+<!--            android:id="@+id/progressBarMain"-->
+<!--            android:visibility="visible"-->
+<!--            layout="@layout/progressbar"/>-->
+
 
 <!--        <FrameLayout-->
 <!--            android:id="@+id/mainDisplay"-->

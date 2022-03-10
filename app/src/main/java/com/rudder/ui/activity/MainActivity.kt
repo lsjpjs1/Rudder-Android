@@ -59,6 +59,7 @@ import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
 import com.rudder.viewModel.MyPageViewModel
 import com.rudder.viewModel.NotificationViewModel
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
 
@@ -365,12 +366,12 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         }
 
-        if (notificationType!=-1&&itemId!=-1){
+        if (notificationType != -1 && itemId != -1) {
             moveByNotificationType(notificationType,itemId)
-        } else{
+        } else {
              if (viewModel.noticeResponse.value == null) {
-            viewModel.getNotice()
-        }
+                 viewModel.getNotice()
+            }
         }
 
 
