@@ -125,7 +125,6 @@ open class MainViewModel : ViewModel() {
     var _categoryIdSelectList = MutableLiveData<ArrayList<Int>>()
     var _categoryIdAllList = MutableLiveData<ArrayList<Int>>()
     val _categorySelectApply = MutableLiveData<Event<Boolean>>()
-    val _clickCategorySelect = MutableLiveData<Event<Boolean>>()
     val _categoryNamesForSelection = MutableLiveData<ArrayList<String>>()
     val _isStringBlank = MutableLiveData<Event<Boolean>>()
     val _isUnvalidCategorySelect = MutableLiveData<Event<Boolean>>()
@@ -209,12 +208,9 @@ open class MainViewModel : ViewModel() {
     var categoryIdSelectList: LiveData<ArrayList<Int>> = _categoryIdSelectList
     var categoryIdAllList: LiveData<ArrayList<Int>> = _categoryIdAllList
     val categorySelectApply: LiveData<Event<Boolean>> = _categorySelectApply // Apply button
-    val clickCategorySelect : LiveData<Event<Boolean>> = _clickCategorySelect
-
 
     val categoryNamesForSelection: LiveData<ArrayList<String>> = _categoryNamesForSelection
     val selectedParentCommentBody: LiveData<String> = _selectedParentCommentBody
-
     val isStringBlank : LiveData<Event<Boolean>> = _isStringBlank
     val isUnvalidCategorySelect : LiveData<Event<Boolean>> = _isUnvalidCategorySelect
     var postMode : PostMode = PostMode.NORMAL
@@ -1266,10 +1262,7 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    fun clickCategorySelection() {
-        _categoryIdSelectList.value = ArrayList<Int>()
-        _clickCategorySelect.value = Event(true)
-    }
+
 
     fun clearPostFromId() {
         _postFromId.value = null
@@ -1344,7 +1337,6 @@ open class MainViewModel : ViewModel() {
 //
 //
             _departmentCategoryAInt.value = pos + 1 + 10
-            _departmentCategoryBInt.value = pos + 1 + 10
         }
 
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
@@ -1357,6 +1349,13 @@ open class MainViewModel : ViewModel() {
         }
 
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
+    }
+
+    fun clearDepartmentCategory() {
+        _categoryIdSelectList.value = ArrayList<Int>()
+        _departmentCategoryAInt.value = 0
+        _departmentCategoryBInt.value = 0
+        Log.d("test123","clear")
     }
 
 

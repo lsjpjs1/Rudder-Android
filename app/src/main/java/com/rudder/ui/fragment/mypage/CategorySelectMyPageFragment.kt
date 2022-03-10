@@ -116,20 +116,15 @@ class CategorySelectMyPageFragment : Fragment() {
         }
 
 
-//        if (categoryListForAddPost[0] != "Select") {
-//            val categoryListForAddPost = viewModel.categoryNames.value!!
-//            categoryListForAddPost.add(0,"Select")
-//        }
-
-
-        //var adapter = ArrayAdapter<String>(lazyContext,R.layout.support_simple_spinner_dropdown_item,schoolNameList)
-
-
-
-
-
 
         return fragmentMyPageCategorySelectBinding.root
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("test123","onResume")
+        viewModel.clearDepartmentCategory()
     }
 
 
