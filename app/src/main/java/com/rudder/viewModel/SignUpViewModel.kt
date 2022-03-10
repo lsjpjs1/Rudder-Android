@@ -238,10 +238,6 @@ class SignUpViewModel : ViewModel() {
     }
 
 
-    override fun onCleared() {
-        super.onCleared()
-    }
-
 
     fun clickNextTermsOfService(){
         _termsOfServiceNext.value = Event(true)
@@ -377,27 +373,10 @@ class SignUpViewModel : ViewModel() {
     }
 
 
-    fun splitCategoryNames(categoryList: ArrayList<Category>): ArrayList<String> {
-        var categoryNames = ArrayList<String>()
-
-        for (category in categoryList) {
-            categoryNames.add(category.categoryName)
-            _categoryIdAllList.value!!.add(category.categoryId)
-        }
-        return categoryNames
-    }
 
 
-    fun getCategories() {
-        GlobalScope.launch {
-            var categoryList = repository.getCategories(GetCategoriesRequest(null,_userSchoolInt.value))
-            categoryList.removeAt(0)
-            viewModelScope.launch {
-                _categoryNames.value = splitCategoryNames(categoryList)
-                _categories.value = categoryList
-            }
-        }
-    }
+
+
 
     fun callNickNameCheck() {
         GlobalScope.launch {

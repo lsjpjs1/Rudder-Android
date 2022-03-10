@@ -140,7 +140,7 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.createAccountNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
-                    viewModel.getCategories()
+
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                     fragmentShowHide.addToBackStack()
                     fragmentShowHide.showFragment(profileSettingFragment, R.id.signUp_container)
