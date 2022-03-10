@@ -69,11 +69,11 @@ class CategorySelectMyPageFragment : Fragment() {
             setCategoryChips(commonCategoryList,chipWidth, chipHeight,R.layout.item_chip_category,fragmentMyPageCategorySelectBinding.root.chipsPrograms)
 
 
-            if (departmentACategoryList.map{it.categoryName}[0] != "Choose university Department A") {
+            if (departmentACategoryList.map{it.categoryName}[0] != "Choose Your Department A") {
                 departmentACategoryList.add(0, Category(categoryName = "Choose university Department A", isMember = null, categoryId = -1, categoryType = "dummy_select") )
             }
 
-            if (departmentBCategoryList.map{it.categoryName}[0] != "Choose university Department B") {
+            if (departmentBCategoryList.map{it.categoryName}[0] != "Choose Your Department B") {
                 departmentBCategoryList.add(0, Category(categoryName = "Choose university Department B", isMember = null, categoryId = -1, categoryType = "dummy_select") )
             }
 
@@ -123,7 +123,6 @@ class CategorySelectMyPageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("test123","onResume")
         viewModel.clearDepartmentCategory()
     }
 

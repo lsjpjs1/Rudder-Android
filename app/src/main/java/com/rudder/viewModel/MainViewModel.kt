@@ -980,11 +980,6 @@ open class MainViewModel : ViewModel() {
         var categoryNames = ArrayList<String>()
 
         for (category in categoryList) {
-
-            if (category.categoryType == "test123") {
-            } else if (category.categoryType == "tmp") {
-            }
-
             categoryNames.add(category.categoryName)
         }
 
@@ -1262,12 +1257,9 @@ open class MainViewModel : ViewModel() {
     }
 
 
-
-
     fun clearPostFromId() {
         _postFromId.value = null
     }
-
 
 
     fun getPostContentFromPostId() { // scroll top 때 사용, mainViewModel
@@ -1355,7 +1347,6 @@ open class MainViewModel : ViewModel() {
         _categoryIdSelectList.value = ArrayList<Int>()
         _departmentCategoryAInt.value = 0
         _departmentCategoryBInt.value = 0
-        Log.d("test123","clear")
     }
 
 
