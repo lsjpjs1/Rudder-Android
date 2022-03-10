@@ -140,7 +140,7 @@ class CategorySelectMyPageFragment : Fragment() {
                     viewModel.categoryIdSelect(compoundButton.tag.toString().toInt(), boolean)
                     Log.d("test123123", "${compoundButton.tag.toString().toInt()}")
                 })
-            } else if(categories[i].isMember=="r"){ // 가입 신청은 해서, 대기중
+            } else if(categories[i].isMember=="r" ){ // 가입 신청은 해서, 대기중
                 mChip.isCheckedIconVisible = false
                 mChip.isChipIconVisible = false
                 mChip.text = mChip.text.toString()+" (pending)"
