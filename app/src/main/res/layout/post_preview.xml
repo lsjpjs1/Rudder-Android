@@ -47,7 +47,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/postPreviewHead"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="56dp"
                     app:layout_constraintHeight_default="percent"
                     app:layout_constraintHeight_percent="@dimen/post_preview_head_height"
                     app:layout_constraintTop_toTopOf="parent"
@@ -215,7 +215,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/postPreviewBody"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="54dp"
                     app:layout_constraintHeight_default="percent"
                     app:layout_constraintHeight_percent="@dimen/post_preview_body_height"
                     app:layout_constraintTop_toBottomOf="@+id/postPreviewBlank"
@@ -226,7 +226,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent">
+                        app:layout_constraintStart_toStartOf="parent"
+                        >
 
                         <TextView
                             android:id="@+id/postPreviewBodyPostTitleTV"
