@@ -227,7 +227,7 @@ open class MainViewModel : ViewModel() {
         _allCategories.value = arrayListOf()
         _allClubCategories.value = arrayListOf()
         _userSelectCategories.value = arrayListOf(
-            Category(-1, "All","t","common")
+            Category(-1, "All","t","common","All")
         )
         _posts.value = arrayListOf(
             PreviewPost(
@@ -949,7 +949,7 @@ open class MainViewModel : ViewModel() {
         GlobalScope.launch {
             var categoryList = Repository().getSelectedCategoriesRepository( Token(App.prefs.getValue(tokenKey)!!) )
             viewModelScope.launch {
-                categoryList.add(0, Category(-1, "All","t","common"))
+                categoryList.add(0, Category(-1, "All","t","common","All"))
                 _userSelectCategories.value = categoryList
             }
 
@@ -1318,8 +1318,7 @@ open class MainViewModel : ViewModel() {
         if (pos != 0) {
             //_schoolSelectFlag.value = Event(true)
             //_userSchoolInt.value = _schoolList.value!![pos].schoolId
-
-            _departmentCategoryAInt.value = pos + 1 + 10
+            _departmentCategoryAInt.value = (parent.selectedItem as Category).categoryId
         }
 
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
@@ -1328,7 +1327,7 @@ open class MainViewModel : ViewModel() {
 
     fun onSelectItemDepartmentBSelect(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         if (pos != 0) {
-            _departmentCategoryBInt.value = pos + 1 + 10
+            _departmentCategoryBInt.value = (parent.selectedItem as Category).categoryId
         }
 
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))

@@ -8,6 +8,7 @@ import com.rudder.data.GetCommentInfo
 import com.rudder.data.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import kotlin.reflect.jvm.internal.impl.types.AbbreviatedType
 
 
 interface BoardInfoService {
@@ -51,8 +52,15 @@ data class Category(
     val isMember : String?,
 
     @SerializedName(value = "category_type")
-    val categoryType : String
-)
+    val categoryType : String,
+    @SerializedName(value = "category_abbreviation")
+    val categoryAbbreviation : String
+
+){
+    override fun toString(): String {
+        return categoryName
+    }
+}
 
 
 data class Token(

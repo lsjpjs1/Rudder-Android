@@ -70,15 +70,15 @@ class CategorySelectMyPageFragment : Fragment() {
 
 
             if (departmentACategoryList.map{it.categoryName}[0] != "Choose Your Department A") {
-                departmentACategoryList.add(0, Category(categoryName = "Choose university Department A", isMember = null, categoryId = -1, categoryType = "dummy_select") )
+                departmentACategoryList.add(0, Category(categoryName = "Choose university Department A", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Choose university Department A") )
             }
 
             if (departmentBCategoryList.map{it.categoryName}[0] != "Choose Your Department B") {
-                departmentBCategoryList.add(0, Category(categoryName = "Choose university Department B", isMember = null, categoryId = -1, categoryType = "dummy_select") )
+                departmentBCategoryList.add(0, Category(categoryName = "Choose university Department B", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Choose university Department B") )
             }
 
-            val departmentASpinnerAdapter = ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, departmentACategoryList.map{it.categoryName})
-            val departmentBSpinnerAdapter = ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, departmentBCategoryList.map{it.categoryName})
+            val departmentASpinnerAdapter = ArrayAdapter(lazyContext, R.layout.support_simple_spinner_dropdown_item, departmentACategoryList)
+            val departmentBSpinnerAdapter = ArrayAdapter(lazyContext, R.layout.support_simple_spinner_dropdown_item, departmentBCategoryList)
             fragmentMyPageCategorySelectBinding.departmentASpinner.adapter = departmentASpinnerAdapter
             fragmentMyPageCategorySelectBinding.departmentBSpinner.adapter = departmentBSpinnerAdapter
         })
