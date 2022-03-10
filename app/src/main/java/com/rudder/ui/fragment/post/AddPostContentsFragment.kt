@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver
 import android.widget.ArrayAdapter
 import android.widget.SpinnerAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -100,8 +101,10 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
 
 
         viewModel.photoPickerClickSwitch.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                openPhotoPicker()
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    openPhotoPicker()
+                }
             }
         })
 

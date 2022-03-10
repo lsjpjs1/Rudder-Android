@@ -107,7 +107,7 @@ open class MainViewModel : ViewModel() {
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
     private val _postInnerValueChangeSwitch = MutableLiveData<Boolean>()
     private val _commentInnerValueChangeSwitch = MutableLiveData<Boolean>()
-    private val _photoPickerClickSwitch = MutableLiveData<Boolean?>()
+    private val _photoPickerClickSwitch = MutableLiveData<Event<Boolean?>>()
     private val _imageCount = MutableLiveData<Int>()
     private val _myProfileImageUrl = MutableLiveData<String>()
     var noticeAlreadyShow = false
@@ -139,7 +139,7 @@ open class MainViewModel : ViewModel() {
     val selectedRequestJoinClubCategoryId:LiveData<Int> = _selectedRequestJoinClubCategoryId
     val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
     val myProfileImageUrl:LiveData<String> = _myProfileImageUrl
-    val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
+    val photoPickerClickSwitch:LiveData<Event<Boolean?>> = _photoPickerClickSwitch
     val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
     val postInnerValueChangeSwitch:LiveData<Boolean> = _postInnerValueChangeSwitch
     val commentLikeCountChange: LiveData<Int> = _commentLikeCountChange
@@ -418,7 +418,8 @@ open class MainViewModel : ViewModel() {
     }
 
     fun onPhotoPickerClick(){
-        switch(_photoPickerClickSwitch)
+        //switch(_photoPickerClickSwitch)
+        _photoPickerClickSwitch.value = Event(true)
     }
 
 
@@ -451,7 +452,7 @@ open class MainViewModel : ViewModel() {
         _selectedPhotoUriList.value = arrayListOf()
         _postBody.value = ""
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
-        _photoPickerClickSwitch.value = null
+        _photoPickerClickSwitch.value = Event(null)
     }
 
 
