@@ -54,7 +54,7 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
             categoryListForAddPost.add(0, Category(categoryName = "Select", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Select") )
         }
 
-        val spinnerAdapter = object : ArrayAdapter<String>(lazyContext, R.layout.support_simple_spinner_dropdown_item, categoryListForAddPost.map{it.categoryName}){
+        val spinnerAdapter = object : ArrayAdapter<String>(lazyContext, R.layout.custom_spinner_layout, categoryListForAddPost.map{it.categoryName}){
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getView(position, convertView, parent) as TextView
                 return view

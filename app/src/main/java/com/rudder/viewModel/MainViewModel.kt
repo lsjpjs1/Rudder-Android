@@ -1037,6 +1037,8 @@ open class MainViewModel : ViewModel() {
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
         _postCategoryInt.value = pos - 1
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
+        (parent.getChildAt(0) as TextView).textSize = 15.0.toFloat()
+
     }
 
 //        fun isAlreadyReadPost(): Boolean {
@@ -1315,6 +1317,8 @@ open class MainViewModel : ViewModel() {
         }
 
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
+        (parent.getChildAt(0) as TextView).textSize = 14.0.toFloat()
+
     }
 
 
@@ -1324,6 +1328,8 @@ open class MainViewModel : ViewModel() {
         }
 
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
+        (parent.getChildAt(0) as TextView).textSize = 14.0.toFloat()
+
     }
 
     fun clearDepartmentCategory() {
