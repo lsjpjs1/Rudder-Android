@@ -10,6 +10,7 @@ import com.rudder.data.remote.ResponseEnum
 import com.rudder.data.remote.UpdateNicknameRequest
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
+import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -41,6 +42,8 @@ class EditNicknameDialogViewModel : ViewModel() {
             _toastMessage.value = "One or more fields is blank!"
         } else {
             GlobalScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
                 val result=Repository().updateNickname(UpdateNicknameRequest(App.prefs.getValue("token")!!,_newNickname.value!!))
                 viewModelScope.launch {
                     when(result.error){
@@ -61,8 +64,7 @@ class EditNicknameDialogViewModel : ViewModel() {
 
                     }
                 }
-
-
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             }
 
         }

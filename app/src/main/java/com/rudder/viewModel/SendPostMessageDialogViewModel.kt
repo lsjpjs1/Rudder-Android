@@ -11,6 +11,7 @@ import com.rudder.data.remote.ResponseEnum
 import com.rudder.data.remote.SendPostMessageRequest
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
+import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -34,6 +35,8 @@ class SendPostMessageDialogViewModel : ViewModel() {
             _toastMessage.value = "One or more fields is blank!"
         } else {
             GlobalScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
                 val token = App.prefs.getValue(BuildConfig.TOKEN_KEY)
                 _messageReceiveUserInfoId.value?.let {
                     val result = Repository().sendPostMessage(SendPostMessageRequest(token!!,_messageReceiveUserInfoId.value!!,_postMessageBody.value!!))
@@ -53,10 +56,10 @@ class SendPostMessageDialogViewModel : ViewModel() {
                         }
                     }
                 }
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+
             }
         }
-
-
 
 
     }
