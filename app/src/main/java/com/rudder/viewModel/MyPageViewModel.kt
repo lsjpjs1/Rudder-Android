@@ -42,10 +42,14 @@ class MyPageViewModel : ViewModel() {
         if (_requestCategoryNameBody.value!!.isBlank()) {
             _isStringBlank.value = Event(true)
         } else {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
             viewModelScope.launch {
                 val requestCategoryApiResult = Repository().requestCategoryRepository(requestCategoryInfo = RequestCategoryInfo(App.prefs.getValue(tokenKey)!!, _requestCategoryNameBody.value!!, "-" ) )
                 _isRequestCategorySuccess.postValue(Event(requestCategoryApiResult))
             }
+
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 

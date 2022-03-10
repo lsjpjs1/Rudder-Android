@@ -27,11 +27,14 @@ class NotificationViewModel: MainViewModel()  {
 
     fun getNotifications(){
         viewModelScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
             val getNotificationsResponse =
                 Repository().getNotifications(GetNotificationsRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!))
             if (getNotificationsResponse.isSuccess) {
                 _notificationList.value = getNotificationsResponse.notifications
             }
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 

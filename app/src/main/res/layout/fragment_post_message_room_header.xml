@@ -73,7 +73,7 @@
                     android:id="@+id/postMessageRoomHeaderReplyTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/reply"
+                    android:text="@string/send"
                     android:textSize="18sp"
                     android:textColor="@color/purple_rudder"
                     android:onClick="@{()->postMessageRoomHeaderFragment.showSendPostMessageDialog()}"

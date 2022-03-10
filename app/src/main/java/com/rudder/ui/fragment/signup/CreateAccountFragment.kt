@@ -34,12 +34,12 @@ class CreateAccountFragment : Fragment() {
         createAccountBinding.lifecycleOwner = this
 
 
-        val toastId = Toast.makeText(activity, "ID (4-15 characters) can contain upper/lower letters and numbers.", Toast.LENGTH_SHORT)
-        val toastPassword = Toast.makeText(activity, "Password (8-15 characters) should be a combination of letters, numbers, or symbols.", Toast.LENGTH_SHORT)
-        val toastPasswordCheck = Toast.makeText(activity, "Incorrect password or confirm password.",Toast.LENGTH_SHORT)
-        val toastEmailDomain = Toast.makeText(activity, "Please enter your valid university email.", Toast.LENGTH_SHORT)
-        val toastverifyCodeCheckFail = Toast.makeText(activity, "Wrong verification code", Toast.LENGTH_SHORT)
-        val toastverifyCodeCheckSuccess = Toast.makeText(activity, "Correct verification code! ", Toast.LENGTH_SHORT)
+        val toastId = Toast.makeText(activity, "ID (4-15 characters) can contain upper/lower letters and numbers.", Toast.LENGTH_LONG)
+        val toastPassword = Toast.makeText(activity, "Password (8-15 characters) should be a combination of letters, numbers, or symbols.", Toast.LENGTH_LONG)
+        val toastPasswordCheck = Toast.makeText(activity, "Incorrect password or confirm password.",Toast.LENGTH_LONG)
+        val toastEmailDomain = Toast.makeText(activity, "Please enter your valid university email.", Toast.LENGTH_LONG)
+        val toastverifyCodeCheckFail = Toast.makeText(activity, "Wrong verification code", Toast.LENGTH_LONG)
+        val toastverifyCodeCheckSuccess = Toast.makeText(activity, "Correct verification code! ", Toast.LENGTH_LONG)
 
 
         viewModel.idChangeFlag.observe(viewLifecycleOwner, Observer {

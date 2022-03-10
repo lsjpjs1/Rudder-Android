@@ -73,12 +73,13 @@ class SearchViewModel : MainViewModel() {
         if ( _searchWord.value!!.isBlank() || _searchWord.value!!.length < 2) {
             _isSearchWordValid.value = Event(true)
         } else {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
             _isScrollTouch.value = Event(true)
             val key = BuildConfig.TOKEN_KEY
             val token = App.prefs.getValue(key)
             val searchWordSplit = _searchWord.value!!.trim().split(' ')
             val validSearchWord = searchWordSplit.joinToString(" ")
-
 
             GlobalScope.launch {
                 val resPosts = if (isScroll) {
@@ -112,10 +113,9 @@ class SearchViewModel : MainViewModel() {
                         _posts.value = resPosts
                     }
                     _isScrollTouch.value = Event(false)
-
                 }
             }
-
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 

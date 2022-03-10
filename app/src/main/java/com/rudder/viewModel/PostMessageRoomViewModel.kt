@@ -10,6 +10,8 @@ import com.rudder.data.dto.PostMessage
 import com.rudder.data.local.App
 import com.rudder.data.remote.GetMessagesByRoomRequest
 import com.rudder.data.repository.Repository
+import com.rudder.util.Event
+import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -27,6 +29,8 @@ class PostMessageRoomViewModel : ViewModel() {
         GlobalScope.launch {
             val messagesByRoom = Repository().getMessagesByRoom(GetMessagesByRoomRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY!!)!!, _postMessageRoomId.value!!))
             viewModelScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
                 _messages.value = messagesByRoom
                 if (messagesByRoom.size>0){
                     if (messagesByRoom[0].isSender){
@@ -35,7 +39,7 @@ class PostMessageRoomViewModel : ViewModel() {
                         _targetUserInfoId.value = messagesByRoom[0].sendUserInfoId
                     }
                 }
-
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             }
         }
     }

@@ -299,7 +299,6 @@ open class MainViewModel : ViewModel() {
 
     fun requestJoinClub() { // 동아리 카테고리 불러오기
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
-
         GlobalScope.launch {
 
             val isSuccess = Repository().requestJoinClub(RequestJoinClubRequest(App.prefs.getValue(tokenKey)!!,_selectedRequestJoinClubCategoryId.value!!,_clubJoinRequestBody.value!!))
@@ -309,7 +308,6 @@ open class MainViewModel : ViewModel() {
                     clickDialogCancel()
                 }
             }
-
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
 
@@ -334,9 +332,7 @@ open class MainViewModel : ViewModel() {
 
     fun getClubCategories() { // 동아리 카테고리 불러오기
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
-
         GlobalScope.launch {
-
             var categoryList = Repository().getClubCategories(GetCategoriesRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY),null))
             viewModelScope.launch {
                 _allClubCategories.value= arrayListOf()
@@ -356,7 +352,6 @@ open class MainViewModel : ViewModel() {
                     }
                 }
             }
-
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
 
@@ -418,7 +413,6 @@ open class MainViewModel : ViewModel() {
     }
 
     fun onPhotoPickerClick(){
-        //switch(_photoPickerClickSwitch)
         _photoPickerClickSwitch.value = Event(true)
     }
 
@@ -430,16 +424,18 @@ open class MainViewModel : ViewModel() {
 
     fun callLoginOut() {
         viewModelScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
             val logoutResponse = Repository().logout(LogoutRequest(App.prefs.getValue("token")!!))
             if(logoutResponse.isSuccess) {
                 val key = BuildConfig.TOKEN_KEY
                 App.prefs.removeValue(key)
                 _startLoginActivity.value = Event(true)
             }
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
 
     }
-
 
 
     fun clearNestedCommentInfo() {
@@ -588,7 +584,7 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    fun getPosts() {
+    fun getPosts() { ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         _isScrollBottomTouch.value = Event(true)
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
@@ -711,6 +707,8 @@ open class MainViewModel : ViewModel() {
             }
 
             GlobalScope.launch {
+                ProgressBarUtil._progressBarFlag.postValue(Event(true))
+
                 if (_selectedCommentGroupNum.value == -1) { // _selectedCommentGroupNum.value==-1 -> parent인 댓글
                     addCommentInfo = AddCommentInfo(
                         postIdForAddComment,
@@ -747,11 +745,9 @@ open class MainViewModel : ViewModel() {
                         getComments()
                     }
                     clearNestedCommentInfo()
-
+                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
                 }
-        }
-
-
+            }
         }
     }
 
@@ -782,8 +778,11 @@ open class MainViewModel : ViewModel() {
                 val res = Repository().addPost(addPostInfo)
                 val isSuccess = res.isSuccess
                 val postId = res.postId
-                if (isSuccess) uploadPhoto(postId)
-                else ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+                if (isSuccess) {
+                    uploadPhoto(postId)
+                } else {
+                    ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+                }
             }
         }
     }
@@ -861,13 +860,11 @@ open class MainViewModel : ViewModel() {
     }
 
     fun clickBlockUser() {
-
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             var result = Repository().blockUser(BlockUserRequest(App.prefs.getValue(tokenKey)!!,_posts.value!![selectedPostMorePosition.value!!].userInfoId))
             _isBlockUser.postValue(Event(result))
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
-
         }
     }
 
@@ -922,6 +919,8 @@ open class MainViewModel : ViewModel() {
         }
 
         GlobalScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
             var result = Repository().deleteCommentRepository(DeleteCommentInfo(commentInt, postId))
             _isCommentDelete.postValue(Event(result))
             _isDeleteCommentSuccess.postValue(Event(result))
@@ -938,8 +937,8 @@ open class MainViewModel : ViewModel() {
 
                 _commentCountChange.postValue(Event(result))
                 getComments()
-
             }
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 
@@ -979,11 +978,9 @@ open class MainViewModel : ViewModel() {
 
     fun splitCategoryNames(categoryList: ArrayList<Category>,removeZeroIndex:Boolean=true): ArrayList<String> {
         var categoryNames = ArrayList<String>()
-
         for (category in categoryList) {
             categoryNames.add(category.categoryName)
         }
-
 
         for (category in categoryList) {
             _categoryIdAllList.value!!.add(category.categoryId)
@@ -994,7 +991,6 @@ open class MainViewModel : ViewModel() {
     }
 
     fun isLikePost() { // 내가 좋아요를 눌렀는지 서버에 확인하는 함수
-
         val postIdForisLikePost : Int
         if (_selectedPostPosition.value!! == -1 ) {
             postIdForisLikePost = _postId.value!!
@@ -1110,6 +1106,8 @@ open class MainViewModel : ViewModel() {
             _isStringBlank.value = Event(true)
         } else {
             GlobalScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
                 val commentInt = _comments.value!![_selectedCommentMorePosition.value!!].commentId
                 val editCommentInfo = EditCommentInfo(
                     _commentEditBody.value!!,
@@ -1124,6 +1122,8 @@ open class MainViewModel : ViewModel() {
                     getComments()
                     _commentBody.postValue("")
                 }
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+
             }
         }
     }
@@ -1143,12 +1143,10 @@ open class MainViewModel : ViewModel() {
                 )
                 val result = Repository().reportRepository(reportInfo)
                 _isReportCommentSuccess.postValue(Event(result))
-
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             }
         }
     }
-
 
 
     fun reportPost() {
@@ -1192,8 +1190,6 @@ open class MainViewModel : ViewModel() {
 
     fun clickDialogCancel() {
         _isCancelClick.value = Event(true)
-
-
         clearValue(_userRequestBody)
         clearValue(_clubJoinRequestBody)
     }
@@ -1238,13 +1234,11 @@ open class MainViewModel : ViewModel() {
     fun clickApplyCategorySelect(){ // Apply 버튼 누를시 실행
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
             _categoryIdSelectList.value!!.add(_departmentCategoryAInt.value!!)
             _categoryIdSelectList.value!!.add(_departmentCategoryBInt.value!!)
 
             Log.d("test1234","${_departmentCategoryAInt.value!!}")
             Log.d("test1235","${_departmentCategoryBInt.value!!}")
-
 
             val tmpIdList = _categoryIdSelectList.value!!.sorted()
             val sortCategoryIdArrayList = ArrayList<Int>()
@@ -1325,10 +1319,6 @@ open class MainViewModel : ViewModel() {
             //_schoolSelectFlag.value = Event(true)
             //_userSchoolInt.value = _schoolList.value!![pos].schoolId
 
-//            _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
-//            _postCategoryInt.value = pos - 1
-//
-//
             _departmentCategoryAInt.value = pos + 1 + 10
         }
 

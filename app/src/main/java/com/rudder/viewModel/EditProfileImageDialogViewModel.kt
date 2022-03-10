@@ -13,6 +13,7 @@ import com.rudder.data.remote.UpdateNicknameRequest
 import com.rudder.data.remote.UpdateProfileImageRequest
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
+import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -60,6 +61,8 @@ class EditProfileImageDialogViewModel : ViewModel() {
             toastMessage.value = "Please select a profile image"
         }else{
             GlobalScope.launch {
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
                 val updateProfileImageRequest = UpdateProfileImageRequest(
                     App.prefs.getValue(BuildConfig.TOKEN_KEY)!!,
                     _selectedProfileImage.value!!.profileImageId
@@ -73,6 +76,8 @@ class EditProfileImageDialogViewModel : ViewModel() {
                 } else {
                     toastMessage.postValue("Failed to change my nickname.")
                 }
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+
 
             }
 
