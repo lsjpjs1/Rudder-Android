@@ -280,16 +280,18 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8"
+                            >
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/showPostImageDisplayRecyclerView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:paddingBottom="24dp"
+                                >
 
                             </androidx.recyclerview.widget.RecyclerView>
                         </androidx.constraintlayout.widget.ConstraintLayout>
