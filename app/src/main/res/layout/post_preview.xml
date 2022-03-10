@@ -67,7 +67,7 @@
                             android:layout_height="20dp"
                             app:srcCompat="@drawable/ic_baseline_more_horiz_24"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.8"
+                            app:layout_constraintHorizontal_bias="0.85"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -115,62 +115,66 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:id="@+id/postPreviewCategoryCL"
-                            app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/postPreviewCL1"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <TextView
-                                android:id="@+id/postPreviewHeadCategoryTV"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{post.categoryName}"
-                                android:textColor="@color/purple_rudder"
-                                android:textSize="13sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintRight_toRightOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:id="@+id/postPreviewHeadNameCL"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintHeight_default="percent"
-                            app:layout_constraintHeight_percent="0.5"
-                            app:layout_constraintStart_toEndOf="@+id/postPreviewCL1">
-
-                            <TextView
-                                android:id="@+id/postPreviewHeadNameTV"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{post.userId}"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/sf_pro_text_bold"
-                                android:textStyle="bold"
-                                app:layout_constraintVertical_bias="0.1"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:id="@+id/postPreviewCategoryCL"
+                        android:layout_marginStart="6dp"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/postPreviewHeadName"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/postPreviewHeadCategoryTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{post.categoryName}"
+                            android:textColor="@color/purple_rudder"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:id="@+id/postPreviewHeadNameCL"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="6dp"
+                        app:layout_constraintHeight_default="percent"
+                        app:layout_constraintHeight_percent="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/postPreviewHeadName">
+
+                        <TextView
+                            android:id="@+id/postPreviewHeadNameTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{post.userId}"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/sf_pro_text_bold"
+                            android:textStyle="bold"
+                            app:layout_constraintVertical_bias="0.1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/postPreviewHeadPostTime"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/postPreviewHeadName"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintStart_toEndOf="@+id/postPreviewHeadNameCL"
                         app:layout_constraintWidth_default="percent"
                         app:layout_constraintWidth_percent="@dimen/post_preview_head_post_time_width"
                         tools:layout_editor_absoluteY="0dp">
