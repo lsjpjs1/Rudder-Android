@@ -126,7 +126,7 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
 
         myPageBinding.constraintLayoutMyPage6.setOnClickListener { view -> // search button click
             view.findNavController().navigate(R.id.action_navigation_mypage_to_navigation_category_select_my_page)
-            //(activity as MainActivity).mainBottomNavigationDisappear()
+            (activity as MainActivity).mainBottomNavigationDisappear()
         }
 
 

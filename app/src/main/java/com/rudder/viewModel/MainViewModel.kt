@@ -68,6 +68,8 @@ open class MainViewModel : ViewModel() {
     private val _selectedCommentMorePosition = MutableLiveData<Int>()
 
     val _postCategoryInt = MutableLiveData<Int>()
+    val _departmentCategoryAInt = MutableLiveData<Int?>()
+    val _departmentCategoryBInt = MutableLiveData<Int?>()
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
@@ -105,7 +107,7 @@ open class MainViewModel : ViewModel() {
     private val _startLoginActivity = MutableLiveData<Event<Boolean>>()
     private val _postInnerValueChangeSwitch = MutableLiveData<Boolean>()
     private val _commentInnerValueChangeSwitch = MutableLiveData<Boolean>()
-    private val _photoPickerClickSwitch = MutableLiveData<Boolean?>()
+    private val _photoPickerClickSwitch = MutableLiveData<Event<Boolean?>>()
     private val _imageCount = MutableLiveData<Int>()
     private val _myProfileImageUrl = MutableLiveData<String>()
     var noticeAlreadyShow = false
@@ -123,7 +125,6 @@ open class MainViewModel : ViewModel() {
     var _categoryIdSelectList = MutableLiveData<ArrayList<Int>>()
     var _categoryIdAllList = MutableLiveData<ArrayList<Int>>()
     val _categorySelectApply = MutableLiveData<Event<Boolean>>()
-    val _clickCategorySelect = MutableLiveData<Event<Boolean>>()
     val _categoryNamesForSelection = MutableLiveData<ArrayList<String>>()
     val _isStringBlank = MutableLiveData<Event<Boolean>>()
     val _isUnvalidCategorySelect = MutableLiveData<Event<Boolean>>()
@@ -138,7 +139,7 @@ open class MainViewModel : ViewModel() {
     val selectedRequestJoinClubCategoryId:LiveData<Int> = _selectedRequestJoinClubCategoryId
     val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
     val myProfileImageUrl:LiveData<String> = _myProfileImageUrl
-    val photoPickerClickSwitch:LiveData<Boolean?> = _photoPickerClickSwitch
+    val photoPickerClickSwitch:LiveData<Event<Boolean?>> = _photoPickerClickSwitch
     val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
     val postInnerValueChangeSwitch:LiveData<Boolean> = _postInnerValueChangeSwitch
     val commentLikeCountChange: LiveData<Int> = _commentLikeCountChange
@@ -160,6 +161,8 @@ open class MainViewModel : ViewModel() {
 
     val selectedCommentMorePosition: LiveData<Int> = _selectedCommentMorePosition
     val postCategoryInt: LiveData<Int> = _postCategoryInt
+    val departmentCategoryAInt: LiveData<Int?> = _departmentCategoryAInt
+    val departmentCategoryBInt: LiveData<Int?> = _departmentCategoryBInt
 
     val commentBodyCheck: LiveData<Event<Boolean>> = _commentBodyCheck
 
@@ -205,12 +208,9 @@ open class MainViewModel : ViewModel() {
     var categoryIdSelectList: LiveData<ArrayList<Int>> = _categoryIdSelectList
     var categoryIdAllList: LiveData<ArrayList<Int>> = _categoryIdAllList
     val categorySelectApply: LiveData<Event<Boolean>> = _categorySelectApply // Apply button
-    val clickCategorySelect : LiveData<Event<Boolean>> = _clickCategorySelect
-
 
     val categoryNamesForSelection: LiveData<ArrayList<String>> = _categoryNamesForSelection
     val selectedParentCommentBody: LiveData<String> = _selectedParentCommentBody
-
     val isStringBlank : LiveData<Event<Boolean>> = _isStringBlank
     val isUnvalidCategorySelect : LiveData<Event<Boolean>> = _isUnvalidCategorySelect
     var postMode : PostMode = PostMode.NORMAL
@@ -418,7 +418,8 @@ open class MainViewModel : ViewModel() {
     }
 
     fun onPhotoPickerClick(){
-        switch(_photoPickerClickSwitch)
+        //switch(_photoPickerClickSwitch)
+        _photoPickerClickSwitch.value = Event(true)
     }
 
 
@@ -451,7 +452,7 @@ open class MainViewModel : ViewModel() {
         _selectedPhotoUriList.value = arrayListOf()
         _postBody.value = ""
         _selectedCategoryNameInAddPost.value = _categoryNames.value!![0]
-        _photoPickerClickSwitch.value = null
+        _photoPickerClickSwitch.value = Event(null)
     }
 
 
@@ -980,11 +981,6 @@ open class MainViewModel : ViewModel() {
         var categoryNames = ArrayList<String>()
 
         for (category in categoryList) {
-
-            if (category.categoryType == "asd") {
-            } else if (category.categoryType == "tmp") {
-            }
-
             categoryNames.add(category.categoryName)
         }
 
@@ -1227,17 +1223,28 @@ open class MainViewModel : ViewModel() {
 
     fun categoryIdSelect(id : Int, checked: Boolean){
         if (checked) {
-            categoryIdSelectList.value!!.add(id)
+            _categoryIdSelectList.value!!.add(id)
         } else {
-            categoryIdSelectList.value!!.remove(id)
+            _categoryIdSelectList.value!!.remove(id)
         }
 
     }
 
+//    fun asd(){
+//        categoryIdSelectList.value!!.add()
+//    }
 
-    fun clickApplyCategorySelect(){ // Apply
+
+    fun clickApplyCategorySelect(){ // Apply 버튼 누를시 실행
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
+            _categoryIdSelectList.value!!.add(_departmentCategoryAInt.value!!)
+            _categoryIdSelectList.value!!.add(_departmentCategoryBInt.value!!)
+
+            Log.d("test1234","${_departmentCategoryAInt.value!!}")
+            Log.d("test1235","${_departmentCategoryBInt.value!!}")
+
 
             val tmpIdList = _categoryIdSelectList.value!!.sorted()
             val sortCategoryIdArrayList = ArrayList<Int>()
@@ -1251,15 +1258,9 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    fun clickCategorySelection() {
-        _categoryIdSelectList.value = ArrayList<Int>()
-        _clickCategorySelect.value = Event(true)
-    }
-
     fun clearPostFromId() {
         _postFromId.value = null
     }
-
 
 
     fun getPostContentFromPostId() { // scroll top 때 사용, mainViewModel
@@ -1313,22 +1314,40 @@ open class MainViewModel : ViewModel() {
         }
     }
 
-    fun onSelectItemDepartmentSelect(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+    fun onSelectItemDepartmentASelect(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
         //parent.getAdapter().getItem(pos)    get item by pos
         //parent.getCount()                   get item count
         //parent.getSelectedItem()            get selected item
 
-//        if (pos != 0) {
-//            _schoolSelectFlag.value = Event(true)
-//            _userSchoolInt.value = _schoolList.value!![pos].schoolId
-//        } else {
-//            _schoolSelectFlag.value = Event(false)
-//        }
+        if (pos != 0) {
+            //_schoolSelectFlag.value = Event(true)
+            //_userSchoolInt.value = _schoolList.value!![pos].schoolId
+
+//            _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
+//            _postCategoryInt.value = pos - 1
+//
+//
+            _departmentCategoryAInt.value = pos + 1 + 10
+        }
+
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
+    }
 
 
+    fun onSelectItemDepartmentBSelect(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        if (pos != 0) {
+            _departmentCategoryBInt.value = pos + 1 + 10
+        }
+
+        (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
+    }
+
+    fun clearDepartmentCategory() {
+        _categoryIdSelectList.value = ArrayList<Int>()
+        _departmentCategoryAInt.value = 0
+        _departmentCategoryBInt.value = 0
     }
 
 

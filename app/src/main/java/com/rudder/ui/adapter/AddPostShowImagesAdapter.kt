@@ -89,9 +89,6 @@ class AddPostShowImagesAdapter(var imageUriList: ArrayList<FileInfo>,val display
         imageUriList.clear()
         imageUriList.addAll(newUriList)
 
-
-
         diffResult.dispatchUpdatesTo(this)
-
     }
 }
