@@ -75,7 +75,7 @@
             <TextView
                 android:id="@+id/schoolSelectionBtn"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:gravity="fill_vertical"
                 android:text="@string/university_select"
                 android:textColor="@color/black"
@@ -96,20 +96,19 @@
             <Spinner
                 android:id="@+id/schoolSelectSpinner"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="41dp"
                 android:background="@drawable/edge"
                 android:onItemSelected="@{(parent,view,pos,id)->signUpVM.onSelectItem(parent,view,pos,id)}"
                 android:selectedItemPosition="@={signUpVM._userSchoolInt}"
 
                 android:spinnerMode="dialog"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="14dp"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintHorizontal_bias="0.28"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.28"
+                app:layout_constraintTop_toBottomOf="@+id/schoolSelectionBtn"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.8">
 
@@ -117,18 +116,18 @@
 
             <CheckBox
                 android:id="@+id/schoolSelectCheckbox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="26dp"
+                android:layout_height="41dp"
                 android:button="@drawable/custom_checkbox"
                 app:buttonTint="@drawable/checkbox_green_state_list"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/schoolSelectionBtn"
                 app:layout_constraintVertical_bias="0.28"
-
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.1"
                 app:layout_constraintStart_toEndOf="@+id/schoolSelectSpinner"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.1" />
 
