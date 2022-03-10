@@ -40,7 +40,7 @@ class ProfileSettingFragment : Fragment() {
         profileSettingBinding.signUpVM = viewModel
         profileSettingBinding.lifecycleOwner = this
 
-        val toastNickName = Toast.makeText(activity, "Nickname (4-15 characters) can contain upper/lower letters and numbers.", Toast.LENGTH_LONG)
+        val toastNickName = Toast.makeText(activity, "Nickname (4-15 characters) can contain upper/lower letters and numbers.", Toast.LENGTH_SHORT)
 
 
         val profileSettingImagesAdapter = ProfileSettingImagesAdapter(viewModel.profileImageList.value!!,  lazyContext, (activity as SignUpActivity).getDisplaySize(), viewModel, viewLifecycleOwner)

@@ -3,6 +3,7 @@ package com.rudder.ui.adapter
 import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
+import com.google.gson.annotations.SerializedName
 import com.rudder.R
 import com.rudder.data.dto.NotificationItem
 import com.rudder.data.dto.NotificationType
@@ -48,9 +49,7 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
             holder.viewBinding.notificationBody.text = notificationBody
         }
 
-
         holder.viewBinding.notificationType.text = notificationType.alertMessage
-        //holder.viewBinding.notificationBody.text = getItem(position).itemBody
         holder.viewBinding.notificationTime.text = timeago
 
 
@@ -58,10 +57,11 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
 
             if (notificationType == NotificationType.COMMENT) { //post에 대한 알림이면
                 notificationAdapterCallback.onClickPostNotification(getItem(position).itemId)
-            } else { // post message room에 대한 알림이면
+            } else if (notificationType == NotificationType.POST_MESSAGE){ // post message room에 대한 알림이면
                 notificationAdapterCallback.onClickPostMessageRoomNotification(getItem(position).itemId)
+            } else if (notificationType == NotificationType.NESTED_COMMENT) {
+                notificationAdapterCallback.onClickPostNotification(getItem(position).itemId)
             }
-
         }
     }
 
