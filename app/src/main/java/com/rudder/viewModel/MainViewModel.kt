@@ -245,7 +245,8 @@ open class MainViewModel : ViewModel() {
                 false,
                 false,
                 arrayListOf(),
-                ""
+                "",
+                categoryAbbreviation = ""
             )
         )
         _comments.value = arrayListOf(
@@ -340,7 +341,6 @@ open class MainViewModel : ViewModel() {
                 tmp?.addAll(categoryList)
                 _allClubCategories.value=tmp!!
                 for(category in categoryList){
-
                     if(category.isMember=="t"){
                         _categoryNames.value?.let{
                             if(category.categoryName !in _categoryNames.value!!) {
@@ -434,7 +434,6 @@ open class MainViewModel : ViewModel() {
             }
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
-
     }
 
 
