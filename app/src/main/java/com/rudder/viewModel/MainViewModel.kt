@@ -1227,19 +1227,12 @@ open class MainViewModel : ViewModel() {
 
     }
 
-//    fun asd(){
-//        categoryIdSelectList.value!!.add()
-//    }
-
 
     fun clickApplyCategorySelect(){ // Apply 버튼 누를시 실행
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             _categoryIdSelectList.value!!.add(_departmentCategoryAInt.value!!)
             _categoryIdSelectList.value!!.add(_departmentCategoryBInt.value!!)
-
-            Log.d("test1234","${_departmentCategoryAInt.value!!}")
-            Log.d("test1235","${_departmentCategoryBInt.value!!}")
 
             val tmpIdList = _categoryIdSelectList.value!!.sorted()
             val sortCategoryIdArrayList = ArrayList<Int>()
@@ -1318,8 +1311,6 @@ open class MainViewModel : ViewModel() {
         //parent.getSelectedItem()            get selected item
 
         if (pos != 0) {
-            //_schoolSelectFlag.value = Event(true)
-            //_userSchoolInt.value = _schoolList.value!![pos].schoolId
             _departmentCategoryAInt.value = (parent.selectedItem as Category).categoryId
         }
 

@@ -56,8 +56,6 @@ class CategorySelectMyPageFragment : Fragment() {
         val departmentBCategoryList = arrayListOf<Category>()
 
         viewModel.allCategories.observe(viewLifecycleOwner, Observer {
-            Log.d("test123123123123", "${it!!}")
-
             for ( i in 0 until it.size ) {
                 if (it[i].categoryType == "department") {
                     departmentACategoryList.add(it[i])
@@ -138,7 +136,6 @@ class CategorySelectMyPageFragment : Fragment() {
             if(categories[i].isMember==null || categories[i].isMember=="t"){ // 동아리원인 경우
                 mChip.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, boolean ->
                     viewModel.categoryIdSelect(compoundButton.tag.toString().toInt(), boolean)
-                    Log.d("test123123", "${compoundButton.tag.toString().toInt()}")
                 })
             } else if(categories[i].isMember=="r" ){ // 가입 신청은 해서, 대기중
                 mChip.isCheckedIconVisible = false

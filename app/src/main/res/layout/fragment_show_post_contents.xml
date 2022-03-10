@@ -140,7 +140,6 @@
                             android:id="@+id/constraintLayout8"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHeight_default="percent"
                             app:layout_constraintHeight_percent="@dimen/post_info_height"
@@ -278,6 +277,7 @@
                             android:id="@+id/showPostImageDisplay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/constraintLayout8"
@@ -300,12 +300,12 @@
                             android:id="@+id/constraintLayout7"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="2dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/showPostImageDisplay"
                             app:layout_constraintWidth_default="percent"
-                            app:layout_constraintWidth_percent="@dimen/width_default">
+                            app:layout_constraintWidth_percent="0.88">
 
                             <TextView
                                 android:id="@+id/postBodyTextView"

@@ -87,6 +87,11 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
 
         viewModel.isLikePost()
         if (viewModelType == "NotificationViewModel") {
+            if (viewModel.posts.value!![0].imageUrls.size == 0) {
+                fragmentBinding.showPostImageDisplay.visibility = View.GONE
+            } else {
+                fragmentBinding.showPostImageDisplay.visibility = View.VISIBLE
+            }
             displayImagesAdapter = DisplayImagesAdapter(
                 viewModel.posts.value!![0].imageUrls,
                 lazyContext,
@@ -94,6 +99,11 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
                 this
             )
         } else {
+            if (viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls.size == 0) {
+                fragmentBinding.showPostImageDisplay.visibility = View.GONE
+            } else {
+                fragmentBinding.showPostImageDisplay.visibility = View.VISIBLE
+            }
             displayImagesAdapter = DisplayImagesAdapter(
                 viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,
                 lazyContext,
@@ -114,9 +124,6 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
         )
         snapHelper.attachToRecyclerView(fragmentBinding.showPostImageDisplayRecyclerView)
 
-
-
-        //recyclerView.addItemDecoration(LinePagerIndicatorDecoration())
 
 
         setFragmentBindingPost()

@@ -139,6 +139,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
+                            android:id="@+id/postPreviewHeadNameCL"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintHeight_default="percent"
                             app:layout_constraintHeight_percent="0.5"
