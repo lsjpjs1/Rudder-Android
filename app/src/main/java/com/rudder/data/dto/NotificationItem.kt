@@ -7,11 +7,11 @@ enum class NotificationType(val typeNumber: Int,val alertMessage : String){
 
     // 0 추가하면 안됨!!!!!!
     @SerializedName("1")
-    COMMENT(1,"New comment at your post"),
+    COMMENT(1,"New Comment"),
     @SerializedName("2")
     POST_MESSAGE(2,"New Quick Mail"),
     @SerializedName("3")
-    NESTED_COMMENT(3,"New comment at your comment");
+    NESTED_COMMENT(3,"New Reply");
 
     companion object{
         fun typeNumberToNotificationType(typeNumber: Int) : NotificationType?{
