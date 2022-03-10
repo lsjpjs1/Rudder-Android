@@ -323,10 +323,12 @@ open class MainViewModel : ViewModel() {
         val tmpList: ArrayList<Category> = arrayListOf()
         tmpList.addAll(_userSelectCategories.value!!)
         tmpList.addAll(_allClubCategories.value!!)
+        tmpList.addAll(_allCategories.value!!)
         for(i in 0 until tmpList.size) {
             if (tmpList[i].categoryId == id){
                 index = i
             }
+
         }
         return index
     }

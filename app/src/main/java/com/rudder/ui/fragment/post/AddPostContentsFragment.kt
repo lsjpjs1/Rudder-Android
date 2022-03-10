@@ -2,6 +2,7 @@ package com.rudder.ui.fragment.post
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import android.widget.SpinnerAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,6 +30,8 @@ import com.rudder.util.FileUtil
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_add_post_contents.*
 import kotlinx.android.synthetic.main.fragment_add_post_contents.view.*
+import java.util.*
+import java.util.stream.Collectors
 
 
 class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean) : Fragment(),AddPostImagesOnclickListener {
@@ -54,27 +58,40 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
             categoryListForAddPost.add(0, Category(categoryName = "Select", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Select") )
         }
 
-        val spinnerAdapter = object : ArrayAdapter<String>(lazyContext, R.layout.custom_spinner_layout, categoryListForAddPost.map{it.categoryName}){
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getView(position, convertView, parent) as TextView
-                return view
-            }
-        }
 
-        display.categorySpinner.adapter = spinnerAdapter
+
+
 
         val addPostShowImagesAdapter = AddPostShowImagesAdapter(viewModel.selectedPhotoUriList.value!!,(activity as MainActivity).getDisplaySize(),this)
 
         viewModel.clearAddPost()
-
+        var spinnerAdapter:ArrayAdapter<Category>
         if (isEdit){ // Add가 아닌, Edit인 경우
             display.root.categorySpinner.isEnabled=false
             display.root.showPhoto.visibility=View.GONE
             viewModel.clickPostEdit()
+            spinnerAdapter =
+            object : ArrayAdapter<Category>(lazyContext, R.layout.custom_spinner_layout,
+                viewModel.userSelectCategories.value!!+
+                viewModel.allClubCategories.value!!+
+            viewModel.allCategories.value!!){
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view = super.getView(position, convertView, parent) as TextView
+                    return view
+                }
+            }
         }else{
             display.root.categorySpinner.isEnabled = true
             display.root.showPhoto.visibility=View.VISIBLE
+            spinnerAdapter = object : ArrayAdapter<Category>(lazyContext, R.layout.custom_spinner_layout, categoryListForAddPost){
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view = super.getView(position, convertView, parent) as TextView
+                    return view
+                }
+            }
         }
+
+        display.categorySpinner.adapter = spinnerAdapter
 
         display.showPhotoRV.also {
             it.layoutManager=LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)
