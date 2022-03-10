@@ -2,6 +2,7 @@ package com.rudder.ui.fragment.mypage
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,9 +55,9 @@ class CategorySelectMyPageFragment : Fragment() {
         val departmentACategoryList = arrayListOf<Category>()
         val departmentBCategoryList = arrayListOf<Category>()
 
-
-
         viewModel.allCategories.observe(viewLifecycleOwner, Observer {
+            Log.d("test123123123123", "${it!!}")
+
             for ( i in 0 until it.size ) {
                 if (it[i].categoryType == "department") {
                     departmentACategoryList.add(it[i])
@@ -111,6 +112,7 @@ class CategorySelectMyPageFragment : Fragment() {
 
         fragmentMyPageCategorySelectBinding.categoryBackBtn.setOnClickListener { view ->
             view.findNavController().popBackStack()
+            (activity as MainActivity).mainBottomNavigationAppear()
         }
 
 
@@ -142,6 +144,7 @@ class CategorySelectMyPageFragment : Fragment() {
             if(categories[i].isMember==null || categories[i].isMember=="t"){ // 동아리원인 경우
                 mChip.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, boolean ->
                     viewModel.categoryIdSelect(compoundButton.tag.toString().toInt(), boolean)
+                    Log.d("test123123", "${compoundButton.tag.toString().toInt()}")
                 })
             } else if(categories[i].isMember=="r"){ // 가입 신청은 해서, 대기중
                 mChip.isCheckedIconVisible = false

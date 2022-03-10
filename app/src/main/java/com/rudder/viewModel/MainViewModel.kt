@@ -68,6 +68,8 @@ open class MainViewModel : ViewModel() {
     private val _selectedCommentMorePosition = MutableLiveData<Int>()
 
     val _postCategoryInt = MutableLiveData<Int>()
+    val _departmentCategoryAInt = MutableLiveData<Int?>()
+    val _departmentCategoryBInt = MutableLiveData<Int?>()
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
 
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
@@ -160,6 +162,8 @@ open class MainViewModel : ViewModel() {
 
     val selectedCommentMorePosition: LiveData<Int> = _selectedCommentMorePosition
     val postCategoryInt: LiveData<Int> = _postCategoryInt
+    val departmentCategoryAInt: LiveData<Int?> = _departmentCategoryAInt
+    val departmentCategoryBInt: LiveData<Int?> = _departmentCategoryBInt
 
     val commentBodyCheck: LiveData<Event<Boolean>> = _commentBodyCheck
 
@@ -981,7 +985,7 @@ open class MainViewModel : ViewModel() {
 
         for (category in categoryList) {
 
-            if (category.categoryType == "asd") {
+            if (category.categoryType == "test123") {
             } else if (category.categoryType == "tmp") {
             }
 
@@ -1227,17 +1231,28 @@ open class MainViewModel : ViewModel() {
 
     fun categoryIdSelect(id : Int, checked: Boolean){
         if (checked) {
-            categoryIdSelectList.value!!.add(id)
+            _categoryIdSelectList.value!!.add(id)
         } else {
-            categoryIdSelectList.value!!.remove(id)
+            _categoryIdSelectList.value!!.remove(id)
         }
 
     }
 
+//    fun asd(){
+//        categoryIdSelectList.value!!.add()
+//    }
 
-    fun clickApplyCategorySelect(){ // Apply
+
+    fun clickApplyCategorySelect(){ // Apply 버튼 누를시 실행
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+
+            _categoryIdSelectList.value!!.add(_departmentCategoryAInt.value!!)
+            _categoryIdSelectList.value!!.add(_departmentCategoryBInt.value!!)
+
+            Log.d("test1234","${_departmentCategoryAInt.value!!}")
+            Log.d("test1235","${_departmentCategoryBInt.value!!}")
+
 
             val tmpIdList = _categoryIdSelectList.value!!.sorted()
             val sortCategoryIdArrayList = ArrayList<Int>()
@@ -1313,22 +1328,35 @@ open class MainViewModel : ViewModel() {
         }
     }
 
-    fun onSelectItemDepartmentSelect(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+    fun onSelectItemDepartmentASelect(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
         //parent.getAdapter().getItem(pos)    get item by pos
         //parent.getCount()                   get item count
         //parent.getSelectedItem()            get selected item
 
-//        if (pos != 0) {
-//            _schoolSelectFlag.value = Event(true)
-//            _userSchoolInt.value = _schoolList.value!![pos].schoolId
-//        } else {
-//            _schoolSelectFlag.value = Event(false)
-//        }
+        if (pos != 0) {
+            //_schoolSelectFlag.value = Event(true)
+            //_userSchoolInt.value = _schoolList.value!![pos].schoolId
+
+//            _selectedCategoryNameInAddPost.value = _categoryNames.value!![pos]
+//            _postCategoryInt.value = pos - 1
+//
+//
+            _departmentCategoryAInt.value = pos + 1 + 10
+            _departmentCategoryBInt.value = pos + 1 + 10
+        }
+
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
+    }
 
 
+    fun onSelectItemDepartmentBSelect(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        if (pos != 0) {
+            _departmentCategoryBInt.value = pos + 1 + 10
+        }
+
+        (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
     }
 
 
