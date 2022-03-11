@@ -78,6 +78,7 @@ open class MainViewModel : ViewModel() {
     private val _isPostDelete = MutableLiveData<Event<Boolean>>()
     private val _isPostDeleteShowPost = MutableLiveData<Event<Boolean>>()
     private val _isBlockUser = MutableLiveData<Event<Boolean>>()
+    private val _isBlockUserInComment = MutableLiveData<Event<Boolean>>()
     private val _isCommentReport = MutableLiveData<Event<Boolean>>()
     private val _isContactUs = MutableLiveData<Event<Boolean>>()
     private val _isCommentEdit = MutableLiveData<Event<Boolean>>()
@@ -159,6 +160,7 @@ open class MainViewModel : ViewModel() {
     val isPostDelete: LiveData<Event<Boolean>> = _isPostDelete
     val isPostDeleteShowPost: LiveData<Event<Boolean>> = _isPostDeleteShowPost
     val isBlockUser: LiveData<Event<Boolean>> = _isBlockUser
+    val isBlockUserInComment: LiveData<Event<Boolean>> = _isBlockUserInComment
     val isCommentReport: LiveData<Event<Boolean>> = _isCommentReport
     val isContactUs: LiveData<Event<Boolean>> = _isContactUs
     val isCommentEdit: LiveData<Event<Boolean>> = _isCommentEdit
@@ -818,11 +820,21 @@ open class MainViewModel : ViewModel() {
 
     }
 
-    fun clickBlockUser() {
+    fun clickBlockUserPost() { //post, user block
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             var result = Repository().blockUser(BlockUserRequest(App.prefs.getValue(tokenKey)!!,_posts.value!![selectedPostMorePosition.value!!].userInfoId))
             _isBlockUser.postValue(Event(result))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+        }
+    }
+
+
+    fun clickBlockUserComment() { // comment, user block
+        GlobalScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+            var result = Repository().blockUser(BlockUserRequest(App.prefs.getValue(tokenKey)!!,_comments.value!![selectedCommentMorePosition.value!!].user_info_id))
+            _isBlockUserInComment.postValue(Event(result))
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }

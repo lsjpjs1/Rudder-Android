@@ -4,14 +4,11 @@ package com.rudder.ui.fragment.post
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -21,7 +18,6 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.AlertDialogFragment
 import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
 import com.rudder.ui.fragment.mypage.MyPostDisplayFragmentDirections
-import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.SendPostMessageDialogFragment
 import com.rudder.ui.fragment.search.SearchPostDisplayFragmentDirections
 import com.rudder.util.AlertDialogListener
@@ -29,7 +25,6 @@ import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.MyCommentViewModel
 import com.rudder.viewModel.MyPostViewModel
 import com.rudder.viewModel.NotificationViewModel
-import com.rudder.viewModel.SearchViewModel
 
 
 class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomSheetDialogFragment() {
@@ -83,7 +78,6 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                     var lp6 = communityPostBottomSheetBinding.sendPostMessageCL.layoutParams
                     lp6.height = (displayDpValue[1] * 0.08).toInt()
                     communityPostBottomSheetBinding.sendPostMessageCL.layoutParams = lp6
-
                     communityPostBottomSheetBinding.postBottomSheetCL2.visibility = View.GONE
                     communityPostBottomSheetBinding.postBottomSheetCL3.visibility = View.GONE
 
@@ -212,7 +206,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
             val alertDialogFragment = AlertDialogFragment.instance(
                 object : AlertDialogListener {
                     override fun onOkClick() {
-                        viewModel.clickBlockUser()
+                        viewModel.clickBlockUserPost()
                     }
 
                     override fun onCancelClick() {

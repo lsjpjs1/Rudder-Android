@@ -265,13 +265,72 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/commentBottomSheetCL5Block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commentBottomSheetCL3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.6"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/blockUserImageViewComment"
+                android:gravity="fill_vertical"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:text="@string/block_user"
+                android:onClick="@{()->communityCommentBottomSheetFragment.showUserBlockAlert()}"
+                android:textSize="15sp">
+            </TextView>
+
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:tint="@color/purple_rudder"
+                android:id="@+id/blockUserImageViewComment"
+                app:srcCompat="@drawable/ic_outline_block_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.06"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.10"
+                >
+
+            </ImageView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.01"
+                android:background="#9E9D9D"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </View>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sendPostMessageCommentCL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/commentBottomSheetCL3">
+            app:layout_constraintTop_toBottomOf="@+id/commentBottomSheetCL5Block">
 
             <TextView
                 android:layout_width="0dp"

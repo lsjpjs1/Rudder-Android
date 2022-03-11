@@ -281,6 +281,20 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
         }
 
 
+        viewModel.isBlockUserInComment.observe(parentFragment as LifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    Toast.makeText(context, "Block User Complete!", Toast.LENGTH_LONG).show()
+                    parentActivity.communityCommentBottomSheetFragment.dismiss()
+                    parentActivity.onBackPressed()
+                    viewModel.clearPosts()
+                    viewModel.getPosts()
+                }
+            }
+        })
+
+
+
         return fragmentBinding.root
     }
 

@@ -60,11 +60,12 @@ class CommunityCommentBottomSheetFragment(val mainViewModel: MainViewModel) : Bo
                 if(!it) { // ismine == false, 내께 아니면
                     communityCommentBottomSheetBinding.commentBottomSheetCL2.visibility = View.GONE
                     communityCommentBottomSheetBinding.commentBottomSheetCL3.visibility = View.GONE
-
                 }else{
                     //communityCommentBottomSheetBinding.commentBottomSheetCL4.visibility = View.GONE
                     communityCommentBottomSheetBinding.commentBottomSheetCL1.visibility = View.GONE
                     communityCommentBottomSheetBinding.sendPostMessageCommentCL.visibility = View.GONE
+                    communityCommentBottomSheetBinding.commentBottomSheetCL5Block.visibility = View.GONE
+
                 }
             }})
 
@@ -117,6 +118,10 @@ class CommunityCommentBottomSheetFragment(val mainViewModel: MainViewModel) : Bo
         lp5.height = (displayDpValue[1] * 0.08).toInt()
         communityCommentBottomSheetBinding.sendPostMessageCommentCL.layoutParams = lp5
 
+        var lp6 = communityCommentBottomSheetBinding.commentBottomSheetCL5Block.layoutParams
+        lp6.height = (displayDpValue[1] * 0.08).toInt()
+        communityCommentBottomSheetBinding.commentBottomSheetCL5Block.layoutParams = lp6
+
 
         return communityCommentBottomSheetBinding.root
     }
@@ -147,6 +152,24 @@ class CommunityCommentBottomSheetFragment(val mainViewModel: MainViewModel) : Bo
             "Do you want to delete this Comment?"
         )
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
+    }
+
+
+    fun showUserBlockAlert(){
+        val alertDialogFragment = AlertDialogFragment.instance(
+            object : AlertDialogListener {
+                override fun onOkClick() {
+                    mainViewModel.clickBlockUserComment()
+                }
+
+                override fun onCancelClick() {
+
+                }
+
+            },
+            "This will permanently block the user."
+        )
+        alertDialogFragment.show(childFragmentManager,AlertDialogFragment.TAG)
     }
 
 }
