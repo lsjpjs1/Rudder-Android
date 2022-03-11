@@ -59,7 +59,7 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                android:text="Choose a category"
+                                android:text="Choose a Category"
                                 android:fontFamily="@font/sf_pro_text_bold"
                                 android:textColor="@color/black"
                                 android:textSize="18sp"

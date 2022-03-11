@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         val toastChooseValidCategory = Toast.makeText(
             this,
-            "Choose a category please.",
+            "Choose a category.",
             Toast.LENGTH_LONG
         )
         val toastStringBlank = Toast.makeText(
