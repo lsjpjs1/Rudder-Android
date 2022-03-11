@@ -25,7 +25,7 @@ open class MyPostViewModel : MainViewModel() {
     }
 
     fun getMyPosts(isMore: Boolean) {
-        if(_noMorePostFlag.value != true){ //더 불러올 데이터가 남아있으면 함수 실
+        if(_noMorePostFlag.value != true){ //더 불러올 데이터가 남아있으면 함수 실행 
             viewModelScope.launch {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
 

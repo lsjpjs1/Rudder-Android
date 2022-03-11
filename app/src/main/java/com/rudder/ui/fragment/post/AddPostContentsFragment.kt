@@ -58,10 +58,6 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
             categoryListForAddPost.add(0, Category(categoryName = "Select", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Select") )
         }
 
-
-
-
-
         val addPostShowImagesAdapter = AddPostShowImagesAdapter(viewModel.selectedPhotoUriList.value!!,(activity as MainActivity).getDisplaySize(),this)
 
         viewModel.clearAddPost()
