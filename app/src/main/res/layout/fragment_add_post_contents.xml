@@ -85,6 +85,20 @@
                                 >
                             </Spinner>
 
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/displayTextLine"
+                                android:layout_width="match_parent"
+                                android:layout_height="3dp"
+                                android:background="@color/light_grey"
+                                android:layout_marginTop="10dp"
+                                app:layout_constraintHeight_default="percent"
+                                app:layout_constraintHeight_percent="@dimen/add_post_display_line_height"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                >
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
