@@ -15,6 +15,7 @@ import com.rudder.util.CustomOnclickListener
 
 class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selectedCategoryNum: Int, val context : Context, val listener: CustomOnclickListener): RecyclerView.Adapter<CategorySelectorAdapter.CustomViewHolder>(){
     inner class CustomViewHolder(val categorySelectorBinding: CategorySelectorBinding) : RecyclerView.ViewHolder(categorySelectorBinding.root)
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -50,7 +51,6 @@ class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selecte
                         holder.categorySelectorBinding.root.layoutParams = lp2
                     }
                 }
-
             }
         )
         holder.categorySelectorBinding.categorySelectorConstraintLayout.setOnClickListener {
@@ -68,6 +68,7 @@ class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selecte
             diffResult.dispatchUpdatesTo(this)
         }
     }
+
 
     override fun getItemId(position: Int): Long {
         return position.toLong()

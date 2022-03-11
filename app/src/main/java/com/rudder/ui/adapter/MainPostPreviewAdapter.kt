@@ -22,14 +22,10 @@ class MainPostPreviewAdapter(
     lifecycleOwner: LifecycleOwner,
 ) : PostPreviewAdapter<MainViewModel>(listener,context,viewModel,lifecycleOwner) {
 
-
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val timeago =
-            PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(getItem(position).postTime.time))
-
+        val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(getItem(position).postTime.time))
         val imageCount = getItem(position).imageUrls.size
         var mLastClickTime: Long = 0
-
 
         holder.postPreviewBinding.post = getItem(position)
         holder.postPreviewBinding.timeago = timeago
@@ -50,26 +46,21 @@ class MainPostPreviewAdapter(
             holder.postPreviewBinding.imageView6.setImageResource(R.drawable.ic_outline_thumb_up_24)
         }
 
-
-
         if (imageCount == 0) {
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.GONE
         } else {
             holder.postPreviewBinding.postPreviewTailImageCount.visibility = View.VISIBLE
         }
 
-
         viewModel.isPostMorePreventDouble.observe(lifecycleOwner, androidx.lifecycle.Observer { it ->
             it?.let {
                 holder.postPreviewBinding.postPreviewMoreImageView.isClickable = true
             }
-
         })
 
         holder.postPreviewBinding.postPreviewMoreImageView.setOnClickListener {
             viewModel.clickPostMore(position)
             it.isClickable = false
-
         }
 
         holder.postPreviewBinding.imageView6.setOnClickListener {
@@ -79,7 +70,6 @@ class MainPostPreviewAdapter(
             } else {
                 it.isActivated = true
             }
-
             mLastClickTime = SystemClock.elapsedRealtime()
         }
 
@@ -88,6 +78,5 @@ class MainPostPreviewAdapter(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.postPreviewBinding.root.previewPostProfileImageView)
     }
-
 
 }

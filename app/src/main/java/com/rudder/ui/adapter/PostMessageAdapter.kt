@@ -26,8 +26,6 @@ class PostMessageAdapter(
 
     ) : BaseAdapter<PostMessageRoom, PostMessageItemBinding>(diffUtil, R.layout.post_message_item)  {
 
-
-
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<PostMessageRoom>() {
             override fun areContentsTheSame(oldItem: PostMessageRoom, newItem: PostMessageRoom): Boolean {
@@ -42,11 +40,8 @@ class PostMessageAdapter(
 
     }
 
-
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(getItem(position).messageSendTime.time))
-
         holder.viewBinding.postMessageItemSenderNickNameTV.text = getItem(position).userId
         holder.viewBinding.postMessageItemDateTV.text = timeago
 
@@ -70,9 +65,6 @@ class PostMessageAdapter(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.viewBinding.root.postMessageItemSenderImageView)
 
-
     }
-
-
 
 }

@@ -38,7 +38,6 @@ class PostCommentsAdapter(
     private var lastReplyClickPosition = -1
     private var replyClickCount = 0
 
-
     inner class CustomViewHolder(val postCommentsBinding: PostCommentsBinding) : RecyclerView.ViewHolder(postCommentsBinding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostCommentsAdapter.CustomViewHolder {
         val bind = DataBindingUtil.inflate<PostCommentsBinding>(
@@ -69,8 +68,6 @@ class PostCommentsAdapter(
         lp.height=headerHeight
         bind.root.postPreviewTail.layoutParams=lp
 
-
-
         return CustomViewHolder(bind)
     }
 
@@ -83,7 +80,6 @@ class PostCommentsAdapter(
         holder.postCommentsBinding.timeago = timeago
         holder.postCommentsBinding.position = position
         var mLastClickTime: Long = 0
-
 
         if(commentList[position].status=="child"){
             holder.postCommentsBinding.nestedCommentImage.visibility=View.VISIBLE
@@ -146,13 +142,10 @@ class PostCommentsAdapter(
         }
 
 
-
         holder.postCommentsBinding.commentMoreImageView.setOnClickListener {
             viewModel.clickCommentMore(position)
             it.isClickable = false
         }
-
-
 
         viewModel.isCommentMorePreventDouble.observe(lifecycleOwner, androidx.lifecycle.Observer { it ->
             it?.let {
@@ -161,13 +154,9 @@ class PostCommentsAdapter(
 
         })
 
-
         holder.postCommentsBinding.postPreviewTailLikeTV.setOnClickListener {
             if (mLastClickTime.toInt() == 0) {
                 it.isActivated = false
-
-                //viewModel.clickPostLikeInCommunityContents(position)
-
                 viewModel.clickCommentLike(position)
             } else {
                 it.isActivated = true
@@ -176,12 +165,10 @@ class PostCommentsAdapter(
             mLastClickTime = SystemClock.elapsedRealtime()
         }
 
-
         Glide.with(holder.postCommentsBinding.commentProfileImageView.context)
             .load(commentList[position].userProfileImageUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.postCommentsBinding.commentProfileImageView)
-
 
     }
 

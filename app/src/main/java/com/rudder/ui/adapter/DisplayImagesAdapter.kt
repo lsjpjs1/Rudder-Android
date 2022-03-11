@@ -20,9 +20,8 @@ class DisplayImagesAdapter(
     val displaySize: ArrayList<Int>,
     val customOnclickListener: CustomOnclickListener
 ): RecyclerView.Adapter<DisplayImagesAdapter.CustomViewHolder>() {
-    inner class CustomViewHolder(val showPostDisplayImageBinding: ShowPostDisplayImageBinding) : RecyclerView.ViewHolder(
-        showPostDisplayImageBinding.root
-    )
+    inner class CustomViewHolder(val showPostDisplayImageBinding: ShowPostDisplayImageBinding) : RecyclerView.ViewHolder(showPostDisplayImageBinding.root)
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -40,6 +39,7 @@ class DisplayImagesAdapter(
         bind.root.showPostDisplayImageImageView.layoutParams=lp
         return CustomViewHolder(bind)
     }
+
 
     override fun onBindViewHolder(holder: DisplayImagesAdapter.CustomViewHolder, position: Int) {
         Glide.with(holder.showPostDisplayImageBinding.root.context)

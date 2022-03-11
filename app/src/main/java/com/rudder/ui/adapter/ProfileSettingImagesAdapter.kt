@@ -56,16 +56,11 @@ class ProfileSettingImagesAdapter(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.profileSettingDisplayImageBinding.root.profileSettingImageImageView)
 
-
-
-
         viewModel.selectedProfileImage.observe(lifecycleOwner, Observer {
             it?.let{
                 holder.profileSettingDisplayImageBinding.profileSettingImageCheckBox.isChecked = it == position
             }
         })
-
-
 
         holder.profileSettingDisplayImageBinding.signUpVM = viewModel
         holder.profileSettingDisplayImageBinding.position = position

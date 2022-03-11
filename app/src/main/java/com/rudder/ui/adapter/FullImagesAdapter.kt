@@ -22,6 +22,7 @@ class FullImagesAdapter : BaseAdapter<String, FullImageBinding>(diffUtil,R.layou
             }
         }
     }
+
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         Glide.with(holder.viewBinding.root.context)
             .load(getItem(position))

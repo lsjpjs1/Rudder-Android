@@ -27,18 +27,12 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
             }
         }
         const val MAX_NOTIFICATION_BODY_LENGTH = 50
-
-
-
-
     }
 
+
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-
         val notificationType = getItem(position).notificationType
-
         val timeago = PrettyTime(LocaleUtil().getSystemLocale(context)).format(Date(getItem(position).itemTime.time))
-
         val notificationBody = getItem(position).itemBody
 
         if (notificationBody.length > 50 ) {
@@ -51,7 +45,6 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
 
         holder.viewBinding.notificationType.text = notificationType.alertMessage
         holder.viewBinding.notificationTime.text = timeago
-
 
         holder.viewBinding.notificationTopLevelCL.setOnClickListener {
 

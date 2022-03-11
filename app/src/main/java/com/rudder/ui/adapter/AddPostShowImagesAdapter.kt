@@ -33,16 +33,6 @@ class AddPostShowImagesAdapter(var imageUriList: ArrayList<FileInfo>,val display
             false
         )
 
-        //이미지 표시되는 전체 영역 크기 조절
-//        var lp = bind.root.layoutParams
-//        lp.width = (displaySize[0]*0.3).toInt()
-//        lp.height = lp.width
-//        bind.root.layoutParams = lp
-
-        //이미지 제거 버튼 크기 조절
-//        lp = bind.addPostDeleteButtonImageView.layoutParams
-//        lp.width = (displaySize[0]*0.2*0.2).toInt()
-//        lp.height = lp.width
         return CustomViewHolder(bind)
     }
 
@@ -74,12 +64,12 @@ class AddPostShowImagesAdapter(var imageUriList: ArrayList<FileInfo>,val display
                 it.setOnClickListener {  }
             }
         }
-
     }
 
     override fun getItemCount(): Int {
         return imageUriList.size+1
     }
+
 
     fun updateImageUri(newUriList: ArrayList<FileInfo>) {
 

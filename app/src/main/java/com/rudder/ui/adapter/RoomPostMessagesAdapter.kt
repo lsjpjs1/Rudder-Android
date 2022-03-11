@@ -30,9 +30,6 @@ class RoomPostMessagesAdapter(
                 return oldItem.postMessageId == newItem.postMessageId //수정 해야됨
             }
         }
-
-        //private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
-
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -48,20 +45,7 @@ class RoomPostMessagesAdapter(
 
         }
 
-
         val messageTime = SimpleDateFormat("yy/MM/dd HH:mm").format(getItem(position).messageSendTime)
-
-
         holder.viewBinding.roomPostMessageTimeTV.text = messageTime
-
-
     }
-
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-//        val superHolder = super.onCreateViewHolder(parent, viewType)
-//        val lp = superHolder.viewBinding.root.layoutParams
-//        lp.height = (3000*0.15).toInt()
-//        superHolder.viewBinding.root.layoutParams = lp
-//        return superHolder
-//    }
 }

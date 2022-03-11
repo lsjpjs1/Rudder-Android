@@ -14,9 +14,7 @@ import kotlinx.android.synthetic.main.edit_profile_images.view.*
 
 class EditProfileImagesAdapter(
     val displaySize: DisplaySize,
-    val parentFragment: EditProfileImageDialogFragment
-
-) : BaseAdapter<ProfileImage,EditProfileImagesBinding>(diffUtil, R.layout.edit_profile_images) {
+    val parentFragment: EditProfileImageDialogFragment) : BaseAdapter<ProfileImage,EditProfileImagesBinding>(diffUtil, R.layout.edit_profile_images) {
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<ProfileImage>() {
