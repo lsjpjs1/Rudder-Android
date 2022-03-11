@@ -12,7 +12,6 @@ data class EditPostInfo(
     val token: String
 )
 
-
 data class EditCommentInfo(
     @SerializedName(value = "comment_body")
     val commentBody: String,
