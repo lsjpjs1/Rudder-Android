@@ -28,8 +28,6 @@ class PostMessageRoomFragment : Fragment(),SendPostMessageCallback {
     }
 
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
-
-
     private val adapter by lazy {
         RoomPostMessagesAdapter(lazyContext)
     }
@@ -38,7 +36,6 @@ class PostMessageRoomFragment : Fragment(),SendPostMessageCallback {
     companion object{
         const val TAG = "PostMessageRoomFragment"
     }
-
 
     val args : PostMessageRoomFragmentArgs by navArgs()
 
@@ -49,26 +46,20 @@ class PostMessageRoomFragment : Fragment(),SendPostMessageCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
         viewModel.setPostMessageRoomId(args.postMessageRoomId)
         requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) // 화면 터치 가능케 함.
 
-
-        fragmentBinding = DataBindingUtil.inflate<FragmentPostMessageRoomBinding>(inflater,
-                R.layout.fragment_post_message_room, container, false)
-
+        fragmentBinding = DataBindingUtil.inflate<FragmentPostMessageRoomBinding>(inflater, R.layout.fragment_post_message_room, container, false)
         fragmentBinding.lifecycleOwner = this
         fragmentBinding.postMessageRoomFragment = this
 
         fragmentBinding.roomPostMessageRV.also {
-            it.layoutManager =
-                    LinearLayoutManager(lazyContext, LinearLayoutManager.VERTICAL, false)
+            it.layoutManager = LinearLayoutManager(lazyContext, LinearLayoutManager.VERTICAL, false)
             it.setHasFixedSize(false)
             it.adapter = adapter
         }
 
         viewModel.getMessagesByRoom()
-
         viewModel.messages.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it){
@@ -88,7 +79,6 @@ class PostMessageRoomFragment : Fragment(),SendPostMessageCallback {
 
         return fragmentBinding.root
     }
-
 
 
     override fun onPostMessageSend() {

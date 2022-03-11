@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -31,7 +29,6 @@ import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
-import com.rudder.ui.fragment.comment.AddCommentFragment
 import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
 import com.rudder.ui.fragment.comment.CommunityCommentEditFragment
 import com.rudder.ui.fragment.comment.CommunityCommentReportFragment
@@ -46,7 +43,6 @@ import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_comment.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
-import kotlinx.android.synthetic.main.fragment_main_bottom_bar.*
 import kotlinx.android.synthetic.main.post_comments.*
 import androidx.navigation.fragment.findNavController
 import com.rudder.data.MainDisplayTab
@@ -54,7 +50,6 @@ import com.rudder.data.dto.NotificationType
 import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
 import com.rudder.ui.fragment.mypage.*
 import com.rudder.ui.fragment.notification.NotificationDisplayFragment
-import com.rudder.ui.fragment.notification.NotificationDisplayFragmentDirections
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
 import com.rudder.viewModel.MyPageViewModel
@@ -64,13 +59,10 @@ import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
 
 class MainActivity : AppCompatActivity(), MainActivityInterface {
-    private val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+    private val mainViewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     private val notificationViewModel : NotificationViewModel by lazy { ViewModelProvider(this).get(NotificationViewModel::class.java) }
     private val myPageViewModel : MyPageViewModel by lazy { ViewModelProvider(this).get(MyPageViewModel::class.java) }
 
-
-    lateinit var mainBottomBarFragment: MainBottomBarFragment
-//    lateinit var addCommentFragment: AddCommentFragment
     lateinit var communityDisplayFragment: CommunityDisplayFragment
     private lateinit var myPageDisplayFragment: MyPageDisplayFragment
     private lateinit var addPostDisplayFragment: AddPostDisplayFragment
@@ -82,23 +74,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     lateinit var communityCommentReportFragment: CommunityCommentReportFragment
     private lateinit var clubJoinRequestDialogFragment: ClubJoinRequestDialogFragment
     lateinit var communityCommentEditFragment: CommunityCommentEditFragment
-    private lateinit var postMessageFragment: PostMessageDisplayFragment
     private lateinit var contactUsFragment: ContactUsFragment
     private lateinit var categorySelectMyPageFragment: CategorySelectMyPageFragment
     lateinit var requestCategoryBottomDialogFragment: RequestCategoryBottomDialogFragment
-
-
-    //private lateinit var postMessageRoomFragment: PostMessageRoomFragment
-
     lateinit var editPostFragment: EditPostFragment
-
     private lateinit var notificationDisplayFragment: NotificationDisplayFragment
-
-    private val purpleRudder by lazy { ContextCompat.getColor(this, R.color.purple_rudder) }
-    private val grey by lazy { ContextCompat.getColor(this, R.color.grey) }
-    private val black by lazy { ContextCompat.getColor(this, R.color.black) }
-
-
 
     private val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -113,8 +93,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     private var notificationType:Int = -1
     private var itemId:Int = -1
 
-
-
     companion object {
         private const val KEY_SELECTED_TAB = "selectedTab"
     }
@@ -125,33 +103,12 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         notificationType=intent.getIntExtra("notificationType",-1)
         itemId=intent.getIntExtra("itemId",-1)
-////
-//        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(
-//            this,
-//            R.layout.activity_main
-//        )
 
-        //val binding = ActivityMainBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
-//        val tmp = DataBindingUtil.setContentView<PostPreviewBinding>(
-//            this,
-//            R.layout.post_preview
-//        )
-
-        binding.mainVM = viewModel
+        binding.mainVM = mainViewModel
         binding.lifecycleOwner = this
-
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        /////////////////////// 21 01 18 navigation
         val mainBottomNavigation: BottomNavigationView = binding.mainBottomNavigation
-        //val navController = findNavController(R.id.mainDisplayContainerView)
-        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainDisplayContainerView) as NavHostFragment
-        //val navController = navHostFragment.navController
-        //mainBottomNavigation.setupWithNavController(navController)
-
-
-
         navDisplayController.apply {
             navigatorProvider.addNavigator(
                 CustomBottomNavigator(
@@ -164,14 +121,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             mainBottomNavigation.setupWithNavController(this)
         }
 
-
-
-        savedInstanceState?.getInt(KEY_SELECTED_TAB)
-            ?.let {
+        savedInstanceState?.getInt(KEY_SELECTED_TAB)?.let {
                 MainDisplayTab.from(it)
-            }
-            ?.itemId
-            ?.let {
+            }?.itemId?.let {
                 mainBottomNavigation.selectedItemId = it
             }
 
@@ -181,26 +133,23 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             true
         }
 
-        //////////////////////
-
 
         val progressDialog = ProgressDialog(this, R.style.MyAlertDialogStyle)
         progressDialog.setMessage("Please wait ...")
         progressDialog.setCancelable(false)
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal)
-        //progressBar.bringToFront()
-        mainBottomBarFragment = MainBottomBarFragment(this)
+
+
         communityDisplayFragment = CommunityDisplayFragment()
         myPageDisplayFragment = MyPageDisplayFragment()
         addPostDisplayFragment = AddPostDisplayFragment()
-
         showPostContentsFragment = ShowPostContentsFragment()
-        communityPostBottomSheetFragment = CommunityPostBottomSheetFragment(viewModel)
-        communityCommentBottomSheetFragment = CommunityCommentBottomSheetFragment(viewModel)
-        communityPostReportFragment = CommunityPostReportFragment(viewModel)
-        communityCommentReportFragment = CommunityCommentReportFragment(viewModel)
+        communityPostBottomSheetFragment = CommunityPostBottomSheetFragment(mainViewModel)
+        communityCommentBottomSheetFragment = CommunityCommentBottomSheetFragment(mainViewModel)
+        communityPostReportFragment = CommunityPostReportFragment(mainViewModel)
+        communityCommentReportFragment = CommunityCommentReportFragment(mainViewModel)
         clubJoinRequestDialogFragment = ClubJoinRequestDialogFragment()
-        communityCommentEditFragment = CommunityCommentEditFragment(viewModel)
+        communityCommentEditFragment = CommunityCommentEditFragment(mainViewModel)
         contactUsFragment = ContactUsFragment()
         editPostFragment = EditPostFragment()
         categorySelectMyPageFragment = CategorySelectMyPageFragment()
@@ -209,12 +158,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         requestCategoryBottomDialogFragment = RequestCategoryBottomDialogFragment(myPageViewModel)
 
 
-
-        val toastDeletePostComplete = Toast.makeText(
-            this,
-            "Delete Post Complete!",
-            Toast.LENGTH_LONG
-        )
         val toastChooseValidCategory = Toast.makeText(
             this,
             "Choose a category please.",
@@ -227,62 +170,36 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         )
 
 
-
-        viewModel.isContactUs.observe(this, Observer {
+        mainViewModel.isContactUs.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
-                if (!contactUsFragment.isAdded)
-                    contactUsFragment.show(
-                        supportFragmentManager,
-                        contactUsFragment.tag
-                    )
+                if (!contactUsFragment.isAdded) {
+                    contactUsFragment.show(supportFragmentManager, contactUsFragment.tag)
+                }
             }
         })
 
-
-        viewModel.isClubJoinRequest.observe(this, Observer {
+        mainViewModel.isClubJoinRequest.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
                 if (!clubJoinRequestDialogFragment.isAdded)
-                    clubJoinRequestDialogFragment.show(
-                        supportFragmentManager,
-                        clubJoinRequestDialogFragment.tag
+                    clubJoinRequestDialogFragment.show(supportFragmentManager, clubJoinRequestDialogFragment.tag
                     )
             }
         })
 
-
-        viewModel.isSearchPostClick.observe(this, Observer {
-            if (it.getContentIfNotHandled()!!) {
-                val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                fragmentShowHide.addToBackStack()
-                fragmentShowHide.hideFragment(communityDisplayFragment)
-                //fragmentShowHide.hideFragment(mainDisplayContainerView)
-
-//                fragmentShowHide.addFragment(searchPostDisplayFragment, R.id.mainDisplay, "searchPost")
-//                fragmentShowHide.showFragment(searchPostDisplayFragment, R.id.mainDisplay)
-
-                //navDisplayController.navigate(R.id.action_navigation_community_to_main_fragment_navigation_graph)
-            }
-        })
-
-
-        viewModel.startLoginActivity.observe(this, Observer {
+        mainViewModel.startLoginActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
                 StartActivityUtil.callActivity(this, LoginActivity())
                 finish()
             }
         })
 
-
-
-        viewModel.isAddPostSuccess.observe(this, Observer {
+        mainViewModel.isAddPostSuccess.observe(this, Observer {
             onBackPressed()
             mainBottomNavigationAppear()
         })
 
 
-
-
-        viewModel.isContactUsSuccess.observe(this, Observer {
+        mainViewModel.isContactUsSuccess.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     contactUsFragment.dismiss()
@@ -291,7 +208,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         })
 
 
-        viewModel.isCancelClick.observe(this, Observer {
+        mainViewModel.isCancelClick.observe(this, Observer {
             event ->
             event.getContentIfNotHandled()?.let {
                 if(it){
@@ -303,7 +220,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                         clubJoinRequestDialogFragment.dismiss()
                 }
             }
-
         })
 
 
@@ -318,8 +234,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         })
 
 
-
-        viewModel.noticeResponse.observe(this, Observer {
+        mainViewModel.noticeResponse.observe(this, Observer {
             it?.let {
                 if (it.isExist) {
                     val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -331,18 +246,16 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             }
         })
 
-
-        viewModel.categorySelectApply.observe(this, Observer { // Apply 버튼
+        mainViewModel.categorySelectApply.observe(this, Observer { // Apply 버튼
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
-                    viewModel.getSelectedCategories()
+                    mainViewModel.getSelectedCategories()
                     onBackPressed()
                 }
             }
         })
 
-
-        viewModel.isStringBlank.observe(this, Observer {
+        mainViewModel.isStringBlank.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     toastStringBlank.show()
@@ -350,8 +263,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             }
         })
 
-
-        viewModel.isUnvalidCategorySelect.observe(this, Observer {
+        mainViewModel.isUnvalidCategorySelect.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     toastChooseValidCategory.show()
@@ -359,26 +271,21 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             }
         })
 
-
-
         parentCommentInfoClose.setOnClickListener {
-            viewModel.clearNestedCommentInfo()
+            mainViewModel.clearNestedCommentInfo()
 
         }
 
         if (notificationType != -1 && itemId != -1) {
             moveByNotificationType(notificationType,itemId)
         } else {
-             if (viewModel.noticeResponse.value == null) {
-                 viewModel.getNotice()
+             if (mainViewModel.noticeResponse.value == null) {
+                 mainViewModel.getNotice()
             }
         }
-
-
     }
 
     private fun moveByNotificationType(notificationType : Int, itemId: Int){
-
         when (notificationType) {
             NotificationType.COMMENT.typeNumber, NotificationType.NESTED_COMMENT.typeNumber -> {
                 notificationViewModel.getPostContentFromPostIdNotification(itemId)
@@ -390,6 +297,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
                 mainBottomNavigationDisappear()
             }
+
             NotificationType.POST_MESSAGE.typeNumber -> {
                 val navController = navDisplayController
                 val actionNotificationToPostMessage = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationPostmessage(notificationPostMessageRoomId = itemId)
@@ -400,7 +308,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 mHandler.postDelayed({
                     navController.navigate(actionPostMessageToPostMessageRoom)
                 }, 300) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
-
 
                 mainBottomNavigationDisappear()
             }
@@ -427,9 +334,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         return super.dispatchTouchEvent(ev)
     }
 
-
-
-
     fun getDisplaySize(): ArrayList<Int> {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val windowMetrics = this@MainActivity.windowManager.currentWindowMetrics
@@ -447,8 +351,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         }
     }
 
-
-
     fun showParentCommentInfo() {
         parentCommentInfo.visibility = View.VISIBLE
     }
@@ -457,52 +359,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         parentCommentInfo.visibility = View.GONE
     }
 
-
-    fun showPost(viewModel: MainViewModel, showPostContentsFragment: ShowPostContentsFragment) {
-        this.showPostContentsFragment = showPostContentsFragment
-
-//        parentCommentInfoClose.setOnClickListener {
-//            this.showPostContentsFragment.closeParentCommentInfo()
-//        }
-        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-
-        fragmentShowHide.addToBackStack()
-        //fragmentShowHide.addFragment(this.showPostContentsFragment, R.id.mainDisplay, "showPost")
-       // fragmentShowHide.showFragment(this.showPostContentsFragment, R.id.mainDisplay)
-    }
-
-
-//    fun showAddComment(addCommentFragment: AddCommentFragment) {
-//        this.addCommentFragment = addCommentFragment
-//        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-//        fragmentShowHide.addFragment(this.addCommentFragment, R.id.mainBottomBar, "addComment")
-//        fragmentShowHide.showFragment(this.addCommentFragment, R.id.mainBottomBar)
-//    }
-
-
-
-
-//    fun changeColorCommunity() {
-//        mainBottomBarFragment.communityIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
-//        mainBottomBarFragment.myPageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
-//        mainBottomBarFragment.postMessagePageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
-//    }
-//
-//    fun changeColorMyPage() {
-//        mainBottomBarFragment.myPageIcon.setColorFilter(purpleRudder, PorterDuff.Mode.SRC_IN)
-//        mainBottomBarFragment.communityIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
-//        mainBottomBarFragment.postMessagePageIcon.setColorFilter(black, PorterDuff.Mode.SRC_IN)
-//    }
-
-    ///
-
-    fun validateBack(tag: String): Boolean {
-        return if (supportFragmentManager.findFragmentByTag(tag)==null){
-            false
-        }else{
-            supportFragmentManager.findFragmentByTag(tag)!!.isVisible
-        }
-    }
 
     fun showPostMore(communityPostBottomSheetFragment: CommunityPostBottomSheetFragment){
         this.communityPostBottomSheetFragment = communityPostBottomSheetFragment
@@ -524,15 +380,11 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
 
-
     fun showRequestCategoryBottomDialog(){
         if (!this.requestCategoryBottomDialogFragment.isAdded) {
             this.requestCategoryBottomDialogFragment.show(supportFragmentManager, this.requestCategoryBottomDialogFragment.tag)
         }
     }
-
-
-
 
     fun closeCommunityBottomSheetFragment(){
         Toast.makeText(
@@ -543,24 +395,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         communityCommentBottomSheetFragment.dismiss()
     }
 
-    fun showFragment(fragment: Fragment,id: Int, tag: String, isAddToBackStack: Boolean = false){
-        val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-        if(isAddToBackStack){
-            fragmentShowHide.addToBackStack()
-        }
-        fragmentShowHide.addFragment(fragment, id, tag)
-        fragmentShowHide.showFragment(fragment,id)
-    }
-
-    override fun showNotificationFragment() {
-        //notificationDisplayFragment = NotificationDisplayFragment(this)
-        //showFragment(notificationDisplayFragment, R.id.mainDisplay,"notification")
-    }
-
-    override fun showPostMessageFragment() {
-        postMessageFragment = PostMessageDisplayFragment()
-        //showFragment(postMessageFragment, R.id.mainDisplay, "postMessage")
-    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -568,14 +402,12 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
     }
 
-
     fun mainBottomNavigationDisappear() {
         binding.mainBottomLayout.visibility = View.GONE
         val lp = binding.mainDisplayContainerView.layoutParams
         lp.height = ViewGroup.LayoutParams.MATCH_PARENT
         binding.mainDisplayContainerView.layoutParams = lp
     }
-
 
     fun mainBottomNavigationAppear() {
         binding.mainBottomLayout.visibility = View.VISIBLE
@@ -587,10 +419,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         binding.mainDisplayContainerView.layoutParams = lp
     }
 
-
-
     fun nestedCommentDisappear(){
-        viewModel.clearNestedCommentInfo()
+        mainViewModel.clearNestedCommentInfo()
     }
 
 
@@ -603,8 +433,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         ActivityContainer.clearCurrentActivity(this)
         super.onDestroy()
     }
-
-
 
 
     @SuppressLint("RestrictedApi")
@@ -624,7 +452,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                 R.id.navigation_search -> {
                     mainBottomNavigationDisappear()
                     nestedCommentDisappear()
-
                 }
                 R.id.navigation_notification -> {
                     mainBottomNavigationAppear()
@@ -633,7 +460,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                     mainBottomNavigationDisappear()
                     nestedCommentDisappear()
                 }
-
                 else -> {
                 }
             }

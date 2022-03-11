@@ -34,7 +34,6 @@ open class MainViewModel : ViewModel() {
 
 
     val _isShowPostRefreshSuccess = MutableLiveData<Event<Boolean>>()
-
     val _toastMessage = MutableLiveData<String?>()
     val _isPostFromId = MutableLiveData<Event<Boolean>>()
     val _postFromId = MutableLiveData<PreviewPost?>()
@@ -44,7 +43,6 @@ open class MainViewModel : ViewModel() {
     val _postBody = MutableLiveData<String>()
     val _commentBody = MutableLiveData<String>()
     private val _selectedParentCommentBody = MutableLiveData<String>()
-    private val _selectedTab = MutableLiveData<Int>()
     var _posts = MutableLiveData<ArrayList<PreviewPost>>()
     private val _comments = MutableLiveData<ArrayList<Comment>>()
     private val _allCategories = MutableLiveData<ArrayList<Category>>()
@@ -58,7 +56,6 @@ open class MainViewModel : ViewModel() {
     val _selectedCategoryNameInAddPost = MutableLiveData<String>()
     private val _selectedRequestJoinClubCategoryId = MutableLiveData<Int>()
     private val _selectedPhotoUriList = MutableLiveData<ArrayList<FileInfo>>()
-    private val _isBackClick = MutableLiveData<Boolean?>()
     private val _isScrollBottomTouch = MutableLiveData<Event<Boolean>>()
     private val _isAddPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isLikePost = MutableLiveData<Boolean>()
@@ -66,12 +63,10 @@ open class MainViewModel : ViewModel() {
     private val _commentLikeCountChange = MutableLiveData<Int>()
     private val _selectedPostMorePosition = MutableLiveData<Int>()
     private val _selectedCommentMorePosition = MutableLiveData<Int>()
-
     val _postCategoryInt = MutableLiveData<Int>()
     val _departmentCategoryAInt = MutableLiveData<Int?>()
     val _departmentCategoryBInt = MutableLiveData<Int?>()
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
-
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
     private val _isPostMorePreventDouble = MutableLiveData<Boolean?>()
     private val _isCommentMorePreventDouble = MutableLiveData<Boolean?>()
@@ -94,8 +89,6 @@ open class MainViewModel : ViewModel() {
     val _isEditPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isReportPostSuccess = MutableLiveData<Event<Boolean>>()
     private val _isContactUsSuccess = MutableLiveData<Event<Boolean>>()
-    private val _isSearchPostClick = MutableLiveData<Event<Boolean>>()
-
     val _reportPostBody = MutableLiveData<String>()
     val _userRequestBody = MutableLiveData<String>()
     val _reportCommentBody = MutableLiveData<String>()
@@ -113,12 +106,9 @@ open class MainViewModel : ViewModel() {
     var noticeAlreadyShow = false
     private val _noticeResponse = MutableLiveData<NoticeResponse>()
 
-//    private val _noticeResponse = MutableLiveData<NoticeResponse>()
-//    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
+
 
     var isShowPostRefreshSuccess: LiveData<Event<Boolean>> = _isShowPostRefreshSuccess
-
-
     var isCommentReportDialogCancel: LiveData<Event<Boolean>> = _isCommentReportDialogCancel
     var isReportDialogCancel: LiveData<Event<Boolean>> = _isReportDialogCancel
     var isCommentEditDialogCancel: LiveData<Event<Boolean>> = _isCommentEditDialogCancel
@@ -129,8 +119,6 @@ open class MainViewModel : ViewModel() {
     val _isStringBlank = MutableLiveData<Event<Boolean>>()
     val _isUnvalidCategorySelect = MutableLiveData<Event<Boolean>>()
     private val _searchPosts = MutableLiveData<ArrayList<PreviewPost>>()
-
-
     val toastMessage : LiveData<String?> = _toastMessage
     val commentBody : LiveData<String> = _commentBody
     val isPostFromId: LiveData<Event<Boolean>> = _isPostFromId
@@ -147,8 +135,6 @@ open class MainViewModel : ViewModel() {
     val isLikePost: LiveData<Boolean> = _isLikePost
     val isAddPostSuccess: LiveData<Event<Boolean>> = _isAddPostSuccess
     val isScrollBottomTouch: LiveData<Event<Boolean>> = _isScrollBottomTouch
-    val isBackClick: LiveData<Boolean?> = _isBackClick
-    val selectedTab: LiveData<Int> = _selectedTab
     val categoryNames: LiveData<ArrayList<String>> = _categoryNames
     val selectedPostPosition: LiveData<Int> = _selectedPostPosition
     val selectedCategoryPosition: LiveData<Int> = _selectedCategoryPosition
@@ -156,16 +142,12 @@ open class MainViewModel : ViewModel() {
     val selectedCategoryView: LiveData<View> = _selectedCategoryView
     val selectedCategoryNameInAddPost: LiveData<String> = _selectedCategoryNameInAddPost
     val selectedPhotoUriList : LiveData<ArrayList<FileInfo>> = _selectedPhotoUriList
-    val isSearchPostClick: LiveData<Event<Boolean>> = _isSearchPostClick
     val selectedPostMorePosition: LiveData<Int> = _selectedPostMorePosition
-
     val selectedCommentMorePosition: LiveData<Int> = _selectedCommentMorePosition
     val postCategoryInt: LiveData<Int> = _postCategoryInt
     val departmentCategoryAInt: LiveData<Int?> = _departmentCategoryAInt
     val departmentCategoryBInt: LiveData<Int?> = _departmentCategoryBInt
-
     val commentBodyCheck: LiveData<Event<Boolean>> = _commentBodyCheck
-
     val isPostMore: LiveData<Event<Boolean>> = _isPostMore
     val isPostMorePreventDouble: LiveData<Boolean?> = _isPostMorePreventDouble
     val isCommentMorePreventDouble: LiveData<Boolean?> = _isCommentMorePreventDouble
@@ -187,38 +169,29 @@ open class MainViewModel : ViewModel() {
     val isReportCommentSuccess: LiveData<Event<Boolean>> = _isReportCommentSuccess
     val isEditPostSuccess : LiveData<Event<Boolean>> = _isEditPostSuccess
     val isReportPostSuccess : LiveData<Event<Boolean>> = _isReportPostSuccess
-
     val isContactUsSuccess : LiveData<Event<Boolean>> = _isContactUsSuccess
-
     val reportPostBody: LiveData<String> = _reportPostBody
     val reportCommentBody: LiveData<String> = _reportCommentBody
     val isCancelClick : LiveData<Event<Boolean>> = _isCancelClick
-
     val startLoginActivity: LiveData<Event<Boolean>> = _startLoginActivity
-
     var posts: LiveData<ArrayList<PreviewPost>> = _posts
     val comments: LiveData<ArrayList<Comment>> = _comments
     val userSelectCategories: LiveData<ArrayList<Category>> = _userSelectCategories
     val allCategories: LiveData<ArrayList<Category>> = _allCategories
     val allClubCategories: LiveData<ArrayList<Category>> = _allClubCategories
-
     val imageCount: LiveData<Int> = _imageCount
-
-
     var categoryIdSelectList: LiveData<ArrayList<Int>> = _categoryIdSelectList
     var categoryIdAllList: LiveData<ArrayList<Int>> = _categoryIdAllList
     val categorySelectApply: LiveData<Event<Boolean>> = _categorySelectApply // Apply button
-
     val categoryNamesForSelection: LiveData<ArrayList<String>> = _categoryNamesForSelection
     val selectedParentCommentBody: LiveData<String> = _selectedParentCommentBody
     val isStringBlank : LiveData<Event<Boolean>> = _isStringBlank
     val isUnvalidCategorySelect : LiveData<Event<Boolean>> = _isUnvalidCategorySelect
     var postMode : PostMode = PostMode.NORMAL
 
-    open var qwe = true
+
     init {
         _selectedPostPosition.value = 0
-        _selectedTab.value = R.id.communityButton
         _selectedCategoryPosition.value = 0
         _postInnerValueChangeSwitch.value=true
         _commentInnerValueChangeSwitch.value=true
@@ -266,22 +239,16 @@ open class MainViewModel : ViewModel() {
         )
         _postBody.value = ""
 
-        //clearSearchPost()
         clearNestedCommentInfo()
-
 
         viewModelScope.async {
             getCategories().await()
             getClubCategories()
         }
 
-
         getSelectedCategories()
-
-
         _isDeleteCommentSuccess.value = Event(false)
         _imageCount.value = 0
-
         _categoryIdSelectList.value = ArrayList<Int>()
         _categoryIdAllList.value = ArrayList<Int>()
         _categoryNamesForSelection.value = ArrayList<String>()
@@ -293,15 +260,9 @@ open class MainViewModel : ViewModel() {
     }
 
 
-
-    fun clickSearchPost() {
-        _isSearchPostClick.value = Event(true)
-    }
-
     fun requestJoinClub() { // 동아리 카테고리 불러오기
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
         GlobalScope.launch {
-
             val isSuccess = Repository().requestJoinClub(RequestJoinClubRequest(App.prefs.getValue(tokenKey)!!,_selectedRequestJoinClubCategoryId.value!!,_clubJoinRequestBody.value!!))
             viewModelScope.launch {
                 if(isSuccess){
@@ -314,9 +275,11 @@ open class MainViewModel : ViewModel() {
 
     }
 
+
     fun setSelectedRequestJoinClubCategoryId(id: Int){
         _selectedRequestJoinClubCategoryId.value = id
     }
+
 
     fun findCategoryIndexById(id: Int) : Int {
         var index = 0
@@ -332,6 +295,7 @@ open class MainViewModel : ViewModel() {
         }
         return index
     }
+
 
     fun getClubCategories() { // 동아리 카테고리 불러오기
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
@@ -359,6 +323,7 @@ open class MainViewModel : ViewModel() {
 
     }
 
+
     fun getMyProfileImageUrl(){
         GlobalScope.async {
             val url = Repository().getMyProfileImageUrl(MyProfileImageRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!)).url
@@ -379,6 +344,7 @@ open class MainViewModel : ViewModel() {
         }
     }
 
+
     suspend fun uploadPhoto(postId:Int){
         GlobalScope.async {
             val list = Repository().getUploadUrls(GetUploadUrlsInfo(getMimeTypeList(),App.prefs.getValue(tokenKey)!!,postId) )
@@ -393,11 +359,14 @@ open class MainViewModel : ViewModel() {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
+
+
     fun deletePhotoUriPosition(position: Int){
         val tmpList = _selectedPhotoUriList.value!!
         tmpList.removeAt(position)
         _selectedPhotoUriList.value = tmpList
     }
+
 
     fun setSelectedPhotoUriList(uriList:ArrayList<FileInfo>){
         val tmpList = _selectedPhotoUriList.value!!
@@ -406,6 +375,7 @@ open class MainViewModel : ViewModel() {
 
     }
 
+
     fun getMimeTypeList():ArrayList<String>{
         var mimeTypeList = arrayListOf<String>()
         for(fileInfo in _selectedPhotoUriList.value!!){
@@ -413,6 +383,7 @@ open class MainViewModel : ViewModel() {
         }
         return mimeTypeList
     }
+
 
     fun onPhotoPickerClick(){
         _photoPickerClickSwitch.value = Event(true)
@@ -424,10 +395,10 @@ open class MainViewModel : ViewModel() {
         _selectedCommentGroupNum.value = groupNum
     }
 
+
     fun callLoginOut() {
         viewModelScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
             val logoutResponse = Repository().logout(LogoutRequest(App.prefs.getValue("token")!!))
             if(logoutResponse.isSuccess) {
                 val key = BuildConfig.TOKEN_KEY
@@ -476,21 +447,12 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    fun clickCommunity() {
-        _selectedTab.value = R.id.communityButton
-    }
 
-    fun clickMyPage() {
-        _selectedTab.value = R.id.myPageButton
-    }
 
     fun clickAddPost() {
         _postCategoryInt.value = 0 // Choose 한 category가 0 (항상 "Select") 이게 함.
     }
 
-    fun clickBack() {
-        switch(_isBackClick)
-    }
 
     fun clickPostLike() {
         val plusValue =
@@ -537,9 +499,7 @@ open class MainViewModel : ViewModel() {
     }
 
     fun addLikePost(plusValue: Int) {
-
         val postIdForAddLikePost : Int
-
         if (_selectedPostPosition.value!! == -1 ) {
             postIdForAddLikePost = _postId.value!!
         } else {
@@ -555,7 +515,6 @@ open class MainViewModel : ViewModel() {
             val resJson = Repository().addLikePost(addLikePostInfo)
             viewModelScope.launch {
                 if (resJson.get("isSuccess").asBoolean){
-
                     if (_selectedPostPosition.value!! == -1 ) {
                         _postFromId.value!!.likeCount = resJson.get("like_count").asInt
                     } else {
@@ -592,13 +551,11 @@ open class MainViewModel : ViewModel() {
 
         viewModelScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
             val categoryId = if(userSelectCategories.value!!.size-1>=selectedCategoryPosition.value!!){
                 userSelectCategories.value!![selectedCategoryPosition.value!!].categoryId
             }else{
                 -1
             }
-
             val resPosts = Repository().getPosts(
                 GetPostInfo(
                     pagingIndex,
@@ -623,6 +580,7 @@ open class MainViewModel : ViewModel() {
 
         }
     }
+
 
     fun addLikeComment(plusValue: Int, position: Int) {
         GlobalScope.launch {
@@ -735,7 +693,6 @@ open class MainViewModel : ViewModel() {
                     _commentBody.postValue("")
 //                    clearNestedCommentInfo()
                     viewModelScope.launch {
-
                         if (_selectedPostPosition.value!! == -1 ) {
                             _postFromId.value!!.commentCount = _postFromId.value!!.commentCount + 1
                         } else {
@@ -975,9 +932,6 @@ open class MainViewModel : ViewModel() {
     }
 
 
-
-
-
     fun splitCategoryNames(categoryList: ArrayList<Category>,removeZeroIndex:Boolean=true): ArrayList<String> {
         var categoryNames = ArrayList<String>()
         for (category in categoryList) {
@@ -1102,7 +1056,6 @@ open class MainViewModel : ViewModel() {
             }
         }
     }
-
 
 
     fun editComment() {
@@ -1330,7 +1283,6 @@ open class MainViewModel : ViewModel() {
 
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
         (parent.getChildAt(0) as TextView).textSize = 14.0.toFloat()
-
     }
 
     fun clearDepartmentCategory() {

@@ -37,6 +37,7 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
         requireContext()
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -46,10 +47,9 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
             R.layout.fragment_notification_contents,container,false)
 
         fragmentBinding.lifecycleOwner = this
-
         val notificationAdapter = NotificationAdapter(this, lazyContext)
-
         notificationViewModel.getNotifications()
+
 
         fragmentBinding.notificationDisplayRV.also {
             it.layoutManager =
@@ -57,7 +57,6 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
             it.setHasFixedSize(false)
             it.adapter = notificationAdapter
         }
-
 
         notificationViewModel.notificationList.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -69,13 +68,10 @@ class NotificationContentsFragment : Fragment(), NotificationAdapterCallback {
             it?.let{
                 if (it != "Success") {
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-//                    findNavController().popBackStack()
-//                    findNavController().popBackStack()
-//                    (activity as MainActivity).mainBottomNavigationAppear()
-
                 }
             }
         })
+
 
         notificationViewModel.clearPostFromId()
         notificationViewModel.isPostFromId.observe(viewLifecycleOwner, Observer {

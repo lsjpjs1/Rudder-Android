@@ -23,7 +23,6 @@ import com.rudder.viewModel.NotificationViewModel
 class NotificationDisplayFragment : Fragment() {
 
     private val notificationViewModel: NotificationViewModel by activityViewModels()
-
     companion object{
         const val TAG = "NotificationDisplayFragment"
     }
@@ -47,7 +46,6 @@ class NotificationDisplayFragment : Fragment() {
         if (!hidden) {
             notificationViewModel.getNotifications()
         }
-
         super.onHiddenChanged(hidden)
     }
 

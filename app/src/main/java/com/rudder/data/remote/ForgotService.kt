@@ -20,7 +20,6 @@ interface ForgotIDService {
 }
 
 
-
 interface ForgotPasswordService {
     @POST("/signupin/sendPwVerificationCode")
     suspend fun forgotPassword(
@@ -28,7 +27,6 @@ interface ForgotPasswordService {
 
     ) : Response<JsonObject>
 }
-
 
 interface SendPasswordSevice {
     @POST("/signupin/checkCode")

@@ -32,7 +32,6 @@ class SendPostMessageDialogFragment(val receiveUserInfoId: Int?,
         context
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,7 +43,6 @@ class SendPostMessageDialogFragment(val receiveUserInfoId: Int?,
         binding.sendPostMessageDialogVM = viewModel
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-
         viewModel.setMessageReceiveUserInfoId(receiveUserInfoId)
 
         val displayDpValue = parentActivity.getDisplaySize() // [0] == width, [1] == height
@@ -53,7 +51,6 @@ class SendPostMessageDialogFragment(val receiveUserInfoId: Int?,
         lp.height = (displayDpValue[1] * 0.45).toInt()
         lp.width = (displayDpValue[0] * 0.9).toInt()
         binding.sendPostMessageDialogCL.layoutParams = lp
-
 
         viewModel.closeFlag.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -69,7 +66,6 @@ class SendPostMessageDialogFragment(val receiveUserInfoId: Int?,
                 }
             }
         })
-
 
         return binding.root
     }

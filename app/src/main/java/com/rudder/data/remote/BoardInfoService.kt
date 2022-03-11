@@ -32,9 +32,6 @@ interface BoardInfoService {
         @Body getCategoriesRequestWithSchoolId: GetCategoriesRequestWithSchoolId
     ) : Response<ArrayList<Category>>
 
-
-
-
     @POST("/board/userSelectCategoryList")
     suspend fun getSelectedCategories(
         @Body token: Token

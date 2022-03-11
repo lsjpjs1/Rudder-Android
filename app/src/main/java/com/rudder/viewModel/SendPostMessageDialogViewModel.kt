@@ -16,21 +16,21 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class SendPostMessageDialogViewModel : ViewModel() {
-    val _postMessageBody = MutableLiveData<String>()
 
+    val _postMessageBody = MutableLiveData<String>()
     private val _messageReceiveUserInfoId = MutableLiveData<Int?>()
     private val _toastMessage = MutableLiveData<String?>()
     private val _closeFlag = MutableLiveData<Event<Boolean>>()
-
     val closeFlag : LiveData<Event<Boolean>> = _closeFlag
     val toastMessage : LiveData<String?> = _toastMessage
+
 
     init {
         _postMessageBody.value = ""
     }
 
-    fun sendPostMessage() {
 
+    fun sendPostMessage() {
         if ( _postMessageBody.value!!.isBlank() ) {
             _toastMessage.value = "One or more fields is blank!"
         } else {
@@ -42,7 +42,6 @@ class SendPostMessageDialogViewModel : ViewModel() {
                     val result = Repository().sendPostMessage(SendPostMessageRequest(token!!,_messageReceiveUserInfoId.value!!,_postMessageBody.value!!))
                     viewModelScope.launch {
                         when(result.error){
-
                             ResponseEnum.SUCCESS -> {
                                 _toastMessage.value = "Sending message complete!"
                                 _closeFlag.value = Event(true)
@@ -57,11 +56,8 @@ class SendPostMessageDialogViewModel : ViewModel() {
                     }
                 }
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
-
             }
         }
-
-
     }
 
     fun setMessageReceiveUserInfoId(receiveUserINfoId : Int?) {

@@ -28,7 +28,6 @@ import kotlinx.coroutines.launch
 class SplashActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java)  }
-
     private var notificationType:Int = -1
     private var itemId:Int = -1
 
@@ -38,9 +37,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         startService(Intent(this, ForecdTerminationService::class.java))
-
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
         val binding = DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash)
         binding.loginVM = viewModel
         binding.lifecycleOwner = this
@@ -59,6 +56,7 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
         })
+
         viewModel.startMainActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 val intent = Intent(this, MainActivity()::class.java)
@@ -74,15 +72,16 @@ class SplashActivity : AppCompatActivity() {
         notificationType=intent.getIntExtra("notificationType",-1)
         itemId=intent.getIntExtra("itemId",-1)
         autoLogin()
+
     }
+
 
     fun autoLogin(){
         GlobalScope.launch {
             val autoLoginPref = App.prefs.getValue("autoLogin")
             if (autoLoginPref == "true") {
                 viewModel.callLogin()
-            }
-            else {
+            } else {
                 val mHandler = Handler(Looper.getMainLooper())
                 mHandler.postDelayed({
                     StartActivityUtil.callActivity(this@SplashActivity, LoginActivity())
@@ -90,12 +89,10 @@ class SplashActivity : AppCompatActivity() {
                 }, 1000)
             }
         }
-
     }
+
     override fun onDestroy() {
         ActivityContainer.clearCurrentActivity(this)
         super.onDestroy()
     }
-
-
 }

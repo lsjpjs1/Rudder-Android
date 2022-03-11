@@ -15,6 +15,7 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 
 class EditPostHeaderFragment(val viewModel: MainViewModel) : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +31,6 @@ class EditPostHeaderFragment(val viewModel: MainViewModel) : Fragment() {
                 (activity as MainActivity).mainBottomNavigationAppear()
             }
         }
-
 
         return header.root
     }

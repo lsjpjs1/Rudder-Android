@@ -35,14 +35,8 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
 
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
 
-
-    //    private val viewModel: SearchViewModel by activityViewModels()
-    private val viewModel : SearchViewModel by activityViewModels()
-
+    private val searchViewModel : SearchViewModel by activityViewModels()
     private val mainViewModel : MainViewModel by activityViewModels()
-
-
-
 
 
     override fun onCreateView(
@@ -55,8 +49,8 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
             R.layout.fragment_search_post_contents,container,false)
         searchDisplayBinding.lifecycleOwner = this
 
-        val adapter = MainPostPreviewAdapter(this,lazyContext, viewModel,viewLifecycleOwner)
-        adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
+        val adapter = MainPostPreviewAdapter(this,lazyContext, searchViewModel,viewLifecycleOwner)
+        adapter.submitList(searchViewModel.posts.value!!.toMutableList().map { it.copy() })
         searchDisplayBinding.searchPostPreviewRV.also{
             it.layoutManager= LinearLayoutManager(lazyContext)
             it.setHasFixedSize(false)
@@ -65,9 +59,8 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if(!it.canScrollVertically(1)){
-                        viewModel.scrollTouchBottomCommunityPost()
+                        searchViewModel.scrollTouchBottomCommunityPost()
                     } else if (!it.canScrollVertically(-1) && dy < 0) {
-                        //viewModel.scrollTouchTop()
                     }
                 }
             })
@@ -76,8 +69,8 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
         searchDisplayBinding.searchPostContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
         searchDisplayBinding.searchPostContentsSwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                viewModel.searchWord.value?.let {
-                    viewModel.scrollTouchTopCommunityPost()
+                searchViewModel.searchWord.value?.let {
+                    searchViewModel.scrollTouchTopCommunityPost()
                 } ?: kotlin.run {
                     searchDisplayBinding.searchPostContentsSwipeRefreshLayout.isRefreshing = false
                 }
@@ -86,28 +79,29 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
 
         })
 
-        viewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
+        searchViewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
             it.getContentIfNotHandled()?.let {
                     bool ->
                 if(bool)
-                    (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
+                    (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(searchViewModel))
             }
         })
 
-        viewModel.posts.observe(viewLifecycleOwner, Observer { items ->
+
+        searchViewModel.posts.observe(viewLifecycleOwner, Observer { items ->
             adapter.submitList(items.toMutableList().map { it.copy() })
             searchDisplayBinding.searchPostContentsSwipeRefreshLayout.isRefreshing = false
 
         })
 
 
-        viewModel.isPostDelete.observe(viewLifecycleOwner, Observer {
+        searchViewModel.isPostDelete.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     Toast.makeText(context, "Delete Post Complete!", Toast.LENGTH_LONG).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
-                    viewModel.clearPosts()
-                    viewModel.searchPost(false)
+                    searchViewModel.clearPosts()
+                    searchViewModel.searchPost(false)
                     if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
@@ -115,7 +109,8 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
             }
         })
 
-        viewModel.isBlockUser.observe(viewLifecycleOwner, Observer {
+
+        searchViewModel.isBlockUser.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     Toast.makeText(
@@ -124,14 +119,15 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
                         Toast.LENGTH_LONG
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
-                    viewModel.clearPosts()
-                    viewModel.searchPost(false)
+                    searchViewModel.clearPosts()
+                    searchViewModel.searchPost(false)
                     if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
                 }
             }
         })
+
 
         mainViewModel.selectedCommentGroupNum.observe(viewLifecycleOwner, Observer {
             if (it != -1) {
@@ -142,9 +138,7 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
         })
 
 
-
-
-        viewModel.isSearchWordValid.observe(viewLifecycleOwner, Observer {
+        searchViewModel.isSearchWordValid.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     Toast.makeText(context, "Please enter at least two letters.", Toast.LENGTH_SHORT).show()
@@ -152,19 +146,15 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
             }
         })
 
-
-
         return searchDisplayBinding.root
     }
 
     override fun onClickView(view: View, position: Int) {
-        viewModel.setSelectedPostPosition(position)
-
+        searchViewModel.setSelectedPostPosition(position)
         val action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationShowPost(ShowPostDisplayFragment.SEARCH_VIEW_MODEL)
         view.findNavController().navigate(action)
 
-        viewModel.addPostViewCount()
-        //viewModel.getComments()
+        searchViewModel.addPostViewCount()
     }
 
 

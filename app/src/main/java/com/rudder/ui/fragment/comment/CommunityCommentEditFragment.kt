@@ -17,11 +17,9 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 
 
-class CommunityCommentEditFragment(val viewModel: MainViewModel) : DialogFragment() {
-
+class CommunityCommentEditFragment(val mainViewModel: MainViewModel) : DialogFragment() {
 
     private lateinit var commentEditSheetFragmentBinding : FragmentCommentEditSheetBinding
-
     private val lazyContext by lazy {
         requireContext()
     }
@@ -35,11 +33,10 @@ class CommunityCommentEditFragment(val viewModel: MainViewModel) : DialogFragmen
         savedInstanceState: Bundle?
     ): View {
         commentEditSheetFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_comment_edit_sheet, container,false)
-        commentEditSheetFragmentBinding.mainVM = viewModel
+        commentEditSheetFragmentBinding.mainVM = mainViewModel
         commentEditSheetFragmentBinding.lifecycleOwner = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-
 
         val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
 
@@ -48,7 +45,7 @@ class CommunityCommentEditFragment(val viewModel: MainViewModel) : DialogFragmen
         lp1.width = (displayDpValue[0] * 0.9).toInt()
         commentEditSheetFragmentBinding.constraintLayout1.layoutParams = lp1
 
-        viewModel.isEditCommentSuccess.observe(this, Observer {
+        mainViewModel.isEditCommentSuccess.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     parentActivity.communityCommentEditFragment.dismiss()
@@ -57,7 +54,7 @@ class CommunityCommentEditFragment(val viewModel: MainViewModel) : DialogFragmen
             }
         })
 
-        viewModel.isCommentEditDialogCancel.observe(this, Observer {
+        mainViewModel.isCommentEditDialogCancel.observe(this, Observer {
                 event ->
             event.getContentIfNotHandled()?.let {
                 if(it){

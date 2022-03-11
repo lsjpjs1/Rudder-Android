@@ -30,8 +30,6 @@ class AddPostDisplayFragment : Fragment() {
             .add(R.id.addPostContentsFrameLayout, AddPostContentsFragment(viewModel,false))
             .commit()
 
-
-
         fragmentBinding.mainVM = viewModel
         fragmentBinding.lifecycleOwner = this
 

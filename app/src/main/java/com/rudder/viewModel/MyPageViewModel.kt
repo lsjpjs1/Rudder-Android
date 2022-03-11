@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class MyPageViewModel : ViewModel() {
 
-
+    private val tokenKey = BuildConfig.TOKEN_KEY
     val _requestCategoryNameBody = MutableLiveData<String>()
     val requestCategoryNameBody : LiveData<String> = _requestCategoryNameBody
 
@@ -29,13 +29,10 @@ class MyPageViewModel : ViewModel() {
     val _isRequestCategorySuccess = MutableLiveData<Event<Boolean>>()
     val isRequestCategorySuccess : LiveData<Event<Boolean>> = _isRequestCategorySuccess
 
+
     init {
         clearRequestCategoryNameBody()
     }
-
-
-
-    private val tokenKey = BuildConfig.TOKEN_KEY
 
 
     fun requestCategoryName(){
@@ -43,22 +40,16 @@ class MyPageViewModel : ViewModel() {
             _isStringBlank.value = Event(true)
         } else {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
             viewModelScope.launch {
                 val requestCategoryApiResult = Repository().requestCategoryRepository(requestCategoryInfo = RequestCategoryInfo(App.prefs.getValue(tokenKey)!!, _requestCategoryNameBody.value!!, "-" ) )
                 _isRequestCategorySuccess.postValue(Event(requestCategoryApiResult))
             }
-
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 
-
     fun clearRequestCategoryNameBody(){
         _requestCategoryNameBody.value = ""
     }
-
-
-
 
 }

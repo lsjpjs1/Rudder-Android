@@ -36,8 +36,6 @@ class EditPostFragment() : Fragment() {
         const val NOTIFICATION_VIEW_MODEL = 3
         const val MY_POST_VIEW_MODEL = 4
         const val MY_COMMENT_VIEW_MODEL = 5
-
-
     }
 
     lateinit var viewModel : MainViewModel
@@ -69,7 +67,6 @@ class EditPostFragment() : Fragment() {
             }
         }
 
-
         val fragmentBinding = DataBindingUtil.inflate<FragmentAddPostDisplayBinding>(inflater,R.layout.fragment_add_post_display,container,false)
         addPostContentsFragment = AddPostContentsFragment(viewModel,true)
 
@@ -78,9 +75,8 @@ class EditPostFragment() : Fragment() {
             .add(R.id.addPostContentsFrameLayout, addPostContentsFragment)
             .commit()
 
-        fragmentBinding.mainVM=viewModel
+        fragmentBinding.mainVM = viewModel
         fragmentBinding.lifecycleOwner = this
-
 
         viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
@@ -102,7 +98,6 @@ class EditPostFragment() : Fragment() {
                     }
                 }
             }
-
         })
 
         return fragmentBinding.root

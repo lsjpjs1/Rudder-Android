@@ -35,11 +35,12 @@ import java.util.stream.Collectors
 
 
 class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean) : Fragment(),AddPostImagesOnclickListener {
+
     private val lazyContext by lazy {
         requireContext()
     }
-
     var categoryListForAddPost = viewModel.userSelectCategories.value!!
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -76,7 +77,7 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
                     return view
                 }
             }
-        }else{
+        } else {
             display.root.categorySpinner.isEnabled = true
             display.root.showPhoto.visibility=View.VISIBLE
             spinnerAdapter = object : ArrayAdapter<Category>(lazyContext, R.layout.custom_spinner_layout, categoryListForAddPost){
@@ -88,18 +89,12 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
         }
 
         display.categorySpinner.adapter = spinnerAdapter
-
         display.showPhotoRV.also {
             it.layoutManager=LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)
             it.setHasFixedSize(false)
             it.adapter = addPostShowImagesAdapter
         }
 
-
-//        viewModel.categoryNames.observe(viewLifecycleOwner, Observer {
-//                it?.let {
-//                }
-//        })
 
         viewModel.selectedPhotoUriList.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -202,8 +197,6 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
         lp.height=(addPostDisplayEntireHeight*lineRatio).toInt()
         addPostDisplayImagesLine.layoutParams=lp
 
-
-        //writePost.maxHeight = (addPostDisplayEntireHeight * 0.3).toInt()
         editTextTextPersonName.maxHeight = (addPostDisplayEntireHeight * 0.3).toInt()
     }
 }

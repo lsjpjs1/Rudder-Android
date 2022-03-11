@@ -23,7 +23,6 @@ import com.rudder.viewModel.SearchViewModel
 
 class MyPostDisplayFragment : Fragment() {
 
-
     companion object{
         const val TAG = "MyPostDisplayFragment"
         const val MY_POST = 1
@@ -40,16 +39,8 @@ class MyPostDisplayFragment : Fragment() {
             R.layout.fragment_my_post_display,container,false)
 
 
-
         binding.lifecycleOwner = this
 
-//        viewModel.isBackClick.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                if ((activity as MainActivity).validateBack("community")){
-//                    (activity as MainActivity).onBackPressed()
-//                }
-//            }
-//        })
 
         return binding.root
     }

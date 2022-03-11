@@ -21,8 +21,8 @@ class NotificationViewModel: MainViewModel()  {
 
     private val _notificationList = MutableLiveData<ArrayList<NotificationItem>>()
     val notificationList : LiveData<ArrayList<NotificationItem>> = _notificationList
-
     private val tokenKey = BuildConfig.TOKEN_KEY
+
 
 
     fun getNotifications(){
@@ -53,7 +53,6 @@ class NotificationViewModel: MainViewModel()  {
                     _isEditPostSuccess.value = Event(result)
                     getPostContentFromPostIdNotification(_postId.value!!, true)
                 }
-
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             }
         }

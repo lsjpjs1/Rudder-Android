@@ -21,7 +21,7 @@ import com.rudder.util.AlertDialogListener
 import com.rudder.viewModel.EditNicknameDialogViewModel
 
 class EditNicknameDialogFragment() : DialogFragment() {
-    private val viewModel: EditNicknameDialogViewModel by activityViewModels()
+    private val editNicknameDialogViewModel: EditNicknameDialogViewModel by activityViewModels()
     private val parentActivity by lazy {
         activity as MainActivity
     }
@@ -34,30 +34,26 @@ class EditNicknameDialogFragment() : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = DataBindingUtil.inflate<FragmentEditNicknameDialogBinding>(inflater, R.layout.fragment_edit_nickname_dialog, container,false)
-        binding.editNicknameDialogVM = viewModel
+        binding.editNicknameDialogVM = editNicknameDialogViewModel
         binding.editNicknameDialogFragment = this
         binding.lifecycleOwner = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         val displayDpValue = parentActivity.getDisplaySize() // [0] == width, [1] == height
-
         var lp = binding.editNicknameDialogDisplayConstraintLayout.layoutParams
         lp.height = (displayDpValue[1] * 0.22).toInt()
         lp.width = (displayDpValue[0] * 0.9).toInt()
 
-
-
         binding.editNicknameDialogConstraintLayout.layoutParams = lp
 
-
-        viewModel.toastMessage.observe(viewLifecycleOwner, Observer {
+        editNicknameDialogViewModel.toastMessage.observe(viewLifecycleOwner, Observer {
             it?.let{
                 Toast.makeText(parentActivity,it,Toast.LENGTH_SHORT).show()
             }
         })
 
-        viewModel.closeFlag.observe(viewLifecycleOwner, Observer {
+        editNicknameDialogViewModel.closeFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{
                 if(it){
                     dismiss()
@@ -65,31 +61,25 @@ class EditNicknameDialogFragment() : DialogFragment() {
             }
         })
 
-
-
         binding.editNicknameEditButton.setOnClickListener{
             showEditNickNameAlert()
         }
-
 
         return binding.root
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        viewModel.clearNewNickname()
-        viewModel.clearToastMessage()
-
+        editNicknameDialogViewModel.clearNewNickname()
+        editNicknameDialogViewModel.clearToastMessage()
         super.onDismiss(dialog)
     }
-
 
     fun showEditNickNameAlert(){
         val alertDialogFragment = AlertDialogFragment.instance(
             object : AlertDialogListener {
                 override fun onOkClick() {
-                    viewModel.updateNickname()
+                    editNicknameDialogViewModel.updateNickname()
                 }
-
                 override fun onCancelClick() {
 
                 }
@@ -97,7 +87,6 @@ class EditNicknameDialogFragment() : DialogFragment() {
             },
             "Do you want to change your nickname?"
         )
-
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
     }
 

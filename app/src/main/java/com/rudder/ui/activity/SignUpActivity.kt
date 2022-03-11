@@ -24,23 +24,18 @@ import kotlinx.android.synthetic.main.fragment_create_account.verifyBtn
 
 
 class SignUpActivity : AppCompatActivity() {
-    private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel::class.java) }
-
-    //private val viewModel: MainViewModel by lazy {ViewModelProvider(this).get(MainViewModel::class.java)  }
-
+    private val signUpViewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel::class.java) }
     private lateinit var termsOfServiceFragment : TermsOfServiceFragment
     private lateinit var createAccountFragment : CreateAccountFragment
     private lateinit var profileSettingFragment : ProfileSettingFragment
     private lateinit var schoolSelectFragment: SchoolSelectFragment
     private lateinit var categorySelectSignUpFragment: CategorySelectSignUpFragment
 
-
     private fun hideSoftKeyboard(){
         (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).apply {
             hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }
     }
-
 
     fun getDisplaySize():ArrayList<Int>{
         return if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
@@ -79,7 +74,7 @@ class SignUpActivity : AppCompatActivity() {
             .commit()
 
         val binding = DataBindingUtil.setContentView<ActivitySignUpBinding>(this, R.layout.activity_sign_up)
-        binding.signUpVM = viewModel
+        binding.signUpVM = signUpViewModel
         binding.lifecycleOwner = this
 
 
@@ -89,8 +84,7 @@ class SignUpActivity : AppCompatActivity() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        val toastSignUpComplete = Toast.makeText(this, "Sign Up Completed!", Toast.LENGTH_LONG)
-
+        //val toastSignUpComplete = Toast.makeText(this, "Sign Up Completed!", Toast.LENGTH_LONG)
 
         ProgressBarUtil.progressBarFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
@@ -101,23 +95,23 @@ class SignUpActivity : AppCompatActivity() {
             }
         })
 
-
-        viewModel.termsOfServiceNext.observe(this, Observer {
+        signUpViewModel.termsOfServiceNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                     fragmentShowHide.addToBackStack()
                     fragmentShowHide.showFragment(schoolSelectFragment, R.id.signUp_container)
-                } }
+                }
+            }
         })
 
-        viewModel.termsOfServiceBack.observe(this, Observer {
+        signUpViewModel.termsOfServiceBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) onBackPressed()
-            }})
+            }
+        })
 
-
-        viewModel.schoolSelectNext.observe(this, Observer {
+        signUpViewModel.schoolSelectNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
@@ -128,37 +122,43 @@ class SignUpActivity : AppCompatActivity() {
                     submitBtn.isEnabled = false
                     createAccountNextBtn.isEnabled = false
                     ChangeUIState.changeCheckBoxFalseState(veifyCodeCheckbox)
-                    viewModel.clearEmailValue()
+                    signUpViewModel.clearEmailValue()
                 }
-            }})
+            }
+        })
 
-        viewModel.schoolSelectBack.observe(this, Observer {
+
+        signUpViewModel.schoolSelectBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) onBackPressed()
-            }})
+            }
+        })
 
-        viewModel.createAccountNext.observe(this, Observer {
+
+        signUpViewModel.createAccountNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
-
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                     fragmentShowHide.addToBackStack()
                     fragmentShowHide.showFragment(profileSettingFragment, R.id.signUp_container)
-                } }})
+                } }
+        })
 
-        viewModel.createAccountBack.observe(this, Observer {
+        signUpViewModel.createAccountBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) onBackPressed()
-            }})
+            }
+        })
 
 
-        viewModel.profileSettingBack.observe(this, Observer {
+        signUpViewModel.profileSettingBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) onBackPressed()
-            }})
+            }
+        })
 
 
-        viewModel.profileSettingNext.observe(this, Observer {
+        signUpViewModel.profileSettingNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 // 여기 주석 풀면 회원가입 후 카테고리 선택 창으로 넘어감
 //                if (it) {
@@ -178,24 +178,28 @@ class SignUpActivity : AppCompatActivity() {
                     StartActivityUtil.callActivity(this, LoginActivity())
                     finish()
                 }
-            }})  // signUP Complete !
+            }
+        })  // signUP Complete !
 
 
 
-        viewModel.categorySelectBack.observe(this, Observer {
+        signUpViewModel.categorySelectBack.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 StartActivityUtil.callActivity(this, LoginActivity())
                 finish()
-            }})
+            }
+        })
 
 
-        viewModel.categorySelectApply.observe(this, Observer { // Apply 버튼
+        signUpViewModel.categorySelectApply.observe(this, Observer { // Apply 버튼
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     StartActivityUtil.callActivity(this, LoginActivity())
                     finish()
                 }
-            }})
+            }
+        })
+
 
     }
 
@@ -212,12 +216,5 @@ class SignUpActivity : AppCompatActivity() {
         } else
             super.onBackPressed()
     }
-
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-
 
 }

@@ -23,7 +23,6 @@ class SearchViewModel : MainViewModel() {
     private val _isScrollTouch = MutableLiveData<Event<Boolean>>()
     val _isSearchWordValid = MutableLiveData<Event<Boolean>>()
 
-    val selectedSearchPostPosition: LiveData<Int> = _selectedSearchPostPosition
     val isScrollTouch: LiveData<Event<Boolean>> = _isScrollTouch
     val isSearchWordValid: LiveData<Event<Boolean>> = _isSearchWordValid
 
@@ -123,18 +122,12 @@ class SearchViewModel : MainViewModel() {
 
     fun clearSearchPost(){
         _posts.value = arrayListOf()
-        //_searchWord.value = MutableLiveData<String>().value
     }
 
 
     fun setSearchWord(string: String){
         _searchWord.value = string
     }
-
-    fun clearSearchWord() {
-        _searchWord.value = ""
-    }
-
 
 
 }

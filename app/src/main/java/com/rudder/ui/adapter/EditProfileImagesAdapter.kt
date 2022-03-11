@@ -46,10 +46,10 @@ class EditProfileImagesAdapter(
             .placeholder(R.drawable.ic_baseline_image_24)
             .into(holder.viewBinding.root.editProfileImageImageView)
         holder.viewBinding.editProfileImageImageView.setOnClickListener {
-            parentFragment.viewModel.clickProfileImage(getItem(position))
+            parentFragment.editProfileImageDialogViewModel.clickProfileImage(getItem(position))
         }
 
-        parentFragment.viewModel._selectedProfileImage.observe(parentFragment.viewLifecycleOwner, Observer {
+        parentFragment.editProfileImageDialogViewModel._selectedProfileImage.observe(parentFragment.viewLifecycleOwner, Observer {
             it?.let {
                 holder.viewBinding.editProfileImageCheckBox.isChecked =
                     (it.profileImageId==getItem(position).profileImageId)

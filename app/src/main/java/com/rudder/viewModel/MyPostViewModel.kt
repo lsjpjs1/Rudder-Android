@@ -25,10 +25,9 @@ open class MyPostViewModel : MainViewModel() {
     }
 
     fun getMyPosts(isMore: Boolean) {
-        if(_noMorePostFlag.value != true){ //더 불러올 데이터가 남아있으면 함수 실행 
+        if(_noMorePostFlag.value != true){ //더 불러올 데이터가 남아있으면 함수 실행
             viewModelScope.launch {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
                 val response = Repository().getMyPosts(MyPostsRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!,_offset.value?:0))
                 if (response.isSuccess){
                     if (response.posts.size == 0){
@@ -44,10 +43,7 @@ open class MyPostViewModel : MainViewModel() {
                     } else {
                         _posts.value = response.posts
                     }
-
                 }
-
-
             }
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }

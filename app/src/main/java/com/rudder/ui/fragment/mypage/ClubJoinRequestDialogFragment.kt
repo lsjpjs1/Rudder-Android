@@ -12,19 +12,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.rudder.R
 import com.rudder.databinding.FragmentClubJoinRequestDialogBinding
-import com.rudder.databinding.FragmentCommunityCommentReportSheetBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 
 class ClubJoinRequestDialogFragment : DialogFragment() {
 
-    private val viewModel : MainViewModel by activityViewModels()
-
+    private val mainViewModel : MainViewModel by activityViewModels()
     private lateinit var clubJoinRequestDialogBinding: FragmentClubJoinRequestDialogBinding
-
-    private val lazyContext by lazy {
-        requireContext()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +26,7 @@ class ClubJoinRequestDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         clubJoinRequestDialogBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_club_join_request_dialog, container,false)
-        clubJoinRequestDialogBinding.mainVM = viewModel
+        clubJoinRequestDialogBinding.mainVM = mainViewModel
         clubJoinRequestDialogBinding.lifecycleOwner = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)

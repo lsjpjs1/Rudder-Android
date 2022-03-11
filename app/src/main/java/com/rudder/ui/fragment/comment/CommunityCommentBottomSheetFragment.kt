@@ -3,7 +3,6 @@ package com.rudder.ui.fragment.comment
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,13 +22,10 @@ import kotlinx.android.synthetic.main.fragment_school_select.*
 import kotlinx.android.synthetic.main.fragment_school_select.view.*
 
 
-class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : BottomSheetDialogFragment() {
-
+class CommunityCommentBottomSheetFragment(val mainViewModel: MainViewModel) : BottomSheetDialogFragment() {
 
     private lateinit var communityCommentBottomSheetBinding : FragmentCommunityCommentBottomSheetBinding
-
     private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
-
     private val lazyContext by lazy {
         requireContext()
     }
@@ -46,20 +42,20 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
         savedInstanceState: Bundle?
     ): View {
         communityCommentBottomSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_community_comment_bottom_sheet, container,false)
-        communityCommentBottomSheetBinding.mainVM = viewModel
+        communityCommentBottomSheetBinding.mainVM = mainViewModel
         communityCommentBottomSheetBinding.lifecycleOwner = this
         communityCommentBottomSheetBinding.communityCommentBottomSheetFragment = this
 
         val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
 
-
-        viewModel.selectedCommentMorePosition.observe(viewLifecycleOwner, Observer {
+        mainViewModel.selectedCommentMorePosition.observe(viewLifecycleOwner, Observer {
             it?.let {
                 communityCommentBottomSheetBinding.position = it
             }
         })
 
-        viewModel.isCommentMine.observe(viewLifecycleOwner, Observer {
+
+        mainViewModel.isCommentMine.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if(!it) { // ismine == false, 내께 아니면
                     communityCommentBottomSheetBinding.commentBottomSheetCL2.visibility = View.GONE
@@ -72,7 +68,7 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
                 }
             }})
 
-        viewModel.isCommentDelete.observe(this, Observer {
+        mainViewModel.isCommentDelete.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     (activity as MainActivity).closeCommunityBottomSheetFragment()
@@ -80,10 +76,10 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
             }
         })
 
-        viewModel.isCommentReport.observe(this, Observer {
+        mainViewModel.isCommentReport.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
                 if (!parentActivity.communityCommentReportFragment.isAdded)
-                    parentActivity.communityCommentReportFragment = CommunityCommentReportFragment(viewModel)
+                    parentActivity.communityCommentReportFragment = CommunityCommentReportFragment(mainViewModel)
                     parentActivity.communityCommentReportFragment.show(
                         parentActivity.supportFragmentManager,
                         parentActivity.communityCommentReportFragment.tag
@@ -91,10 +87,10 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
             }
         })
 
-        viewModel.isCommentEdit.observe(this, Observer {
+        mainViewModel.isCommentEdit.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 if (!parentActivity.communityCommentEditFragment.isAdded) {
-                    parentActivity.communityCommentEditFragment = CommunityCommentEditFragment(viewModel)
+                    parentActivity.communityCommentEditFragment = CommunityCommentEditFragment(mainViewModel)
                     parentActivity.communityCommentEditFragment.show(parentActivity.supportFragmentManager, parentActivity.communityCommentEditFragment.tag
                     )
                 }
@@ -126,13 +122,13 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
     }
 
     fun showPostMessageDialog() {
-        val receiveUserInfoId = viewModel.comments.value!![viewModel.selectedCommentMorePosition.value!!].user_info_id
+        val receiveUserInfoId = mainViewModel.comments.value!![mainViewModel.selectedCommentMorePosition.value!!].user_info_id
         sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId)
         sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        viewModel.dismissCommentMore()
+        mainViewModel.dismissCommentMore()
         super.onDismiss(dialog)
     }
 
@@ -140,7 +136,7 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
         val alertDialogFragment = AlertDialogFragment.instance(
             object : AlertDialogListener {
                 override fun onOkClick() {
-                    viewModel.clickCommentDelete()
+                    mainViewModel.clickCommentDelete()
                 }
 
                 override fun onCancelClick() {
@@ -150,7 +146,6 @@ class CommunityCommentBottomSheetFragment(val viewModel: MainViewModel) : Bottom
             },
             "Do you want to delete this Comment?"
         )
-
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
     }
 

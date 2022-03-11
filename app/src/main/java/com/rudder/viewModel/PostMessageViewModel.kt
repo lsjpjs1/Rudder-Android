@@ -16,11 +16,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class PostMessageViewModel: ViewModel() {
-    /// 21 01 15 real final
 
     private val _myMessageRooms = MutableLiveData<ArrayList<PostMessageRoom>>()
-
     val myMessageRooms : LiveData<ArrayList<PostMessageRoom>> = _myMessageRooms
+
 
     fun getPostMessages() {
         GlobalScope.launch {

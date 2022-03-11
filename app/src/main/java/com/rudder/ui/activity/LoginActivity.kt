@@ -1,9 +1,7 @@
 package com.rudder.ui.activity
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,11 +20,10 @@ import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.fragment_add_comment.*
 
 
 class LoginActivity : AppCompatActivity() {
-    private val viewModel: LoginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java)  }
+    private val loginViewModel: LoginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java)  }
 
     private fun hideSoftKeyboard(){
         (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).apply {
@@ -34,25 +31,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ActivityContainer.currentActivity = this
         App.prefs.removeValue(BuildConfig.TOKEN_KEY)
         val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
-        binding.loginVM = viewModel
+        binding.loginVM = loginViewModel
         binding.lifecycleOwner = this
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
         autoLoginCheckbox()
-
         loginContainer.setOnClickListener {
             hideSoftKeyboard()
         }
 
-
-        viewModel.showLoginErrorToast.observe(this, Observer {
+        loginViewModel.showLoginErrorToast.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it)
 
@@ -61,20 +54,20 @@ class LoginActivity : AppCompatActivity() {
 
             }
         })
-        viewModel.startMainActivity.observe(this, Observer {
+        loginViewModel.startMainActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 StartActivityUtil.callActivity(this, MainActivity() )
                 finish()
                 ProgressBarUtil._progressBarFlag.postValue(Event(false))
             }
         })
-        viewModel.startSignUpActivity.observe(this, Observer {
+        loginViewModel.startSignUpActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 StartActivityUtil.callActivity(this, SignUpActivity())
             }
         })
 
-        viewModel.startForgotActivity.observe(this, Observer {
+        loginViewModel.startForgotActivity.observe(this, Observer {
             it.getContentIfNotHandled()?.let{
                 StartActivityUtil.callActivity(this, ForgotActivity())
             }
@@ -90,11 +83,11 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        if(viewModel.noticeResponse.value==null){
-            viewModel.getNotice()
+        if(loginViewModel.noticeResponse.value==null){
+            loginViewModel.getNotice()
         }
 
-        viewModel.noticeResponse.observe(this, Observer {
+        loginViewModel.noticeResponse.observe(this, Observer {
             it?.let {
                 if(it.isExist){
                     val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -106,8 +99,6 @@ class LoginActivity : AppCompatActivity() {
 
             }
         })
-
-
     }
     override fun onDestroy() {
         ActivityContainer.clearCurrentActivity(this)
@@ -115,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        viewModel.clearIdAndPassword()
+        loginViewModel.clearIdAndPassword()
         super.onResume()
     }
 

@@ -12,11 +12,11 @@ import kotlinx.coroutines.launch
 
 class MyCommentViewModel : MyPostViewModel() {
 
+
     fun getPostsWithMyComment(isMore: Boolean) {
         if(!(_noMorePostFlag.value?:false)){ //더 불러올 데이터가 남아있으면 함수 실행
             viewModelScope.launch {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
                 val response = Repository().getPostsWithMyComment(PostsWithMyCommentRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!,_offset.value?:0))
                 if (response.isSuccess){
                     if (response.posts.size == 0){
@@ -36,17 +36,19 @@ class MyCommentViewModel : MyPostViewModel() {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             }
         }
-
     }
+
 
     override fun refreshPosts() {
         clearPosts()
         getPostsWithMyComment(false)
     }
 
+
     override fun scrollTouchTopCommunityPost() {
         refreshPosts()
     }
+
 
     override fun scrollTouchBottomCommunityPost() {
         _offset.value?.let {
@@ -54,7 +56,6 @@ class MyCommentViewModel : MyPostViewModel() {
             getPostsWithMyComment(true)
         }
     }
-
 
 
 }

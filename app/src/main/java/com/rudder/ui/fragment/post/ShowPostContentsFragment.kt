@@ -37,12 +37,9 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
     private val parentActivity by lazy {
         activity as MainActivity
     }
-
     private val viewModel: MainViewModel by lazy {
         (parentFragment as ShowPostDisplayFragment).viewModel
     }
-
-
     var _fragmentBinding: FragmentShowPostContentsBinding? = null
     val fragmentBinding get() = _fragmentBinding!!
 
@@ -112,7 +109,6 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
             )
         }
 
-
         fragmentBinding.showPostImageDisplayRecyclerView.also {
             it.layoutManager = LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)
             it.setHasFixedSize(false)
@@ -124,19 +120,15 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
         )
         snapHelper.attachToRecyclerView(fragmentBinding.showPostImageDisplayRecyclerView)
 
-
-
         setFragmentBindingPost()
 
-        val timeago =
-            PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(fragmentBinding.post!!.postTime.time))
+        val timeago = PrettyTime(LocaleUtil().getSystemLocale(lazyContext)).format(Date(fragmentBinding.post!!.postTime.time))
         fragmentBinding.mainVM = viewModel
         fragmentBinding.position = viewModel.selectedPostPosition.value!!
         fragmentBinding.lifecycleOwner = this
         fragmentBinding.timeago = timeago
 
-        //지우지 마셈
-        viewModel.getComments()
+        viewModel.getComments()    //지우지 마셈
 
         viewModel.comments.observe(parentFragment as LifecycleOwner, Observer {
             var deleteCommentflag = false
@@ -161,6 +153,7 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(fragmentBinding.showPostImageView)
         })
+
         viewModel.postInnerValueChangeSwitch.observe(parentFragment as LifecycleOwner, Observer {
             it?.let {
                 setFragmentBindingPost()
@@ -176,15 +169,12 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
             }
         })
 
-
         viewModel.isPostFromId.observe(parentFragment as LifecycleOwner, Observer {
             it?.let {
                 fragmentBinding.post = viewModel.postFromId.value!!
 
             }
         })
-
-
 
         viewModel.commentInnerValueChangeSwitch.observe(parentFragment as LifecycleOwner, Observer {
             it?.let {
@@ -194,13 +184,11 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
             }
         })
 
-
         viewModel.isShowPostRefreshSuccess.observe(parentFragment as LifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 setFragmentBindingPost()
             }
         })
-
 
         fragmentBinding.showPostBody.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
@@ -211,16 +199,6 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
             }
         )
 
-
-        ProgressBarUtil.progressBarFlag.observe(parentFragment as LifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    ProgressBarUtil.progressBarVisibleFragment(progressBarShowPost, this)
-                } else {
-                }
-                ProgressBarUtil.progressBarGoneFragment(progressBarShowPost, this)
-            }
-        })
 
         viewModel.isLikePost.observe(parentFragment as LifecycleOwner, Observer {
             if (it!!) {
@@ -236,13 +214,11 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
                 }
                 (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
             }
-
         })
 
         viewModel.selectedParentCommentBody.observe(parentFragment as LifecycleOwner, Observer {
             it?.let {
                 (activity as MainActivity).setParentCommentInfoText(it)
-                //fragmentBinding.parentCommentInfoTextTextView.text = it
             }
         })
 
@@ -266,6 +242,7 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
             }
         })
 
+
         fragmentBinding.postMoreImageView.setOnClickListener {
             viewModel.clickPostMore(viewModel.selectedPostPosition.value!!)
             it.isClickable = false
@@ -275,7 +252,6 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
             it?.let {
                 fragmentBinding.postMoreImageView.isClickable = true
             }
-
         })
 
 
@@ -305,38 +281,14 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
         }
 
 
-
         return fragmentBinding.root
     }
 
-//    val postMoreOnclickListener = object : View.OnClickListener{
-//        override fun onClick(p0: View?) {
-//            val popupMenu = PopupMenu(lazyContext,view)
-//            MenuInflater(lazyContext).inflate(R.menu.post_pop_up_menu,popupMenu.menu)
-//            popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener{
-//                override fun onMenuItemClick(p0: MenuItem?): Boolean {
-//                    if (p0 != null) {
-//                        when (p0.itemId){
-//                            R.id.post_edit->Log.d("edit","edit")
-//                            R.id.post_delete->Log.d("delete","delete")
-//                        }
-//
-//                    }else{
-//                        return false
-//                    }
-//                    return false
-//                }
-//            })
-//            popupMenu.show()
-//        }
-//
-//    }
 
     override fun onPause() {
         viewModel.clearNestedCommentInfo()
         super.onPause()
     }
-
 
     //스크롤 뷰 높이에 따라 바뀌는 view의 높이를 고정시켜주는 함수
     fun fixOtherViewHeight(showPostBody: View) {
@@ -347,7 +299,6 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
         lazyContext.resources.getValue(R.dimen.divide_default, typedValue2, true)
         val postInfoHeightRatio = typedValue.float
         val divideHeightRatio = typedValue2.float
-
         //리사이클러뷰를 제외한 나머지 뷰의 높이 고정
         var lp = constraintLayout16.layoutParams
         lp.height = (showPostBodyHeight * divideHeightRatio).toInt()
@@ -366,6 +317,7 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
         constraintLayout10.layoutParams = lp
     }
 
+
     fun setFragmentBindingPost() {
         if (viewModel.selectedPostPosition.value!! == -1) {
             fragmentBinding.post = viewModel.postFromId.value!!
@@ -381,10 +333,7 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
         } else {
             imageSliderDialogFragment = ImageSliderDialogFragment.instance(viewModel.posts.value!![viewModel.selectedPostPosition.value!!].imageUrls,position)
         }
-
         imageSliderDialogFragment.show(childFragmentManager, ImageSliderDialogFragment.TAG)
-
     }
-
 
 }

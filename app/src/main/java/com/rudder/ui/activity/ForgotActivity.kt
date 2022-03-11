@@ -16,16 +16,12 @@ import com.rudder.util.ActivityContainer
 import com.rudder.util.ProgressBarUtil
 import com.rudder.viewModel.ForgotViewModel
 import kotlinx.android.synthetic.main.activity_forgot.*
-import kotlinx.android.synthetic.main.activity_forgot.view.*
-import kotlinx.android.synthetic.main.activity_login.*
 
 class ForgotActivity : AppCompatActivity() {
-    private val viewModel: ForgotViewModel by lazy { ViewModelProvider(this).get(ForgotViewModel::class.java)  }
+    private val forgotViewModel: ForgotViewModel by lazy { ViewModelProvider(this).get(ForgotViewModel::class.java)  }
 
     private var _binding: ActivityForgotBinding? = null
     private val binding get() = _binding!!
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +29,7 @@ class ForgotActivity : AppCompatActivity() {
         ActivityContainer.currentActivity = this
 
         _binding = DataBindingUtil.setContentView<ActivityForgotBinding>(this, R.layout.activity_forgot)
-        binding.forgotVM = viewModel
+        binding.forgotVM = forgotViewModel
         binding.lifecycleOwner = this
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -49,29 +45,25 @@ class ForgotActivity : AppCompatActivity() {
 
         toastFindId.show()
 
-
         binding.forgotTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                Log.d("onTabSelected","${tab}")
                 val pos = tab!!.position
                 changeView(pos)
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                Log.d("onTabReselected","${tab}")
                 val pos = tab!!.position
                 changeView(pos)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Log.d("onTabUnselected","${tab}")
                 val pos = tab!!.position
                 changeView(pos)
             }
         })
 
 
-        viewModel.findIDClick.observe(this, Observer {
+        forgotViewModel.findIDClick.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     constraintLayoutForgot3.visibility = View.GONE
@@ -80,7 +72,7 @@ class ForgotActivity : AppCompatActivity() {
                 } }
         })
 
-        viewModel.findPasswordClick.observe(this, Observer {
+        forgotViewModel.findPasswordClick.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     constraintLayoutForgot4.visibility = View.GONE
@@ -89,7 +81,7 @@ class ForgotActivity : AppCompatActivity() {
                 } }
         })
 
-        viewModel.emailCheckFlag.observe(this, Observer {
+        forgotViewModel.emailCheckFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     toastEmailTrue.show()
@@ -103,7 +95,7 @@ class ForgotActivity : AppCompatActivity() {
         })
 
 
-        viewModel.emailVerifyFlag.observe(this, Observer {
+        forgotViewModel.emailVerifyFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
                     toastEmailVerifySuccess.show()
@@ -117,18 +109,14 @@ class ForgotActivity : AppCompatActivity() {
         })
 
 
-
-
-        viewModel.verifyCodeCheckFlag.observe(this, Observer {
+        forgotViewModel.verifyCodeCheckFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) toastVerifyCodeTrue.show()
                 else toastVerifyCodeFalse.show()
             }
         })
 
-
-
-        viewModel.isBackClick.observe(this, Observer {
+        forgotViewModel.isBackClick.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 super.onBackPressed()
             }
@@ -146,7 +134,6 @@ class ForgotActivity : AppCompatActivity() {
 
         forgotSendPasswordBtn.isEnabled = false
 
-
     }
 
 
@@ -157,18 +144,18 @@ class ForgotActivity : AppCompatActivity() {
                 binding.constraintLayoutForgot3.visibility = View.INVISIBLE
                 val toastFindId = Toast.makeText(this, "Tell us your university email. Then we will send your id to your email.", Toast.LENGTH_SHORT)
                 toastFindId.show()
-                viewModel.clickID()
-
+                forgotViewModel.clickID()
             }
             1 -> {
                 binding.constraintLayoutForgot4.visibility = View.INVISIBLE
                 binding.constraintLayoutForgot3.visibility = View.VISIBLE
                 val toastFindPassword = Toast.makeText(this, "Tell us your university email. Then we will send verification code.", Toast.LENGTH_SHORT)
                 toastFindPassword.show()
-                viewModel.clickPassword()
+                forgotViewModel.clickPassword()
             }
         }
     }
+
 
     override fun onDestroy() {
         ActivityContainer.clearCurrentActivity(this)

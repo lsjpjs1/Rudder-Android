@@ -25,7 +25,6 @@ class ForgotApi {
         }
     }
 
-
     private val forgotPasswordService : ForgotPasswordService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(ForgotPasswordService::class.java)
 
     fun findForgotPassword(emailInfo: EmailInfo) : Deferred<Response<JsonObject>>{

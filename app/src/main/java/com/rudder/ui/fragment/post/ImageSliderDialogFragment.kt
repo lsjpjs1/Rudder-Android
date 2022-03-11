@@ -26,10 +26,10 @@ class ImageSliderDialogFragment(val imageUrlList: ArrayList<String>,val selected
     private val parentActivity by lazy {
         activity as MainActivity
     }
-
     private val lazyContext by lazy {
         requireContext()
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,15 +41,19 @@ class ImageSliderDialogFragment(val imageUrlList: ArrayList<String>,val selected
         adapter.submitList(imageUrlList)
         val displayDpValue = parentActivity.getDisplaySize() // [0] == width, [1] == height
         val snapHelper = PagerSnapHelper()
+
         binding.fullImageRV.also {
             it.layoutManager = LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)
             it.setHasFixedSize(false)
             it.adapter = adapter
         }
+
         binding.fullImageRV.addItemDecoration(
             CirclePagerIndicatorDecoration()
         )
+
         snapHelper.attachToRecyclerView(binding.fullImageRV)
+
         binding.fullImageRV.scrollToPosition(selectedIndex)
         var lp = binding.imageSliderCL.layoutParams
         lp.height = (displayDpValue[1] * 0.7).toInt()

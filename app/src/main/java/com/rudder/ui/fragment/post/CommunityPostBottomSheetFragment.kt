@@ -35,7 +35,6 @@ import com.rudder.viewModel.SearchViewModel
 class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomSheetDialogFragment() {
 
     lateinit var communityPostBottomSheetBinding : FragmentCommunityPostBottomSheetBinding
-
     private val lazyContext by lazy {
         requireContext()
     }
@@ -43,10 +42,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         activity as MainActivity
     }
 
-
-
     private lateinit var sendPostMessageDialogFragment: SendPostMessageDialogFragment
-
     override fun getTheme(): Int = R.style.CustomBottomSheetDialog
 
     @SuppressLint("RestrictedApi")
@@ -110,27 +106,7 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                     )
                 }
             }
-
         })
-
-//        viewModel.isPostEdit.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-////                parentActivity.communityPostBottomSheetFragment.dismiss()
-////
-////                val fragmentShowHide = FragmentShowHide(parentActivity.supportFragmentManager)
-////                fragmentShowHide.addToBackStack()
-////                fragmentShowHide.hideFragment(parentActivity.mainBottomBarFragment)
-////
-////                if (parentActivity.addCommentFragment.isAdded) {
-////                    fragmentShowHide.hideFragment(parentActivity.addCommentFragment)
-////                }
-////                parentActivity.editPostFragment = EditPostFragment(viewModel)
-////                fragmentShowHide.addFragment(parentActivity.editPostFragment, R.id.mainDisplay, "editPost")
-////                fragmentShowHide.showFragment(parentActivity.editPostFragment, R.id.mainDisplay)
-//            }
-//
-//        })
-
 
         communityPostBottomSheetBinding.postMoreEditPostTextView.setOnClickListener { view ->
             parentActivity.communityPostBottomSheetFragment.dismiss()
@@ -138,7 +114,6 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
             val currentDestination = navController.currentDestination?.label
             val previousDestination = navController.previousBackStackEntry?.destination?.label
             var action : NavDirections? = null
-
 
             if (currentDestination == "SearchPostDisplayFragment") {
                 action = SearchPostDisplayFragmentDirections.actionNavigationSearchToNavigationEditPost(EditPostFragment.SEARCH_VIEW_MODEL)
@@ -169,13 +144,10 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                     action = ShowPostDisplayFragmentDirections.actionNavigationShowPostToNavigationEditPost(EditPostFragment.NOTIFICATION_VIEW_MODEL)
             }
 
-
-            Log.d("edit123","${action}")
             navController.navigate(action!!)
             (activity as MainActivity).mainBottomNavigationDisappear()
 
         }
-
 
         return communityPostBottomSheetBinding.root
     }
@@ -212,11 +184,13 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
         communityPostBottomSheetBinding.sendPostMessageCL.layoutParams = lp6
     }
 
+
     fun showPostMessageDialog() {
         val receiveUserInfoId = viewModel.posts.value!![viewModel.selectedPostMorePosition.value!!].userInfoId
         sendPostMessageDialogFragment = SendPostMessageDialogFragment(receiveUserInfoId)
         sendPostMessageDialogFragment.show(childFragmentManager, "sendPostMessageDialogFragment")
     }
+
 
     fun showDeleteAlert(){
         val alertDialogFragment = AlertDialogFragment.instance(
@@ -228,11 +202,9 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                 override fun onCancelClick() {
 
                 }
-
             },
             "Do you want to delete this Post?"
         )
-
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
     }
 
@@ -250,7 +222,6 @@ class CommunityPostBottomSheetFragment(var viewModel: MainViewModel) : BottomShe
                 },
                 "This will permanently block the user."
             )
-
             alertDialogFragment.show(childFragmentManager,AlertDialogFragment.TAG)
     }
 

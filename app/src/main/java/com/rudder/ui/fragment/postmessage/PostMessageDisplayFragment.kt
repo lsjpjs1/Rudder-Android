@@ -40,9 +40,6 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
 
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
 
-    val args : PostMessageDisplayFragmentArgs by navArgs()
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,12 +84,6 @@ class PostMessageDisplayFragment : Fragment(),PostMessageAdapterCallback {
                 }
             }
         }
-
-
-//        val argsNotificationPostMessageId = args.notificationPostMessageRoomId
-//        if (argsNotificationPostMessageId != -1){
-//            onClickPostMessageRoom(argsNotificationPostMessageId)
-//        }
 
 
         return fragmentBinding.root

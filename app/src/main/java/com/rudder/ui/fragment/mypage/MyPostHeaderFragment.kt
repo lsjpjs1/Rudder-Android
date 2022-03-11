@@ -31,7 +31,6 @@ class MyPostHeaderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
         val header = DataBindingUtil.inflate<FragmentMyPostHeaderBinding>(inflater,
             R.layout.fragment_my_post_header,container,false)
 
@@ -39,12 +38,12 @@ class MyPostHeaderFragment : Fragment() {
             view.findNavController().popBackStack()
             (activity as MainActivity).mainBottomNavigationAppear()
         }
-        if (args.viewModelIndex == MyPostDisplayFragment.MY_COMMENT){
+
+        if (args.viewModelIndex == MyPostDisplayFragment.MY_COMMENT) {
             header.myPostHeaderTitleTV.text = "My Comment"
-        }else if (args.viewModelIndex == MyPostDisplayFragment.MY_POST){
+        } else if (args.viewModelIndex == MyPostDisplayFragment.MY_POST){
             header.myPostHeaderTitleTV.text = "My Post"
         }
-
 
         return header.root
     }

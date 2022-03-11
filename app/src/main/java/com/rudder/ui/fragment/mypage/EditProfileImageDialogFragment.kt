@@ -24,7 +24,7 @@ import com.rudder.viewModel.EditProfileImageDialogViewModel
 
 class EditProfileImageDialogFragment(val myPageFragmentInterface: MyPageFragmentInterface) : DialogFragment() {
 
-    val viewModel: EditProfileImageDialogViewModel by activityViewModels()
+    val editProfileImageDialogViewModel: EditProfileImageDialogViewModel by activityViewModels()
     private val parentActivity by lazy {
         activity as MainActivity
     }
@@ -43,7 +43,7 @@ class EditProfileImageDialogFragment(val myPageFragmentInterface: MyPageFragment
             container,
             false
         )
-        binding.editProfileImageVM=viewModel
+        binding.editProfileImageVM = editProfileImageDialogViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -63,27 +63,27 @@ class EditProfileImageDialogFragment(val myPageFragmentInterface: MyPageFragment
             arrayListOf(
             )
         )
+
         binding.editProfileImageRecyclerView.also {
             it.layoutManager =
                 LinearLayoutManager(lazyContext, LinearLayoutManager.HORIZONTAL, false)
             it.setHasFixedSize(false)
             it.adapter = adapter
         }
-        //프로필 이미지 리사이클러뷰 세팅
 
-        viewModel._profileImageList.observe(viewLifecycleOwner, Observer {
+        editProfileImageDialogViewModel._profileImageList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it.toMutableList().map { it.copy() })
             }
         })
 
-        viewModel._toastMessage.observe(viewLifecycleOwner, Observer {
+        editProfileImageDialogViewModel._toastMessage.observe(viewLifecycleOwner, Observer {
             it?.let{
                 Toast.makeText(context,it,Toast.LENGTH_SHORT).show()
             }
         })
 
-        viewModel._closeFlag.observe(viewLifecycleOwner, Observer {
+        editProfileImageDialogViewModel._closeFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 if (it){
                     dismiss()
@@ -91,7 +91,7 @@ class EditProfileImageDialogFragment(val myPageFragmentInterface: MyPageFragment
             }
         })
 
-        viewModel._myProfileImageUrl.observe(requireParentFragment().viewLifecycleOwner, Observer {
+        editProfileImageDialogViewModel._myProfileImageUrl.observe(requireParentFragment().viewLifecycleOwner, Observer {
             it?.let{
                 myPageFragmentInterface.setMyProfileImageUrl(it)
             }
@@ -101,7 +101,7 @@ class EditProfileImageDialogFragment(val myPageFragmentInterface: MyPageFragment
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        viewModel.clear()
+        editProfileImageDialogViewModel.clear()
         super.onDismiss(dialog)
     }
 

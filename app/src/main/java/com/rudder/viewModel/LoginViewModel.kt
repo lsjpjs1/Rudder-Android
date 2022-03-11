@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 
 
 class LoginViewModel() : ViewModel() {
+
     private val NOTIFICATION_TOKEN_KEY = "notificationKey"
     val _userId = MutableLiveData<String>()
     val _userPassword = MutableLiveData<String>()
@@ -37,14 +38,12 @@ class LoginViewModel() : ViewModel() {
     var noticeAlreadyShow = false
     val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
     val _autoLogin = MutableLiveData<Event<Boolean>>()
-
     val userId: LiveData<String> = _userId
     val userPassword: LiveData<String> = _userPassword
     val showLoginErrorToast: LiveData<Event<Boolean>> = _showLoginErrorToast
     val startMainActivity: LiveData<Event<Boolean>> = _startMainActivity
     val startSignUpActivity: LiveData<Event<Boolean>> = _startSignUpActivity
     val startForgotActivity : LiveData<Event<Boolean>> = _startForgotActivity
-
     val autoLogin : LiveData<Event<Boolean>> = _autoLogin
 
     private val repository = Repository()
@@ -64,21 +63,20 @@ class LoginViewModel() : ViewModel() {
                     _noticeResponse.value = response
                 }
             }
-        }catch (e: Exception){
+        } catch (e: Exception){
             _noticeResponse.value = NoticeResponse(true,"Error Exist")
         }
-
     }
 
     fun onCheckedChange(button: CompoundButton?, check: Boolean) {
         if (check) {
             _autoLogin.value = Event(true)
             prefs.setValue("autoLogin","true")
-        } else{
+        } else {
             _autoLogin.value = Event(false)
             prefs.setValue("autoLogin","false")
         }
-}
+    }
 
 
     fun callSignUp(){

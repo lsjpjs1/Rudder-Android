@@ -26,14 +26,10 @@ class SearchPostDisplayFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val fragmentBinding= DataBindingUtil.inflate<FragmentSearchPostDisplayBinding>(inflater,
             R.layout.fragment_search_post_display,container,false)
 
         fragmentBinding.lifecycleOwner = this
-
-
-
 
         return fragmentBinding.root
     }

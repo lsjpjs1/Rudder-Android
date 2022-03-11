@@ -33,9 +33,11 @@ class EditProfileImageDialogViewModel : ViewModel() {
     val _selectedProfileImage : LiveData<ProfileImage?> = selectedProfileImage
     val _profileImageList : LiveData<ArrayList<ProfileImage>> = profileImageList
 
+
     init {
         getProfileImages()
     }
+
 
     private fun getProfileImages(){
         GlobalScope.launch {
@@ -77,19 +79,14 @@ class EditProfileImageDialogViewModel : ViewModel() {
                     toastMessage.postValue("Failed to change my nickname.")
                 }
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
-
-
             }
-
         }
     }
 
     fun getMyProfileImageUrl(){
         GlobalScope.launch {
-
             val url = Repository().getMyProfileImageUrl(MyProfileImageRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!)).url
             myProfileImageUrl.postValue(url)
-
         }
     }
 }

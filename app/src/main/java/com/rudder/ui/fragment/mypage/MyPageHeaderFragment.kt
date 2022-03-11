@@ -13,7 +13,7 @@ import com.rudder.viewModel.MainViewModel
 
 class MyPageHeaderFragment : Fragment() {
 
-    private val viewModel :MainViewModel by activityViewModels()
+    private val mainViewModel :MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +22,7 @@ class MyPageHeaderFragment : Fragment() {
     ): View? {
 
         val header = DataBindingUtil.inflate<FragmentMyPageHeaderBinding>(inflater,R.layout.fragment_my_page_header,container,false)
-        header.mainVM = viewModel
+        header.mainVM = mainViewModel
         return header.root
     }
 }

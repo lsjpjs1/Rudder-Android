@@ -1,7 +1,6 @@
 package com.rudder.ui.fragment.community
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,19 +25,16 @@ import com.rudder.viewModel.MainViewModel
 
 open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
 
-
     private val lazyContext by lazy {
         requireContext()
     }
     private val parentActivity by lazy {
         activity as MainActivity
     }
-    private val viewModel : MainViewModel by activityViewModels()
-
-
+    private val mainViewModel : MainViewModel by activityViewModels()
     lateinit var adapter : MainPostPreviewAdapter
-
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,66 +42,59 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         savedInstanceState: Bundle?
     ): View? {
         val communityDisplay = DataBindingUtil.inflate<FragmentCommunityContentsBinding>(inflater,R.layout.fragment_community_contents,container,false)
-        communityDisplay.mainVM = viewModel
+        communityDisplay.mainVM = mainViewModel
 
-        adapter = MainPostPreviewAdapter(this,lazyContext, viewModel,viewLifecycleOwner)
-        adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
+        adapter = MainPostPreviewAdapter(this,lazyContext, mainViewModel,viewLifecycleOwner)
+        adapter.submitList(mainViewModel.posts.value!!.toMutableList().map { it.copy() })
         communityDisplay.lifecycleOwner = this
         communityDisplay.postPreviewRV.also{
             it.layoutManager=LinearLayoutManager(lazyContext)
             it.setHasFixedSize(false)
             it.adapter = adapter
-
             it.addOnScrollListener(object : RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if(!it.canScrollVertically(1)){
-                        viewModel.scrollTouchBottomCommunityPost()
+                        mainViewModel.scrollTouchBottomCommunityPost()
                     } else if (!it.canScrollVertically(-1) && dy < 0) {
-                        //viewModel.scrollTouchTop()
+
                     }
                 }
             })
         }
 
-
         communityDisplay.communityContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
         communityDisplay.communityContentsSwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                viewModel.scrollTouchTopCommunityPost()
+                mainViewModel.scrollTouchTopCommunityPost()
             }
-
         })
-
 
         communityDisplay.communityContentsSwipeRefreshLayout
 
-
-        viewModel.posts.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(viewModel.posts.value!!.toMutableList().map { it.copy() })
+        mainViewModel.posts.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(mainViewModel.posts.value!!.toMutableList().map { it.copy() })
             communityDisplay.communityContentsSwipeRefreshLayout.isRefreshing = false
-
         })
 
-        viewModel.isAddPostSuccess.observe(viewLifecycleOwner, Observer {
+        mainViewModel.isAddPostSuccess.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 if(it){
-                    viewModel.clearPosts()
-                    viewModel.getPosts()
+                    mainViewModel.clearPosts()
+                    mainViewModel.getPosts()
                 }
-
             }
         })
 
-        viewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
+        mainViewModel.isPostMore.observe(viewLifecycleOwner, Observer { it ->
             it.getContentIfNotHandled()?.let {
                     bool ->
                 if(bool)
-                    (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(viewModel))
+                    (activity as MainActivity).showPostMore(CommunityPostBottomSheetFragment(mainViewModel))
             }
         })
 
-        viewModel.isPostDelete.observe(viewLifecycleOwner, Observer {
+        mainViewModel.isPostDelete.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     Toast.makeText(
@@ -114,8 +103,8 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
                         Toast.LENGTH_LONG
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
-                    viewModel.clearPosts()
-                    viewModel.getPosts()
+                    mainViewModel.clearPosts()
+                    mainViewModel.getPosts()
                     if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
@@ -123,7 +112,7 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
             }
         })
 
-        viewModel.isBlockUser.observe(viewLifecycleOwner, Observer {
+        mainViewModel.isBlockUser.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     Toast.makeText(
@@ -132,8 +121,8 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
                         Toast.LENGTH_LONG
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
-                    viewModel.clearPosts()
-                    viewModel.getPosts()
+                    mainViewModel.clearPosts()
+                    mainViewModel.getPosts()
                     if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
@@ -141,53 +130,19 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
             }
         })
 
-//        viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
-//            it.getContentIfNotHandled().let {
-//                it?.let{
-//                    if (it){
-//                        parentActivity.showProgressBar()
-//                    } else {
-//                        parentActivity.hideProgressBar()
-//                    }
-//                }
-//            }
-//        })
-
-//        viewModel.isEditPostSuccess.observe(viewLifecycleOwner, Observer {
-//            viewModel.clearPosts()
-//            viewModel.getPosts()
-//
-//            GlobalScope.launch {
-//                viewModel.getPosts()
-//                (activity as MainActivity).showPost()
-//            }
-//
-//            //(activity as MainActivity).showPost()
-//        })
-
-
-
-
 
         return communityDisplay.root
     }
 
     override fun onClickView(view: View, position: Int) {
-        viewModel.setSelectedPostPosition(position)
-        //(activity as MainActivity). showPost(viewModel, ShowPostContentsFragment(viewModel))
+        mainViewModel.setSelectedPostPosition(position)
 
         val action = CommunityDisplayFragmentDirections.actionNavigationCommunityToNavigationShowPost(
             ShowPostDisplayFragment.MAIN_VIEW_MODEL)
         view.findNavController().navigate(action)
         (activity as MainActivity).mainBottomNavigationDisappear()
 
-
-        //(activity as MainActivity).showAddComment(AddCommentFragment(viewModel))
-//        if(!viewModel.isAlreadyReadPost()){
-//            viewModel.addPostViewCount()
-//        }
-        viewModel.addPostViewCount()
-        //viewModel.getComments()
+        mainViewModel.addPostViewCount()
     }
 
 

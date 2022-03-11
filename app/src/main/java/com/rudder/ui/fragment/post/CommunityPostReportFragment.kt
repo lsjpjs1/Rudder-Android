@@ -26,15 +26,13 @@ class CommunityPostReportFragment(val viewModel: MainViewModel) : DialogFragment
 
 
     private lateinit var communityPostReportFragmentBinding : FragmentCommunityPostReportSheetBinding
-
-
     private val lazyContext by lazy {
         requireContext()
     }
-
     private val parentActivity by lazy {
         activity as MainActivity
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,8 +45,6 @@ class CommunityPostReportFragment(val viewModel: MainViewModel) : DialogFragment
         communityPostReportFragmentBinding.communityPostReportFragment = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-
-
 
         viewModel.isReportPostSuccess.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
@@ -68,16 +64,14 @@ class CommunityPostReportFragment(val viewModel: MainViewModel) : DialogFragment
                     }
                 }
             }
-
         })
 
-
         val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
-
         var lp1 = communityPostReportFragmentBinding.constraintLayout1.layoutParams
         lp1.height = (displayDpValue[1] * 0.4).toInt()
         lp1.width = (displayDpValue[0] * 0.9).toInt()
         communityPostReportFragmentBinding.constraintLayout1.layoutParams = lp1
+
 
         return communityPostReportFragmentBinding.root
     }
@@ -92,11 +86,9 @@ class CommunityPostReportFragment(val viewModel: MainViewModel) : DialogFragment
                 override fun onCancelClick() {
 
                 }
-
             },
             "Do you want to Report this post?"
         )
-
         alertDialogFragment.show(childFragmentManager,AlertDialogFragment.TAG)
     }
 

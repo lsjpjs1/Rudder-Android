@@ -23,9 +23,7 @@ import kotlinx.android.synthetic.main.fragment_request_category_bottom_dialog.vi
 
 class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) : BottomSheetDialogFragment() {
 
-
     private lateinit var binding : FragmentRequestCategoryBottomDialogBinding
-
     private val parentActivity by lazy {
         activity as MainActivity
     }
@@ -64,7 +62,6 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
             myPageViewModel.requestCategoryName()
 
         }
-
 
         myPageViewModel.isStringBlank.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->

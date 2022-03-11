@@ -17,17 +17,11 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.AlertDialogFragment
 import com.rudder.util.AlertDialogListener
 import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.activity_sign_up.*
-import kotlinx.android.synthetic.main.fragment_community_comment_bottom_sheet.*
-import kotlinx.android.synthetic.main.fragment_school_select.*
-import kotlinx.android.synthetic.main.fragment_school_select.view.*
 
 
-class CommunityCommentReportFragment(val viewModel: MainViewModel) : DialogFragment() {
-
+class CommunityCommentReportFragment(val mainViewModel: MainViewModel) : DialogFragment() {
 
     private lateinit var communityCommentReportFragmentBinding : FragmentCommunityCommentReportSheetBinding
-
     private val lazyContext by lazy {
         requireContext()
     }
@@ -41,20 +35,19 @@ class CommunityCommentReportFragment(val viewModel: MainViewModel) : DialogFragm
         savedInstanceState: Bundle?
     ): View {
         communityCommentReportFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_community_comment_report_sheet, container,false)
-        communityCommentReportFragmentBinding.mainVM = viewModel
+        communityCommentReportFragmentBinding.mainVM = mainViewModel
         communityCommentReportFragmentBinding.communityCommentReportFragment = this
         communityCommentReportFragmentBinding.lifecycleOwner = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         val displayDpValue = (activity as MainActivity).getDisplaySize() // [0] == width, [1] == height
-
         var lp1 = communityCommentReportFragmentBinding.constraintLayout1.layoutParams
         lp1.height = (displayDpValue[1] * 0.4).toInt()
         lp1.width = (displayDpValue[0] * 0.9).toInt()
         communityCommentReportFragmentBinding.constraintLayout1.layoutParams = lp1
 
-        viewModel.isCommentReportDialogCancel.observe(this, Observer {
+        mainViewModel.isCommentReportDialogCancel.observe(this, Observer {
                 event ->
             event.getContentIfNotHandled()?.let {
                 if(it){
@@ -63,10 +56,9 @@ class CommunityCommentReportFragment(val viewModel: MainViewModel) : DialogFragm
                     }
                 }
             }
-
         })
 
-        viewModel.isReportCommentSuccess.observe(this, Observer {
+        mainViewModel.isReportCommentSuccess.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     parentActivity.communityCommentReportFragment.dismiss()
@@ -75,23 +67,23 @@ class CommunityCommentReportFragment(val viewModel: MainViewModel) : DialogFragm
             }
         })
 
+
         return communityCommentReportFragmentBinding.root
     }
+
     fun showCommentReportAlert() {
         val alertDialogFragment = AlertDialogFragment.instance(
             object : AlertDialogListener {
                 override fun onOkClick() {
-                    viewModel.reportComment()
+                    mainViewModel.reportComment()
                 }
 
                 override fun onCancelClick() {
 
                 }
-
             },
             "Do you want to Report this comment?"
         )
-
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
     }
 

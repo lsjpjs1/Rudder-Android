@@ -21,33 +21,21 @@ class EditNicknameDialogViewModel : ViewModel() {
 
     val closeFlag : LiveData<Event<Boolean>> = _closeFlag
     val toastMessage : LiveData<String?> = _toastMessage
+
     init {
         _newNickname.value=""
     }
-    fun clearNewNickname(){
-        _newNickname.value = null
-    }
-    fun clearToastMessage(){
-        _toastMessage.value = null
-    }
 
-    fun clear(){
-        clearNewNickname()
-        clearToastMessage()
-    }
 
     fun updateNickname(){
-
         if ( _newNickname.value!!.isBlank() ) {
             _toastMessage.value = "One or more fields is blank!"
         } else {
             GlobalScope.launch {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
                 val result=Repository().updateNickname(UpdateNicknameRequest(App.prefs.getValue("token")!!,_newNickname.value!!))
                 viewModelScope.launch {
                     when(result.error){
-
                         ResponseEnum.SUCCESS -> {
                             _toastMessage.value = "Successfully changed!"
                             _closeFlag.value = Event(true)
@@ -61,7 +49,6 @@ class EditNicknameDialogViewModel : ViewModel() {
                         ResponseEnum.DUPLICATE -> {
                             _toastMessage.value = "This nickname already exists. Please try other nickname."
                         }
-
                     }
                 }
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
@@ -69,5 +56,17 @@ class EditNicknameDialogViewModel : ViewModel() {
 
         }
 
+    }
+
+    fun clearNewNickname(){
+        _newNickname.value = null
+    }
+    fun clearToastMessage(){
+        _toastMessage.value = null
+    }
+
+    fun clear(){
+        clearNewNickname()
+        clearToastMessage()
     }
 }

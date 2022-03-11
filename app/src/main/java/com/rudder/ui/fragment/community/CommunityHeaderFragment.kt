@@ -1,7 +1,6 @@
 package com.rudder.ui.fragment.community
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,7 @@ import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 
 class CommunityHeaderFragment : Fragment() {
-
-    private val viewModel :MainViewModel by activityViewModels()
+    private val mainViewModel :MainViewModel by activityViewModels()
     private val lazyContext by lazy {
         requireContext()
     }
@@ -28,10 +26,9 @@ class CommunityHeaderFragment : Fragment() {
     ): View? {
 
         val header = DataBindingUtil.inflate<FragmentCommunityHeaderBinding>(inflater,R.layout.fragment_community_header,container,false)
-        header.mainVM = viewModel
+        header.mainVM = mainViewModel
 
-
-        viewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
+        mainViewModel.isScrollBottomTouch.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled().let {
                 it?.let{
                     if (it){
@@ -43,20 +40,16 @@ class CommunityHeaderFragment : Fragment() {
             }
         })
 
-
         header.constraintLayout13.setOnClickListener { view -> // search button click
             view.findNavController().navigate(R.id.action_navigation_community_to_navigation_search)
             (activity as MainActivity).mainBottomNavigationDisappear()
         }
 
-
         header.constraintLayout12.setOnClickListener { view -> // add post button click
             view.findNavController().navigate(R.id.action_navigation_community_to_navigation_add_post)
-            viewModel.clickAddPost()
+            mainViewModel.clickAddPost()
             (activity as MainActivity).mainBottomNavigationDisappear()
         }
-
-
 
         return header.root
     }

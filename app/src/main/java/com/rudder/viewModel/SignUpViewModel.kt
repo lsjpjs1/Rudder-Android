@@ -83,7 +83,6 @@ class SignUpViewModel : ViewModel() {
     var _categoryIdSelectList = MutableLiveData<ArrayList<Int>>()
     var _categoryIdAllList = MutableLiveData<ArrayList<Int>>()
 
-
     val userId: LiveData<String> = _userId
     val userPassword: LiveData<String> = _userPassword
     val userPasswordCheck: LiveData<String> = _userPasswordCheck
@@ -107,7 +106,6 @@ class SignUpViewModel : ViewModel() {
     val categorySelectApply: LiveData<Event<Boolean>> = _categorySelectApply // Apply button
     val categorySelectBack: LiveData<Event<Boolean>> = _categorySelectBack
 
-
     val nickNameDuplicatedCheck : LiveData<Event<Boolean>> = _nickNameDuplicatedCheck
     val nickNameChangeFlag : LiveData<Event<Boolean>> = _nickNameChangeFlag
     val idRgCheckFlag : LiveData<Event<Boolean>> = _idRgCheckFlag
@@ -125,7 +123,6 @@ class SignUpViewModel : ViewModel() {
     val termsOfServiceFlag : LiveData<Event<Boolean>> = _termsOfServiceFlag
     val schoolList : LiveData<ArrayList<School>> = _schoolList
 
-
     var categories: LiveData<ArrayList<Category>> = _categories
     var categoryNames: LiveData<ArrayList<String>> = _categoryNames
     val emailToast: LiveData<String> = _emailToast
@@ -137,8 +134,6 @@ class SignUpViewModel : ViewModel() {
     val userSelectedProfileId: LiveData<Int> = _userSelectedProfileId
     var categoryIdSelectList: LiveData<ArrayList<Int>> = _categoryIdSelectList
     var categoryIdAllList: LiveData<ArrayList<Int>> = _categoryIdAllList
-
-
 
 
     private val repository = Repository()
@@ -156,9 +151,7 @@ class SignUpViewModel : ViewModel() {
         _userSchoolInt.value = 0
         _userIntroduce.value = ""
         _emailToast.value = ""
-
         _categoryNames.value = ArrayList()
-
         _profileImageList.value = ArrayList<String>()
         _selectedProfileImage.value = -1
         _profileIdSelectList.value = ArrayList<Int>()
@@ -174,7 +167,6 @@ class SignUpViewModel : ViewModel() {
     val passwordRg = "^(?=.*[a-zA-Z0-9])(?=.*[a-zA-Z!@#\$%^&*])(?=.*[0-9!@#\$%^&*]).{8,15}\$".toRegex() // 숫자, 문자, 특수문자 중 2가지 포함(8~15자)
     val nickNameRg = "^[a-zA-Z0-9-_]{4,15}\$".toRegex()
     val idRg = "^[a-zA-Z0-9-_]{4,15}\$".toRegex()
-
 
 
     fun onTextChangeId() {
@@ -236,7 +228,6 @@ class SignUpViewModel : ViewModel() {
     }
 
 
-
     fun clickNextTermsOfService(){
         _termsOfServiceNext.value = Event(true)
     }
@@ -244,7 +235,6 @@ class SignUpViewModel : ViewModel() {
     fun clickBackTermsOfService(){
         _termsOfServiceBack.value = Event(true)
     }
-
 
     fun clickNextSchoolSelect(){
         _schoolSelectNext.value = Event(true)
@@ -266,12 +256,9 @@ class SignUpViewModel : ViewModel() {
         _profileSettingBack.value = Event(true)
     }
 
-
-
     fun clickBackCategorySelect(){
         _categorySelectBack.value = Event(true)
     }
-
 
 
 
@@ -298,7 +285,6 @@ class SignUpViewModel : ViewModel() {
                 val iObject = resultSchoolList[i].asJsonObject
                 val schoolName = iObject.get("school_name").asString
                 val schoolId = iObject.get("school_id").asInt
-
                 _schoolList.value!!.add(School(schoolId,schoolName))
             }
             viewModelScope.launch {
@@ -313,11 +299,9 @@ class SignUpViewModel : ViewModel() {
     fun callIdCheck() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
-
             val idInput = _userId.value!!
             val result = repository.signUpIdDuplicated(IdDuplicatedInfo(idInput))
             _idCheckFlag.postValue(Event(!result && _userId.value!!.isNotBlank()))
-
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
@@ -325,7 +309,6 @@ class SignUpViewModel : ViewModel() {
     fun callSendVeriCode() { //verifyEmail
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
-
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val result = repository.signUpSendVerifyCode(EmailInfoSignUp(emailInput,_userSchoolInt.value!!))
             if (result == "") {
@@ -356,24 +339,15 @@ class SignUpViewModel : ViewModel() {
     fun callCreateAccount() { // Sign Up, Complete!, Profile Setting Fragment에서 실행
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
-
             val emailInput = _userEmailID.value!!.plus('@').plus(_userEmailDomain.value!!)
             val inputInfo = SignUpInsertInfo(_userId.value!!, _userPassword.value!!,emailInput,_userRecommendCode.value!!,
                 _userSchoolInt.value!!,"",_userNickName.value!!, _userSelectedProfileId.value!! )
 
             val result = repository.signUpCreateAccount(inputInfo)
-
             _profileSettingNext.postValue(Event(result))
-
-
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
-
-
-
-
-
 
 
     fun callNickNameCheck() {
@@ -417,7 +391,6 @@ class SignUpViewModel : ViewModel() {
     }
 
 
-
     fun categoryIdSelect(id : Int, checked: Boolean){
         if (checked) {
             categoryIdSelectList.value!!.add(id)
@@ -426,7 +399,6 @@ class SignUpViewModel : ViewModel() {
         }
 
     }
-
 
     fun clickApplyCategorySelect(){ // Apply
         GlobalScope.launch {

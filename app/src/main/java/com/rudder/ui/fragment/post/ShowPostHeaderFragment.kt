@@ -24,7 +24,6 @@ class ShowPostHeaderFragment() : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val header = DataBindingUtil.inflate<FragmentShowPostHeaderBinding>(inflater,R.layout.fragment_show_post_header,container,false)
-        //header.mainVM = viewModel
         header.lifecycleOwner = this
 
         header.constraintLayout13.setOnClickListener { view ->

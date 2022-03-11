@@ -1,7 +1,6 @@
 package com.rudder.ui.fragment.community
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,7 @@ import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.category_selector.view.*
 
 class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
-    private val viewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private val lazyContext by lazy {
         requireContext()
     }
@@ -31,39 +30,38 @@ class CommunitySelectorFragment : Fragment(),CustomOnclickListener {
         savedInstanceState: Bundle?
     ): View? {
         val fragmentBinding= DataBindingUtil.inflate<FragmentCommuintySelectorBinding>(inflater,R.layout.fragment_commuinty_selector,container,false)
-
-
-        adapter = CategorySelectorAdapter(viewModel.userSelectCategories.value!!,viewModel.selectedCategoryPosition.value!!,lazyContext,this)
+        adapter = CategorySelectorAdapter(mainViewModel.userSelectCategories.value!!,mainViewModel.selectedCategoryPosition.value!!,lazyContext,this)
         fragmentBinding.categoryRecyclerView.also {
             it.layoutManager = LinearLayoutManager(lazyContext,LinearLayoutManager.HORIZONTAL,false)
             it.setHasFixedSize(false)
             it.adapter = adapter
         }
 
-        viewModel.selectedCategoryView.observe(viewLifecycleOwner, Observer {
+        mainViewModel.selectedCategoryView.observe(viewLifecycleOwner, Observer {
             it?.also {
                 it.categoryUnderBarView.visibility = View.VISIBLE
                 it.categoryTextView.setTextColor(ContextCompat.getColor(lazyContext,R.color.black))
             }
-
-
         })
 
-        viewModel.userSelectCategories.observe(viewLifecycleOwner, Observer {
+
+        mainViewModel.userSelectCategories.observe(viewLifecycleOwner, Observer {
             adapter.updateCategories(it)
         })
+
+
         return fragmentBinding.root
     }
 
     override fun onClickView(view: View, position: Int) {
-        viewModel.selectedCategoryView.value?.also {
+        mainViewModel.selectedCategoryView.value?.also {
             it.categoryUnderBarView.visibility = View.GONE
             it.categoryTextView.setTextColor(ContextCompat.getColor(lazyContext,R.color.grey))
         }
-        viewModel.setSelectedCategoryPosition(position)
-        viewModel.setSelectedCategoryView(view)
-        viewModel.clearPosts()
-        viewModel.getPosts()
+        mainViewModel.setSelectedCategoryPosition(position)
+        mainViewModel.setSelectedCategoryView(view)
+        mainViewModel.clearPosts()
+        mainViewModel.getPosts()
     }
 
 }

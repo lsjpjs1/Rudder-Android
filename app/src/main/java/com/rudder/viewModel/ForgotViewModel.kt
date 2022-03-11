@@ -22,16 +22,12 @@ class ForgotViewModel() : ViewModel() {
 
     val _forgotEmail = MutableLiveData<String>()
     val _forgotverifyCode = MutableLiveData<String>()
-
     val _findIDClick = MutableLiveData<Event<Boolean>>()
     val _findPasswordClick = MutableLiveData<Event<Boolean>>()
     val _emailCheckFlag = MutableLiveData<Event<Boolean>>()
     val _emailVerifyFlag = MutableLiveData<Event<Boolean>>()
     val _verifyCodeCheckFlag = MutableLiveData<Event<Boolean>>()
-
     val _isBackClick = MutableLiveData<Event<Boolean>>()
-
-
     val forgotEmail: LiveData<String> = _forgotEmail
     val forgotverifyCode: LiveData<String> = _forgotverifyCode
 
@@ -40,7 +36,6 @@ class ForgotViewModel() : ViewModel() {
     val emailCheckFlag : LiveData<Event<Boolean>> = _emailCheckFlag
     val emailVerifyFlag : LiveData<Event<Boolean>> = _emailVerifyFlag
     val verifyCodeCheckFlag: LiveData<Event<Boolean>> = _verifyCodeCheckFlag
-
     val isBackClick : LiveData<Event<Boolean>> = _isBackClick
 
 
@@ -80,10 +75,8 @@ class ForgotViewModel() : ViewModel() {
     fun callSendVeriCode() { // Find Password Email Check
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
-
             val result = repository.findAccountPassword(EmailInfo(_forgotEmail.value!!))
             _emailVerifyFlag.postValue(Event(result && _forgotEmail.value!!.matches(emailRg)))
-
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
@@ -91,10 +84,8 @@ class ForgotViewModel() : ViewModel() {
     fun callSendPassword() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
-
             val result = repository.sendAccountPassword(CheckVerifyCodeInfo(_forgotEmail.value!!, _forgotverifyCode.value!!))
             _verifyCodeCheckFlag.postValue(Event(result))
-
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }

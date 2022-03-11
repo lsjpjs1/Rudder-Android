@@ -31,22 +31,16 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
     private lateinit var editNicknameDialogFragment: EditNicknameDialogFragment
     private lateinit var editProfileImageDialogFragment: EditProfileImageDialogFragment
     private lateinit var myPageBinding : FragmentMyPageDisplayBinding
-
     companion object{
         const val TAG = "MyPageDisplayFragment"
     }
 
-
-
     private val lazyContext by lazy {
         requireContext()
     }
-
     private val parentActivity by lazy{
         activity as MainActivity
     }
-
-    //var myPageBinding: FragmentMyPageDisplayBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,24 +58,20 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         myPageBinding.mainVM = viewModel
         myPageBinding.myPageDisplayFragment = this
         myPageBinding.lifecycleOwner = viewLifecycleOwner
-
-
-
         myPageBinding.constraintLayoutMyPage3.setOnClickListener {
             showLogoutAlert()
         }
 
-
-
         viewModel.getMyProfileImageUrl()
-        viewModel.myProfileImageUrl.value?.let {
 
+        viewModel.myProfileImageUrl.value?.let {
             Glide.with(myPageBinding.myProfileImageImageView.context)
                 .load(it)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.raw.post_loading_raw)
                 .into(myPageBinding.myProfileImageImageView)
         }
+
         viewModel.myProfileImageUrl.observe(viewLifecycleOwner, Observer {
             it?.let {
 
@@ -138,10 +128,12 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
         editNicknameDialogFragment.show(childFragmentManager,"editNicknameDialog")
     }
 
+
     fun showEditProfileImageDialog(){
         editProfileImageDialogFragment = EditProfileImageDialogFragment(this)
         editProfileImageDialogFragment.show(childFragmentManager, "editProfileImageDialog")
     }
+
 
     override fun setMyProfileImageUrl(url : String){
         viewModel.setMyProfileImageUrl(url)
@@ -155,15 +147,12 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
                 override fun onOkClick() {
                     viewModel.callLoginOut()
                 }
-
                 override fun onCancelClick() {
 
                 }
-
             },
             "Are you sure you want to logout?"
         )
-
         alertDialogFragment.show(childFragmentManager, AlertDialogFragment.TAG)
     }
 

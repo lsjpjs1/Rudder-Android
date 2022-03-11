@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.fragment_profile_setting.view.*
 
 class ProfileSettingFragment : Fragment() {
 
-    //private val viewModel: SignUpViewModel by lazy { ViewModelProvider(this).get(SignUpViewModel().getInstance()::class.java) }
     private val viewModel: SignUpViewModel by activityViewModels()
     private lateinit var profileSettingBinding : FragmentProfileSettingBinding
 
