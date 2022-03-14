@@ -41,7 +41,7 @@
 
                 android:gravity="center"
                 android:text="Find Account"
-                android:textSize="28sp"
+                android:textSize="24sp"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
