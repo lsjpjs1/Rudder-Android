@@ -66,7 +66,6 @@ open class MainViewModel : ViewModel() {
     private val _selectedCommentMorePosition = MutableLiveData<Int>()
     val _postCategoryInt = MutableLiveData<Int>()
     val _departmentCategoryAInt = MutableLiveData<Int?>()
-    val _departmentCategoryAtmp = MutableLiveData<Int?>()
     val _departmentCategoryBInt = MutableLiveData<Int?>()
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
@@ -1189,28 +1188,24 @@ open class MainViewModel : ViewModel() {
 
 
     fun categoryIdSelect(id : Int, checked: Boolean){
-        //_categoryIdSelectList.value!!.distinct()
-
         if (checked) {
-            Log.d("test4567777", "add")
             _categoryIdSelectList.value!!.add(id)
         } else {
-            Log.d("test4567777", "remove")
             _categoryIdSelectList.value!!.remove(id)
         }
-        //_categoryIdSelectList.value!!.distinct()
-
-        Log.d("test888", "${_categoryIdSelectList.value!!}")
-        //_categoryIdSelectList.value!!.distinct()
-
     }
 
 
     fun clickApplyCategorySelect(){ // Apply 버튼 누를시 실행
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            _categoryIdSelectList.value!!.add(_departmentCategoryAInt.value!!)
-            _categoryIdSelectList.value!!.add(_departmentCategoryBInt.value!!)
+            if (_departmentCategoryAInt.value!! != 0) {
+                _categoryIdSelectList.value!!.add(_departmentCategoryAInt.value!!)
+            }
+            if (_departmentCategoryBInt.value!! != 0) {
+                _categoryIdSelectList.value!!.add(_departmentCategoryBInt.value!!)
+            }
+            //_categoryIdSelectList.value!!.add(_departmentCategoryBInt.value!!)
 
             val tmpIdList = _categoryIdSelectList.value!!.sorted()
             val sortCategoryIdArrayList = ArrayList<Int>()
@@ -1292,12 +1287,8 @@ open class MainViewModel : ViewModel() {
             _departmentCategoryAInt.value = (parent.selectedItem as Category).categoryId
         }
 
-        _departmentCategoryAtmp.value = pos - 1
-
-
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
         (parent.getChildAt(0) as TextView).textSize = 14.0.toFloat()
-
     }
 
 
@@ -1312,14 +1303,17 @@ open class MainViewModel : ViewModel() {
 
     fun clearDepartmentCategory() {
         //_categoryIdSelectList.value = ArrayList<Int>()
+
+        _departmentCategoryAInt.value?.let{
+            _categoryIdSelectList.value!!.remove(_departmentCategoryAInt.value!!)
+        }
+
+        _departmentCategoryBInt.value?.let{
+            _categoryIdSelectList.value!!.remove(_departmentCategoryBInt.value!!)
+        }
+
         _departmentCategoryAInt.value = 0
         _departmentCategoryBInt.value = 0
     }
-
-
-    fun tmp(parent: AdapterView<*>){
-        Log.d("test123","nothing")
-    }
-
 
 }

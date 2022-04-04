@@ -49,9 +49,8 @@ class CategorySelectMyPageFragment : Fragment() {
         val chipWidth = (displayDpValue[0] * 0.42).toInt()
         val chipHeight = (displayDpValue[1] * 0.09).toInt()
         val commonCategoryList = arrayListOf<Category>()
-        val departmentACategoryList = arrayListOf<Category>()
-        val departmentBCategoryList = arrayListOf<Category>()
-        var departmentASpinnerAdapter:ArrayAdapter<Category>
+        var departmentACategoryList = arrayListOf<Category>()
+        var departmentBCategoryList = arrayListOf<Category>()
 
 
         mainViewModel.allCategories.observe(viewLifecycleOwner, Observer {
@@ -65,6 +64,8 @@ class CategorySelectMyPageFragment : Fragment() {
             }
             setCategoryChips(commonCategoryList,chipWidth, chipHeight,R.layout.item_chip_category,fragmentMyPageCategorySelectBinding.root.chipsPrograms)
 
+            Log.d("test123", "test123")
+
             if (departmentACategoryList.map{it.categoryName}[0] != "Choose Your Department A") {
                 departmentACategoryList.add(0, Category(categoryName = "Choose University Department A", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Choose university Department A") )
             }
@@ -73,20 +74,18 @@ class CategorySelectMyPageFragment : Fragment() {
                 departmentBCategoryList.add(0, Category(categoryName = "Choose University Department B", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Choose university Department B") )
             }
 
-            //val departmentASpinnerAdapter = ArrayAdapter(lazyContext, R.layout.custom_spinner_layout, departmentACategoryList)
-
-            departmentASpinnerAdapter = object : ArrayAdapter<Category>(lazyContext, R.layout.custom_spinner_layout,
-                departmentACategoryList){
-                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                    val view = super.getView(position, convertView, parent) as TextView
-                    return view
-                }
-            }
-
+            val departmentASpinnerAdapter = ArrayAdapter(lazyContext, R.layout.custom_spinner_layout, departmentACategoryList)
             val departmentBSpinnerAdapter = ArrayAdapter(lazyContext, R.layout.custom_spinner_layout, departmentBCategoryList)
             fragmentMyPageCategorySelectBinding.departmentASpinner.adapter = departmentASpinnerAdapter
             fragmentMyPageCategorySelectBinding.departmentBSpinner.adapter = departmentBSpinnerAdapter
         })
+
+
+//        val departmentASpinnerAdapter = ArrayAdapter(lazyContext, R.layout.custom_spinner_layout, departmentACategoryList)
+//        val departmentBSpinnerAdapter = ArrayAdapter(lazyContext, R.layout.custom_spinner_layout, departmentBCategoryList)
+//
+//        fragmentMyPageCategorySelectBinding.departmentASpinner.adapter = departmentASpinnerAdapter
+//        fragmentMyPageCategorySelectBinding.departmentBSpinner.adapter = departmentBSpinnerAdapter
 
         mainViewModel.allClubCategories.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -121,7 +120,6 @@ class CategorySelectMyPageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("test123resume","${mainViewModel._departmentCategoryAInt.value }")
         mainViewModel.clearDepartmentCategory()
     }
 
