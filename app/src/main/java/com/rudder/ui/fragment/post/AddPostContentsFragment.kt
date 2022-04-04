@@ -63,12 +63,12 @@ class AddPostContentsFragment(val viewModel: MainViewModel, val isEdit: Boolean)
 
         viewModel.clearAddPost()
         var spinnerAdapter:ArrayAdapter<Category>
+
         if (isEdit){ // Add가 아닌, Edit인 경우
             display.root.categorySpinner.isEnabled=false
             display.root.showPhoto.visibility=View.GONE
             viewModel.clickPostEdit()
-            spinnerAdapter =
-            object : ArrayAdapter<Category>(lazyContext, R.layout.custom_spinner_layout,
+            spinnerAdapter = object : ArrayAdapter<Category>(lazyContext, R.layout.custom_spinner_layout,
                 viewModel.userSelectCategories.value!!+
                 viewModel.allClubCategories.value!!+
             viewModel.allCategories.value!!){

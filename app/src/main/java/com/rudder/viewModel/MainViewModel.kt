@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
+import androidx.collection.ArraySet
 import androidx.lifecycle.*
 import com.rudder.BuildConfig
 import com.rudder.R
@@ -65,6 +66,7 @@ open class MainViewModel : ViewModel() {
     private val _selectedCommentMorePosition = MutableLiveData<Int>()
     val _postCategoryInt = MutableLiveData<Int>()
     val _departmentCategoryAInt = MutableLiveData<Int?>()
+    val _departmentCategoryAtmp = MutableLiveData<Int?>()
     val _departmentCategoryBInt = MutableLiveData<Int?>()
     private val _commentBodyCheck = MutableLiveData<Event<Boolean>>()
     private val _isPostMore = MutableLiveData<Event<Boolean>>()
@@ -113,7 +115,7 @@ open class MainViewModel : ViewModel() {
     var isCommentReportDialogCancel: LiveData<Event<Boolean>> = _isCommentReportDialogCancel
     var isReportDialogCancel: LiveData<Event<Boolean>> = _isReportDialogCancel
     var isCommentEditDialogCancel: LiveData<Event<Boolean>> = _isCommentEditDialogCancel
-    var _categoryIdSelectList = MutableLiveData<ArrayList<Int>>()
+    var _categoryIdSelectList = MutableLiveData<ArraySet<Int>>()
     var _categoryIdAllList = MutableLiveData<ArrayList<Int>>()
     val _categorySelectApply = MutableLiveData<Event<Boolean>>()
     val _categoryNamesForSelection = MutableLiveData<ArrayList<String>>()
@@ -182,7 +184,7 @@ open class MainViewModel : ViewModel() {
     val allCategories: LiveData<ArrayList<Category>> = _allCategories
     val allClubCategories: LiveData<ArrayList<Category>> = _allClubCategories
     val imageCount: LiveData<Int> = _imageCount
-    var categoryIdSelectList: LiveData<ArrayList<Int>> = _categoryIdSelectList
+    var categoryIdSelectList: LiveData<ArraySet<Int>> = _categoryIdSelectList
     var categoryIdAllList: LiveData<ArrayList<Int>> = _categoryIdAllList
     val categorySelectApply: LiveData<Event<Boolean>> = _categorySelectApply // Apply button
     val categoryNamesForSelection: LiveData<ArrayList<String>> = _categoryNamesForSelection
@@ -251,7 +253,7 @@ open class MainViewModel : ViewModel() {
         getSelectedCategories()
         _isDeleteCommentSuccess.value = Event(false)
         _imageCount.value = 0
-        _categoryIdSelectList.value = ArrayList<Int>()
+        _categoryIdSelectList.value = ArraySet<Int>()
         _categoryIdAllList.value = ArrayList<Int>()
         _categoryNamesForSelection.value = ArrayList<String>()
 
@@ -1187,11 +1189,19 @@ open class MainViewModel : ViewModel() {
 
 
     fun categoryIdSelect(id : Int, checked: Boolean){
+        //_categoryIdSelectList.value!!.distinct()
+
         if (checked) {
+            Log.d("test4567777", "add")
             _categoryIdSelectList.value!!.add(id)
         } else {
+            Log.d("test4567777", "remove")
             _categoryIdSelectList.value!!.remove(id)
         }
+        //_categoryIdSelectList.value!!.distinct()
+
+        Log.d("test888", "${_categoryIdSelectList.value!!}")
+        //_categoryIdSelectList.value!!.distinct()
 
     }
 
@@ -1282,6 +1292,9 @@ open class MainViewModel : ViewModel() {
             _departmentCategoryAInt.value = (parent.selectedItem as Category).categoryId
         }
 
+        _departmentCategoryAtmp.value = pos - 1
+
+
         (parent.getChildAt(0) as TextView).setTextColor(Color.parseColor("#9329D1"))
         (parent.getChildAt(0) as TextView).textSize = 14.0.toFloat()
 
@@ -1298,9 +1311,14 @@ open class MainViewModel : ViewModel() {
     }
 
     fun clearDepartmentCategory() {
-        _categoryIdSelectList.value = ArrayList<Int>()
+        //_categoryIdSelectList.value = ArrayList<Int>()
         _departmentCategoryAInt.value = 0
         _departmentCategoryBInt.value = 0
+    }
+
+
+    fun tmp(parent: AdapterView<*>){
+        Log.d("test123","nothing")
     }
 
 

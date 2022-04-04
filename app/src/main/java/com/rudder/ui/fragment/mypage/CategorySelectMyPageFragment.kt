@@ -2,11 +2,13 @@ package com.rudder.ui.fragment.mypage
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -49,6 +51,8 @@ class CategorySelectMyPageFragment : Fragment() {
         val commonCategoryList = arrayListOf<Category>()
         val departmentACategoryList = arrayListOf<Category>()
         val departmentBCategoryList = arrayListOf<Category>()
+        var departmentASpinnerAdapter:ArrayAdapter<Category>
+
 
         mainViewModel.allCategories.observe(viewLifecycleOwner, Observer {
             for ( i in 0 until it.size ) {
@@ -62,14 +66,23 @@ class CategorySelectMyPageFragment : Fragment() {
             setCategoryChips(commonCategoryList,chipWidth, chipHeight,R.layout.item_chip_category,fragmentMyPageCategorySelectBinding.root.chipsPrograms)
 
             if (departmentACategoryList.map{it.categoryName}[0] != "Choose Your Department A") {
-                departmentACategoryList.add(0, Category(categoryName = "Choose university Department A", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Choose university Department A") )
+                departmentACategoryList.add(0, Category(categoryName = "Choose University Department A", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Choose university Department A") )
             }
 
             if (departmentBCategoryList.map{it.categoryName}[0] != "Choose Your Department B") {
-                departmentBCategoryList.add(0, Category(categoryName = "Choose university Department B", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Choose university Department B") )
+                departmentBCategoryList.add(0, Category(categoryName = "Choose University Department B", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Choose university Department B") )
             }
 
-            val departmentASpinnerAdapter = ArrayAdapter(lazyContext, R.layout.custom_spinner_layout, departmentACategoryList)
+            //val departmentASpinnerAdapter = ArrayAdapter(lazyContext, R.layout.custom_spinner_layout, departmentACategoryList)
+
+            departmentASpinnerAdapter = object : ArrayAdapter<Category>(lazyContext, R.layout.custom_spinner_layout,
+                departmentACategoryList){
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view = super.getView(position, convertView, parent) as TextView
+                    return view
+                }
+            }
+
             val departmentBSpinnerAdapter = ArrayAdapter(lazyContext, R.layout.custom_spinner_layout, departmentBCategoryList)
             fragmentMyPageCategorySelectBinding.departmentASpinner.adapter = departmentASpinnerAdapter
             fragmentMyPageCategorySelectBinding.departmentBSpinner.adapter = departmentBSpinnerAdapter
@@ -108,6 +121,7 @@ class CategorySelectMyPageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        Log.d("test123resume","${mainViewModel._departmentCategoryAInt.value }")
         mainViewModel.clearDepartmentCategory()
     }
 
@@ -121,6 +135,14 @@ class CategorySelectMyPageFragment : Fragment() {
             mChip.tag = categories[i].categoryId
 
             if(categories[i].isMember == null || categories[i].isMember ==  "t"){ // 동아리원인 경우
+                if (mainViewModel.userSelectCategories.value!!.map{it.categoryName}.contains(categories[i].categoryName)) {
+                    mChip.isChecked = true
+                    mainViewModel.categoryIdSelect(categories[i].categoryId, mChip.isChecked)
+                } else {
+                    mChip.isChecked = false
+                    mainViewModel.categoryIdSelect(categories[i].categoryId, mChip.isChecked)
+                }
+
                 mChip.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, boolean ->
                     mainViewModel.categoryIdSelect(compoundButton.tag.toString().toInt(), boolean)
                 })
