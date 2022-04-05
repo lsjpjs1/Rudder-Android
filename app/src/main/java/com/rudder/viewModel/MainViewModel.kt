@@ -107,6 +107,10 @@ open class MainViewModel : ViewModel() {
     private val _myProfileImageUrl = MutableLiveData<String>()
     var noticeAlreadyShow = false
     private val _noticeResponse = MutableLiveData<NoticeResponse>()
+    private val _commonCategoryList = MutableLiveData<ArrayList<Category>>()
+    private val _departmentACategoryList = MutableLiveData<ArrayList<Category>>()
+    private val _departmentBCategoryList = MutableLiveData<ArrayList<Category>>()
+
 
 
 
@@ -191,6 +195,10 @@ open class MainViewModel : ViewModel() {
     val isStringBlank : LiveData<Event<Boolean>> = _isStringBlank
     val isUnvalidCategorySelect : LiveData<Event<Boolean>> = _isUnvalidCategorySelect
     var postMode : PostMode = PostMode.NORMAL
+    val commonCategoryList: LiveData<ArrayList<Category>> = _commonCategoryList
+    val departmentACategoryList: LiveData<ArrayList<Category>> = _departmentACategoryList
+    val departmentBCategoryList: LiveData<ArrayList<Category>> = _departmentBCategoryList
+
 
 
     init {
@@ -255,6 +263,10 @@ open class MainViewModel : ViewModel() {
         _categoryIdSelectList.value = ArraySet<Int>()
         _categoryIdAllList.value = ArrayList<Int>()
         _categoryNamesForSelection.value = ArrayList<String>()
+        _commonCategoryList.value = ArrayList<Category>()
+        _departmentACategoryList.value = ArrayList<Category>()
+        _departmentBCategoryList.value = ArrayList<Category>()
+
 
     }
 
@@ -938,7 +950,26 @@ open class MainViewModel : ViewModel() {
             viewModelScope.launch {
                 _allCategories.value?.addAll(categoryList)
                 _categoryNames.value = splitCategoryNames(categoryList)
+
+                for ( i in 0 until _allCategories.value!!.size ) {
+                    if (_allCategories.value!![i].categoryType == "department") {
+                        _departmentACategoryList.value!!.add(_allCategories.value!![i])
+                        _departmentBCategoryList.value!!.add(_allCategories.value!![i])
+                    } else if (_allCategories.value!![i].categoryType == "common") {
+                        _commonCategoryList.value!!.add(_allCategories.value!![i])
+                    }
+                }
+
+                if (_departmentACategoryList.value!!.map{it.categoryName}[0] != "Choose Your Department A") {
+                    departmentACategoryList.value!!.add(0, Category(categoryName = "Choose University Department A", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Choose university Department A") )
+                }
+
+                if (_departmentBCategoryList.value!!.map{it.categoryName}[0] != "Choose Your Department B") {
+                    _departmentBCategoryList.value!!.add(0, Category(categoryName = "Choose University Department B", isMember = null, categoryId = -1, categoryType = "dummy_select",categoryAbbreviation = "Choose university Department B") )
+                }
+
             }
+
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             return@async
         }
@@ -1205,7 +1236,6 @@ open class MainViewModel : ViewModel() {
             if (_departmentCategoryBInt.value!! != 0) {
                 _categoryIdSelectList.value!!.add(_departmentCategoryBInt.value!!)
             }
-            //_categoryIdSelectList.value!!.add(_departmentCategoryBInt.value!!)
 
             val tmpIdList = _categoryIdSelectList.value!!.sorted()
             val sortCategoryIdArrayList = ArrayList<Int>()
