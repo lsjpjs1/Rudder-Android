@@ -2,6 +2,7 @@ package com.rudder.data
 
 import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.MyPostDisplayFragment
+import com.rudder.ui.fragment.mypage.SettingFragment
 import com.rudder.ui.fragment.post.AddPostDisplayFragment
 import com.rudder.ui.fragment.post.EditPostFragment
 import com.rudder.ui.fragment.post.ShowPostDisplayFragment
@@ -16,6 +17,7 @@ object MainAddTabObject {
         CategorySelectMyPageFragment.TAG,
         EditPostFragment.TAG,
         PostMessageRoomFragment.TAG,
-        MyPostDisplayFragment.TAG
+        MyPostDisplayFragment.TAG,
+        SettingFragment.TAG
     )
 }

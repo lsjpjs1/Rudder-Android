@@ -6,6 +6,7 @@ import com.rudder.ui.fragment.community.CommunityDisplayFragment
 import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.mypage.MyPostDisplayFragment
+import com.rudder.ui.fragment.mypage.SettingFragment
 import com.rudder.ui.fragment.notification.NotificationDisplayFragment
 import com.rudder.ui.fragment.post.AddPostDisplayFragment
 import com.rudder.ui.fragment.post.EditPostFragment
@@ -29,7 +30,8 @@ enum class MainDisplayTab( // Just, show, hide
     CATEGORYSELECTMYPAGE(R.id.navigation_category_select_my_page, CategorySelectMyPageFragment.TAG),
     EDITPOST(R.id.navigation_edit_post, EditPostFragment.TAG),
     POSTMESSAGEROOM(R.id.navigation_postmessage_room, PostMessageRoomFragment.TAG),
-    MYPOST(R.id.navigation_my_post, MyPostDisplayFragment.TAG);
+    MYPOST(R.id.navigation_my_post, MyPostDisplayFragment.TAG),
+    SETTING(R.id.navigation_setting, SettingFragment.TAG);
 
     companion object {
         fun from(itemId: Int): MainDisplayTab? = values().firstOrNull { it.itemId == itemId }

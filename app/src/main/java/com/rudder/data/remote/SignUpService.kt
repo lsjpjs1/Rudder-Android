@@ -27,6 +27,7 @@ interface SignUpService{
         @Body verifyInfo : CheckVerifyCodeInfo
     ) : Response<JsonObject>
 
+
     @POST("/signupin/schoolList")
     suspend fun schoolListSignUp(
     ) : Response<JsonArray>

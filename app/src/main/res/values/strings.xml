@@ -73,6 +73,7 @@
     <string name="request_category">Request Category</string>
     <string name="choose_department">Choose Department</string>
     <string name="send">Send</string>
+    <string name="setting_title">Setting</string>
 
 
 </resources>

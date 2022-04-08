@@ -145,6 +145,15 @@
             app:argType="integer"
             android:defaultValue="1"
             />
+
+
+
+        <action
+            android:id="@+id/action_navigation_mypage_to_navigation_setting"
+            app:destination="@id/navigation_setting"
+            app:popUpTo="@id/navigation_mypage" />
+
+
     </bottom>
 
     <bottom
@@ -371,6 +380,13 @@
             />
     </bottom>
 
+
+    <bottom
+        android:id="@+id/navigation_setting"
+        android:name="com.rudder.ui.fragment.mypage.SettingFragment"
+        android:label="@string/setting_title"
+        tools:layout="@layout/fragment_setting">
+    </bottom>
 
 
 
