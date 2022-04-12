@@ -12,7 +12,7 @@ import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.launch
 
-open class MyPostViewModel : MainViewModel() {
+open class MyPostViewModel : MainViewModel(),ViewModelInterface {
 
 
     protected val _offset = MutableLiveData<Int>()
@@ -56,9 +56,9 @@ open class MyPostViewModel : MainViewModel() {
     }
 
     override fun clearPosts() {
-            _posts.value = ArrayList<PreviewPost>()
-            _offset.value = 0
-            _noMorePostFlag.value = false
+        _posts.value = ArrayList<PreviewPost>()
+        _offset.value = 0
+        _noMorePostFlag.value = false
     }
 
     override fun scrollTouchTopCommunityPost() {

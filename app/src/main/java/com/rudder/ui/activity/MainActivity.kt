@@ -59,7 +59,7 @@ import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
 
 class MainActivity : AppCompatActivity(), MainActivityInterface {
-    private val mainViewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
+    val mainViewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     private val notificationViewModel : NotificationViewModel by lazy { ViewModelProvider(this).get(NotificationViewModel::class.java) }
     private val myPageViewModel : MyPageViewModel by lazy { ViewModelProvider(this).get(MyPageViewModel::class.java) }
 
@@ -170,13 +170,13 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         )
 
 
-        mainViewModel.isContactUs.observe(this, Observer {
-            if (it.getContentIfNotHandled()!!) {
-                if (!contactUsFragment.isAdded) {
-                    contactUsFragment.show(supportFragmentManager, contactUsFragment.tag)
-                }
-            }
-        })
+//        mainViewModel.isContactUs.observe(this, Observer {
+//            if (it.getContentIfNotHandled()!!) {
+//                if (!contactUsFragment.isAdded) {
+//                    contactUsFragment.show(supportFragmentManager, contactUsFragment.tag)
+//                }
+//            }
+//        })
 
         mainViewModel.isClubJoinRequest.observe(this, Observer {
             if (it.getContentIfNotHandled()!!) {
@@ -199,13 +199,13 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         })
 
 
-        mainViewModel.isContactUsSuccess.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    contactUsFragment.dismiss()
-                }
-            }
-        })
+//        mainViewModel.isContactUsSuccess.observe(this, Observer {
+//            it.getContentIfNotHandled()?.let { it ->
+//                if (it) {
+//                    contactUsFragment.dismiss()
+//                }
+//            }
+//        })
 
 
         mainViewModel.isCancelClick.observe(this, Observer {

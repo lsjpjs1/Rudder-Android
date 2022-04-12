@@ -22,8 +22,9 @@ import com.rudder.ui.fragment.post.CommunityPostBottomSheetFragment
 import com.rudder.ui.fragment.post.ShowPostDisplayFragment
 import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.fragment_community_contents.view.*
 
-open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
+open class CommunityContentsFragment: Fragment(), CustomOnclickListener {
 
     private val lazyContext by lazy {
         requireContext()
@@ -42,10 +43,9 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         savedInstanceState: Bundle?
     ): View? {
         val communityDisplay = DataBindingUtil.inflate<FragmentCommunityContentsBinding>(inflater,R.layout.fragment_community_contents,container,false)
-        communityDisplay.mainVM = mainViewModel
-
         adapter = MainPostPreviewAdapter(this,lazyContext, mainViewModel,viewLifecycleOwner)
         adapter.submitList(mainViewModel.posts.value!!.toMutableList().map { it.copy() })
+        communityDisplay.mainVM = mainViewModel
         communityDisplay.lifecycleOwner = this
         communityDisplay.postPreviewRV.also{
             it.layoutManager=LinearLayoutManager(lazyContext)
@@ -63,18 +63,21 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
             })
         }
 
-        communityDisplay.communityContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
-        communityDisplay.communityContentsSwipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
-            override fun onRefresh() {
-                mainViewModel.scrollTouchTopCommunityPost()
-            }
-        })
+        return communityDisplay.root
+    }
 
-        communityDisplay.communityContentsSwipeRefreshLayout
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.communityContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
+        view.communityContentsSwipeRefreshLayout.setOnRefreshListener {
+            mainViewModel.scrollTouchTopCommunityPost()
+        }
+
 
         mainViewModel.posts.observe(viewLifecycleOwner, Observer {
             adapter.submitList(mainViewModel.posts.value!!.toMutableList().map { it.copy() })
-            communityDisplay.communityContentsSwipeRefreshLayout.isRefreshing = false
+            view.communityContentsSwipeRefreshLayout.isRefreshing = false
         })
 
         mainViewModel.isAddPostSuccess.observe(viewLifecycleOwner, Observer {
@@ -131,7 +134,6 @@ open class CommunityContentsFragment: Fragment(),CustomOnclickListener {
         })
 
 
-        return communityDisplay.root
     }
 
     override fun onClickView(view: View, position: Int) {

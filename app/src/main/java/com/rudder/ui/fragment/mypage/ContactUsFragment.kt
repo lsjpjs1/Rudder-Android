@@ -10,9 +10,13 @@ import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import com.rudder.R
 import com.rudder.databinding.FragmentContactUsDialogBinding
 import com.rudder.ui.activity.MainActivity
+import com.rudder.viewModel.ContactUsViewModel
 import com.rudder.viewModel.MainViewModel
 
 class ContactUsFragment : DialogFragment() {
@@ -20,13 +24,18 @@ class ContactUsFragment : DialogFragment() {
     private val mainViewModel : MainViewModel by activityViewModels()
     private lateinit var contectUsFragmentBinding : FragmentContactUsDialogBinding
 
+    private val contactUsViewModel: ContactUsViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         contectUsFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_contact_us_dialog, container,false)
+
+
         contectUsFragmentBinding.mainVM = mainViewModel
+        contectUsFragmentBinding.contactUsVM = contactUsViewModel
         contectUsFragmentBinding.lifecycleOwner = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -38,7 +47,21 @@ class ContactUsFragment : DialogFragment() {
         lp1.width = (displayDpValue[0] * 0.9).toInt()
         contectUsFragmentBinding.constraintLayout1.layoutParams = lp1
 
+
+        contectUsFragmentBinding.reportCancel.setOnClickListener{
+            this.dismiss()
+        }
+
+        contactUsViewModel.isContactUsSuccess.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (it) {
+                    this.dismiss()
+                }
+            }
+        })
+
         return contectUsFragmentBinding.root
+
     }
 
 

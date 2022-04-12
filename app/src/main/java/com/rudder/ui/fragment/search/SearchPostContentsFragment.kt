@@ -34,10 +34,8 @@ class SearchPostContentsFragment  : Fragment(),CustomOnclickListener {
     }
 
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
-
-    private val searchViewModel : SearchViewModel by activityViewModels()
     private val mainViewModel : MainViewModel by activityViewModels()
-
+    private val searchViewModel : SearchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

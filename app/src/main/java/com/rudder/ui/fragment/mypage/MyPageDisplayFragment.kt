@@ -30,6 +30,7 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var editNicknameDialogFragment: EditNicknameDialogFragment
     private lateinit var editProfileImageDialogFragment: EditProfileImageDialogFragment
+    private lateinit var contactUsFragment: ContactUsFragment
     private lateinit var myPageBinding : FragmentMyPageDisplayBinding
     companion object{
         const val TAG = "MyPageDisplayFragment"
@@ -132,6 +133,11 @@ class MyPageDisplayFragment: Fragment(), MyPageFragmentInterface {
     fun showEditProfileImageDialog(){
         editProfileImageDialogFragment = EditProfileImageDialogFragment(this)
         editProfileImageDialogFragment.show(childFragmentManager, "editProfileImageDialog")
+    }
+
+    fun showContactUsDialog(){
+        contactUsFragment = ContactUsFragment()
+        contactUsFragment.show(childFragmentManager, "editProfileImageDialog")
     }
 
 

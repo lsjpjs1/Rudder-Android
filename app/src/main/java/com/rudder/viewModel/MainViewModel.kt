@@ -2,14 +2,12 @@ package com.rudder.viewModel
 
 
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
 import androidx.collection.ArraySet
 import androidx.lifecycle.*
 import com.rudder.BuildConfig
-import com.rudder.R
 import com.rudder.data.*
 import com.rudder.data.local.App
 import com.rudder.data.remote.*
@@ -24,7 +22,7 @@ import java.sql.Timestamp
 import kotlin.collections.ArrayList
 
 
-open class MainViewModel : ViewModel() {
+open class MainViewModel : ViewModel(), ViewModelInterface {
     enum class PostMode{
         NORMAL,SEARCH
     }
@@ -32,6 +30,8 @@ open class MainViewModel : ViewModel() {
     private val ALREADY_READ_POST_ID_KEY = "alreadyReadPostIdJson"
     var pagingIndex = 0
     var endPostId = -1
+
+    val repository = Repository()
 
 
     val _isShowPostRefreshSuccess = MutableLiveData<Event<Boolean>>()
@@ -167,7 +167,7 @@ open class MainViewModel : ViewModel() {
     val isBlockUser: LiveData<Event<Boolean>> = _isBlockUser
     val isBlockUserInComment: LiveData<Event<Boolean>> = _isBlockUserInComment
     val isCommentReport: LiveData<Event<Boolean>> = _isCommentReport
-    val isContactUs: LiveData<Event<Boolean>> = _isContactUs
+    //val isContactUs: LiveData<Event<Boolean>> = _isContactUs
     val isCommentEdit: LiveData<Event<Boolean>> = _isCommentEdit
     val isClubJoinRequest: LiveData<Event<Boolean>> = _isClubJoinRequest
     val isCommentDelete: LiveData<Event<Boolean>> = _isCommentDelete
@@ -176,7 +176,7 @@ open class MainViewModel : ViewModel() {
     val isReportCommentSuccess: LiveData<Event<Boolean>> = _isReportCommentSuccess
     val isEditPostSuccess : LiveData<Event<Boolean>> = _isEditPostSuccess
     val isReportPostSuccess : LiveData<Event<Boolean>> = _isReportPostSuccess
-    val isContactUsSuccess : LiveData<Event<Boolean>> = _isContactUsSuccess
+    //val isContactUsSuccess : LiveData<Event<Boolean>> = _isContactUsSuccess
     val reportPostBody: LiveData<String> = _reportPostBody
     val reportCommentBody: LiveData<String> = _reportCommentBody
     val isCancelClick : LiveData<Event<Boolean>> = _isCancelClick
@@ -198,7 +198,6 @@ open class MainViewModel : ViewModel() {
     val commonCategoryList: LiveData<ArrayList<Category>> = _commonCategoryList
     val departmentACategoryList: LiveData<ArrayList<Category>> = _departmentACategoryList
     val departmentBCategoryList: LiveData<ArrayList<Category>> = _departmentBCategoryList
-
 
 
     init {
@@ -278,7 +277,7 @@ open class MainViewModel : ViewModel() {
     fun requestJoinClub() { // 동아리 카테고리 불러오기
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
         GlobalScope.launch {
-            val isSuccess = Repository().requestJoinClub(RequestJoinClubRequest(App.prefs.getValue(tokenKey)!!,_selectedRequestJoinClubCategoryId.value!!,_clubJoinRequestBody.value!!))
+            val isSuccess = repository.requestJoinClub(RequestJoinClubRequest(App.prefs.getValue(tokenKey)!!,_selectedRequestJoinClubCategoryId.value!!,_clubJoinRequestBody.value!!))
             viewModelScope.launch {
                 if(isSuccess){
                     getClubCategories()
@@ -315,7 +314,7 @@ open class MainViewModel : ViewModel() {
     fun getClubCategories() { // 동아리 카테고리 불러오기
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
         GlobalScope.launch {
-            var categoryList = Repository().getClubCategories(GetCategoriesRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY),null))
+            var categoryList = repository.getClubCategories(GetCategoriesRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY),null))
             viewModelScope.launch {
                 _allClubCategories.value= arrayListOf()
                 val tmp = _allClubCategories.value
@@ -341,7 +340,7 @@ open class MainViewModel : ViewModel() {
 
     fun getMyProfileImageUrl(){
         GlobalScope.async {
-            val url = Repository().getMyProfileImageUrl(MyProfileImageRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!)).url
+            val url = repository.getMyProfileImageUrl(MyProfileImageRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY)!!)).url
             viewModelScope.launch{
                 _myProfileImageUrl.value = url
             }
@@ -351,7 +350,7 @@ open class MainViewModel : ViewModel() {
     fun getNotice(){
         GlobalScope.async {
             val version = BuildConfig.VERSION_NAME
-            val response = Repository().getNotice(NoticeRequest("android",version))
+            val response = repository.getNotice(NoticeRequest("android",version))
             viewModelScope.launch{
                 _noticeResponse.value = response
                 noticeAlreadyShow=true
@@ -362,11 +361,11 @@ open class MainViewModel : ViewModel() {
 
     suspend fun uploadPhoto(postId:Int){
         GlobalScope.async {
-            val list = Repository().getUploadUrls(GetUploadUrlsInfo(getMimeTypeList(),App.prefs.getValue(tokenKey)!!,postId) )
+            val list = repository.getUploadUrls(GetUploadUrlsInfo(getMimeTypeList(),App.prefs.getValue(tokenKey)!!,postId) )
             for(i in 0 until list.size){
                 val file = RequestBody.create(MediaType.parse(_selectedPhotoUriList.value!![i].mimeType),
                     FileUtil.getDownsizedImageBytes(_selectedPhotoUriList.value!![i].filePath))
-                Repository().uploadImage(file,list[i])
+                repository.uploadImage(file,list[i])
             }
             viewModelScope.launch {
                 _isAddPostSuccess.value = Event(true)
@@ -414,7 +413,7 @@ open class MainViewModel : ViewModel() {
     fun callLoginOut() {
         viewModelScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            val logoutResponse = Repository().logout(LogoutRequest(App.prefs.getValue("token")!!))
+            val logoutResponse = repository.logout(LogoutRequest(App.prefs.getValue("token")!!))
             if(logoutResponse.isSuccess) {
                 val key = BuildConfig.TOKEN_KEY
                 App.prefs.removeValue(key)
@@ -443,7 +442,7 @@ open class MainViewModel : ViewModel() {
         _commentBody.value = ""
     }
 
-    open fun scrollTouchBottomCommunityPost() {
+    override fun scrollTouchBottomCommunityPost() {
         if (_posts.value!!.size > 0) {
             pagingIndex += 1
             endPostId = _posts.value!![_posts.value!!.size - 1].postId
@@ -451,7 +450,7 @@ open class MainViewModel : ViewModel() {
         }
     }
 
-    open fun scrollTouchTopCommunityPost() {
+    override fun scrollTouchTopCommunityPost() {
         clearPosts()
         getPosts()
     }
@@ -527,7 +526,7 @@ open class MainViewModel : ViewModel() {
                 App.prefs.getValue(tokenKey)!!,
                 plusValue
             )
-            val resJson = Repository().addLikePost(addLikePostInfo)
+            val resJson = repository.addLikePost(addLikePostInfo)
             viewModelScope.launch {
                 if (resJson.get("isSuccess").asBoolean){
                     if (_selectedPostPosition.value!! == -1 ) {
@@ -571,7 +570,7 @@ open class MainViewModel : ViewModel() {
             }else{
                 -1
             }
-            val resPosts = Repository().getPosts(
+            val resPosts = repository.getPosts(
                 GetPostInfo(
                     pagingIndex,
                     endPostId,
@@ -604,7 +603,7 @@ open class MainViewModel : ViewModel() {
                 App.prefs.getValue(tokenKey)!!,
                 plusValue
             )
-            val resJson = Repository().addLikeComment(addLikeCommentInfo)
+            val resJson = repository.addLikeComment(addLikeCommentInfo)
             viewModelScope.launch {
                 if (resJson.get("isSuccess").asBoolean) {
                     _comments.value!![position].likeCount = resJson.get("like_count").asInt
@@ -620,7 +619,7 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    open fun clearPosts() {
+    override fun clearPosts() {
         _posts.value = ArrayList<PreviewPost>()
         pagingIndex = 0
         endPostId = -1
@@ -640,7 +639,7 @@ open class MainViewModel : ViewModel() {
 
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            val resComments = Repository().getComments(getCommentInfo)
+            val resComments = repository.getComments(getCommentInfo)
             viewModelScope.launch {
                 var tmpCommentList = ArrayList<Comment>()
                 for(idx in resComments.indices) {
@@ -702,7 +701,7 @@ open class MainViewModel : ViewModel() {
                         _selectedCommentGroupNum.value!!
                     )
                 }
-                val isSuccess = Repository().addComment(addCommentInfo)
+                val isSuccess = repository.addComment(addCommentInfo)
 
                 if (isSuccess) {
                     _commentBody.postValue("")
@@ -749,7 +748,7 @@ open class MainViewModel : ViewModel() {
                     arrayListOf(),
                     tmpCategoryId
                 )
-                val res = Repository().addPost(addPostInfo)
+                val res = repository.addPost(addPostInfo)
                 val isSuccess = res.isSuccess
                 val postId = res.postId
                 if (isSuccess) {
@@ -836,7 +835,7 @@ open class MainViewModel : ViewModel() {
     fun clickBlockUserPost() { //post, user block
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            var result = Repository().blockUser(BlockUserRequest(App.prefs.getValue(tokenKey)!!,_posts.value!![selectedPostMorePosition.value!!].userInfoId))
+            var result = repository.blockUser(BlockUserRequest(App.prefs.getValue(tokenKey)!!,_posts.value!![selectedPostMorePosition.value!!].userInfoId))
             _isBlockUser.postValue(Event(result))
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
@@ -846,7 +845,7 @@ open class MainViewModel : ViewModel() {
     fun clickBlockUserComment() { // comment, user block
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            var result = Repository().blockUser(BlockUserRequest(App.prefs.getValue(tokenKey)!!,_comments.value!![selectedCommentMorePosition.value!!].user_info_id))
+            var result = repository.blockUser(BlockUserRequest(App.prefs.getValue(tokenKey)!!,_comments.value!![selectedCommentMorePosition.value!!].user_info_id))
             _isBlockUserInComment.postValue(Event(result))
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
@@ -862,7 +861,7 @@ open class MainViewModel : ViewModel() {
 
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            var result = Repository().deletePostRepository(DeletePostInfo( postId ))
+            var result = repository.deletePostRepository(DeletePostInfo( postId ))
             _isPostDelete.postValue(Event(result))
             _isPostDeleteShowPost.postValue(Event(result))
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
@@ -876,10 +875,10 @@ open class MainViewModel : ViewModel() {
         _reportCommentBody.value = ""
     }
 
-    fun clickContactUs() {
-        _isContactUs.value = Event(true)
-        _userRequestBody.value = ""
-    }
+//    fun clickContactUs() {
+//        _isContactUs.value = Event(true)
+//        _userRequestBody.value = ""
+//    }
 
     fun clickCommentEdit() {
         _isCommentEdit.value = Event(true)
@@ -905,7 +904,7 @@ open class MainViewModel : ViewModel() {
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
 
-            var result = Repository().deleteCommentRepository(DeleteCommentInfo(commentInt, postId))
+            var result = repository.deleteCommentRepository(DeleteCommentInfo(commentInt, postId))
             _isCommentDelete.postValue(Event(result))
             _isDeleteCommentSuccess.postValue(Event(result))
 
@@ -931,7 +930,7 @@ open class MainViewModel : ViewModel() {
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
 
         GlobalScope.launch {
-            var categoryList = Repository().getSelectedCategoriesRepository( Token(App.prefs.getValue(tokenKey)!!) )
+            var categoryList = repository.getSelectedCategoriesRepository( Token(App.prefs.getValue(tokenKey)!!) )
             viewModelScope.launch {
                 categoryList.add(0, Category(-1, "All","t","common","All"))
                 _userSelectCategories.value = categoryList
@@ -946,7 +945,7 @@ open class MainViewModel : ViewModel() {
         ProgressBarUtil._progressBarDialogFlag.value = Event(true)
 
         return GlobalScope.async {
-            var categoryList = Repository().getCategories(GetCategoriesRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY),null))
+            var categoryList = repository.getCategories(GetCategoriesRequest(App.prefs.getValue(BuildConfig.TOKEN_KEY),null))
             viewModelScope.launch {
                 _allCategories.value?.addAll(categoryList)
                 _categoryNames.value = splitCategoryNames(categoryList)
@@ -1003,7 +1002,7 @@ open class MainViewModel : ViewModel() {
                 postIdForisLikePost,
                 App.prefs.getValue(tokenKey)!!
             )
-            val res = Repository().isLikePost(isLikePostInfo)
+            val res = repository.isLikePost(isLikePostInfo)
             viewModelScope.launch {
                 _isLikePost.value = res
             }
@@ -1017,7 +1016,7 @@ open class MainViewModel : ViewModel() {
                 _posts.value!![_selectedPostPosition.value!!].postId,
                 App.prefs.getValue(tokenKey)!!
             )
-            val res = Repository().isLikePost(isLikePostInfo)
+            val res = repository.isLikePost(isLikePostInfo)
             viewModelScope.launch {
                 _isLikePost.value = res
             }
@@ -1028,7 +1027,7 @@ open class MainViewModel : ViewModel() {
 
     fun addPostViewCount() {
         GlobalScope.launch {
-            Repository().addPostViewCount(AddPostViewCountInfo(_posts.value!![_selectedPostPosition.value!!].postId))
+            repository.addPostViewCount(AddPostViewCountInfo(_posts.value!![_selectedPostPosition.value!!].postId))
         }
     }
 
@@ -1080,7 +1079,7 @@ open class MainViewModel : ViewModel() {
     }
 
 
-    open fun editPost() {
+    override fun editPost() {
         if ( _postBody.value!!.isBlank() ) {
             _isStringBlank.value = Event(true)
         } else {
@@ -1089,7 +1088,7 @@ open class MainViewModel : ViewModel() {
                 val key = BuildConfig.TOKEN_KEY
                 val editPostInfo =
                     EditPostInfo(_postBody.value!!, _postId.value!!, App.prefs.getValue(key)!!)
-                val result = Repository().editPostRepository(editPostInfo)
+                val result = repository.editPostRepository(editPostInfo)
 
                 viewModelScope.launch {
                     _isEditPostSuccess.value = Event(result)
@@ -1115,7 +1114,7 @@ open class MainViewModel : ViewModel() {
                     commentInt,
                     App.prefs.getValue(tokenKey)!!
                 )
-                val result = Repository().editCommentRepository(editCommentInfo)
+                val result = repository.editCommentRepository(editCommentInfo)
                 _isEditCommentSuccess.postValue(Event(result))
 
                 if (result) {
@@ -1142,7 +1141,7 @@ open class MainViewModel : ViewModel() {
                     _reportCommentBody.value!!,
                     "comment"
                 )
-                val result = Repository().reportRepository(reportInfo)
+                val result = repository.reportRepository(reportInfo)
                 _isReportCommentSuccess.postValue(Event(result))
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             }
@@ -1157,7 +1156,7 @@ open class MainViewModel : ViewModel() {
             GlobalScope.launch {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
                 val reportInfo = ReportInfo( App.prefs.getValue(tokenKey)!!, _postId.value!!, _reportPostBody.value!! ,"post")
-                val result = Repository().reportRepository(reportInfo)
+                val result = repository.reportRepository(reportInfo)
                 _isReportPostSuccess.postValue(Event(result))
 
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
@@ -1165,22 +1164,22 @@ open class MainViewModel : ViewModel() {
         }
     }
 
-    fun addUserRequest() {
-        if ( _userRequestBody.value!!.isBlank() ) {
-            _isStringBlank.value = Event(true)
-        } else {
-            GlobalScope.launch {
-                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
-                val addUserRequestRequest =
-                    AddUserRequestRequest(App.prefs.getValue(tokenKey)!!, _userRequestBody.value!!)
-                val result = Repository().addUserRequest(addUserRequestRequest)
-                _isContactUsSuccess.postValue(Event(result))
-
-                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
-            }
-        }
-    }
+//    fun addUserRequest() {
+//        if ( _userRequestBody.value!!.isBlank() ) {
+//            _isStringBlank.value = Event(true)
+//        } else {
+//            GlobalScope.launch {
+//                ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+//
+//                val addUserRequestRequest =
+//                    AddUserRequestRequest(App.prefs.getValue(tokenKey)!!, _userRequestBody.value!!)
+//                val result = repository.addUserRequest(addUserRequestRequest)
+//                _isContactUsSuccess.postValue(Event(result))
+//
+//                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+//            }
+//        }
+//    }
 
 
 
@@ -1241,7 +1240,7 @@ open class MainViewModel : ViewModel() {
             val sortCategoryIdArrayList = ArrayList<Int>()
             sortCategoryIdArrayList.addAll(tmpIdList)
 
-            val result = Repository().categorySelectMyPageRepository(CategorySelectMyPageInfo( App.prefs.getValue(tokenKey)!!, sortCategoryIdArrayList!!) )
+            val result = repository.categorySelectMyPageRepository(CategorySelectMyPageInfo( App.prefs.getValue(tokenKey)!!, sortCategoryIdArrayList!!) )
             _categorySelectApply.postValue(Event(result))
 
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
@@ -1270,7 +1269,7 @@ open class MainViewModel : ViewModel() {
 
         GlobalScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            val result = Repository().postFromIdRepository(postRequest)
+            val result = repository.postFromIdRepository(postRequest)
             val errorMessage = result.error
             val postContent = result.post
             when {

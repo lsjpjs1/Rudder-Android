@@ -7,7 +7,12 @@
         <variable
             name="mainVM"
             type="com.rudder.viewModel.MainViewModel" />
+
+        <variable
+            name="contactUsVM"
+            type="com.rudder.viewModel.ContactUsViewModel" />
     </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -48,7 +53,7 @@
                 android:paddingLeft="10dp"
                 android:paddingBottom="10dp"
                 android:paddingRight="10dp"
-                android:text="@={mainVM._userRequestBody}"
+                android:text="@={contactUsVM._userContactUsBody}"
                 android:theme="@style/MyEditTextTheme"
                 android:maxLength="180"
                 android:gravity="top|left"
@@ -85,7 +90,7 @@
                 android:clickable="true"
                 android:background="@drawable/button_enabled"
                 android:gravity="center"
-                android:onClick="@{()->mainVM.addUserRequest()}"
+                android:onClick="@{()->contactUsVM.submitUserRequest()}"
                 android:text="@string/sumbit"
                 android:textStyle="bold"
 
@@ -110,13 +115,15 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:text="Cancel"
-                android:onClick="@{()->mainVM.clickDialogCancel()}"
-
                 app:layout_constraintEnd_toStartOf="@id/reportSubmit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextReport"
+
                 />
+
+<!--            android:onClick="@{()->mainVM.clickDialogCancel()}"-->
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

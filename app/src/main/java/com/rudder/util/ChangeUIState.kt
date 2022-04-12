@@ -3,7 +3,7 @@ package com.rudder.util
 import android.widget.Button
 import android.widget.CheckBox
 
-class ChangeUIState() {
+class ChangeUIState {
 
     companion object {
         fun changeCheckBoxTrueState(checkBox: CheckBox) {

@@ -1,36 +1,39 @@
 package com.rudder.viewModel
 
+import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rudder.BuildConfig
 import com.rudder.data.EditPostInfo
 import com.rudder.data.GetPostInfo
 import com.rudder.data.local.App
 import com.rudder.data.repository.Repository
+import com.rudder.ui.activity.MainActivity
 import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class SearchViewModel : MainViewModel() {
+class SearchViewModel : MainViewModel(), ViewModelInterface {
     private val _searchWord = MutableLiveData<String>()
     val searchWord: LiveData<String> = _searchWord
     private val _selectedSearchPostPosition = MutableLiveData<Int>()
 
     private val _isScrollTouch = MutableLiveData<Event<Boolean>>()
-    val _isSearchWordValid = MutableLiveData<Event<Boolean>>()
+    private val _isSearchWordValid = MutableLiveData<Event<Boolean>>()
 
     val isScrollTouch: LiveData<Event<Boolean>> = _isScrollTouch
     val isSearchWordValid: LiveData<Event<Boolean>> = _isSearchWordValid
-
-
+    
 
     init {
         postMode = PostMode.SEARCH
         clearSearchPost()
+        
     }
 
     override fun editPost(){
@@ -46,14 +49,14 @@ class SearchViewModel : MainViewModel() {
 
                 viewModelScope.launch {
                     _isEditPostSuccess.value = Event(result)
-                    clearPosts()
-                    searchPost(false)
+                    scrollTouchTopCommunityPost()
                 }
 
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             }
         }
     }
+
 
     override fun scrollTouchBottomCommunityPost() {
         if (_posts.value!!.size > 0) {
@@ -117,7 +120,6 @@ class SearchViewModel : MainViewModel() {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
-
 
 
     fun clearSearchPost(){

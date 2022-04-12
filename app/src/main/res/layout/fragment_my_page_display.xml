@@ -294,7 +294,7 @@
                                 android:id="@+id/constraintLayoutMyPage5"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:onClick="@{()->mainVM.clickContactUs()}"
+                                android:onClick="@{()->myPageDisplayFragment.showContactUsDialog()}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHeight_default="percent"
                                 app:layout_constraintHeight_percent="0.2"

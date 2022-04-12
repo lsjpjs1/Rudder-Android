@@ -10,7 +10,7 @@ import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.launch
 
-class MyCommentViewModel : MyPostViewModel() {
+class MyCommentViewModel : MyPostViewModel(), ViewModelInterface {
 
 
     fun getPostsWithMyComment(isMore: Boolean) {
@@ -37,6 +37,9 @@ class MyCommentViewModel : MyPostViewModel() {
             }
         }
     }
+
+
+
 
 
     override fun refreshPosts() {
