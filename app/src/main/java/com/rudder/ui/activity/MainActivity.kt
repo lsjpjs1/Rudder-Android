@@ -52,6 +52,7 @@ import com.rudder.ui.fragment.mypage.*
 import com.rudder.ui.fragment.notification.NotificationDisplayFragment
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
+import com.rudder.viewModel.MainActivityViewModel
 import com.rudder.viewModel.MyPageViewModel
 import com.rudder.viewModel.NotificationViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -62,6 +63,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     val mainViewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     private val notificationViewModel : NotificationViewModel by lazy { ViewModelProvider(this).get(NotificationViewModel::class.java) }
     private val myPageViewModel : MyPageViewModel by lazy { ViewModelProvider(this).get(MyPageViewModel::class.java) }
+
+    //private lateinit var mainActivityViewModel: MainActivityViewModel
+
 
     lateinit var communityDisplayFragment: CommunityDisplayFragment
     private lateinit var myPageDisplayFragment: MyPageDisplayFragment
@@ -100,6 +104,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ActivityContainer.currentActivity = this
+        //mainActivityViewModel = MainActivityViewModel()
 
         notificationType=intent.getIntExtra("notificationType",-1)
         itemId=intent.getIntExtra("itemId",-1)
@@ -255,7 +260,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             }
         })
 
-        mainViewModel.isStringBlank.observe(this, Observer {
+        MainActivityViewModel.isStringBlank.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     toastStringBlank.show()

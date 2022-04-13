@@ -51,6 +51,13 @@ class CommunityHeaderFragment : Fragment() {
             (activity as MainActivity).mainBottomNavigationDisappear()
         }
 
+
+        header.notificationCL.setOnClickListener { view ->
+            view.findNavController().navigate(R.id.action_navigation_community_to_navigation_notification)
+            (activity as MainActivity).mainBottomNavigationDisappear()
+
+        }
+
         return header.root
     }
 }

@@ -33,7 +33,7 @@ class ContactUsViewModel : ViewModel() {
 
     fun submitUserRequest() {
         if ( _userContactUsBody.value!!.isBlank() ) {
-            _isStringBlank.value = Event(true)
+            MainActivityViewModel._isStringBlank.value = Event(true)
         } else {
             GlobalScope.launch {
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
