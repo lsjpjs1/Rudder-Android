@@ -458,7 +458,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
                     mainBottomNavigationDisappear()
                     nestedCommentDisappear()
                 }
-                R.id.navigation_notification -> {
+                R.id.navigation_jobs -> {
                     mainBottomNavigationAppear()
                 }
                 R.id.navigation_my_post -> {

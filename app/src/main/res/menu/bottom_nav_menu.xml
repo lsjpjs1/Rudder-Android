@@ -10,15 +10,16 @@
         android:icon="@drawable/ic_outline_article_24"
         android:title="@string/community_title" />
 
+
+    <item
+        android:id="@+id/navigation_jobs"
+        android:icon="@drawable/ic_baseline_work_outline_24"
+        android:title="@string/jobs_title" />
+
     <item
         android:id="@+id/navigation_postmessage"
         android:icon="@drawable/ic_outline_email_24"
         android:title="@string/post_message" />
-
-    <item
-        android:id="@+id/navigation_notification"
-        android:icon="@drawable/ic_baseline_notifications_none_24"
-        android:title="@string/notification" />
 
     <item
         android:id="@+id/navigation_mypage"

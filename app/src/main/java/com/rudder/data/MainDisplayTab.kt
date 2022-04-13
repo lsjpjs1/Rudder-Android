@@ -3,6 +3,7 @@ package com.rudder.data
 import android.util.Log
 import com.rudder.R
 import com.rudder.ui.fragment.community.CommunityDisplayFragment
+import com.rudder.ui.fragment.jobs.JobsContentsFragment
 import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.mypage.MyPostDisplayFragment
@@ -21,8 +22,8 @@ enum class MainDisplayTab( // Just, show, hide
     val tag: String
 ) {
     COMMUNITY(R.id.navigation_community, CommunityDisplayFragment.TAG),
+    JOBS(R.id.navigation_jobs, JobsContentsFragment.TAG),
     POSTMESSAGE(R.id.navigation_postmessage, PostMessageDisplayFragment.TAG),
-    NOTIFICATION(R.id.navigation_notification, NotificationDisplayFragment.TAG),
     MYPAGE(R.id.navigation_mypage, MyPageDisplayFragment.TAG),
     SEARCH(R.id.navigation_search, SearchPostDisplayFragment.TAG),
     ADDPOST(R.id.navigation_add_post, AddPostDisplayFragment.TAG),
@@ -31,6 +32,7 @@ enum class MainDisplayTab( // Just, show, hide
     EDITPOST(R.id.navigation_edit_post, EditPostFragment.TAG),
     POSTMESSAGEROOM(R.id.navigation_postmessage_room, PostMessageRoomFragment.TAG),
     MYPOST(R.id.navigation_my_post, MyPostDisplayFragment.TAG),
+    NOTIFICATION(R.id.navigation_notification, NotificationDisplayFragment.TAG),
     SETTING(R.id.navigation_setting, SettingFragment.TAG);
 
     companion object {

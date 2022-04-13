@@ -388,5 +388,14 @@
 
 
 
+    <bottom
+        android:id="@+id/navigation_jobs"
+        android:name="com.rudder.ui.fragment.jobs.JobsContentsFragment"
+        android:label="@string/jobs_title"
+        tools:layout="@layout/fragment_jobs_contents">
+    </bottom>
+
+
+
 
 </navigation>
