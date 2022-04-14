@@ -20,7 +20,7 @@
             app:layout_constraintWidth_percent="0.9"
             app:layout_constraintWidth_default="percent"
             android:id="@+id/post_message_room_item_container"
-            android:paddingBottom="20dp"
+            android:paddingBottom="2dp"
             >
 
             <ImageView
@@ -42,6 +42,58 @@
                 android:id="@+id/jobsTitleTV"
                 android:layout_width="wrap_content"
                 android:textSize="14sp"
+                android:text="title_sample"
+                android:textColor="@color/black"
+                android:layout_marginStart="4dp"
+                android:textIsSelectable="true"
+                android:paddingRight="6dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/jobsCompanyTV"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/jobsTimeTV"
+                android:layout_width="wrap_content"
+                android:textSize="12sp"
+                android:text="22/05/03"
+                android:layout_marginTop="2dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/jobsCompanyTV"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="14sp"
+                android:text="type_sample"
+                android:textColor="@color/black"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/jobsTypeTV"
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:text="type_sample"
+                android:textColor="@color/black"
+                android:layout_marginStart="4dp"
+                android:textIsSelectable="true"
+                android:paddingRight="6dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/jobsTitleTV"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/jobsSalaryTV"
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:text="salary_sample"
                 android:textColor="@color/black"
                 android:layout_marginStart="4dp"
                 android:textIsSelectable="true"
@@ -50,27 +102,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/jobsTypeTV"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <TextView
-                android:id="@+id/jobsTimeTV"
-                android:layout_width="wrap_content"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-
-            <TextView
-                android:id="@+id/jobsTypeTV"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textSize="14sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/sf_pro_text_bold"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
