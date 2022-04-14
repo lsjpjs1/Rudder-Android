@@ -19,6 +19,7 @@ class JobsViewModel : ViewModel() {
 
     init {
         _jobsInfoArrayList.value = arrayListOf<JobsInfo>(
+            JobsInfo(JobsTitle = "title_0"),
             JobsInfo(JobsTitle = "title_1"),
             JobsInfo(JobsTitle = "title_2"),
             JobsInfo(JobsTitle = "title_3"),
@@ -27,7 +28,10 @@ class JobsViewModel : ViewModel() {
             JobsInfo(JobsTitle = "title_6"),
             JobsInfo(JobsTitle = "title_7"),
             JobsInfo(JobsTitle = "title_8"),
-        )
+            JobsInfo(JobsTitle = "title_9"),
+            JobsInfo(JobsTitle = "title_10"),
+            JobsInfo(JobsTitle = "title_11")
+            )
 
     }
 

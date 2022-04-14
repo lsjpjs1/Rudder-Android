@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +15,12 @@ import com.rudder.databinding.FragmentCommunityContentsBinding
 import com.rudder.databinding.FragmentJobsContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.JobsAdapter
+import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.JobsViewModel
 import kotlinx.android.synthetic.main.fragment_commuinty_selector.view.*
 import kotlinx.android.synthetic.main.fragment_jobs_contents.view.*
 
-class JobsContentsFragment : Fragment() {
+class JobsContentsFragment : Fragment(), CustomOnclickListener {
 
     private val parentActivity by lazy {
         activity as MainActivity
@@ -56,9 +58,13 @@ class JobsContentsFragment : Fragment() {
         view.JobsMainRecyclerView.also{
             it.layoutManager = LinearLayoutManager(parentActivity, LinearLayoutManager.VERTICAL, false)
             it.setHasFixedSize(false)
-            it.adapter = JobsAdapter(jobsViewModel.jobsInfoArrayList.value!!)
+            it.adapter = JobsAdapter(jobsViewModel.jobsInfoArrayList.value!!, this)
         }
 
+    }
+
+    override fun onClickView(view: View, position: Int) {
+        Toast.makeText(parentActivity, "title ${position}", Toast.LENGTH_SHORT).show()
     }
 
 
