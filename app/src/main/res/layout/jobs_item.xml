@@ -3,7 +3,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140dp"
         android:id="@+id/jobsMainCL"
         android:layout_marginBottom="2dp"
         android:background="@color/white"
@@ -12,7 +12,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="130dp"
             android:background="@color/white"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -22,6 +22,21 @@
             android:id="@+id/post_message_room_item_container"
             android:paddingBottom="20dp"
             >
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:id="@+id/jobsItemsHeart"
+                android:src="@drawable/ic_baseline_favorite_border_24"
+                app:tint="@color/purple_rudder"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="4dp"
+
+                >
+
+            </ImageView>
 
             <TextView
                 android:id="@+id/jobsTitleTV"

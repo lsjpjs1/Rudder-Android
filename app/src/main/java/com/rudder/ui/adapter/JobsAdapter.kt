@@ -46,7 +46,7 @@ class JobsAdapter(private val jobsItemList : ArrayList<JobsInfo>, customOnclickL
         }
 
         fun bind(jobsItem: JobsInfo) {
-            jobsItemBinding.jobsTitleTV.text = jobsItem.JobsTitle
+            jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
         }
 
         override fun onClick(view: View?) {

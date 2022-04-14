@@ -4,6 +4,7 @@ import android.util.Log
 import com.rudder.R
 import com.rudder.ui.fragment.community.CommunityDisplayFragment
 import com.rudder.ui.fragment.jobs.JobsContentsFragment
+import com.rudder.ui.fragment.jobs.JobsDetailsFragment
 import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.mypage.MyPostDisplayFragment
@@ -33,7 +34,8 @@ enum class MainDisplayTab( // Just, show, hide
     POSTMESSAGEROOM(R.id.navigation_postmessage_room, PostMessageRoomFragment.TAG),
     MYPOST(R.id.navigation_my_post, MyPostDisplayFragment.TAG),
     NOTIFICATION(R.id.navigation_notification, NotificationDisplayFragment.TAG),
-    SETTING(R.id.navigation_setting, SettingFragment.TAG);
+    SETTING(R.id.navigation_setting, SettingFragment.TAG),
+    JOBSDETAILS(R.id.navigation_jobs_details, JobsDetailsFragment.TAG);
 
     companion object {
         fun from(itemId: Int): MainDisplayTab? = values().firstOrNull { it.itemId == itemId }

@@ -19,18 +19,18 @@ class JobsViewModel : ViewModel() {
 
     init {
         _jobsInfoArrayList.value = arrayListOf<JobsInfo>(
-            JobsInfo(JobsTitle = "title_0"),
-            JobsInfo(JobsTitle = "title_1"),
-            JobsInfo(JobsTitle = "title_2"),
-            JobsInfo(JobsTitle = "title_3"),
-            JobsInfo(JobsTitle = "title_4"),
-            JobsInfo(JobsTitle = "title_5"),
-            JobsInfo(JobsTitle = "title_6"),
-            JobsInfo(JobsTitle = "title_7"),
-            JobsInfo(JobsTitle = "title_8"),
-            JobsInfo(JobsTitle = "title_9"),
-            JobsInfo(JobsTitle = "title_10"),
-            JobsInfo(JobsTitle = "title_11")
+            JobsInfo(jobTitle = "title_0"),
+            JobsInfo(jobTitle = "title_1"),
+            JobsInfo(jobTitle = "title_2"),
+            JobsInfo(jobTitle = "title_3"),
+            JobsInfo(jobTitle = "title_4"),
+            JobsInfo(jobTitle = "title_5"),
+            JobsInfo(jobTitle = "title_6"),
+            JobsInfo(jobTitle = "title_7"),
+            JobsInfo(jobTitle = "title_8"),
+            JobsInfo(jobTitle = "title_9"),
+            JobsInfo(jobTitle = "title_10"),
+            JobsInfo(jobTitle = "title_11")
             )
 
     }

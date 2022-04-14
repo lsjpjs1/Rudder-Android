@@ -393,6 +393,23 @@
         android:name="com.rudder.ui.fragment.jobs.JobsContentsFragment"
         android:label="@string/jobs_title"
         tools:layout="@layout/fragment_jobs_contents">
+
+        <action
+            android:id="@+id/action_navigation_jobs_to_navigation_jobs_details"
+            app:destination="@id/navigation_jobs_details"
+            app:popUpTo="@id/navigation_jobs"
+            >
+        </action>
+
+    </bottom>
+
+
+
+    <bottom
+        android:id="@+id/navigation_jobs_details"
+        android:name="com.rudder.ui.fragment.jobs.JobsDetailsFragment"
+        android:label="@string/jobs_details"
+        tools:layout="@layout/fragment_jobs_details">
     </bottom>
 
 
