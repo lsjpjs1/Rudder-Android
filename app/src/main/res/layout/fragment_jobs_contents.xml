@@ -43,14 +43,26 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_filtericonsvg"
                 android:layout_marginEnd="10dp"
+                android:id="@+id/jobsContentFilter"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:tint="@color/black"
                 >
+            </ImageView>
 
 
-
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_favorite_24"
+                android:layout_marginEnd="16dp"
+                android:id="@+id/jobsContentHeart"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/jobsContentFilter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tint="@color/black"
+                >
             </ImageView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
