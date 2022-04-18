@@ -12,5 +12,6 @@ data class JobsInfo(
 //    val postDate : Timestamp,
 //    val dueDate : Timestamp,
 //    val jobDetails : String,
+    val isSaved : Boolean
 
 )

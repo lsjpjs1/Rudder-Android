@@ -17,10 +17,15 @@ import com.rudder.databinding.FragmentJobsContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.JobsContentAdapter
 import com.rudder.util.CustomOnclickListener
+import com.rudder.util.JobsContentOnclickListener
 import com.rudder.viewModel.JobsViewModel
 import kotlinx.android.synthetic.main.fragment_jobs_contents.view.*
+import kotlinx.android.synthetic.main.jobs_item.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class JobsContentsFragment : Fragment(), CustomOnclickListener {
+class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
 
     private val parentActivity by lazy {
         activity as MainActivity
@@ -92,13 +97,29 @@ class JobsContentsFragment : Fragment(), CustomOnclickListener {
 
     }
 
-    override fun onClickView(view: View, position: Int) {
+    override fun onClickContainerView(view: View, position: Int) {
         Toast.makeText(parentActivity, "title ${position}", Toast.LENGTH_SHORT).show()
 
 
         val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
         view.findNavController().navigate(action)
         (activity as MainActivity).mainBottomNavigationDisappear()
+
+    }
+
+    override fun onClickImageView(view: View, position: Int) {
+        val heartTag = view.jobsItemsHeart.tag
+
+        if (heartTag == "border") {
+            view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
+            view.jobsItemsHeart.tag = "not border"
+
+        } else if (heartTag == "not border") {
+            view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            view.jobsItemsHeart.tag = "border"
+
+
+        }
 
     }
 
