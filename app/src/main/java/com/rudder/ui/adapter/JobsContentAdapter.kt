@@ -8,8 +8,8 @@ import com.rudder.data.dto.JobsInfo
 import com.rudder.databinding.JobsItemBinding
 import com.rudder.util.CustomOnclickListener
 
-class JobsAdapter(private val jobsItemList : ArrayList<JobsInfo>, customOnclickListener: CustomOnclickListener)
-    : RecyclerView.Adapter<JobsAdapter.JobsViewHolder>() {
+class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, customOnclickListener: CustomOnclickListener)
+    : RecyclerView.Adapter<JobsContentAdapter.JobsViewHolder>() {
 
     private var customOnclickListener : CustomOnclickListener? = null
 

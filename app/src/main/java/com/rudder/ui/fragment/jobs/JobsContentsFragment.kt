@@ -13,16 +13,11 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
-import com.rudder.databinding.FragmentCommunityContentsBinding
 import com.rudder.databinding.FragmentJobsContentsBinding
 import com.rudder.ui.activity.MainActivity
-import com.rudder.ui.adapter.JobsAdapter
-import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
-import com.rudder.ui.fragment.post.ShowPostDisplayFragment
+import com.rudder.ui.adapter.JobsContentAdapter
 import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.JobsViewModel
-import kotlinx.android.synthetic.main.fragment_commuinty_selector.view.*
-import kotlinx.android.synthetic.main.fragment_community_contents.view.*
 import kotlinx.android.synthetic.main.fragment_jobs_contents.view.*
 
 class JobsContentsFragment : Fragment(), CustomOnclickListener {
@@ -59,7 +54,7 @@ class JobsContentsFragment : Fragment(), CustomOnclickListener {
 //        jobsContentsDataBinding.JobsMainRecyclerView.also{
 //            it.layoutManager = LinearLayoutManager(parentActivity, LinearLayoutManager.VERTICAL, false)
 //            it.setHasFixedSize(false)
-//            it.adapter = JobsAdapter(jobsViewModel.jobsInfoArrayList.value!!)
+//            it.adapter = JobsContentAdapter(jobsViewModel.jobsInfoArrayList.value!!)
 //        }
 
         return jobsContentsDataBinding.root
@@ -71,7 +66,7 @@ class JobsContentsFragment : Fragment(), CustomOnclickListener {
         view.jobsContentRecyclerView.also{
             it.layoutManager = LinearLayoutManager(parentActivity, LinearLayoutManager.VERTICAL, false)
             it.setHasFixedSize(false)
-            it.adapter = JobsAdapter(jobsViewModel.jobsInfoArrayList.value!!, this)
+            it.adapter = JobsContentAdapter(jobsViewModel.jobsInfoArrayList.value!!, this)
             it.addOnScrollListener(object : RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -88,6 +83,11 @@ class JobsContentsFragment : Fragment(), CustomOnclickListener {
         view.jobsContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
         view.jobsContentsSwipeRefreshLayout.setOnRefreshListener {
             //mainViewModel.scrollTouchTopCommunityPost()
+        }
+
+        view.jobsContentHeart.setOnClickListener { view ->
+            view.findNavController().navigate(R.id.action_navigation_jobs_to_navigation_jobs_saved)
+            (activity as MainActivity).mainBottomNavigationDisappear()
         }
 
     }
