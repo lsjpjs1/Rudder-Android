@@ -50,20 +50,18 @@ class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsCon
         fun bind(jobsItem: JobsInfo) {
             jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
 
-
             if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
                 jobsItemBinding.jobsItemsHeart.tag = "not border"
                 jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
             } else {
                 jobsItemBinding.jobsItemsHeart.tag = "border"
                 jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-
             }
-
-
         }
 
         override fun onClick(view: View?) {
+
+
             if (view is ImageView) { // heart 클릭시
                 this.jobsContentOnclickListener?.onClickImageView(view = view!!, position = bindingAdapterPosition)
             } else {
