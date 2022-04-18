@@ -3,45 +3,57 @@ package com.rudder.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.data.dto.JobsInfo
 import com.rudder.databinding.JobsItemBinding
 import com.rudder.util.CustomOnclickListener
+import com.rudder.util.JobsContentOnclickListener
 
-class JobsSavedAdapter(private val jobsItemList : ArrayList<JobsInfo>, customOnclickListener: CustomOnclickListener)
-    : RecyclerView.Adapter<JobsSavedAdapter.JobsViewHolder>() {
+class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
+    : ListAdapter<JobsInfo, RecyclerView.ViewHolder>(JobsSavedDiffCallback()) {
 
-    private var customOnclickListener : CustomOnclickListener? = null
+    private var jobsContentOnclickListener : JobsContentOnclickListener? = null
 
     init {
-        this.customOnclickListener = customOnclickListener
+        this.jobsContentOnclickListener = jobsContentOnclickListener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobsViewHolder {
-        return JobsViewHolder( JobsItemBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobsSavedViewHolder {
+        return JobsSavedViewHolder( JobsItemBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
-            ), this.customOnclickListener!!
+            ), this.jobsContentOnclickListener!!
         )
     }
 
-    override fun onBindViewHolder(jobsViewHolder: JobsViewHolder, position: Int) {
-        jobsViewHolder.bind(jobsItemList[jobsViewHolder.bindingAdapterPosition])
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        //TODO("Not yet implemented")
+        //jobsViewHolder.bind(jobsItemList[jobsViewHolder.bindingAdapterPosition])
+
+        if (holder is JobsSavedViewHolder) {
+            val jobsItem = getItem(position) as JobsInfo
+            holder.bind(jobsItem)
+        }
     }
 
-    override fun getItemCount(): Int = jobsItemList.size
+
+    fun removeItem(position: Int) {
+        val newList = currentList.toMutableList()
+        newList.removeAt(position)
+        submitList(newList)
+    }
 
 
+    class JobsSavedViewHolder(private val jobsItemBinding : JobsItemBinding, jobsContentOnclickListener: JobsContentOnclickListener) : RecyclerView.ViewHolder(jobsItemBinding.root), View.OnClickListener {
 
-
-
-    class JobsViewHolder(private val jobsItemBinding : JobsItemBinding, customOnclickListener: CustomOnclickListener) : RecyclerView.ViewHolder(jobsItemBinding.root), View.OnClickListener {
-
-        private var customOnclickListener : CustomOnclickListener? = null
+        private var jobsContentOnclickListener : JobsContentOnclickListener? = null
 
         init {
             jobsItemBinding.jobsMainCL.setOnClickListener(this)
-            this.customOnclickListener = customOnclickListener
+            jobsItemBinding.jobsItemsHeart.setOnClickListener(this)
+            this.jobsContentOnclickListener = jobsContentOnclickListener
         }
 
         fun bind(jobsItem: JobsInfo) {
@@ -49,9 +61,14 @@ class JobsSavedAdapter(private val jobsItemList : ArrayList<JobsInfo>, customOnc
         }
 
         override fun onClick(view: View?) {
-            this.customOnclickListener?.onClickView(view = view!!, position = bindingAdapterPosition)
+            if (view is ImageView) { // heart 클릭시
+                this.jobsContentOnclickListener?.onClickImageView(view = view!!, position = bindingAdapterPosition)
+            } else {
+                this.jobsContentOnclickListener?.onClickContainerView(view = view!!, position = bindingAdapterPosition)
+            }
         }
     }
+
 
 
 }

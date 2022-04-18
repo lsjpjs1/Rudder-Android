@@ -4,6 +4,7 @@ import java.sql.Timestamp
 
 data class JobsInfo(
     val jobTitle : String,
+    //val jobPostId : Int,
 //    val company : String,
 //    val jobType : String,
 //    val salary : Int,

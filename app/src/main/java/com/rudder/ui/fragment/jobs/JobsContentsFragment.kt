@@ -117,8 +117,6 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
         } else if (heartTag == "not border") {
             view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
             view.jobsItemsHeart.tag = "border"
-
-
         }
 
     }
