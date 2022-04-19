@@ -167,7 +167,6 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     val isBlockUser: LiveData<Event<Boolean>> = _isBlockUser
     val isBlockUserInComment: LiveData<Event<Boolean>> = _isBlockUserInComment
     val isCommentReport: LiveData<Event<Boolean>> = _isCommentReport
-    //val isContactUs: LiveData<Event<Boolean>> = _isContactUs
     val isCommentEdit: LiveData<Event<Boolean>> = _isCommentEdit
     val isClubJoinRequest: LiveData<Event<Boolean>> = _isClubJoinRequest
     val isCommentDelete: LiveData<Event<Boolean>> = _isCommentDelete
@@ -176,7 +175,6 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     val isReportCommentSuccess: LiveData<Event<Boolean>> = _isReportCommentSuccess
     val isEditPostSuccess : LiveData<Event<Boolean>> = _isEditPostSuccess
     val isReportPostSuccess : LiveData<Event<Boolean>> = _isReportPostSuccess
-    //val isContactUsSuccess : LiveData<Event<Boolean>> = _isContactUsSuccess
     val reportPostBody: LiveData<String> = _reportPostBody
     val reportCommentBody: LiveData<String> = _reportCommentBody
     val isCancelClick : LiveData<Event<Boolean>> = _isCancelClick

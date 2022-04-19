@@ -419,6 +419,14 @@
         android:name="com.rudder.ui.fragment.jobs.JobsDetailsFragment"
         android:label="@string/jobs_details"
         tools:layout="@layout/fragment_jobs_details">
+
+        <action
+            android:id="@+id/action_navigation_jobs_saved_to_navigation_community"
+            app:destination="@id/navigation_community"
+            app:popUpTo="@id/navigation_community"
+            >
+        </action>
+
     </bottom>
 
 

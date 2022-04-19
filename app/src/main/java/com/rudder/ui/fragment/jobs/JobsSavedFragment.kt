@@ -19,6 +19,7 @@ import com.rudder.ui.adapter.JobsContentAdapter
 import com.rudder.ui.adapter.JobsSavedAdapter
 import com.rudder.util.JobsContentOnclickListener
 import com.rudder.viewModel.JobsViewModel
+import kotlinx.android.synthetic.main.fragment_jobs_details.view.*
 import kotlinx.android.synthetic.main.fragment_jobs_saved.view.*
 import kotlinx.android.synthetic.main.jobs_item.view.*
 
@@ -87,6 +88,8 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
             setHasFixedSize(false)
             adapter = jobsSavedAdapter
         }
+
+
         jobsSavedAdapter.submitList(jobsViewModel.jobsInfoArrayList.value!!)
 
     }
