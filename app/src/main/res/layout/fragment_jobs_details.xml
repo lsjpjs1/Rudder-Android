@@ -55,10 +55,348 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/jobsDetailMainCL"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@color/light_grey"
             app:layout_constraintTop_toBottomOf="@id/jobsDetailHeaderCL">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.9">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="20dp"
+                        android:textSize="14sp"
+                        android:text="Company Name"
+                        android:textColor="@color/purple_rudder"
+                        android:id="@+id/jobsDetailCompanyTV"
+                        >
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailCompanyTV"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="Jobs Title qei8uqoiewu qowieuq oie"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:id="@+id/jobsDetailJobTitle"
+                        >
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailJobTitle"
+                        android:id="@+id/jobsDetailDiscussionBoardTV"
+                        android:text="Discussion Board (+99)"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        android:textSize="14sp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:background="@drawable/edge_grey"
+                        android:backgroundTint="#F4F4F4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        >
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailDiscussionBoardTV"
+                        android:id="@+id/jobsDetailTime"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="2022.04.18"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:layout_marginTop="14dp"
+                        >
+                    </TextView>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="52dp"
+                        android:layout_height="34dp"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailTime"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:background="@drawable/edge_grey"
+                        android:id="@+id/jobsDetailHeartCL"
+                        android:layout_marginTop="20dp"
+                        >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:id="@+id/jobsDetailHeart"
+                            android:src="@drawable/ic_baseline_favorite_border_24"
+                            >
+                        </ImageView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="52dp"
+                        android:layout_height="34dp"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailTime"
+                        app:layout_constraintStart_toEndOf="@+id/jobsDetailHeartCL"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/edge_grey"
+                        android:id="@+id/jobsDetailShareCL"
+                        android:layout_marginTop="20dp"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:id="@+id/jobsDetailShare"
+                            android:src="@drawable/ic_baseline_share_24"
+                            >
+                        </ImageView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:id="@+id/jobsDetailView1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="20dp"
+                        android:background="#AEAEAE"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailHeartCL"
+                        >
+                    </View>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Job Details"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailView1"
+                        android:textColor="@color/black"
+                        android:id="@+id/jobsDetailJobDetailsTV"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:layout_marginTop="20dp"
+                        >
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jobsDetailSalary"
+                        android:textSize="16sp"
+                        android:text="Salary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailJobDetailsTV"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="20dp"
+                        >
+
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jobsDetailSalaryTV"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:text="$22 ~ $30"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailJobDetailsTV"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="20dp"
+                        >
+
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jobsDetailTmp"
+                        android:textSize="16sp"
+                        android:text="Salary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailSalary"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        >
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jobsDetailTmpTV"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:text="Full-time"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailSalary"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        >
+
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jobsDetailType"
+                        android:textSize="16sp"
+                        android:text="Type"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailTmp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        >
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jobsDetailTypeTV"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:text="Apprenticeship"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailTmp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        >
+
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jobsDetailLocation"
+                        android:textSize="16sp"
+                        android:text="Location"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailTypeTV"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        >
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jobsDetailLocationTV"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:text="London"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailTypeTV"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        >
+
+                    </TextView>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:id="@+id/jobsDetailView2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="20dp"
+                        android:background="#AEAEAE"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailLocationTV"
+                        >
+                    </View>
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailView2"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:id="@+id/jobsDetailFullJobDescription"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:layout_marginTop="20dp"
+                        android:text="Full Job Description"
+                        >
+
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailFullJobDescription"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:layout_marginTop="20dp"
+                        android:lineSpacingExtra="10dp"
+
+                        android:text="Tesla, Inc. (/ˈtɛslə/ TESS-lə or /ˈtɛzlə/ TEZ-lə[b]) is an American automotive electric vehicle and clean energy company based in Austin, Texas. Tesla designs and manufactures electric cars, battery energy storage from home to grid-scale, solar panels and solar roof tiles, and related products and services. Tesla is one of the world's most valuable companies and remains the world's most valuable automaker with a market capitalization of more than US $1 trillion. The company had the most worldwide sales of battery electric vehicles and plug-in electric vehicles, capturing 23% of the battery-electric (purely electric) market and 16% of the plug-in market (which includes plug-in hybrids) in 2020. Through its subsidiary Tesla Energy, the company develops and is a major installer of photovoltaic systems in the United States. Tesla Energy is also one of the largest global suppliers of battery energy storage systems, with 3.99 gigawatt-hours (GWh) installed in 2021. */"
+
+                        >
+
+
+                    </TextView>
+
+                    
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:layout_constraintWidth_percent="0.9"
+                android:text="@string/apply"
+                android:fontFamily="@font/sf_pro_text_bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/button_enabled"
+                android:layout_marginBottom="20dp"
+                >
+
+            </Button>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

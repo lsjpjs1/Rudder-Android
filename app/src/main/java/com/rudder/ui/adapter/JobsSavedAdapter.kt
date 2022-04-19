@@ -30,7 +30,6 @@ class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        //TODO("Not yet implemented")
         //jobsViewHolder.bind(jobsItemList[jobsViewHolder.bindingAdapterPosition])
 
         if (holder is JobsSavedViewHolder) {
@@ -42,7 +41,7 @@ class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
 
     fun removeItem(position: Int) {
         val newList = currentList.toMutableList()
-        try { // 빠른 더블 클릭 ANR 방지
+        try { // 빠른 더블 클릭 ANR 방
             newList.removeAt(position)
         }
         catch (e: Exception) {
