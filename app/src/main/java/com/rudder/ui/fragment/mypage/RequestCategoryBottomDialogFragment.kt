@@ -8,25 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rudder.R
 import com.rudder.databinding.FragmentRequestCategoryBottomDialogBinding
 import com.rudder.ui.activity.MainActivity
-import com.rudder.util.ChangeUIState
-import com.rudder.viewModel.MyPageViewModel
-import kotlinx.android.synthetic.main.fragment_add_comment.view.*
-import kotlinx.android.synthetic.main.fragment_create_account.*
+import com.rudder.viewModel.EditNicknameDialogViewModel
+import com.rudder.viewModel.EditProfileImageDialogViewModel
+import com.rudder.viewModel.RequestCategoryViewModel
 import kotlinx.android.synthetic.main.fragment_request_category_bottom_dialog.view.*
 
 
-class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) : BottomSheetDialogFragment() {
+class RequestCategoryBottomDialogFragment() : BottomSheetDialogFragment() {
 
     private lateinit var binding : FragmentRequestCategoryBottomDialogBinding
     private val parentActivity by lazy {
         activity as MainActivity
     }
+
+    private lateinit var requestCategoryViewModel: RequestCategoryViewModel
+
 
     override fun getTheme(): Int = R.style.DialogStyle
 
@@ -36,7 +38,9 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_request_category_bottom_dialog, container,false)
-        binding.myPageVM = myPageViewModel
+        requestCategoryViewModel = ViewModelProvider(this).get(RequestCategoryViewModel::class.java)
+
+        binding.myPageVM = requestCategoryViewModel
         binding.lifecycleOwner = this
 
         val toastStringBlank: Toast = Toast.makeText(
@@ -59,11 +63,11 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
 
 
         binding.root.requestButton.setOnClickListener {
-            myPageViewModel.requestCategoryName()
+            requestCategoryViewModel.requestCategoryName()
 
         }
 
-        myPageViewModel.isStringBlank.observe(viewLifecycleOwner, Observer {
+        requestCategoryViewModel.isStringBlank.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     toastStringBlank.show()
@@ -72,7 +76,7 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
         })
 
 
-        myPageViewModel.isRequestCategorySuccess.observe(viewLifecycleOwner, Observer {
+        requestCategoryViewModel.isRequestCategorySuccess.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     toastRequestCategorySuccess.show()
@@ -88,11 +92,6 @@ class RequestCategoryBottomDialogFragment(val myPageViewModel: MyPageViewModel) 
         return binding.root
     }
 
-
-    override fun onDismiss(dialog: DialogInterface) {
-        myPageViewModel.clearRequestCategoryNameBody()
-        super.onDismiss(dialog)
-    }
 
 
 }

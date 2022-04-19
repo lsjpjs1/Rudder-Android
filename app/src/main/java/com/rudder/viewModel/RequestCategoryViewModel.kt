@@ -17,7 +17,7 @@ import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.launch
 
-class MyPageViewModel : ViewModel() {
+class RequestCategoryViewModel : ViewModel() {
 
     private val tokenKey = BuildConfig.TOKEN_KEY
     val _requestCategoryNameBody = MutableLiveData<String>()
@@ -31,7 +31,7 @@ class MyPageViewModel : ViewModel() {
 
 
     init {
-        clearRequestCategoryNameBody()
+        _requestCategoryNameBody.value = ""
     }
 
 
@@ -46,10 +46,6 @@ class MyPageViewModel : ViewModel() {
             }
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
-    }
-
-    fun clearRequestCategoryNameBody(){
-        _requestCategoryNameBody.value = ""
     }
 
 }

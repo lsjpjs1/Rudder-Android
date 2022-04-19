@@ -18,7 +18,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -34,9 +33,7 @@ import com.rudder.ui.fragment.comment.CommunityCommentEditFragment
 import com.rudder.ui.fragment.comment.CommunityCommentReportFragment
 import com.rudder.ui.fragment.community.CommunityDisplayFragment
 import com.rudder.ui.fragment.post.*
-import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragment
 import com.rudder.ui.fragment.search.SearchPostDisplayFragment
-import com.rudder.util.FragmentShowHide
 import com.rudder.util.ProgressBarUtil
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.MainViewModel
@@ -53,7 +50,7 @@ import com.rudder.ui.fragment.notification.NotificationDisplayFragment
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
 import com.rudder.util.*
 import com.rudder.viewModel.MainActivityViewModel
-import com.rudder.viewModel.MyPageViewModel
+import com.rudder.viewModel.RequestCategoryViewModel
 import com.rudder.viewModel.NotificationViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
@@ -62,7 +59,6 @@ import kotlinx.android.synthetic.main.show_post_display_image.view.*
 class MainActivity : AppCompatActivity(), MainActivityInterface {
     val mainViewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     private val notificationViewModel : NotificationViewModel by lazy { ViewModelProvider(this).get(NotificationViewModel::class.java) }
-    private val myPageViewModel : MyPageViewModel by lazy { ViewModelProvider(this).get(MyPageViewModel::class.java) }
 
     //private lateinit var mainActivityViewModel: MainActivityViewModel
 
@@ -160,7 +156,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         categorySelectMyPageFragment = CategorySelectMyPageFragment()
         searchPostDisplayFragment = SearchPostDisplayFragment()
         notificationDisplayFragment = NotificationDisplayFragment()
-        requestCategoryBottomDialogFragment = RequestCategoryBottomDialogFragment(myPageViewModel)
+        requestCategoryBottomDialogFragment = RequestCategoryBottomDialogFragment()
 
 
         val toastChooseValidCategory = Toast.makeText(

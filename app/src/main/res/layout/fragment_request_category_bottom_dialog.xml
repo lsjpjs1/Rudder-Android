@@ -6,7 +6,7 @@
     <data>
         <variable
             name="myPageVM"
-            type="com.rudder.viewModel.MyPageViewModel" />
+            type="com.rudder.viewModel.RequestCategoryViewModel" />
     </data>
 
 <!---->
