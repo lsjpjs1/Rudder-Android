@@ -13,15 +13,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.rudder.R
 import com.rudder.databinding.FragmentEditNicknameDialogBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.fragment.AlertDialogFragment
 import com.rudder.util.AlertDialogListener
 import com.rudder.viewModel.EditNicknameDialogViewModel
+import com.rudder.viewModel.JobsViewModel
 
 class EditNicknameDialogFragment() : DialogFragment() {
-    private val editNicknameDialogViewModel: EditNicknameDialogViewModel by activityViewModels()
+    private lateinit var editNicknameDialogViewModel: EditNicknameDialogViewModel
     private val parentActivity by lazy {
         activity as MainActivity
     }
@@ -34,6 +36,7 @@ class EditNicknameDialogFragment() : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = DataBindingUtil.inflate<FragmentEditNicknameDialogBinding>(inflater, R.layout.fragment_edit_nickname_dialog, container,false)
+        editNicknameDialogViewModel = ViewModelProvider(this).get(EditNicknameDialogViewModel::class.java)
         binding.editNicknameDialogVM = editNicknameDialogViewModel
         binding.editNicknameDialogFragment = this
         binding.lifecycleOwner = this
@@ -68,11 +71,6 @@ class EditNicknameDialogFragment() : DialogFragment() {
         return binding.root
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
-        editNicknameDialogViewModel.clearNewNickname()
-        editNicknameDialogViewModel.clearToastMessage()
-        super.onDismiss(dialog)
-    }
 
     fun showEditNickNameAlert(){
         val alertDialogFragment = AlertDialogFragment.instance(

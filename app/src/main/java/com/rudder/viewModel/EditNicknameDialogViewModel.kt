@@ -23,7 +23,7 @@ class EditNicknameDialogViewModel : ViewModel() {
     val toastMessage : LiveData<String?> = _toastMessage
 
     init {
-        _newNickname.value=""
+        _newNickname.value = ""
     }
 
 
@@ -58,15 +58,5 @@ class EditNicknameDialogViewModel : ViewModel() {
 
     }
 
-    fun clearNewNickname(){
-        _newNickname.value = null
-    }
-    fun clearToastMessage(){
-        _toastMessage.value = null
-    }
 
-    fun clear(){
-        clearNewNickname()
-        clearToastMessage()
-    }
 }

@@ -370,6 +370,7 @@
                         android:textSize="16sp"
                         android:layout_marginTop="20dp"
                         android:lineSpacingExtra="10dp"
+                        android:paddingBottom="100dp"
 
                         android:text="Tesla, Inc. (/ˈtɛslə/ TESS-lə or /ˈtɛzlə/ TEZ-lə[b]) is an American automotive electric vehicle and clean energy company based in Austin, Texas. Tesla designs and manufactures electric cars, battery energy storage from home to grid-scale, solar panels and solar roof tiles, and related products and services. Tesla is one of the world's most valuable companies and remains the world's most valuable automaker with a market capitalization of more than US $1 trillion. The company had the most worldwide sales of battery electric vehicles and plug-in electric vehicles, capturing 23% of the battery-electric (purely electric) market and 16% of the plug-in market (which includes plug-in hybrids) in 2020. Through its subsidiary Tesla Energy, the company develops and is a major installer of photovoltaic systems in the United States. Tesla Energy is also one of the largest global suppliers of battery energy storage systems, with 3.99 gigawatt-hours (GWh) installed in 2021. */"
 
