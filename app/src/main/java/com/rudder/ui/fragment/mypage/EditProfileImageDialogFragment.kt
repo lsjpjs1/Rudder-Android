@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.data.DisplaySize
@@ -20,11 +21,15 @@ import com.rudder.databinding.FragmentEditProfileImageDialogBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.EditProfileImagesAdapter
 import com.rudder.ui.fragment.MyPageFragmentInterface
+import com.rudder.viewModel.EditNicknameDialogViewModel
 import com.rudder.viewModel.EditProfileImageDialogViewModel
 
 class EditProfileImageDialogFragment(val myPageFragmentInterface: MyPageFragmentInterface) : DialogFragment() {
 
-    val editProfileImageDialogViewModel: EditProfileImageDialogViewModel by activityViewModels()
+    //val editProfileImageDialogViewModel: EditProfileImageDialogViewModel by activityViewModels()
+    lateinit var editProfileImageDialogViewModel: EditProfileImageDialogViewModel
+
+
     private val parentActivity by lazy {
         activity as MainActivity
     }
@@ -43,6 +48,9 @@ class EditProfileImageDialogFragment(val myPageFragmentInterface: MyPageFragment
             container,
             false
         )
+
+        editProfileImageDialogViewModel = ViewModelProvider(this).get(EditProfileImageDialogViewModel::class.java)
+
         binding.editProfileImageVM = editProfileImageDialogViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -101,7 +109,7 @@ class EditProfileImageDialogFragment(val myPageFragmentInterface: MyPageFragment
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        editProfileImageDialogViewModel.clear()
+        //editProfileImageDialogViewModel.clear()
         super.onDismiss(dialog)
     }
 

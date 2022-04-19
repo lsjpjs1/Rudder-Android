@@ -52,11 +52,6 @@ class EditProfileImageDialogViewModel : ViewModel() {
         selectedProfileImage.value = profileImage
     }
 
-    fun clear(){
-        selectedProfileImage.value = null
-        toastMessage.value = null
-        myProfileImageUrl.value = null
-    }
 
     fun updateProfileImage(){
         if (_selectedProfileImage.value == null){
@@ -71,12 +66,12 @@ class EditProfileImageDialogViewModel : ViewModel() {
                 )
                 val updateResponse = Repository().updateProfileImage(updateProfileImageRequest)
                 if (updateResponse.isSuccess) {
-                    toastMessage.postValue("Successfully changed nickname!")
+                    toastMessage.postValue("Successfully changed Character!")
                     closeFlag.postValue(Event(true))
                     getMyProfileImageUrl()
 
                 } else {
-                    toastMessage.postValue("Failed to change my nickname.")
+                    toastMessage.postValue("Failed to change my Character.")
                 }
                 ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
             }
