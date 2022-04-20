@@ -1,9 +1,11 @@
 package com.rudder.ui.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +38,7 @@ class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selecte
 
     override fun onBindViewHolder(holder: CategorySelectorAdapter.CustomViewHolder, position: Int) {
         holder.categorySelectorBinding.category = categoryList[position]
+
         if(selectedCategoryNum == position){
             listener.onClickView(holder.categorySelectorBinding.root,position)
         }
@@ -54,7 +57,11 @@ class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selecte
             }
         )
         holder.categorySelectorBinding.categorySelectorConstraintLayout.setOnClickListener {
-            listener.onClickView(holder.categorySelectorBinding.root,position)
+            listener.onClickView(holder.categorySelectorBinding.root, position)
+        }
+
+        if (holder.categorySelectorBinding.categoryTextView.text == "five") {
+            holder.categorySelectorBinding.categoryTextView.setTextColor( ContextCompat.getColor(context, R.color.teal_200) )
         }
     }
 

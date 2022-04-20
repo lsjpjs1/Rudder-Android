@@ -121,5 +121,4 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
 
     }
 
-
 }

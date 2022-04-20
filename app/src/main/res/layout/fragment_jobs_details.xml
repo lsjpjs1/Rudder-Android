@@ -82,7 +82,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginTop="20dp"
                         android:textSize="14sp"
-                        android:text="Company Name"
+                        android:text="HSBC"
                         android:textColor="@color/purple_rudder"
                         android:id="@+id/jobsDetailCompanyTV"
                         >
@@ -95,7 +95,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/jobsDetailCompanyTV"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="Jobs Title qei8uqoiewu qowieuq oie"
+                        android:text="Global Banking"
                         android:textColor="@color/black"
                         android:fontFamily="@font/sf_pro_text_bold"
                         android:id="@+id/jobsDetailJobTitle"
@@ -143,6 +143,7 @@
                         android:background="@drawable/edge_grey"
                         android:id="@+id/jobsDetailHeartCL"
                         android:layout_marginTop="20dp"
+                        android:tag="border"
                         >
 
                         <ImageView
@@ -154,6 +155,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             android:id="@+id/jobsDetailHeart"
                             android:src="@drawable/ic_baseline_favorite_border_24"
+                            android:tag="border"
                             >
                         </ImageView>
 
@@ -232,7 +234,7 @@
                         android:id="@+id/jobsDetailSalaryTV"
                         android:textSize="16sp"
                         android:fontFamily="@font/sf_pro_text_bold"
-                        android:text="$22 ~ $30"
+                        android:text="$30K ~ $50K"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/jobsDetailJobDetailsTV"
                         android:textColor="@color/black"
@@ -247,7 +249,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/jobsDetailTmp"
                         android:textSize="16sp"
-                        android:text="Salary"
+                        android:text="Deadline"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/jobsDetailSalary"
                         android:textColor="@color/black"
@@ -262,7 +264,7 @@
                         android:id="@+id/jobsDetailTmpTV"
                         android:textSize="16sp"
                         android:fontFamily="@font/sf_pro_text_bold"
-                        android:text="Full-time"
+                        android:text="2022.05.03"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/jobsDetailSalary"
                         android:textColor="@color/black"
@@ -292,7 +294,7 @@
                         android:id="@+id/jobsDetailTypeTV"
                         android:textSize="16sp"
                         android:fontFamily="@font/sf_pro_text_bold"
-                        android:text="Apprenticeship"
+                        android:text="Graduate Scheme"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/jobsDetailTmp"
                         android:textColor="@color/black"
@@ -372,7 +374,7 @@
                         android:lineSpacingExtra="10dp"
                         android:paddingBottom="100dp"
 
-                        android:text="Tesla, Inc. (/ˈtɛslə/ TESS-lə or /ˈtɛzlə/ TEZ-lə[b]) is an American automotive electric vehicle and clean energy company based in Austin, Texas. Tesla designs and manufactures electric cars, battery energy storage from home to grid-scale, solar panels and solar roof tiles, and related products and services. Tesla is one of the world's most valuable companies and remains the world's most valuable automaker with a market capitalization of more than US $1 trillion. The company had the most worldwide sales of battery electric vehicles and plug-in electric vehicles, capturing 23% of the battery-electric (purely electric) market and 16% of the plug-in market (which includes plug-in hybrids) in 2020. Through its subsidiary Tesla Energy, the company develops and is a major installer of photovoltaic systems in the United States. Tesla Energy is also one of the largest global suppliers of battery energy storage systems, with 3.99 gigawatt-hours (GWh) installed in 2021. */"
+                        android:text="HSBC Holdings plc is a British multinational investment bank and financial services holding company. It is the second largest bank in Europe behind BNP Paribas,[6] with total equity of US$206.777 billion and assets of US$2.958 trillion as of December 2021. In 2021, HSBC had $10.8 trillion in assets under custody (AUC) and $4.9 trillion in assets under administration (AUA), respectively.[4] HSBC traces its origin to a hong in British Hong Kong, and its present form was established in London by the Hongkong and Shanghai Banking Corporation to act as a new group holding company in 1991;[7][8] its name derives from that company's initials.[9] The Hongkong and Shanghai Banking Corporation opened branches in Shanghai in 1865[1] and was first formally incorporated in 1866."
 
                         >
 
