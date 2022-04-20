@@ -56,12 +56,6 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
         jobsContentsDataBinding.jobVM = jobsViewModel
 
 
-//        jobsContentsDataBinding.JobsMainRecyclerView.also{
-//            it.layoutManager = LinearLayoutManager(parentActivity, LinearLayoutManager.VERTICAL, false)
-//            it.setHasFixedSize(false)
-//            it.adapter = JobsContentAdapter(jobsViewModel.jobsInfoArrayList.value!!)
-//        }
-
         return jobsContentsDataBinding.root
     }
 

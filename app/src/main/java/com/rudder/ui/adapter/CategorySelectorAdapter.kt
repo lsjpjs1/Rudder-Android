@@ -60,9 +60,6 @@ class CategorySelectorAdapter(val categoryList: ArrayList<Category>, val selecte
             listener.onClickView(holder.categorySelectorBinding.root, position)
         }
 
-        if (holder.categorySelectorBinding.categoryTextView.text == "five") {
-            holder.categorySelectorBinding.categoryTextView.setTextColor( ContextCompat.getColor(context, R.color.teal_200) )
-        }
     }
 
     fun updateCategories(newCategories: ArrayList<Category>){

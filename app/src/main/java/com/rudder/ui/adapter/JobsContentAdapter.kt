@@ -60,8 +60,6 @@ class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsCon
         }
 
         override fun onClick(view: View?) {
-
-
             if (view is ImageView) { // heart 클릭시
                 this.jobsContentOnclickListener?.onClickImageView(view = view!!, position = bindingAdapterPosition)
             } else {
