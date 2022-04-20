@@ -396,6 +396,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/button_enabled"
                 android:layout_marginBottom="20dp"
+                android:id="@+id/jobsDetailApplyButton"
                 >
 
             </Button>
