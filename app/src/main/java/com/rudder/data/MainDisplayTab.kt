@@ -1,6 +1,5 @@
 package com.rudder.data
 
-import android.util.Log
 import com.rudder.R
 import com.rudder.ui.fragment.community.CommunityDisplayFragment
 import com.rudder.ui.fragment.jobs.JobsContentsFragment
@@ -37,7 +36,8 @@ enum class MainDisplayTab( // Just, show, hide
     NOTIFICATION(R.id.navigation_notification, NotificationDisplayFragment.TAG),
     SETTING(R.id.navigation_setting, SettingFragment.TAG),
     JOBSDETAILS(R.id.navigation_jobs_details, JobsDetailsFragment.TAG),
-    JOBSSAVED(R.id.navigation_jobs_saved, JobsSavedFragment.TAG);
+    JOBSSAVED(R.id.navigation_jobs_saved, JobsSavedFragment.TAG),
+    JOBSSEARCH(R.id.navigation_jobs_search, JobsSavedFragment.TAG);
 
     companion object {
         fun from(itemId: Int): MainDisplayTab? = values().firstOrNull { it.itemId == itemId }

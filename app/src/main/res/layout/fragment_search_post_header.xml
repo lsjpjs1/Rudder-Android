@@ -71,6 +71,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+
+
+
         <SearchView
             android:id="@+id/searchPostSearchView"
             android:layout_width="0dp"

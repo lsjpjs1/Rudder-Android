@@ -410,6 +410,14 @@
         </action>
 
 
+        <action
+            android:id="@+id/action_navigation_jobs_to_navigation_jobs_search"
+            app:destination="@id/navigation_jobs_search"
+            app:popUpTo="@id/navigation_jobs"
+            >
+        </action>
+
+
     </bottom>
 
 
@@ -443,6 +451,15 @@
             >
         </action>
 
+
+    </bottom>
+
+
+    <bottom
+        android:id="@+id/navigation_jobs_search"
+        android:name="com.rudder.ui.fragment.jobs.JobsSearchFragment"
+        android:label="jobsSearch"
+        tools:layout="@layout/fragment_jobs_search">>
 
     </bottom>
 

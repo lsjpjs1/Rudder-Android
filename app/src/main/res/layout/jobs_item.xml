@@ -40,14 +40,14 @@
             </ImageView>
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:id="@+id/jobsItemsHeart"
                 android:src="@drawable/ic_baseline_favorite_border_24"
                 app:tint="@color/purple_rudder"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="4dp"
 
                 >

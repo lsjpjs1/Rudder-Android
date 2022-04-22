@@ -2,6 +2,7 @@ package com.rudder.data
 
 import com.rudder.ui.fragment.jobs.JobsDetailsFragment
 import com.rudder.ui.fragment.jobs.JobsSavedFragment
+import com.rudder.ui.fragment.jobs.JobsSearchFragment
 import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.MyPostDisplayFragment
 import com.rudder.ui.fragment.mypage.SettingFragment
@@ -22,7 +23,7 @@ object MainAddTabObject {
         MyPostDisplayFragment.TAG,
         SettingFragment.TAG,
         JobsDetailsFragment.TAG,
-        JobsSavedFragment.TAG
-
+        JobsSavedFragment.TAG,
+        JobsSearchFragment.TAG
     )
 }
