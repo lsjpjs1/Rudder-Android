@@ -37,7 +37,8 @@ class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsCon
 
 
 
-    class JobsViewHolder(private val jobsItemBinding : JobsItemBinding, jobsContentOnclickListener: JobsContentOnclickListener) : RecyclerView.ViewHolder(jobsItemBinding.root), View.OnClickListener {
+    class JobsViewHolder(private val jobsItemBinding : JobsItemBinding, jobsContentOnclickListener: JobsContentOnclickListener)
+        : RecyclerView.ViewHolder(jobsItemBinding.root), View.OnClickListener {
 
         private var jobsContentOnclickListener : JobsContentOnclickListener? = null
 
