@@ -1,16 +1,19 @@
 package com.rudder.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
 import com.rudder.data.dto.JobsInfo
 import com.rudder.databinding.JobsItemBinding
-import com.rudder.util.CustomOnclickListener
 import com.rudder.util.JobsContentOnclickListener
+import com.rudder.util.LocaleUtil
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsContentOnclickListener: JobsContentOnclickListener)
     : RecyclerView.Adapter<JobsContentAdapter.JobsViewHolder>() {
@@ -49,7 +52,31 @@ class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsCon
         }
 
         fun bind(jobsItem: JobsInfo) {
+            val timeago = PrettyTime(LocaleUtil().getSystemLocale(jobsItemBinding.root.context)).format(Date(jobsItem.postDate.time))
+
             jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
+            jobsItemBinding.jobsCompanyTV.text = jobsItem.companyName
+            jobsItemBinding.jobsSalaryTV.text = jobsItem.salary
+            jobsItemBinding.jobsTypeTV.text = jobsItem.jobType
+            jobsItemBinding.jobsPostTimeTV.text = timeago
+
+
+
+            jobsItem.companyImage?.let{
+                Glide.with(jobsItemBinding.root.context)
+                    .load(jobsItem.companyImage)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(jobsItemBinding.jobsItemCompanyIcon)
+            }
+
+//            Glide.with(jobsItemBinding.root.context)
+//                .load(jobsItem.companyImage)
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(jobsItemBinding.jobsItemCompanyIcon)
+
+
+            //jobsItemBinding.jobsItemCompanyIcon.background = ContextCompat.getDrawable(jobsItemBinding.root.context, R.drawable.edge)
+
 
             if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
                 jobsItemBinding.jobsItemsHeart.tag = "not border"

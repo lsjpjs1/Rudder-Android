@@ -5,7 +5,7 @@ data class JobsDetail(
     //val jobPostId : Int,
 //    val companyName : String,
 //    val jobType : String,
-//    val salary : Int,
+//    val salary : String,
 //    val jobLocation : String,
 //    val jobPostURL : String,
 //    val postDate : Timestamp,

@@ -8,8 +8,8 @@ data class JobsInfo(
     val jobPostId : Int,
     val companyName : String,
     val jobType : String,
-    val salary : Int,
-    val postDate : Timestamp?,
+    val salary : String?,
+    val postDate : Timestamp,
     val companyImage : String?,
     val isSaved : Boolean
 )
