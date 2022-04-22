@@ -5,6 +5,7 @@ import com.rudder.ui.fragment.community.CommunityDisplayFragment
 import com.rudder.ui.fragment.jobs.JobsContentsFragment
 import com.rudder.ui.fragment.jobs.JobsDetailsFragment
 import com.rudder.ui.fragment.jobs.JobsSavedFragment
+import com.rudder.ui.fragment.jobs.JobsSearchFragment
 import com.rudder.ui.fragment.mypage.CategorySelectMyPageFragment
 import com.rudder.ui.fragment.mypage.MyPageDisplayFragment
 import com.rudder.ui.fragment.mypage.MyPostDisplayFragment
@@ -37,7 +38,7 @@ enum class MainDisplayTab( // Just, show, hide
     SETTING(R.id.navigation_setting, SettingFragment.TAG),
     JOBSDETAILS(R.id.navigation_jobs_details, JobsDetailsFragment.TAG),
     JOBSSAVED(R.id.navigation_jobs_saved, JobsSavedFragment.TAG),
-    JOBSSEARCH(R.id.navigation_jobs_search, JobsSavedFragment.TAG);
+    JOBSSEARCH(R.id.navigation_jobs_search, JobsSearchFragment.TAG);
 
     companion object {
         fun from(itemId: Int): MainDisplayTab? = values().firstOrNull { it.itemId == itemId }

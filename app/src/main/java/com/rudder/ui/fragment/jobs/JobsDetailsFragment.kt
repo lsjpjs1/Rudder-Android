@@ -4,31 +4,24 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
-import com.rudder.databinding.CategorySelectorBinding
-import com.rudder.databinding.FragmentJobsContentsBinding
 import com.rudder.databinding.FragmentJobsDetailsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.CategorySelectorAdapter
-import com.rudder.util.CustomOnclickListener
 import com.rudder.viewModel.JobsViewModel
 import com.rudder.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.category_selector.view.*
 import kotlinx.android.synthetic.main.fragment_commuinty_selector.*
 import kotlinx.android.synthetic.main.fragment_jobs_details.view.*
-import kotlinx.android.synthetic.main.fragment_jobs_saved.view.*
-import kotlinx.android.synthetic.main.fragment_jobs_saved.view.jobsSavedBackButton
-import kotlinx.android.synthetic.main.jobs_item.view.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -103,16 +96,11 @@ class JobsDetailsFragment : Fragment() {
             val action = JobsDetailsFragmentDirections.actionNavigationJobsSavedToNavigationCommunity()
             view.findNavController().navigate(action)
             (activity as MainActivity).mainBottomNavigationAppear()
-            mainViewModel.selectedCategoryView.value?.also {
-                it.categoryUnderBarView.visibility = View.GONE
-                it.categoryTextView.setTextColor(ContextCompat.getColor(lazyContext,R.color.grey))
-            }
-            val viewHolder = parentActivity.categoryRecyclerView.findViewHolderForAdapterPosition(2)
-            val categorySelectorConstraintLayoutView = (viewHolder as CategorySelectorAdapter.CustomViewHolder).categorySelectorBinding.categorySelectorConstraintLayout
-            mainViewModel.setSelectedCategoryPosition(2)
-            mainViewModel.setSelectedCategoryView(categorySelectorConstraintLayoutView)
-            mainViewModel.clearPosts()
-            mainViewModel.getPosts()
+
+            Log.d("test123", "${mainViewModel.userSelectCategories.value!!}")
+            val jobPosition = mainViewModel.userSelectCategories.value!!.map{it.categoryName}.indexOf("Job")
+
+            moveToJobCategoryPreviewPost(jobPosition)
 
         }
 
@@ -136,6 +124,27 @@ class JobsDetailsFragment : Fragment() {
             startActivity(intent)
         }
 
+    }
+
+    fun moveToJobCategoryPreviewPost(findJobIndex : Int){
+        mainViewModel.selectedCategoryView.value?.also {
+            it.categoryUnderBarView.visibility = View.GONE
+            it.categoryTextView.setTextColor(ContextCompat.getColor(lazyContext,R.color.grey))
+        }
+        if (findJobIndex == -1) { // 내가 고른 카테고리중 job이 아예 없으면, ALL로 감.
+            val viewHolder = parentActivity.categoryRecyclerView.findViewHolderForAdapterPosition(0)
+            val categorySelectorConstraintLayoutView = (viewHolder as CategorySelectorAdapter.CustomViewHolder).categorySelectorBinding.categorySelectorConstraintLayout
+            mainViewModel.setSelectedCategoryPosition(0)
+            mainViewModel.setSelectedCategoryView(categorySelectorConstraintLayoutView)
+        } else {
+            val viewHolder = parentActivity.categoryRecyclerView.findViewHolderForAdapterPosition(findJobIndex)
+            val categorySelectorConstraintLayoutView = (viewHolder as CategorySelectorAdapter.CustomViewHolder).categorySelectorBinding.categorySelectorConstraintLayout
+            mainViewModel.setSelectedCategoryPosition(findJobIndex)
+            mainViewModel.setSelectedCategoryView(categorySelectorConstraintLayoutView)
+
+        }
+        mainViewModel.clearPosts()
+        mainViewModel.getPosts()
     }
 
 
