@@ -76,6 +76,30 @@ class JobsDetailsFragment : Fragment() {
         jobsDetailsDataBinding.jobVM = jobsViewModel
 
 
+
+        jobsDetailsDataBinding.jobsDetailCompanyTV.text = jobsViewModel.jobsDetailInfo.value!!.companyName
+        jobsDetailsDataBinding.jobsDetailLocationTV.text = jobsViewModel.jobsDetailInfo.value!!.jobLocation
+        jobsDetailsDataBinding.jobsDetailSalaryTV.text = jobsViewModel.jobsDetailInfo.value!!.salary
+        jobsDetailsDataBinding.jobsDetailTypeTV.text = jobsViewModel.jobsDetailInfo.value!!.jobType
+        jobsDetailsDataBinding.jobsDetailFullJobDescriptionTV.text = jobsViewModel.jobsDetailInfo.value!!.jobDescription
+        jobsDetailsDataBinding.jobsDetailPostTimeTV.text = jobsViewModel.jobsDetailInfo.value!!.postDate.toString()
+        jobsDetailsDataBinding.jobsDetailDeadlineTV.text = jobsViewModel.jobsDetailInfo.value!!.dueDate.toString()
+
+        if (jobsViewModel.jobsDetailInfo.value!!.isSaved) {
+            jobsDetailsDataBinding.jobsDetailHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
+            jobsDetailsDataBinding.jobsDetailHeart.setColorFilter(ContextCompat.getColor(lazyContext,R.color.purple_rudder))
+            jobsDetailsDataBinding.jobsDetailHeart.tag = "not border"
+            jobsDetailsDataBinding.jobsDetailHeartCL.background = ContextCompat.getDrawable(lazyContext, R.drawable.edge)
+
+        } else {
+            jobsDetailsDataBinding.jobsDetailHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            jobsDetailsDataBinding.jobsDetailHeart.setColorFilter(ContextCompat.getColor(lazyContext,R.color.grey))
+            jobsDetailsDataBinding.jobsDetailHeart.tag = "border"
+            jobsDetailsDataBinding.jobsDetailHeartCL.background = ContextCompat.getDrawable(lazyContext, R.drawable.edge_grey)
+
+        }
+
+
         return jobsDetailsDataBinding.root
     }
 
@@ -116,7 +140,7 @@ class JobsDetailsFragment : Fragment() {
         }
 
         view.jobsDetailApplyButton.setOnClickListener {
-            val url = "https://www.naver.com"
+            val url = jobsViewModel.jobsDetailInfo.value!!.jobPostURL
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }

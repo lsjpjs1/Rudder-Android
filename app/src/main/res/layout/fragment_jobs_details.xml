@@ -126,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/jobsDetailDiscussionBoardTV"
-                        android:id="@+id/jobsDetailTime"
+                        android:id="@+id/jobsDetailPostTimeTV"
                         app:layout_constraintStart_toStartOf="parent"
                         android:text="2022.04.18"
                         android:textColor="@color/black"
@@ -138,7 +138,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="52dp"
                         android:layout_height="34dp"
-                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailTime"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailPostTimeTV"
                         app:layout_constraintStart_toStartOf="parent"
                         android:background="@drawable/edge_grey"
                         android:id="@+id/jobsDetailHeartCL"
@@ -165,7 +165,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="52dp"
                         android:layout_height="34dp"
-                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailTime"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailPostTimeTV"
                         app:layout_constraintStart_toEndOf="@+id/jobsDetailHeartCL"
                         android:layout_marginStart="8dp"
                         android:background="@drawable/edge_grey"
@@ -247,7 +247,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/jobsDetailTmp"
+                        android:id="@+id/jobsDetailDeadline"
                         android:textSize="16sp"
                         android:text="Deadline"
                         app:layout_constraintStart_toStartOf="parent"
@@ -261,7 +261,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/jobsDetailTmpTV"
+                        android:id="@+id/jobsDetailDeadlineTV"
                         android:textSize="16sp"
                         android:fontFamily="@font/sf_pro_text_bold"
                         android:text="2022.05.03"
@@ -281,7 +281,7 @@
                         android:textSize="16sp"
                         android:text="Type"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailTmp"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailDeadline"
                         android:textColor="@color/black"
                         android:layout_marginTop="10dp"
                         >
@@ -296,7 +296,7 @@
                         android:fontFamily="@font/sf_pro_text_bold"
                         android:text="Graduate Scheme"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailTmp"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailDeadline"
                         android:textColor="@color/black"
                         android:layout_marginTop="10dp"
                         >
@@ -373,6 +373,8 @@
                         android:layout_marginTop="20dp"
                         android:lineSpacingExtra="10dp"
                         android:paddingBottom="100dp"
+                        android:id="@+id/jobsDetailFullJobDescriptionTV"
+
 
                         android:text="HSBC Holdings plc is a British multinational investment bank and financial services holding company. It is the second largest bank in Europe behind BNP Paribas,[6] with total equity of US$206.777 billion and assets of US$2.958 trillion as of December 2021. In 2021, HSBC had $10.8 trillion in assets under custody (AUC) and $4.9 trillion in assets under administration (AUA), respectively.[4] HSBC traces its origin to a hong in British Hong Kong, and its present form was established in London by the Hongkong and Shanghai Banking Corporation to act as a new group holding company in 1991;[7][8] its name derives from that company's initials.[9] The Hongkong and Shanghai Banking Corporation opened branches in Shanghai in 1865[1] and was first formally incorporated in 1866."
 

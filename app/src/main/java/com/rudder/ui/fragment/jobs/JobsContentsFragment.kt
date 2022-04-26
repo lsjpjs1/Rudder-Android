@@ -74,6 +74,8 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
             })
         }
 
+        //jobsViewModel.getJobsInfo()
+
 
         view.jobsContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
         view.jobsContentsSwipeRefreshLayout.setOnRefreshListener {
@@ -92,8 +94,8 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
 
     }
 
-    override fun onClickContainerView(view: View, position: Int) {
-        Toast.makeText(parentActivity, "title ${position}", Toast.LENGTH_SHORT).show()
+    override fun onClickContainerView(view: View, position: Int, viewTag : String) {
+        Toast.makeText(parentActivity, "title ${viewTag}", Toast.LENGTH_SHORT).show()
 
 
         val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()

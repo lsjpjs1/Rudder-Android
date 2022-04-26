@@ -1,14 +1,24 @@
 package com.rudder.data.remote
 
-import com.rudder.data.Response
-import com.rudder.data.dto.JobsInfo
-import retrofit2.http.Body
-import retrofit2.http.POST
+import com.rudder.BuildConfig
 
-interface JobsInfoApi {
-    @POST("/users/blockUser")
-    suspend fun JobsInfoApiFun(
-        @Body blockUserRequest: BlockUserRequest
-    ) : Response<JobsInfo>
+class JobsInfoApi {
+
+    companion object{
+        val instance = JobsInfoApi()
+    }
+
+    //private val blockUserService : BlockUserService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(BlockUserService::class.java)
+
+
+    val jobsInfoService : JobsInfoService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(JobsInfoService::class.java)
+
+//    fun blockUser(blockUserRequest: BlockUserRequest) : Deferred<Response<BlockUserResponse>> {
+//        return GlobalScope.async(Dispatchers.IO){
+//            blockUserService.blockUser(blockUserRequest)
+//        }
+//    }
+
+
 }
 

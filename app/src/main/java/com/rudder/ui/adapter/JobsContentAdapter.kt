@@ -60,6 +60,8 @@ class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsCon
             jobsItemBinding.jobsTypeTV.text = jobsItem.jobType
             jobsItemBinding.jobsPostTimeTV.text = timeago
 
+            jobsItemBinding.jobsMainCL.tag = jobsItem.jobPostId
+
 
 
             jobsItem.companyImage?.let{
@@ -89,9 +91,9 @@ class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsCon
 
         override fun onClick(view: View?) {
             if (view is ImageView) { // heart 클릭시
-                this.jobsContentOnclickListener?.onClickImageView(view = view!!, position = bindingAdapterPosition)
+                this.jobsContentOnclickListener?.onClickImageView(view = view, position = bindingAdapterPosition)
             } else {
-                this.jobsContentOnclickListener?.onClickContainerView(view = view!!, position = bindingAdapterPosition)
+                this.jobsContentOnclickListener?.onClickContainerView(view = view!!, position = bindingAdapterPosition, viewTag = view.tag.toString())
             }
         }
     }

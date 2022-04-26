@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
 import com.rudder.data.dto.JobsInfo
 import com.rudder.databinding.JobsItemBinding
-import com.rudder.util.CustomOnclickListener
 import com.rudder.util.JobsContentOnclickListener
 
 class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
@@ -63,6 +62,11 @@ class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
 
         fun bind(jobsItem: JobsInfo) {
             jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
+
+
+            jobsItemBinding.jobsMainCL.tag = jobsItem.jobPostId
+
+
             if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
                 jobsItemBinding.jobsItemsHeart.tag = "not border"
                 jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
@@ -77,7 +81,7 @@ class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
             if (view is ImageView) { // heart 클릭시
                 this.jobsContentOnclickListener?.onClickImageView(view = view!!, position = bindingAdapterPosition)
             } else {
-                this.jobsContentOnclickListener?.onClickContainerView(view = view!!, position = bindingAdapterPosition)
+                this.jobsContentOnclickListener?.onClickContainerView(view = view!!, position = bindingAdapterPosition, viewTag = view.tag.toString())
             }
         }
     }

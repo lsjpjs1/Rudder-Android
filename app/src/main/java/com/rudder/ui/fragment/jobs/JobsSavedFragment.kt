@@ -2,24 +2,19 @@ package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
-import com.rudder.databinding.FragmentAddCommentBinding
-import com.rudder.databinding.FragmentJobsDetailsBinding
 import com.rudder.databinding.FragmentJobsSavedBinding
-import com.rudder.databinding.FragmentJobsSavedBindingImpl
 import com.rudder.ui.activity.MainActivity
-import com.rudder.ui.adapter.JobsContentAdapter
 import com.rudder.ui.adapter.JobsSavedAdapter
 import com.rudder.util.JobsContentOnclickListener
 import com.rudder.viewModel.JobsViewModel
-import kotlinx.android.synthetic.main.fragment_jobs_details.view.*
 import kotlinx.android.synthetic.main.fragment_jobs_saved.view.*
 import kotlinx.android.synthetic.main.jobs_item.view.*
 
@@ -116,7 +111,7 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
         const val TAG = "JobsSavedFragment"
     }
 
-    override fun onClickContainerView(view: View, position: Int) {
+    override fun onClickContainerView(view: View, position: Int, viewTag : String) {
         Log.d("savedJob", "${position}")
         val action = JobsSavedFragmentDirections.actionNavigationJobsSavedToNavigationJobsDetails()
         view.findNavController().navigate(action)
