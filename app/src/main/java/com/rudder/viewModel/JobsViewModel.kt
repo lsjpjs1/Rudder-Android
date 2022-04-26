@@ -26,7 +26,7 @@ class JobsViewModel : ViewModel() {
                 jobType = "InternShip",
                 salary = "£33，500 a year",
                 postDate = Timestamp.valueOf("2021-07-13 11:11:11"),
-                companyImage = "https://avatars.githubusercontent.com/u/59787852?v=4"),
+                companyImage = "http://books.google.com/books/content?id=puFBDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api"),
             JobsInfo(jobTitle = "Customer Resolution Officer", isSaved = true,
                 jobPostId = 1,
                 companyName = "Naver",

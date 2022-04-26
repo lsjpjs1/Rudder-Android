@@ -3,7 +3,6 @@ package com.rudder.ui.fragment.jobs
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,9 +96,7 @@ class JobsDetailsFragment : Fragment() {
             view.findNavController().navigate(action)
             (activity as MainActivity).mainBottomNavigationAppear()
 
-            Log.d("test123", "${mainViewModel.userSelectCategories.value!!}")
-            val jobPosition = mainViewModel.userSelectCategories.value!!.map{it.categoryName}.indexOf("Job")
-
+            val jobPosition = mainViewModel.userSelectCategories.value!!.map{it.categoryName}.indexOf("five")
             moveToJobCategoryPreviewPost(jobPosition)
 
         }
@@ -127,22 +124,18 @@ class JobsDetailsFragment : Fragment() {
     }
 
     fun moveToJobCategoryPreviewPost(findJobIndex : Int){
+        var viewPosition = findJobIndex
         mainViewModel.selectedCategoryView.value?.also {
             it.categoryUnderBarView.visibility = View.GONE
             it.categoryTextView.setTextColor(ContextCompat.getColor(lazyContext,R.color.grey))
         }
         if (findJobIndex == -1) { // 내가 고른 카테고리중 job이 아예 없으면, ALL로 감.
-            val viewHolder = parentActivity.categoryRecyclerView.findViewHolderForAdapterPosition(0)
-            val categorySelectorConstraintLayoutView = (viewHolder as CategorySelectorAdapter.CustomViewHolder).categorySelectorBinding.categorySelectorConstraintLayout
-            mainViewModel.setSelectedCategoryPosition(0)
-            mainViewModel.setSelectedCategoryView(categorySelectorConstraintLayoutView)
-        } else {
-            val viewHolder = parentActivity.categoryRecyclerView.findViewHolderForAdapterPosition(findJobIndex)
-            val categorySelectorConstraintLayoutView = (viewHolder as CategorySelectorAdapter.CustomViewHolder).categorySelectorBinding.categorySelectorConstraintLayout
-            mainViewModel.setSelectedCategoryPosition(findJobIndex)
-            mainViewModel.setSelectedCategoryView(categorySelectorConstraintLayoutView)
-
+            viewPosition = 0
         }
+        val viewHolder = parentActivity.categoryRecyclerView.findViewHolderForAdapterPosition(viewPosition)
+        val categorySelectorConstraintLayoutView = (viewHolder as CategorySelectorAdapter.CustomViewHolder).categorySelectorBinding.categorySelectorConstraintLayout
+        mainViewModel.setSelectedCategoryPosition(viewPosition)
+        mainViewModel.setSelectedCategoryView(categorySelectorConstraintLayoutView)
         mainViewModel.clearPosts()
         mainViewModel.getPosts()
     }
