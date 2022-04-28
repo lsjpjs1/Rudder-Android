@@ -145,6 +145,18 @@ class JobsDetailsFragment : Fragment() {
             startActivity(intent)
         }
 
+
+        view.jobsDetailShareCL.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
+
     }
 
     fun moveToJobCategoryPreviewPost(findJobIndex : Int){

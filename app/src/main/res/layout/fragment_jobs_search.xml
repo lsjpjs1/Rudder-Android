@@ -33,7 +33,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:iconifiedByDefault="false"
                 app:layout_constraintStart_toStartOf="parent"
-                android:queryHint="Search"
+                android:queryHint="Jobs Search"
                 app:layout_constraintWidth_percent="0.78"
                 android:searchIcon="@drawable/ic_baseline_search_24"
                 android:background="@drawable/edge"

@@ -28,6 +28,8 @@ android {
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "BASE_URL",localProperties['baseUrl']
         buildConfigField "String", "TOKEN_KEY",localProperties['tokenKey']
+        buildConfigField "String", "BASE_URL_SPRING",localProperties['baseUrlSpring']
+
         multiDexEnabled true
     }
 
