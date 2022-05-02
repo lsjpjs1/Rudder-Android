@@ -1,6 +1,7 @@
 package com.rudder.ui.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 import com.rudder.R
 import com.rudder.data.local.App
 import com.rudder.databinding.ActivitySplashBinding
@@ -20,7 +23,6 @@ import com.rudder.util.ActivityContainer
 import com.rudder.util.ForecdTerminationService
 import com.rudder.util.StartActivityUtil
 import com.rudder.viewModel.LoginViewModel
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -41,6 +43,31 @@ class SplashActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash)
         binding.loginVM = viewModel
         binding.lifecycleOwner = this
+
+
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                var deeplink: Uri? = null
+                if(pendingDynamicLinkData != null) {
+                    deeplink = pendingDynamicLinkData.link
+                }
+
+                if(deeplink != null) {
+//                    val tvDeepLinkContent = findViewById<TextView>(R.id.tv_deeplink_content)
+//                    tvDeepLinkContent.text = deeplink.toString()
+                    Log.d("deeplink", "${deeplink.toString()}")
+                    Log.d("deeplink.path", "${deeplink.path}")
+
+                }
+                else {
+                    Log.d("deeplink_null", "getDynamicLink: no link found")
+                }
+            }
+            .addOnFailureListener(this) { e -> Log.w("deeplink_failure", "getDynamicLink:onFailure", e)
+            }
+
+
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -71,7 +98,13 @@ class SplashActivity : AppCompatActivity() {
 
         notificationType=intent.getIntExtra("notificationType",-1)
         itemId=intent.getIntExtra("itemId",-1)
+
+        initDeepLink()
+
+
+
         autoLogin()
+
 
     }
 
@@ -90,6 +123,24 @@ class SplashActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    /** DeepLink */
+    private fun initDeepLink() {
+        if (Intent.ACTION_VIEW.equals(intent.action)) {
+            var uri = intent.data
+            if (uri != null) {
+                var dl_data1 = uri.getQueryParameter("data1")
+                var dl_data2 = uri.getQueryParameter("data2")
+                Log.d("test123", "${uri}")
+
+//                binding.tvDeeplinkReceive.text = "딥링크 수신받은 값\n" +
+//                        "dl_data1: $dl_data1 \n" +
+//                        "dl_data2: $dl_data2"
+            }
+        }
+    }
+
 
     override fun onDestroy() {
         ActivityContainer.clearCurrentActivity(this)

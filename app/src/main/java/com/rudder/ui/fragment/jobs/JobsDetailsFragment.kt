@@ -147,14 +147,27 @@ class JobsDetailsFragment : Fragment() {
 
 
         view.jobsDetailShareCL.setOnClickListener {
+            val url = "https://linkrudder.page.link/main"
+
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
+                putExtra(Intent.EXTRA_TEXT, url)
+                //putExtra(Intent.EXTRA_TEXT,2)
+
                 type = "text/plain"
+
+            }
+
+            val bundle = Bundle().apply {
+                putInt("param1", 3)
             }
 
             val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
+            //startActivity(shareIntent)
+            startActivity(shareIntent, bundle)
+
+            //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("example://gizmos")))
+
         }
 
     }

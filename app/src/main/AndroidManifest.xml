@@ -22,12 +22,73 @@
             android:name=".util.ForecdTerminationService"
             android:stopWithTask="true" />
 
-        <activity android:name=".ui.activity.SplashActivity" >
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:exported="true"
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- DeepLink -->
+            <intent-filter>
+
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+                <data android:scheme="http"
+                    android:host="www.example.com"
+                    android:pathPrefix="/gizmos" />
+                <!-- note that the leading "/" is required for pathPrefix-->
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "example://gizmos” -->
+                <data android:scheme="example"
+                    android:host="gizmos" />
+            </intent-filter>
+
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="rudder.link.com"
+                    android:scheme="https"
+                    android:path="/id"
+                    />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="linkrudder.page.link"
+                    android:scheme="https"
+                    android:path="/sign"
+                    />
+
+                <data
+                    android:host="linkrudder.page.link"
+                    android:scheme="https"
+                    android:path="/main"
+                    />
+            </intent-filter>
+
+
+
+
         </activity>
         <activity
             android:name=".ui.activity.SignUpActivity"

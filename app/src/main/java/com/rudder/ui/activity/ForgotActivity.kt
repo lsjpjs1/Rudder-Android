@@ -1,10 +1,9 @@
 package com.rudder.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -34,12 +33,12 @@ class ForgotActivity : AppCompatActivity() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        val toastEmailTrue = Toast.makeText(this, "We have sent your ID to your university email", Toast.LENGTH_LONG)
-        val toastEmailVerifySuccess = Toast.makeText(this, "We have sent the verification code to your university email", Toast.LENGTH_LONG)
-        val toastEmailVerifyFail = Toast.makeText(this, "Please enter your valid university email ", Toast.LENGTH_LONG)
-        val toastEmailFalse = Toast.makeText(this, "Please enter valid your university email.", Toast.LENGTH_LONG)
-        val toastVerifyCodeTrue = Toast.makeText(this, "Correct Code! We will send new password to your email.", Toast.LENGTH_LONG)
-        val toastVerifyCodeFalse = Toast.makeText(this, "Wrong verification code", Toast.LENGTH_LONG)
+        val toastEmailTrue = Toast.makeText(this, "We have sent your ID to your university email", Toast.LENGTH_SHORT)
+        val toastEmailVerifySuccess = Toast.makeText(this, "We have sent the verification code to your university email", Toast.LENGTH_SHORT)
+        val toastEmailVerifyFail = Toast.makeText(this, "Please enter your valid university email ", Toast.LENGTH_SHORT)
+        val toastEmailFalse = Toast.makeText(this, "Please enter valid your university email.", Toast.LENGTH_SHORT)
+        val toastVerifyCodeTrue = Toast.makeText(this, "Correct Code! We will send new password to your email.", Toast.LENGTH_SHORT)
+        val toastVerifyCodeFalse = Toast.makeText(this, "Wrong verification code", Toast.LENGTH_SHORT)
         val toastFindId = Toast.makeText(this, "Tell us your university email. Then we will send your id to your email.", Toast.LENGTH_SHORT)
         var findpasswordFlag = false
 

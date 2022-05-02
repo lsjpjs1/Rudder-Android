@@ -1,12 +1,12 @@
 package com.rudder.ui.activity
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -20,7 +20,6 @@ import com.rudder.viewModel.SignUpViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_create_account.*
-import kotlinx.android.synthetic.main.fragment_create_account.verifyBtn
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -138,9 +137,14 @@ class SignUpActivity : AppCompatActivity() {
         signUpViewModel.createAccountNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
-                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
-                    fragmentShowHide.addToBackStack()
-                    fragmentShowHide.showFragment(profileSettingFragment, R.id.signUp_container)
+//                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
+//                    fragmentShowHide.addToBackStack()
+//                    fragmentShowHide.showFragment(profileSettingFragment, R.id.signUp_container)
+                    signUpViewModel.callCreateAccount()
+                    Toast.makeText(this, "Check your email to verify and Enjoy Rudder!", Toast.LENGTH_SHORT).show()
+
+                    StartActivityUtil.callActivity(this, LoginActivity())
+                    finish()
                 } }
         })
 
