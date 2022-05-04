@@ -62,13 +62,13 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="rudder.link.com"
-                    android:scheme="https"
-                    android:path="/id"
+                    android:host="onelink.to"
+                    android:scheme="http"
+                    android:path="/rudder"
                     />
             </intent-filter>
 
-            <intent-filter android:autoVerify="true">
+            <intent-filter >
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -76,13 +76,7 @@
                 <data
                     android:host="linkrudder.page.link"
                     android:scheme="https"
-                    android:path="/sign"
-                    />
-
-                <data
-                    android:host="linkrudder.page.link"
-                    android:scheme="https"
-                    android:path="/main"
+                    android:pathPrefix="/main/**"
                     />
             </intent-filter>
 

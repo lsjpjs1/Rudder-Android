@@ -1,12 +1,12 @@
 package com.rudder.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rudder.BuildConfig
 import com.rudder.data.dto.JobsDetail
 import com.rudder.data.dto.JobsInfo
-import com.rudder.data.remote.BlockUserRequest
 import com.rudder.data.remote.JobsInfoApi
 import com.rudder.data.repository.Repository
 import kotlinx.coroutines.CoroutineScope
@@ -93,7 +93,8 @@ class JobsViewModel : ViewModel() {
 
         CoroutineScope(Dispatchers.IO).launch {
             //ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            val response = service.jobsInfoApiFun(BlockUserRequest(token = tokenKey, blockUserInfoId = 9999))
+            val response = service.jobsInfoApiFun(endPostId = 600, searchBody = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+            Log.d("getJobsInfo", "${response}")
 
             withContext(Dispatchers.Main) {
 

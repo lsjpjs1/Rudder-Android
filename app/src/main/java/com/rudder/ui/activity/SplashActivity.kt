@@ -48,17 +48,23 @@ class SplashActivity : AppCompatActivity() {
         Firebase.dynamicLinks
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData ->
+
                 var deeplink: Uri? = null
                 if(pendingDynamicLinkData != null) {
                     deeplink = pendingDynamicLinkData.link
+                    Log.d("deep_123","$pendingDynamicLinkData")
+                    val tmp = pendingDynamicLinkData.link!!.getQueryParameter("key1")
+                    Log.d("deep_456","$tmp")
+                    Log.d("deep_456","${Uri.parse(deeplink.toString())}")
+
                 }
 
                 if(deeplink != null) {
 //                    val tvDeepLinkContent = findViewById<TextView>(R.id.tv_deeplink_content)
 //                    tvDeepLinkContent.text = deeplink.toString()
                     Log.d("deeplink", "${deeplink.toString()}")
-                    Log.d("deeplink.path", "${deeplink.path}")
-
+                    Log.d("deeplink.path1", "${deeplink.pathSegments}")
+                    Log.d("deeplink.path2", "${deeplink.getQueryParameter("key1")}")
                 }
                 else {
                     Log.d("deeplink_null", "getDynamicLink: no link found")
@@ -99,9 +105,10 @@ class SplashActivity : AppCompatActivity() {
         notificationType=intent.getIntExtra("notificationType",-1)
         itemId=intent.getIntExtra("itemId",-1)
 
+
         initDeepLink()
-
-
+        val intent = Intent().getIntExtra("asd",0)
+        Log.d("deeplink_789", "$intent")
 
         autoLogin()
 
@@ -127,12 +134,18 @@ class SplashActivity : AppCompatActivity() {
 
     /** DeepLink */
     private fun initDeepLink() {
-        if (Intent.ACTION_VIEW.equals(intent.action)) {
+        if (Intent.ACTION_VIEW == intent.action) {
+
             var uri = intent.data
+            //var tmtmp = intent.getData().getQueryParameter(hotelId);
+            var tmp = intent.data!!.getQueryParameter("key1")
+
+
             if (uri != null) {
-                var dl_data1 = uri.getQueryParameter("data1")
-                var dl_data2 = uri.getQueryParameter("data2")
-                Log.d("test123", "${uri}")
+
+                Log.d("deeplink_test123", "${uri}")
+                Log.d("deeplink_test456", "${tmp}")
+
 
 //                binding.tvDeeplinkReceive.text = "딥링크 수신받은 값\n" +
 //                        "dl_data1: $dl_data1 \n" +

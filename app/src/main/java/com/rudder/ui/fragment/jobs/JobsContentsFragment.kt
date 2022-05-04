@@ -74,7 +74,7 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
             })
         }
 
-        //jobsViewModel.getJobsInfo()
+        jobsViewModel.getJobsInfo()
 
 
         view.jobsContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)

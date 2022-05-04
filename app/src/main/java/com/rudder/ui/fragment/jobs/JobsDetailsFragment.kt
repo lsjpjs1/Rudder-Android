@@ -3,6 +3,7 @@ package com.rudder.ui.fragment.jobs
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -147,27 +148,28 @@ class JobsDetailsFragment : Fragment() {
 
 
         view.jobsDetailShareCL.setOnClickListener {
-            val url = "https://linkrudder.page.link/main"
+            val url = "https://linkrudder.page.link/main=6"
+            //val url = "http://onelink.to/rudder/?key1=6"
+            val tmp = Uri.parse(url)
+            Log.d("deep_tmp", "$tmp")
 
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, Uri.parse(url))
                 putExtra(Intent.EXTRA_TEXT, url)
-                //putExtra(Intent.EXTRA_TEXT,2)
 
                 type = "text/plain"
 
             }
 
-            val bundle = Bundle().apply {
-                putInt("param1", 3)
-            }
+//            val bundle = Bundle().apply {
+//                putInt("asd", 3)
+//            }
 
             val shareIntent = Intent.createChooser(sendIntent, null)
-            //startActivity(shareIntent)
-            startActivity(shareIntent, bundle)
-
+            startActivity(shareIntent)
+            //startActivity(shareIntent, bundle)
             //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("example://gizmos")))
-
         }
 
     }
