@@ -16,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 import java.sql.Timestamp
 
 class JobsViewModel : ViewModel() {
@@ -32,7 +33,8 @@ class JobsViewModel : ViewModel() {
     private val _isApiResultFail = MutableLiveData<Boolean>()
     val isApiResultFail: LiveData<Boolean> = _isApiResultFail
 
-
+    var pagingIndex = 0
+    var endJobsId = -1
 
     init {
 
@@ -53,9 +55,18 @@ class JobsViewModel : ViewModel() {
     }
 
 
+    fun scrollTouchBottomJobInfoPost() {
+        if (_jobsInfoArrayList.value!!.size > 0) {
+            pagingIndex += 1
+            endJobsId = _jobsInfoArrayList.value!![_jobsInfoArrayList.value!!.size - 1].jobPostId
+            getJobsInfo(true)
+        }
+    }
+
+
     fun scrollTouchTopJobContent() {
         clearJobInfo()
-        getJobsInfo()
+        getJobsInfo(false)
     }
 
 
@@ -65,21 +76,29 @@ class JobsViewModel : ViewModel() {
     }
 
 
-    fun getJobsInfo() {
+    fun getJobsInfo(isScroll: Boolean) {
         val service = JobsInfoApi.instance.jobsInfoService
 
         CoroutineScope(Dispatchers.IO).launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            val response = service.jobsInfoApiFun(endPostId = null, searchBody = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+
+            val response : Response<JsonObject>
+
+            if (isScroll) {
+                response = service.jobsInfoApiFun(endPostId = endJobsId, searchBody = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+            } else {
+                response = service.jobsInfoApiFun(endPostId = null, searchBody = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+            }
 
             withContext(Dispatchers.Main) {
                 if (response.code() == 200) { // 서버 통신 success
                     val result = response.body()
                     val getItems = result!!.getAsJsonArray("jobs")
-                    Log.d("getJobsInfo", "${getItems}")
+                    //Log.d("getJobsInfo", "${getItems}")
 
                     for (getItem in getItems) {
                         val jsonObject = getItem as JsonObject
+                        Log.d("getJobsInfo", "${jsonObject}")
                         _jobsInfoArrayList.value!!.add(
                             JobsInfo(
                                 jobTitle = jsonObject.get("jobTitle").toString().drop(1).dropLast(1),

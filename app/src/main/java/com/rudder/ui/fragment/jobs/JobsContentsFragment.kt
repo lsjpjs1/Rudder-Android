@@ -55,7 +55,7 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
         val jobsContentsDataBinding = DataBindingUtil.inflate<FragmentJobsContentsBinding>(inflater,R.layout.fragment_jobs_contents,container,false)
         jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         jobsContentsDataBinding.jobVM = jobsViewModel
-        jobsViewModel.getJobsInfo()
+        jobsViewModel.getJobsInfo(false)
 
 
         return jobsContentsDataBinding.root
@@ -81,7 +81,7 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if(!it.canScrollVertically(1)){
-                        //mainViewModel.scrollTouchBottomCommunityPost()
+                        jobsViewModel.scrollTouchBottomJobInfoPost()
                     } else if (!it.canScrollVertically(-1) && dy < 0) {
 
                     }
