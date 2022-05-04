@@ -20,6 +20,7 @@ import java.util.*
 class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
     : ListAdapter<JobsInfo, RecyclerView.ViewHolder>(JobContentDiffCallback()) {
 
+
     class JobContentDiffCallback : DiffUtil.ItemCallback<JobsInfo>() {
         override fun areItemsTheSame(oldItem: JobsInfo, newItem: JobsInfo): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
@@ -56,6 +57,10 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
 
     class JobsViewHolder(private val jobsItemBinding : JobsItemBinding, jobsContentOnclickListener: JobsContentOnclickListener)
         : RecyclerView.ViewHolder(jobsItemBinding.root), View.OnClickListener {
+        companion object {
+            const val MAX_COMPANY_BODY_LENGTH = 30
+            const val MAX_JOB_TITLE_BODY_LENGTH = 70
+        }
 
         private var jobsContentOnclickListener : JobsContentOnclickListener? = null
 
@@ -68,8 +73,26 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
         fun bind(jobsItem: JobsInfo) {
             val timeago = PrettyTime(LocaleUtil().getSystemLocale(jobsItemBinding.root.context)).format(Date(jobsItem.postDate.time))
 
-            jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
-            jobsItemBinding.jobsCompanyTV.text = jobsItem.companyName
+            if (jobsItem.jobType == "") {
+                jobsItemBinding.jobsTypeTV.visibility = View.GONE
+            }
+
+
+            if (jobsItem.companyName.length > MAX_COMPANY_BODY_LENGTH ) {
+                val subBody = jobsItem.companyName.substring(0, MAX_COMPANY_BODY_LENGTH) + "  ..."
+                jobsItemBinding.jobsCompanyTV.text = subBody
+            } else {
+                jobsItemBinding.jobsCompanyTV.text = jobsItem.companyName
+            }
+
+
+            if (jobsItem.jobTitle.length > MAX_JOB_TITLE_BODY_LENGTH ) {
+                val subBody = jobsItem.jobTitle.substring(0, MAX_JOB_TITLE_BODY_LENGTH) + "  ..."
+                jobsItemBinding.jobsTitleTV.text = subBody
+            } else {
+                jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
+            }
+
             jobsItemBinding.jobsSalaryTV.text = jobsItem.salary
             jobsItemBinding.jobsTypeTV.text = jobsItem.jobType
             jobsItemBinding.jobsPostTimeTV.text = timeago
@@ -85,7 +108,6 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
 
 
             //jobsItemBinding.jobsItemCompanyIcon.background = ContextCompat.getDrawable(jobsItemBinding.root.context, R.drawable.edge)
-
 
             if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
                 jobsItemBinding.jobsItemsHeart.tag = "not border"

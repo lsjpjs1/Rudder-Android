@@ -1,6 +1,7 @@
 package com.rudder.data.remote
 
 import com.google.gson.JsonObject
+import com.rudder.data.dto.JobsDetail
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
@@ -26,10 +27,10 @@ interface JobsInfoService {
 
 
     @GET("/jobs/{jobId}")
-    suspend fun jobsByIdApiFun(
+    suspend fun jobsByJobIdApiFun(
         @Header("Authorization") token : String,
         @Path("jobId") jobId: Int?,
-    ) : retrofit2.Response<JsonObject>
+    ) : retrofit2.Response<JobsDetail>
 
 
 

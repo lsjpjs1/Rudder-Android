@@ -1,17 +1,16 @@
 package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
@@ -44,8 +43,11 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
         JobsContentAdapter(this)
     }
 
+    private val jobsViewModel: JobsViewModel by activityViewModels()
 
-    private lateinit var jobsViewModel: JobsViewModel
+
+
+    //private lateinit var jobsViewModel: JobsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +55,7 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
     ): View? {
 
         val jobsContentsDataBinding = DataBindingUtil.inflate<FragmentJobsContentsBinding>(inflater,R.layout.fragment_jobs_contents,container,false)
-        jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
+        //jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         jobsContentsDataBinding.jobVM = jobsViewModel
         jobsViewModel.getJobsInfo(false)
 
@@ -64,12 +66,10 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        jobsViewModel.isApiResultFail.observe(viewLifecycleOwner, Observer {
+        jobsViewModel.isJobContentApiResultFail.observe(viewLifecycleOwner, Observer {
             if (!it) {
                 jobsContentAdapter.submitList(jobsViewModel.jobsInfoArrayList.value!!.toMutableList())
-                Log.d("test123", "${jobsViewModel.jobsInfoArrayList.value!!}")
                 view.jobsContentsSwipeRefreshLayout.isRefreshing = false
-
             }
         })
 
@@ -109,12 +109,38 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
     }
 
     override fun onClickContainerView(view: View, position: Int, viewTag : String) {
-        Toast.makeText(parentActivity, "title ${viewTag}", Toast.LENGTH_SHORT).show()
+        jobsViewModel.getJobsDetail(viewTag.toInt())
 
+//        ProgressBarUtil.progressBarDialogFlag.observe(this, Observer {
+//            it.getContentIfNotHandled()?.let { it ->
+//                if (it && jobsViewModel.isJobDetailApiResultFail.value == false) {
+//                    val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
+//                    view.findNavController().navigate(action)
+//                    (activity as MainActivity).mainBottomNavigationDisappear()
+//                } else {
+//                    Log.d("test123", "${jobsViewModel.isJobDetailApiResultFail.value}")
+//                }
+//            }
+//        })
 
-        val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
-        view.findNavController().navigate(action)
-        (activity as MainActivity).mainBottomNavigationDisappear()
+        jobsViewModel.isJobDetailApiResultFail.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (!it) {
+                    val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
+//                    val mHandler = Handler(Looper.getMainLooper())
+//                    mHandler.postDelayed({
+//                        findNavController().navigate(action)
+//                    }, 1000) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
+
+                    findNavController().navigate(action)
+                    (activity as MainActivity).mainBottomNavigationDisappear()
+                }
+            }
+
+        })
+//        val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
+//        view.findNavController().navigate(action)
+//        (activity as MainActivity).mainBottomNavigationDisappear()
 
     }
 

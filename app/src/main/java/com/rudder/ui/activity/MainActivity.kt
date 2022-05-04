@@ -21,10 +21,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rudder.R
+import com.rudder.data.MainDisplayTab
+import com.rudder.data.dto.NotificationType
 import com.rudder.data.local.App
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
@@ -32,33 +35,27 @@ import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
 import com.rudder.ui.fragment.comment.CommunityCommentEditFragment
 import com.rudder.ui.fragment.comment.CommunityCommentReportFragment
 import com.rudder.ui.fragment.community.CommunityDisplayFragment
-import com.rudder.ui.fragment.post.*
-import com.rudder.ui.fragment.search.SearchPostDisplayFragment
-import com.rudder.util.ProgressBarUtil
-import com.rudder.util.StartActivityUtil
-import com.rudder.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_add_comment.*
-import kotlinx.android.synthetic.main.fragment_community_display.*
-import kotlinx.android.synthetic.main.post_comments.*
-import androidx.navigation.fragment.findNavController
-import com.rudder.data.MainDisplayTab
-import com.rudder.data.dto.NotificationType
 import com.rudder.ui.fragment.community.CommunityDisplayFragmentDirections
 import com.rudder.ui.fragment.mypage.*
 import com.rudder.ui.fragment.notification.NotificationDisplayFragment
+import com.rudder.ui.fragment.post.*
 import com.rudder.ui.fragment.postmessage.PostMessageDisplayFragmentDirections
+import com.rudder.ui.fragment.search.SearchPostDisplayFragment
 import com.rudder.util.*
-import com.rudder.viewModel.MainActivityViewModel
-import com.rudder.viewModel.RequestCategoryViewModel
-import com.rudder.viewModel.NotificationViewModel
+import com.rudder.viewModel.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.fragment_add_comment.*
+import kotlinx.android.synthetic.main.fragment_community_display.*
+import kotlinx.android.synthetic.main.post_comments.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
 
 
 class MainActivity : AppCompatActivity(), MainActivityInterface {
     val mainViewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
     private val notificationViewModel : NotificationViewModel by lazy { ViewModelProvider(this).get(NotificationViewModel::class.java) }
+    val jobsViewModel: JobsViewModel by lazy { ViewModelProvider(this).get(JobsViewModel::class.java) }
+
 
     //private lateinit var mainActivityViewModel: MainActivityViewModel
 
@@ -227,7 +224,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         ProgressBarUtil.progressBarDialogFlag.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
-                    progressDialog.show()
+                    if(!progressDialog.isShowing) {
+                        progressDialog.show()
+                    }
                 } else {
                     progressDialog.dismiss()
                 }

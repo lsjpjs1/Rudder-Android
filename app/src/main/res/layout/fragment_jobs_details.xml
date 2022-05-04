@@ -98,7 +98,7 @@
                         android:text="Global Banking"
                         android:textColor="@color/black"
                         android:fontFamily="@font/sf_pro_text_bold"
-                        android:id="@+id/jobsDetailJobTitle"
+                        android:id="@+id/jobsDetailJobTitleTV"
                         >
 
                     </TextView>
@@ -106,9 +106,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailJobTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/jobsDetailJobTitleTV"
                         android:id="@+id/jobsDetailDiscussionBoardTV"
-                        android:text="Discussion Board (+99)"
+                        android:text="Discussion Board"
                         android:textColor="@color/black"
                         android:layout_marginTop="10dp"
                         android:textSize="14sp"
@@ -234,7 +234,7 @@
                         android:id="@+id/jobsDetailSalaryTV"
                         android:textSize="16sp"
                         android:fontFamily="@font/sf_pro_text_bold"
-                        android:text="$30K ~ $50K"
+                        android:text=""
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/jobsDetailJobDetailsTV"
                         android:textColor="@color/black"
@@ -264,7 +264,7 @@
                         android:id="@+id/jobsDetailDeadlineTV"
                         android:textSize="16sp"
                         android:fontFamily="@font/sf_pro_text_bold"
-                        android:text="2022.05.03"
+                        android:text=""
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/jobsDetailSalary"
                         android:textColor="@color/black"

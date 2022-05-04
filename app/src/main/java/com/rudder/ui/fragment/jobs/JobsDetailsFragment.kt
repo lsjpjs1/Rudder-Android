@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.rudder.R
 import com.rudder.databinding.FragmentJobsDetailsBinding
@@ -48,15 +47,13 @@ class JobsDetailsFragment : Fragment() {
         }
     }
 
-    private lateinit var jobsViewModel: JobsViewModel
+    //private lateinit var jobsViewModel: JobsViewModel
+    private val jobsViewModel: JobsViewModel by activityViewModels()
+
 
     companion object {
         const val TAG = "JobsDetailsFragment"
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         * @return A new instance of fragment JobsDetailsFragment.
-         */
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             JobsDetailsFragment().apply {
@@ -73,20 +70,27 @@ class JobsDetailsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val jobsDetailsDataBinding = DataBindingUtil.inflate<FragmentJobsDetailsBinding>(inflater,R.layout.fragment_jobs_details,container,false)
-        jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
+        //jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         jobsDetailsDataBinding.jobVM = jobsViewModel
 
 
+        Log.d("test1234", "${jobsViewModel.jobsDetailInfo.value}")
+
 
         jobsDetailsDataBinding.jobsDetailCompanyTV.text = jobsViewModel.jobsDetailInfo.value!!.companyName
-        jobsDetailsDataBinding.jobsDetailLocationTV.text = jobsViewModel.jobsDetailInfo.value!!.jobLocation
+        jobsDetailsDataBinding.jobsDetailLocationTV.text = jobsViewModel.jobsDetailInfo.value!!.location
         jobsDetailsDataBinding.jobsDetailSalaryTV.text = jobsViewModel.jobsDetailInfo.value!!.salary
         jobsDetailsDataBinding.jobsDetailTypeTV.text = jobsViewModel.jobsDetailInfo.value!!.jobType
-        jobsDetailsDataBinding.jobsDetailFullJobDescriptionTV.text = jobsViewModel.jobsDetailInfo.value!!.jobDescription
-        jobsDetailsDataBinding.jobsDetailPostTimeTV.text = jobsViewModel.jobsDetailInfo.value!!.postDate.toString()
-        jobsDetailsDataBinding.jobsDetailDeadlineTV.text = jobsViewModel.jobsDetailInfo.value!!.dueDate.toString()
+        jobsDetailsDataBinding.jobsDetailJobTitleTV.text = jobsViewModel.jobsDetailInfo.value!!.jobTitle
 
-        if (jobsViewModel.jobsDetailInfo.value!!.isSaved) {
+        jobsDetailsDataBinding.jobsDetailFullJobDescriptionTV.text = jobsViewModel.jobsDetailInfo.value!!.jobDescription
+        jobsDetailsDataBinding.jobsDetailPostTimeTV.text = jobsViewModel.jobsDetailInfo.value!!.uploadDate.toString().dropLast(12)
+
+        jobsViewModel.jobsDetailInfo.value!!.expireDate?.let{
+            jobsDetailsDataBinding.jobsDetailDeadlineTV.text = it
+        }
+
+        if (jobsViewModel.jobsDetailInfo.value!!.isFavorite) {
             jobsDetailsDataBinding.jobsDetailHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
             jobsDetailsDataBinding.jobsDetailHeart.setColorFilter(ContextCompat.getColor(lazyContext,R.color.purple_rudder))
             jobsDetailsDataBinding.jobsDetailHeart.tag = "not border"
@@ -141,7 +145,7 @@ class JobsDetailsFragment : Fragment() {
         }
 
         view.jobsDetailApplyButton.setOnClickListener {
-            val url = jobsViewModel.jobsDetailInfo.value!!.jobPostURL
+            val url = jobsViewModel.jobsDetailInfo.value!!.jobUrl
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }
