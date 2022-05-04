@@ -1,7 +1,6 @@
 package com.rudder.data.remote
 
 import com.google.gson.JsonObject
-import com.rudder.data.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
@@ -22,7 +21,7 @@ interface JobsInfoService {
         @Header("Authorization") token : String,
         @Query("endJobId") endPostId: Int?,
         @Query("searchBody") searchBody : String?
-    ) : Response<JsonObject>
+    ) : retrofit2.Response<JsonObject>
 
 
 
@@ -30,7 +29,7 @@ interface JobsInfoService {
     suspend fun jobsByIdApiFun(
         @Header("Authorization") token : String,
         @Path("jobId") jobId: Int?,
-    ) : Response<JsonObject>
+    ) : retrofit2.Response<JsonObject>
 
 
 
@@ -38,7 +37,7 @@ interface JobsInfoService {
     suspend fun jobsFavoriteApiFun(
         @Header("Authorization") token : String,
         @Query("endJobId") endPostId: Int?,
-    ) : Response<JsonObject>
+    ) : retrofit2.Response<JsonObject>
 
 
 }

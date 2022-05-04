@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +40,9 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
     }
 
     private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
+    private val jobsContentAdapter by lazy {
+        JobsContentAdapter(this)
+    }
 
 
     private lateinit var jobsViewModel: JobsViewModel
@@ -50,6 +55,7 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
         val jobsContentsDataBinding = DataBindingUtil.inflate<FragmentJobsContentsBinding>(inflater,R.layout.fragment_jobs_contents,container,false)
         jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         jobsContentsDataBinding.jobVM = jobsViewModel
+        jobsViewModel.getJobsInfo()
 
 
         return jobsContentsDataBinding.root
@@ -58,10 +64,19 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        jobsViewModel.isApiResultFail.observe(viewLifecycleOwner, Observer {
+            if (!it) {
+                jobsContentAdapter.submitList(jobsViewModel.jobsInfoArrayList.value!!.toMutableList())
+                Log.d("test123", "${jobsViewModel.jobsInfoArrayList.value!!}")
+                view.jobsContentsSwipeRefreshLayout.isRefreshing = false
+
+            }
+        })
+
         view.jobsContentRecyclerView.also{
             it.layoutManager = LinearLayoutManager(parentActivity, LinearLayoutManager.VERTICAL, false)
             it.setHasFixedSize(false)
-            it.adapter = JobsContentAdapter(jobsViewModel.jobsInfoArrayList.value!!, this)
+            it.adapter = jobsContentAdapter
             it.addOnScrollListener(object : RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -74,12 +89,11 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
             })
         }
 
-        jobsViewModel.getJobsInfo()
-
 
         view.jobsContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
         view.jobsContentsSwipeRefreshLayout.setOnRefreshListener {
-            //mainViewModel.scrollTouchTopCommunityPost()
+            jobsViewModel.scrollTouchTopJobContent()
+
         }
 
         view.jobsContentHeart.setOnClickListener { view ->

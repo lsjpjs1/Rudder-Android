@@ -30,9 +30,10 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/ic_baseline_apartment_24"
+                android:src="@drawable/login_rudder_icon"
                 android:id="@+id/jobsItemCompanyIcon"
-                android:background="@drawable/edge_grey"
+                android:background="@drawable/edge_light_grey"
+                android:padding="4dp"
                 >
 
 

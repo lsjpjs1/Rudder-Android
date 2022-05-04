@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -15,8 +17,20 @@ import com.rudder.util.LocaleUtil
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsContentOnclickListener: JobsContentOnclickListener)
-    : RecyclerView.Adapter<JobsContentAdapter.JobsViewHolder>() {
+class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
+    : ListAdapter<JobsInfo, RecyclerView.ViewHolder>(JobContentDiffCallback()) {
+
+    class JobContentDiffCallback : DiffUtil.ItemCallback<JobsInfo>() {
+        override fun areItemsTheSame(oldItem: JobsInfo, newItem: JobsInfo): Boolean {
+            return oldItem.hashCode() == newItem.hashCode()
+        }
+
+
+        override fun areContentsTheSame(oldItem: JobsInfo, newItem: JobsInfo): Boolean {
+            return oldItem == newItem
+        }
+    }
+
 
     private var jobsContentOnclickListener : JobsContentOnclickListener? = null
 
@@ -31,12 +45,12 @@ class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsCon
         )
     }
 
-    override fun onBindViewHolder(jobsViewHolder: JobsViewHolder, position: Int) {
-        jobsViewHolder.bind(jobsItemList[jobsViewHolder.bindingAdapterPosition])
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder as JobsViewHolder
+        val jobInfoItem = getItem(position) as JobsInfo
+        holder.bind(jobInfoItem)
     }
-
-    override fun getItemCount(): Int = jobsItemList.size
 
 
 
@@ -62,19 +76,12 @@ class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsCon
 
             jobsItemBinding.jobsMainCL.tag = jobsItem.jobPostId
 
-
-
             jobsItem.companyImage?.let{
                 Glide.with(jobsItemBinding.root.context)
                     .load(jobsItem.companyImage)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(jobsItemBinding.jobsItemCompanyIcon)
             }
-
-//            Glide.with(jobsItemBinding.root.context)
-//                .load(jobsItem.companyImage)
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .into(jobsItemBinding.jobsItemCompanyIcon)
 
 
             //jobsItemBinding.jobsItemCompanyIcon.background = ContextCompat.getDrawable(jobsItemBinding.root.context, R.drawable.edge)
@@ -97,6 +104,7 @@ class JobsContentAdapter(private val jobsItemList : ArrayList<JobsInfo>, jobsCon
             }
         }
     }
+
 
 
 }

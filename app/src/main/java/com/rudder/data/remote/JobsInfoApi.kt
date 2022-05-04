@@ -8,16 +8,9 @@ class JobsInfoApi {
         val instance = JobsInfoApi()
     }
 
-    //private val blockUserService : BlockUserService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(BlockUserService::class.java)
-
 
     val jobsInfoService : JobsInfoService = RetrofitClientSpring.getClient(BuildConfig.BASE_URL_SPRING).create(JobsInfoService::class.java)
 
-//    fun blockUser(blockUserRequest: BlockUserRequest) : Deferred<Response<BlockUserResponse>> {
-//        return GlobalScope.async(Dispatchers.IO){
-//            blockUserService.blockUser(blockUserRequest)
-//        }
-//    }
 
 
 }
