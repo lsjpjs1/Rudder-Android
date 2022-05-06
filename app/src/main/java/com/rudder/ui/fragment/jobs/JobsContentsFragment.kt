@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
+import com.rudder.data.remote.JobsEnum
 import com.rudder.databinding.FragmentJobsContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.JobsContentAdapter
@@ -44,6 +45,8 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
     }
 
     private val jobsViewModel: JobsViewModel by activityViewModels()
+
+    //private val jobsViewModel: JobsViewModel by viewModels()
 
 
 
@@ -109,9 +112,9 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
     }
 
     override fun onClickContainerView(view: View, position: Int, viewTag : String) {
-        jobsViewModel.getJobsDetail(viewTag.toInt())
+        jobsViewModel.getJobsDetail(viewTag.toInt(),JobsEnum.CONTENT)
 
-        jobsViewModel.isJobDetailApiResultFail.observe(viewLifecycleOwner, Observer {
+        jobsViewModel.isJobDetailContentResultFail.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (!it) {
                     val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
@@ -119,7 +122,31 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
                     (activity as MainActivity).mainBottomNavigationDisappear()
                 }
             }
+
         })
+
+//        jobsViewModel.jobsDetailInfo.observe(viewLifecycleOwner, Observer {
+//            val navController = findNavController()
+//            //Log.d("test555", "content")
+//                if (navController.currentDestination?.label == "Jobs") {
+//                    val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
+//                    val mHandler = Handler(Looper.getMainLooper())
+//                    mHandler.postDelayed({
+//                        navController.navigate(action)
+//                    }, 1000) //
+//
+//
+//                    //navController.navigate(action)
+//                    (activity as MainActivity).mainBottomNavigationDisappear()
+//
+//            }
+//
+//        })
+
+
+
+
+
     }
 
     override fun onClickImageView(view: View, position: Int) {

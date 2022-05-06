@@ -459,7 +459,14 @@
         android:id="@+id/navigation_jobs_search"
         android:name="com.rudder.ui.fragment.jobs.JobsSearchFragment"
         android:label="jobsSearch"
-        tools:layout="@layout/fragment_jobs_search">>
+        tools:layout="@layout/fragment_jobs_search">
+
+        <action
+            android:id="@+id/action_navigation_jobs_search_to_navigation_jobs_details"
+            app:destination="@id/navigation_jobs_details"
+            app:popUpTo="@id/navigation_jobs_search"
+            >
+        </action>
 
     </bottom>
 

@@ -115,7 +115,7 @@ class JobsDetailsFragment : Fragment() {
 
             if (navController.currentDestination!!.label == "Jobs") {
                 (activity as MainActivity).mainBottomNavigationAppear()
-            } else if (navController.currentDestination!!.label == "Saved Jobs") {
+            } else if (navController.currentDestination!!.label == "Saved Jobs" || navController.currentDestination!!.label == "jobsSearch") {
                 (activity as MainActivity).mainBottomNavigationDisappear()
             }
         }

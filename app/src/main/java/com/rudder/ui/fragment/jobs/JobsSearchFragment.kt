@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.rudder.data.remote.JobsEnum
 import com.rudder.databinding.FragmentJobsSearchBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.JobsContentAdapter
@@ -73,7 +75,7 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if(!it.canScrollVertically(1)){
-                        jobsViewModel.scrollTouchBottomJobInfoPost()
+                        //jobsViewModel.scrollTouchBottomJobInfoPost()
                     } else if (!it.canScrollVertically(-1) && dy < 0) {
 
                     }
@@ -110,7 +112,20 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
     }
 
     override fun onClickContainerView(view: View, position: Int, viewTag: String) {
-        TODO("Not yet implemented")
+        jobsViewModel.getJobsDetail(viewTag.toInt(),JobsEnum.SEARCH)
+
+
+        val navController = findNavController()
+        jobsViewModel.isJobDetailSearchResultFail.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (!it) {
+                    val action = JobsSearchFragmentDirections.actionNavigationJobsSearchToNavigationJobsDetails()
+                    findNavController().navigate(action)
+                    (activity as MainActivity).mainBottomNavigationDisappear()
+                }
+            }
+        })
+
     }
 
     override fun onClickImageView(view: View, position: Int) {

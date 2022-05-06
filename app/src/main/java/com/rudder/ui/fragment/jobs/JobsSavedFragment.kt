@@ -1,7 +1,6 @@
 package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
+import com.rudder.data.remote.JobsEnum
 import com.rudder.databinding.FragmentJobsSavedBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.JobsSavedAdapter
@@ -43,6 +43,12 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     }
 
     private val jobsViewModel: JobsViewModel by activityViewModels()
+
+    //private val jobsViewModel: JobsViewModel by viewModels()
+
+
+    //private lateinit var jobsViewModel: JobsViewModel
+
 
 
 
@@ -122,18 +128,14 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     }
 
     override fun onClickContainerView(view: View, position: Int, viewTag : String) {
-//        Log.d("savedJob", "${position}")
-//        val action = JobsSavedFragmentDirections.actionNavigationJobsSavedToNavigationJobsDetails()
-//        view.findNavController().navigate(action)
-//        (activity as MainActivity).mainBottomNavigationDisappear()
-        Log.d("test123", "${viewTag.toInt()}")
-        jobsViewModel.getJobsDetail(viewTag.toInt())
+        jobsViewModel.getJobsDetail(viewTag.toInt(), JobsEnum.SAVED)
 
-        jobsViewModel.isJobDetailApiResultFail.observe(viewLifecycleOwner, Observer {
+        val navController = findNavController()
+        jobsViewModel.isJobDetailSavedResultFail.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (!it) {
                     val action = JobsSavedFragmentDirections.actionNavigationJobsSavedToNavigationJobsDetails()
-                    findNavController().navigate(action)
+                    navController.navigate(action)
                     (activity as MainActivity).mainBottomNavigationDisappear()
                 }
             }

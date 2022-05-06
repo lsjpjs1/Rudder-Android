@@ -8,6 +8,7 @@ import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.dto.JobsDetail
 import com.rudder.data.dto.JobsInfo
+import com.rudder.data.remote.JobsEnum
 import com.rudder.data.remote.JobsInfoApi
 import com.rudder.data.repository.Repository
 import com.rudder.util.Event
@@ -43,10 +44,18 @@ class JobsViewModel : ViewModel() {
     val isJobDetailApiResultFail: LiveData<Event<Boolean>> = _isJobDetailApiResultFail
 
 
+    private val _isJobDetailContentResultFail = MutableLiveData<Event<Boolean>>()
+    val isJobDetailContentResultFail: LiveData<Event<Boolean>> = _isJobDetailContentResultFail
+
+    private val _isJobDetailSavedResultFail = MutableLiveData<Event<Boolean>>()
+    val isJobDetailSavedResultFail: LiveData<Event<Boolean>> = _isJobDetailSavedResultFail
+
+    private val _isJobDetailSearchResultFail = MutableLiveData<Event<Boolean>>()
+    val isJobDetailSearchResultFail: LiveData<Event<Boolean>> = _isJobDetailSearchResultFail
+
+
     private val _isJobMyFavoriteApiResultFail = MutableLiveData<Boolean>()
     val isJobMyFavoriteApiResultFail: LiveData<Boolean> = _isJobMyFavoriteApiResultFail
-
-
 
 
     var pagingIndex = 0
@@ -153,7 +162,7 @@ class JobsViewModel : ViewModel() {
 
 
 
-    fun getJobsDetail(jobId : Int) {
+    fun getJobsDetail(jobId : Int, whereCall : JobsEnum) {
         val service = JobsInfoApi.instance.jobsInfoService
 
 
@@ -165,12 +174,22 @@ class JobsViewModel : ViewModel() {
                     val result = response.body()
                     Log.d("test123", "${result}")
                     _jobsDetailInfo.value = result!!
-                    _isJobDetailApiResultFail.postValue(Event(false))
+                    when (whereCall) {
+                        JobsEnum.CONTENT -> {
+                            _isJobDetailContentResultFail.postValue(Event(false))
+                        }
+                        JobsEnum.SAVED -> {
+                            _isJobDetailSavedResultFail.postValue(Event(false))
+                        }
+                        JobsEnum.SEARCH -> {
+                            _isJobDetailSearchResultFail.postValue(Event(false))
+                        }
+                    }
                 } else { // 서버 통신 fail
                     _isJobDetailApiResultFail.postValue(Event(true))
                 }
             }
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+           ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
     }
 
