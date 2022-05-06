@@ -26,6 +26,8 @@ class JobsViewModel : ViewModel() {
     var _jobsInfoArrayList = MutableLiveData<ArrayList<JobsInfo>>()
     var jobsInfoArrayList: LiveData<ArrayList<JobsInfo>> = _jobsInfoArrayList
 
+    var _jobsSearchArrayList = MutableLiveData<ArrayList<JobsInfo>>()
+    var jobsSearchArrayList: LiveData<ArrayList<JobsInfo>> = _jobsSearchArrayList
 
     var _jobsMyFavoriteArrayList = MutableLiveData<ArrayList<JobsInfo>>()
     var jobsMyFavoriteArrayList: LiveData<ArrayList<JobsInfo>> = _jobsMyFavoriteArrayList
@@ -52,6 +54,7 @@ class JobsViewModel : ViewModel() {
 
     init {
         _jobsInfoArrayList.value = arrayListOf<JobsInfo>()
+        _jobsSearchArrayList.value = arrayListOf<JobsInfo>()
         _jobsMyFavoriteArrayList.value = arrayListOf<JobsInfo>()
         _jobsDetailInfo.value = JobsDetail(jobTitle = null,
             jobId = null,
@@ -87,16 +90,16 @@ class JobsViewModel : ViewModel() {
         endJobsId = -1
     }
 
-    fun getJobsInfo(isScroll: Boolean) {
+    fun getJobsInfo(isScroll: Boolean, searchWord : String? = null) {
         val service = JobsInfoApi.instance.jobsInfoService
 
         CoroutineScope(Dispatchers.IO).launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             val response : Response<JsonObject>
             if (isScroll) {
-                response = service.jobsInfoApiFun(endPostId = endJobsId, searchBody = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                response = service.jobsInfoApiFun(endPostId = endJobsId, searchBody = searchWord, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
             } else {
-                response = service.jobsInfoApiFun(endPostId = null, searchBody = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                response = service.jobsInfoApiFun(endPostId = null, searchBody = searchWord, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
             }
 
             withContext(Dispatchers.Main) {
@@ -107,19 +110,37 @@ class JobsViewModel : ViewModel() {
 
                     for (getItem in getItems) {
                         val jsonObject = getItem as JsonObject
-                        //Log.d("getJobsInfo", "${jsonObject}")
-                        _jobsInfoArrayList.value!!.add(
-                            JobsInfo(
-                                jobTitle = jsonObject.get("jobTitle").toString().drop(1).dropLast(1),
-                                jobPostId = jsonObject.get("jobId").asInt,
-                                companyName = jsonObject.get("companyName").toString().drop(1).dropLast(1),
-                                jobType = if (jsonObject.get("jobType") != null) "" else jsonObject.get("jobType").toString().drop(1).dropLast(1),
-                                salary = jsonObject.get("salary").toString().drop(1).dropLast(1),
-                                postDate = Timestamp.valueOf(jsonObject.get("uploadDate").toString().split('T').joinToString(" ").drop(1).dropLast(11)),
-                                companyImage = null,
-                                isSaved = jsonObject.get("isFavorite").asBoolean
+
+                        if (searchWord == null) { // search가 아닌 content인 경우
+                            _jobsInfoArrayList.value!!.add(
+                                JobsInfo(
+                                    jobTitle = jsonObject.get("jobTitle").toString().drop(1).dropLast(1),
+                                    jobPostId = jsonObject.get("jobId").asInt,
+                                    companyName = jsonObject.get("companyName").toString().drop(1).dropLast(1),
+                                    jobType = if (jsonObject.get("jobType") != null) "" else jsonObject.get("jobType").toString().drop(1).dropLast(1),
+                                    salary = jsonObject.get("salary").toString().drop(1).dropLast(1),
+                                    postDate = Timestamp.valueOf(jsonObject.get("uploadDate").toString().split('T').joinToString(" ").drop(1).dropLast(11)),
+                                    companyImage = null,
+                                    isSaved = jsonObject.get("isFavorite").asBoolean
+                                )
                             )
-                        )
+                        } else { // search 인 경우
+                            _jobsSearchArrayList.value!!.add(
+                                JobsInfo(
+                                    jobTitle = jsonObject.get("jobTitle").toString().drop(1).dropLast(1),
+                                    jobPostId = jsonObject.get("jobId").asInt,
+                                    companyName = jsonObject.get("companyName").toString().drop(1).dropLast(1),
+                                    jobType = if (jsonObject.get("jobType") != null) "" else jsonObject.get("jobType").toString().drop(1).dropLast(1),
+                                    salary = jsonObject.get("salary").toString().drop(1).dropLast(1),
+                                    postDate = Timestamp.valueOf(jsonObject.get("uploadDate").toString().split('T').joinToString(" ").drop(1).dropLast(11)),
+                                    companyImage = null,
+                                    isSaved = jsonObject.get("isFavorite").asBoolean
+                                )
+                            )
+
+
+                        }
+
                     }
                     _isJobContentApiResultFail.postValue(false)
                 } else { // 서버 통신 fail

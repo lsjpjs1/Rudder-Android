@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,10 +25,8 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
         activity as MainActivity
     }
 
-
     private var _binding : FragmentJobsSearchBinding? = null
     private val binding get() = _binding!!
-    private lateinit var jobsViewModel: JobsViewModel
     private val lazyContext by lazy {
         requireContext()
     }
@@ -35,34 +35,20 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
     }
 
     companion object {
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            JobsSearchFragment().apply {
-//                arguments = Bundle().apply {
-////                    putString(ARG_PARAM1, param1)
-////                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-
         const val TAG = "JobsSearchFragment"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            //param1 = it.getString(ARG_PARAM1)
-            //param2 = it.getString(ARG_PARAM2)
-        }
+    private val jobsViewModel: JobsViewModel by activityViewModels()
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentJobsSearchBinding.inflate(layoutInflater)
-        jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
+        //jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         binding.jobVM = jobsViewModel
+
 
 
 
@@ -94,6 +80,32 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
                 }
             })
         }
+
+
+        jobsViewModel.isJobContentApiResultFail.observe(viewLifecycleOwner, Observer {
+            if (!it) {
+                jobsContentAdapter.submitList(jobsViewModel.jobsSearchArrayList.value!!.toMutableList())
+                //view.jobsContentsSwipeRefreshLayout.isRefreshing = false
+            }
+        })
+
+
+        view.jobsSearchSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let{
+                    jobsViewModel.getJobsInfo(isScroll = false, searchWord = query)
+                }
+                view.jobsSearchSearchView.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let{
+
+                }
+                return true
+            }
+        })
 
     }
 

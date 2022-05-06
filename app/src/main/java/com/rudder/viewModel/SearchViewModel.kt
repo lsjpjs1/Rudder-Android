@@ -1,17 +1,13 @@
 package com.rudder.viewModel
 
-import android.app.Activity
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rudder.BuildConfig
 import com.rudder.data.EditPostInfo
 import com.rudder.data.GetPostInfo
 import com.rudder.data.local.App
 import com.rudder.data.repository.Repository
-import com.rudder.ui.activity.MainActivity
 import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
 import kotlinx.coroutines.GlobalScope
@@ -33,7 +29,9 @@ class SearchViewModel : MainViewModel(), ViewModelInterface {
     init {
         postMode = PostMode.SEARCH
         clearSearchPost()
-        
+        _searchWord.value = ""
+
+
     }
 
     override fun editPost(){
@@ -76,7 +74,6 @@ class SearchViewModel : MainViewModel(), ViewModelInterface {
             _isSearchWordValid.value = Event(true)
         } else {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-
             _isScrollTouch.value = Event(true)
             val key = BuildConfig.TOKEN_KEY
             val token = App.prefs.getValue(key)

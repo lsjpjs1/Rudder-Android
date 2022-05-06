@@ -38,6 +38,7 @@ class SearchPostHeaderFragment : Fragment() {
                 query?.let{
                     searchViewModel.searchPost(false)
                 }
+                header.searchPostSearchView.clearFocus()
                 return true
             }
 
