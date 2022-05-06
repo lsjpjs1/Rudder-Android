@@ -142,6 +142,7 @@ class JobsViewModel : ViewModel() {
             withContext(Dispatchers.Main) {
                 if (response.code() == 200) { // 서버 통신 success
                     val result = response.body()
+                    Log.d("test123", "${result}")
                     _jobsDetailInfo.value = result!!
                     _isJobDetailApiResultFail.postValue(Event(false))
                 } else { // 서버 통신 fail

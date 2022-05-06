@@ -1,12 +1,13 @@
 package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +25,7 @@ import kotlinx.android.synthetic.main.jobs_item.view.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [JobsSavedFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -37,7 +34,6 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     private var _binding : FragmentJobsSavedBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var jobsViewModel: JobsViewModel
     private val lazyContext by lazy {
         requireContext()
     }
@@ -45,6 +41,9 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     private val jobsSavedAdapter: JobsSavedAdapter by lazy {
         JobsSavedAdapter(this)
     }
+
+    private val jobsViewModel: JobsViewModel by activityViewModels()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +60,7 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentJobsSavedBinding.inflate(layoutInflater)
-        jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
+        //jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         binding.jobVM = jobsViewModel
 
         jobsViewModel.getJobsMyFavorite(false)
@@ -127,7 +126,7 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
 //        val action = JobsSavedFragmentDirections.actionNavigationJobsSavedToNavigationJobsDetails()
 //        view.findNavController().navigate(action)
 //        (activity as MainActivity).mainBottomNavigationDisappear()
-
+        Log.d("test123", "${viewTag.toInt()}")
         jobsViewModel.getJobsDetail(viewTag.toInt())
 
         jobsViewModel.isJobDetailApiResultFail.observe(viewLifecycleOwner, Observer {

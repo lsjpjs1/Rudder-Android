@@ -73,8 +73,6 @@ class JobsDetailsFragment : Fragment() {
         //jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         jobsDetailsDataBinding.jobVM = jobsViewModel
 
-
-
         jobsDetailsDataBinding.jobsDetailCompanyTV.text = jobsViewModel.jobsDetailInfo.value!!.companyName
         jobsDetailsDataBinding.jobsDetailLocationTV.text = jobsViewModel.jobsDetailInfo.value!!.location
         jobsDetailsDataBinding.jobsDetailSalaryTV.text = jobsViewModel.jobsDetailInfo.value!!.salary
