@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="test_id_01" type="id"/>
-    <item name="test_id_02" type="id"/>
+    <item name="borderTag" type="id"/>
+    <item name="jobIdTag" type="id"/>
 </resources>

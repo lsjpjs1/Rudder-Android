@@ -106,14 +106,19 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
                     .into(jobsItemBinding.jobsItemCompanyIcon)
             }
 
-
             //jobsItemBinding.jobsItemCompanyIcon.background = ContextCompat.getDrawable(jobsItemBinding.root.context, R.drawable.edge)
 
             if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
-                jobsItemBinding.jobsItemsHeart.tag = "not border"
+                //jobsItemBinding.jobsItemsHeart.tag = "not border"
+
+                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "not border")
+                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)
                 jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
             } else {
-                jobsItemBinding.jobsItemsHeart.tag = "border"
+                //jobsItemBinding.jobsItemsHeart.tag = "border"
+
+                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "not border")
+                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)
                 jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
             }
         }

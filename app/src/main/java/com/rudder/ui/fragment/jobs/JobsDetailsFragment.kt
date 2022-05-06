@@ -82,7 +82,6 @@ class JobsDetailsFragment : Fragment() {
         jobsDetailsDataBinding.jobsDetailSalaryTV.text = jobsViewModel.jobsDetailInfo.value!!.salary
         jobsDetailsDataBinding.jobsDetailTypeTV.text = jobsViewModel.jobsDetailInfo.value!!.jobType
         jobsDetailsDataBinding.jobsDetailJobTitleTV.text = jobsViewModel.jobsDetailInfo.value!!.jobTitle
-
         jobsDetailsDataBinding.jobsDetailFullJobDescriptionTV.text = jobsViewModel.jobsDetailInfo.value!!.jobDescription
         jobsDetailsDataBinding.jobsDetailPostTimeTV.text = jobsViewModel.jobsDetailInfo.value!!.uploadDate.toString().dropLast(12)
 

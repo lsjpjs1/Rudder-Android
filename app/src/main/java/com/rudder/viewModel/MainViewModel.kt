@@ -19,7 +19,6 @@ import kotlinx.coroutines.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.sql.Timestamp
-import kotlin.collections.ArrayList
 
 
 open class MainViewModel : ViewModel(), ViewModelInterface {
@@ -110,8 +109,6 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     private val _commonCategoryList = MutableLiveData<ArrayList<Category>>()
     private val _departmentACategoryList = MutableLiveData<ArrayList<Category>>()
     private val _departmentBCategoryList = MutableLiveData<ArrayList<Category>>()
-
-
 
 
     var isShowPostRefreshSuccess: LiveData<Event<Boolean>> = _isShowPostRefreshSuccess

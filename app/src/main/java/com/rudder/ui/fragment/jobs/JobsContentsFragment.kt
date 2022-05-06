@@ -57,8 +57,8 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
         val jobsContentsDataBinding = DataBindingUtil.inflate<FragmentJobsContentsBinding>(inflater,R.layout.fragment_jobs_contents,container,false)
         //jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         jobsContentsDataBinding.jobVM = jobsViewModel
-        jobsViewModel.getJobsInfo(false)
 
+        jobsViewModel.getJobsInfo(false)
 
         return jobsContentsDataBinding.root
     }
@@ -111,41 +111,20 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
     override fun onClickContainerView(view: View, position: Int, viewTag : String) {
         jobsViewModel.getJobsDetail(viewTag.toInt())
 
-//        ProgressBarUtil.progressBarDialogFlag.observe(this, Observer {
-//            it.getContentIfNotHandled()?.let { it ->
-//                if (it && jobsViewModel.isJobDetailApiResultFail.value == false) {
-//                    val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
-//                    view.findNavController().navigate(action)
-//                    (activity as MainActivity).mainBottomNavigationDisappear()
-//                } else {
-//                    Log.d("test123", "${jobsViewModel.isJobDetailApiResultFail.value}")
-//                }
-//            }
-//        })
-
         jobsViewModel.isJobDetailApiResultFail.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (!it) {
                     val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
-//                    val mHandler = Handler(Looper.getMainLooper())
-//                    mHandler.postDelayed({
-//                        findNavController().navigate(action)
-//                    }, 1000) // delay를 주지 않으면, postmessage와 postmessageRoom 두 개의 view가 바로 그려져서 겹쳐져 보이게 되기에 delay를 줌.
-
                     findNavController().navigate(action)
                     (activity as MainActivity).mainBottomNavigationDisappear()
                 }
             }
-
         })
-//        val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
-//        view.findNavController().navigate(action)
-//        (activity as MainActivity).mainBottomNavigationDisappear()
-
     }
 
     override fun onClickImageView(view: View, position: Int) {
-        val heartTag = view.jobsItemsHeart.tag
+        val heartTag = view.jobsItemsHeart.getTag(R.id.borderTag)
+        val jobIdTag = view.jobsItemsHeart.getTag(R.id.jobIdTag)
 
         if (heartTag == "border") {
             view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
@@ -155,6 +134,9 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
             view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
             view.jobsItemsHeart.tag = "border"
         }
+
+        jobsViewModel.clickFavorite(jobIdTag.toString().toInt())
+        jobsContentAdapter.submitList(jobsViewModel.jobsInfoArrayList.value!!.toMutableList())
 
     }
 

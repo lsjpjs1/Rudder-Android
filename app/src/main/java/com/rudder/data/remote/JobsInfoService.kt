@@ -2,10 +2,7 @@ package com.rudder.data.remote
 
 import com.google.gson.JsonObject
 import com.rudder.data.dto.JobsDetail
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 
 //interface JobsInfoService {
@@ -29,15 +26,15 @@ interface JobsInfoService {
     @GET("/jobs/{jobId}")
     suspend fun jobsByJobIdApiFun(
         @Header("Authorization") token : String,
-        @Path("jobId") jobId: Int?,
+        @Path("jobId") jobId: Int?
     ) : retrofit2.Response<JobsDetail>
 
 
 
-    @GET("/jobs/my-favorite")
-    suspend fun jobsFavoriteApiFun(
+    @POST("/jobs/{jobId}/favorite")
+    suspend fun jobsFavoriteClickApiFun(
         @Header("Authorization") token : String,
-        @Query("endJobId") endPostId: Int?,
+        @Path("jobId") jobId: Int?
     ) : retrofit2.Response<JsonObject>
 
 

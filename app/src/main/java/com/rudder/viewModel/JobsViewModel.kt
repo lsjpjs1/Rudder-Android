@@ -110,7 +110,6 @@ class JobsViewModel : ViewModel() {
                         )
                     }
                     _isJobContentApiResultFail.postValue(false)
-
                 } else { // 서버 통신 fail
                     _isJobContentApiResultFail.postValue(true)
                 }
@@ -125,6 +124,7 @@ class JobsViewModel : ViewModel() {
     fun getJobsDetail(jobId : Int) {
         val service = JobsInfoApi.instance.jobsInfoService
 
+
        CoroutineScope(Dispatchers.IO).launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             val response = service.jobsByJobIdApiFun(jobId = jobId, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
@@ -136,13 +136,28 @@ class JobsViewModel : ViewModel() {
                 } else { // 서버 통신 fail
                     _isJobDetailApiResultFail.postValue(Event(true))
                 }
-
             }
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
-
     }
 
+
+    fun clickFavorite(jobId : Int) {
+        val service = JobsInfoApi.instance.jobsInfoService
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.jobsFavoriteClickApiFun(jobId = jobId, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+            withContext(Dispatchers.Main) {
+                if (response.code() == 201) {
+                    val result = response.body()
+                    Log.d("clickFavorite", "$result")
+                    val jsonObject = result as JsonObject
+                    val tmp = jsonObject.get("jobId")
+
+                }
+            }
+        }
+    }
 
 
 
