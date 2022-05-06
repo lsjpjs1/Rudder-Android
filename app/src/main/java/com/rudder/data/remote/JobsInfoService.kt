@@ -30,6 +30,13 @@ interface JobsInfoService {
     ) : retrofit2.Response<JobsDetail>
 
 
+    @GET("/jobs/my-favorite")
+    suspend fun jobsGetMyFavoriteApiFun(
+        @Header("Authorization") token : String,
+        @Query("endJobId") endPostId: Int?,
+    ) : retrofit2.Response<JsonObject>
+
+
 
     @POST("/jobs/{jobId}/favorite")
     suspend fun jobsFavoriteClickApiFun(
@@ -42,7 +49,6 @@ interface JobsInfoService {
 
 
 data class JobsListRequest(
-    //val token: String,
     val endPostId:Int,
     val searchBody : String
 )

@@ -10,6 +10,9 @@ import com.rudder.R
 import com.rudder.data.dto.JobsInfo
 import com.rudder.databinding.JobsItemBinding
 import com.rudder.util.JobsContentOnclickListener
+import com.rudder.util.LocaleUtil
+import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
     : ListAdapter<JobsInfo, RecyclerView.ViewHolder>(JobsSavedDiffCallback()) {
@@ -61,12 +64,45 @@ class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
         }
 
         fun bind(jobsItem: JobsInfo) {
-            jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
+            val timeago = PrettyTime(LocaleUtil().getSystemLocale(jobsItemBinding.root.context)).format(
+                Date(jobsItem.postDate.time))
 
+            if (jobsItem.jobType == "") {
+                jobsItemBinding.jobsTypeTV.visibility = View.GONE
+            }
+
+
+            if (jobsItem.companyName.length > JobsContentAdapter.JobsViewHolder.MAX_COMPANY_BODY_LENGTH) {
+                val subBody = jobsItem.companyName.substring(0,
+                    JobsContentAdapter.JobsViewHolder.MAX_COMPANY_BODY_LENGTH) + "  ..."
+                jobsItemBinding.jobsCompanyTV.text = subBody
+            } else {
+                jobsItemBinding.jobsCompanyTV.text = jobsItem.companyName
+            }
+
+
+            if (jobsItem.jobTitle.length > JobsContentAdapter.JobsViewHolder.MAX_JOB_TITLE_BODY_LENGTH) {
+                val subBody = jobsItem.jobTitle.substring(0,
+                    JobsContentAdapter.JobsViewHolder.MAX_JOB_TITLE_BODY_LENGTH) + "  ..."
+                jobsItemBinding.jobsTitleTV.text = subBody
+            } else {
+                jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
+            }
+
+            jobsItemBinding.jobsSalaryTV.text = jobsItem.salary
+            jobsItemBinding.jobsTypeTV.text = jobsItem.jobType
+            jobsItemBinding.jobsPostTimeTV.text = timeago
 
             jobsItemBinding.jobsMainCL.tag = jobsItem.jobPostId
 
 
+
+
+            //////////
+//            jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
+//            jobsItemBinding.jobsMainCL.tag = jobsItem.jobPostId
+//
+//
             if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
                 jobsItemBinding.jobsItemsHeart.tag = "not border"
                 jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)

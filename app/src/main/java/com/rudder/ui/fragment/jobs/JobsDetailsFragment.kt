@@ -74,8 +74,6 @@ class JobsDetailsFragment : Fragment() {
         jobsDetailsDataBinding.jobVM = jobsViewModel
 
 
-        Log.d("test1234", "${jobsViewModel.jobsDetailInfo.value}")
-
 
         jobsDetailsDataBinding.jobsDetailCompanyTV.text = jobsViewModel.jobsDetailInfo.value!!.companyName
         jobsDetailsDataBinding.jobsDetailLocationTV.text = jobsViewModel.jobsDetailInfo.value!!.location
@@ -116,6 +114,12 @@ class JobsDetailsFragment : Fragment() {
             navController.popBackStack()
             (activity as MainActivity).mainBottomNavigationAppear()
 
+
+            if (navController.currentDestination!!.label == "Jobs") {
+                (activity as MainActivity).mainBottomNavigationAppear()
+            } else if (navController.currentDestination!!.label == "Saved Jobs") {
+                (activity as MainActivity).mainBottomNavigationDisappear()
+            }
         }
 
 

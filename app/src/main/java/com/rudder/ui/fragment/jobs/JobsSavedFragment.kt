@@ -1,13 +1,14 @@
 package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rudder.R
 import com.rudder.databinding.FragmentJobsSavedBinding
@@ -63,6 +64,9 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
         jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         binding.jobVM = jobsViewModel
 
+        jobsViewModel.getJobsMyFavorite(false)
+
+
 
         return binding.root
     }
@@ -76,6 +80,13 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
             navController.popBackStack()
             (activity as MainActivity).mainBottomNavigationAppear()
         }
+
+        jobsViewModel.isJobMyFavoriteApiResultFail.observe(viewLifecycleOwner, Observer {
+            if (!it) {
+                jobsSavedAdapter.submitList(jobsViewModel.jobsMyFavoriteArrayList.value!!.toMutableList())
+                //view.jobsContentsSwipeRefreshLayout.isRefreshing = false
+            }
+        })
 
 
         view.jobsSavedRecyclerView.apply {
@@ -112,10 +123,23 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     }
 
     override fun onClickContainerView(view: View, position: Int, viewTag : String) {
-        Log.d("savedJob", "${position}")
-        val action = JobsSavedFragmentDirections.actionNavigationJobsSavedToNavigationJobsDetails()
-        view.findNavController().navigate(action)
-        (activity as MainActivity).mainBottomNavigationDisappear()
+//        Log.d("savedJob", "${position}")
+//        val action = JobsSavedFragmentDirections.actionNavigationJobsSavedToNavigationJobsDetails()
+//        view.findNavController().navigate(action)
+//        (activity as MainActivity).mainBottomNavigationDisappear()
+
+        jobsViewModel.getJobsDetail(viewTag.toInt())
+
+        jobsViewModel.isJobDetailApiResultFail.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { it ->
+                if (!it) {
+                    val action = JobsSavedFragmentDirections.actionNavigationJobsSavedToNavigationJobsDetails()
+                    findNavController().navigate(action)
+                    (activity as MainActivity).mainBottomNavigationDisappear()
+                }
+            }
+        })
+
     }
 
     override fun onClickImageView(view: View, position: Int) {

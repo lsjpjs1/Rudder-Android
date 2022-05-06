@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rudder.databinding.FragmentJobsSearchBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.JobsContentAdapter
+import com.rudder.util.JobsContentOnclickListener
 import com.rudder.viewModel.JobsViewModel
-import kotlinx.android.synthetic.main.fragment_jobs_contents.view.*
 import kotlinx.android.synthetic.main.fragment_jobs_search.view.*
 
-class JobsSearchFragment : Fragment() {
+class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
 
 
     private val parentActivity by lazy {
@@ -95,6 +95,14 @@ class JobsSearchFragment : Fragment() {
             })
         }
 
+    }
+
+    override fun onClickContainerView(view: View, position: Int, viewTag: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onClickImageView(view: View, position: Int) {
+        TODO("Not yet implemented")
     }
 
 }
