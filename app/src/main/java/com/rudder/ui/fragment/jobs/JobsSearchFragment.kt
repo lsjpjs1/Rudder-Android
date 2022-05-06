@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.rudder.R
 import com.rudder.data.remote.JobsEnum
 import com.rudder.databinding.FragmentJobsSearchBinding
 import com.rudder.ui.activity.MainActivity
@@ -38,7 +40,10 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
 
     companion object {
         const val TAG = "JobsSearchFragment"
+
     }
+
+    private val purpleRudder by lazy { ContextCompat.getColor(lazyContext, R.color.purple_rudder) }
 
     private val jobsViewModel: JobsViewModel by activityViewModels()
 
@@ -84,10 +89,18 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
         }
 
 
+        view.jobsSearchSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
+        view.jobsSearchSwipeRefreshLayout.setOnRefreshListener {
+            jobsViewModel.scrollTouchTopJobSearch()
+        }
+
+
+
         jobsViewModel.isJobContentApiResultFail.observe(viewLifecycleOwner, Observer {
             if (!it) {
+
                 jobsContentAdapter.submitList(jobsViewModel.jobsSearchArrayList.value!!.toMutableList())
-                //view.jobsContentsSwipeRefreshLayout.isRefreshing = false
+                view.jobsSearchSwipeRefreshLayout.isRefreshing = false
             }
         })
 
@@ -103,6 +116,7 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let{
+                    jobsViewModel.setSearchWord(it)
 
                 }
                 return true
@@ -113,9 +127,6 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
 
     override fun onClickContainerView(view: View, position: Int, viewTag: String) {
         jobsViewModel.getJobsDetail(viewTag.toInt(),JobsEnum.SEARCH)
-
-
-        val navController = findNavController()
         jobsViewModel.isJobDetailSearchResultFail.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (!it) {

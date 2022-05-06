@@ -24,6 +24,9 @@ class JobsViewModel : ViewModel() {
     private val tokenKey = BuildConfig.TOKEN_KEY
     private val repository = Repository()
 
+    private val _searchWord = MutableLiveData<String?>()
+    val searchWord: LiveData<String?> = _searchWord
+
     var _jobsInfoArrayList = MutableLiveData<ArrayList<JobsInfo>>()
     var jobsInfoArrayList: LiveData<ArrayList<JobsInfo>> = _jobsInfoArrayList
 
@@ -59,12 +62,16 @@ class JobsViewModel : ViewModel() {
 
 
     var pagingIndex = 0
-    var endJobsId = -1
+    var endContentJobsId = -1
+    var endSearchJobsId = -1
+
+
 
     init {
         _jobsInfoArrayList.value = arrayListOf<JobsInfo>()
         _jobsSearchArrayList.value = arrayListOf<JobsInfo>()
         _jobsMyFavoriteArrayList.value = arrayListOf<JobsInfo>()
+        _searchWord.value = null
         _jobsDetailInfo.value = JobsDetail(jobTitle = null,
             jobId = null,
             companyName = null,
@@ -82,10 +89,12 @@ class JobsViewModel : ViewModel() {
     fun scrollTouchBottomJobInfoPost() {
         if (_jobsInfoArrayList.value!!.size > 0) {
             pagingIndex += 1
-            endJobsId = _jobsInfoArrayList.value!![_jobsInfoArrayList.value!!.size - 1].jobPostId
+            endContentJobsId = _jobsInfoArrayList.value!![_jobsInfoArrayList.value!!.size - 1].jobPostId
             getJobsInfo(true)
         }
     }
+
+
 
     fun scrollTouchTopJobContent() {
         clearJobInfo()
@@ -93,10 +102,22 @@ class JobsViewModel : ViewModel() {
     }
 
 
+    fun scrollTouchTopJobSearch() {
+        clearJobSearch()
+        getJobsInfo(false)
+    }
+
+    fun clearJobSearch() {
+        _jobsSearchArrayList.value = arrayListOf<JobsInfo>()
+        pagingIndex = 0
+        endSearchJobsId = -1
+    }
+
+
     fun clearJobInfo() {
         _jobsInfoArrayList.value = arrayListOf<JobsInfo>()
         pagingIndex = 0
-        endJobsId = -1
+        endContentJobsId = -1
     }
 
     fun getJobsInfo(isScroll: Boolean, searchWord : String? = null) {
@@ -106,9 +127,9 @@ class JobsViewModel : ViewModel() {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             val response : Response<JsonObject>
             if (isScroll) {
-                response = service.jobsInfoApiFun(endPostId = endJobsId, searchBody = searchWord, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                response = service.jobsInfoApiFun(endPostId = endContentJobsId, searchBody = _searchWord.value, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
             } else {
-                response = service.jobsInfoApiFun(endPostId = null, searchBody = searchWord, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                response = service.jobsInfoApiFun(endPostId = null, searchBody = _searchWord.value, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
             }
 
             withContext(Dispatchers.Main) {
@@ -120,7 +141,7 @@ class JobsViewModel : ViewModel() {
                     for (getItem in getItems) {
                         val jsonObject = getItem as JsonObject
 
-                        if (searchWord == null) { // search가 아닌 content인 경우
+                        if (_searchWord.value == null) { // search가 아닌 content인 경우
                             _jobsInfoArrayList.value!!.add(
                                 JobsInfo(
                                     jobTitle = jsonObject.get("jobTitle").toString().drop(1).dropLast(1),
@@ -164,8 +185,6 @@ class JobsViewModel : ViewModel() {
 
     fun getJobsDetail(jobId : Int, whereCall : JobsEnum) {
         val service = JobsInfoApi.instance.jobsInfoService
-
-
        CoroutineScope(Dispatchers.IO).launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             val response = service.jobsByJobIdApiFun(jobId = jobId, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
@@ -219,7 +238,7 @@ class JobsViewModel : ViewModel() {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             val response : Response<JsonObject>
             if (isScroll) {
-                response = service.jobsGetMyFavoriteApiFun(endPostId = endJobsId, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                response = service.jobsGetMyFavoriteApiFun(endPostId = endContentJobsId, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
             } else {
                 response = service.jobsGetMyFavoriteApiFun(endPostId = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
             }
@@ -255,6 +274,10 @@ class JobsViewModel : ViewModel() {
         }
     }
 
+
+    fun setSearchWord(string: String){
+        _searchWord.value = string
+    }
 
 
 

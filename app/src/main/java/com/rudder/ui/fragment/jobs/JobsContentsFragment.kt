@@ -125,28 +125,6 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
 
         })
 
-//        jobsViewModel.jobsDetailInfo.observe(viewLifecycleOwner, Observer {
-//            val navController = findNavController()
-//            //Log.d("test555", "content")
-//                if (navController.currentDestination?.label == "Jobs") {
-//                    val action = JobsContentsFragmentDirections.actionNavigationJobsToNavigationJobsDetails()
-//                    val mHandler = Handler(Looper.getMainLooper())
-//                    mHandler.postDelayed({
-//                        navController.navigate(action)
-//                    }, 1000) //
-//
-//
-//                    //navController.navigate(action)
-//                    (activity as MainActivity).mainBottomNavigationDisappear()
-//
-//            }
-//
-//        })
-
-
-
-
-
     }
 
     override fun onClickImageView(view: View, position: Int) {
