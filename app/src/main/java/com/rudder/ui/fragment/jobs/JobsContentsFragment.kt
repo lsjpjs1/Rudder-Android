@@ -61,7 +61,7 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
         //jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         jobsContentsDataBinding.jobVM = jobsViewModel
 
-        jobsViewModel.getJobsInfo(false)
+        jobsViewModel.getJobsInfo(false, false)
 
         return jobsContentsDataBinding.root
     }

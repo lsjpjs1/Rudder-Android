@@ -90,7 +90,16 @@ class JobsViewModel : ViewModel() {
         if (_jobsInfoArrayList.value!!.size > 0) {
             pagingIndex += 1
             endContentJobsId = _jobsInfoArrayList.value!![_jobsInfoArrayList.value!!.size - 1].jobPostId
-            getJobsInfo(true)
+            getJobsInfo(true, false)
+        }
+    }
+
+
+    fun scrollTouchBottomJobSearch() {
+        if (_jobsSearchArrayList.value!!.size > 0) {
+            pagingIndex += 1
+            endSearchJobsId = _jobsSearchArrayList.value!![_jobsSearchArrayList.value!!.size - 1].jobPostId
+            getJobsInfo(true, true)
         }
     }
 
@@ -98,19 +107,20 @@ class JobsViewModel : ViewModel() {
 
     fun scrollTouchTopJobContent() {
         clearJobInfo()
-        getJobsInfo(false)
+        getJobsInfo(false, false)
     }
 
 
     fun scrollTouchTopJobSearch() {
         clearJobSearch()
-        getJobsInfo(false)
+        getJobsInfo(false, true)
     }
 
     fun clearJobSearch() {
         _jobsSearchArrayList.value = arrayListOf<JobsInfo>()
         pagingIndex = 0
         endSearchJobsId = -1
+        //_searchWord.value = null
     }
 
 
@@ -120,17 +130,29 @@ class JobsViewModel : ViewModel() {
         endContentJobsId = -1
     }
 
-    fun getJobsInfo(isScroll: Boolean, searchWord : String? = null) {
+    fun getJobsInfo(isScroll: Boolean, isSearch: Boolean) {
         val service = JobsInfoApi.instance.jobsInfoService
 
         CoroutineScope(Dispatchers.IO).launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
             val response : Response<JsonObject>
-            if (isScroll) {
-                response = service.jobsInfoApiFun(endPostId = endContentJobsId, searchBody = _searchWord.value, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+
+            if (isSearch) {
+                if (isScroll) {
+                    response = service.jobsInfoApiFun(endPostId = endSearchJobsId, searchBody = _searchWord.value, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                } else {
+                    response = service.jobsInfoApiFun(endPostId = null, searchBody = _searchWord.value, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                }
             } else {
-                response = service.jobsInfoApiFun(endPostId = null, searchBody = _searchWord.value, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                if (isScroll) {
+                    response = service.jobsInfoApiFun(endPostId = endContentJobsId, searchBody = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                    Log.d("test555", "3333")
+                } else {
+                    response = service.jobsInfoApiFun(endPostId = null, searchBody = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                    Log.d("test555", "4444")
+                }
             }
+
 
             withContext(Dispatchers.Main) {
                 if (response.code() == 200) { // 서버 통신 success
@@ -141,7 +163,7 @@ class JobsViewModel : ViewModel() {
                     for (getItem in getItems) {
                         val jsonObject = getItem as JsonObject
 
-                        if (_searchWord.value == null) { // search가 아닌 content인 경우
+                        if (!isSearch) { // search가 아닌 content인 경우
                             _jobsInfoArrayList.value!!.add(
                                 JobsInfo(
                                     jobTitle = jsonObject.get("jobTitle").toString().drop(1).dropLast(1),

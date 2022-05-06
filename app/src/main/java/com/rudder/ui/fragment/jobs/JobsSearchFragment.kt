@@ -80,7 +80,7 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if(!it.canScrollVertically(1)){
-                        //jobsViewModel.scrollTouchBottomJobInfoPost()
+                        jobsViewModel.scrollTouchBottomJobSearch()
                     } else if (!it.canScrollVertically(-1) && dy < 0) {
 
                     }
@@ -108,7 +108,8 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
         view.jobsSearchSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let{
-                    jobsViewModel.getJobsInfo(isScroll = false, searchWord = query)
+                    jobsViewModel.clearJobSearch()
+                    jobsViewModel.getJobsInfo(isScroll = false, isSearch = true)
                 }
                 view.jobsSearchSearchView.clearFocus()
                 return true
@@ -142,5 +143,13 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
     override fun onClickImageView(view: View, position: Int) {
         TODO("Not yet implemented")
     }
+
+
+    override fun onStart() {
+        jobsViewModel.clearJobSearch()
+        super.onStart()
+    }
+
+
 
 }
