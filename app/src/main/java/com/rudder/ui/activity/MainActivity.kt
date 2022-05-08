@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -229,7 +228,6 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     if(!progressDialog.isShowing) {
-                        Log.d("test123", "${progressDialog.isShowing.toString()}")
                         progressDialog.show()
                     }
                 } else {
@@ -437,12 +435,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     override fun onDestroy() {
         if (progressDialog.isShowing) {
             progressDialog.dismiss()
-            Log.d("test1234", "test1234")
         }
-
-
         ActivityContainer.clearCurrentActivity(this)
-
         super.onDestroy()
     }
 

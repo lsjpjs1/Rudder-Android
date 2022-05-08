@@ -147,6 +147,7 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
 
     override fun onStart() {
         jobsViewModel.clearJobSearch()
+        jobsViewModel.clearSearchWord()
         super.onStart()
     }
 

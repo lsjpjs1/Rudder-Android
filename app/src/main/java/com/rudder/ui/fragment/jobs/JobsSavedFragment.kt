@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.rudder.R
 import com.rudder.data.remote.JobsEnum
 import com.rudder.databinding.FragmentJobsSavedBinding
@@ -88,16 +90,28 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
 
         jobsViewModel.isJobMyFavoriteApiResultFail.observe(viewLifecycleOwner, Observer {
             if (!it) {
+                Log.d("test555", "isJobMyFavoriteApiResultFail")
                 jobsSavedAdapter.submitList(jobsViewModel.jobsMyFavoriteArrayList.value!!.toMutableList())
-                //view.jobsContentsSwipeRefreshLayout.isRefreshing = false
+                view.jobsSavedMainSwipeRefreshLayout.isRefreshing = false
             }
         })
 
 
-        view.jobsSavedRecyclerView.apply {
-            layoutManager = LinearLayoutManager(lazyContext, LinearLayoutManager.VERTICAL, false)
-            setHasFixedSize(false)
-            adapter = jobsSavedAdapter
+        view.jobsSavedRecyclerView.also {
+            it.layoutManager = LinearLayoutManager(lazyContext, LinearLayoutManager.VERTICAL, false)
+            it.setHasFixedSize(false)
+            it.adapter = jobsSavedAdapter
+            it.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if(!it.canScrollVertically(1)){
+                        jobsViewModel.scrollTouchBottomJobSaved()
+                        Log.d("test555","test123")
+                    } else if (!it.canScrollVertically(-1) && dy < 0) {
+
+                    }
+                }
+            })
         }
 
 
@@ -106,15 +120,6 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment JobsSavedFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             JobsSavedFragment().apply {
@@ -144,7 +149,6 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     }
 
     override fun onClickImageView(view: View, position: Int) {
-        //TODO("Not yet implemented")
         jobsSavedAdapter.removeItem(position = position)
         view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
     }
