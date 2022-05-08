@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -77,6 +78,9 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     lateinit var editPostFragment: EditPostFragment
     private lateinit var notificationDisplayFragment: NotificationDisplayFragment
 
+    lateinit var progressDialog: ProgressDialog
+
+
     private val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
@@ -132,7 +136,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         }
 
 
-        val progressDialog = ProgressDialog(this, R.style.MyAlertDialogStyle)
+        progressDialog = ProgressDialog(this, R.style.MyAlertDialogStyle)
         progressDialog.setMessage("Please wait ...")
         progressDialog.setCancelable(false)
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal)
@@ -225,6 +229,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             it.getContentIfNotHandled()?.let { it ->
                 if (it) {
                     if(!progressDialog.isShowing) {
+                        Log.d("test123", "${progressDialog.isShowing.toString()}")
                         progressDialog.show()
                     }
                 } else {
@@ -430,7 +435,14 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
     }
 
     override fun onDestroy() {
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+            Log.d("test1234", "test1234")
+        }
+
+
         ActivityContainer.clearCurrentActivity(this)
+
         super.onDestroy()
     }
 
@@ -467,5 +479,7 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
         super.onBackPressed()
     }
+
+
 
 }

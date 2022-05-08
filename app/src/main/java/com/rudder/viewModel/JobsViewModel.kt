@@ -64,8 +64,8 @@ class JobsViewModel : ViewModel() {
     var pagingIndex = 0
     var endContentJobsId = -1
     var endSearchJobsId = -1
-
-
+    var endSavedJobsId = -1
+    
 
     init {
         _jobsInfoArrayList.value = arrayListOf<JobsInfo>()
@@ -135,13 +135,16 @@ class JobsViewModel : ViewModel() {
 
         CoroutineScope(Dispatchers.IO).launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            val response : Response<JsonObject>
+            val response : Response<JsonObject>?
 
             if (isSearch) {
-                if (isScroll) {
+                if (isScroll && _searchWord.value != null) {
                     response = service.jobsInfoApiFun(endPostId = endSearchJobsId, searchBody = _searchWord.value, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
-                } else {
+                } else if (_searchWord.value != null) {
                     response = service.jobsInfoApiFun(endPostId = null, searchBody = _searchWord.value, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+                } else {
+                    response = null
+                    _isJobContentApiResultFail.postValue(false)
                 }
             } else {
                 if (isScroll) {
@@ -155,7 +158,7 @@ class JobsViewModel : ViewModel() {
 
 
             withContext(Dispatchers.Main) {
-                if (response.code() == 200) { // 서버 통신 success
+                if (response?.code() == 200) { // 서버 통신 success
                     val result = response.body()
                     val getItems = result!!.getAsJsonArray("jobs")
                     //Log.d("getJobsInfo", "${getItems}")
