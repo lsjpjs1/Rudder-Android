@@ -1,10 +1,10 @@
 package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -47,11 +47,8 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     private val jobsViewModel: JobsViewModel by activityViewModels()
 
     //private val jobsViewModel: JobsViewModel by viewModels()
-
-
     //private lateinit var jobsViewModel: JobsViewModel
-
-
+    private val purpleRudder by lazy { ContextCompat.getColor(lazyContext!!, R.color.purple_rudder) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,8 +87,7 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
 
         jobsViewModel.isJobMyFavoriteApiResultFail.observe(viewLifecycleOwner, Observer {
             if (!it) {
-                Log.d("test555", "isJobMyFavoriteApiResultFail")
-                jobsSavedAdapter.submitList(jobsViewModel.jobsMyFavoriteArrayList.value!!.toMutableList())
+                jobsSavedAdapter.submitList(jobsViewModel.jobsMyFavoriteArrayList.value?.toMutableList())
                 view.jobsSavedMainSwipeRefreshLayout.isRefreshing = false
             }
         })
@@ -106,13 +102,18 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
                     super.onScrolled(recyclerView, dx, dy)
                     if(!it.canScrollVertically(1)){
                         jobsViewModel.scrollTouchBottomJobSaved()
-                        Log.d("test555","test123")
                     } else if (!it.canScrollVertically(-1) && dy < 0) {
 
                     }
                 }
             })
         }
+
+        view.jobsSavedMainSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
+        view.jobsSavedMainSwipeRefreshLayout.setOnRefreshListener {
+            jobsViewModel.scrollTouchTopJobSaved()
+        }
+
 
 
         jobsSavedAdapter.submitList(jobsViewModel.jobsInfoArrayList.value!!)

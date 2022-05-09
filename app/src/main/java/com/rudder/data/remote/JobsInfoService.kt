@@ -45,6 +45,13 @@ interface JobsInfoService {
     ) : retrofit2.Response<JsonObject>
 
 
+    @DELETE("/jobs/{jobId}/favorite")
+    suspend fun jobsUnFavoriteClickApiFun(
+        @Header("Authorization") token : String,
+        @Path("jobId") jobId: Int?
+    ) : retrofit2.Response<JsonObject>
+
+
 }
 
 

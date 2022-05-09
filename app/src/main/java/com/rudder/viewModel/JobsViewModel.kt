@@ -106,10 +106,10 @@ class JobsViewModel : ViewModel() {
     fun scrollTouchBottomJobSaved() {
         if (_jobsMyFavoriteArrayList.value!!.size > 0) {
             pagingIndex += 1
+            if (endSavedJobsId != _jobsMyFavoriteArrayList.value!![_jobsMyFavoriteArrayList.value!!.size - 1].jobPostId) {
+                getJobsMyFavorite(true)
+            }
             endSavedJobsId = _jobsMyFavoriteArrayList.value!![_jobsMyFavoriteArrayList.value!!.size - 1].jobPostId
-            //getJobsInfo(true, false, true)
-            getJobsMyFavorite(true)
-            Log.d("test5555", "${endSavedJobsId}")
         }
     }
 
@@ -131,10 +131,10 @@ class JobsViewModel : ViewModel() {
         getJobsMyFavorite(false)
     }
 
-    fun clearJobSearch() {
-        _jobsSearchArrayList.value = arrayListOf<JobsInfo>()
+    fun clearJobSaved() {
+        _jobsMyFavoriteArrayList.value = arrayListOf<JobsInfo>()
         pagingIndex = 0
-        endSearchJobsId = -1
+        endSavedJobsId = -1
     }
 
     fun clearJobSearch() {
@@ -159,22 +159,17 @@ class JobsViewModel : ViewModel() {
             if (isSearch) {
                 if (isScroll && !_searchWord.value.isNullOrBlank()) {
                     response = service.jobsInfoApiFun(endPostId = endSearchJobsId, searchBody = _searchWord.value, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
-                    Log.d("test555", "1111")
                 } else if (!_searchWord.value.isNullOrBlank()) {
                     response = service.jobsInfoApiFun(endPostId = null, searchBody = _searchWord.value, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
-                    Log.d("test555", "2222")
                 } else { // _searchWord.value == null 인 경
-                    Log.d("test555", "3333")
                     response = null
                     _isJobContentApiResultFail.postValue(false)
                 }
             } else { // Search, Saved가 아닌 경우, ===> Content
                 if (isScroll) {
                     response = service.jobsInfoApiFun(endPostId = endContentJobsId, searchBody = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
-                    Log.d("test555", "4444")
                 } else {
                     response = service.jobsInfoApiFun(endPostId = null, searchBody = null, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
-                    Log.d("test555", "5555")
                 }
             }
 
@@ -267,11 +262,32 @@ class JobsViewModel : ViewModel() {
                     Log.d("clickFavorite", "$result")
                     val jsonObject = result as JsonObject
                     val tmp = jsonObject.get("jobId")
-
                 }
             }
         }
     }
+
+
+    fun clickUnFavorite(jobId : Int) {
+        val service = JobsInfoApi.instance.jobsInfoService
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.jobsFavoriteClickApiFun(jobId = jobId, token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
+            withContext(Dispatchers.Main) {
+                if (response.code() == 201) {
+                    val result = response.body()
+                    Log.d("clickFavorite", "$result")
+                    val jsonObject = result as JsonObject
+                    val tmp = jsonObject.get("jobId")
+                }
+            }
+        }
+    }
+
+
+
+
+
 
 
     fun getJobsMyFavorite(isScroll: Boolean) {
