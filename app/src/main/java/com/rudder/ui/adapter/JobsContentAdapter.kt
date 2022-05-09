@@ -1,5 +1,6 @@
 package com.rudder.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,12 +24,14 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
 
     class JobContentDiffCallback : DiffUtil.ItemCallback<JobsInfo>() {
         override fun areItemsTheSame(oldItem: JobsInfo, newItem: JobsInfo): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            //return oldItem.hashCode() == newItem.hashCode()
+            return oldItem.jobPostId == newItem.jobPostId
+
         }
 
-
         override fun areContentsTheSame(oldItem: JobsInfo, newItem: JobsInfo): Boolean {
-            return oldItem == newItem
+            Log.d("test555", "${oldItem},\n ${newItem}")
+            return (oldItem.jobPostId == newItem.jobPostId && oldItem.isSaved == newItem.isSaved)
         }
     }
 
@@ -51,11 +54,30 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
         holder as JobsViewHolder
         val jobInfoItem = getItem(position) as JobsInfo
         holder.bind(jobInfoItem)
+
+        if (jobInfoItem.isSaved) { // heart를 누른, saved 된 Item 이라면
+            holder.jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "not border")
+            holder.jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobInfoItem.jobPostId)
+            holder.jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
+        } else {
+            holder.jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "border")
+            holder.jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobInfoItem.jobPostId)
+            holder.jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
 
 
-    class JobsViewHolder(private val jobsItemBinding : JobsItemBinding, jobsContentOnclickListener: JobsContentOnclickListener)
+    class JobsViewHolder(val jobsItemBinding : JobsItemBinding, jobsContentOnclickListener: JobsContentOnclickListener)
         : RecyclerView.ViewHolder(jobsItemBinding.root), View.OnClickListener {
         companion object {
             const val MAX_COMPANY_BODY_LENGTH = 30
@@ -71,6 +93,7 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
         }
 
         fun bind(jobsItem: JobsInfo) {
+            Log.d("test555bind", "${jobsItem}")
             val timeago = PrettyTime(LocaleUtil().getSystemLocale(jobsItemBinding.root.context)).format(Date(jobsItem.postDate.time))
 
             if (jobsItem.jobType == "") {
@@ -108,19 +131,16 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
 
             //jobsItemBinding.jobsItemCompanyIcon.background = ContextCompat.getDrawable(jobsItemBinding.root.context, R.drawable.edge)
 
-            if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
-                //jobsItemBinding.jobsItemsHeart.tag = "not border"
-
-                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "not border")
-                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)
-                jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
-            } else {
-                //jobsItemBinding.jobsItemsHeart.tag = "border"
-
-                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "not border")
-                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)
-                jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-            }
+            //Log.d("test555", "${jobsItem.isSaved}")
+//            if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
+//                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "not border")
+//                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)
+//                jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
+//            } else {
+//                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "border")
+//                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)
+//                jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+//            }
         }
 
         override fun onClick(view: View?) {
@@ -130,6 +150,10 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
                 this.jobsContentOnclickListener?.onClickContainerView(view = view!!, position = bindingAdapterPosition, viewTag = view.tag.toString())
             }
         }
+
+
+
+
     }
 
 

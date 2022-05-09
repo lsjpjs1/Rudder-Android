@@ -14,7 +14,7 @@ data class JobsInfo(
     val postDate : Timestamp,
     val companyImage : String?,
     @SerializedName("isFavorite")
-    val isSaved : Boolean
+    var isSaved : Boolean
 )
 
 

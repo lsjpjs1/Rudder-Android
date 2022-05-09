@@ -34,10 +34,14 @@ class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         //jobsViewHolder.bind(jobsItemList[jobsViewHolder.bindingAdapterPosition])
 
-        if (holder is JobsSavedViewHolder) {
-            val jobsItem = getItem(position) as JobsInfo
-            holder.bind(jobsItem)
-        }
+//        if (holder is JobsSavedViewHolder) {
+//            val jobsItem = getItem(position) as JobsInfo
+//            holder.bind(jobsItem)
+//        }
+
+        holder as JobsSavedViewHolder
+        val jobsItem = getItem(position) as JobsInfo
+        holder.bind(jobsItem)
     }
 
 
@@ -92,24 +96,35 @@ class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
             jobsItemBinding.jobsSalaryTV.text = jobsItem.salary
             jobsItemBinding.jobsTypeTV.text = jobsItem.jobType
             jobsItemBinding.jobsPostTimeTV.text = timeago
-
             jobsItemBinding.jobsMainCL.tag = jobsItem.jobPostId
 
 
-
-
-            //////////
-//            jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
-//            jobsItemBinding.jobsMainCL.tag = jobsItem.jobPostId
-//
-//
             if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
-                jobsItemBinding.jobsItemsHeart.tag = "not border"
+                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "not border")
+                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)
                 jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
             } else {
-                jobsItemBinding.jobsItemsHeart.tag = "border"
+                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "border")
+                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)
                 jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
             }
+
+
+
+
+//            if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
+//
+//                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "not border")
+//                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)
+//                jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
+//            } else {
+//                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "border")
+//                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)
+//                jobsItemBinding.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+//            }
+
+
+
 
         }
 

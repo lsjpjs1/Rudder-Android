@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,9 +69,6 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
         //jobsViewModel = ViewModelProvider(this).get(JobsViewModel::class.java)
         binding.jobVM = jobsViewModel
 
-        jobsViewModel.getJobsMyFavorite(false)
-
-
 
         return binding.root
     }
@@ -83,11 +81,17 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
             val navController = view.findNavController()
             navController.popBackStack()
             (activity as MainActivity).mainBottomNavigationAppear()
+
+            //jobsViewModel.scrollTouchTopJobContent()
         }
+
+        jobsViewModel.getJobsMyFavorite(false)
+
 
         jobsViewModel.isJobMyFavoriteApiResultFail.observe(viewLifecycleOwner, Observer {
             if (!it) {
-                jobsSavedAdapter.submitList(jobsViewModel.jobsMyFavoriteArrayList.value?.toMutableList())
+                Log.d("test555", "${jobsViewModel.jobsMyFavoriteArrayList.value?.size}")
+                jobsSavedAdapter.submitList(jobsViewModel.jobsMyFavoriteArrayList.value?.toMutableSet()?.toMutableList())
                 view.jobsSavedMainSwipeRefreshLayout.isRefreshing = false
             }
         })
@@ -115,8 +119,6 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
         }
 
 
-
-        jobsSavedAdapter.submitList(jobsViewModel.jobsInfoArrayList.value!!)
 
     }
 
@@ -150,7 +152,29 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
     }
 
     override fun onClickImageView(view: View, position: Int) {
-        jobsSavedAdapter.removeItem(position = position)
-        view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+
+        val heartTag = view.jobsItemsHeart.getTag(R.id.borderTag)
+        val jobIdTag = view.jobsItemsHeart.getTag(R.id.jobIdTag)
+
+        if (heartTag == "not border") {
+            jobsSavedAdapter.removeItem(position = position)
+            jobsViewModel.changeJobsInfoFavoriteFalse(jobIdTag.toString().toInt())
+
+            jobsViewModel.clickUnFavorite(jobIdTag.toString().toInt())
+            view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            view.jobsItemsHeart.setTag(R.id.borderTag, "border")
+
+        }
     }
+
+
+    override fun onStart() {
+        Log.d("test555", "onStart")
+        jobsViewModel.clearJobSaved()
+        super.onStart()
+    }
+
+
+
+
 }

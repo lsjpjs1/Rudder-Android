@@ -21,6 +21,7 @@ import com.rudder.ui.adapter.JobsContentAdapter
 import com.rudder.util.JobsContentOnclickListener
 import com.rudder.viewModel.JobsViewModel
 import kotlinx.android.synthetic.main.fragment_jobs_search.view.*
+import kotlinx.android.synthetic.main.jobs_item.view.*
 
 class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
 
@@ -141,7 +142,23 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
     }
 
     override fun onClickImageView(view: View, position: Int) {
-        TODO("Not yet implemented")
+        val heartTag = view.jobsItemsHeart.getTag(R.id.borderTag)
+        val jobIdTag = view.jobsItemsHeart.getTag(R.id.jobIdTag)
+
+        if (heartTag == "border") {
+            jobsViewModel.clickFavorite(jobIdTag.toString().toInt())
+            jobsViewModel.changeJobsInfoFavoriteTrue(jobIdTag.toString().toInt())
+
+            view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
+            view.jobsItemsHeart.setTag(R.id.borderTag, "not border")
+        } else if (heartTag == "not border") {
+            jobsViewModel.clickUnFavorite(jobIdTag.toString().toInt())
+            jobsViewModel.changeJobsInfoFavoriteFalse(jobIdTag.toString().toInt())
+            view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            view.jobsItemsHeart.setTag(R.id.borderTag, "border")
+
+        }
+
     }
 
 

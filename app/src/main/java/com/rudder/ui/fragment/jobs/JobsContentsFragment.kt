@@ -1,6 +1,7 @@
 package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,12 +70,25 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        jobsViewModel.isJobContentApiResultFail.observe(viewLifecycleOwner, Observer {
-            if (!it) {
-                jobsContentAdapter.submitList(jobsViewModel.jobsInfoArrayList.value!!.toMutableList())
+//        jobsViewModel.isJobContentApiResultFail.observe(viewLifecycleOwner, Observer {
+//            if (!it) {
+//                val copyList = jobsViewModel.jobsInfoArrayList.value!!.toMutableList()
+//                jobsContentAdapter.submitList(copyList)
+//                view.jobsContentsSwipeRefreshLayout.isRefreshing = false
+//            }
+//        })
+
+        jobsViewModel.jobsInfoArrayList.observe(viewLifecycleOwner, Observer {
+            if (it!=null) {
+                Log.d("test5551234jobsInfo", "${jobsViewModel.jobsInfoArrayList.value}")
+                val copyList = it.toMutableList()
+                jobsContentAdapter.submitList(copyList)
+                //jobsContentAdapter.notifyDataSetChanged()
                 view.jobsContentsSwipeRefreshLayout.isRefreshing = false
             }
         })
+
+
 
         view.jobsContentRecyclerView.also{
             it.layoutManager = LinearLayoutManager(parentActivity, LinearLayoutManager.VERTICAL, false)
@@ -91,6 +105,9 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
                 }
             })
         }
+
+        view.jobsContentRecyclerView.smoothScrollToPosition(0)
+
 
 
         view.jobsContentsSwipeRefreshLayout.setColorSchemeColors(purpleRudder)
@@ -132,16 +149,20 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
         val jobIdTag = view.jobsItemsHeart.getTag(R.id.jobIdTag)
 
         if (heartTag == "border") {
+            jobsViewModel.clickFavorite(jobIdTag.toString().toInt())
+            jobsViewModel.changeJobsInfoFavoriteTrue(jobIdTag.toString().toInt())
+
             view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
-            view.jobsItemsHeart.tag = "not border"
+            view.jobsItemsHeart.setTag(R.id.borderTag, "not border")
 
         } else if (heartTag == "not border") {
+            jobsViewModel.clickUnFavorite(jobIdTag.toString().toInt())
+            jobsViewModel.changeJobsInfoFavoriteFalse(jobIdTag.toString().toInt())
+
             view.jobsItemsHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-            view.jobsItemsHeart.tag = "border"
+            view.jobsItemsHeart.setTag(R.id.borderTag, "border")
         }
 
-        jobsViewModel.clickFavorite(jobIdTag.toString().toInt())
-        jobsContentAdapter.submitList(jobsViewModel.jobsInfoArrayList.value!!.toMutableList())
 
     }
 
