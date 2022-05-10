@@ -1,5 +1,6 @@
 package com.rudder.ui.fragment.jobs
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -12,6 +13,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.google.firebase.dynamiclinks.DynamicLink
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.rudder.R
 import com.rudder.databinding.FragmentJobsDetailsBinding
 import com.rudder.ui.activity.MainActivity
@@ -163,31 +166,81 @@ class JobsDetailsFragment : Fragment() {
 
 
         view.jobsDetailShareCL.setOnClickListener {
-            val url = "https://linkrudder.page.link/main=6"
-            //val url = "http://onelink.to/rudder/?key1=6"
-            val tmp = Uri.parse(url)
-            Log.d("deep_tmp", "$tmp")
 
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, Uri.parse(url))
-                putExtra(Intent.EXTRA_TEXT, url)
 
-                type = "text/plain"
+            FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(getDeepLink("main", "key1", jobsViewModel.jobsDetailInfo.value!!.jobId.toString()))
+//                .setDynamicLinkDomain("linkrudder.page.link")
+//                .setDomainUriPrefix("https://linkrudder.page.link")
+                .setDomainUriPrefix("https://teamswan.page.link")
+                .setSocialMetaTagParameters(
+                    DynamicLink.SocialMetaTagParameters.Builder()
+                        .setImageUrl(Uri.parse("https://commons.wikimedia.org/wiki/File:Square_200x200.png"))
+                        .build()
+                )
+                .setAndroidParameters(
+                    DynamicLink.AndroidParameters.Builder(parentActivity.packageName)
+                        .setMinimumVersion(1)
+                        .build()
+                )
+                .buildShortDynamicLink()
+                .addOnCompleteListener(
+                    parentActivity
+                ) { task ->
+                    if (task.isSuccessful) {
+                        val shortLink: Uri = task.result.shortLink!!
+                        Log.i(TAG, "${shortLink}, shortLink")
+                        try {
+                            val sendIntent = Intent()
+                            sendIntent.action = Intent.ACTION_SEND
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, shortLink.toString())
+                            sendIntent.type = "text/plain"
+                            parentActivity.startActivity(Intent.createChooser(sendIntent, "Share"))
+                        } catch (ignored: ActivityNotFoundException) {
+                        }
+                    } else {
+                        Log.i(TAG, task.exception.toString())
+                    }
+                }
 
-            }
 
-//            val bundle = Bundle().apply {
-//                putInt("asd", 3)
+            ////////////////////////////////////////////////
+//            val url = "https://linkrudder.page.link/main?key1=6"
+//            //val url = "http://onelink.to/rudder/?key1=6"
+//            val tmp = Uri.parse(url)
+//            Log.d("deep_tmp", "$tmp")
+//
+//            val sendIntent: Intent = Intent().apply {
+//                action = Intent.ACTION_SEND
+//                putExtra(Intent.EXTRA_TEXT, Uri.parse(url))
+//                putExtra(Intent.EXTRA_TEXT, url)
+//
+//                type = "text/plain"
+//
 //            }
-
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
+//
+////            val bundle = Bundle().apply {
+////                putInt("asd", 3)
+////            }
+//
+//            val shareIntent = Intent.createChooser(sendIntent, null)
+//            startActivity(shareIntent)
+            /////////////////////////////////////////////////////////////////
             //startActivity(shareIntent, bundle)
             //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("example://gizmos")))
         }
 
     }
+
+    private fun getDeepLink(scheme: String, key: String?, id: String?): Uri {
+        return if(key == null){
+            Uri.parse("https://teamswan.page.link/${scheme}/")
+        } else {
+            Uri.parse("https://teamswan.page.link/${scheme}/?${key}=$id")
+        }
+    }
+
+
 
     fun moveToJobCategoryPreviewPost(findJobIndex : Int){
         var viewPosition = findJobIndex

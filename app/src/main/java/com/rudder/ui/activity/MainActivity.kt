@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ import com.rudder.R
 import com.rudder.data.MainDisplayTab
 import com.rudder.data.dto.NotificationType
 import com.rudder.data.local.App
+import com.rudder.data.remote.JobsEnum
 import com.rudder.databinding.ActivityMainBinding
 import com.rudder.ui.fragment.*
 import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
@@ -49,6 +51,9 @@ import kotlinx.android.synthetic.main.fragment_add_comment.*
 import kotlinx.android.synthetic.main.fragment_community_display.*
 import kotlinx.android.synthetic.main.post_comments.*
 import kotlinx.android.synthetic.main.show_post_display_image.view.*
+
+
+
 
 
 class MainActivity : AppCompatActivity(), MainActivityInterface {
@@ -102,6 +107,13 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         ActivityContainer.currentActivity = this
         //mainActivityViewModel = MainActivityViewModel()
 
+        val intent = intent
+        val bundle = intent.extras
+        val getBundleJobId = bundle?.getInt("jobId")
+
+        Log.d("deep_main", "${getBundleJobId}")
+
+
         notificationType=intent.getIntExtra("notificationType",-1)
         itemId=intent.getIntExtra("itemId",-1)
 
@@ -134,6 +146,18 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             true
         }
 
+        if (getBundleJobId != null) {
+
+            jobsViewModel.getJobsDetail(getBundleJobId, JobsEnum.CONTENT)
+
+            val mHandler = Handler(Looper.getMainLooper())
+            mHandler.postDelayed({
+                navDisplayController.navigate(R.id.action_navigation_community_to_navigation_jobs_details)
+            }, 2000)
+
+            mainBottomNavigationDisappear()
+
+        }
 
         progressDialog = ProgressDialog(this, R.style.MyAlertDialogStyle)
         progressDialog.setMessage("Please wait ...")

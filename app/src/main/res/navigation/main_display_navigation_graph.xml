@@ -12,6 +12,13 @@
         android:name="com.rudder.ui.fragment.community.CommunityDisplayFragment"
         android:label="@string/community_title"
         tools:layout="@layout/fragment_community_display" >
+
+        <action
+            android:id="@+id/action_navigation_community_to_navigation_jobs_details"
+            app:destination="@id/navigation_jobs_details"
+            app:popUpTo="@id/navigation_community" />
+
+
         <action
             android:id="@+id/action_navigation_community_to_navigation_search"
             app:destination="@id/navigation_search"
