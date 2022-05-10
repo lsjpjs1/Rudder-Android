@@ -403,4 +403,17 @@ class JobsViewModel : ViewModel() {
     }
 
 
+    fun changeJobsSearchFavoriteFalse(jobId: Int) {
+        var tmpList = _jobsSearchArrayList.value
+        tmpList!!.find { it.jobPostId == jobId }?.isSaved = false
+        _jobsSearchArrayList.postValue(tmpList!!)
+    }
+
+    fun changeJobsSearchFavoriteTrue(jobId: Int) {
+        var tmpList = _jobsSearchArrayList.value
+        tmpList!!.find { it.jobPostId == jobId }?.isSaved = true
+        _jobsSearchArrayList.postValue(tmpList!!)
+    }
+
+
 }

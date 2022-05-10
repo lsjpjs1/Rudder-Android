@@ -135,6 +135,7 @@ class JobsDetailsFragment : Fragment() {
             if (view.jobsDetailHeart.tag == "border") {
                 jobsViewModel.clickFavorite( jobsViewModel.jobsDetailInfo.value!!.jobId )
                 jobsViewModel.changeJobsInfoFavoriteTrue(jobsViewModel.jobsDetailInfo.value!!.jobId)
+                jobsViewModel.changeJobsSearchFavoriteTrue(jobsViewModel.jobsDetailInfo.value!!.jobId)
 
                 view.jobsDetailHeart.setImageResource(R.drawable.ic_baseline_favorite_24)
                 view.jobsDetailHeart.setColorFilter(ContextCompat.getColor(lazyContext,R.color.purple_rudder))
@@ -144,6 +145,8 @@ class JobsDetailsFragment : Fragment() {
             } else if (view.jobsDetailHeart.tag == "not border") {
                 jobsViewModel.clickUnFavorite( jobsViewModel.jobsDetailInfo.value!!.jobId )
                 jobsViewModel.changeJobsInfoFavoriteFalse(jobsViewModel.jobsDetailInfo.value!!.jobId)
+                jobsViewModel.changeJobsSearchFavoriteFalse(jobsViewModel.jobsDetailInfo.value!!.jobId)
+
 
                 view.jobsDetailHeart.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                 view.jobsDetailHeart.setColorFilter(ContextCompat.getColor(lazyContext,R.color.grey))
