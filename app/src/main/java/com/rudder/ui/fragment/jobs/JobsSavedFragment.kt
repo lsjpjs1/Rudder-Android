@@ -1,7 +1,6 @@
 package com.rudder.ui.fragment.jobs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,19 +80,19 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
             val navController = view.findNavController()
             navController.popBackStack()
             (activity as MainActivity).mainBottomNavigationAppear()
-
-            //jobsViewModel.scrollTouchTopJobContent()
         }
 
         jobsViewModel.getJobsMyFavorite(false)
 
 
-        jobsViewModel.isJobMyFavoriteApiResultFail.observe(viewLifecycleOwner, Observer {
-            if (!it) {
-                Log.d("test555", "${jobsViewModel.jobsMyFavoriteArrayList.value?.size}")
-                jobsSavedAdapter.submitList(jobsViewModel.jobsMyFavoriteArrayList.value?.toMutableSet()?.toMutableList())
-                view.jobsSavedMainSwipeRefreshLayout.isRefreshing = false
-            }
+        jobsViewModel.jobsMyFavoriteArrayList.observe(viewLifecycleOwner, Observer {
+//            if (!it) {
+//                Log.d("test55566", "${jobsViewModel.jobsMyFavoriteArrayList.value?.size}")
+//                jobsSavedAdapter.submitList(jobsViewModel.jobsMyFavoriteArrayList.value?.toMutableList())
+//                view.jobsSavedMainSwipeRefreshLayout.isRefreshing = false
+//            }
+            jobsSavedAdapter.submitList(it?.toMutableList())
+            view.jobsSavedMainSwipeRefreshLayout.isRefreshing = false
         })
 
 
@@ -169,8 +168,7 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
 
 
     override fun onStart() {
-        Log.d("test555", "onStart")
-        jobsViewModel.clearJobSaved()
+        jobsViewModel.clearJobMyFavoriteArrayList()
         super.onStart()
     }
 

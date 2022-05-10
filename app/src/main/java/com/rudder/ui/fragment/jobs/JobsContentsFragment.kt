@@ -79,13 +79,21 @@ class JobsContentsFragment : Fragment(), JobsContentOnclickListener {
 //        })
 
         jobsViewModel.jobsInfoArrayList.observe(viewLifecycleOwner, Observer {
-            if (it!=null) {
-                Log.d("test5551234jobsInfo", "${jobsViewModel.jobsInfoArrayList.value}")
+            it?.let {
+                Log.d("testJobsInfo", "${jobsViewModel.jobsInfoArrayList.value}")
                 val copyList = it.toMutableList()
                 jobsContentAdapter.submitList(copyList)
-                //jobsContentAdapter.notifyDataSetChanged()
+                jobsContentAdapter.notifyDataSetChanged()
                 view.jobsContentsSwipeRefreshLayout.isRefreshing = false
             }
+
+//            if (it!=null) {
+//                Log.d("testJobsInfo", "${jobsViewModel.jobsInfoArrayList.value}")
+//                val copyList = it.toMutableList()
+//                jobsContentAdapter.submitList(copyList)
+//                jobsContentAdapter.notifyDataSetChanged()
+//                view.jobsContentsSwipeRefreshLayout.isRefreshing = false
+//            }
         })
 
 

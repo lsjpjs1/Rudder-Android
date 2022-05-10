@@ -31,6 +31,7 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
 
         override fun areContentsTheSame(oldItem: JobsInfo, newItem: JobsInfo): Boolean {
             Log.d("test555", "${oldItem},\n ${newItem}")
+            Log.d("test555", "${oldItem.isSaved == newItem.isSaved}" )
             return (oldItem.jobPostId == newItem.jobPostId && oldItem.isSaved == newItem.isSaved)
         }
     }
@@ -41,6 +42,7 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
     init {
         this.jobsContentOnclickListener = jobsContentOnclickListener
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobsViewHolder {
         return JobsViewHolder( JobsItemBinding.inflate(
@@ -93,7 +95,7 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
         }
 
         fun bind(jobsItem: JobsInfo) {
-            Log.d("test555bind", "${jobsItem}")
+            Log.d("testBind", "${jobsItem}")
             val timeago = PrettyTime(LocaleUtil().getSystemLocale(jobsItemBinding.root.context)).format(Date(jobsItem.postDate.time))
 
             if (jobsItem.jobType == "") {

@@ -61,14 +61,6 @@ class JobsViewModel : ViewModel() {
     val isJobMyFavoriteApiResultFail: LiveData<Boolean> = _isJobMyFavoriteApiResultFail
 
 
-    private val _ttmp = MutableLiveData<Boolean>()
-    val ttmp: LiveData<Boolean> = _ttmp
-
-
-    private val _isUnFavorite = MutableLiveData<Event<Boolean>>()
-    val isUnFavorite: LiveData<Event<Boolean>> = _isUnFavorite
-
-
     var pagingIndex = 0
     var endContentJobsId = -1
     var endSearchJobsId = -1
@@ -147,6 +139,10 @@ class JobsViewModel : ViewModel() {
         endSavedJobsId = -1
     }
 
+    fun clearJobMyFavoriteArrayList(){
+        _jobsMyFavoriteArrayList.value = arrayListOf<JobsInfo>()
+    }
+
     fun clearJobSearch() {
         _jobsSearchArrayList.value = arrayListOf<JobsInfo>()
         pagingIndex = 0
@@ -202,44 +198,21 @@ class JobsViewModel : ViewModel() {
                         val jsonObject = getItem as JsonObject
 
                         if (isSearch) { // search 인 경우
-                            _jobsSearchArrayList.value!!.add(
+                            var tmpList = _jobsSearchArrayList.value
+                            tmpList!!.add(
                                 JobsInfo(
-                                    jobTitle = jsonObject.get("jobTitle").toString().drop(1)
-                                        .dropLast(1),
+                                    jobTitle = jsonObject.get("jobTitle").toString().drop(1).dropLast(1),
                                     jobPostId = jsonObject.get("jobId").asInt,
-                                    companyName = jsonObject.get("companyName").toString().drop(1)
-                                        .dropLast(1),
-                                    jobType = if (jsonObject.get("jobType") != null) "" else jsonObject.get(
-                                        "jobType").toString().drop(1).dropLast(1),
-                                    salary = jsonObject.get("salary").toString().drop(1)
-                                        .dropLast(1),
-                                    postDate = Timestamp.valueOf(jsonObject.get("uploadDate")
-                                        .toString().split('T').joinToString(" ").drop(1)
-                                        .dropLast(11)),
+                                    companyName = jsonObject.get("companyName").toString().drop(1).dropLast(1),
+                                    jobType = if (jsonObject.get("jobType") != null) "" else jsonObject.get("jobType").toString().drop(1).dropLast(1),
+                                    salary = jsonObject.get("salary").toString().drop(1).dropLast(1),
+                                    postDate = Timestamp.valueOf(jsonObject.get("uploadDate").toString().split('T').joinToString(" ").drop(1).dropLast(11)),
                                     companyImage = null,
                                     isSaved = jsonObject.get("isFavorite").asBoolean
                                 )
                             )
+                            _jobsSearchArrayList.postValue(tmpList!!)
                         } else { // search, content인 경우
-//                            _jobsInfoArrayList.value!!.add(
-//                                JobsInfo(
-//                                    jobTitle = jsonObject.get("jobTitle").toString().drop(1)
-//                                        .dropLast(1),
-//                                    jobPostId = jsonObject.get("jobId").asInt,
-//                                    companyName = jsonObject.get("companyName").toString().drop(1)
-//                                        .dropLast(1),
-//                                    jobType = if (jsonObject.get("jobType") != null) "" else jsonObject.get(
-//                                        "jobType").toString().drop(1).dropLast(1),
-//                                    salary = jsonObject.get("salary").toString().drop(1)
-//                                        .dropLast(1),
-//                                    postDate = Timestamp.valueOf(jsonObject.get("uploadDate")
-//                                        .toString().split('T').joinToString(" ").drop(1)
-//                                        .dropLast(11)),
-//                                    companyImage = null,
-//                                    isSaved = jsonObject.get("isFavorite").asBoolean
-//                                )
-//                            )
-
                             var tmpList = _jobsInfoArrayList.value
                             tmpList!!.add(
                                 JobsInfo(
@@ -320,9 +293,6 @@ class JobsViewModel : ViewModel() {
 
     fun clickUnFavorite(jobId: Int) {
         val service = JobsInfoApi.instance.jobsInfoService
-
-        Log.d("test55512click", "${jobId}")
-
         CoroutineScope(Dispatchers.IO).launch {
             val response = service.jobsUnFavoriteClickApiFun(jobId = jobId,
                 token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhdXRoIjoiUk9MRV9VU0VSIiwic2Nob29sIjp7InNjaG9vbElkIjoxLCJzY2hvb2xOYW1lIjoiV2FzZWRhIFVuaXZlcnNpdHkiLCJyZWdleCI6IlxcYlteXFxzXStAd2FzZWRhXFwuanBcXGIifSwidXNlck5pY2tuYW1lIjoi7ZuIIiwidXNlckVtYWlsIjoieG9ydWRmbDc3MkBuYXZlci5jb20iLCJ1c2VySWQiOiJhYmNkIiwidXNlckluZm9JZCI6MjE4LCJub3RpZmljYXRpb25Ub2tlbiI6InJpZ2h0Q2FzZSJ9.E0CSycn5hUDS8HFg6dFHn-KQl3CDd7EoDU2gO1CqpsudtYG7daO7X8XliNPn0TNXceMPW2wG-oqbvk3wgxOEpQ")
@@ -349,6 +319,7 @@ class JobsViewModel : ViewModel() {
 
         CoroutineScope(Dispatchers.IO).launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+            Log.d("getJobsMy","getJobsMy")
             val response: Response<JsonObject>
             if (isScroll) {
                 response = service.jobsGetMyFavoriteApiFun(endPostId = endSavedJobsId,
@@ -365,22 +336,40 @@ class JobsViewModel : ViewModel() {
                     for (getItem in getItems) {
                         val jsonObject = getItem as JsonObject
                         //Log.d("getJobsInfoFavorite", "${jsonObject}")
-                        _jobsMyFavoriteArrayList.value!!.add(
+
+                        var tmpList = _jobsMyFavoriteArrayList.value
+                        tmpList!!.add(
                             JobsInfo(
-                                jobTitle = jsonObject.get("jobTitle").toString().drop(1)
-                                    .dropLast(1),
+                                jobTitle = jsonObject.get("jobTitle").toString().drop(1).dropLast(1),
                                 jobPostId = jsonObject.get("jobId").asInt,
-                                companyName = jsonObject.get("companyName").toString().drop(1)
-                                    .dropLast(1),
-                                jobType = if (jsonObject.get("jobType") != null) "" else jsonObject.get(
-                                    "jobType").toString().drop(1).dropLast(1),
+                                companyName = jsonObject.get("companyName").toString().drop(1).dropLast(1),
+                                jobType = if (jsonObject.get("jobType") != null) "" else jsonObject.get("jobType").toString().drop(1).dropLast(1),
                                 salary = jsonObject.get("salary").toString().drop(1).dropLast(1),
-                                postDate = Timestamp.valueOf(jsonObject.get("uploadDate").toString()
-                                    .split('T').joinToString(" ").drop(1).dropLast(11)),
+                                postDate = Timestamp.valueOf(jsonObject.get("uploadDate").toString().split('T').joinToString(" ").drop(1).dropLast(11)),
                                 companyImage = null,
                                 isSaved = jsonObject.get("isFavorite").asBoolean
                             )
                         )
+                        _jobsMyFavoriteArrayList.postValue(tmpList!!)
+
+
+
+//                        _jobsMyFavoriteArrayList.value!!.add(
+//                            JobsInfo(
+//                                jobTitle = jsonObject.get("jobTitle").toString().drop(1)
+//                                    .dropLast(1),
+//                                jobPostId = jsonObject.get("jobId").asInt,
+//                                companyName = jsonObject.get("companyName").toString().drop(1)
+//                                    .dropLast(1),
+//                                jobType = if (jsonObject.get("jobType") != null) "" else jsonObject.get(
+//                                    "jobType").toString().drop(1).dropLast(1),
+//                                salary = jsonObject.get("salary").toString().drop(1).dropLast(1),
+//                                postDate = Timestamp.valueOf(jsonObject.get("uploadDate").toString()
+//                                    .split('T').joinToString(" ").drop(1).dropLast(11)),
+//                                companyImage = null,
+//                                isSaved = jsonObject.get("isFavorite").asBoolean
+//                            )
+//                        )
                     }
                     _isJobMyFavoriteApiResultFail.postValue(false)
                 } else { // 서버 통신 fail

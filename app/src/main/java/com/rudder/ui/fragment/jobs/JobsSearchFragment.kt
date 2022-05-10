@@ -95,6 +95,16 @@ class JobsSearchFragment : Fragment(), JobsContentOnclickListener {
             jobsViewModel.scrollTouchTopJobSearch()
         }
 
+        jobsViewModel.jobsSearchArrayList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val copyList = it.toMutableList()
+                jobsContentAdapter.submitList(copyList)
+                jobsContentAdapter.notifyDataSetChanged()
+                view.jobsSearchSwipeRefreshLayout.isRefreshing = false
+            }
+
+        })
+
 
 
         jobsViewModel.isJobContentApiResultFail.observe(viewLifecycleOwner, Observer {

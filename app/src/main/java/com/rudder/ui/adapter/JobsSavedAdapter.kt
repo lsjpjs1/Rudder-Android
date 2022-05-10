@@ -58,6 +58,10 @@ class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
 
 
     class JobsSavedViewHolder(private val jobsItemBinding : JobsItemBinding, jobsContentOnclickListener: JobsContentOnclickListener) : RecyclerView.ViewHolder(jobsItemBinding.root), View.OnClickListener {
+        companion object {
+            const val MAX_COMPANY_BODY_LENGTH = 30
+            const val MAX_JOB_TITLE_BODY_LENGTH = 70
+        }
 
         private var jobsContentOnclickListener : JobsContentOnclickListener? = null
 
@@ -76,18 +80,16 @@ class JobsSavedAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
             }
 
 
-            if (jobsItem.companyName.length > JobsContentAdapter.JobsViewHolder.MAX_COMPANY_BODY_LENGTH) {
-                val subBody = jobsItem.companyName.substring(0,
-                    JobsContentAdapter.JobsViewHolder.MAX_COMPANY_BODY_LENGTH) + "  ..."
+            if (jobsItem.companyName.length > MAX_COMPANY_BODY_LENGTH) {
+                val subBody = jobsItem.companyName.substring(0, MAX_COMPANY_BODY_LENGTH) + "  ..."
                 jobsItemBinding.jobsCompanyTV.text = subBody
             } else {
                 jobsItemBinding.jobsCompanyTV.text = jobsItem.companyName
             }
 
 
-            if (jobsItem.jobTitle.length > JobsContentAdapter.JobsViewHolder.MAX_JOB_TITLE_BODY_LENGTH) {
-                val subBody = jobsItem.jobTitle.substring(0,
-                    JobsContentAdapter.JobsViewHolder.MAX_JOB_TITLE_BODY_LENGTH) + "  ..."
+            if (jobsItem.jobTitle.length > MAX_JOB_TITLE_BODY_LENGTH) {
+                val subBody = jobsItem.jobTitle.substring(0, MAX_JOB_TITLE_BODY_LENGTH) + "  ..."
                 jobsItemBinding.jobsTitleTV.text = subBody
             } else {
                 jobsItemBinding.jobsTitleTV.text = jobsItem.jobTitle
