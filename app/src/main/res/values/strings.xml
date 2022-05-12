@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Rudder</string>
     <string name="id_placeholder">ID</string>
-    <string name="password_placeholder">PASSWORD</string>
+    <string name="password_placeholder">Password</string>
     <string name="password_confirm_placeholder">PASSWORD Check</string>
     <string name="recommend_code">RECOMMENDATION CODE (Optional)</string>
     <string name="email_id">EMAIL ID</string>
@@ -79,6 +79,7 @@
     <string name="jobs_title">Jobs</string>
     <string name="jobs_details">Jobs Details</string>
     <string name="saved_jobs">Saved Jobs</string>
+    <string name="school_email">School Email</string>
 
 
 </resources>

@@ -309,7 +309,6 @@
                 android:textColor="@color/white"
                 android:background="@drawable/button_enabled"
                 android:gravity="center"
-                android:onClick="@{()->signUpVM.callCreateAccount()}"
                 android:text="@string/sign_up"
                 android:textStyle="bold"
                 android:fontFamily="@font/sf_pro_text_bold"
@@ -323,6 +322,9 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.9"
                 />
+
+<!--            android:onClick="@{()->signUpVM.callCreateAccount()}"-->
+
 
 
 

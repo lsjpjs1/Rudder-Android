@@ -1,32 +1,26 @@
 package com.rudder.viewModel
 
 
-import android.R
-import android.app.ProgressDialog
-import android.content.ContentValues
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rudder.data.*
-import com.rudder.data.local.App
 import com.rudder.data.remote.Category
-import com.rudder.data.remote.GetCategoriesRequest
 import com.rudder.data.remote.School
 import com.rudder.data.repository.Repository
-import com.rudder.ui.activity.SignUpActivity
+import com.rudder.data.repository.RepositorySignUp
 import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.FieldPosition
 
 
 class SignUpViewModel : ViewModel() {
@@ -137,6 +131,7 @@ class SignUpViewModel : ViewModel() {
 
 
     private val repository = Repository()
+    private val repositorySignUp = RepositorySignUp()
 
     init {
         _userId.value = ""
@@ -348,6 +343,36 @@ class SignUpViewModel : ViewModel() {
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }
+
+
+    fun callSignUp() { // Sign Up, Complete!
+        CoroutineScope(Dispatchers.Main).launch {
+            ProgressBarUtil._progressBarFlag.postValue(Event(true))
+            val resultCode = repositorySignUp.signUpApiCall(SignUpInfo(_userId.value!!, _userPassword.value!!))
+
+            when (resultCode) {
+                201 -> { // 성공 코드
+
+                }
+                406 -> { // 지원 하지 않는 이메일 아이디 형식
+
+                }
+                409 -> { // 이미 존재하는 이메일 아이디
+
+                }
+                else -> { // 그 외 나머지 서버 에러 코드
+
+                }
+            }
+
+            //_profileSettingNext.postValue(Event(result))
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+        }
+    }
+
+
+
+
 
 
     fun callNickNameCheck() {

@@ -44,43 +44,44 @@ class CreateAccountFragment : Fragment() {
 
         viewModel.idChangeFlag.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let{
-                ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
+                //ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
+
                 //ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
                 //ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
                 //ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
-                ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked)
+                ChangeUIState.buttonEnable(createAccountNextBtn, PWcheckbox1.isChecked)
 
             }})
 
 
-        viewModel.idRgCheckFlag.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let{ it ->
-                if(it) {
-                    idDuplicatedCheck.isEnabled = true
-                    toastId.cancel()
-                }
-                else{
-                    idDuplicatedCheck.isEnabled = false
-                    toastId.show()
-                }
-            }})
+//        viewModel.idRgCheckFlag.observe(viewLifecycleOwner, Observer {
+//            it.getContentIfNotHandled()?.let{ it ->
+//                if(it) {
+//                    idDuplicatedCheck.isEnabled = true
+//                    toastId.cancel()
+//                }
+//                else{
+//                    idDuplicatedCheck.isEnabled = false
+//                    toastId.show()
+//                }
+//            }})
 
 
-        viewModel.idCheckFlag.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let { it ->
-                if (it) {
-                    ChangeUIState.changeCheckBoxTrueState(IDcheckbox)
-                    idDuplicatedCheck.isEnabled = false
-                } else {
-                    ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
-                    Toast.makeText(activity, "This ID already exists. Please try other ID.", Toast.LENGTH_SHORT).show()
-                }
-            }
-            //ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
-            //ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
-            //ChangeUIState.buttonEnable( createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
-            ChangeUIState.buttonEnable( createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked)
-        })
+//        viewModel.idCheckFlag.observe(viewLifecycleOwner, Observer {
+//            it.getContentIfNotHandled()?.let { it ->
+//                if (it) {
+//                    ChangeUIState.changeCheckBoxTrueState(IDcheckbox)
+//                    idDuplicatedCheck.isEnabled = false
+//                } else {
+//                    ChangeUIState.changeCheckBoxFalseState(IDcheckbox)
+//                    Toast.makeText(activity, "This ID already exists. Please try other ID.", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//            //ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
+//            //ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
+//            //ChangeUIState.buttonEnable( createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
+//            ChangeUIState.buttonEnable( createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked)
+//        })
 
 //        viewModel.verifiCodeChangeFlag.observe(viewLifecycleOwner, Observer {
 //            it.getContentIfNotHandled()?.let{
@@ -101,7 +102,7 @@ class CreateAccountFragment : Fragment() {
                 //ChangeUIState.buttonEnable(verifyBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked)
                 //ChangeUIState.buttonEnable(submitBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked)
                 //ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
-                ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked)
+                ChangeUIState.buttonEnable(createAccountNextBtn,  PWcheckbox1.isChecked)
 
             }})
 
@@ -185,7 +186,10 @@ class CreateAccountFragment : Fragment() {
 //            ChangeUIState.buttonEnable(createAccountNextBtn, IDcheckbox.isChecked, PWcheckbox1.isChecked, PWcheckbox2.isChecked, emailCheckbox.isChecked, veifyCodeCheckbox.isChecked)
 //        })
 
-        createAccountBinding.root.IDcheckbox.isEnabled = false
+        //createAccountBinding.root.IDcheckbox.isEnabled = false
+        createAccountBinding.root.IDcheckbox.isChecked = true
+
+
         createAccountBinding.root.PWcheckbox1.isEnabled = false
         createAccountBinding.root.PWcheckbox2.isEnabled = false
         createAccountBinding.root.emailCheckbox.isEnabled = false
@@ -193,7 +197,7 @@ class CreateAccountFragment : Fragment() {
         createAccountBinding.root.Recommendcheckbox.isEnabled = false
         createAccountBinding.root.veifyCodeCheckbox.isEnabled = false
 
-        createAccountBinding.root.idDuplicatedCheck.isEnabled = false
+        //createAccountBinding.root.idDuplicatedCheck.isEnabled = false
         createAccountBinding.root.verifyBtn.isEnabled = false
         createAccountBinding.root.submitBtn.isEnabled = false
         createAccountBinding.root.createAccountNextBtn.isEnabled = false

@@ -3,6 +3,7 @@ package com.rudder.ui.activity
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -99,7 +100,7 @@ class SignUpActivity : AppCompatActivity() {
                 if (it) {
                     val fragmentShowHide = FragmentShowHide(supportFragmentManager)
                     fragmentShowHide.addToBackStack()
-                    fragmentShowHide.showFragment(schoolSelectFragment, R.id.signUp_container)
+                    fragmentShowHide.showFragment(createAccountFragment, R.id.signUp_container)
                 }
             }
         })
@@ -140,7 +141,8 @@ class SignUpActivity : AppCompatActivity() {
 //                    val fragmentShowHide = FragmentShowHide(supportFragmentManager)
 //                    fragmentShowHide.addToBackStack()
 //                    fragmentShowHide.showFragment(profileSettingFragment, R.id.signUp_container)
-                    signUpViewModel.callCreateAccount()
+
+//                    signUpViewModel.callSignUp()
                     Toast.makeText(this, "Check your email to verify and Enjoy Rudder!", Toast.LENGTH_SHORT).show()
 
                     StartActivityUtil.callActivity(this, LoginActivity())
@@ -178,6 +180,7 @@ class SignUpActivity : AppCompatActivity() {
 //                    fragmentShowHide.addFragment(categorySelectSignUpFragment,R.id.signUp_container,"categorySelectSignUpFragment")
 //                    fragmentShowHide.showFragment(categorySelectSignUpFragment, R.id.signUp_container)
 //                }
+                Log.d("test1234", "test")
                 if (it) {
                     StartActivityUtil.callActivity(this, LoginActivity())
                     finish()

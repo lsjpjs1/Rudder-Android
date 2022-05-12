@@ -3,12 +3,9 @@ package com.rudder.data.remote
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import com.google.gson.JsonPrimitive
 import com.rudder.BuildConfig
 import com.rudder.data.*
 import kotlinx.coroutines.*
-import org.json.JSONArray
-import retrofit2.Call
 
 class SignUpApi {
 
@@ -16,7 +13,12 @@ class SignUpApi {
         val instance = SignUpApi()
     }
     private val singUpService : SignUpService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(SignUpService::class.java)
+    private val singUpSpringService : SignUpSpringService = RetrofitClientSpring.getClient(BuildConfig.BASE_URL_SPRING).create(SignUpSpringService::class.java)
 
+
+    fun signUpApiFun(singUpInfo : SignUpInfo) : Deferred<retrofit2.Response<JsonObject>> {
+        return CoroutineScope(Dispatchers.IO).async{ singUpSpringService.signUpService(singUpInfo) }
+    }
 
     fun emailSignUp(emailInfoSignUp: EmailInfoSignUp) : Deferred<Response<JsonObject>>{
         return GlobalScope.async(Dispatchers.IO){

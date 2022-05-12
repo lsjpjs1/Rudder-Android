@@ -72,3 +72,10 @@ data class SignUpInsertInfo(
     val userProfileImageId: Int
 
 )
+
+
+data class SignUpInfo(
+    val userEmail: String,
+    val userPassword: String
+
+)
