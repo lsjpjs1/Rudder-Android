@@ -169,8 +169,7 @@ class JobsDetailsFragment : Fragment() {
 
 
             FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLink(getDeepLink("main", "key1", jobsViewModel.jobsDetailInfo.value!!.jobId.toString()))
-//                .setDynamicLinkDomain("linkrudder.page.link")
+                .setLink(getDeepLink("main", "jobId", jobsViewModel.jobsDetailInfo.value!!.jobId.toString()))
 //                .setDomainUriPrefix("https://linkrudder.page.link")
                 .setDomainUriPrefix("https://teamswan.page.link")
                 .setSocialMetaTagParameters(
@@ -202,32 +201,6 @@ class JobsDetailsFragment : Fragment() {
                         Log.i(TAG, task.exception.toString())
                     }
                 }
-
-
-            ////////////////////////////////////////////////
-//            val url = "https://linkrudder.page.link/main?key1=6"
-//            //val url = "http://onelink.to/rudder/?key1=6"
-//            val tmp = Uri.parse(url)
-//            Log.d("deep_tmp", "$tmp")
-//
-//            val sendIntent: Intent = Intent().apply {
-//                action = Intent.ACTION_SEND
-//                putExtra(Intent.EXTRA_TEXT, Uri.parse(url))
-//                putExtra(Intent.EXTRA_TEXT, url)
-//
-//                type = "text/plain"
-//
-//            }
-//
-////            val bundle = Bundle().apply {
-////                putInt("asd", 3)
-////            }
-//
-//            val shareIntent = Intent.createChooser(sendIntent, null)
-//            startActivity(shareIntent)
-            /////////////////////////////////////////////////////////////////
-            //startActivity(shareIntent, bundle)
-            //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("example://gizmos")))
         }
 
     }

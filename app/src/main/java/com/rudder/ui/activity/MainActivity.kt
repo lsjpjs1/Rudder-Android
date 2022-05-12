@@ -147,16 +147,18 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
         }
 
         if (getBundleJobId != null) {
+            jobsViewModel.getJobsDetail(getBundleJobId, JobsEnum.MAIN)
 
-            jobsViewModel.getJobsDetail(getBundleJobId, JobsEnum.CONTENT)
-
-            val mHandler = Handler(Looper.getMainLooper())
-            mHandler.postDelayed({
-                navDisplayController.navigate(R.id.action_navigation_community_to_navigation_jobs_details)
-            }, 2000)
+            jobsViewModel.isJobDetailMainResultFail.observe(this, Observer {
+                Log.d("deepMain", "deepMain")
+                it.getContentIfNotHandled()?.let { it ->
+                    if (!it) {
+                        navDisplayController.navigate(R.id.action_navigation_community_to_navigation_jobs_details)
+                    }
+                }
+            })
 
             mainBottomNavigationDisappear()
-
         }
 
         progressDialog = ProgressDialog(this, R.style.MyAlertDialogStyle)

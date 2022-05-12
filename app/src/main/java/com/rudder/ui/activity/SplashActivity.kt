@@ -91,26 +91,18 @@ class SplashActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let{
                 val intent = Intent(this, MainActivity()::class.java)
 
-                Log.d("deeplink", "${deeplinkParameter}")
+                Log.d("deeplink_parameter", "${deeplinkParameter}")
                 if (deeplinkParameter != null) {
                     val bundle = Bundle()
                     bundle.putInt("jobId", deeplinkParameter.toInt())
                     intent.putExtras(bundle)
-                    //startActivity(intent)
-//                    ContextCompat.startActivity(this, intent, null)
+
                 } else {
                     if(notificationType!=-1 && itemId != -1){
                         intent.putExtra("itemId",itemId)
                         intent.putExtra("notificationType",notificationType)
                     }
-//                    ContextCompat.startActivity(this, intent, null)
                 }
-
-
-//                if(notificationType!=-1 && itemId != -1){
-//                    intent.putExtra("itemId",itemId)
-//                    intent.putExtra("notificationType",notificationType)
-//                }
                 ContextCompat.startActivity(this, intent, null)
                 finish()
             }
@@ -119,9 +111,6 @@ class SplashActivity : AppCompatActivity() {
         notificationType=intent.getIntExtra("notificationType",-1)
         itemId=intent.getIntExtra("itemId",-1)
 
-
-        val intent = Intent().getIntExtra("asd",0)
-        Log.d("deeplink_789", "$intent")
 
         autoLogin()
 
@@ -150,13 +139,10 @@ class SplashActivity : AppCompatActivity() {
         var shareParameter : String? = null
         if (Intent.ACTION_VIEW == intent.action) {
             val uri = intent.data
-            shareParameter = intent.data!!.getQueryParameter("key1")
+            shareParameter = intent.data!!.getQueryParameter("jobId")
             if (uri != null) {
-                Log.d("deeplink_test1234", "${uri}")
-                Log.d("deeplink_test4564", "${shareParameter}")
-//                binding.tvDeeplinkReceive.text = "딥링크 수신받은 값\n" +
-//                        "dl_data1: $dl_data1 \n" +
-//                        "dl_data2: $dl_data2"
+                Log.d("deeplink_uri", "${uri}")
+                Log.d("deeplink_parameter", "${shareParameter}")
             }
         }
         return shareParameter

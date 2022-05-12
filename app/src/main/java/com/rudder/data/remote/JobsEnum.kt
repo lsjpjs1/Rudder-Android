@@ -5,5 +5,6 @@ enum class JobsEnum {
     CONTENT,
     SAVED,
     SEARCH,
+    MAIN,
     NOTHING,
 }

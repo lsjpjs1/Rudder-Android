@@ -56,6 +56,10 @@ class JobsViewModel : ViewModel() {
     private val _isJobDetailSearchResultFail = MutableLiveData<Event<Boolean>>()
     val isJobDetailSearchResultFail: LiveData<Event<Boolean>> = _isJobDetailSearchResultFail
 
+    private val _isJobDetailMainResultFail = MutableLiveData<Event<Boolean>>()
+    val isJobDetailMainResultFail: LiveData<Event<Boolean>> = _isJobDetailMainResultFail
+
+
 
     private val _isJobMyFavoriteApiResultFail = MutableLiveData<Boolean>()
     val isJobMyFavoriteApiResultFail: LiveData<Boolean> = _isJobMyFavoriteApiResultFail
@@ -260,6 +264,9 @@ class JobsViewModel : ViewModel() {
                         }
                         JobsEnum.SEARCH -> {
                             _isJobDetailSearchResultFail.postValue(Event(false))
+                        }
+                        JobsEnum.MAIN -> {
+                            _isJobDetailMainResultFail.postValue(Event(false))
                         }
                     }
                 } else { // 서버 통신 fail
