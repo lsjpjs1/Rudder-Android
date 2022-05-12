@@ -174,7 +174,9 @@ class JobsDetailsFragment : Fragment() {
                 .setDomainUriPrefix("https://teamswan.page.link")
                 .setSocialMetaTagParameters(
                     DynamicLink.SocialMetaTagParameters.Builder()
-                        .setImageUrl(Uri.parse("https://commons.wikimedia.org/wiki/File:Square_200x200.png"))
+                        .setImageUrl(Uri.parse("https://play-lh.googleusercontent.com/437awOtC9nZnV-1eqD6SQz2nVJ6Upu0buZC5dJjwL2g-Moh_dcjMJUzIgPENRphgzQ=w480-h960-rw"))
+                        .setTitle("Rudder")
+                        .setDescription("This is Rudder Job Post!")
                         .build()
                 )
                 .setAndroidParameters(
