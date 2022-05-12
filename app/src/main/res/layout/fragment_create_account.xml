@@ -108,7 +108,7 @@
                     android:afterTextChanged="@{() -> signUpVM.onTextChangeId()}"
                     android:theme="@style/MyEditTextTheme"
                     android:maxLength="35"
-                    android:hint="@string/school_email"
+                    android:hint="@string/university_email"
                     android:textSize="16sp"
                     android:inputType="text"
                     android:text="@={signUpVM._userId}"

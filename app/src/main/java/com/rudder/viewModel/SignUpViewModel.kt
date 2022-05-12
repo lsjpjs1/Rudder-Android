@@ -129,6 +129,11 @@ class SignUpViewModel : ViewModel() {
     var categoryIdSelectList: LiveData<ArrayList<Int>> = _categoryIdSelectList
     var categoryIdAllList: LiveData<ArrayList<Int>> = _categoryIdAllList
 
+    val _signUpResultFlag = MutableLiveData<Int>()
+    val signUpResultFlag: LiveData<Int> = _signUpResultFlag
+
+
+
 
     private val repository = Repository()
     private val repositorySignUp = RepositorySignUp()
@@ -350,18 +355,18 @@ class SignUpViewModel : ViewModel() {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
             val resultCode = repositorySignUp.signUpApiCall(SignUpInfo(_userId.value!!, _userPassword.value!!))
 
-            when (resultCode) {
+           when (resultCode) {
                 201 -> { // 성공 코드
-
+                    _signUpResultFlag.postValue(201)
                 }
                 406 -> { // 지원 하지 않는 이메일 아이디 형식
-
+                    _signUpResultFlag.postValue(406)
                 }
                 409 -> { // 이미 존재하는 이메일 아이디
-
+                    _signUpResultFlag.postValue(409)
                 }
                 else -> { // 그 외 나머지 서버 에러 코드
-
+                    _signUpResultFlag.postValue(-1)
                 }
             }
 

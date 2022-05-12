@@ -135,6 +135,27 @@ class SignUpActivity : AppCompatActivity() {
         })
 
 
+        signUpViewModel.signUpResultFlag.observe(this, Observer {
+            when (it) {
+                201 -> {
+                    Toast.makeText(this, "Check your email to verify and Enjoy Rudder!", Toast.LENGTH_LONG).show()
+                    StartActivityUtil.callActivity(this, LoginActivity())
+                    finish()
+                }
+                406 -> {
+                    Toast.makeText(this, "Please enter your valid university email.", Toast.LENGTH_LONG).show()
+                }
+                409 -> {
+                    Toast.makeText(this, "There is already exist University Email", Toast.LENGTH_LONG).show()
+                }
+                -1 -> {
+                    Toast.makeText(this, "Please Try Again.", Toast.LENGTH_LONG).show()
+
+                }
+            }
+        })
+
+
         signUpViewModel.createAccountNext.observe(this, Observer {
             it.getContentIfNotHandled()?.let{ it ->
                 if (it) {
