@@ -40,7 +40,7 @@ class SplashActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash)
         binding.loginVM = viewModel
         binding.lifecycleOwner = this
-//
+
 //        Firebase.dynamicLinks
 //            .getDynamicLink(intent)
 //            .addOnSuccessListener(this) { pendingDynamicLinkData ->
@@ -122,7 +122,10 @@ class SplashActivity : AppCompatActivity() {
         GlobalScope.launch {
             val autoLoginPref = App.prefs.getValue("autoLogin")
             if (autoLoginPref == "true") {
-                viewModel.callLogin()
+                //viewModel.callLogin()
+                //viewModel.clickLogin()
+                viewModel.checkToken()
+
             } else {
                 val mHandler = Handler(Looper.getMainLooper())
                 mHandler.postDelayed({

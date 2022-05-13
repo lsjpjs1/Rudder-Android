@@ -3,7 +3,6 @@ package com.rudder.ui.activity
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -201,7 +200,6 @@ class SignUpActivity : AppCompatActivity() {
 //                    fragmentShowHide.addFragment(categorySelectSignUpFragment,R.id.signUp_container,"categorySelectSignUpFragment")
 //                    fragmentShowHide.showFragment(categorySelectSignUpFragment, R.id.signUp_container)
 //                }
-                Log.d("test1234", "test")
                 if (it) {
                     StartActivityUtil.callActivity(this, LoginActivity())
                     finish()

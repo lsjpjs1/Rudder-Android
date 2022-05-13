@@ -133,7 +133,6 @@ class JobsContentAdapter(jobsContentOnclickListener: JobsContentOnclickListener)
 
             //jobsItemBinding.jobsItemCompanyIcon.background = ContextCompat.getDrawable(jobsItemBinding.root.context, R.drawable.edge)
 
-            //Log.d("test555", "${jobsItem.isSaved}")
 //            if (jobsItem.isSaved) { // heart를 누른, saved 된 Item 이라면
 //                jobsItemBinding.jobsItemsHeart.setTag(R.id.borderTag, "not border")
 //                jobsItemBinding.jobsItemsHeart.setTag(R.id.jobIdTag, jobsItem.jobPostId)

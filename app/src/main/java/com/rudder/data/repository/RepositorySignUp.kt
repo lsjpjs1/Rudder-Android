@@ -1,6 +1,6 @@
 package com.rudder.data.repository
 
-import com.rudder.data.SignUpInfo
+import com.rudder.data.dto.SignUpInfo
 import com.rudder.data.remote.SignUpApi
 
 class RepositorySignUp {

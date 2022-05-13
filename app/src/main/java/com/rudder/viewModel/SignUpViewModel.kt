@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rudder.data.*
+import com.rudder.data.dto.SignUpInfo
 import com.rudder.data.remote.Category
 import com.rudder.data.remote.School
 import com.rudder.data.repository.Repository
@@ -369,8 +370,6 @@ class SignUpViewModel : ViewModel() {
                     _signUpResultFlag.postValue(-1)
                 }
             }
-
-            //_profileSettingNext.postValue(Event(result))
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
         }
     }

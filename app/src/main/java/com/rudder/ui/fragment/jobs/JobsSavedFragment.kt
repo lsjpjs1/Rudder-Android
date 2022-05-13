@@ -87,7 +87,6 @@ class JobsSavedFragment : Fragment(), JobsContentOnclickListener {
 
         jobsViewModel.jobsMyFavoriteArrayList.observe(viewLifecycleOwner, Observer {
 //            if (!it) {
-//                Log.d("test55566", "${jobsViewModel.jobsMyFavoriteArrayList.value?.size}")
 //                jobsSavedAdapter.submitList(jobsViewModel.jobsMyFavoriteArrayList.value?.toMutableList())
 //                view.jobsSavedMainSwipeRefreshLayout.isRefreshing = false
 //            }

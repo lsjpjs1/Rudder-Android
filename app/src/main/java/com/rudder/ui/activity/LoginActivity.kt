@@ -45,10 +45,49 @@ class LoginActivity : AppCompatActivity() {
             hideSoftKeyboard()
         }
 
+
+        loginViewModel.loginResultFlag.observe(this, Observer {
+            when (it) {
+                201 -> {
+                    StartActivityUtil.callActivity(this, MainActivity() )
+                    finish()
+                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
+                }
+                401 -> {
+                    Toast.makeText(this, "401", Toast.LENGTH_LONG).show()
+                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
+
+                }
+                402 -> {
+                    Toast.makeText(this, "402", Toast.LENGTH_LONG).show()
+                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
+
+                }
+                404 -> {
+                    Toast.makeText(this, "404", Toast.LENGTH_LONG).show()
+                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
+
+                }
+                406 -> {
+                    Toast.makeText(this, "406", Toast.LENGTH_LONG).show()
+                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
+
+                }
+                -1 -> {
+                    Toast.makeText(this, "Please Try Again.", Toast.LENGTH_LONG).show()
+                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
+
+                }
+            }
+        })
+
+
+
+
+
         loginViewModel.showLoginErrorToast.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it ->
                 if (it)
-
                     Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show()
                 ProgressBarUtil._progressBarFlag.postValue(Event(false))
 

@@ -358,25 +358,6 @@ class JobsViewModel : ViewModel() {
                             )
                         )
                         _jobsMyFavoriteArrayList.postValue(tmpList!!)
-
-
-
-//                        _jobsMyFavoriteArrayList.value!!.add(
-//                            JobsInfo(
-//                                jobTitle = jsonObject.get("jobTitle").toString().drop(1)
-//                                    .dropLast(1),
-//                                jobPostId = jsonObject.get("jobId").asInt,
-//                                companyName = jsonObject.get("companyName").toString().drop(1)
-//                                    .dropLast(1),
-//                                jobType = if (jsonObject.get("jobType") != null) "" else jsonObject.get(
-//                                    "jobType").toString().drop(1).dropLast(1),
-//                                salary = jsonObject.get("salary").toString().drop(1).dropLast(1),
-//                                postDate = Timestamp.valueOf(jsonObject.get("uploadDate").toString()
-//                                    .split('T').joinToString(" ").drop(1).dropLast(11)),
-//                                companyImage = null,
-//                                isSaved = jsonObject.get("isFavorite").asBoolean
-//                            )
-//                        )
                     }
                     _isJobMyFavoriteApiResultFail.postValue(false)
                 } else { // 서버 통신 fail

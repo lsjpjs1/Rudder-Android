@@ -74,8 +74,8 @@ data class SignUpInsertInfo(
 )
 
 
-data class SignUpInfo(
-    val userEmail: String,
-    val userPassword: String
-
-)
+//data class SignUpInfo(
+//    val userEmail: String,
+//    val userPassword: String
+//
+//)

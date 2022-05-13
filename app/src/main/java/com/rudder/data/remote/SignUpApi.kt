@@ -5,6 +5,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.rudder.BuildConfig
 import com.rudder.data.*
+import com.rudder.data.dto.SignUpInfo
 import kotlinx.coroutines.*
 
 class SignUpApi {
