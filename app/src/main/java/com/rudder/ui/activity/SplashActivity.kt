@@ -122,9 +122,9 @@ class SplashActivity : AppCompatActivity() {
         GlobalScope.launch {
             val autoLoginPref = App.prefs.getValue("autoLogin")
             if (autoLoginPref == "true") {
-                //viewModel.callLogin()
-                //viewModel.clickLogin()
-                viewModel.checkToken()
+                viewModel.callLogin()
+
+                //viewModel.checkToken()
 
             } else {
                 val mHandler = Handler(Looper.getMainLooper())

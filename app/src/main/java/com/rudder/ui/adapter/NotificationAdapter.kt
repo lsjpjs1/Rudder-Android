@@ -1,13 +1,11 @@
 package com.rudder.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
-import com.google.gson.annotations.SerializedName
 import com.rudder.R
 import com.rudder.data.dto.NotificationItem
 import com.rudder.data.dto.NotificationType
-import com.rudder.data.dto.PostMessageRoom
+import com.rudder.data.local.App
 import com.rudder.databinding.NotificationContentsItemBinding
 import com.rudder.util.LocaleUtil
 import com.rudder.util.NotificationAdapterCallback
@@ -47,6 +45,12 @@ class NotificationAdapter(val notificationAdapterCallback: NotificationAdapterCa
         holder.viewBinding.notificationTime.text = timeago
 
         holder.viewBinding.notificationTopLevelCL.setOnClickListener {
+
+            val getNotificationValue = App.prefs.getValueInt("notification")
+            if (getNotificationValue!! > 0) {
+                App.prefs.setValueInt("notification", getNotificationValue!!.minus(1) )
+            }
+
 
             if (notificationType == NotificationType.COMMENT) { //post에 대한 알림이면
                 notificationAdapterCallback.onClickPostNotification(getItem(position).itemId)

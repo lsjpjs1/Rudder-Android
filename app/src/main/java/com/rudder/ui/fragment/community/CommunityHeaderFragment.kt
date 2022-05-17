@@ -1,5 +1,6 @@
 package com.rudder.ui.fragment.community
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,15 +15,19 @@ import com.rudder.databinding.FragmentCommunityHeaderBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.viewModel.MainViewModel
 
-class CommunityHeaderFragment : Fragment() {
+
+class CommunityHeaderFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val mainViewModel :MainViewModel by activityViewModels()
     private val lazyContext by lazy {
         requireContext()
     }
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         val header = DataBindingUtil.inflate<FragmentCommunityHeaderBinding>(inflater,R.layout.fragment_community_header,container,false)
@@ -40,24 +45,33 @@ class CommunityHeaderFragment : Fragment() {
             }
         })
 
+
         header.constraintLayout13.setOnClickListener { view -> // search button click
-            view.findNavController().navigate(R.id.action_navigation_community_to_navigation_search)
+            view.findNavController()
+                .navigate(R.id.action_navigation_community_to_navigation_search)
             (activity as MainActivity).mainBottomNavigationDisappear()
         }
 
         header.constraintLayout12.setOnClickListener { view -> // add post button click
-            view.findNavController().navigate(R.id.action_navigation_community_to_navigation_add_post)
+            view.findNavController()
+                .navigate(R.id.action_navigation_community_to_navigation_add_post)
             mainViewModel.clickAddPost()
             (activity as MainActivity).mainBottomNavigationDisappear()
         }
 
 
         header.notificationCL.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_navigation_community_to_navigation_notification)
+            view.findNavController()
+                .navigate(R.id.action_navigation_community_to_navigation_notification)
             (activity as MainActivity).mainBottomNavigationDisappear()
 
         }
 
         return header.root
+    }
+
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+
     }
 }

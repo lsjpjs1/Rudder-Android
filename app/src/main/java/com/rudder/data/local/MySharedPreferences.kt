@@ -2,7 +2,6 @@ package com.rudder.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 
 
 class MySharedPreferences(context: Context) {
@@ -24,6 +23,18 @@ class MySharedPreferences(context: Context) {
 
     fun setValueCommit(key:String, value:String?) {
         prefs.edit().putString(key, value).commit()
+    }
+
+
+    fun setValueInt(key:String, value:Int?){ // apply
+        prefs.edit().putInt(key,value!!).apply()
+    }
+    fun getValueInt(key:String):Int?{
+        return prefs.getInt(key,0)
+    }
+
+    fun MyOnSharedPreferenceChangeListenerSetting(listener: SharedPreferences.OnSharedPreferenceChangeListener){
+        prefs.registerOnSharedPreferenceChangeListener(listener)
     }
 
 

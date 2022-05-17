@@ -17,6 +17,8 @@
     <color name="orange">#FF9800</color>
     <color name="light_purple_rudder">#FFCFA7FF</color>
     <color name="transparent_color">#80000000</color>
+    <color name="badge_red">#FF4E22</color>
+
 
 
 </resources>

@@ -1,6 +1,5 @@
 package com.rudder.util
 
-import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
@@ -13,17 +12,14 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.rudder.R
-import com.rudder.data.dto.NotificationItem
-import com.rudder.data.dto.NotificationType
 import com.rudder.data.local.App
 import com.rudder.ui.activity.MainActivity
-import com.rudder.ui.activity.SignUpActivity
 import com.rudder.ui.activity.SplashActivity
 
 class MyFireBaseMessagingService: FirebaseMessagingService() {
     private val TAG = "FirebaseService"
     private val NOTIFICATION_TOKEN_KEY = "notificationKey"
-
+    //var count = 0
 
     // 파이어베이스 서비스의 토큰을 가져온다
     override fun onNewToken(p0: String) {
@@ -32,10 +28,10 @@ class MyFireBaseMessagingService: FirebaseMessagingService() {
 
     // 새로운 FCM 메시지가 있을 때 메세지를 받는다
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-
-
+        //count += 1
+//        val getNotificationValue = App.prefs.getValueInt("notification")
+//        App.prefs.setValueInt("notification", getNotificationValue!!.plus(1) )
         sendNotification(remoteMessage)
-
     }
 
     // FCM 메시지를 보내는 메시지
@@ -94,6 +90,7 @@ class MyFireBaseMessagingService: FirebaseMessagingService() {
             .setContentTitle(title)
             .setContentText(body)
             .setAutoCancel(true)
+//            .setNumber(App.prefs.getValueInt("notification")!!)
             .setSound(notificationSound)
             .setContentIntent(pendingIntent)
 
