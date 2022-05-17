@@ -14,12 +14,15 @@ import com.rudder.data.dto.LoginRequestInfo
 import com.rudder.data.local.App
 import com.rudder.data.local.App.Companion.prefs
 import com.rudder.data.remote.NoticeRequest
-import com.rudder.data.remote.NoticeResponse
 import com.rudder.data.repository.Repository
 import com.rudder.data.repository.RepositoryLogin
+import com.rudder.data.repository.RepositoryNotice
 import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class LoginViewModel() : ViewModel() {
@@ -31,9 +34,9 @@ class LoginViewModel() : ViewModel() {
     private val _startMainActivity = MutableLiveData<Event<Boolean>>()
     private val _startSignUpActivity = MutableLiveData<Event<Boolean>>()
     private val _startForgotActivity = MutableLiveData<Event<Boolean>>()
-    private val _noticeResponse = MutableLiveData<NoticeResponse>()
+    private val _noticeResponse = MutableLiveData<String>()
     var noticeAlreadyShow = false
-    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
+    val noticeResponse:LiveData<String> = _noticeResponse
     val _autoLogin = MutableLiveData<Event<Boolean>>()
     val userId: LiveData<String> = _userId
     val userPassword: LiveData<String> = _userPassword
@@ -48,6 +51,8 @@ class LoginViewModel() : ViewModel() {
 
     private val repository = Repository()
     private val repositoryLogin = RepositoryLogin()
+    private val repositoryNotice = RepositoryNotice()
+
     private val key = BuildConfig.TOKEN_KEY
 
 
@@ -58,19 +63,37 @@ class LoginViewModel() : ViewModel() {
         _showLoginErrorToast.value = Event(false)
     }
 
-    fun getNotice(){
-        try{
-            GlobalScope.async {
-                val version = BuildConfig.VERSION_NAME
-                val response = Repository().getNotice(NoticeRequest("android",version))
-                viewModelScope.launch{
-                    _noticeResponse.value = response
+
+    fun getNoticeFun() { // Spring
+        val version = BuildConfig.VERSION_NAME
+        CoroutineScope(Dispatchers.Main).launch {
+            val result = repositoryNotice.noticeApiCall(NoticeRequest("android", version))
+            Log.d("test123","${result.body()}")
+            when (result.code()) {
+                200 -> { // 성공 코드
+                    _noticeResponse.value = result.body()!!.noticeBody
+                }
+                else -> { // 그 외 나머지 서버 에러 코드
+                    _noticeResponse.value = "Error Exist"
                 }
             }
-        } catch (e: Exception){
-            _noticeResponse.value = NoticeResponse(true,"Error Exist")
         }
     }
+
+
+//    fun getNotice(){
+//        try{
+//            GlobalScope.async {
+//                val version = BuildConfig.VERSION_NAME
+//                val response = Repository().getNotice(NoticeRequest("android",version))
+//                viewModelScope.launch{
+//                    _noticeResponse.value = response
+//                }
+//            }
+//        } catch (e: Exception){
+//            _noticeResponse.value = NoticeResponse(true,"Error Exist")
+//        }
+//    }
 
     fun onCheckedChange(button: CompoundButton?, check: Boolean) {
         if (check) {

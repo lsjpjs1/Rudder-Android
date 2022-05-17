@@ -2,6 +2,7 @@ package com.rudder.viewModel
 
 
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
@@ -12,6 +13,7 @@ import com.rudder.data.*
 import com.rudder.data.local.App
 import com.rudder.data.remote.*
 import com.rudder.data.repository.Repository
+import com.rudder.data.repository.RepositoryNotice
 import com.rudder.util.Event
 import com.rudder.util.FileUtil
 import com.rudder.util.ProgressBarUtil
@@ -31,6 +33,7 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     var endPostId = -1
 
     val repository = Repository()
+    val repositoryNotice = RepositoryNotice()
 
 
     val _isShowPostRefreshSuccess = MutableLiveData<Event<Boolean>>()
@@ -105,7 +108,7 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     private val _imageCount = MutableLiveData<Int>()
     private val _myProfileImageUrl = MutableLiveData<String>()
     var noticeAlreadyShow = false
-    private val _noticeResponse = MutableLiveData<NoticeResponse>()
+    private val _noticeResponse = MutableLiveData<String>()
     private val _commonCategoryList = MutableLiveData<ArrayList<Category>>()
     private val _departmentACategoryList = MutableLiveData<ArrayList<Category>>()
     private val _departmentBCategoryList = MutableLiveData<ArrayList<Category>>()
@@ -128,7 +131,7 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     val postFromId: LiveData<PreviewPost?> = _postFromId
     val searchPosts: LiveData<ArrayList<PreviewPost>> = _searchPosts
     val selectedRequestJoinClubCategoryId:LiveData<Int> = _selectedRequestJoinClubCategoryId
-    val noticeResponse:LiveData<NoticeResponse> = _noticeResponse
+    val noticeResponse:LiveData<String> = _noticeResponse
     val myProfileImageUrl:LiveData<String> = _myProfileImageUrl
     val photoPickerClickSwitch:LiveData<Event<Boolean?>> = _photoPickerClickSwitch
     val commentInnerValueChangeSwitch:LiveData<Boolean> = _commentInnerValueChangeSwitch
@@ -342,16 +345,35 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
         }
     }
 
-    fun getNotice(){
-        GlobalScope.async {
-            val version = BuildConfig.VERSION_NAME
-            val response = repository.getNotice(NoticeRequest("android",version))
-            viewModelScope.launch{
-                _noticeResponse.value = response
-                noticeAlreadyShow=true
+
+    fun getNoticeFun() { // Spring
+        val version = BuildConfig.VERSION_NAME
+        CoroutineScope(Dispatchers.Main).launch {
+            val result = repositoryNotice.noticeApiCall(NoticeRequest("android", version))
+            Log.d("test123","${result.body()}")
+            when (result.code()) {
+                200 -> { // 성공 코드
+                    _noticeResponse.value = result.body()!!.noticeBody
+                }
+                else -> { // 그 외 나머지 서버 에러 코드
+                    _noticeResponse.value = "Error Exist"
+                }
             }
         }
     }
+
+
+
+//    fun getNotice(){
+//        GlobalScope.async {
+//            val version = BuildConfig.VERSION_NAME
+//            val response = repository.getNotice(NoticeRequest("android",version))
+//            viewModelScope.launch{
+//                _noticeResponse.value = response
+//                noticeAlreadyShow=true
+//            }
+//        }
+//    }
 
 
     suspend fun uploadPhoto(postId:Int){

@@ -264,15 +264,23 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
 
 
         mainViewModel.noticeResponse.observe(this, Observer {
-            it?.let {
-                if (it.isExist) {
-                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                    builder.setTitle("Notice").setMessage(it.notice)
-                    val alertDialog: AlertDialog = builder.create()
-                    alertDialog.show()
-                    App.prefs.setValue("isNoticeAlreadyPopUp", "true")
-                }
-            }
+//            it?.let {
+//                if (it.isExist) {
+//                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+//                    builder.setTitle("Notice").setMessage(it.notice)
+//                    val alertDialog: AlertDialog = builder.create()
+//                    alertDialog.show()
+//                    App.prefs.setValue("isNoticeAlreadyPopUp", "true")
+//                }
+//            }
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder
+                .setTitle("Notice")
+                .setMessage(it)
+
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+            App.prefs.setValue("isNoticeAlreadyPopUp","true")
         })
 
         mainViewModel.categorySelectApply.observe(this, Observer { // Apply 버튼
@@ -309,7 +317,8 @@ class MainActivity : AppCompatActivity(), MainActivityInterface {
             moveByNotificationType(notificationType,itemId)
         } else {
              if (mainViewModel.noticeResponse.value == null) {
-                 mainViewModel.getNotice()
+                 //mainViewModel.getNotice()
+                 mainViewModel.getNoticeFun()
             }
         }
     }

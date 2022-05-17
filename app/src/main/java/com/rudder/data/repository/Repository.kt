@@ -289,7 +289,7 @@ class Repository {
     suspend fun getNotice(noticeRequest: NoticeRequest): NoticeResponse{
 
             return ExceptionUtil.retryWhenException(NoticeApi::getNotice,noticeRequest,NoticeApi(),
-                Response(NoticeResponse(false,""))
+                Response(NoticeResponse(""))
             ).results
 
 

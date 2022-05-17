@@ -123,20 +123,30 @@ class LoginActivity : AppCompatActivity() {
         })
 
         if(loginViewModel.noticeResponse.value==null){
-            loginViewModel.getNotice()
+            loginViewModel.getNoticeFun()
+            //loginViewModel.getNotice()
+
         }
 
         loginViewModel.noticeResponse.observe(this, Observer {
-            it?.let {
-                if(it.isExist){
-                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                    builder.setTitle("Notice").setMessage(it.notice)
-                    val alertDialog: AlertDialog = builder.create()
-                    alertDialog.show()
-                    App.prefs.setValue("isNoticeAlreadyPopUp","true")
-                }
+//            it?.let {
+////                if(it.isExist){
+////                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+////                    builder.setTitle("Notice").setMessage(it.notice)
+////                    val alertDialog: AlertDialog = builder.create()
+////                    alertDialog.show()
+////                    App.prefs.setValue("isNoticeAlreadyPopUp","true")
+////                }
+//            }
+            // Spring
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder
+                .setTitle("Notice")
+                .setMessage(it)
 
-            }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+            App.prefs.setValue("isNoticeAlreadyPopUp","true")
         })
     }
     override fun onDestroy() {
