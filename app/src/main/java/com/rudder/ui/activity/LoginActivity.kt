@@ -51,34 +51,15 @@ class LoginActivity : AppCompatActivity() {
                 201 -> {
                     StartActivityUtil.callActivity(this, MainActivity() )
                     finish()
-                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
                 }
-                401 -> {
-                    Toast.makeText(this, "401", Toast.LENGTH_LONG).show()
-                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
-
-                }
-                402 -> {
-                    Toast.makeText(this, "402", Toast.LENGTH_LONG).show()
-                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
-
-                }
-                404 -> {
-                    Toast.makeText(this, "404", Toast.LENGTH_LONG).show()
-                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
-
-                }
-                406 -> {
-                    Toast.makeText(this, "406", Toast.LENGTH_LONG).show()
-                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
-
-                }
-                -1 -> {
-                    Toast.makeText(this, "Please Try Again.", Toast.LENGTH_LONG).show()
-                    ProgressBarUtil._progressBarFlag.postValue(Event(false))
-
-                }
+                401 -> Toast.makeText(this, "Email not verified", Toast.LENGTH_LONG).show()
+                402 -> Toast.makeText(this, "Password wrong", Toast.LENGTH_LONG).show()
+                404 -> Toast.makeText(this, "Email Id is not exist", Toast.LENGTH_LONG).show()
+                406 -> Toast.makeText(this, "Please Try Again.", Toast.LENGTH_LONG).show()
+                -1 -> Toast.makeText(this, "Please Try Again.", Toast.LENGTH_LONG).show()
             }
+            ProgressBarUtil._progressBarFlag.postValue(Event(false))
+
         })
 
 
