@@ -21,27 +21,35 @@ class RepositoryLogin {
     suspend fun loginApiCall(loginRequestInfo: LoginRequestInfo): Int {
         val apiResponse = LoginApi.instance.loginServiceCall(loginRequestInfo).await()
         val key = BuildConfig.TOKEN_KEY
-        val userIdKey = "userId"
+        //val userIdKey = "userId"
 
         if (apiResponse.isSuccessful) { // 클릭 로그인 성공시
             val body = apiResponse.body()
             val bodyToken = body?.get("accessToken").toString()
-            App.prefs.setValue(key, bodyToken)
-            App.prefs.setValue(userIdKey, loginRequestInfo.userId)
-            Log.d("test123token", "$bodyToken")
+
+            val tokenDrop = bodyToken.drop(1).dropLast(1)
+            App.prefs.setValue(key, "Bearer $tokenDrop")
+
+            //App.prefs.setValue(userIdKey, loginRequestInfo.userId)
             return apiResponse.code()
 
         } else { // 클릭 로그인 실패시
-            val errorBody = apiResponse.errorBody()
-            val errorJsonObject = JSONObject(errorBody!!.string())
-            val errorCodeString = errorJsonObject.getString("code")
-            Log.d("errorCodeString", "${errorCodeString}")
-            when (errorCodeString) {
-                "EMAIL_NOT_VERIFIED" -> return 401
-                "PASSWORD_WRONG" -> return 402
-                "USER_ID_NOT_FOUND" -> return 404
-                "BAD_REQUEST_CONTENT" -> return 406
-                else -> return -1
+            val errorBody = apiResponse.errorBody() // 엘비스 표현식?
+
+            if (errorBody == null) {
+                return -1
+            } else {
+                val errorJsonObject = JSONObject(errorBody.string())
+                val errorCodeString = errorJsonObject.getString("code")
+                Log.d("errorCodeString", "${errorCodeString}")
+                when (errorCodeString) {
+                    "EMAIL_NOT_VERIFIED" -> return 401
+                    "PASSWORD_WRONG" -> return 402
+                    "USER_ID_NOT_FOUND" -> return 404
+                    "BAD_REQUEST_CONTENT" -> return 406
+                    else -> return -1
+            }
+
             }
         }
 

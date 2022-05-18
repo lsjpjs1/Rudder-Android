@@ -6,8 +6,7 @@ import com.google.gson.annotations.SerializedName
 import com.rudder.data.GetPostInfo
 import com.rudder.data.PreviewPost
 import com.rudder.data.Response
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface PostService {
@@ -45,8 +44,22 @@ interface PostService {
 
 
 
+    @GET("/posts")
+    suspend fun getPostsService(
+        @Header("Authorization") token : String,
+        @Query("categoryId") categoryId: Int?,
+        @Query("endPostId") endPostId : Int?,
+        @Query("searchBody") searchBody : String?,
+        ): retrofit2.Response<GetPostResponse>
+
+
+
 
 }
+
+data class GetPostResponse(
+    val posts : List<PreviewPost>
+)
 
 
 data class AddPostViewCountInfo(

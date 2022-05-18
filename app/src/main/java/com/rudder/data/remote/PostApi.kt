@@ -16,8 +16,15 @@ class PostApi {
     }
 
     private val postService : PostService = RetrofitClient.getClient(BuildConfig.BASE_URL).create(PostService::class.java)
+    private val postServiceSpring : PostService = RetrofitClientSpring.getClient(BuildConfig.BASE_URL_SPRING).create(PostService::class.java)
 
 
+
+    fun getPostsApi(getPostInfo: GetPostInfo) : Deferred<retrofit2.Response<GetPostResponse>> { // Spring
+        return CoroutineScope(Dispatchers.IO).async{
+            postServiceSpring.getPostsService( getPostInfo.token, getPostInfo.categoryId, getPostInfo.endPostId, getPostInfo.searchBody)
+        }
+    }
 
 
     fun getPosts(getPostInfo: GetPostInfo) : Deferred<ArrayList<PreviewPost>> {

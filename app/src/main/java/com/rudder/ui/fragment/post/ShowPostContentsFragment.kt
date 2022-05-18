@@ -2,9 +2,11 @@ package com.rudder.ui.fragment.post
 
 
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -15,13 +17,14 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rudder.R
-import com.rudder.data.PreviewPost
 import com.rudder.databinding.FragmentShowPostContentsBinding
 import com.rudder.ui.activity.MainActivity
 import com.rudder.ui.adapter.DisplayImagesAdapter
 import com.rudder.ui.adapter.PostCommentsAdapter
 import com.rudder.ui.fragment.comment.CommunityCommentBottomSheetFragment
-import com.rudder.util.*
+import com.rudder.util.CirclePagerIndicatorDecoration
+import com.rudder.util.CustomOnclickListener
+import com.rudder.util.LocaleUtil
 import com.rudder.viewModel.MainViewModel
 import com.rudder.viewModel.NotificationViewModel
 import kotlinx.android.synthetic.main.fragment_show_post_contents.*
@@ -288,7 +291,9 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
                     parentActivity.communityCommentBottomSheetFragment.dismiss()
                     parentActivity.onBackPressed()
                     viewModel.clearPosts()
-                    viewModel.getPosts()
+                    //viewModel.getPosts()
+                    viewModel.getPostsFun()
+
                 }
             }
         })

@@ -28,7 +28,6 @@ class LoginApi {
 
 
     fun login(loginInfo: LoginInfo) : Deferred<Response<LoginResponse>>{
-
         return GlobalScope.async(Dispatchers.IO){
             loginService.login(loginInfo)
         }

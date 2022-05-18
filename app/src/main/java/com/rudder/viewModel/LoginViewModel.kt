@@ -66,9 +66,8 @@ class LoginViewModel() : ViewModel() {
 
     fun getNoticeFun() { // Spring
         val version = BuildConfig.VERSION_NAME
-        CoroutineScope(Dispatchers.Main).launch {
+        viewModelScope.launch {
             val result = repositoryNotice.noticeApiCall(NoticeRequest("android", version))
-            Log.d("test123","${result.body()}")
             when (result.code()) {
                 200 -> { // 성공 코드
                     _noticeResponse.value = result.body()!!.noticeBody
@@ -112,7 +111,7 @@ class LoginViewModel() : ViewModel() {
 
 
     fun checkToken(){
-        CoroutineScope(Dispatchers.Main).launch {
+        viewModelScope.launch {
 
             Log.d("checkTokenApiCall_asd", "${App.prefs.getValue(key)}")
             val resultCode = repositoryLogin.checkTokenApiCall(App.prefs.getValue(key)!!)
@@ -147,7 +146,7 @@ class LoginViewModel() : ViewModel() {
     }
 
 
-    fun clickLogin() { // Sign Up, Complete!
+    fun clickLogin() { // Spring
         CoroutineScope(Dispatchers.Main).launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
             val resultCode = repositoryLogin.loginApiCall(LoginRequestInfo(App.prefs.getValue(NOTIFICATION_TOKEN_KEY)!!,"android", _userId.value!!,_userPassword.value!!))

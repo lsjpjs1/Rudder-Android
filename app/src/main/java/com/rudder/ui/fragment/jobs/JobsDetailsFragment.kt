@@ -231,7 +231,9 @@ class JobsDetailsFragment : Fragment() {
         mainViewModel.setSelectedCategoryPosition(viewPosition)
         mainViewModel.setSelectedCategoryView(categorySelectorConstraintLayoutView)
         mainViewModel.clearPosts()
-        mainViewModel.getPosts()
+        //mainViewModel.getPosts()
+        mainViewModel.getPostsFun()
+
     }
 
 

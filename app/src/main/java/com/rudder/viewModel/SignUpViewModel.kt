@@ -18,8 +18,6 @@ import com.rudder.data.repository.Repository
 import com.rudder.data.repository.RepositorySignUp
 import com.rudder.util.Event
 import com.rudder.util.ProgressBarUtil
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -351,8 +349,8 @@ class SignUpViewModel : ViewModel() {
     }
 
 
-    fun callSignUp() { // Sign Up, Complete!
-        CoroutineScope(Dispatchers.Main).launch {
+    fun callSignUp() { // Sign Up, Complete!, // Spring
+        viewModelScope.launch {
             ProgressBarUtil._progressBarFlag.postValue(Event(true))
             val resultCode = repositorySignUp.signUpApiCall(SignUpInfo(_userId.value!!, _userPassword.value!!))
 

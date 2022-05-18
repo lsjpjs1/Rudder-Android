@@ -191,7 +191,6 @@ class JobsViewModel : ViewModel() {
                 }
             }
 
-
             withContext(Dispatchers.Main) {
                 if (response?.code() == 200) { // 서버 통신 success
                     val result = response.body()

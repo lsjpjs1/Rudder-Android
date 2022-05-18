@@ -84,20 +84,18 @@ class SearchViewModel : MainViewModel(), ViewModelInterface {
                 val resPosts = if (isScroll) {
                     Repository().getPosts(
                         GetPostInfo(
-                            pagingIndex,
-                            endPostId,
-                            -1,
                             token!!,
+                            -1,
+                            endPostId,
                             validSearchWord
                         )
                     )
                 } else {
                     Repository().getPosts(
                         GetPostInfo(
-                            -1,
-                            -1,
-                            -1,
                             token!!,
+                            -1,
+                            -1,
                             validSearchWord
                         )
                     )

@@ -146,7 +146,7 @@
                 android:clickable="true"
                 android:textSize="14sp"
                 android:gravity="center"
-                android:onClick="@{()->loginVM.callLogin()}"
+                        android:onClick="@{()->loginVM.clickLogin()}"
                 android:text="@string/sign_in"
                 app:layout_constraintVertical_bias="0.9"
                 app:layout_constraintTop_toTopOf="parent"

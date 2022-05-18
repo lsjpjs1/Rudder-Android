@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.rudder.R
 import com.rudder.databinding.FragmentCommunityContentsBinding
 import com.rudder.ui.activity.MainActivity
@@ -84,7 +83,9 @@ open class CommunityContentsFragment: Fragment(), CustomOnclickListener {
             it.getContentIfNotHandled()?.let {
                 if(it){
                     mainViewModel.clearPosts()
-                    mainViewModel.getPosts()
+                    //mainViewModel.getPosts()
+                    mainViewModel.getPostsFun()
+
                 }
             }
         })
@@ -107,7 +108,9 @@ open class CommunityContentsFragment: Fragment(), CustomOnclickListener {
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     mainViewModel.clearPosts()
-                    mainViewModel.getPosts()
+                    //mainViewModel.getPosts()
+                    mainViewModel.getPostsFun()
+
                     if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }
@@ -125,7 +128,9 @@ open class CommunityContentsFragment: Fragment(), CustomOnclickListener {
                     ).show()
                     parentActivity.communityPostBottomSheetFragment.dismiss()
                     mainViewModel.clearPosts()
-                    mainViewModel.getPosts()
+                    //mainViewModel.getPosts()
+                    mainViewModel.getPostsFun()
+
                     if (parentActivity.showPostContentsFragment.isVisible){
                         parentActivity.onBackPressed()
                     }

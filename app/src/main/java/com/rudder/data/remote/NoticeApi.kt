@@ -2,10 +2,7 @@ package com.rudder.data.remote
 
 import com.rudder.BuildConfig
 import com.rudder.data.Response
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.*
 
 class NoticeApi {
     companion object{
@@ -26,7 +23,7 @@ class NoticeApi {
 
 
     fun callGetNoticeAPi(noticeRequest: NoticeRequest) : Deferred<retrofit2.Response<NoticeResponse>> {
-        return GlobalScope.async(Dispatchers.IO) {
+        return CoroutineScope(Dispatchers.IO).async {
             noticeServiceSpring.getNoticeService(noticeRequest.os, noticeRequest.version)
         }
     }

@@ -14,6 +14,7 @@ import com.rudder.data.local.App
 import com.rudder.data.remote.*
 import com.rudder.data.repository.Repository
 import com.rudder.data.repository.RepositoryNotice
+import com.rudder.data.repository.RepositoryPost
 import com.rudder.util.Event
 import com.rudder.util.FileUtil
 import com.rudder.util.ProgressBarUtil
@@ -21,6 +22,9 @@ import kotlinx.coroutines.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.sql.Timestamp
+
+
+
 
 
 open class MainViewModel : ViewModel(), ViewModelInterface {
@@ -34,6 +38,8 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
 
     val repository = Repository()
     val repositoryNotice = RepositoryNotice()
+    val repositoryPost = RepositoryPost()
+
 
 
     val _isShowPostRefreshSuccess = MutableLiveData<Event<Boolean>>()
@@ -213,21 +219,19 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
         _posts.value = arrayListOf(
             PreviewPost(
                 1,
-                "abc",
                 0,
-                "body",
-                "title",
-                Timestamp.valueOf("2021-07-13 11:11:11"),
-                1,
-                2,
-                3,
                 "",
+                "body",
+                Timestamp.valueOf("2021-07-13 11:11:11"),
                 0,
+                1,
+                "",
+                3,
                 false,
                 false,
                 arrayListOf(),
                 "",
-                categoryAbbreviation = ""
+                "",
             )
         )
         _comments.value = arrayListOf(
@@ -463,13 +467,17 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
         if (_posts.value!!.size > 0) {
             pagingIndex += 1
             endPostId = _posts.value!![_posts.value!!.size - 1].postId
-            getPosts()
+            //getPosts()
+            getPostsFun()
+
         }
     }
 
     override fun scrollTouchTopCommunityPost() {
         clearPosts()
-        getPosts()
+        //getPosts()
+        getPostsFun()
+
     }
 
     fun scrollTopShowPost() {
@@ -575,7 +583,8 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     }
 
 
-    fun getPosts() {
+
+    fun getPostsFun(){ // Spring
         _isScrollBottomTouch.value = Event(true)
         val key = BuildConfig.TOKEN_KEY
         val token = App.prefs.getValue(key)
@@ -585,32 +594,115 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
             val categoryId = if(userSelectCategories.value!!.size-1>=selectedCategoryPosition.value!!){
                 userSelectCategories.value!![selectedCategoryPosition.value!!].categoryId
             }else{
-                -1
+                null
             }
-            val resPosts = repository.getPosts(
+
+            val resPosts = repositoryPost.getPostApiCall(
                 GetPostInfo(
-                    pagingIndex,
-                    endPostId,
-                    categoryId,
-                    token!!
+                    token!!, categoryId, null, null
                 )
             )
-            viewModelScope.launch {
 
-                if (_posts.value!!.size == 0) {
-                    _posts.value = resPosts
-                } else {
-                    val oldPosts = _posts.value
-                    oldPosts!!.addAll(resPosts)
-                    _posts.value = oldPosts!!
 
-                }
+            Log.d("jsonObject555", "${resPosts}")
+
+            if (resPosts.code() == 200) {
+
+                val tmp = resPosts.body()
+                Log.d("jsonObject555", "${tmp}")
+
+
+
+//                val getPosts = resPosts.body()!!.getAsJsonArray("posts")
+//                //val data = Gson().fromJson<PreviewPost>(getPosts, PreviewPost::class.java)
+//                Log.d("jsonObject554", "${getPosts}")
+//
+//                for (getPost in getPosts) {
+//                    val jsonObject = getPost as JsonObject
+//                    Log.d("jsonObject", "${jsonObject}")
+//
+//                    var tmpList = _posts.value
+//                    tmpList!!.add(
+//                        PreviewPost(postId = jsonObject.get("postId").asInt,
+//                            userId = "",
+//                            userInfoId = jsonObject.get("userInfoId").asInt,
+//                            postBody = jsonObject.get("postBody").toString().drop(1).dropLast(1),
+//                            postTitle = "",
+//                            postTime = Timestamp.valueOf(jsonObject.get("postTime").toString()
+//                                .split('T').joinToString(" ").drop(1).dropLast(11)),
+//                            commentCount = jsonObject.get("commentCount").asInt,
+//                            likeCount = jsonObject.get("likeCount").asInt,
+//                            postView = 0,
+//                            categoryName = jsonObject.get("categoryName").toString().drop(1)
+//                                .dropLast(1),
+//                            categoryId = jsonObject.get("categoryId").asInt,
+//                            isLiked = jsonObject.get("isLiked").asBoolean,
+//                            isMine = jsonObject.get("isMine").asBoolean,
+//                            imageUrls = arrayListOf(),
+//                            userProfileImageUrl = jsonObject.get("userProfileImageUrl").toString()
+//                                .drop(1).dropLast(1),
+//                            categoryAbbreviation = jsonObject.get("categoryAbbreviation").toString()
+//                                .drop(1).dropLast(1)
+//                        )
+//                    )
+//                    _posts.postValue(tmpList!!)
+//
+//                    _isScrollBottomTouch.value = Event(false)
+//                }
+            }
+
+//                if (_posts.value!!.size == 0) {
+//                    _posts.value = resPosts
+//                } else {
+//                    val oldPosts = _posts.value
+//                    oldPosts!!.addAll(resPosts)
+//                    _posts.value = oldPosts!!
+//
+//                }
                 _isScrollBottomTouch.value = Event(false)
             }
-            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
-
+                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
-    }
+        //            viewModelScope.launch {
+
+
+
+
+//    fun getPosts() {
+//        _isScrollBottomTouch.value = Event(true)
+//        val key = BuildConfig.TOKEN_KEY
+//        val token = App.prefs.getValue(key)
+//
+//        viewModelScope.launch {
+//            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+//            val categoryId = if(userSelectCategories.value!!.size-1>=selectedCategoryPosition.value!!){
+//                userSelectCategories.value!![selectedCategoryPosition.value!!].categoryId
+//            }else{
+//                -1
+//            }
+//            val resPosts = repository.getPosts(
+//                GetPostInfo(
+//                    pagingIndex,
+//                    endPostId,
+//                    categoryId,
+//                    token!!
+//                )
+//            )
+//            viewModelScope.launch {
+//
+//                if (_posts.value!!.size == 0) {
+//                    _posts.value = resPosts
+//                } else {
+//                    val oldPosts = _posts.value
+//                    oldPosts!!.addAll(resPosts)
+//                    _posts.value = oldPosts!!
+//
+//                }
+//                _isScrollBottomTouch.value = Event(false)
+//            }
+//            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+//        }
+//    }
 
 
     fun addLikeComment(plusValue: Int, position: Int) {
