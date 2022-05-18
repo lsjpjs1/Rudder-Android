@@ -149,7 +149,7 @@ open class CommunityContentsFragment: Fragment(), CustomOnclickListener {
         view.findNavController().navigate(action)
         (activity as MainActivity).mainBottomNavigationDisappear()
 
-        mainViewModel.addPostViewCount()
+        //mainViewModel.addPostViewCount()
     }
 
 

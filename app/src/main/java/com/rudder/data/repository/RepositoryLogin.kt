@@ -12,9 +12,8 @@ class RepositoryLogin {
 
 
     suspend fun checkTokenApiCall(token: String): Int {
-        val tokenDrop = token.drop(1).dropLast(1)
         val apiResponse =
-            LoginApi.instance.tokenCheckServiceCall(token = "Bearer $tokenDrop").await()
+            LoginApi.instance.tokenCheckServiceCall(token = token).await()
         return apiResponse.code()
     }
 
@@ -22,8 +21,6 @@ class RepositoryLogin {
     suspend fun loginApiCall(loginRequestInfo: LoginRequestInfo): Int {
         val apiResponse = LoginApi.instance.loginServiceCall(loginRequestInfo).await()
         val key = BuildConfig.TOKEN_KEY
-        //val userIdKey = "userId"
-
 
         if (apiResponse.isSuccessful) { // 클릭 로그인 성공시
             val body = apiResponse.body()
@@ -32,7 +29,6 @@ class RepositoryLogin {
             val tokenDrop = bodyToken.drop(1).dropLast(1)
             App.prefs.setValue(key, "Bearer $tokenDrop")
 
-            //App.prefs.setValue(userIdKey, loginRequestInfo.userId)
             return apiResponse.code()
 
         } else if (apiResponse.code() == 500) {

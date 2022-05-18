@@ -86,6 +86,9 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
 
 
         viewModel.isLikePost()
+
+
+
         if (viewModelType == "NotificationViewModel") {
             if (viewModel.posts.value!![0].imageUrls.size == 0) {
                 fragmentBinding.showPostImageDisplay.visibility = View.GONE
@@ -131,7 +134,7 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
         fragmentBinding.lifecycleOwner = this
         fragmentBinding.timeago = timeago
 
-        viewModel.getComments()    //지우지 마셈
+        //viewModel.getComments()    //지우지 마셈, // Spring 전환 해야됨
 
         viewModel.comments.observe(parentFragment as LifecycleOwner, Observer {
             var deleteCommentflag = false
@@ -230,9 +233,7 @@ class ShowPostContentsFragment() : Fragment(), CustomOnclickListener {
                 if (bool) {
                 }
                 (activity as MainActivity).showCommentMore(
-                    CommunityCommentBottomSheetFragment(
-                        viewModel
-                    )
+                    CommunityCommentBottomSheetFragment(viewModel)
                 )
             }
         })

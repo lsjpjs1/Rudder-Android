@@ -26,6 +26,13 @@ class PostApi {
         }
     }
 
+    fun getPostFromIdApi(postFromIdRequest: PostFromIdRequest) : Deferred<retrofit2.Response<PreviewPost>> { // Spring
+        return CoroutineScope(Dispatchers.IO).async{
+            postServiceSpring.getPostFromIdService( postFromIdRequest.token, postFromIdRequest.postId )
+        }
+    }
+
+
 
     fun getPosts(getPostInfo: GetPostInfo) : Deferred<ArrayList<PreviewPost>> {
         return GlobalScope.async(Dispatchers.IO){

@@ -57,7 +57,7 @@ interface PostService {
     suspend fun getPostFromIdService(
         @Header("Authorization") token : String,
         @Path("postId") postId: Int?
-    ): retrofit2.Response<GetPostsResponse>
+    ): retrofit2.Response<PreviewPost>
 
 
 

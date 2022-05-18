@@ -34,7 +34,7 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     private val tokenKey = BuildConfig.TOKEN_KEY
     private val ALREADY_READ_POST_ID_KEY = "alreadyReadPostIdJson"
     var pagingIndex = 0
-    var endPostId = -1
+    var endPostId : Int? = null
 
     val repository = Repository()
     val repositoryNotice = RepositoryNotice()
@@ -357,7 +357,6 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
         val version = BuildConfig.VERSION_NAME
         CoroutineScope(Dispatchers.Main).launch {
             val result = repositoryNotice.noticeApiCall(NoticeRequest("android", version))
-            Log.d("test123","${result.body()}")
             when (result.code()) {
                 200 -> { // 성공 코드
                     _noticeResponse.value = result.body()!!.noticeBody
@@ -468,8 +467,10 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
 
     override fun scrollTouchBottomCommunityPost() {
         if (_posts.value!!.size > 0) {
-            pagingIndex += 1
-            endPostId = _posts.value!![_posts.value!!.size - 1].postId
+            if (_posts.value!!.size > 19) {
+                endPostId = _posts.value!![_posts.value!!.size - 1].postId
+            }
+            //endPostId = _posts.value!![_posts.value!!.size - 1].postId
             //getPosts()
             getPostsFun()
 
@@ -484,7 +485,8 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     }
 
     fun scrollTopShowPost() {
-        getPostContentFromPostId()
+        //getPostContentFromPostId()
+        getPostFromPostId()
         getComments()
     }
 
@@ -590,6 +592,7 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     fun getPostsFun() { // Spring
         _isScrollBottomTouch.value = Event(true)
 
+        Log.d("test1111", "${endPostId}")
 
         viewModelScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
@@ -600,9 +603,10 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
                     null
                 }
 
-            val resPosts = repositoryPost.getPostApiCall(
+
+            val resPosts = repositoryPost.getPostsApiCall(
                 GetPostInfo(
-                    token!!, categoryId, null, null
+                    token!!, categoryId, endPostId, null
                 )
             )
             Log.d("jsonObject", "${resPosts}")
@@ -1318,6 +1322,51 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     fun clearPostFromId() {
         _postFromId.value = null
     }
+
+
+
+    fun getPostFromPostId() { // Spring
+        val reFreshPostId : Int
+        if (_selectedPostPosition.value!! == -1 ) {
+            reFreshPostId = _postId.value!!
+        } else {
+            reFreshPostId = _posts.value!![_selectedPostPosition.value!!].postId
+        }
+        val postRequest = PostFromIdRequest(
+            reFreshPostId,
+            token!!
+        )
+
+        viewModelScope.launch {
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
+            val response = repositoryPost.getPostFromIdApiCall(postRequest)
+            Log.d("getPostFromPostId", "${response}")
+            if (response.isSuccessful) {
+
+                val postContent = response.body()
+                Log.d("postContent", "${postContent}")
+
+                _toastMessage.postValue("Success")
+                if (_selectedPostPosition.value!! == -1 ) {
+                    _postFromId.postValue ( postContent!! )
+                } else {
+//                    viewModelScope.launch {
+//                        _posts.value!![_selectedPostPosition.value!!] = postContent!!
+//                    }
+                    _posts.value!![_selectedPostPosition.value!!] = postContent!!
+                }
+                _isShowPostRefreshSuccess.postValue(Event(true))
+
+            } else {
+
+            }
+
+
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+        }
+    }
+
+
 
 
     fun getPostContentFromPostId() { // scroll top 때 사용, mainViewModel
