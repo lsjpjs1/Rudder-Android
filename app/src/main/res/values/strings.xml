@@ -45,7 +45,7 @@
     <string name="report_post_content">Please help us understand whats going on. (Offensive content, Privacy concerns, etc.,)</string>
     <string name="choose_profile_image">Choose Profile Image</string>
     <string name="category_select">Category Selection</string>
-    <string name="auto_login_error">Auto login Fail. Please type your ID and Password.</string>
+    <string name="auto_login_error">Auto login fail. Please type your ID and Password.</string>
     <string name="my_page_title">My Page</string>
     <string name="club">Society</string>
     <string name="nickname_hint">New Nickname</string>

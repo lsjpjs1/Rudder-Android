@@ -20,7 +20,7 @@ class PostApi {
 
 
 
-    fun getPostsApi(getPostInfo: GetPostInfo) : Deferred<retrofit2.Response<GetPostResponse>> { // Spring
+    fun getPostsApi(getPostInfo: GetPostInfo) : Deferred<retrofit2.Response<GetPostsResponse>> { // Spring
         return CoroutineScope(Dispatchers.IO).async{
             postServiceSpring.getPostsService( getPostInfo.token, getPostInfo.categoryId, getPostInfo.endPostId, getPostInfo.searchBody)
         }

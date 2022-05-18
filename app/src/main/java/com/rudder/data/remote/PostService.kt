@@ -50,14 +50,21 @@ interface PostService {
         @Query("categoryId") categoryId: Int?,
         @Query("endPostId") endPostId : Int?,
         @Query("searchBody") searchBody : String?,
-        ): retrofit2.Response<GetPostResponse>
+        ): retrofit2.Response<GetPostsResponse>
+
+
+    @GET("/posts/{postId}")
+    suspend fun getPostFromIdService(
+        @Header("Authorization") token : String,
+        @Path("postId") postId: Int?
+    ): retrofit2.Response<GetPostsResponse>
 
 
 
 
 }
 
-data class GetPostResponse(
+data class GetPostsResponse(
     val posts : List<PreviewPost>
 )
 

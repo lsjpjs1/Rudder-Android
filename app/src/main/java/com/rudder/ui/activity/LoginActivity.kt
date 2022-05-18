@@ -59,10 +59,7 @@ class LoginActivity : AppCompatActivity() {
                 -1 -> Toast.makeText(this, "Please Try Again.", Toast.LENGTH_LONG).show()
             }
             ProgressBarUtil._progressBarFlag.postValue(Event(false))
-
         })
-
-
 
 
 

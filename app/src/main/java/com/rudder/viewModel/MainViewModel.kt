@@ -40,6 +40,9 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
     val repositoryNotice = RepositoryNotice()
     val repositoryPost = RepositoryPost()
 
+    val key = BuildConfig.TOKEN_KEY
+    val token = App.prefs.getValue(key)
+
 
 
     val _isShowPostRefreshSuccess = MutableLiveData<Event<Boolean>>()
@@ -584,87 +587,42 @@ open class MainViewModel : ViewModel(), ViewModelInterface {
 
 
 
-    fun getPostsFun(){ // Spring
+    fun getPostsFun() { // Spring
         _isScrollBottomTouch.value = Event(true)
-        val key = BuildConfig.TOKEN_KEY
-        val token = App.prefs.getValue(key)
+
 
         viewModelScope.launch {
             ProgressBarUtil._progressBarDialogFlag.postValue(Event(true))
-            val categoryId = if(userSelectCategories.value!!.size-1>=selectedCategoryPosition.value!!){
-                userSelectCategories.value!![selectedCategoryPosition.value!!].categoryId
-            }else{
-                null
-            }
+            val categoryId =
+                if (userSelectCategories.value!!.size - 1 >= selectedCategoryPosition.value!!) {
+                    userSelectCategories.value!![selectedCategoryPosition.value!!].categoryId
+                } else {
+                    null
+                }
 
             val resPosts = repositoryPost.getPostApiCall(
                 GetPostInfo(
                     token!!, categoryId, null, null
                 )
             )
-
-
-            Log.d("jsonObject555", "${resPosts}")
+            Log.d("jsonObject", "${resPosts}")
 
             if (resPosts.code() == 200) {
+                val getPosts = resPosts.body()!!.posts
 
-                val tmp = resPosts.body()
-                Log.d("jsonObject555", "${tmp}")
-
-
-
-//                val getPosts = resPosts.body()!!.getAsJsonArray("posts")
-//                //val data = Gson().fromJson<PreviewPost>(getPosts, PreviewPost::class.java)
-//                Log.d("jsonObject554", "${getPosts}")
-//
-//                for (getPost in getPosts) {
-//                    val jsonObject = getPost as JsonObject
-//                    Log.d("jsonObject", "${jsonObject}")
-//
-//                    var tmpList = _posts.value
-//                    tmpList!!.add(
-//                        PreviewPost(postId = jsonObject.get("postId").asInt,
-//                            userId = "",
-//                            userInfoId = jsonObject.get("userInfoId").asInt,
-//                            postBody = jsonObject.get("postBody").toString().drop(1).dropLast(1),
-//                            postTitle = "",
-//                            postTime = Timestamp.valueOf(jsonObject.get("postTime").toString()
-//                                .split('T').joinToString(" ").drop(1).dropLast(11)),
-//                            commentCount = jsonObject.get("commentCount").asInt,
-//                            likeCount = jsonObject.get("likeCount").asInt,
-//                            postView = 0,
-//                            categoryName = jsonObject.get("categoryName").toString().drop(1)
-//                                .dropLast(1),
-//                            categoryId = jsonObject.get("categoryId").asInt,
-//                            isLiked = jsonObject.get("isLiked").asBoolean,
-//                            isMine = jsonObject.get("isMine").asBoolean,
-//                            imageUrls = arrayListOf(),
-//                            userProfileImageUrl = jsonObject.get("userProfileImageUrl").toString()
-//                                .drop(1).dropLast(1),
-//                            categoryAbbreviation = jsonObject.get("categoryAbbreviation").toString()
-//                                .drop(1).dropLast(1)
-//                        )
-//                    )
-//                    _posts.postValue(tmpList!!)
-//
-//                    _isScrollBottomTouch.value = Event(false)
-//                }
-            }
-
-//                if (_posts.value!!.size == 0) {
-//                    _posts.value = resPosts
-//                } else {
-//                    val oldPosts = _posts.value
-//                    oldPosts!!.addAll(resPosts)
-//                    _posts.value = oldPosts!!
-//
-//                }
+                if (_posts.value!!.size == 1) {
+                    _posts.value = getPosts as ArrayList<PreviewPost>
+                } else {
+                    val oldPosts = _posts.value
+                    oldPosts!!.addAll(getPosts)
+                    _posts.value = oldPosts!!
+                }
                 _isScrollBottomTouch.value = Event(false)
             }
-                ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
+            ProgressBarUtil._progressBarDialogFlag.postValue(Event(false))
         }
+    }
         //            viewModelScope.launch {
-
 
 
 
